@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
-
+// test push
   // launch login screen
   Future<void> launchLoginWidget() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
