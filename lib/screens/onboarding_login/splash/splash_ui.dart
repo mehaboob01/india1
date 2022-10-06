@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // print("Current User");
     // print(stringValue);
 
-    Get.offAllNamed(MRouter.homeScreen);
+    Get.offAllNamed(MRouter.languageSelectionIO);
   }
 
   @override
@@ -51,10 +51,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Widget buildSplashLogo() {
     return Center(
-      child: Image.asset(
-        "assets/images/india_one_logo.png",
-        width: 148,
-        height: 148,
+      child: Hero(
+        tag: 'logo_image',
+        child:
+        Image.asset(
+          "assets/images/india_one_logo.png",
+          width: 244,
+          height: 184,
+        ),
       ),
     );
   }

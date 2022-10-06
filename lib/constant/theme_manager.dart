@@ -47,6 +47,12 @@ class ThemeManager {
 
 class AppColors {
   static const primary = Color(0xFFF9E42C);
+  static const bgScreenColor = Color(0xFFB3B9C9);
+  static const btnColor = Color(0xFF2b6dd4);
+  static const btnDisableColor = Color(0xffa6b6d0);
+  static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
+  static Color passiveTabColor = const Color.fromRGBO(75, 92, 107, 1.0);
+
   static const pink = Color(0xFFF9E42C);
   static const pinkdark = Color(0xFFF9E42C);
   static const primaryDark = Color(0xFF4FBCDD);
@@ -331,14 +337,3 @@ class Toasts{
 
 }
 
-// class Constant{
-//   // SharedPreferences prefs = await SharedPreferences.getInstance();
-//   static SharedPreferences pref = SharedPreferences.getInstance() as SharedPreferences;
-//   static const USER_ID = "id";
-//   static const TOKEN = "token";
-//   static const FULL_NAME = "fullName";
-//   static const EMAIL = "email";
-//   static const PASSWORD = "password";
-//
-//
-// }
