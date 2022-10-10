@@ -4,20 +4,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/widgets/screen_bg.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
+import 'otp_manager.dart';
+
 class OtpScreen extends StatefulWidget {
+  String? phoneNumber;
+
+  OtpScreen(this.phoneNumber);
+
   @override
   State<OtpScreen> createState() => _OtpState();
 }
 
 class _OtpState extends State<OtpScreen> {
-  final interval = const Duration(seconds: 1);
-  final int timerMaxSeconds = 28;
-  int currentSeconds = 0;
-  bool? reSendOtp = false;
+  final interval =  Duration(seconds: 1);
+  OtpManager _otpManager = Get.put(OtpManager());
+
+  String? codeValue = '';
+  static const timerMaxSeconds = 28;
+  int currentSeconds = timerMaxSeconds;
+  Timer? timer;
+
+  void startTimer()
+  {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+
+    setState(() {
+      currentSeconds--;
+      if(currentSeconds == 0) timer!.cancel();
+    });
+    });
+  }
+
+
+
 
   final GlobalKey<FormBuilderState> _userOtp = GlobalKey<FormBuilderState>();
   String get timerText => '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
@@ -28,8 +52,6 @@ class _OtpState extends State<OtpScreen> {
       setState(() {
         print(timer.tick);
         currentSeconds = timer.tick;
-        if(timer.tick == 28)
-          {}
         if (timer.tick >= timerMaxSeconds) timer.cancel();
       });
     });
@@ -37,363 +59,342 @@ class _OtpState extends State<OtpScreen> {
 
   @override
   void initState() {
-    startTimeout();
+    listenOtp();
+    startTimer();
+    //startTimeout();
     super.initState();
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: AppColors.white,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Container(
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 84,
-                    ),
-                    Text("Enter OTP",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Dimens.font_20sp,
-                            color: Colors.black87)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "We have sent you a 4-digit verification code",
-                      overflow: TextOverflow.visible,
-                      maxLines: 1,
-                      style: TextStyle(
-                        overflow: TextOverflow.visible,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.bgScreenColor,
-                        fontSize: Dimens.font_14sp,
-                      ),
-                    ),
-                  ],
-                )),
-            Spacer(flex: 2),
-            Column(
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 24.0, left: 44.0),
-                    child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      color: AppColors.white,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 120,
-                            width: 120,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                SizedBox(height: 24),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  '9131480982',
-                                  style: TextStyle(
-                                      fontSize: Dimens.font_14sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            height: 120,
-                            width: 120,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                SizedBox(height: 24),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  'Edit number',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimens.font_14sp,
-                                      color: AppColors.btnColor),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+            SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                color: AppColors.white,
+                child: Stack(
+                  children: [BgScreen(), buildOtpCard()],
                 ),
-                Center(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 32.0, left: 32.0, top: 12.0),
-                      child: FormBuilder(
-                        key: _userOtp,
-                        initialValue: {
-                          "otp1": "",
-                          "otp2": "",
-                          "otp3": "",
-                          "otp4": "",
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 48,
-                                  width: 48,
-                                  child: FormBuilderTextField(
-                                    name: 'otp1',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      if (value!.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    decoration:
-                                        InputDecoration(border: InputBorder.none),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildOtpCard() {
+    return Align(
+      alignment: FractionalOffset.bottomCenter,
+      child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 524,
+          child: Padding(
+            padding:  EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                FormBuilder(
+                  key: _userOtp,
+                  initialValue: {
+                    "mobile": "",
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SingleChildScrollView(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 12.0,
+                                  right: 12.0,
+                                ),
+                                child: Image.asset(
+                                  "assets/images/india_one_logo.png",
+                                  width: 120,
+                                  height: 90,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 24,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 12.0,
+                                  right: 12.0,
+                                ),
+                                child: Obx(()=>
+                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _otpManager.resendOtpLoading == true?
+
+                                      Text(
+                                        "Resending OTP",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.black,
+                                          fontSize: Dimens.font_20sp,
+                                        ),
+                                      ):
+                                      _otpManager.isLoading == true?
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Verifying..",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                              fontSize: Dimens.font_20sp,
+                                            )
+                                          ),
+                                          SizedBox(width: 4,),
+                                          Container(
+                                              height: 16,
+                                              width: 16,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2.0,
+                                                color: AppColors.facebookBlue,
+                                              ))
+                                        ],
+                                      ):Text(
+                                        "Enter OTP",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.black,
+                                          fontSize: Dimens.font_20sp,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "We sent it to the number",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                              fontSize: Dimens.font_14sp,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            widget.phoneNumber.toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.facebookBlue,
+                                              fontSize: Dimens.font_14sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.bgScreenColor)),
                                 ),
-                                SizedBox(
-                                  width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 32),
+                      Padding(
+                          padding: EdgeInsets.only(
+                            left: 12.0,
+                            right: 12.0,
+                          ),
+                          child: PinFieldAutoFill(
+                            currentCode: codeValue,
+                            onCodeChanged: (code) {
+                              setState(() {
+                                codeValue = code.toString();
+                              });
+                            },
+                            codeLength: 4,
+                            onCodeSubmitted: (val) {
+                              _otpManager.callVerifyOtpApi(
+                                  codeValue.toString(), context);
+                            },
+                          )),
+                      SizedBox(height: 14),
+                      Obx(
+                        ()=> Padding(
+                          padding: EdgeInsets.only(
+                            left: 12.0,
+                            right: 12.0,
+                          ),
+                          child: Visibility(
+                            visible:
+                                _otpManager.wrongOtp == true ? true : false,
+                            child: Text(
+                              "Invalid OTP entered. Please enter valid OTP",
+                              overflow: TextOverflow.visible,
+                              maxLines: 1,
+                              style: TextStyle(
+                                overflow: TextOverflow.visible,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.googleRed,
+                                fontSize: Dimens.font_12sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 38,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 12.0,
+                          right: 12.0,
+                        ),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.offAllNamed(MRouter.userLogin);
+                              },
+                              child: Text(
+                                "Edit Number",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black,
+                                  fontSize: Dimens.font_14sp,
                                 ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 48,
-                                  width: 48,
-                                  child: FormBuilderTextField(
-                                    name: 'otp2',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      if (value!.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    decoration:
-                                        InputDecoration(border: InputBorder.none),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.bgScreenColor)),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 48,
-                                  width: 48,
-                                  child: FormBuilderTextField(
-                                    name: 'otp3',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      if (value!.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    decoration:
-                                        InputDecoration(border: InputBorder.none),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.bgScreenColor)),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 48,
-                                  width: 48,
-                                  child: FormBuilderTextField(
-                                    name: 'otp4',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      if (value!.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    decoration:
-                                        InputDecoration(border: InputBorder.none),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.bgScreenColor)),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                              ],
+                              ),
+                            ),
+                            Spacer(),
+                            Obx(
+                              () => _otpManager.resendOtpLoading == false
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        if(currentSeconds == 0)
+                                        _otpManager.callResendOtpApi(
+                                            widget.phoneNumber.toString(),
+                                            context,
+                                            true);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Resend OTP',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.facebookBlue,
+                                              fontSize: Dimens.font_14sp,
+                                            ),
+                                          ),
+                                          SizedBox(width: 4,),
+                                          Visibility(
+                                            visible: currentSeconds == 0 ? false : true,
+                                            child: Text(
+                                              'in',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.facebookBlue,
+                                                fontSize: Dimens.font_14sp,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 6,),
+                                          Visibility(
+                                            visible: currentSeconds == 0 ? false : true,
+                                            child: SizedBox(
+                                              width: 22,
+                                              height: 22,
+                                              child: Stack(
+
+
+                                                children:[
+                                                  CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                                                    backgroundColor: AppColors.facebookBlue,
+                                                    strokeWidth: 2,
+                                                    value: currentSeconds/timerMaxSeconds,
+                                                  ),
+
+
+                                                  Center(
+                                                    child: Padding(
+                                                      padding:  EdgeInsets.all(2),
+                                                      child: Text(currentSeconds.toString(),
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.w700,
+                                                        color: AppColors.facebookBlue,
+                                                        fontSize: Dimens.font_14sp,
+                                                      ),
+                                                ),
+                                                    ),
+                                                  ),]
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Row(
+                                      children: [
+                                        Text(
+                                          'Sending',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.facebookBlue,
+                                            fontSize: Dimens.font_14sp,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        Container(
+                                            height: 16,
+                                            width: 16,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2.0,
+                                              color: AppColors.facebookBlue,
+                                            ))
+                                      ],
+                                    ),
                             ),
                           ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 56.0, left: 32.0),
-                    child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      color: AppColors.white,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(height: 24),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Row(
-
-                            children: [
-                              Text(
-                                "Resend OTP",
-                                overflow: TextOverflow.visible,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.visible,
-                                  color:  AppColors.bgScreenColor,
-                                  fontSize: Dimens.font_14sp,
-                                ),
-                              ),
-                              SizedBox(width: 4,),
-                              Visibility(
-                                visible: currentSeconds == 0?false:true,
-                                child: Text(
-                                  timerText,
-                                  style: TextStyle(
-                                    overflow: TextOverflow.visible,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.bgScreenColor,
-                                    fontSize: Dimens.font_14sp,
-                                  ),
-                                ),
-                              ),
-
-
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                Spacer(),
               ],
             ),
-            Spacer(flex: 3),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: GestureDetector(
-                onTap: (){
-
-                  Get.offAllNamed(MRouter.verifiedScreen);
-
-
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.height * 0.9,
-                  height: 48,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Submit',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                      ],
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white70.withOpacity(0.8),
-                        offset: const Offset(
-                          -6.0,
-                          -6.0,
-                        ),
-                        blurRadius: 16.0,
-                      ),
-                      BoxShadow(
-                        color: AppColors.darkerGrey.withOpacity(0.4),
-                        offset: const Offset(6.0, 6.0),
-                        blurRadius: 16.0,
-                      ),
-                    ],
-                    color: AppColors.btnColor,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                ),
+          ),
+          decoration: BoxDecoration(
+              borderRadius:  BorderRadius.only(
+                topRight: Radius.circular(44),
+                topLeft: Radius.circular(44),
               ),
-            ),
-            Spacer(flex: 1),
-          ],
-      ),
-    ),
-        ));
-  }
-
-  Widget otpBoxBuilder(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: 70,
-      width: 70,
-      child: FormBuilderTextField(
-        name: 'otp',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
-        keyboardType: TextInputType.number,
-        onChanged: (value) {
-          if (value!.length == 1) {
-            FocusScope.of(context).nextFocus();
-          }
-        },
-        decoration: InputDecoration(border: InputBorder.none),
-      ),
-      decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+              border: Border.all(
+                color: AppColors.white,
+                width: 0.5,
+              ),
+              // radius of 10
+              color: AppColors.white // green as background color
+              )),
     );
   }
+
+  void listenOtp() async {
+    // await SmsAutoFill().unregisterListener();
+    // listenForCode();
+    await SmsAutoFill().listenForCode;
+    print("OTP listen Called");
+  }
+
+
 }

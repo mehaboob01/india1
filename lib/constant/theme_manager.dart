@@ -49,9 +49,29 @@ class AppColors {
   static const primary = Color(0xFFF9E42C);
   static const bgScreenColor = Color(0xFFB3B9C9);
   static const btnColor = Color(0xFF2b6dd4);
-  static const btnDisableColor = Color(0xffa6b6d0);
+  static const btnDisableColor = Color(0xffbcc3ce);
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
   static Color passiveTabColor = const Color.fromRGBO(75, 92, 107, 1.0);
+
+  static const Color transparent = Colors.transparent;
+  static const Color blackColor = Colors.black;
+  static const Color black26Color = Colors.black26;
+  static const Color whiteColor = Colors.white;
+  static const Color greenColor = Colors.green;
+  static const Color redColor = Colors.red;
+
+
+
+  static const Color greyBgColor = const Color.fromRGBO(223, 230, 237, 1.0);
+
+  static const Color unSelectedLangColor =
+  const Color.fromRGBO(228, 230, 231, 1.0);
+  static const Color selectedLangColor =
+  const Color.fromRGBO(24, 89, 173, 1.0);
+  static const Color textLangColor = const Color.fromRGBO(41, 56, 69, 1.0);
+
+  static const Color buttonColor = const Color.fromRGBO(101, 88, 245, 1.0);
+  static const Color textColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   static const pink = Color(0xFFF9E42C);
   static const pinkdark = Color(0xFFF9E42C);
@@ -100,10 +120,10 @@ class AppColors {
   static const lightGrey = Color(0xFFE2E2EC);
   static const lightYellow = Color(0xFFFCF4E4);
 
-  static const transparent = Color(0xFFFFFF);
+  // static const transparent = Color(0xFFFFFF);
   static const bluetransparent = Color(0x9BB2E2);
 
-  static const facebookBlue = Color(0xFF1877F2);
+  static const facebookBlue = Color(0xFF07408A);
   static const googleRed = Color(0xFFDC4E41);
 }
 

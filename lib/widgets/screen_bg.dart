@@ -12,21 +12,21 @@ class BgScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.bgScreenColor,
+      color: AppColors.facebookBlue,
       constraints: BoxConstraints.expand(),
       child: Column(
         children: [
           SizedBox(height: 32),
-          Center(
-            child: Hero(
-              tag: 'logo_image',
-              child: Image.asset(
-                "assets/images/india_one_logo.png",
-                width: 244,
-                height: 184,
-              ),
-            ),
-          ),
+          // Center(
+          //   child: Hero(
+          //     tag: 'logo_image',
+          //     child: Image.asset(
+          //       "assets/images/india_one_logo.png",
+          //       width: 244,
+          //       height: 184,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -9,7 +9,9 @@ import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
 class VerifiedScreen extends StatefulWidget {
-  VerifiedScreen({Key? key}) : super(key: key);
+
+
+
 
   @override
   State<VerifiedScreen> createState() => _VerifiedScreenState();
@@ -85,20 +87,5 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
     );
   }
 
-// Future<void> requestCameraPermission() async {
-//   final serviceStatus = await Permission.camera.isGranted;
-//
-//   bool isCameraOn = serviceStatus == ServiceStatus.enabled;
-//
-//   final status = await Permission.camera.request();
-//
-//   if (status == PermissionStatus.granted) {
-//     print('Permission Granted');
-//   } else if (status == PermissionStatus.denied) {
-//     print('Permission denied');
-//   } else if (status == PermissionStatus.permanentlyDenied) {
-//     print('Permission Permanently Denied');
-//     await openAppSettings();
-//   }
-// }
+
 }

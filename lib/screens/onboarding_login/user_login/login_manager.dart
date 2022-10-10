@@ -1,48 +1,68 @@
+import 'dart:convert';
+
+
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:india_one/core/data/remote/api_constant.dart';
 
-import '../../../core/data/remote/api_calls.dart';
+import 'package:india_one/screens/onboarding_login/user_login/user_login_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../core/data/local/shared_preference_keys.dart';
+
+import '../otp_screen/otp_screen_ui.dart';
 
 class LoginManager extends GetxController {
   var isLoading = false.obs;
+  var getOtp = false.obs;
 
-  callSentOtpApi(Map<String, dynamic> data, BuildContext context) async {
+  callSentOtpApi(String phoneNumber, BuildContext context,
+      bool? termConditionChecked) async {
+
     try {
       isLoading.value = true;
-      dynamic response = await ApiCalls.post(baseUrl + Apis.sendOtp);
 
-      //  UserSignInModelDto userSignInModelDto = UserSignInModelDto.fromJson(response.data);
-      //
-      // print("staus");
-      // print(signupResponseModel.status);
-      // print(signupResponseModel.response);
+      var response = await http.post(
+          Uri.parse(
+              "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/auth/send-otp"),
+          body: jsonEncode({
+            "mobileNumber": phoneNumber,
+            "agreedToToc": termConditionChecked
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+      var jsonData = jsonDecode(response.body);
 
-      // if (userSignInModelDto.status == "true") {
-      //   print("success");
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   prefs.setString('CurrentUser', "User");
-      //   prefs.setString(SPKeys.USER_NAME, userSignInModelDto.userData!.name.toString());
-      //   prefs.setString(SPKeys.USER_EMAIL, userSignInModelDto.userData!.email.toString());
-      //   prefs.setString(SPKeys.USER_MOBILE, userSignInModelDto.userData!.mobile.toString());
-      //   prefs.setString(SPKeys.USER_CITY, userSignInModelDto.userData!.city.toString());
-      //
-      //   print(userSignInModelDto.msg);
-      //   //showSnackBar(userSignInModelDto.msg.toString());
-      //   Get.toNamed(MRouter.userHomeScreen);
-      // } else {
-      //   var snackBar = SnackBar(
-      //     content: Text(userSignInModelDto.msg.toString()),
-      //   );
-      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      //   print("failed");
-      //   print(userSignInModelDto.msg);
-      //   await Future.delayed(Duration(seconds: 2));
-      //   print("error ");
+      LoginModel userSignInModelDto = LoginModel.fromJson(jsonData);
 
+      print(userSignInModelDto.status!.code);
+
+      if (userSignInModelDto.status!.code == 2000) {
+        getOtp.value = true;
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(
+            SPKeys.TOKEN_KEY, userSignInModelDto.data!.token.toString());
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => OtpScreen(phoneNumber)));
+      } else {
+        var snackBar = SnackBar(
+          content: Text("Something went wrong!"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     } catch (e) {
-      // showSnackBar("Something went wrong");
+      var snackBar = SnackBar(
+        content: Text("Something went wrong!"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } finally {
       isLoading.value = false;
     }
