@@ -6,20 +6,40 @@ import 'package:get/get.dart';
 import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/screen_bg.dart';
 import 'login_manager.dart';
 
 class UserLogin extends StatefulWidget {
-   UserLogin({Key? key}) : super(key: key);
+  UserLogin({Key? key}) : super(key: key);
 
   @override
   State<UserLogin> createState() => _UserLoginState();
 }
 
 class _UserLoginState extends State<UserLogin> {
+  var _textController = new TextEditingController();
 
+  int charLength = 0;
+  bool? termConditionChecked = false;
+  bool? alertTextShow = false;
+
+  final Uri _termConditionUrl =
+      Uri.parse('https://pub.dev/packages/rflutter_alert/example');
+  final GlobalKey<FormBuilderState> _loginKey = GlobalKey<FormBuilderState>();
+  LoginManager _loginManager = Get.put(LoginManager());
+
+  _onTextChanged(String? value) {
+    setState(() {
+      charLength = value!.length;
+
+      print('char length');
+      print(charLength);
+      if (charLength == 12) {
+        _loginKey.currentState!.validate();
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -30,12 +50,6 @@ class _UserLoginState extends State<UserLogin> {
     if (!mounted) return;
   }
 
-  bool? termConditionChecked = false;
-  bool? alertTextShow = false;
-
-  final Uri _termConditionUrl = Uri.parse('https://pub.dev/packages/rflutter_alert/example');
-  final GlobalKey<FormBuilderState> _loginKey = GlobalKey<FormBuilderState>();
-  LoginManager _loginManager = Get.put(LoginManager());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,7 +86,7 @@ class _UserLoginState extends State<UserLogin> {
           width: MediaQuery.of(context).size.width,
           height: 524,
           child: Padding(
-            padding:  EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               children: [
                 FormBuilder(
@@ -109,7 +123,7 @@ class _UserLoginState extends State<UserLogin> {
                                   right: 12.0,
                                 ),
                                 child: Text(
-                                  "Mobile Number",
+                                  "Mobile Number".tr,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.black,
@@ -128,7 +142,9 @@ class _UserLoginState extends State<UserLogin> {
                             right: 12.0,
                           ),
                           child: FormBuilderTextField(
-
+                            controller: _textController,
+                            onChanged: _onTextChanged,
+                            autocorrect: true,
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly,
@@ -140,21 +156,24 @@ class _UserLoginState extends State<UserLogin> {
                                 color: AppColors.facebookBlue,
                                 fontSize: Dimens.font_16sp),
                             decoration: new InputDecoration(
-
                               prefixIcon: Padding(
                                   padding: EdgeInsets.only(top: 14),
                                   child: Text('+91 ')),
-
-                              hintText: '0000 0000 00',
-
+                              hintText: '**** **** **',
+                              hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black,
+                                  fontSize: Dimens.font_20sp),
                               labelStyle:
                                   new TextStyle(color: Color(0xFF787878)),
                             ),
-
-
-                            validator : (value){
-                              if(value!.isEmpty) return 'Please enter a 10 digit mobile number';
-                              return null;
+                            validator: (value) {
+                              if (value!.isEmpty)
+                                return 'Please enter a 10 digit mobile number';
+                              else if (value.length < 11)
+                                return 'Please enter a 10 digit mobile number';
+                              else
+                                return null;
                             },
                             name: 'mobile',
                           )),
@@ -164,7 +183,7 @@ class _UserLoginState extends State<UserLogin> {
                       Row(
                         children: [
                           Checkbox(
-                              shape:  RoundedRectangleBorder(
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(
                                           5.0))), // Rounded Checkbox
@@ -185,7 +204,7 @@ class _UserLoginState extends State<UserLogin> {
                           Row(
                             children: [
                               Text(
-                                "I accept",
+                                "I accept".tr,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
                                   color: AppColors.black,
@@ -205,7 +224,7 @@ class _UserLoginState extends State<UserLogin> {
                                 },
                                 child: Container(
                                   child: Text(
-                                    "Terms & Conditions",
+                                    "Terms & Conditions".tr,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.facebookBlue,
@@ -219,7 +238,7 @@ class _UserLoginState extends State<UserLogin> {
                         ],
                       ),
                       Padding(
-                        padding:  EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0),
                         child: Row(
                           children: [
                             Visibility(
@@ -261,7 +280,8 @@ class _UserLoginState extends State<UserLogin> {
                             _loginKey.currentState!.save();
                             if (_loginKey.currentState!.validate()) {
                               _loginManager.callSentOtpApi(
-                                  _loginKey.currentState!.value['mobile'].replaceAll(' ', '')
+                                  _loginKey.currentState!.value['mobile']
+                                      .replaceAll(' ', '')
                                       .toString(),
                                   context,
                                   termConditionChecked);
@@ -272,7 +292,9 @@ class _UserLoginState extends State<UserLogin> {
                         }
                       : () {
                           setState(() {
-                            alertTextShow = true;
+                            _loginKey.currentState!.save();
+                            _loginKey.currentState!.validate();
+                            if (charLength == 12) alertTextShow = true;
                           });
                         },
                   child: Obx(() => _loginManager.isLoading == false
@@ -280,12 +302,12 @@ class _UserLoginState extends State<UserLogin> {
                           width: MediaQuery.of(context).size.height * 0.9,
                           height: 48,
                           child: Padding(
-                            padding:  EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Request OTP',
+                                  'Request OTP'.tr,
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
@@ -294,7 +316,6 @@ class _UserLoginState extends State<UserLogin> {
                                 SizedBox(
                                   width: 4,
                                 ),
-
                               ],
                             ),
                           ),
@@ -307,7 +328,7 @@ class _UserLoginState extends State<UserLogin> {
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.white70.withOpacity(0.8),
-                                      offset:  Offset(
+                                      offset: Offset(
                                         -6.0,
                                         -6.0,
                                       ),
@@ -316,7 +337,7 @@ class _UserLoginState extends State<UserLogin> {
                                     BoxShadow(
                                       color:
                                           AppColors.darkerGrey.withOpacity(0.4),
-                                      offset:  Offset(6.0, 6.0),
+                                      offset: Offset(6.0, 6.0),
                                       blurRadius: 16.0,
                                     ),
                                   ],
@@ -329,7 +350,7 @@ class _UserLoginState extends State<UserLogin> {
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.white70.withOpacity(0.8),
-                                      offset:  Offset(
+                                      offset: Offset(
                                         -6.0,
                                         -6.0,
                                       ),
@@ -338,7 +359,7 @@ class _UserLoginState extends State<UserLogin> {
                                     BoxShadow(
                                       color:
                                           AppColors.darkerGrey.withOpacity(0.4),
-                                      offset:  Offset(6.0, 6.0),
+                                      offset: Offset(6.0, 6.0),
                                       blurRadius: 16.0,
                                     ),
                                   ],
@@ -347,12 +368,11 @@ class _UserLoginState extends State<UserLogin> {
                                       : AppColors.btnDisableColor,
                                   borderRadius: BorderRadius.circular(6.0),
                                 ))
-                      :
-                  Container(
+                      : Container(
                           width: MediaQuery.of(context).size.height * 0.9,
                           height: 48,
                           child: Padding(
-                            padding:  EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -384,7 +404,7 @@ class _UserLoginState extends State<UserLogin> {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.white.withOpacity(0.8),
-                                offset:  Offset(
+                                offset: Offset(
                                   -6.0,
                                   -6.0,
                                 ),
@@ -392,7 +412,7 @@ class _UserLoginState extends State<UserLogin> {
                               ),
                               BoxShadow(
                                 color: AppColors.darkerGrey.withOpacity(0.4),
-                                offset:  Offset(6.0, 6.0),
+                                offset: Offset(6.0, 6.0),
                                 blurRadius: 16.0,
                               ),
                             ],
@@ -410,7 +430,7 @@ class _UserLoginState extends State<UserLogin> {
             ),
           ),
           decoration: BoxDecoration(
-              borderRadius:  BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topRight: Radius.circular(44),
                 topLeft: Radius.circular(44),
               ),

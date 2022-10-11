@@ -55,9 +55,9 @@ class _SplashScreenState extends State<SplashScreen> {
         tag: 'logo_image',
         child:
         Image.asset(
-          "assets/images/india_one_logo.png",
-          width: 244,
-          height: 184,
+          "assets/images/splash_logo.png",
+          width: 288,
+          height: 240,
         ),
       ),
     );

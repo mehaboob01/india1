@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/local/shared_preference_keys.dart';
+import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
@@ -15,6 +17,8 @@ class OtpManager extends GetxController {
   var isLoading = false.obs;
   var resendOtpLoading = false.obs;
   var wrongOtp = false.obs;
+
+  SharedPreferences? prefs;
 
   callResendOtpApi(String phoneNumber, BuildContext context,
       bool? termConditionChecked) async {
@@ -31,7 +35,7 @@ class OtpManager extends GetxController {
 
       dynamic response = await http.post(
           Uri.parse(
-              "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/auth/send-otp"),
+              baseUrl+Apis.sendOtp),
           body: jsonEncode({
             "mobileNumber": phoneNumber,
             "agreedToToc": termConditionChecked
@@ -70,9 +74,9 @@ class OtpManager extends GetxController {
 
 
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+       prefs = await SharedPreferences.getInstance();
       //Return String
-      String? tokenKey = prefs.getString(SPKeys.TOKEN_KEY);
+      String? tokenKey = prefs!.getString(SPKeys.TOKEN_KEY);
       isLoading.value = true;
 
       Map<String, dynamic> verifyHeadersData = {};
@@ -80,8 +84,7 @@ class OtpManager extends GetxController {
       verifyHeadersData['x-digital-api-key'] = '1234';
 
       var response = await http.post(
-          Uri.parse(
-              "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/auth/verify-otp"),
+          Uri.parse(baseUrl+Apis.verifyOtp),
           body: jsonEncode(
               {"token": tokenKey, "otp": OtpNumber, "preferredLanguage": "kn"}),
           headers: {
@@ -95,12 +98,12 @@ class OtpManager extends GetxController {
       VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
 
       if (verifyOtpModel.status!.code == 2000) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(
+         prefs = await SharedPreferences.getInstance();
+        prefs!.setString(
             SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-        prefs.setString(
+        prefs!.setString(
             SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
-        prefs.setString(
+        prefs!.setString(
             SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
 
         Get.offAllNamed(MRouter.verifiedScreen);
@@ -108,15 +111,17 @@ class OtpManager extends GetxController {
         wrongOtp.value = true;
       } else {
         var snackBar = SnackBar(
-          content: Text("Something went wrong!"),
+          content: Text("Invalid otp"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     } catch (e) {
-      var snackBar = SnackBar(
-        content: Text("Something went wrong!"),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Flushbar(
+        title:  "Error",
+        message:  "Please try again..",
+        duration:  Duration(seconds: 3),
+      )..show(context);
+
       // showSnackBar("Something went wrong");
     } finally {
       isLoading.value = false;

@@ -51,7 +51,7 @@ class LoginManager extends GetxController {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => OtpScreen(phoneNumber)));
+                builder: (BuildContext context) => OtpScreen(phoneNumber,userSignInModelDto.data!.retryInSeconds)));
       } else {
         var snackBar = SnackBar(
           content: Text("Something went wrong!"),

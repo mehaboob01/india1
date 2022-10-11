@@ -64,10 +64,13 @@ class AppColors {
 
   static const Color greyBgColor = const Color.fromRGBO(223, 230, 237, 1.0);
 
-  static const Color unSelectedLangColor =
-  const Color.fromRGBO(228, 230, 231, 1.0);
-  static const Color selectedLangColor =
-  const Color.fromRGBO(24, 89, 173, 1.0);
+  static const Color unSelectedLangColor = const Color.fromRGBO(228, 230, 231, 1.0);
+  static const Color selectedLangColor = const Color.fromRGBO(24, 89, 173, 1.0);
+
+  static const Color selectedTextColor = const Color.fromRGBO(
+      255, 255, 255, 1.0);
+  static const Color unSelectedTextColor = const Color.fromRGBO(
+      8, 70, 155, 1.0);
   static const Color textLangColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   static const Color buttonColor = const Color.fromRGBO(101, 88, 245, 1.0);

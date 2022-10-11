@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/widgets/screen_bg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
+import '../../../core/data/local/shared_preference_keys.dart';
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
   String? phoneNumber;
+  int? retryInSeconds;
 
-  OtpScreen(this.phoneNumber);
+  OtpScreen(this.phoneNumber, this.retryInSeconds);
 
   @override
   State<OtpScreen> createState() => _OtpState();
@@ -59,6 +62,9 @@ class _OtpState extends State<OtpScreen> {
 
   @override
   void initState() {
+
+
+
     listenOtp();
     startTimer();
     //startTimeout();
@@ -212,18 +218,31 @@ class _OtpState extends State<OtpScreen> {
                             left: 12.0,
                             right: 12.0,
                           ),
-                          child: PinFieldAutoFill(
-                            currentCode: codeValue,
-                            onCodeChanged: (code) {
-                              setState(() {
-                                codeValue = code.toString();
-                              });
-                            },
-                            codeLength: 4,
-                            onCodeSubmitted: (val) {
-                              _otpManager.callVerifyOtpApi(
-                                  codeValue.toString(), context);
-                            },
+                          child:
+
+
+                          Column(
+                            children: [
+
+                              PinFieldAutoFill(
+                                currentCode: codeValue,
+                                onCodeChanged: (code) {
+                                  setState(() {
+                                    codeValue = code.toString();
+                                  });
+                                  if(codeValue!.length==4)
+                                    {
+                                      _otpManager.callVerifyOtpApi(
+                                          codeValue.toString(), context);
+                                    }
+                                },
+                                codeLength: 4,
+                                onCodeSubmitted: (val) {
+                                  _otpManager.callVerifyOtpApi(
+                                      codeValue.toString(), context);
+                                },
+                              ),
+                            ],
                           )),
                       SizedBox(height: 14),
                       Obx(

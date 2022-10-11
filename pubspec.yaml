@@ -38,6 +38,9 @@ dependencies:
   sms_autofill: ^2.2.0
   shared_preferences: ^2.0.15
   webviewx: ^0.2.1
+  another_flushbar: ^1.12.29
+  flutter_svg: ^1.1.5
+
 
 
 dev_dependencies:
