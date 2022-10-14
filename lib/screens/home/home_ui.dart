@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/theme_manager.dart';
+import '../../core/data/local/shared_preference_keys.dart';
 import '../home_start/home_main_io.dart';
 import '../insurances/insurances_main_io.dart';
 import '../loans/loans_main_io.dart';
@@ -25,49 +27,55 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedTabId = 0;
   Widget mainHomeWidget = Container();
 
+
+
   @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
-    Future.delayed(Duration.zero, () =>
+
+    SharedPreferences.getInstance().then((value) {
+      value.setBool(SPKeys.OTP_VERIFIED, true);
+    }).then((value) =>  Future.delayed(Duration.zero, () =>
 
         Alert(
-            buttons: [
+          buttons: [
+
+          ],
+          context: context,
+          title: "Welcome to India1 Cashback Program",
+          content: Column(
+            children: <Widget>[
+              SizedBox(height: 4,),
+              Image.asset(
+                "assets/images/rewards.gif",
+                width: 224,
+                height: 184,
+              ),
+              SizedBox(height: 4,),
+              Text(
+                "You just won",
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  color: AppColors.black,
+                  fontSize: Dimens.font_12sp,
+                ),
+              ),
+              SizedBox(height: 2,),
+              Text(
+                "10 points",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.black,
+                  fontSize: Dimens.font_18sp,
+                ),
+              ),
 
             ],
-            context: context,
-            title: "Welcome to India1 Cashback Program",
-            content: Column(
-              children: <Widget>[
-                SizedBox(height: 4,),
-                Image.asset(
-                  "assets/images/rewards.gif",
-                  width: 224,
-                  height: 184,
-                ),
-                SizedBox(height: 4,),
-                Text(
-                  "You just won",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    color: AppColors.black,
-                    fontSize: Dimens.font_12sp,
-                  ),
-                ),
-                SizedBox(height: 2,),
-                Text(
-                  "10 points",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.black,
-                    fontSize: Dimens.font_18sp,
-                  ),
-                ),
+          ),
+        ).show()));
 
-              ],
-            ),
-            ).show());
 
 
 

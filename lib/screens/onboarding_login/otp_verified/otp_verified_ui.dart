@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -9,10 +7,6 @@ import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
 class VerifiedScreen extends StatefulWidget {
-
-
-
-
   @override
   State<VerifiedScreen> createState() => _VerifiedScreenState();
 }
@@ -21,20 +15,11 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   void initState() {
     super.initState();
-    // requestCameraPermission();
-
     Timer(Duration(seconds: 2), () => launchLoginWidget());
   }
 
-  // launch login screen
   Future<void> launchLoginWidget() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // //Return String
-    // String? stringValue = prefs.getString('CurrentUser');
-    // print("Current User");
-    // print(stringValue);
-
-     Get.offAllNamed(MRouter.homeScreen);
+    Get.offAllNamed(MRouter.homeScreen);
   }
 
   @override
@@ -86,6 +71,4 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
       color: AppColors.white,
     );
   }
-
-
 }

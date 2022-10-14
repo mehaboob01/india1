@@ -1,52 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
-class ThemeManager {
-  static final appTheme = ThemeData(
-    primaryColor: AppColors.primary,
-    accentColor: AppColors.secondary,
-    scaffoldBackgroundColor: AppColors.backgroundLight,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    dividerColor: AppColors.surfaceLight,
-    dividerTheme: DividerThemeData(thickness: 1),
-  );
 
-  static final appThemeDark = ThemeData(
-    primaryColor: AppColors.primary,
-    accentColor: AppColors.secondary,
-    scaffoldBackgroundColor: AppColors.backgroundDark,
-    brightness: Brightness.dark,
-    dividerColor: AppColors.surfaceDark,
-    dividerTheme: DividerThemeData(thickness: 1),
-  );
-
-  static final upwardsBoxShadow = BoxShadow(
-      color: Color.fromARGB(25, 21, 28, 42),
-      spreadRadius: 2,
-      blurRadius: 4,
-      offset: Offset(0, -2));
-
-  static Brightness get currentSystemBrightness =>
-      SchedulerBinding.instance!.window.platformBrightness;
-
-  static setStatusBarAndNavigationBarColors(ThemeMode themeMode) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness:
-      themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
-      systemNavigationBarIconBrightness:
-      themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
-      systemNavigationBarColor: themeMode == ThemeMode.light
-          ? AppColors.backgroundLight
-          : AppColors.backgroundDark,
-      systemNavigationBarDividerColor: Colors.transparent,
-    ));
-  }
-}
 
 class AppColors {
-  static const primary = Color(0xFFF9E42C);
+  static const primary = Color(0xFF08469B);
   static const bgScreenColor = Color(0xFFB3B9C9);
   static const btnColor = Color(0xFF2b6dd4);
   static const btnDisableColor = Color(0xffbcc3ce);
@@ -251,36 +211,14 @@ class Dimens {
 
 class AppTextThemes {
   static TextTheme textThemeLight = TextTheme(
-    headline1: h1,
-    headline2: h2,
-    headline3: h3,
-    headline4: h4,
-    headline5: h5,
-    headline6: h6,
-    bodyText1: bodyText1,
-    bodyText2: bodyText2,
+
     button: button,
     subtitle1: subtitle1,
-    subtitle2: subtitle2,
-    caption: caption,
-    overline: overline,
+
+
   );
 
-  static TextTheme textThemeDark = TextTheme(
-    headline1: h1Dark,
-    headline2: h2Dark,
-    headline3: h3Dark,
-    headline4: h4Dark,
-    headline5: h5Dark,
-    headline6: h6Dark,
-    bodyText1: bodyTextDark,
-    bodyText2: bodyText2Dark,
-    button: buttonDark,
-    subtitle1: subtitle1Dark,
-    subtitle2: subtitle2Dark,
-    caption: captionDark,
-    overline: overlineDark,
-  );
+
 
   static final h1 = TextStyle(
       fontSize: 48, fontWeight: FontWeight.w600, color: AppColors.black);
@@ -302,7 +240,9 @@ class AppTextThemes {
   static final bodyText2 = TextStyle(
       fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.black);
   static final button = TextStyle(
-      fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.white);
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.white);
   static final subtitle2 = TextStyle(
       fontSize: 20, fontWeight: FontWeight.w500, color: AppColors.black);
   static final caption = TextStyle(
@@ -331,31 +271,36 @@ class AppTextThemes {
   static final overlineDark = overline.copyWith(color: AppColors.white);
 }
 
-extension ThemeExtras on ThemeData {
-  Color get appBarColor => this.brightness == Brightness.light
-      ? AppColors.primary
-      : AppColors.surfaceDark;
+// extension ThemeExtras on ThemeData {
+//   Color get appBarColor => this.brightness == Brightness.light
+//       ? AppColors.primary
+//       : AppColors.surfaceDark;
+//
+//   Color get navBarColor => this.brightness == Brightness.light
+//       ? AppColors.surfaceLight
+//       : AppColors.surfaceDark;
+//
+//   Color get textFieldBackgroundColor => this.brightness == Brightness.light
+//       ? AppColors.surfaceLight
+//       : AppColors.surfaceDark;
+//
+//   Color get iconColor => this.brightness == Brightness.light
+//       ? AppColors.iconColorDark
+//       : AppColors.iconColorLight;
+//
+//   TextStyle get labelStyle =>
+//       AppTextThemes.bodyText2.copyWith(color: AppColors.secondary);
+// }
 
-  Color get navBarColor => this.brightness == Brightness.light
-      ? AppColors.surfaceLight
-      : AppColors.surfaceDark;
+class Strings{
 
-  Color get textFieldBackgroundColor => this.brightness == Brightness.light
-      ? AppColors.surfaceLight
-      : AppColors.surfaceDark;
 
-  Color get iconColor => this.brightness == Brightness.light
-      ? AppColors.iconColorDark
-      : AppColors.iconColorLight;
-
-  TextStyle get labelStyle =>
-      AppTextThemes.bodyText2.copyWith(color: AppColors.secondary);
-}
-
-class Toasts{
+  //Toast messages
 
   static const CHECK_INTERNET = "Please Check Internet Connection.";
   static const API_ERROR = "Something went wrong. please try after sometime";
+
+
 
 
 }
