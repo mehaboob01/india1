@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
+
+import '../../../../constant/other_constants_io.dart';
 import '../../../../widgets/text_io.dart';
 
-
 class HomeEachBottomTabIO extends StatefulWidget {
-  IconData icondata;
+  String path;
   String title;
   var onpressed;
   bool selected;
   double size;
+  String dotImagePath;
 
   HomeEachBottomTabIO(
-      this.icondata, this.title, this.onpressed, this.selected, this.size,
+    this.path ,this.dotImagePath,this.title, this.onpressed, this.selected, this.size,
       {Key? key})
       : super(key: key);
 
@@ -28,37 +31,50 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
     widthIs = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: widget.onpressed,
-      child: Container(
-        padding: const EdgeInsets.all(9),
-        decoration: BoxDecoration(
-            color: widget.selected
-                ? const Color.fromRGBO(102, 90, 165, 1.0)
-                : AppColors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(18))),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
-              child: Icon(
-                widget.icondata,
-                color: widget.selected
-                    ? AppColors.white
-                    : AppColors.btnColor,
+      child: Stack(
+        children: [
+          widget.selected
+              ? Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.white,
+            ),
+            height: bottomNavigationCircleRadius,
+            width: bottomNavigationCircleRadius,
+          )
+              : Container(),
+          Container(
+            decoration: widget.selected
+                ? BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
+                  )
+                : BoxDecoration(),
+            height: bottomMargin + 36,
+            width: widthIs / 5.4,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 2,),
+                    SvgPicture.asset(widget.dotImagePath,color: widget.selected == true ? AppColors.primary:null,),
+                    SizedBox(height: 4,),
+
+                    SvgPicture.asset(widget.path,color: widget.selected == true ? AppColors.primary:null,),
+                    TextIO(
+                      widget.title,
+                      color: widget.selected
+                          ? AppColors.primary
+                          : AppColors.passiveTabColor,
+                      size: widget.size,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
               ),
             ),
-            widget.selected
-                ? TextIO(
-                    widget.title,
-                    color: AppColors.white,
-                    size: widget.size,
-                    fontWeight: FontWeight.bold,
-                  )
-                : Container(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

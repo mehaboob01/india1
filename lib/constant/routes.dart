@@ -1,14 +1,15 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 
-import '../screens/home/home_ui.dart';
 
+
+import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
+import '../screens/loyality_points/loyality_points_ui.dart';
+import '../screens/onboarding_login/finger_print/finger_print_io.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/select_language/language_selection_io.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
-
 
 class MRouter {
   static const String splashRoute = 'SplashWidget';
@@ -16,6 +17,11 @@ class MRouter {
   static const String userLogin = 'UserLogin';
   static const String verifiedScreen = 'VerifiedScreen';
   static const String languageSelectionIO = 'LanguageSelectionIO';
+  static const String fingerPrintIO = 'FingerPrintIO';
+  static const String loyaltyPoints = 'LoyaltyPoints';
+
+
+
 
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -24,18 +30,22 @@ class MRouter {
         return CupertinoPageRoute(builder: (_) => SplashScreen());
 
       case homeScreen:
-        return CupertinoPageRoute(builder: (_) => HomeScreen());
+        return CupertinoPageRoute(builder: (_) => BottomTabsMainIO());
 
       case userLogin:
         return CupertinoPageRoute(builder: (_) => UserLogin());
 
-
-
       case verifiedScreen:
         return CupertinoPageRoute(builder: (_) => VerifiedScreen());
 
-      case languageSelectionIO:
-        return CupertinoPageRoute(builder: (_) => LanguageSelectionIO());
+      // case languageSelectionIO:
+      //   return CupertinoPageRoute(builder: (_) => LanguageSelectionIO());
+
+      case fingerPrintIO:
+        return CupertinoPageRoute(builder: (_) => FingerPrintIO());
+
+      case loyaltyPoints:
+        return CupertinoPageRoute(builder: (_) => LoyaltyPoints());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

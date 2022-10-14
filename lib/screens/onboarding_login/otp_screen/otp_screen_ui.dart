@@ -1,21 +1,23 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/widgets/screen_bg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
-import '../../../core/data/local/shared_preference_keys.dart';
+
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
   String? phoneNumber;
   int? retryInSeconds;
+  //String signature = "{{ app signature }}";
+
+
 
   OtpScreen(this.phoneNumber, this.retryInSeconds);
 
@@ -23,7 +25,7 @@ class OtpScreen extends StatefulWidget {
   State<OtpScreen> createState() => _OtpState();
 }
 
-class _OtpState extends State<OtpScreen> {
+class _OtpState extends State<OtpScreen> with CodeAutoFill{
   final interval =  Duration(seconds: 1);
   OtpManager _otpManager = Get.put(OtpManager());
 
@@ -35,16 +37,12 @@ class _OtpState extends State<OtpScreen> {
   void startTimer()
   {
     timer = Timer.periodic(Duration(seconds: 1), (_) {
-
-    setState(() {
+      setState(() {
       currentSeconds--;
       if(currentSeconds == 0) timer!.cancel();
     });
     });
   }
-
-
-
 
   final GlobalKey<FormBuilderState> _userOtp = GlobalKey<FormBuilderState>();
   String get timerText => '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
@@ -61,17 +59,25 @@ class _OtpState extends State<OtpScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    SmsAutoFill().unregisterListener();
+    super.dispose();
+  }
+
+  @override
   void initState() {
-
-
-
     listenOtp();
     startTimer();
-    //startTimeout();
     super.initState();
   }
 
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -82,7 +88,7 @@ class _OtpState extends State<OtpScreen> {
                 height: MediaQuery.of(context).size.height,
                 color: AppColors.white,
                 child: Stack(
-                  children: [BgScreen(), buildOtpCard()],
+                  children: [LoginBgScreen('assets/images/login_bg.png'), buildOtpCard()],
                 ),
               ),
             ),
@@ -97,7 +103,7 @@ class _OtpState extends State<OtpScreen> {
       alignment: FractionalOffset.bottomCenter,
       child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 524,
+          height: MediaQuery.of(context).size.height*0.6,
           child: Padding(
             padding:  EdgeInsets.all(24.0),
             child: Column(
@@ -171,7 +177,7 @@ class _OtpState extends State<OtpScreen> {
                                               ))
                                         ],
                                       ):Text(
-                                        "Enter OTP",
+                                        "enter_otp".tr,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.black,
@@ -184,7 +190,7 @@ class _OtpState extends State<OtpScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            "We sent it to the number",
+                                            "otp_message".tr,
                                             style: TextStyle(
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.black,
@@ -219,11 +225,8 @@ class _OtpState extends State<OtpScreen> {
                             right: 12.0,
                           ),
                           child:
-
-
                           Column(
                             children: [
-
                               PinFieldAutoFill(
                                 currentCode: codeValue,
                                 onCodeChanged: (code) {
@@ -232,15 +235,17 @@ class _OtpState extends State<OtpScreen> {
                                   });
                                   if(codeValue!.length==4)
                                     {
-                                      _otpManager.callVerifyOtpApi(
-                                          codeValue.toString(), context);
+                                      print("verify api's");
+
+                                      log('Hitting verify apis');
+                                      _otpManager.callVerifyOtpApi(codeValue.toString(), context);
                                     }
                                 },
                                 codeLength: 4,
-                                onCodeSubmitted: (val) {
-                                  _otpManager.callVerifyOtpApi(
-                                      codeValue.toString(), context);
-                                },
+                                // onCodeSubmitted: (val) {
+                                //   _otpManager.callVerifyOtpApi(
+                                //       codeValue.toString(), context);
+                                // },
                               ),
                             ],
                           )),
@@ -255,7 +260,7 @@ class _OtpState extends State<OtpScreen> {
                             visible:
                                 _otpManager.wrongOtp == true ? true : false,
                             child: Text(
-                              "Invalid OTP entered. Please enter valid OTP",
+                              "invalid_otp".tr,
                               overflow: TextOverflow.visible,
                               maxLines: 1,
                               style: TextStyle(
@@ -283,7 +288,7 @@ class _OtpState extends State<OtpScreen> {
                                 Get.offAllNamed(MRouter.userLogin);
                               },
                               child: Text(
-                                "Edit Number",
+                                "edit_number".tr,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.black,
@@ -297,15 +302,21 @@ class _OtpState extends State<OtpScreen> {
                                   ? GestureDetector(
                                       onTap: () {
                                         if(currentSeconds == 0)
-                                        _otpManager.callResendOtpApi(
-                                            widget.phoneNumber.toString(),
-                                            context,
-                                            true);
+
+                                        {
+                                          listenOtp();
+
+                                          _otpManager.callResendOtpApi(
+                                              widget.phoneNumber.toString(),
+                                              context,
+                                              true);
+                                        }
+
                                       },
                                       child: Row(
                                         children: [
                                           Text(
-                                            'Resend OTP',
+                                            'resend_otp'.tr,
                                             style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.facebookBlue,
@@ -316,7 +327,7 @@ class _OtpState extends State<OtpScreen> {
                                           Visibility(
                                             visible: currentSeconds == 0 ? false : true,
                                             child: Text(
-                                              'in',
+                                              'in'.tr,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: AppColors.facebookBlue,
@@ -324,24 +335,13 @@ class _OtpState extends State<OtpScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 6,),
+                                          SizedBox(width: 4,),
                                           Visibility(
                                             visible: currentSeconds == 0 ? false : true,
                                             child: SizedBox(
                                               width: 22,
                                               height: 22,
-                                              child: Stack(
-
-
-                                                children:[
-                                                  CircularProgressIndicator(
-                                                    valueColor: AlwaysStoppedAnimation(Colors.green),
-                                                    backgroundColor: AppColors.facebookBlue,
-                                                    strokeWidth: 2,
-                                                    value: currentSeconds/timerMaxSeconds,
-                                                  ),
-
-
+                                              child:
                                                   Center(
                                                     child: Padding(
                                                       padding:  EdgeInsets.all(2),
@@ -353,8 +353,8 @@ class _OtpState extends State<OtpScreen> {
                                                       ),
                                                 ),
                                                     ),
-                                                  ),]
-                                              ),
+                                                  ),
+
                                             ),
                                           ),
                                         ],
@@ -363,7 +363,7 @@ class _OtpState extends State<OtpScreen> {
                                   : Row(
                                       children: [
                                         Text(
-                                          'Sending',
+                                          'sending_otp'.tr,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.facebookBlue,
@@ -402,17 +402,23 @@ class _OtpState extends State<OtpScreen> {
                 color: AppColors.white,
                 width: 0.5,
               ),
-              // radius of 10
+
               color: AppColors.white // green as background color
               )),
     );
   }
 
-  void listenOtp() async {
-    // await SmsAutoFill().unregisterListener();
-    // listenForCode();
+  void  listenOtp() async {
+    await SmsAutoFill().unregisterListener();
+    listenForCode();
     await SmsAutoFill().listenForCode;
+
     print("OTP listen Called");
+  }
+
+  @override
+  void codeUpdated() {
+    // TODO: implement codeUpdated
   }
 
 

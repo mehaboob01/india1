@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
-import 'package:india_one/widgets/text_io.dart';
+
 
 class PaymentsMainIO extends StatefulWidget {
   const PaymentsMainIO({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _PaymentsMainIOState extends State<PaymentsMainIO> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           overflow: TextOverflow.visible,
-          color:  AppColors.white,
+          color:  AppColors.primary,
           fontSize: Dimens.font_16sp,
         ),
       ),),

@@ -1,35 +1,53 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-
+import 'package:flutter_svg/svg.dart';
 import '../constant/theme_manager.dart';
 
 
 
 class BgScreen extends StatelessWidget {
-  const BgScreen({Key? key}) : super(key: key);
+
+  String? imageLocation;
+   BgScreen(this.imageLocation, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: AppColors.white,
+        child: Image.asset(
+          imageLocation!,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+        ),
+      );
+    }
+
+}
+
+class LoginBgScreen extends StatelessWidget {
+
+  String? imageLocation;
+  LoginBgScreen(this.imageLocation, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
     return Container(
-      color: AppColors.facebookBlue,
-      constraints: BoxConstraints.expand(),
-      child: Column(
-        children: [
-          SizedBox(height: 32),
-          // Center(
-          //   child: Hero(
-          //     tag: 'logo_image',
-          //     child: Image.asset(
-          //       "assets/images/india_one_logo.png",
-          //       width: 244,
-          //       height: 184,
-          //     ),
-          //   ),
-          // ),
-        ],
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height*0.5,
+      color: AppColors.white,
+      child: Image.asset(
+        imageLocation!,
+        fit: BoxFit.fill,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
       ),
     );
   }
+
 }
 

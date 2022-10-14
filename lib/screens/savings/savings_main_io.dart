@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/widgets/text_io.dart';
+
 
 class SavingsMainIO extends StatefulWidget {
   const SavingsMainIO({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _SavingsMainIOState extends State<SavingsMainIO> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           overflow: TextOverflow.visible,
-          color:  AppColors.white,
+          color:  AppColors.primary,
           fontSize: Dimens.font_16sp,
         ),
       ),),
