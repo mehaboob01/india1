@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,11 +6,9 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/carasoul_slider.dart';
-
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
@@ -64,12 +61,14 @@ class _HomeMainIOState extends State<HomeMainIO> {
                     SizedBox(
                       height: 2,
                     ),
-                    Text(
-                      "10 points",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.black,
-                        fontSize: Dimens.font_18sp,
+                    Obx(
+                      ()=> Text(
+                        _homeManager.loyalityPoints.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.black,
+                          fontSize: Dimens.font_18sp,
+                        ),
                       ),
                     ),
                   ],
@@ -91,8 +90,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-
-
       onWillPop: () async {
         Get.defaultDialog(
           cancelTextColor: AppColors.white,
@@ -380,7 +377,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       ),
                       Obx(
                         () => Text(
-                          _homeManager.pointsEarned.toString(),
+                          _homeManager.pointsRedeemed.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: 18,
                               color: Colors.white,
@@ -492,13 +489,15 @@ class _HomeMainIOState extends State<HomeMainIO> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '2x/3x',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: 18,
-                    color: Colors.black,
-                    letterSpacing: 0.5,
-                    fontWeight: FontWeight.bold),
+              Obx(
+                ()=> Text(
+                  _homeManager.atmRewards[0].toString()+"x"+"/"+_homeManager.atmRewards[1].toString()+"x",
+                  style: AppStyle.shortHeading.copyWith(
+                      fontSize: 18,
+                      color: Colors.black,
+                      letterSpacing: 0.5,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               Text(
                 ' rewards at ATMs',

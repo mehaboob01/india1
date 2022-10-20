@@ -15,7 +15,6 @@ import 'package:http/http.dart' as http;
 import 'home_model.dart';
 
 class HomeManager extends GetxController {
-
   final size = Get.size;
   final carouselCtrl = CarouselController();
   final index = 0.obs;
@@ -24,19 +23,21 @@ class HomeManager extends GetxController {
   var pointsEarned = '0'.obs;
   var pointsRedeemed = '0'.obs;
   var redeemablePoints = '0'.obs;
+  var atmRewards = [].obs;
+  var loyalityPoints = '0'.obs;
+
+
 
   callHomeApi(BuildContext context) async {
-
-
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-
-
+    String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
+   
 
     try {
       isLoading.value = true;
-      var response = await http.get(Uri.parse(baseUrl + Apis.dashboard+customerId.toString()),
+      var response = await http.get(
+          Uri.parse(baseUrl + Apis.dashboard + customerId.toString()),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -45,22 +46,14 @@ class HomeManager extends GetxController {
       var jsonData = jsonDecode(response.body);
       HomeModel homeModel = HomeModel.fromJson(jsonData);
 
-
       if (homeModel.status!.code == 2000) {
-
-
-
-       pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned.toString();
-       pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed.toString();
-       redeemablePoints.value = homeModel.data!.pointsSummary!.redeemablePoints.toString();
-
-       //print(homeModel.data!.atmRewards!.rewardsMultipliers.toString());
-
-
-
-
-
-
+        pointsEarned.value =
+            homeModel.data!.pointsSummary!.pointsEarned.toString();
+        pointsRedeemed.value =
+            homeModel.data!.pointsSummary!.pointsRedeemed.toString();
+        redeemablePoints.value =
+            homeModel.data!.pointsSummary!.redeemablePoints.toString();
+        atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers!;
       } else {
         var snackBar = SnackBar(
           content: Text("Something went wrong!"),
