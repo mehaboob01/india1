@@ -15,9 +15,6 @@ class LoginManager extends GetxController {
 
   callSentOtpApi(String phoneNumber, BuildContext context,
       bool? termConditionChecked, String appSignatureId) async {
-
-
-
     try {
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
@@ -37,11 +34,9 @@ class LoginManager extends GetxController {
 
       if (userSignInModelDto.status!.code == 2000) {
         getOtp.value = true;
-
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(SPKeys.TOKEN_KEY, userSignInModelDto.data!.token.toString());
         prefs.setInt(SPKeys.RETRY_IN_SECONDS, userSignInModelDto.data!.retryInSeconds!.toInt());
-
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

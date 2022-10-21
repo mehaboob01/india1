@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
-
 import '../../../../constant/other_constants_io.dart';
 import '../../../../widgets/text_io.dart';
 
@@ -14,8 +13,8 @@ class HomeEachBottomTabIO extends StatefulWidget {
   double size;
   String dotImagePath;
 
-  HomeEachBottomTabIO(
-    this.path ,this.dotImagePath,this.title, this.onpressed, this.selected, this.size,
+  HomeEachBottomTabIO(this.path, this.dotImagePath, this.title, this.onpressed,
+      this.selected, this.size,
       {Key? key})
       : super(key: key);
 
@@ -35,13 +34,13 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
         children: [
           widget.selected
               ? Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.white,
-            ),
-            height: bottomNavigationCircleRadius,
-            width: bottomNavigationCircleRadius,
-          )
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
+                  ),
+                  height: bottomNavigationCircleRadius,
+                  width: bottomNavigationCircleRadius,
+                )
               : Container(),
           Container(
             decoration: widget.selected
@@ -56,19 +55,33 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 2,),
-                    SvgPicture.asset(widget.dotImagePath,color: widget.selected == true ? AppColors.primary:null,),
-                    SizedBox(height: 4,),
-
-                    SvgPicture.asset(widget.path,color: widget.selected == true ? AppColors.primary:null,),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    SvgPicture.asset(
+                      'assets/images/dot_img.svg',
+                      color: widget.selected == true ? AppColors.primary : null,
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    SvgPicture.asset(
+                      widget.path,
+                      color: widget.selected == true ? AppColors.primary : null,
+                    ),
                     TextIO(
                       widget.title,
                       color: widget.selected
                           ? AppColors.primary
                           : AppColors.passiveTabColor,
-                      size: widget.size,
-                      fontWeight: FontWeight.bold,
+                      size: widget.selected == true?Dimens.font_14sp :Dimens.font_12sp,
+                      fontWeight: widget.selected == true ?FontWeight.w400 :FontWeight.w500,
                     ),
+                    SvgPicture.asset(
+                      widget.dotImagePath,
+                      color: widget.selected == true ? AppColors.primary : null,
+                    ),
+                    // SvgPicture.asset('assets/images/underline.svg'),
                   ],
                 ),
               ),

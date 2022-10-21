@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/widgets/screen_bg.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
-
 
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
   String? phoneNumber;
   int? retryInSeconds;
-  //String signature = "{{ app signature }}";
-
 
 
   OtpScreen(this.phoneNumber, this.retryInSeconds);
@@ -25,27 +23,31 @@ class OtpScreen extends StatefulWidget {
   State<OtpScreen> createState() => _OtpState();
 }
 
-class _OtpState extends State<OtpScreen> with CodeAutoFill{
-  final interval =  Duration(seconds: 1);
+class _OtpState extends State<OtpScreen> with CodeAutoFill {
+
+  var _otpController = TextEditingController();
+
+  final interval = Duration(seconds: 1);
   OtpManager _otpManager = Get.put(OtpManager());
 
   String? codeValue = '';
-  static const timerMaxSeconds = 28;
-  int currentSeconds = timerMaxSeconds;
+  //static const timerMaxSeconds = 28;
+  int currentSeconds = 0;
   Timer? timer;
 
-  void startTimer()
-  {
+  void startTimer() {
+    currentSeconds = widget.retryInSeconds!;
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
-      currentSeconds--;
-      if(currentSeconds == 0) timer!.cancel();
-    });
+        currentSeconds--;
+        if (currentSeconds == 0) timer!.cancel();
+      });
     });
   }
 
   final GlobalKey<FormBuilderState> _userOtp = GlobalKey<FormBuilderState>();
-  String get timerText => '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
+  String get timerText =>
+      '${((widget.retryInSeconds! - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((widget.retryInSeconds! - currentSeconds) % 60).toString().padLeft(2, '0')}';
 
   startTimeout([int? milliseconds]) {
     var duration = interval;
@@ -53,7 +55,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
       setState(() {
         print(timer.tick);
         currentSeconds = timer.tick;
-        if (timer.tick >= timerMaxSeconds) timer.cancel();
+        if (timer.tick >= currentSeconds) timer.cancel();
       });
     });
   }
@@ -73,7 +75,6 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
   }
 
   Widget build(BuildContext context) {
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -88,7 +89,10 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                 height: MediaQuery.of(context).size.height,
                 color: AppColors.white,
                 child: Stack(
-                  children: [LoginBgScreen('assets/images/login_bg.png'), buildOtpCard()],
+                  children: [
+                    LoginBgScreen('assets/images/login_bg.png'),
+                    buildOtpCard()
+                  ],
                 ),
               ),
             ),
@@ -103,9 +107,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
       alignment: FractionalOffset.bottomCenter,
       child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*0.6,
+          height: MediaQuery.of(context).size.height * 0.6,
           child: Padding(
-            padding:  EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               children: [
                 FormBuilder(
@@ -134,81 +138,97 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                 ),
                               ),
                               SizedBox(
-                                height: 24,
+                                height: 16,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: 12.0,
                                   right: 12.0,
                                 ),
-                                child: Obx(()=>
-                                   Column(
+                                child: Obx(
+                                  () => Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      _otpManager.resendOtpLoading == true?
-
-                                      Text(
-                                        "Resending OTP",
+                                      _otpManager.resendOtpLoading == true
+                                          ? Text(
+                                              "Resending OTP",
+                                        maxLines: 2,
                                         style: TextStyle(
+                                          fontFamily: 'Graphik',
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.black,
-                                          fontSize: Dimens.font_20sp,
+                                          fontSize: 26,
                                         ),
-                                      ):
-                                      _otpManager.isLoading == true?
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Verifying..",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.black,
-                                              fontSize: Dimens.font_20sp,
                                             )
-                                          ),
-                                          SizedBox(width: 4,),
-                                          Container(
-                                              height: 16,
-                                              width: 16,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2.0,
-                                                color: AppColors.facebookBlue,
-                                              ))
-                                        ],
-                                      ):Text(
-                                        "enter_otp".tr,
+                                          : _otpManager.isLoading == true
+                                              ? Row(
+                                                  children: [
+                                                    Text(
+                                                      "Verifying..",
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                        fontFamily: 'Graphik',
+                                                        fontWeight: FontWeight.w600,
+                                                        color: AppColors.black,
+                                                        fontSize: 26,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Container(
+                                                        height: 16,
+                                                        width: 16,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          strokeWidth: 2.0,
+                                                          color: AppColors
+                                                              .facebookBlue,
+                                                        ))
+                                                  ],
+                                                )
+                                              : Text(
+                                                  "enter_otp".tr,
+                                        maxLines: 2,
                                         style: TextStyle(
+                                          fontFamily: 'Graphik',
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.black,
-                                          fontSize: Dimens.font_20sp,
+                                          fontSize: 26,
                                         ),
-                                      ),
+                                                ),
                                       SizedBox(
                                         height: 8,
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "otp_message".tr,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.black,
-                                              fontSize: Dimens.font_14sp,
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "otp_message".tr,
+                                              style: TextStyle(
+                                                fontFamily: 'Graphik',
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.black,
+                                                fontSize: Dimens.font_16sp,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Text(
-                                            widget.phoneNumber.toString(),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.facebookBlue,
-                                              fontSize: Dimens.font_14sp,
+                                            SizedBox(
+                                              width: 6,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              widget.phoneNumber.toString(),
+                                              style: TextStyle(
+                                                fontFamily: 'Graphik',
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.black,
+                                                fontSize: Dimens.font_16sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -224,34 +244,52 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                             left: 12.0,
                             right: 12.0,
                           ),
-                          child:
-                          Column(
+                          child: Column(
                             children: [
                               PinFieldAutoFill(
+
+
+                                decoration: UnderlineDecoration(
+                                  lineHeight: 1,
+                                  hintText: '••••',
+                                  hintTextStyle: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: AppColors.dotsColor,
+                                      fontSize: Dimens.font_24sp),
+                                  textStyle: TextStyle(
+                                      fontFamily: 'Graphik',
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.black,
+                                      fontSize: Dimens.font_24sp),
+                                  colorBuilder: FixedColorBuilder(Colors.grey),
+                                ),
                                 currentCode: codeValue,
+                                cursor: Cursor(
+                                  width: 2,
+                                  height: 40,
+                                  color: AppColors.primary,
+                                  radius: Radius.circular(1),
+                                  enabled: true,
+                                ),
                                 onCodeChanged: (code) {
                                   setState(() {
                                     codeValue = code.toString();
                                   });
-                                  if(codeValue!.length==4)
-                                    {
-                                      print("verify api's");
-
-                                      log('Hitting verify apis');
-                                      _otpManager.callVerifyOtpApi(codeValue.toString(), context);
-                                    }
+                                  if (codeValue!.length == 4) {
+                                    FocusScope.of(context).unfocus();
+                                    _otpManager.callVerifyOtpApi(
+                                        codeValue.toString(), context);
+                                  }
                                 },
+
                                 codeLength: 4,
-                                // onCodeSubmitted: (val) {
-                                //   _otpManager.callVerifyOtpApi(
-                                //       codeValue.toString(), context);
-                                // },
+                                controller: _otpController,
                               ),
                             ],
                           )),
                       SizedBox(height: 14),
                       Obx(
-                        ()=> Padding(
+                        () => Padding(
                           padding: EdgeInsets.only(
                             left: 12.0,
                             right: 12.0,
@@ -264,10 +302,11 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                               overflow: TextOverflow.visible,
                               maxLines: 1,
                               style: TextStyle(
+                                fontFamily: 'Graphik',
                                 overflow: TextOverflow.visible,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.googleRed,
-                                fontSize: Dimens.font_12sp,
+                                fontSize: Dimens.font_14sp,
                               ),
                             ),
                           ),
@@ -282,6 +321,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                           right: 12.0,
                         ),
                         child: Row(
+
+
                           children: [
                             GestureDetector(
                               onTap: () {
@@ -290,9 +331,10 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                               child: Text(
                                 "edit_number".tr,
                                 style: TextStyle(
+                                  fontFamily: 'Graphik',
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.black,
-                                  fontSize: Dimens.font_14sp,
+                                  color: AppColors.cardBg1,
+                                  fontSize: Dimens.font_16sp,
                                 ),
                               ),
                             ),
@@ -301,60 +343,82 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                               () => _otpManager.resendOtpLoading == false
                                   ? GestureDetector(
                                       onTap: () {
-                                        if(currentSeconds == 0)
-
-                                        {
+                                        if (currentSeconds == 0) {
+                                          FocusScope.of(context).unfocus();
                                           listenOtp();
 
-                                          _otpManager.callResendOtpApi(
-                                              widget.phoneNumber.toString(),
-                                              context,
-                                              true);
+                                          _otpManager
+                                              .callResendOtpApi(
+                                                  widget.phoneNumber.toString(),
+                                                  context,
+                                                  true)
+                                              .then((value) {
+                                            print("value ==> $value");
+                                            if (value == true) {
+                                              _otpController.clear();
+                                              currentSeconds = 28;
+                                              startTimer();
+                                            } else {}
+                                          });
                                         }
-
                                       },
                                       child: Row(
+
                                         children: [
                                           Text(
                                             'resend_otp'.tr,
                                             style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.facebookBlue,
-                                              fontSize: Dimens.font_14sp,
+                                              fontFamily: 'Graphik',
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.greyText,
+                                              fontSize: Dimens.font_16sp,
                                             ),
                                           ),
-                                          SizedBox(width: 4,),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
                                           Visibility(
-                                            visible: currentSeconds == 0 ? false : true,
+                                            visible: currentSeconds == 0
+                                                ? false
+                                                : true,
                                             child: Text(
                                               'in'.tr,
                                               style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                color: AppColors.facebookBlue,
-                                                fontSize: Dimens.font_14sp,
+                                                fontFamily: 'Graphik',
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.greyText,
+                                                fontSize: Dimens.font_16sp,
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 4,),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
                                           Visibility(
-                                            visible: currentSeconds == 0 ? false : true,
+                                            visible: currentSeconds == 0
+                                                ? false
+                                                : true,
                                             child: SizedBox(
-                                              width: 22,
+                                              width: 58,
                                               height: 22,
-                                              child:
-                                                  Center(
-                                                    child: Padding(
-                                                      padding:  EdgeInsets.all(2),
-                                                      child: Text(currentSeconds.toString(),
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w700,
-                                                        color: AppColors.facebookBlue,
-                                                        fontSize: Dimens.font_14sp,
-                                                      ),
-                                                ),
+                                              child: Center(
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(2),
+                                                  child: Text(
+
+                                                    "00:"+currentSeconds.toString(),
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Graphik',
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: AppColors.greyText,
+                                                      fontSize:
+                                                          Dimens.font_16sp,
                                                     ),
                                                   ),
-
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -365,9 +429,10 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                         Text(
                                           'sending_otp'.tr,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.facebookBlue,
-                                            fontSize: Dimens.font_14sp,
+                                            fontFamily: 'Graphik',
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.greyText,
+                                            fontSize: Dimens.font_16sp,
                                           ),
                                         ),
                                         SizedBox(
@@ -394,7 +459,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
             ),
           ),
           decoration: BoxDecoration(
-              borderRadius:  BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topRight: Radius.circular(44),
                 topLeft: Radius.circular(44),
               ),
@@ -402,13 +467,12 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                 color: AppColors.white,
                 width: 0.5,
               ),
-
               color: AppColors.white // green as background color
               )),
     );
   }
 
-  void  listenOtp() async {
+  void listenOtp() async {
     await SmsAutoFill().unregisterListener();
     listenForCode();
     await SmsAutoFill().listenForCode;
@@ -420,6 +484,4 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
   void codeUpdated() {
     // TODO: implement codeUpdated
   }
-
-
 }

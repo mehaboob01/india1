@@ -3,26 +3,42 @@ import 'package:flutter/services.dart';
 
 
 class AppColors {
-  static const primary = Color(0xFF08469B);
-  static const bgScreenColor = Color(0xFFB3B9C9);
-  static const btnColor = Color(0xFF2b6dd4);
-  static const btnDisableColor = Color(0xffbcc3ce);
 
+
+  static const Color buttonColor = Color(0xff666666);
+  static const Color butngradient1 = Color(0xff004280);
+  static const Color butngradient2 = Color(0xff00C376);
+  static const Color backGroundgradient1 = Color(0xff004280);
+  static const Color backGroundgradient2 = Color(0xff357CBE);
+  static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
   static const Color textColorshade = Color(0xffEEEEEE);
   static const Color yellowgradient1 = Color(0xffffee48);
   static const Color yellowgradient2 = Color(0xffffad04);
   static const Color cardGradientblue1 = Color(0xffEBF8FF);
   static const Color cardGradientcommon2 = Color(0xffF8F9FB);
   static const Color cardGradientred1 = Color(0xffFFF3EE);
+  static const Color cardGradientred2 = Color(0xffFFFFEF);
+  static const Color cardGradientskyBlue = Color(0xffF3EDFF);
+  static const Color pointsColor = Color(0xffF2642C);
+  // linear gradient orange
+  static const Color orangeGradient1 = Color(0xffFFF46B);
+  static const Color orangeGradient2 = Color(0xffF2642C);
+  static const primary = Color(0xFF08469B);
+  static const greyText = Color(0xFF555555);
+  static const btnColor = Color(0xFF2b6dd4);
+  static const btnDisableColor = Color(0xffbcc3ce);
+  static const dotsColor = Color(0xffD9D9D9);
+
+
+
 
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
-  static Color passiveTabColor = const Color.fromRGBO(75, 92, 107, 1.0);
+  static Color passiveTabColor = Color(0xff666666);
 
   // cards gradient colors
   static Color cardBg1 = const Color.fromRGBO(0, 66, 128, 1);
   static Color cardBg2 = const Color.fromRGBO(53, 124, 190, 1);
-  static const Color backGroundgradient2 = Color(0xff357CBE);
-  static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
+
 
 
 
@@ -32,7 +48,7 @@ class AppColors {
   static const Color whiteColor = Colors.white;
   static const Color greenColor = Colors.green;
   static const Color redColor = Colors.red;
-  static const Color buttonColor = const Color.fromRGBO(101, 88, 245, 1.0);
+
   static const Color textColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   static const Color homeGradient1Color = const Color.fromRGBO(0, 66, 128, 1.0);
@@ -43,15 +59,17 @@ class AppColors {
 
 
 
-  static const Color greyBgColor = const Color.fromRGBO(223, 230, 237, 1.0);
+  static const Color greyBgColor = Color(0xFFEDEDED);
 
-  static const Color unSelectedLangColor = const Color.fromRGBO(228, 230, 231, 1.0);
-  static const Color selectedLangColor = const Color.fromRGBO(24, 89, 173, 1.0);
+
+  static const Color unSelectedLangColor = const Color.fromRGBO( 255, 255, 255, 1.0);
+  static const Color selectedLangColor = Color(0xFF004280);
+
 
   static const Color selectedTextColor = const Color.fromRGBO(
       255, 255, 255, 1.0);
   static const Color unSelectedTextColor = const Color.fromRGBO(
-      8, 70, 155, 1.0);
+      1, 3, 7, 1.0);
   static const Color textLangColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   //static const Color buttonColor = const Color.fromRGBO(101, 88, 245, 1.0);
@@ -113,9 +131,7 @@ class AppColors {
 
   // cash back screen
 
-  static const Color butngradient1 = Color(0xff004280);
-  static const Color butngradient2 = Color(0xff00C376);
-  static const Color backGroundgradient1 = Color(0xff004280);
+
   //static const Color backGroundgradient2 = Color(0xff357CBE);
  // static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
 
@@ -123,7 +139,23 @@ class AppColors {
 
 class AppStyle {
   static const shortHeading = TextStyle(
-    fontSize: 20,
+      fontWeight: FontWeight.w500,
+      color: AppColors.white,
+      fontSize: Dimens.font_16sp,
+      fontFamily: 'Graphik'
+  );
+  // static const shortHeading2 = TextStyle(
+  //     fontWeight: FontWeight.w400,
+  //     color: AppColors.white,
+  //     fontSize: Dimens.font_14sp,
+  //     fontFamily: 'Graphik'
+  // );
+
+  static const languageTextStyle = TextStyle(
+      fontWeight: FontWeight.w600,
+      color: AppColors.black,
+      fontSize: Dimens.font_20sp,
+      fontFamily: 'Graphik'
   );
 }
 
@@ -247,6 +279,9 @@ class Dimens {
 }
 
 class AppTextThemes {
+
+
+
   static TextTheme textThemeLight = TextTheme(
 
     button: button,
@@ -260,8 +295,9 @@ class AppTextThemes {
 
 
   static final button = TextStyle(
-      fontSize: 16.0,
+      fontSize: Dimens.font_16sp,
       fontWeight: FontWeight.w600,
+      fontFamily: 'Graphik',
       color: Colors.white);
   static final appbar = TextStyle(
       fontSize: 16.0,
@@ -323,26 +359,24 @@ AppBar transParentAppbar(titleOfAppbar){
 
 class AppImages {
   static const String assetPng = 'assets/png/';
-  static const String assetSvg = 'assets/images/';
-
   static const String bottomNavHome = '${assetPng}home.png';
+  static const String celebrationBg = '${assetPng}celebrationbg.png';
   static const String bottomNavLoan = '${assetPng}hand.png';
   static const String bottomNavPayment = '${assetPng}wallet.png';
   static const String bottomNavInsurance = '${assetPng}umbrella.png';
   static const String bottomNavWallet = '${assetPng}piggyBank.png';
   static const String homebg = '${assetPng}homebg.png';
   static const String coins = '${assetPng}coins.png';
-  static const String user_profile = '${assetSvg}user_profile.svg';
-  static const String notify_icon = '${assetSvg}notify_icon.svg';
-
-
-  static const String recharge = '${assetSvg}mobile_icon.svg';
-  static const String cashback = '${assetSvg}wallet_icon.svg';
-  static const String bgflower = '${assetPng}flower.png';
+  static const String recharge = '${assetPng}recharge.png';
+  static const String cashback = '${assetPng}cashback.png';
+  static const String bgflower = '${assetPng}2x/flower.png';
   static const String nearestAtmBg = '${assetPng}nearestAtmbg.png';
   static const String atmBg2 = '${assetPng}atmbg2.png';
   static const String rightArrow = '${assetPng}right_arrow.png';
   static const String cardImageshadow = '${assetPng}shadow.png';
+  static const String notificationBell = '${assetPng}notification_bell.png';
+  static const String profileImage = '${assetPng}profile_image.png';
+
   // loans
   static const String handRupee = '${assetPng}loans/hand_rupee.png';
   static const String bike = '${assetPng}loans/bike.png';
@@ -365,6 +399,28 @@ class AppImages {
   static const String fd = '${assetPng}savings/FD.png';
   static const String rd = '${assetPng}savings/RD.png';
   static const String digiSilver = '${assetPng}savings/Digi_Silver.png';
+  // reward card
+  static const String rewardWon = '${assetPng}rewardCard/Orange BG.png';
+  static const String rewardUsed = '${assetPng}rewardCard/Grey BG.png';
+  // referralBonus Image
+  static const String referralBonusImage = '${assetPng}referral_bonus.png';
+  // recharge Image
+  static const String rechargeImage = '${assetPng}recharge_image.png';
+  // loan Image
+  static const String loanImage = '${assetPng}loan_img.png';
+  // used card Image
+  static const String usedCardImage = '${assetPng}used_card_image.png';
+  //loyalty flower
+  static const String flower2 = '${assetPng}flower2.png';
+
+  static const String assetSvg = 'assets/images/';
+
+
+  static const String user_profile = '${assetSvg}user_profile.svg';
+  static const String notify_icon = '${assetSvg}notify_icon.svg';
+
+
+
 }
 class Strings{
 
@@ -377,5 +433,8 @@ class Strings{
 
 
 
+}
+class AppFonts{
+  static const appFont = 'Graphik';
 }
 

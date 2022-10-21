@@ -5,10 +5,11 @@ import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart
 
 
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
-import '../screens/loyality_points/loyality_points_ui.dart';
+
+import '../screens/loyality_points/loyalty_page.dart';
 import '../screens/onboarding_login/finger_print/finger_print_io.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
-import '../screens/onboarding_login/select_language/language_selection_io.dart';
+
 import '../screens/onboarding_login/splash/splash_ui.dart';
 
 class MRouter {
@@ -19,6 +20,7 @@ class MRouter {
   static const String languageSelectionIO = 'LanguageSelectionIO';
   static const String fingerPrintIO = 'FingerPrintIO';
   static const String loyaltyPoints = 'LoyaltyPoints';
+
 
 
 
@@ -45,7 +47,7 @@ class MRouter {
         return CupertinoPageRoute(builder: (_) => FingerPrintIO());
 
       case loyaltyPoints:
-        return CupertinoPageRoute(builder: (_) => LoyaltyPoints());
+        return CupertinoPageRoute(builder: (_) => LoyaltyScreen());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));
