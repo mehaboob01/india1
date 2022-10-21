@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
@@ -26,31 +25,46 @@ class _EachLanguageIOState extends State<EachLanguageIO> {
       child: Padding(
         padding: const EdgeInsets.all(9),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          // borderRadius: BorderRadius.all(Radius.circular(16)),
           child: Container(
             height: 68,
             width: 164,
-            color: widget.color,
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                widget.textColor == AppColors.white ?
-                Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.white,
-                ):Icon(
-                  Icons.circle,
-                  color: Colors.white,
-                ),
-               SizedBox(width: 4,),
-                TextIO(
-                  widget.text,
-                  color: widget.textColor,
-                ),
-              ],
-            )),
+           // color: widget.color,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  widget.textColor == AppColors.white
+                      ? Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.white,
+                        )
+                      : Icon(
+                          Icons.circle,
+                          color: AppColors.greyBgColor,
+                        ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  Center(
+                    child: TextIO(
+                      widget.text,
+                      color: widget.textColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  border: Border.all(
+                    color: AppColors.black26Color,
+                    width: 0.5,
+                  ),
+                  // radius of 10
+                  color: widget.color // green as background color
+              )
           ),
         ),
       ),

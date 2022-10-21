@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 
 class AppColors {
   static const primary = Color(0xFF08469B);
-  static const bgScreenColor = Color(0xFFB3B9C9);
+  static const greyText = Color(0xFF555555);
   static const btnColor = Color(0xFF2b6dd4);
   static const btnDisableColor = Color(0xffbcc3ce);
+  static const dotsColor = Color(0xffD9D9D9);
+
 
   static const Color textColorshade = Color(0xffEEEEEE);
   static const Color yellowgradient1 = Color(0xffffee48);
@@ -16,7 +18,7 @@ class AppColors {
   static const Color cardGradientred1 = Color(0xffFFF3EE);
 
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
-  static Color passiveTabColor = const Color.fromRGBO(75, 92, 107, 1.0);
+  static Color passiveTabColor = Color(0xff666666);
 
   // cards gradient colors
   static Color cardBg1 = const Color.fromRGBO(0, 66, 128, 1);
@@ -43,10 +45,12 @@ class AppColors {
 
 
 
-  static const Color greyBgColor = const Color.fromRGBO(223, 230, 237, 1.0);
+  static const Color greyBgColor = Color(0xFFEDEDED);
 
-  static const Color unSelectedLangColor = const Color.fromRGBO(228, 230, 231, 1.0);
-  static const Color selectedLangColor = const Color.fromRGBO(24, 89, 173, 1.0);
+
+  static const Color unSelectedLangColor = const Color.fromRGBO( 255, 255, 255, 1.0);
+  static const Color selectedLangColor = Color(0xFF004280);
+
 
   static const Color selectedTextColor = const Color.fromRGBO(
       255, 255, 255, 1.0);
@@ -123,7 +127,7 @@ class AppColors {
 
 class AppStyle {
   static const shortHeading = TextStyle(
-    fontSize: 20,
+    fontSize: 16,
   );
 }
 

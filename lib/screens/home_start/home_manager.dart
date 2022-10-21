@@ -19,11 +19,11 @@ class HomeManager extends GetxController {
   final carouselCtrl = CarouselController();
   final index = 0.obs;
   var isLoading = false.obs;
-
+  final datadelete = 'to mushc'.obs;
   var pointsEarned = '0'.obs;
   var pointsRedeemed = '0'.obs;
   var redeemablePoints = '0'.obs;
-  var atmRewards = [].obs;
+  var atmRewards = '0'.obs;
   var loyalityPoints = '0'.obs;
 
 
@@ -32,7 +32,10 @@ class HomeManager extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
     String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
-   
+    loyalityPoints.value = points.toString();
+
+
+
 
     try {
       isLoading.value = true;
@@ -47,13 +50,16 @@ class HomeManager extends GetxController {
       HomeModel homeModel = HomeModel.fromJson(jsonData);
 
       if (homeModel.status!.code == 2000) {
-        pointsEarned.value =
-            homeModel.data!.pointsSummary!.pointsEarned.toString();
-        pointsRedeemed.value =
-            homeModel.data!.pointsSummary!.pointsRedeemed.toString();
-        redeemablePoints.value =
-            homeModel.data!.pointsSummary!.redeemablePoints.toString();
-        atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers!;
+        pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned.toString();
+        pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed.toString();
+        redeemablePoints.value = homeModel.data!.pointsSummary!.redeemablePoints.toString();
+       // atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0].toString() ;
+
+        atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0].toString();
+
+
+
+
       } else {
         var snackBar = SnackBar(
           content: Text("Something went wrong!"),

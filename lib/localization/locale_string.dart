@@ -5,20 +5,20 @@ class LocaleString extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           'hello': 'Hello World',
-          'mobile_number': 'Mobile Number',
+          'mobile_number': 'Mobile number',
           'term_condition': 'Terms & Conditions',
-          'i_accept': 'i accept',
+          'i_accept': 'I accept',
           'request_otp': 'Request OTP',
-          'empty_error_msg': 'Please enter a 10 digit mobile number',
+          'empty_error_msg': 'Please enter a valid 10 digit mobile number',
           'checkbox_select_error' : 'Agree to our Terms & Conditions to proceed further',
           'sending_otp' : 'Sending OTP',
           'proceed_btn' : 'Proceed',
           'enter_otp': 'Enter OTP',
-          'otp_message': 'We sent it to the number',
-          'edit_number':'Edit Number',
+          'otp_message': 'We have sent a OTP to',
+          'edit_number':'Edit number',
           'resend_otp':'Resend OTP',
           'invalid_otp' : 'Invalid OTP entered. Please enter valid OTP',
-          'select_prefer_lan' : 'Select prefer language',
+          'select_prefer_lan' : 'Select preferred language',
           'loyalty_points' : 'Loyalty points',
           'welcome' : 'Welcome!',
           'cashback_india1_summary' : 'Cashback by India1 summary',
@@ -124,12 +124,6 @@ class LocaleString extends Translations {
           'loans': 'कर्ज',
           'insurance': 'विमा',
           'savings' : 'बचत'
-
-
-
-
-
-
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -256,13 +250,6 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings' : 'Savings'
-
-
-
-
-
-
-
         },
 
 

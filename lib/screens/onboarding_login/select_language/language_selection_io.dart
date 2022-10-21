@@ -9,10 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 
 class LanguageSelectionIO extends StatefulWidget {
-
-
-   String fromScreen;
-   LanguageSelectionIO(this.fromScreen);
+  String fromScreen;
+  LanguageSelectionIO(this.fromScreen);
 
   @override
   State<LanguageSelectionIO> createState() => _LanguageSelectionIOState();
@@ -28,26 +26,16 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   }
 
   void getSelectedLan() async {
-    print('changing');
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE) as int;
-    print("current lan$selectedLan");
-    print("selectedLanguage befoire : $selectedLanguage");
-
-    selectedLanguage =selectedLan;
-    print("selectedLanguage after $selectedLanguage");
-
-    setState(() {
-
-        });
-
+    int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
+    selectedLanguage = selectedLan!;
+    setState(() {});
   }
 
-
-    final List locale = [
+  final List locale = [
     {'name': 'ENGLISH', 'locale': Locale('en', 'US')},
-    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
     {'name': 'ಕನ್ನಡ', 'locale': Locale('ka', 'IN')},
+    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
     {'name': 'मराठी', 'locale': Locale('ma', 'IN')},
     {'name': 'తెలుగు', 'locale': Locale('te', 'IN')},
     {'name': 'தமிழ்', 'locale': Locale('ta', 'IN')},
@@ -67,7 +55,6 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-
         BgScreen('assets/images/select_lan_bg.png'),
         SingleChildScrollView(child: buildContentOfScreen()),
       ],
@@ -76,13 +63,15 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
 
   Widget buildContentOfScreen() {
     return Column(
+
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.9,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
                 SizedBox(
                   height: 44,
@@ -95,12 +84,15 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "assets/images/india_one_logo.png",
-                        width: 120,
-                        height: 64,
+                      Container(
+                        height: 84,
+                        child: Image.asset(
+                          "assets/images/india_one_logo.png",
+                        ),
                       ),
-                      SizedBox(height: 4,),
+                      SizedBox(
+                        height: 4,
+                      ),
                       Center(
                         child: Text(
                           'select_prefer_lan'.tr,
@@ -109,6 +101,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             color: AppColors.black,
                             fontSize: Dimens.font_20sp,
                           ),
+                          textAlign:TextAlign.center,
+
                         ),
                       ),
                     ],
@@ -118,17 +112,15 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                   height: 44,
                 ),
                 InkWell(
-
-
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.9,
-
                     child: Wrap(
+
                       children: [
                         EachLanguageIO("English", () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 0);
-
                           updateLanguage(locale[0]['locale'], 0);
                         },
                             selectedLanguage == 0
@@ -137,9 +129,11 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 0
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("हिन्दी", () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("ಕನ್ನಡ", () async {
+                          SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 1);
+
                           updateLanguage(locale[1]['locale'], 1);
                         },
                             selectedLanguage == 1
@@ -148,10 +142,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 1
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("ಕನ್ನಡ", () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("हिन्दी", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 2);
-
                           updateLanguage(locale[2]['locale'], 2);
                         },
                             selectedLanguage == 2
@@ -160,9 +154,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 2
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("मराठी", () async{
 
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("मराठी", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 3);
 
                           updateLanguage(locale[3]['locale'], 3);
@@ -173,8 +168,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 3
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("తెలుగు", () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("తెలుగు", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 4);
                           updateLanguage(locale[4]['locale'], 4);
                         },
@@ -184,8 +180,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 4
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("தமிழ்", () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("தமிழ்", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 5);
                           updateLanguage(locale[5]['locale'], 5);
                         },
@@ -196,7 +193,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
                         EachLanguageIO("മലയാളം", () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 6);
                           updateLanguage(locale[6]['locale'], 6);
                         },
@@ -206,8 +204,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 6
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("বাংলো", () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("বাংলো", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 7);
                           updateLanguage(locale[7]['locale'], 7);
                         },
@@ -217,8 +216,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                             selectedLanguage == 7
                                 ? AppColors.selectedTextColor
                                 : AppColors.unSelectedTextColor),
-                        EachLanguageIO("ଓଡିଆ", () async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        EachLanguageIO("ଓଡିଆ", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setInt(SPKeys.SELECTED_LANGUAGE, 8);
                           updateLanguage(locale[8]['locale'], 8);
                         },
@@ -237,7 +237,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
           ),
         ),
         Visibility(
-          visible: widget.fromScreen == "home"?false:true,
+          visible: widget.fromScreen == "home" ? false : true,
           child: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -246,7 +246,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
               );
             },
             child: Padding(
-              padding:  EdgeInsets.only(left: 14.0, right: 14.0),
+              padding: EdgeInsets.only(left: 14.0, right: 14.0),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: 48,
@@ -261,13 +261,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                     Spacer(),
                     SizedBox(
                       height: 48,
-
-
                       child: Image.asset(
-
                         "assets/images/btn_img.png",
                         fit: BoxFit.fill,
-
                       ),
                     ),
                   ],
@@ -305,8 +301,6 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
     );
   }
 
-  
-
   updateLanguage(Locale locale, int selectdLang) {
     Get.back();
     Get.updateLocale(locale);
@@ -315,6 +309,4 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
       selectedLanguage;
     });
   }
-
-  }
-
+}

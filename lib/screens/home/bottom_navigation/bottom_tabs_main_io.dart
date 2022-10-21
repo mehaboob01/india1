@@ -53,7 +53,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      HomeEachBottomTabIO('assets/images/homeInactive.svg','assets/images/dot_img.svg', "${'home'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/homeInactive.svg','assets/images/underline.svg', "${'home'.tr}", () {
                         selectedTabId = 0;
                         mainHomeWidget = HomeMainIO();
                         setState(() {
@@ -61,24 +61,24 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                           mainHomeWidget;
                         });
                       }, selectedTabId == 0, 12),
-                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/dot_img.svg', "${'payments'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/underline.svg', "${'loans'.tr}", () {
                         selectedTabId = 1;
-                        mainHomeWidget = PaymentsMainIO();
+                        mainHomeWidget = LoansMainIO();
                         setState(() {
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 1, 12),
-                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/dot_img.svg', "${'loans'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/underline.svg', "${'payments'.tr}", () {
                         selectedTabId = 2;
-                        mainHomeWidget = LoansMainIO();
+                        mainHomeWidget = PaymentsMainIO();
                         setState(() {
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 2, 12),
                       HomeEachBottomTabIO(
-                          'assets/images/insuranceInactive.svg','assets/images/dot_img.svg', "${'insurance'.tr}", () {
+                          'assets/images/insuranceInactive.svg','assets/images/underline.svg', "${'insurance'.tr}", () {
                         selectedTabId = 3;
                         mainHomeWidget = InsurancesMainIO();
                         setState(() {
@@ -86,7 +86,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                           mainHomeWidget;
                         });
                       }, selectedTabId == 3, 12),
-                      HomeEachBottomTabIO('assets/images/savingsInactive.svg','assets/images/dot_img.svg', "${'savings'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/savingsInactive.svg','assets/images/underline.svg', "${'savings'.tr}", () {
                         selectedTabId = 4;
                         mainHomeWidget = SavingsMainIO();
                         setState(() {

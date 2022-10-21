@@ -40,7 +40,6 @@ dependencies:
   another_flushbar: ^1.12.29
   flutter_svg: ^1.1.5
   google_fonts: ^3.0.1
-  flutter_local_auth_invisible: ^2.2.0
   intl: ^0.17.0
   flutter_libphonenumber: ^1.2.4
   flutter_image_slideshow: ^0.1.4
@@ -49,6 +48,8 @@ dependencies:
   permission_handler: ^10.1.0
   flutter_staggered_grid_view: ^0.6.2
   carousel_slider: ^4.1.1
+  flutter_local_auth_invisible: ^2.2.0
+
 
 
 dev_dependencies:
