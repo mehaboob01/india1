@@ -18,6 +18,7 @@ class OtpManager extends GetxController {
   var isLoading = false.obs;
   var resendOtpLoading = false.obs;
   var wrongOtp = false.obs;
+  var loyaltyPoints = '0'.obs;
 
   SharedPreferences? prefs;
 
@@ -118,7 +119,15 @@ class OtpManager extends GetxController {
         prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
         prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
         prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+
+
+        print("loyalty points");
+        print(verifyOtpModel.data!.loyaltyPointsGained.toString());
+        loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
+         prefs!.setString(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained.toString());
+
          prefs!.setBool(SPKeys.LOGGED_IN, true);
+
 
          Get.offAllNamed(MRouter.homeScreen);
       } else if (verifyOtpModel.status!.code == 4403) {

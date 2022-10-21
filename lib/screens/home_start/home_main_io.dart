@@ -1,18 +1,27 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/widgets/text_io.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/carasoul_slider.dart';
+import '../../widgets/divider_io.dart';
+import '../../widgets/home_blue_gradient_io.dart';
+import '../../widgets/home_each_tile_io.dart';
+import '../../widgets/icon_io.dart';
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
 import '../Pages/savings.dart';
+import '../onboarding_login/otp_screen/otp_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import 'home_manager.dart';
 
@@ -24,20 +33,27 @@ class HomeMainIO extends StatefulWidget {
 }
 
 class _HomeMainIOState extends State<HomeMainIO> {
+
+  OtpManager _otpManager = Get.put(OtpManager());
   void showFirstTimePoints() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTimeLogin = prefs.getBool(SPKeys.FIRST_TIME_LOGIN_POINTS);
-    if (firstTimeLogin == true) {
-    } else {
-      SharedPreferences.getInstance().then((value) {
-        value.setBool(SPKeys.FIRST_TIME_LOGIN_POINTS, true);
-      }).then((value) => Future.delayed(
-          Duration.zero,
-          () => Alert(
-                buttons: [],
-                context: context,
-                title: "Welcome to India1 Cashback Program",
-                content: Column(
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool? firstTimeLogin = prefs.getBool(SPKeys.FIRST_TIME_LOGIN_POINTS);
+
+    if(_homeManager.loyalityPoints.toString() == "0")
+      {
+
+
+      }
+    else
+      {
+        Future.delayed(
+            Duration(milliseconds: 300),
+                () => Alert(
+              buttons: [],
+              context: context,
+              title: "Welcome to India1 Cashback Program",
+              content: Obx(
+                    () => Column(
                   children: <Widget>[
                     SizedBox(
                       height: 4,
@@ -61,26 +77,28 @@ class _HomeMainIOState extends State<HomeMainIO> {
                     SizedBox(
                       height: 2,
                     ),
-                    Obx(
-                      ()=> Text(
-                        _homeManager.loyalityPoints.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.black,
-                          fontSize: Dimens.font_18sp,
-                        ),
+                    Text(
+                      _homeManager.loyalityPoints.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.black,
+                        fontSize: Dimens.font_18sp,
                       ),
                     ),
                   ],
                 ),
-              ).show()));
+              ),
+            ).show());
+
+      }
+
     }
-  }
+
 
   @override
   void initState() {
-
     super.initState();
+
     _homeManager.callHomeApi(context);
     showFirstTimePoints();
   }
@@ -100,9 +118,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
           radius: 8,
           backgroundColor: AppColors.cardBg1,
           titleStyle:
-          TextStyle(color: Colors.white, fontSize: Dimens.font_14sp),
+              TextStyle(color: Colors.white, fontSize: Dimens.font_14sp),
           middleTextStyle:
-          TextStyle(color: Colors.white, fontSize: Dimens.font_12sp),
+              TextStyle(color: Colors.white, fontSize: Dimens.font_12sp),
         );
         return false;
       },
@@ -121,7 +139,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       bottomRight: Radius.circular(5.0.wp)),
                   image: DecorationImage(
                       image: AssetImage(AppImages.homebg), fit: BoxFit.fill),
-
                 ),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +181,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       SizedBox(height: 2.0.hp),
                       Text('cashback_india1_summary'.tr,
                           style: AppStyle.shortHeading.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.bold)),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
                       SizedBox(height: 2.0.hp),
                       // balance card --------------------------
                       Row(
@@ -318,6 +336,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       SizedBox(
                         child: Image.asset(AppImages.coins),
                       ),
+                      SizedBox(
+                        width: 6,
+                      ),
                       Obx(
                         () => Text(
                           _homeManager.redeemablePoints.toString(),
@@ -466,103 +487,16 @@ class _HomeMainIOState extends State<HomeMainIO> {
 // find nearest Atm -------------------------------
   Widget nearestAtm({VoidCallback? onPressed}) {
     return Container(
-      height: 20.0.wp,
+      height: 28.0.wp,
       margin: EdgeInsets.all(2.0.hp),
       padding: EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 2.0.wp),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2.0.wp),
-          image: const DecorationImage(
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.circular(
+            2.0.wp,
+          ),
+          image: DecorationImage(
               image: AssetImage(AppImages.nearestAtmBg), fit: BoxFit.fill)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Find the nearest India1 ATM',
-            style: AppStyle.shortHeading.copyWith(
-                fontSize: 14.0.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: 0.5),
-          ),
-          SizedBox(height: 1.0.hp),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(
-                ()=> Text(
-                  _homeManager.atmRewards[0].toString()+"x"+"/"+_homeManager.atmRewards[1].toString()+"x",
-                  style: AppStyle.shortHeading.copyWith(
-                      fontSize: 18,
-                      color: Colors.black,
-                      letterSpacing: 0.5,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Text(
-                ' rewards at ATMs',
-                style: AppStyle.shortHeading
-                    .copyWith(fontSize: 15, color: Colors.black),
-              ),
-              SizedBox(width: 6.0.wp),
-              Flexible(
-                child: GestureDetector(
-                  onTap: onPressed,
-                  child: Container(
-                    height: 4.0.hp,
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              AppColors.yellowgradient1,
-                              AppColors.yellowgradient2
-                            ]),
-                        borderRadius: BorderRadius.circular(2.0.wp)),
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Locate ATM',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 10.0.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.butngradient1,
-                                letterSpacing: 0.5),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Image.asset(
-                                AppImages.bgflower,
-                                fit: BoxFit.fill,
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Get it on India1 -------------------------------
-  Widget india1Carasoul({VoidCallback? onPressed}) {
-    return Container(
-      height: 20.0.wp,
-      margin: EdgeInsets.all(2.0.hp),
-      padding: EdgeInsets.symmetric(horizontal: 2.0.hp, vertical: 1.0.hp),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2.0.wp),
-          image: const DecorationImage(
-              image: AssetImage(AppImages.atmBg2), fit: BoxFit.fill)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -592,14 +526,14 @@ class _HomeMainIOState extends State<HomeMainIO> {
                 style: AppStyle.shortHeading
                     .copyWith(fontSize: 15, color: Colors.black),
               ),
-              SizedBox(width: 2.0.wp),
+              SizedBox(width: 6.0.wp),
               Flexible(
                 child: GestureDetector(
                   onTap: onPressed,
                   child: Container(
                     height: 4.0.hp,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
@@ -640,9 +574,96 @@ class _HomeMainIOState extends State<HomeMainIO> {
       ),
     );
   }
+
+  // // Get it on India1 -------------------------------
+  // Widget india1Carasoul({VoidCallback? onPressed}) {
+  //   return Container(
+  //     height: 20.0.wp,
+  //     margin: EdgeInsets.all(2.0.hp),
+  //     padding: EdgeInsets.symmetric(horizontal: 2.0.hp, vertical: 1.0.hp),
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(2.0.wp),
+  //         image:  DecorationImage(
+  //             image: AssetImage(AppImages.atmBg2), fit: BoxFit.fill)),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           'Find the nearest India1 ATM',
+  //           style: AppStyle.shortHeading.copyWith(
+  //               fontSize: 14.0.sp,
+  //               fontWeight: FontWeight.bold,
+  //               color: Colors.black,
+  //               letterSpacing: 0.5),
+  //         ),
+  //         SizedBox(height: 1.0.hp),
+  //         Row(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Text(
+  //               '2x/3x',
+  //               style: AppStyle.shortHeading.copyWith(
+  //                   fontSize: 18,
+  //                   color: Colors.black,
+  //                   letterSpacing: 0.5,
+  //                   fontWeight: FontWeight.bold),
+  //             ),
+  //             Text(
+  //               ' rewards at ATMs',
+  //               style: AppStyle.shortHeading
+  //                   .copyWith(fontSize: 15, color: Colors.black),
+  //             ),
+  //             SizedBox(width: 2.0.wp),
+  //             Flexible(
+  //               child: GestureDetector(
+  //                 onTap: onPressed,
+  //                 child: Container(
+  //                   height: 4.0.hp,
+  //                   decoration: BoxDecoration(
+  //                       gradient:  LinearGradient(
+  //                           begin: Alignment.topLeft,
+  //                           end: Alignment.bottomRight,
+  //                           colors: [
+  //                             AppColors.yellowgradient1,
+  //                             AppColors.yellowgradient2
+  //                           ]),
+  //                       borderRadius: BorderRadius.circular(2.0.wp)),
+  //                   child: Stack(
+  //                     children: [
+  //                       Align(
+  //                         alignment: Alignment.center,
+  //                         child: Text(
+  //                           'Locate ATM',
+  //                           style: AppStyle.shortHeading.copyWith(
+  //                               fontSize: 10.0.sp,
+  //                               fontWeight: FontWeight.bold,
+  //                               color: AppColors.butngradient1,
+  //                               letterSpacing: 0.5),
+  //                         ),
+  //                       ),
+  //                       Align(
+  //                           alignment: Alignment.centerRight,
+  //                           child: Opacity(
+  //                             opacity: 0.3,
+  //                             child: Image.asset(
+  //                               AppImages.bgflower,
+  //                               fit: BoxFit.fill,
+  //                             ),
+  //                           ))
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget confirmBtn() {
     return ElevatedButton(
-
         onPressed: () {
           if (Platform.isAndroid) {
             SystemNavigator.pop();
@@ -653,8 +674,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
         child: Text("Yes"));
   }
 
-
-
   Widget cancelBtn() {
     return ElevatedButton(
         onPressed: () {
@@ -662,5 +681,4 @@ class _HomeMainIOState extends State<HomeMainIO> {
         },
         child: Text("No"));
   }
-
 }

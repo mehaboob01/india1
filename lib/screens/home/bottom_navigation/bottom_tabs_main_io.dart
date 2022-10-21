@@ -61,17 +61,17 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                           mainHomeWidget;
                         });
                       }, selectedTabId == 0, 12),
-                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/dot_img.svg', "${'payments'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/dot_img.svg', "${'loans'.tr}", () {
                         selectedTabId = 1;
-                        mainHomeWidget = PaymentsMainIO();
+                        mainHomeWidget = LoansMainIO();
                         setState(() {
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 1, 12),
-                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/dot_img.svg', "${'loans'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/dot_img.svg', "${'payments'.tr}", () {
                         selectedTabId = 2;
-                        mainHomeWidget = LoansMainIO();
+                        mainHomeWidget = PaymentsMainIO();
                         setState(() {
                           selectedTabId;
                           mainHomeWidget;

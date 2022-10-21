@@ -7,6 +7,8 @@ class AppColors {
   static const bgScreenColor = Color(0xFFB3B9C9);
   static const btnColor = Color(0xFF2b6dd4);
   static const btnDisableColor = Color(0xffbcc3ce);
+  static const dotsColor = Color(0xffD9D9D9);
+
 
   static const Color textColorshade = Color(0xffEEEEEE);
   static const Color yellowgradient1 = Color(0xffffee48);
@@ -123,7 +125,7 @@ class AppColors {
 
 class AppStyle {
   static const shortHeading = TextStyle(
-    fontSize: 20,
+    fontSize: 16,
   );
 }
 

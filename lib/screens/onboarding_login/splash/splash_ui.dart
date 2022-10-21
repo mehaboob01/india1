@@ -40,11 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   updateLanguage(Locale locale, int selectdLang) {
-   // Get.back();
+    // Get.back();
     Get.updateLocale(locale);
     // selectedLanguage = selectdLang;
     setState(() {
-     // selectedLanguage;
+      // selectedLanguage;
     });
   }
 
@@ -56,11 +56,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     if(loggedIn == true)
-      {
-        int selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE) as int;
-        updateLanguage(locale[selectedLan]['locale'], selectedLan);
-        Get.offAllNamed(MRouter.homeScreen);
-      }
+    {
+      int selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE) as int;
+      updateLanguage(locale[selectedLan]['locale'], selectedLan);
+      Get.offAllNamed(MRouter.homeScreen);
+    }
     else{
       Navigator.pushReplacement(
           context,
