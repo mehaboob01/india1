@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "348701615394",
+    "project_id": "india1-623d6",
+    "storage_bucket": "india1-623d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348701615394:android:f76f3da477966e0233317b",
+        "android_client_info": {
+          "package_name": "com.example.india_one"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348701615394-c6r1c5s5hikskvdallpvg60ls3etrprs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1Btmmb-OyPvFikpm9XE_Xor2ko8NdDjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348701615394-c6r1c5s5hikskvdallpvg60ls3etrprs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

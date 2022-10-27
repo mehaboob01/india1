@@ -5,20 +5,33 @@ class LocaleString extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           'hello': 'Hello World',
-          'mobile_number': 'Mobile Number',
+          'mobile_number': 'Mobile number',
           'term_condition': 'Terms & Conditions',
-          'i_accept': 'i accept',
+          'i_accept': 'I accept',
           'request_otp': 'Request OTP',
-          'empty_error_msg': 'Please enter a 10 digit mobile number',
+          'empty_error_msg': 'Please enter a valid 10 digit mobile number',
           'checkbox_select_error' : 'Agree to our Terms & Conditions to proceed further',
           'sending_otp' : 'Sending OTP',
           'proceed_btn' : 'Proceed',
           'enter_otp': 'Enter OTP',
-          'otp_message': 'We sent it to the number',
-          'edit_number':'Edit Number',
+          'otp_message': 'We have sent a OTP to',
+          'edit_number':'Edit number',
           'resend_otp':'Resend OTP',
           'invalid_otp' : 'Invalid OTP entered. Please enter valid OTP',
-          'select_prefer_lan' : 'Select prefer language'
+          'select_prefer_lan' : 'Select preferred language',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'Welcome!',
+          'cashback_india1_summary' : 'Cashback by India1 summary',
+          'in' : 'in',
+          'redeem_points_now': 'Redeem Points Now',
+          'home': 'Home',
+          'payments':'Payments',
+          'loans': 'Loans',
+          'insurance': 'Insurance',
+          'savings' : 'Savings'
+
+
+
 
         },
         'hi_IN': {
@@ -36,7 +49,22 @@ class LocaleString extends Translations {
           'edit_number':'संख्या संपादित करें',
           'resend_otp':'ओटीपी पुनः भेजें',
           'invalid_otp' : 'कृपया मान्य ओटीपी दर्ज करें',
-          'select_prefer_lan' : 'पसंदीदा भाषा चुनें'
+          'select_prefer_lan' : 'पसंदीदा भाषा चुनें',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'स्वागत!',
+          'cashback_india1_summary' : 'कैशबैक बाय इंडिया1 सारांश',
+          'in' : 'में',
+          'redeem_points_now': 'अंक भुनाएं',
+          'home': 'घर',
+          'payments':'भुगतान',
+          'loans': 'ऋण',
+          'insurance': 'बीमा',
+          'savings' : 'बचत'
+
+
+
+
+
         },
         'ka_IN': {
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
@@ -53,7 +81,22 @@ class LocaleString extends Translations {
           'edit_number':'ಸಂಖ್ಯೆ ಸಂಪಾದಿಸಿ',
           'resend_otp':'OTP ಮರುಕಳುಹಿಸಿ',
           'invalid_otp' : 'ದಯವಿಟ್ಟು ಮಾನ್ಯ OTP ಅನ್ನು ನಮೂದಿಸಿ',
-          'select_prefer_lan' : 'ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ'
+          'select_prefer_lan' : 'ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'ಸ್ವಾಗತ!',
+          'cashback_india1_summary' : 'ಭಾರತದಿಂದ ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ 1 ಸಾರಾಂಶ',
+          'in' : 'ಒಗೆ',
+          'redeem_points_now': 'ಪಡೆದುಕೊಳ್ಳಿ',
+          'home': 'ಮನೆ',
+          'payments':'ಪಾವತಿಗಳು',
+          'loans': 'ಸಾಲಗಳು',
+          'insurance': 'ವಿಮೆ',
+          'savings' : 'ಉಳಿತಾಯ'
+
+
+
+
+
         },
         'ma_IN': {
           'hello': 'हॅलो वर्ल्ड',
@@ -70,8 +113,17 @@ class LocaleString extends Translations {
           'edit_number':'क्रमांक संपादित करा',
           'resend_otp':'OTP पुन्हा पाठवा',
           'invalid_otp' :  'कृपया वैध OTP प्रविष्ट करा',
-          'select_prefer_lan' : 'प्राधान्य भाषा निवडा'
-
+          'select_prefer_lan' : 'प्राधान्य भाषा निवडा',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'स्वागत!',
+          'cashback_india1_summary' : 'India1 सारांश द्वारे कॅशबॅक',
+          'in' : 'मध्ये',
+          'redeem_points_now': 'पूर्तता करा',
+          'home': 'मुख्यपृष्ठ',
+          'payments':'देयके',
+          'loans': 'कर्ज',
+          'insurance': 'विमा',
+          'savings' : 'बचत'
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -88,7 +140,22 @@ class LocaleString extends Translations {
           'edit_number':'సంఖ్యను సవరించండి',
           'resend_otp':'OTP పంపు',
           'invalid_otp' : 'దయచేసి చెల్లుబాటు అయ్యే OTPని నమోదు చేయండి',
-          'select_prefer_lan' : 'ప్రాధాన్య భాషని ఎంచుకోండి'
+          'select_prefer_lan' : 'ప్రాధాన్య భాషని ఎంచుకోండి',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'స్వాగతం!',
+          'cashback_india1_summary' : 'ఇండియా1  ద్వారా క్యాష్‌బ్యాక్',
+          'in' : 'లో',
+          'redeem_points_now': 'రీడీమ్ చేయండి',
+          'home': 'Home',
+          'payments':'Payments',
+          'loans': 'Loans',
+          'insurance': 'Insurance',
+          'savings' : 'Savings'
+
+
+
+
+
         },
         'ta_IN': {
           'hello': 'வணக்கம் உலகம்',
@@ -105,7 +172,22 @@ class LocaleString extends Translations {
           'edit_number':'எண்ணைத் திருத்து',
           'resend_otp':'OTP அனுப்பவும்',
           'invalid_otp' : 'சரியான OTP ஐ உள்ளிடவும்',
-          'select_prefer_lan' : 'மொழியைத் தேர்ந்தெடுக்கவும்'
+          'select_prefer_lan' : 'மொழியைத் தேர்ந்தெடுக்கவும்',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'வரவேற்பு!',
+          'cashback_india1_summary' : 'இந்தியா 1 சுருக்கம்  கேஷ்பேக்',
+          'in' : '்ளே',
+          'redeem_points_now': 'மீட்டுக்கொள்ளு',
+          'home': 'Home',
+          'payments':'Payments',
+          'loans': 'Loans',
+          'insurance': 'Insurance',
+          'savings' : 'Savings'
+
+
+
+
+
 
 
         },
@@ -124,7 +206,22 @@ class LocaleString extends Translations {
           'edit_number':'നമ്പർ എഡിറ്റ് ചെയ്യുക',
           'resend_otp':'OTP അയയ്‌ക്കുക',
           'invalid_otp' : 'ദയവായി സാധുവായ OTP നൽകുക',
-          'select_prefer_lan' : 'മുൻഗണന ഭാഷ തിരഞ്ഞെടുക്കുക'
+          'select_prefer_lan' : 'മുൻഗണന ഭാഷ തിരഞ്ഞെടുക്കുക',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'സ്വാഗതം!',
+          'cashback_india1_summary' : 'ക്യാഷ്ബാക്ക് ബൈ ഇന്ത്യ1 സംഗ്രഹം',
+          'in' : 'in',
+          'redeem_points_now': 'വീണ്ടെടുക്കുക',
+          'home': 'Home',
+          'payments':'Payments',
+          'loans': 'Loans',
+          'insurance': 'Insurance',
+          'savings' : 'Savings'
+
+
+
+
+
 
         },
         'ban_IN': {
@@ -142,8 +239,17 @@ class LocaleString extends Translations {
           'edit_number':'নম্বর সম্পাদনা করুন',
           'resend_otp':'OTP আবার পাঠান',
           'invalid_otp' : 'অনুগ্রহ করে বৈধ ওটিপি লিখুন',
-          'select_prefer_lan' : 'পছন্দের ভাষা নির্বাচন করুন'
-
+          'select_prefer_lan' : 'পছন্দের ভাষা নির্বাচন করুন',
+          'loyalty_points' : 'Loyalty points',
+          'welcome' : 'স্বাগত!',
+          'cashback_india1_summary' : 'India1 সারাংশ দ্বারা ক্যাশব্যাক',
+          'in' : 'ভিতরে',
+          'redeem_points_now': 'পয়েন্ট রিডিম করুন',
+          'home': 'Home',
+          'payments':'Payments',
+          'loans': 'Loans',
+          'insurance': 'Insurance',
+          'savings' : 'Savings'
         },
 
 
@@ -162,7 +268,21 @@ class LocaleString extends Translations {
       'edit_number':'ସଂଖ୍ୟା ସଂପାଦନ କରନ୍ତୁ |',
       'resend_otp':'OTP ପଠାନ୍ତୁ |',
       'invalid_otp' : 'ଦୟାକରି ବ valid ଧ OTP ପ୍ରବେଶ କରନ୍ତୁ |',
-      'select_prefer_lan' : 'ପସନ୍ଦ ଭାଷା ଚୟନ କରନ୍ତୁ |'
+      'select_prefer_lan' : 'ପସନ୍ଦ ଭାଷା ଚୟନ କରନ୍ତୁ |',
+      'loyalty_points' : 'Loyalty points',
+      'welcome': 'ସ୍ Welcome ାଗତ',
+      'cashback_india1_summary' : 'ଭାରତ 1 ସାରାଂଶ ଦ୍ୱାରା କ୍ୟାସବ୍ୟାକ୍ |',
+      'in' : 'ଭିତରେ',
+      'redeem_points_now': 'ପଏଣ୍ଟଗୁଡିକ ମୁକ୍ତ କରନ୍ତୁ |',
+      'home': 'Home',
+      'payments':'Payments',
+      'loans': 'Loans',
+      'insurance': 'Insurance',
+      'savings' : 'Savings'
+
+
+
+
 
     },
 

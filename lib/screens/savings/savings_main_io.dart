@@ -20,7 +20,7 @@ class _SavingsMainIOState extends State<SavingsMainIO> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           overflow: TextOverflow.visible,
-          color:  AppColors.white,
+          color:  AppColors.primary,
           fontSize: Dimens.font_16sp,
         ),
       ),),

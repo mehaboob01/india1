@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:webviewx/webviewx.dart';
 
 import '../../../constant/theme_manager.dart';
@@ -19,25 +18,9 @@ class _Tnc_IOState extends State<Tnc_IO> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[AppColors.primary, Colors.blue]),
-          )),
-        title: Text(
-          "term_condition".tr,
-          maxLines: 1,
+      appBar:appBar('term_condition'),
 
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: AppColors.white,
-            fontSize: Dimens.font_16sp,
-          ),
-        ),
-      ),
+
       body: SafeArea(
           child: WebViewX(
             initialContent:

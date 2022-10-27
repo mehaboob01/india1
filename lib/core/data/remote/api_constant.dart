@@ -10,4 +10,5 @@ class Apis
 {
   static String sendOtp = "auth/send-otp";
   static String verifyOtp = "auth/verify-otp";
+  static String dashboard = "dashboards/home/";
 }

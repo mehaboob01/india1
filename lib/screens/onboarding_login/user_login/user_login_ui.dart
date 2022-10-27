@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/screen_bg.dart';
 import 'login_manager.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 
 class UserLogin extends StatefulWidget {
@@ -21,39 +19,49 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLoginState extends State<UserLogin> {
-  var _textController = new TextEditingController();
+
   String? mobileno = '';
   int charLength = 0;
   bool? termConditionChecked = false;
   bool? alertTextShow = false;
+
   final autofill = SmsAutoFill();
-
-
-
-Future<void> getMobilePopup()async{
-
-  try {
-    var data = await autofill.hint ?? '';
-    if (data.isNotEmpty) {
-      mobileno = data;
-      _textController.text = FlutterLibphonenumber().formatNumberSync(mobileno.toString());;
-      _loginKey.currentState!.validate();
-
-
-    }
-  } catch (e) {
-    debugPrint(e.toString());
-  }
-}
-
   final GlobalKey<FormBuilderState> _loginKey = GlobalKey<FormBuilderState>();
   LoginManager _loginManager = Get.put(LoginManager());
+  var _textController = new TextEditingController();
 
+
+  //fun for show mobile numbers
+  Future<void> getMobilePopup()async{
+    try {
+      var data = await autofill.hint ?? '';
+      var buffer = new StringBuffer();
+      if (data.isNotEmpty) {
+        mobileno = data.substring(3);
+        for (int i = 0; i < mobileno!.length; i++) {
+          buffer.write(mobileno![i]);
+          var nonZeroIndex = i + 1;
+          if (nonZeroIndex % 4 == 0 && nonZeroIndex != mobileno!.length) {
+            buffer.write(' ');
+          }
+        }
+        var autoSelectNumber = buffer.toString();
+        mobileno = autoSelectNumber;
+        mobileno = mobileno.toString() + ' ';
+        _textController.text = FlutterLibphonenumber().formatNumberSync(mobileno.toString());
+
+
+      }
+    } catch (e) {
+
+    }
+  }
   _onTextChanged(String? value) {
     setState(() {
       charLength = value!.length;
       if (charLength == 12) {
         _loginKey.currentState!.validate();
+        FocusScope.of(context).unfocus();
       }
     });
   }
@@ -140,7 +148,7 @@ Future<void> getMobilePopup()async{
                               ),
                             ),
                             SizedBox(
-                              height: 24,
+                              height: 16,
                             ),
                             Padding(
                               padding: EdgeInsets.only(
@@ -151,9 +159,10 @@ Future<void> getMobilePopup()async{
                                 'mobile_number'.tr,
                                 maxLines: 2,
                                 style: TextStyle(
+                                  fontFamily: 'Graphik',
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.black,
-                                  fontSize: Dimens.font_20sp,
+                                  fontSize: 26,
                                 ),
                               ),
                             ),
@@ -179,25 +188,42 @@ Future<void> getMobilePopup()async{
                               LengthLimitingTextInputFormatter(12),
                             ],
                             style: TextStyle(
+                                letterSpacing: 3,
+                                fontFamily: 'Graphik',
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.facebookBlue,
-                                fontSize: Dimens.font_16sp),
+                                color: AppColors.black,
+                                fontSize: Dimens.font_24sp),
                             decoration: new InputDecoration(
-                              prefixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 14),
-                                  child: Text('+91 ')),
-                              hintText: '•••• ••• •••',
+                              errorStyle:  GoogleFonts.roboto(fontSize: Dimens.font_14sp,  fontWeight: FontWeight.w500,),
+                              prefixIcon: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
+                                    child: Text('+91 ',   style: TextStyle(
+                                        letterSpacing: 3,
+
+                                        fontFamily: 'Graphik',
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.black,
+                                        fontSize: Dimens.font_24sp),
+                                    textAlign: TextAlign.start,),
+                                  ),
+                                ],
+                              ),
+                              hintText: '• • • •  • • •  • • •',
                               hintStyle: TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColors.black,
-                                  fontSize: Dimens.font_20sp),
+                                  fontWeight: FontWeight.w900,
+                                  color: AppColors.dotsColor,
+
+                                  fontSize: Dimens.font_28sp),
                               labelStyle:
-                                  new TextStyle(color: Color(0xFF787878)),
+                              new TextStyle(color: Color(0xFF787878)),
                             ),
                             validator: (value) {
                               if (value!.isEmpty)
                                 return 'empty_error_msg'.tr;
-                              else if (value.length < 11)
+                              else if (value.length < 12)
                                 return 'empty_error_msg'.tr;
                               else
                                 return null;
@@ -205,7 +231,7 @@ Future<void> getMobilePopup()async{
                             name: 'mobile',
                           )),
                       SizedBox(
-                        height: 32,
+                        height: 44,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -228,7 +254,7 @@ Future<void> getMobilePopup()async{
                                   });
                                 }),
                             SizedBox(
-                              width: 1,
+                              width: 4,
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -241,7 +267,8 @@ Future<void> getMobilePopup()async{
                                           "i_accept".tr,
                                           maxLines: 2,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.w300,
+                                            fontFamily: 'Graphik',
+                                            fontWeight: FontWeight.w400,
                                             color: AppColors.black,
                                             fontSize: Dimens.font_16sp,
                                           ),
@@ -262,6 +289,7 @@ Future<void> getMobilePopup()async{
                                             "term_condition".tr,
                                             maxLines: 1,
                                             style: TextStyle(
+                                              fontFamily: 'Graphik',
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.facebookBlue,
                                               fontSize: Dimens.font_16sp,
@@ -293,15 +321,17 @@ Future<void> getMobilePopup()async{
                             ),
                             Visibility(
                               visible: alertTextShow == true ? true : false,
-                              child: Text(
-                                'checkbox_select_error'.tr,
-                                overflow: TextOverflow.visible,
-                                maxLines: 1,
-                                style: TextStyle(
+                              child: Expanded(
+                                child: Text(
+                                  'checkbox_select_error'.tr,
                                   overflow: TextOverflow.visible,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.googleRed,
-                                  fontSize: Dimens.font_12sp,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.googleRed,
+                                    fontSize: Dimens.font_12sp,
+                                  ),
                                 ),
                               ),
                             ),
@@ -315,169 +345,171 @@ Future<void> getMobilePopup()async{
                 GestureDetector(
                   onTap: termConditionChecked == true
                       ? () {
-                          setState(() async {
-                            alertTextShow = false;
-                            _loginKey.currentState!.save();
-                            if (_loginKey.currentState!.validate()) {
-                              var appSignatureId =
-                                  await SmsAutoFill().getAppSignature;
-                              // print('app signature');
-                              // print(appSignatureId);
-                              _loginManager.callSentOtpApi(
-                                  _loginKey.currentState!.value['mobile']
-                                      .replaceAll(' ', '')
-                                      .toString(),
-                                  context,
-                                  termConditionChecked,
-                                  appSignatureId);
-                            } else {
-                              print("validation failed");
-                            }
-                          });
-                        }
+                    setState(() async {
+                      alertTextShow = false;
+                      _loginKey.currentState!.save();
+                      if (_loginKey.currentState!.validate()) {
+                        var appSignatureId =
+                        await SmsAutoFill().getAppSignature;
+
+                        _loginManager.callSentOtpApi(
+                            _loginKey.currentState!.value['mobile'].replaceAll(' ', '')
+
+                                .toString(),
+                            context,
+                            termConditionChecked,
+                            appSignatureId);
+                      } else {
+
+                      }
+                    });
+                  }
                       : () {
-                          setState(() {
-                            _loginKey.currentState!.save();
-                            _loginKey.currentState!.validate();
-                            if (charLength == 12) alertTextShow = true;
-                          });
-                        },
+                    setState(() {
+                      _loginKey.currentState!.save();
+                      _loginKey.currentState!.validate();
+                      if ( _loginKey.currentState!.validate()) alertTextShow = true;
+                    });
+                  },
                   child: Obx(() => _loginManager.isLoading == false
-                      ? Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: 48,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              Text(
-                                'request_otp'.tr,
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                              Spacer(),
-                              SizedBox(
-                                height: 48,
-                                child: Image.asset(
-                                  "assets/images/btn_img.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ],
+                      ?
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 48,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          Text(
+                            'request_otp'.tr,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                            textAlign: TextAlign.center,
                           ),
-                          decoration: termConditionChecked == true
-                              ? BoxDecoration(
-                                  gradient: new LinearGradient(
-                                    end: Alignment.topRight,
-                                    colors: [Colors.orange, Colors.redAccent],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.white70.withOpacity(0.8),
-                                      offset: Offset(
-                                        -6.0,
-                                        -6.0,
-                                      ),
-                                      blurRadius: 16.0,
-                                    ),
-                                    BoxShadow(
-                                      color:
-                                          AppColors.darkerGrey.withOpacity(0.4),
-                                      offset: Offset(6.0, 6.0),
-                                      blurRadius: 16.0,
-                                    ),
-                                  ],
-                                  color: termConditionChecked == true
-                                      ? AppColors.btnColor
-                                      : AppColors.btnDisableColor,
-                                  borderRadius: BorderRadius.circular(6.0),
-                                )
-                              : BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.white70.withOpacity(0.8),
-                                      offset: Offset(
-                                        -6.0,
-                                        -6.0,
-                                      ),
-                                      blurRadius: 16.0,
-                                    ),
-                                    BoxShadow(
-                                      color:
-                                          AppColors.darkerGrey.withOpacity(0.4),
-                                      offset: Offset(6.0, 6.0),
-                                      blurRadius: 16.0,
-                                    ),
-                                  ],
-                                  color: termConditionChecked == true
-                                      ? AppColors.btnColor
-                                      : AppColors.btnDisableColor,
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ))
-                      : Container(
-                          width: MediaQuery.of(context).size.height * 0.9,
-                          height: 48,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              Row(
-                                children: [
-                                  Text(
-                                    'sending_otp'.tr,
-                                    style: AppTextThemes.button,
-                                  ),
-                                  SizedBox(
-                                    width: 6,
-                                  ),
-                                  Container(
-                                      height: 18,
-                                      width: 18,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.0,
-                                        color: AppColors.white,
-                                      ))
-                                ],
-                              ),
-                              Spacer(),
-                              SizedBox(
-                                height: 48,
-                                child: Image.asset(
-                                  "assets/images/btn_img.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: new LinearGradient(
-                              end: Alignment.topRight,
-                              colors: [Colors.orange, Colors.redAccent],
+                          Spacer(),
+                          SizedBox(
+                            height: 48,
+                            child: Image.asset(
+                              "assets/images/btn_img.png",
+                              fit: BoxFit.fill,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white.withOpacity(0.8),
-                                offset: Offset(
-                                  -6.0,
-                                  -6.0,
-                                ),
-                                blurRadius: 16.0,
-                              ),
-                              BoxShadow(
-                                color: AppColors.darkerGrey.withOpacity(0.4),
-                                offset: Offset(6.0, 6.0),
-                                blurRadius: 16.0,
-                              ),
-                            ],
-                            // color: termConditionChecked == true
-                            //     ? AppColors.btnColor
-                            //     : AppColors.btnDisableColor,
-                            borderRadius: BorderRadius.circular(6.0),
                           ),
-                        )),
+                        ],
+                      ),
+                      decoration: termConditionChecked == true
+                          ? BoxDecoration(
+                        gradient: new LinearGradient(
+                          end: Alignment.topRight,
+                          colors: [Colors.orange, Colors.redAccent],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white70.withOpacity(0.8),
+                            offset: Offset(
+                              -6.0,
+                              -6.0,
+                            ),
+                            blurRadius: 16.0,
+                          ),
+                          BoxShadow(
+                            color:
+                            AppColors.darkerGrey.withOpacity(0.4),
+                            offset: Offset(6.0, 6.0),
+                            blurRadius: 16.0,
+                          ),
+                        ],
+                        color: termConditionChecked == true
+                            ? AppColors.btnColor
+                            : AppColors.btnDisableColor,
+                        borderRadius: BorderRadius.circular(6.0),
+                      )
+                          : BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white70.withOpacity(0.8),
+                            offset: Offset(
+                              -6.0,
+                              -6.0,
+                            ),
+                            blurRadius: 16.0,
+                          ),
+                          BoxShadow(
+                            color:
+                            AppColors.darkerGrey.withOpacity(0.4),
+                            offset: Offset(6.0, 6.0),
+                            blurRadius: 16.0,
+                          ),
+                        ],
+                        color: termConditionChecked == true
+                            ? AppColors.btnColor
+                            : AppColors.btnDisableColor,
+                        borderRadius: BorderRadius.circular(6.0),
+                      ))
+                      :
+                  Container(
+                    width: MediaQuery.of(context).size.height * 0.9,
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Spacer(),
+                        Row(
+                          children: [
+                            Text(
+                              'sending_otp'.tr,
+                              style: AppTextThemes.button,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Container(
+                                height: 18,
+                                width: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.0,
+                                  color: AppColors.white,
+                                ))
+                          ],
+                        ),
+                        Spacer(),
+                        SizedBox(
+                          height: 48,
+                          child: Image.asset(
+                            "assets/images/btn_img.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: new LinearGradient(
+                        end: Alignment.topRight,
+                        colors: [Colors.orange, Colors.redAccent],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.8),
+                          offset: Offset(
+                            -6.0,
+                            -6.0,
+                          ),
+                          blurRadius: 16.0,
+                        ),
+                        BoxShadow(
+                          color: AppColors.darkerGrey.withOpacity(0.4),
+                          offset: Offset(6.0, 6.0),
+                          blurRadius: 16.0,
+                        ),
+                      ],
+                      // color: termConditionChecked == true
+                      //     ? AppColors.btnColor
+                      //     : AppColors.btnDisableColor,
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                  )),
                 ),
                 SizedBox(
                   height: 28,
@@ -496,7 +528,8 @@ Future<void> getMobilePopup()async{
               ),
               // radius of 10
               color: AppColors.white // green as background color
-              )),
+          )
+      ),
     );
   }
 }

@@ -1,80 +1,73 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../select_language/language_selection_io.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
+  final List locale = [
+    {'name': 'ENGLISH', 'locale': Locale('en', 'US')},
+    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
+    {'name': 'ಕನ್ನಡ', 'locale': Locale('ka', 'IN')},
+    {'name': 'मराठी', 'locale': Locale('ma', 'IN')},
+    {'name': 'తెలుగు', 'locale': Locale('te', 'IN')},
+    {'name': 'தமிழ்', 'locale': Locale('ta', 'IN')},
+    {'name': 'മലയാളം', 'locale': Locale('mal', 'IN')},
+    {'name': 'বাংলো', 'locale': Locale('ban', 'IN')},
+    {'name': 'ଓଡିଆ', 'locale': Locale('or', 'IN')},
+  ];
   @override
   void initState() {
     super.initState();
-    // requestCameraPermission();
+    initDynamicLinks();
+    Timer(Duration(seconds: 2), () => launchLoginWidget());
+  }
+  Future<void> initDynamicLinks() async {
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      Get.toNamed(MRouter.splashRoute);
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
+  }
 
-    Timer(Duration(seconds: 3), () => launchLoginWidget());
+  updateLanguage(Locale locale, int selectdLang) {
+    Get.updateLocale(locale);
+    setState(() {
+    });
   }
 
   // launch login screen
   Future<void> launchLoginWidget() async {
-    Get.offAllNamed(MRouter.languageSelectionIO);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
+    if(loggedIn == true )
+    {
+      Get.offAllNamed(MRouter.homeScreen);
+      int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
+      updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+    }
+    else{
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => LanguageSelectionIO('splash')));}
   }
-
-
-
-
-
-
-  void getSignature() async {
-    final String signature = await SmsAutoFill().getAppSignature;
-    debugPrint('signature $signature');
-  }
-  // Future<void> initMobileNumberState() async {
-  //
-  //   try {
-  //     var data = await autoFill.hint ?? '';
-  //     if (data.isNotEmpty) {
-  //       mobileNumber.value = data;
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  //
-  //   String val = mobileNumber.value.toString().replaceAll("+91", '');
-  //   val = val.startsWith('0') ? val.replaceFirst('0', "") : val;
-  //   validatePhone(val);
-  //   phoneNumberController!.value.text = val;
-  //
-  // }
-  // // validate phone
-  // validatePhone(value) {
-  //   String pattern = r'(^(?:[+0]9)?[0-9]{10}$)';
-  //   RegExp regExp = RegExp(pattern);
-  //   if (value.isEmpty) {
-  //     validateMobile.value = false;
-  //   } else if (!regExp.hasMatch(value)) {
-  //     validateMobile.value = false;
-  //   } else {
-  //     String val =
-  //     phoneNumberController!.value.text.toString().replaceAll("+91", '');
-  //     val = val.startsWith('0') ? val.replaceFirst('0', "") : val;
-  //     phoneNumberController!.value.text = val;
-  //     validateMobile.value = true;
-  //     // phoneNumberController!.value.selection = TextSelection.fromPosition(
-  //     //     TextPosition(offset: phoneNumberController!.value.text.length));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

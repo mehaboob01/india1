@@ -11,7 +11,12 @@ class SPKeys {
   static const String CUSTOMER_ID = 'customer_Id';
   static const String LOYALTY_POINT_GAINED = 'loyaltyPointsGained';
 
-  static const String OTP_VERIFIED = 'otpVerified';
+  static const String FIRST_TIME_LOGIN_POINTS = 'first_time_login_points';
+  static const String SELECTED_LANGUAGE = 'selected_lan';
+
+  static const String LOGGED_IN = 'logged_in';
+
+
 
 
 

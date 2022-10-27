@@ -17,13 +17,11 @@ class LoginManager extends GetxController {
       bool? termConditionChecked, String appSignatureId) async {
     try {
       isLoading.value = true;
-      var response = await http.post(
-          Uri.parse(
-              baseUrl+Apis.sendOtp),
+      var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
             "mobileNumber": phoneNumber,
             "agreedToToc": termConditionChecked,
-            "appSignature" : appSignatureId
+            "appSignature": appSignatureId
           }),
           headers: {
             'Content-type': 'application/json',
@@ -34,18 +32,16 @@ class LoginManager extends GetxController {
 
       LoginModel userSignInModelDto = LoginModel.fromJson(jsonData);
 
-
-
       if (userSignInModelDto.status!.code == 2000) {
         getOtp.value = true;
-
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(
-            SPKeys.TOKEN_KEY, userSignInModelDto.data!.token.toString());
+        prefs.setString(SPKeys.TOKEN_KEY, userSignInModelDto.data!.token.toString());
+        prefs.setInt(SPKeys.RETRY_IN_SECONDS, userSignInModelDto.data!.retryInSeconds!.toInt());
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => OtpScreen(phoneNumber,userSignInModelDto.data!.retryInSeconds)));
+                builder: (BuildContext context) => OtpScreen(
+                    phoneNumber, userSignInModelDto.data!.retryInSeconds)));
       } else {
         var snackBar = SnackBar(
           content: Text("Something went wrong!"),
