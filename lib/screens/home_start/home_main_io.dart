@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:flutter_local_auth_invisible/flutter_local_auth_invisible.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';

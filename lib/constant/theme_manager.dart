@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 class AppColors {
-
-
   static const Color buttonColor = Color(0xff666666);
   static const Color butngradient1 = Color(0xff004280);
   static const Color butngradient2 = Color(0xff00C376);
@@ -29,18 +26,12 @@ class AppColors {
   static const btnDisableColor = Color(0xffbcc3ce);
   static const dotsColor = Color(0xffD9D9D9);
 
-
-
-
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
   static Color passiveTabColor = Color(0xff666666);
 
   // cards gradient colors
   static Color cardBg1 = const Color.fromRGBO(0, 66, 128, 1);
   static Color cardBg2 = const Color.fromRGBO(53, 124, 190, 1);
-
-
-
 
   static const Color transparent = Colors.transparent;
   static const Color blackColor = Colors.black;
@@ -53,27 +44,23 @@ class AppColors {
 
   static const Color homeGradient1Color = const Color.fromRGBO(0, 66, 128, 1.0);
   static const Color homeGradient2Color =
-  const Color.fromRGBO(34, 103, 168, 1.0);
+      const Color.fromRGBO(34, 103, 168, 1.0);
   static const Color homeGradientUpperLayerColor =
-  const Color.fromRGBO(1, 48, 92, .7);
-
-
+      const Color.fromRGBO(1, 48, 92, .7);
 
   static const Color greyBgColor = Color(0xFFEDEDED);
 
-
-  static const Color unSelectedLangColor = const Color.fromRGBO( 255, 255, 255, 1.0);
+  static const Color unSelectedLangColor =
+      const Color.fromRGBO(255, 255, 255, 1.0);
   static const Color selectedLangColor = Color(0xFF004280);
 
-
-  static const Color selectedTextColor = const Color.fromRGBO(
-      255, 255, 255, 1.0);
-  static const Color unSelectedTextColor = const Color.fromRGBO(
-      1, 3, 7, 1.0);
+  static const Color selectedTextColor =
+      const Color.fromRGBO(255, 255, 255, 1.0);
+  static const Color unSelectedTextColor = const Color.fromRGBO(1, 3, 7, 1.0);
   static const Color textLangColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   //static const Color buttonColor = const Color.fromRGBO(101, 88, 245, 1.0);
- // static const Color textColor = const Color.fromRGBO(41, 56, 69, 1.0);
+  // static const Color textColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
   static const pink = Color(0xFFF9E42C);
   static const pinkdark = Color(0xFFF9E42C);
@@ -128,12 +115,10 @@ class AppColors {
   static const facebookBlue = Color(0xFF07408A);
   static const googleRed = Color(0xFFDC4E41);
 
-
   // cash back screen
 
-
   //static const Color backGroundgradient2 = Color(0xff357CBE);
- // static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
+  // static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
 
 }
 
@@ -142,8 +127,7 @@ class AppStyle {
       fontWeight: FontWeight.w500,
       color: AppColors.white,
       fontSize: Dimens.font_16sp,
-      fontFamily: 'Graphik'
-  );
+      fontFamily: 'Graphik');
   // static const shortHeading2 = TextStyle(
   //     fontWeight: FontWeight.w400,
   //     color: AppColors.white,
@@ -155,8 +139,7 @@ class AppStyle {
       fontWeight: FontWeight.w600,
       color: AppColors.black,
       fontSize: Dimens.font_20sp,
-      fontFamily: 'Graphik'
-  );
+      fontFamily: 'Graphik');
 }
 
 class Dimens {
@@ -279,20 +262,9 @@ class Dimens {
 }
 
 class AppTextThemes {
-
-
-
   static TextTheme textThemeLight = TextTheme(
-
     button: button,
-
-
-
   );
-
-
-
-
 
   static final button = TextStyle(
       fontSize: Dimens.font_16sp,
@@ -300,31 +272,25 @@ class AppTextThemes {
       fontFamily: 'Graphik',
       color: Colors.white);
   static final appbar = TextStyle(
-      fontSize: 16.0,
-      fontWeight: FontWeight.w600,
-      color: Colors.white);
-
+      fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white);
 
   static final labelStyle = TextStyle(
       fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.secondary);
-
-
 }
 
-AppBar appBar(titleOfAppbar){
-  return  AppBar(
+AppBar appBar(titleOfAppbar) {
+  return AppBar(
     centerTitle: true,
     flexibleSpace: Container(
-        decoration:  BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[AppColors.cardBg1, AppColors.cardBg2]),
-        )),
+        decoration: BoxDecoration(
+      gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[AppColors.cardBg1, AppColors.cardBg2]),
+    )),
     title: Text(
       titleOfAppbar,
       maxLines: 1,
-
       style: TextStyle(
         fontWeight: FontWeight.w600,
         color: AppColors.white,
@@ -333,20 +299,19 @@ AppBar appBar(titleOfAppbar){
     ),
   );
 }
-AppBar transParentAppbar(titleOfAppbar){
-  return  AppBar(
+
+AppBar transParentAppbar(titleOfAppbar) {
+  return AppBar(
     centerTitle: false,
     flexibleSpace: Container(
-        decoration:  BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[AppColors.white, AppColors.white]),
-        )),
+        decoration: BoxDecoration(
+      gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[AppColors.white, AppColors.white]),
+    )),
     title: Text(
       titleOfAppbar,
-
-
       style: TextStyle(
         fontWeight: FontWeight.w600,
         color: AppColors.cardBg1,
@@ -355,7 +320,6 @@ AppBar transParentAppbar(titleOfAppbar){
     ),
   );
 }
-
 
 class AppImages {
   static const String assetPng = 'assets/png/';
@@ -415,26 +379,17 @@ class AppImages {
 
   static const String assetSvg = 'assets/images/';
 
-
   static const String user_profile = '${assetSvg}user_profile.svg';
   static const String notify_icon = '${assetSvg}notify_icon.svg';
-
-
-
 }
-class Strings{
 
-
+class Strings {
   //Toast messages
 
   static const CHECK_INTERNET = "Please Check Internet Connection.";
   static const API_ERROR = "Something went wrong. please try after sometime";
-
-
-
-
 }
-class AppFonts{
+
+class AppFonts {
   static const appFont = 'Graphik';
 }
-

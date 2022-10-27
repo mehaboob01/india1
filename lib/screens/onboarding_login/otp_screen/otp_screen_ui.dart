@@ -392,7 +392,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 4,
+                                            width: 2,
                                           ),
                                           Visibility(
                                             visible: currentSeconds == 0

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/constant/routes.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
@@ -13,10 +15,14 @@ class LoansPage extends StatelessWidget {
     return Wrap(
       spacing: 2.0.wp,
       children:  [
-        ItemCard(
-          image: AppImages.handRupee,
-          label: 'Personal',
-          isblue: true,
+        GestureDetector(
+          onTap:()=> Get.toNamed(MRouter.personalLoan),
+          child: ItemCard(
+            
+            image: AppImages.handRupee,
+            label: 'Personal',
+            isblue: true,
+          ),
         ),
         ItemCard(
           image: AppImages.bike,
