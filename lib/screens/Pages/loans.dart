@@ -15,14 +15,11 @@ class LoansPage extends StatelessWidget {
     return Wrap(
       spacing: 2.0.wp,
       children:  [
-        GestureDetector(
-          onTap:()=> Get.toNamed(MRouter.personalLoan),
-          child: ItemCard(
-            
-            image: AppImages.handRupee,
-            label: 'Personal',
-            isblue: true,
-          ),
+        ItemCard(
+
+          image: AppImages.handRupee,
+          label: 'Personal',
+          isblue: true,
         ),
         ItemCard(
           image: AppImages.bike,

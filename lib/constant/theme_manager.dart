@@ -25,6 +25,7 @@ class AppColors {
   static const btnColor = Color(0xFF2b6dd4);
   static const btnDisableColor = Color(0xffbcc3ce);
   static const dotsColor = Color(0xffD9D9D9);
+  static const loanScreenBg = Color(0xFFD1D1D1);
 
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
   static Color passiveTabColor = Color(0xff666666);

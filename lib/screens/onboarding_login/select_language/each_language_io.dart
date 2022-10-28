@@ -26,7 +26,7 @@ class _EachLanguageIOState extends State<EachLanguageIO> {
         padding: const EdgeInsets.all(9),
         child: Container(
           height: 68,
-          width: 164,
+          width: 148,
          // color: widget.color,
           child: Padding(
             padding: const EdgeInsets.all(12.0),

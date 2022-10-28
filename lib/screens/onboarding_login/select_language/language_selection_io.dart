@@ -47,7 +47,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildSelectLanScreen(),
+      body: SafeArea(child: buildSelectLanScreen()),
     );
   }
 
@@ -101,7 +101,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
             width: MediaQuery.of(context).size.width,
             // height: MediaQuery.of(context).size.height * 0.7,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   // width: MediaQuery.of(context).size.width,
