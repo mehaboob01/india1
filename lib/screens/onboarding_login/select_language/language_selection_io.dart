@@ -56,14 +56,15 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
       clipBehavior: Clip.none,
       children: [
         BgScreen('assets/images/select_lan_bg.png'),
-        SingleChildScrollView(child: buildContentOfScreen()),
+        buildContentOfScreen(),
       ],
     );
   }
 
   Widget buildContentOfScreen() {
     return Container(
-      padding: EdgeInsets.only(),
+
+      padding: EdgeInsets.all(6),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -97,153 +98,156 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                   ),
                 ),
               )),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * 0.7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  // width: MediaQuery.of(context).size.width,
-                  //height: MediaQuery.of(context).size.height * 0.9,
-                  child: Wrap(
-                    children: [
-                      EachLanguageIO("English", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.ENGLISH.index);
-                        updateLanguage(locale[Language.ENGLISH.index]['locale'],
-                            Language.ENGLISH.index);
-                      },
-                          selectedLanguage == Language.ENGLISH.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.ENGLISH.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("ಕನ್ನಡ", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.KANNADA.index);
+          Padding(
+            padding:  EdgeInsets.symmetric(vertical: 4.0,horizontal: 4),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height * 0.7,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    // width: MediaQuery.of(context).size.width,
+                    //height: MediaQuery.of(context).size.height * 0.9,
+                    child: Wrap(
+                      children: [
+                        EachLanguageIO("English", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.ENGLISH.index);
+                          updateLanguage(locale[Language.ENGLISH.index]['locale'],
+                              Language.ENGLISH.index);
+                        },
+                            selectedLanguage == Language.ENGLISH.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.ENGLISH.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("ಕನ್ನಡ", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.KANNADA.index);
 
-                        updateLanguage(locale[Language.KANNADA.index]['locale'],
-                            Language.KANNADA.index);
-                      },
-                          selectedLanguage == Language.KANNADA.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.KANNADA.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("हिन्दी", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
-                        updateLanguage(locale[Language.HINDI.index]['locale'],
-                            Language.HINDI.index);
-                      },
-                          selectedLanguage == Language.HINDI.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.HINDI.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("मराठी", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.MARATHI.index);
+                          updateLanguage(locale[Language.KANNADA.index]['locale'],
+                              Language.KANNADA.index);
+                        },
+                            selectedLanguage == Language.KANNADA.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.KANNADA.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("हिन्दी", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
+                          updateLanguage(locale[Language.HINDI.index]['locale'],
+                              Language.HINDI.index);
+                        },
+                            selectedLanguage == Language.HINDI.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.HINDI.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("मराठी", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.MARATHI.index);
 
-                        updateLanguage(locale[Language.MARATHI.index]['locale'],
-                            Language.MARATHI.index);
-                      },
-                          selectedLanguage == Language.MARATHI.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.MARATHI.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("తెలుగు", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.TELUGU.index);
-                        updateLanguage(locale[Language.TELUGU.index]['locale'],
-                            Language.TELUGU.index);
-                      },
-                          selectedLanguage == Language.TELUGU.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.TELUGU.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("தமிழ்", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.TAMIL.index);
-                        updateLanguage(locale[Language.TAMIL.index]['locale'],
-                            Language.TAMIL.index);
-                      },
-                          selectedLanguage == Language.TAMIL.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.TAMIL.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("മലയാളം", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.MALAYALAM.index);
-                        updateLanguage(
-                            locale[Language.MALAYALAM.index]['locale'],
-                            Language.MALAYALAM.index);
-                      },
-                          selectedLanguage == Language.MALAYALAM.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.MALAYALAM.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("বাংলো", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.BENGALI.index);
-                        updateLanguage(locale[Language.BENGALI.index]['locale'],
-                            Language.BENGALI.index);
-                      },
-                          selectedLanguage == Language.BENGALI.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.BENGALI.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                      EachLanguageIO("ଓଡିଆ", () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setInt(
-                            SPKeys.SELECTED_LANGUAGE, Language.ODIA.index);
-                        updateLanguage(locale[Language.ODIA.index]['locale'],
-                            Language.ODIA.index);
-                      },
-                          selectedLanguage == Language.ODIA.index
-                              ? AppColors.selectedLangColor
-                              : AppColors.unSelectedLangColor,
-                          selectedLanguage == Language.ODIA.index
-                              ? AppColors.selectedTextColor
-                              : AppColors.unSelectedTextColor),
-                    ],
+                          updateLanguage(locale[Language.MARATHI.index]['locale'],
+                              Language.MARATHI.index);
+                        },
+                            selectedLanguage == Language.MARATHI.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.MARATHI.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("తెలుగు", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.TELUGU.index);
+                          updateLanguage(locale[Language.TELUGU.index]['locale'],
+                              Language.TELUGU.index);
+                        },
+                            selectedLanguage == Language.TELUGU.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.TELUGU.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("தமிழ்", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.TAMIL.index);
+                          updateLanguage(locale[Language.TAMIL.index]['locale'],
+                              Language.TAMIL.index);
+                        },
+                            selectedLanguage == Language.TAMIL.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.TAMIL.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("മലയാളം", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.MALAYALAM.index);
+                          updateLanguage(
+                              locale[Language.MALAYALAM.index]['locale'],
+                              Language.MALAYALAM.index);
+                        },
+                            selectedLanguage == Language.MALAYALAM.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.MALAYALAM.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("বাংলো", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.BENGALI.index);
+                          updateLanguage(locale[Language.BENGALI.index]['locale'],
+                              Language.BENGALI.index);
+                        },
+                            selectedLanguage == Language.BENGALI.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.BENGALI.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                        EachLanguageIO("ଓଡିଆ", () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt(
+                              SPKeys.SELECTED_LANGUAGE, Language.ODIA.index);
+                          updateLanguage(locale[Language.ODIA.index]['locale'],
+                              Language.ODIA.index);
+                        },
+                            selectedLanguage == Language.ODIA.index
+                                ? AppColors.selectedLangColor
+                                : AppColors.unSelectedLangColor,
+                            selectedLanguage == Language.ODIA.index
+                                ? AppColors.selectedTextColor
+                                : AppColors.unSelectedTextColor),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          Spacer(),
+        SizedBox(height: 16,),
           Visibility(
             visible: widget.fromScreen == "home" ? false : true,
             child: GestureDetector(
@@ -290,7 +294,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
             ),
           ),
           SizedBox(
-            height: 32,
+            height: 16,
           )
         ],
       ),

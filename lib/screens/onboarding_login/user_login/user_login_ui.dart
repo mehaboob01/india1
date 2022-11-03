@@ -176,7 +176,8 @@ class _UserLoginState extends State<UserLogin> {
                             left: 12.0,
                             right: 12.0,
                           ),
-                          child: FormBuilderTextField(
+                          child:
+                          FormBuilderTextField(
                             autofocus: false,
                             controller: _textController,
                             onChanged: _onTextChanged,
@@ -229,7 +230,8 @@ class _UserLoginState extends State<UserLogin> {
                                 return null;
                             },
                             name: 'mobile',
-                          )),
+                          )
+                      ),
                       SizedBox(
                         height: 44,
                       ),
@@ -509,7 +511,8 @@ class _UserLoginState extends State<UserLogin> {
                       //     : AppColors.btnDisableColor,
                       borderRadius: BorderRadius.circular(6.0),
                     ),
-                  )),
+                  )
+                  ),
                 ),
                 SizedBox(
                   height: 28,

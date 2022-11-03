@@ -7,6 +7,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../home_start/home_main_io.dart';
 import '../select_language/language_selection_io.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
@@ -58,15 +59,21 @@ class _SplashScreenState extends State<SplashScreen> {
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
     if(loggedIn == true )
     {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs!.setBool(SPKeys.SHOW_AUTH, true);
       Get.offAllNamed(MRouter.homeScreen);
+
       int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
       updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+
+
     }
     else{
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => LanguageSelectionIO('splash')));}
+              builder: (BuildContext context) => LanguageSelectionIO('splash')));
+    }
   }
 
   @override

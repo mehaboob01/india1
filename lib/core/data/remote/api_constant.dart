@@ -8,7 +8,14 @@
 
 class Apis
 {
+
+  // OnBoarding & login Api
   static String sendOtp = "auth/send-otp";
   static String verifyOtp = "auth/verify-otp";
   static String dashboard = "dashboards/home/";
+
+  // Loyalty Program Api
+
+  static String loyaltyDashBoard = "dashboards/loyalty-program";
+  static String loyaltyHistory = "loyalty/loyalty-history";
 }

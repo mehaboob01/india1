@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/Pages/loans.dart';
 
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/other_constants_io.dart';
 
+import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_main_io.dart';
 import '../../insurances/insurances_main_io.dart';
-import '../../loans/loans_main_io.dart';
+
 import '../../payments/payments_main_io.dart';
 import '../../savings/savings_main_io.dart';
 
@@ -57,14 +60,17 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         selectedTabId = 0;
                         mainHomeWidget = HomeMainIO();
                         setState(() {
+
+                           showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 0, 12),
                       HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/underline.svg', "${'loans'.tr}", () {
                         selectedTabId = 1;
-                        mainHomeWidget = LoansMainIO();
+                        mainHomeWidget = LoansPage();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
@@ -73,6 +79,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         selectedTabId = 2;
                         mainHomeWidget = PaymentsMainIO();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
@@ -82,6 +89,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         selectedTabId = 3;
                         mainHomeWidget = InsurancesMainIO();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
@@ -90,6 +98,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         selectedTabId = 4;
                         mainHomeWidget = SavingsMainIO();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
@@ -103,5 +112,10 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
         ],
       ),
     );
+  }
+
+  Future<void> showAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs!.setBool(SPKeys.SHOW_AUTH, false);
   }
 }

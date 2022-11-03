@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -27,16 +27,22 @@ class HomeManager extends GetxController {
   var loyalityPoints = '0'.obs;
 
 
+  @override
+ void onInit()
+  {
+  super.onInit();
+  callHomeApi();
+  }
 
-  callHomeApi(BuildContext context) async {
+
+
+
+
+ void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
     String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
     loyalityPoints.value = points.toString();
-
-
-
-
     try {
       isLoading.value = true;
       var response = await http.get(
@@ -49,7 +55,8 @@ class HomeManager extends GetxController {
       var jsonData = jsonDecode(response.body);
       HomeModel homeModel = HomeModel.fromJson(jsonData);
 
-      if (homeModel.status!.code == 2000) {
+      if (response.statusCode == 200) {
+        isLoading(false);
         pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned.toString();
         pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed.toString();
         redeemablePoints.value = homeModel.data!.pointsSummary!.redeemablePoints.toString();
@@ -59,20 +66,23 @@ class HomeManager extends GetxController {
 
 
 
-
       } else {
-        var snackBar = SnackBar(
-          content: Text("Something went wrong!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        isLoading(false);
+
+        Flushbar(
+          title: "Error!",
+          message: "Something went wrong",
+          duration: Duration(seconds: 3),
+        )..show(Get.context!);
       }
     } catch (e) {
-      var snackBar = SnackBar(
-        content: Text("Something went wrong!"),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Flushbar(
+        title: "Error!",
+        message: "Something went wrong",
+        duration: Duration(seconds: 3),
+      )..show(Get.context!);
     } finally {
-      isLoading.value = false;
+      isLoading(false);
     }
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
-import '../screens/loans/personal_loan/personal_loan_ui.dart';
+
+import '../screens/loans/personal_loan_io/choose_amount_io.dart';
+import '../screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../screens/loyality_points/loyalty_page.dart';
-import '../screens/onboarding_login/finger_print/finger_print_io.dart';
+import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
 
@@ -17,6 +19,10 @@ class MRouter {
   static const String fingerPrintIO = 'FingerPrintIO';
   static const String loyaltyPoints = 'LoyaltyPoints';
   static const String personalLoan =  'PersonalLoan';
+  static const String chooseAmountIO = 'ChooseAmountIO';
+  static const String redeemPointsPage = 'RedeemPointsPage';
+  static const String cashBackRedeemPage = 'CashBackRedeemPage';
+
   
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -33,12 +39,14 @@ class MRouter {
         return CupertinoPageRoute(builder: (_) => VerifiedScreen());
 
 
+      case chooseAmountIO:
+        return CupertinoPageRoute(builder: (_) => ChooseAmountIO());
 
-      // case languageSelectionIO:
-      //   return CupertinoPageRoute(builder: (_) => LanguageSelectionIO());
+      case cashBackRedeemPage:
+        return CupertinoPageRoute(builder: (_) => CashBackRedeemPage());
 
-      // case fingerPrintIO:
-      //   return CupertinoPageRoute(builder: (_) => FingerPrintIO());
+      case redeemPointsPage:
+        return CupertinoPageRoute(builder: (_) => RedeemPointsPage());
 
       case loyaltyPoints:
         return CupertinoPageRoute(builder: (_) => LoyaltyScreen());

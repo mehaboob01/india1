@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
+import '../screens/loyality_points/redeem_points/rp_ui.dart';
+import 'button_with_flower.dart';
 
 
 // Appbar section --------------------------------
@@ -10,34 +13,97 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     Key? key,
     required this.heading,
+    this.customActionIconsList,
   }) : super(key: key);
   final String heading;
+  final List<CustomActionIcons>? customActionIconsList;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 20.0.wp,
-      width: double.infinity,
-      //padding: EdgeInsets.only(top: 8.0.wp, left: 2.0.wp),
-      color: Colors.white,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Icon(
-              Icons.chevron_left_rounded,
-              size: 10.0.wp,
-              color: Colors.black,
+    return Material(
+      elevation: 5.0,
+      child: Container(
+        height: 20.0.wp,
+        width: double.infinity,
+        //padding: EdgeInsets.only(top: 8.0.wp, left: 2.0.wp),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Icon(
+                    Icons.chevron_left_rounded,
+                    size: 10.0.wp,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  heading,
+                  style: AppStyle.shortHeading.copyWith(
+                      color: const Color(0xff2d2d2d),
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
-          ),
-          Text(
-            heading,
-            style: AppStyle.shortHeading.copyWith(
-                color: const Color(0xff2d2d2d), fontWeight: FontWeight.w600),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.all(4.0.wp),
+              child: Row(children: customActionIconsList ?? []),
+            )
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class CustomActionIcons extends StatelessWidget {
+  const CustomActionIcons(
+      {Key? key,
+      this.customGradientColors,
+      required this.image,
+      this.isSvg = true,
+      this.beginsAt = Alignment.topLeft,
+      this.endsAt = Alignment.bottomRight,
+      this.stops = const [0.5, 1.0],
+      this.imageColor})
+      : super(key: key);
+
+  final List<Color>? customGradientColors;
+  final bool? isSvg;
+  final String image;
+  final Color? imageColor;
+  final List<double>? stops;
+  final Alignment? beginsAt;
+  final Alignment? endsAt;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 6.0.wp,
+      height: 6.0.wp,
+      child: customGradientColors != null
+          ? ShaderMask(
+              shaderCallback: (bounds) {
+                return LinearGradient(
+                        begin: beginsAt!,
+                        end: endsAt!,
+                        stops: stops,
+                        colors: List.generate(customGradientColors!.length,
+                            (index) => customGradientColors![index]))
+                    .createShader(bounds);
+              },
+              child: SvgPicture.asset(image, fit: BoxFit.fill))
+          : isSvg!
+              ? SvgPicture.asset(
+                  image,
+                  color: imageColor,
+                  fit: BoxFit.fill,
+                )
+              : Image.asset(image, color: imageColor, fit: BoxFit.fill),
     );
   }
 }
@@ -173,36 +239,18 @@ class HeadingContainer extends StatelessWidget {
             Positioned(
               top: 32,
               right: 18,
-              child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 10.0.wp,
-                    width: 40.0.wp,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(2.0.wp)),
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Redeem Now',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 10.0.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.butngradient1,
-                                letterSpacing: 0.5),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Image.asset(
-                              AppImages.bgflower,
-                              fit: BoxFit.fill,
-                            ))
-                      ],
-                    ),
-                  )),
+              child: ButtonWithFlower(
+                buttonColor: Colors.white,
+                onPressed: () {
+                  Get.to(() => RedeemPointsPage());
+                },
+                buttonHeight: 10.0.wp,
+                buttonWidth: 40.0.wp,
+                label: 'Redeem Now',
+                labelSize: 10.0.sp,
+                labelWeight: FontWeight.w600,
+                labelColor: AppColors.butngradient1,
+              ),
             )
           ],
         ));

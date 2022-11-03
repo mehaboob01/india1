@@ -1,23 +1,30 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/widgets/text_io.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
+import '../../widgets/button_with_flower.dart';
 import '../../widgets/carasoul_slider.dart';
 import '../../widgets/divider_io.dart';
 import '../../widgets/home_blue_gradient_io.dart';
 import '../../widgets/home_each_tile_io.dart';
 import '../../widgets/icon_io.dart';
+import '../../widgets/pop_up_menu.dart';
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
@@ -27,18 +34,17 @@ import '../onboarding_login/select_language/language_selection_io.dart';
 import 'home_manager.dart';
 
 class HomeMainIO extends StatefulWidget {
-  const HomeMainIO({Key? key}) : super(key: key);
-
   @override
   State<HomeMainIO> createState() => _HomeMainIOState();
 }
 
 class _HomeMainIOState extends State<HomeMainIO> {
-  OtpManager _otpManager = Get.put(OtpManager());
-  void showFirstTimePoints() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // bool? firstTimeLogin = prefs.getBool(SPKeys.FIRST_TIME_LOGIN_POINTS);
+  HomeManager _homeManager = Get.put(HomeManager());
+   final LocalAuthentication auth = LocalAuthentication();
+   int profileClciked = ProfileColor.INACTIVE.index;
+   String msg = "You are not authorized.";
 
+  void showFirstTimePoints() async {
     if (_homeManager.loyalityPoints.toString() == "0") {
     } else {
       Future.delayed(
@@ -87,15 +93,73 @@ class _HomeMainIOState extends State<HomeMainIO> {
     }
   }
 
+  // Future<void> checkLogin() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
+  //
+  //   if (showAuth == true) {
+  //     {
+  //       try {
+  //         bool hasbiometrics =
+  //             await auth.canCheckBiometrics; //check if there is authencations,
+  //
+  //         if (hasbiometrics) {
+  //           List<BiometricType> availableBiometrics =
+  //               await auth.getAvailableBiometrics();
+  //           if (Platform.isAndroid) {
+  //             bool pass = await auth.authenticate(
+  //                 localizedReason: 'Authenticate with pattern/pin/passcode',
+  //                 biometricOnly: false);
+  //             if (pass) {
+  //               msg = "You are Authenticated.";
+  //               setState(() {});
+  //             } else {
+  //               SystemNavigator.pop();
+  //             }
+  //             // if (availableBiometrics.contains(BiometricType.face)) {
+  //             //
+  //             //   // bool pass = await auth.authenticate(
+  //             //   //     localizedReason: 'Authenticate with fingerprint',
+  //             //   //     biometricOnly: true);
+  //             //   //
+  //             //   // if(pass){
+  //             //   //   msg = "You are Autenciated.";
+  //             //   //   setState(() {
+  //             //   //
+  //             //   //   });
+  //             //   // }
+  //             //
+  //             // }
+  //           } else {
+  //             if (availableBiometrics.contains(BiometricType.fingerprint)) {
+  //               bool pass = await auth.authenticate(
+  //                   localizedReason: 'Authenticate with fingerprint/face',
+  //                   biometricOnly: true);
+  //               if (pass) {
+  //                 msg = "You are Authenicated.";
+  //                 setState(() {});
+  //               } else {
+  //                 SystemNavigator.pop();
+  //               }
+  //             }
+  //           }
+  //         } else {}
+  //       } on PlatformException catch (e) {
+  //         SystemNavigator.pop();
+  //
+  //         msg = "Error while opening fingerprint/face scanner";
+  //       }
+  //     }
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
 
-    _homeManager.callHomeApi(context);
     showFirstTimePoints();
+   // checkLogin();
   }
-
-  HomeManager _homeManager = Get.put(HomeManager());
 
   @override
   Widget build(BuildContext context) {
@@ -116,152 +180,261 @@ class _HomeMainIOState extends State<HomeMainIO> {
         );
         return false;
       },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // top container ---------------------
-              Container(
-                padding: EdgeInsets.fromLTRB(4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
-                height: 50.0.hp,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5.0.wp),
-                      bottomRight: Radius.circular(5.0.wp)),
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.homebg), fit: BoxFit.fill),
-                ),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Obx(
+        () => GestureDetector(
+          onTap: () => {
+
+
+
+
+            profileClciked == 0
+
+
+          },
+          child: Scaffold(
+            body: _homeManager.isLoading.value
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text('welcome'.tr,
-                                style: AppStyle.shortHeading.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              headingBox(
-                                  text: 'Aa',
-                                  ontap: () {
-                                    // Get.toNamed(
-                                    //     MRouter.languageSelectionIO);
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                LanguageSelectionIO('home')));
-                                  }),
-                              SizedBox(
-                                width: 2.0.wp,
-                              ),
-                              headingBox(imagePath: AppImages.notify_icon),
-                              SizedBox(width: 2.0.wp),
-                              headingBox(imagePath: AppImages.user_profile)
-                            ],
-                          ),
-                        ],
+                      Center(
+                        child: LoadingAnimationWidget.horizontalRotatingDots(
+                          size: 36,
+                          color: AppColors.primary,
+                        ),
                       ),
-                      SizedBox(height: 2.0.hp),
-                      Text('cashback_india1_summary'.tr,
+                      Text('Loading ...',
                           style: AppStyle.shortHeading.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 2.0.hp),
-                      // balance card --------------------------
-                      Row(
-                        children: [
-                          Expanded(child: balanceCard(first: true)),
-                          SizedBox(width: 2.0.wp),
-                          Expanded(child: balanceCard(first: false))
-                        ],
-                      ),
-                      // ways to Reedem ---------------------------------
-                      SizedBox(height: 2.0.hp),
-                      Flexible(child: redeemWay()),
-                      // Redeem points now -------------------------------
-                      SizedBox(height: 2.0.hp),
-                      Flexible(child: redeemPoints()),
-                    ]),
-              ),
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w400))
+                    ],
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // top container ---------------------
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
+                          height: 50.0.hp,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(5.0.wp),
+                                bottomRight: Radius.circular(5.0.wp)),
+                            image: const DecorationImage(
+                                image: AssetImage(AppImages.homebg),
+                                fit: BoxFit.fill),
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text('welcome'.tr,
+                                          style: AppStyle.shortHeading.copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600)),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        headingBox(
+                                            text: 'Aa',
+                                            ontap: () {
+                                              // Get.toNamed(
+                                              //     MRouter.languageSelectionIO);
 
-              // nearest atm ---------------------
-              nearestAtm(),
-              // carosuel Images --------------------
-              CarasoulImages(),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 6.0.wp, top: 12.0.wp, bottom: 2.0.wp, right: 6.0.wp),
-                child: Text(
-                  'Loans',
-                  style: AppStyle.shortHeading.copyWith(
-                      fontSize: 16.0.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                child: LoansPage(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 6.0.wp, top: 12.0.wp, bottom: 2.0.wp, right: 6.0.wp),
-                child: Text(
-                  'Payments',
-                  style: AppStyle.shortHeading.copyWith(
-                      fontSize: 16.0.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                child: PaymentsPage(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 6.0.wp, top: 12.0.wp, bottom: 2.0.wp, right: 6.0.wp),
-                child: Text(
-                  'Insurance',
-                  style: AppStyle.shortHeading.copyWith(
-                      fontSize: 16.0.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                child: InsurancePage(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 6.0.wp, top: 12.0.wp, bottom: 2.0.wp, right: 6.0.wp),
-                child: Text(
-                  'Savings',
-                  style: AppStyle.shortHeading.copyWith(
-                      fontSize: 16.0.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                child: SavingsPage(),
-              )
-            ],
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          LanguageSelectionIO(
+                                                              'home')));
+                                            }),
+                                        SizedBox(
+                                          width: 2.0.wp,
+                                        ),
+                                        headingBox(
+                                            image: AppImages.notify_icon),
+                                        SizedBox(
+                                          width: 2.0.wp,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+
+                                            profileClciked == 1;
+                                            showMenu<String>(
+                                              context: context,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.0),bottomRight: Radius.circular(13.0),topLeft: Radius.circular(13.0))
+                                              ),
+
+                                              position: RelativeRect.fromLTRB(
+                                                  25.0, 112.0,16.0,0.0),
+                                              //position where you want to show the menu on screen
+                                              items: [
+
+                                                PopupMenuItem(
+
+
+                                                  child: ListTile(
+                                                    title: Text("My Profile"),
+                                                  ),
+                                                ),
+                                                PopupMenuDivider(),
+                                                PopupMenuItem(
+
+                                                  child: ListTile(
+                                                    onTap: () =>    {
+                                                      Get.back(),
+
+                                            Get.toNamed(MRouter.loyaltyPoints),
+
+                                            },
+
+
+
+
+
+                                                    title: Text("My Rewards"),
+                                                  ),
+                                                ),
+                                              ],
+                                              elevation: 8.0,
+                                            ).then<void>((String? itemSelected) {
+                                              if (itemSelected == null) return;
+
+                                              if (itemSelected == "1") {
+
+                                              } else if (itemSelected == "2") {
+                                                Get.toNamed(MRouter.loyaltyPoints);
+
+                                                print("2nd itme ");
+
+                                              } else if (itemSelected == "3") {
+
+                                              } else {
+                                                //code here
+                                              }
+                                            });
+                                          },
+                                          child: headingBox(image: AppImages.user_profile),
+                                        ),
+                                        //headingBox(image: AppImages.user_profile),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 2.0.hp),
+                                Text('cashback_india1_summary'.tr,
+                                    style: AppStyle.shortHeading.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600)),
+                                SizedBox(height: 2.0.hp),
+                                // balance card --------------------------
+                                Row(
+                                  children: [
+                                    Expanded(child: balanceCard(first: true)),
+                                    SizedBox(width: 2.0.wp),
+                                    Expanded(child: balanceCard(first: false))
+                                  ],
+                                ),
+                                // ways to Reedem ---------------------------------
+                                SizedBox(height: 2.0.hp),
+                                Flexible(child: redeemWay()),
+                                // Redeem points now -------------------------------
+                                SizedBox(height: 2.0.hp),
+                                Flexible(child: redeemPoints()),
+                              ]),
+                        ),
+                        nearestAtm(),
+                        // carosuel Images --------------------
+                        CarasoulImages(),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 6.0.wp,
+                              top: 12.0.wp,
+                              bottom: 2.0.wp,
+                              right: 6.0.wp),
+                          child: Text(
+                            'Loans',
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 16.0.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                          child: LoansPage(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 6.0.wp,
+                              top: 12.0.wp,
+                              bottom: 2.0.wp,
+                              right: 6.0.wp),
+                          child: Text(
+                            'Payments',
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 16.0.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                          child: PaymentsPage(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 6.0.wp,
+                              top: 12.0.wp,
+                              bottom: 2.0.wp,
+                              right: 6.0.wp),
+                          child: Text(
+                            'Insurance',
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 16.0.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                          child: InsurancePage(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 6.0.wp,
+                              top: 12.0.wp,
+                              bottom: 2.0.wp,
+                              right: 6.0.wp),
+                          child: Text(
+                            'Savings',
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 16.0.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                          child: SavingsPage(),
+                        )
+                      ],
+                    ),
+                  ),
           ),
         ),
       ),
@@ -270,22 +443,29 @@ class _HomeMainIOState extends State<HomeMainIO> {
 
 // heading box -----------------------------------
   Widget headingBox(
-      {IconData? icon, String? text, VoidCallback? ontap, String? imagePath}) {
+      {IconData? icon, String? image, String? text, VoidCallback? ontap}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            color: profileClciked == 1
+                ? Colors.orange
+                : Colors.white,
+            borderRadius: BorderRadius.circular(5)),
         child: text != null
             ? Center(
                 child: Text(
-                text!,
-                style: TextStyle(fontWeight: FontWeight.normal),
+                text,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ))
-            : imagePath != null
-                ? Center(child: SvgPicture.asset(imagePath))
+            : image != null
+                ? Center(
+                    child: SvgPicture.asset(
+                    image,
+                    color: Colors.black,
+                  ))
                 : Icon(icon),
       ),
     );
@@ -315,12 +495,13 @@ class _HomeMainIOState extends State<HomeMainIO> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Current balance',
-                      style: AppStyle.shortHeading.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white,
-                          fontSize: Dimens.font_14sp,
-                          fontFamily: 'Graphik')),
+                  Text(
+                    'Current balance',
+                    style: AppStyle.shortHeading.copyWith(
+                        fontSize: 12.0.sp,
+                        color: Colors.white,
+                        letterSpacing: 0.5),
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -328,22 +509,25 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         child: Image.asset(AppImages.coins),
                       ),
                       SizedBox(
-                        width: 6,
+                        width: 4,
                       ),
                       Obx(
-                        () => Text(_homeManager.redeemablePoints.toString(),
-                            style: AppStyle.shortHeading.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                                fontSize: Dimens.font_24sp,
-                                fontFamily: 'Graphik')),
-                      ),
-                      Text(' Points',
+                        () => Text(
+                          _homeManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white,
-                              fontSize: Dimens.font_16sp,
-                              fontFamily: 'Graphik')),
+                              fontSize: 18,
+                              color: Colors.white,
+                              letterSpacing: 0.5,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Text(
+                        ' Points',
+                        style: AppStyle.shortHeading.copyWith(
+                            fontSize: 15,
+                            color: Colors.white,
+                            letterSpacing: 0.5),
+                      ),
                     ],
                   ),
                 ],
@@ -355,38 +539,44 @@ class _HomeMainIOState extends State<HomeMainIO> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Total earned : ',
-                          style: AppStyle.shortHeading.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white,
-                              fontSize: Dimens.font_14sp,
-                              fontFamily: 'Graphik')),
+                      Text(
+                        'Total earned : ',
+                        style: AppStyle.shortHeading.copyWith(
+                            fontSize: 15,
+                            color: Colors.white,
+                            letterSpacing: 0.5),
+                      ),
                       Obx(
-                        () => Text(_homeManager.pointsEarned.toString(),
-                            style: AppStyle.shortHeading.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                                fontSize: Dimens.font_24sp,
-                                fontFamily: 'Graphik')),
+                        () => Text(
+                          _homeManager.pointsEarned.toString(),
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 18,
+                              color: Colors.white,
+                              letterSpacing: 0.5,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Total redeemed : ',
-                          style: AppStyle.shortHeading.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white,
-                              fontSize: Dimens.font_14sp,
-                              fontFamily: 'Graphik')),
+                      Text(
+                        'Total redeemed : ',
+                        style: AppStyle.shortHeading.copyWith(
+                            fontSize: 15,
+                            color: Colors.white,
+                            letterSpacing: 0.5),
+                      ),
                       Obx(
-                        () => Text(_homeManager.pointsRedeemed.toString(),
-                            style: AppStyle.shortHeading.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                                fontSize: Dimens.font_24sp,
-                                fontFamily: 'Graphik')),
+                        () => Text(
+                          _homeManager.pointsRedeemed.toString(),
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 18,
+                              color: Colors.white,
+                              letterSpacing: 0.5,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
@@ -408,14 +598,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
           Text(
             'Ways to redeem :',
             style: AppStyle.shortHeading.copyWith(
-                fontSize: Dimens.font_14sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-                fontFamily: 'Graphik',
-                letterSpacing: 0.5),
+                fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
-          redeemWaySub(image: AppImages.recharge, text: 'Recharge'),
-          redeemWaySub(image: AppImages.cashback, text: 'Cashback')
+          redeemWaySub(image: AppImages.mobilRechargeSvg, text: 'Recharge'),
+          redeemWaySub(image: AppImages.walletIcon, text: 'Cashback')
         ],
       ),
     );
@@ -429,9 +615,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
         Text(
           text,
           style: AppStyle.shortHeading.copyWith(
-              fontSize: Dimens.font_12sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'Graphik',
+              fontSize: 10.0.sp,
               color: AppColors.textColorshade,
               letterSpacing: 0.5),
         ),
@@ -441,52 +625,26 @@ class _HomeMainIOState extends State<HomeMainIO> {
   // redeem points container ------------------------
 
   Widget redeemPoints({VoidCallback? onPressed}) {
-    return GestureDetector(
-      onTap: (){
-       // Get.toNamed(MRouter.loyaltyPoints);
-      },
-      child: Container(
-        height: 8.0.hp,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(2.0.wp)),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'redeem_points_now'.tr,
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_18sp,
-                    fontWeight:  FontWeight.w600,
-                    color: AppColors.butngradient1,
-                    fontFamily: 'Graphik',
-                    ),
-              ),
-            ),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(
-                  AppImages.bgflower,
-                  fit: BoxFit.fill,
-                ))
-          ],
-        ),
-      ),
-    );
+    return ButtonWithFlower(
+        label: 'Redeem Points Now',
+        onPressed: () => {},
+        buttonWidth: double.maxFinite,
+        buttonHeight: 8.0.hp,
+        labelSize: 14.0.sp,
+        buttonColor: AppColors.white,
+        labelColor: AppColors.butngradient1,
+        labelWeight: FontWeight.w600);
   }
 
 // find nearest Atm -------------------------------
   Widget nearestAtm({VoidCallback? onPressed}) {
     return Container(
-      height: 28.0.wp,
+      height: 20.0.wp,
       margin: EdgeInsets.all(2.0.hp),
       padding: EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 2.0.wp),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black12),
-          borderRadius: BorderRadius.circular(
-            2.0.wp,
-          ),
-          image: DecorationImage(
+          borderRadius: BorderRadius.circular(2.0.wp),
+          image: const DecorationImage(
               image: AssetImage(AppImages.nearestAtmBg), fit: BoxFit.fill)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -495,7 +653,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
           Text(
             'Find the nearest India1 ATM',
             style: AppStyle.shortHeading.copyWith(
-                fontSize: Dimens.font_16sp,
+                fontSize: 14.0.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
                 letterSpacing: 0.5),
@@ -507,7 +665,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
               Text(
                 '2x/3x',
                 style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_16sp,
+                    fontSize: 18,
                     color: Colors.black,
                     letterSpacing: 0.5,
                     fontWeight: FontWeight.w600),
@@ -515,7 +673,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
               Text(
                 ' rewards at ATMs',
                 style: AppStyle.shortHeading
-                    .copyWith(fontSize: Dimens.font_16sp, color: Colors.black),
+                    .copyWith(fontSize: 15, color: Colors.black),
               ),
               SizedBox(width: 6.0.wp),
               Flexible(
@@ -524,7 +682,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                   child: Container(
                     height: 4.0.hp,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
@@ -539,8 +697,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
                           child: Text(
                             'Locate ATM',
                             style: AppStyle.shortHeading.copyWith(
-                                fontSize: Dimens.font_14sp,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 10.0.sp,
+                                fontWeight: FontWeight.w600,
                                 color: AppColors.butngradient1,
                                 letterSpacing: 0.5),
                           ),
@@ -565,25 +723,177 @@ class _HomeMainIOState extends State<HomeMainIO> {
       ),
     );
   }
-
-
-  Widget confirmBtn() {
-    return ElevatedButton(
-        onPressed: () {
-          if (Platform.isAndroid) {
-            SystemNavigator.pop();
-          } else if (Platform.isIOS) {
-            exit(0);
-          }
-        },
-        child: Text("Yes"));
-  }
-
-  Widget cancelBtn() {
-    return ElevatedButton(
-        onPressed: () {
-          Get.back();
-        },
-        child: Text("No"));
-  }
 }
+
+// find nearest Atm -------------------------------
+Widget nearestAtm({VoidCallback? onPressed}) {
+  return Container(
+    height: 28.0.wp,
+    margin: EdgeInsets.all(2.0.hp),
+    padding: EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 2.0.wp),
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.black12),
+        borderRadius: BorderRadius.circular(
+          2.0.wp,
+        ),
+        image: DecorationImage(
+            image: AssetImage(AppImages.nearestAtmBg), fit: BoxFit.fill)),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Find the nearest India1 ATM',
+          style: AppStyle.shortHeading.copyWith(
+              fontSize: Dimens.font_16sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              letterSpacing: 0.5),
+        ),
+        SizedBox(height: 1.0.hp),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '2x/3x',
+              style: AppStyle.shortHeading.copyWith(
+                  fontSize: Dimens.font_16sp,
+                  color: Colors.black,
+                  letterSpacing: 0.5,
+                  fontWeight: FontWeight.w600),
+            ),
+            Text(
+              ' rewards at ATMs',
+              style: AppStyle.shortHeading
+                  .copyWith(fontSize: Dimens.font_16sp, color: Colors.black),
+            ),
+            SizedBox(width: 6.0.wp),
+            Flexible(
+              child: GestureDetector(
+                onTap: onPressed,
+                child: Container(
+                  height: 4.0.hp,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.yellowgradient1,
+                            AppColors.yellowgradient2
+                          ]),
+                      borderRadius: BorderRadius.circular(2.0.wp)),
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Locate ATM',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: Dimens.font_14sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.butngradient1,
+                              letterSpacing: 0.5),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: Opacity(
+                            opacity: 0.3,
+                            child: Image.asset(
+                              AppImages.bgflower,
+                              fit: BoxFit.fill,
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+// showAlertDialog(BuildContext context, String message, String heading,
+//     String buttonAcceptTitle, String buttonCancelTitle) {
+//   // set up the buttons
+//   Widget cancelButton = RaisedButton(
+//     color: Colors.red,
+//     child: Text(
+//       buttonCancelTitle,
+//       style: TextStyle(color: AppColors.white),
+//     ),
+//     onPressed: () {
+//       Get.back();
+//     },
+//   );
+//   Widget continueButton = FlatButton(
+//     color: AppColors.blueDark,
+//     child: Text(
+//       buttonAcceptTitle,
+//       style: TextStyle(color: AppColors.white),
+//     ),
+//     onPressed: () {
+//       dataBox.erase();
+//       Navigator.pushAndRemoveUntil(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => SignInScreen(),
+//           ),
+//               (route) => false);
+//     },
+//   );
+//
+//   // set up the AlertDialog
+//   AlertDialog alert = AlertDialog(
+//     title: Text(heading),
+//     content: Text(message),
+//     actions: [
+//       cancelButton,
+//       continueButton,
+//     ],
+//   );
+//
+//   // show the dialog
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return alert;
+//     },
+//   );
+// }
+// Widget confirmBtn() {
+//   return ElevatedButton(
+//       onPressed: () {
+//         if (Platform.isAndroid) {
+//           SystemNavigator.pop();
+//         } else if (Platform.isIOS) {
+//           exit(0);
+//         }
+//       },
+//       child: Text("Yes"));
+// }
+
+Widget confirmBtn() {
+  return ElevatedButton(
+      onPressed: () {
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else if (Platform.isIOS) {
+          exit(0);
+        }
+      },
+      child: Text("Yes"));
+}
+
+Widget cancelBtn() {
+  return ElevatedButton(
+      onPressed: () {
+        Get.back();
+      },
+      child: Text("No"));
+}
+
+enum ProfileColor { INACTIVE, ACTIVE }
