@@ -52,7 +52,7 @@ dependencies:
   local_auth: ^1.1.6
   firebase_dynamic_links: ^5.0.2
   firebase_core: ^2.1.0
-
+  fluttertoast: ^8.1.1
 
 
 dev_dependencies:

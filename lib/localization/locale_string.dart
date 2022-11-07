@@ -150,7 +150,8 @@ class LocaleString extends Translations {
           'payments':'Payments',
           'loans': 'Loans',
           'insurance': 'Insurance',
-          'savings' : 'Savings'
+          'savings' : 'Savings',
+          'logout' : 'Logout'
 
 
 
