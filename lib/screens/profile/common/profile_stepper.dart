@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -82,9 +83,13 @@ class ProfileStepper {
     Widget? suffix,
     FormFieldValidator? vaidation,
     Function? onChanged,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
   }) {
     return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters ?? [],
       onTap: () {
         if (onTap != null) {
           onTap();
@@ -144,6 +149,7 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: personalForm,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -163,6 +169,7 @@ class ProfileStepper {
                 label: 'First Name',
                 hint: 'Enter first name',
                 vaidation: (value) => profileController.nameValidation(value, 'Enter name min 3 character'),
+                keyboardType: TextInputType.name,
               ),
               SizedBox(
                 height: 20,
@@ -172,6 +179,7 @@ class ProfileStepper {
                 label: 'Last Name',
                 hint: 'Enter last name',
                 vaidation: (value) => profileController.nameValidation(value, 'Enter last name min 3 character'),
+                keyboardType: TextInputType.name,
               ),
               SizedBox(
                 height: 20,
@@ -182,6 +190,8 @@ class ProfileStepper {
                 hint: 'Enter mobile number',
                 prefix: '+91',
                 vaidation: (value) => profileController.mobileValidation(value),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               SizedBox(
                 height: 20,
@@ -192,6 +202,10 @@ class ProfileStepper {
                 hint: 'Enter alternate number',
                 prefix: '+91',
                 vaidation: (value) => profileController.mobileValidation(value),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -201,6 +215,7 @@ class ProfileStepper {
                 label: 'Email ID',
                 hint: 'Enter email ID',
                 vaidation: (value) => profileController.emailValidation(value),
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
                 height: 20,
@@ -331,6 +346,7 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: residentialForm,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -373,22 +389,27 @@ class ProfileStepper {
                 height: 20,
               ),
               textField(
-                  controller: profileController.pincodeController.value,
-                  label: 'Pincode',
-                  hint: 'Enter pincode here',
-                  vaidation: (value) => profileController.pinCodeValidation(
-                        value,
-                      ),
-                  onChanged: (value) {
-                    if (value.toString().trim().length == 6) {
-                      profileController.city.value = '';
-                      profileController.state.value = '';
-                      profileController.getCityState(value);
-                    } else {
-                      profileController.city.value = '';
-                      profileController.state.value = '';
-                    }
-                  }),
+                controller: profileController.pincodeController.value,
+                label: 'Pincode',
+                hint: 'Enter pincode here',
+                vaidation: (value) => profileController.pinCodeValidation(
+                  value,
+                ),
+                onChanged: (value) {
+                  if (value.toString().trim().length == 6) {
+                    profileController.city.value = '';
+                    profileController.state.value = '';
+                    profileController.getCityState(value);
+                  } else {
+                    profileController.city.value = '';
+                    profileController.state.value = '';
+                  }
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -440,6 +461,7 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: occupationForm,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -495,6 +517,10 @@ class ProfileStepper {
                   value,
                   'Enter valid amount',
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
               ),
               SizedBox(
                 height: 20,

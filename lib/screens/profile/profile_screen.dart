@@ -29,149 +29,158 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      Container(
-                        height: 100,
-                        padding: EdgeInsets.only(
-                          left: 100,
-                        ),
-                        margin: EdgeInsets.only(
-                          left: 80,
-                          right: 20,
-                          top: 20,
-                          bottom: 20,
-                        ),
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            30,
-                          ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: <Color>[
-                              AppColors.cardBg1,
-                              AppColors.cardBg2,
-                            ],
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+            child: Obx(()=>Stack(
+              children: [
+                if(profileController.getProfileLoading.value == true)...[
+                  Center(
+                    child: CircularProgressIndicator(),
+                  )
+                ]else...[
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Stack(
+                          alignment: Alignment.centerLeft,
                           children: [
-                            Text(
-                              "Mobile number",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: Dimens.font_14sp,
-                                color: Colors.white,
+                            Container(
+                              height: 100,
+                              padding: EdgeInsets.only(
+                                left: 100,
                               ),
-                            ),
-                            Text(
-                              "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Dimens.font_18sp,
-                                color: Colors.white,
+                              margin: EdgeInsets.only(
+                                left: 80,
+                                right: 20,
+                                top: 20,
+                                bottom: 20,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Container(
-                            height: 140,
-                            width: 140,
-                            margin: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: Container(
+                              width: Get.width,
                               decoration: BoxDecoration(
-                                color: AppColors.orangeColor,
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.circular(
+                                  30,
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: <Color>[
+                                    AppColors.cardBg1,
+                                    AppColors.cardBg2,
+                                  ],
+                                ),
                               ),
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.white,
-                                size: 110,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.lightOrangeColor.withOpacity(0.4),
-                                width: 10,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 45,
-                            width: 45,
-                            margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.lightOrangeColor,
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.camera_alt_outlined,
-                              size: 28,
-                              color: AppColors.lightOrangeColor,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  details(title: 'Personal details'),
-                  details(title: 'Residential address'),
-                  details(title: 'Occupation Details'),
-                  details(title: 'Bank account(s)'),
-                  details(title: 'UPI ID(s) / VPA Number(s)'),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 48,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Spacer(),
-                            Text(
-                              'logout'.tr,
-                              maxLines: 2,
-                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            Spacer(),
-                            SizedBox(
-                              height: 48,
-                              child: Image.asset(
-                                "assets/images/btn_img.png",
-                                fit: BoxFit.fill,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Mobile number",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: Dimens.font_14sp,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Obx(
+                                        () => Text(
+                                      "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Dimens.font_18sp,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Container(
+                                  height: 140,
+                                  width: 140,
+                                  margin: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.orangeColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 110,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.lightOrangeColor.withOpacity(0.4),
+                                      width: 10,
+                                      style: BorderStyle.solid,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 45,
+                                  width: 45,
+                                  margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.lightOrangeColor,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.camera_alt_outlined,
+                                    size: 28,
+                                    color: AppColors.lightOrangeColor,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
-                        decoration: 1 == 1
-                            ? BoxDecoration(
+                        SizedBox(
+                          height: 30,
+                        ),
+                        details(title: 'Personal details'),
+                        details(title: 'Residential address'),
+                        details(title: 'Occupation Details'),
+                        details(title: 'Bank account(s)'),
+                        details(title: 'UPI ID(s) / VPA Number(s)'),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 48,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Spacer(),
+                                  Text(
+                                    'logout'.tr,
+                                    maxLines: 2,
+                                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Spacer(),
+                                  SizedBox(
+                                    height: 48,
+                                    child: Image.asset(
+                                      "assets/images/btn_img.png",
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              decoration: 1 == 1
+                                  ? BoxDecoration(
                                 gradient: new LinearGradient(
                                   end: Alignment.topRight,
                                   colors: [Colors.orange, Colors.redAccent],
@@ -194,7 +203,7 @@ class ProfileScreen extends StatelessWidget {
                                 color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
                                 borderRadius: BorderRadius.circular(6.0),
                               )
-                            : BoxDecoration(
+                                  : BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.white70.withOpacity(0.8),
@@ -213,13 +222,17 @@ class ProfileScreen extends StatelessWidget {
                                 color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
                                 borderRadius: BorderRadius.circular(6.0),
                               )),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ],
-              ),
-            ),
+                ]
+
+              ],
+            )),
           ),
         ],
       ),
@@ -298,7 +311,7 @@ class ProfileScreen extends StatelessWidget {
         stepNumber = 2;
         break;
 
-      case 'Occupation details':
+      case 'Occupation Details':
         stepNumber = 3;
         break;
     }
@@ -321,6 +334,7 @@ class ProfileScreen extends StatelessWidget {
             dividerColor: Colors.transparent,
           ),
           child: ExpansionTile(
+            initiallyExpanded: true,
             title: Row(
               children: [
                 Expanded(
@@ -333,7 +347,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 if ((title == 'Personal details' && (isPersonalDetailsVisible.value == true)) ||
-                    (title == 'Residential address' && (isResidentialDetailsVisible.value == true) || (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true)))) ...[
+                    (title == 'Residential address' && (isResidentialDetailsVisible.value == true)) ||
+                    (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true))) ...[
                   InkWell(
                     onTap: () {
                       nextStep(title);
@@ -655,10 +670,7 @@ class ProfileScreen extends StatelessWidget {
             addDetailButton(
               title: 'Add Occupation Details',
               callBack: () {
-                profileController.currentStep.value = 3;
-                Get.to(() => StepperScreen(
-                      stepNumber: 3,
-                    ));
+                nextStep('Occupation Details');
               },
             ),
         ],

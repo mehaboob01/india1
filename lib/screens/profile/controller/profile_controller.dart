@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 
 class ProfileController extends GetxController {
-  RxBool addPersonalLoading = false.obs, addResidentialLoading = false.obs, addOccupationLoading = false.obs, getProfileLoading = false.obs, getPinCodeLoading = false.obs;
+  RxBool addPersonalLoading = false.obs, addResidentialLoading = false.obs, addOccupationLoading = false.obs, getProfileLoading = true.obs, getPinCodeLoading = false.obs, autoValidation = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -74,7 +74,7 @@ class ProfileController extends GetxController {
   }
 
   nameValidation(value, message) {
-    if (value.toString().trim().length < 2) {
+    if (value.toString().trim().length < 3) {
       return message;
     }
     return null;
@@ -92,9 +92,7 @@ class ProfileController extends GetxController {
   }
 
   emailValidation(value) {
-    String pattern = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?)*$";
+    String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
     RegExp regex = RegExp(pattern);
     if (value == null || value.isEmpty || !regex.hasMatch(value))
       return 'Enter a valid email address';
@@ -279,18 +277,18 @@ class ProfileController extends GetxController {
         dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
         gender.value = profileDetailsModel.value.gender ?? '';
         maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
+
+        addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
+        addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
+        pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
+        city.value = profileDetailsModel.value.address?.city ?? '';
+        state.value = profileDetailsModel.value.address?.state ?? '';
+
+        employmentType.value = profileDetailsModel.value.employmentType ?? '';
+        occupationController.value.text = profileDetailsModel.value.occupation ?? '';
+        monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
+        panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
       }
-
-      addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
-      addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
-      pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
-      city.value = profileDetailsModel.value.address?.city ?? '';
-      state.value = profileDetailsModel.value.address?.state ?? '';
-
-      employmentType.value = profileDetailsModel.value.employmentType ?? '';
-      occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-      monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
-      panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
     } catch (exception) {
       print(exception);
     } finally {

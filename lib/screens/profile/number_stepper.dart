@@ -10,6 +10,7 @@ class NumberStepper extends StatelessWidget {
   final Color inactiveColor;
   final double lineWidth;
   final List<String> title;
+  final Function callback;
 
   NumberStepper({
     Key? key,
@@ -21,6 +22,7 @@ class NumberStepper extends StatelessWidget {
     required this.currentStepColor,
     required this.lineWidth,
     required this.title,
+    required this.callback,
   })  : assert(curStep > 0 == true && curStep <= totalSteps + 1 && title.length == totalSteps),
         super(key: key);
 
@@ -33,20 +35,25 @@ class NumberStepper extends StatelessWidget {
         right: 24.0,
       ),
       width: this.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: _steps(),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: _title(),
-          ),
-        ],
+      child: InkWell(
+        onTap: (){
+
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: _steps(),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: _title(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -87,17 +94,22 @@ class NumberStepper extends StatelessWidget {
 
       // step circles
       list.add(
-        Container(
-          width: 28.0,
-          height: 28.0,
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          child: getInnerElementOfStepper(i),
-          decoration: new BoxDecoration(
-            color: circleColor,
-            borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
-            border: new Border.all(
-              color: borderColor,
-              width: 1.0,
+        InkWell(
+          onTap: (){
+            callback(i);
+          },
+          child:  Container(
+            width: 28.0,
+            height: 28.0,
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: getInnerElementOfStepper(i),
+            decoration: new BoxDecoration(
+              color: circleColor,
+              borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
+              border: new Border.all(
+                color: borderColor,
+                width: 1.0,
+              ),
             ),
           ),
         ),

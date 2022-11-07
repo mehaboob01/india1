@@ -8,17 +8,29 @@ import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import '../../widgets/loyalty_common_header.dart';
 import 'number_stepper.dart';
 
-class StepperScreen extends StatelessWidget {
+class StepperScreen extends StatefulWidget {
   final int stepNumber;
 
   StepperScreen({Key? key, required this.stepNumber}) : super(key: key);
 
+  @override
+  State<StepperScreen> createState() => _StepperScreenState();
+}
+
+class _StepperScreenState extends State<StepperScreen> {
   ProfileController profileController = Get.put(ProfileController());
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
+
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
+
   GlobalKey<FormState> occupationForm = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    super.initState();
+    profileController.autoValidation.value = false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +54,9 @@ class StepperScreen extends StatelessWidget {
                     inactiveColor: Color(0xffbababa),
                     lineWidth: 2,
                     title: profileController.titleList,
+                    callback: (i){
+                      profileController.currentStep.value = i + 1;
+                    },
                   ),
                 ),
                 SizedBox(
@@ -67,6 +82,7 @@ class StepperScreen extends StatelessWidget {
                     : InkWell(
                         onTap: () {
                           if (profileController.currentStep.value <= 3) {
+                            profileController.autoValidation.value = true;
                             if (profileController.currentStep.value == 1) {
                               if (!personalForm.currentState!.validate()) {
                                 print("Not validate");
