@@ -18,4 +18,36 @@ class Apis
 
   static String loyaltyDashBoard = "dashboards/loyalty-program";
   static String loyaltyHistory = "loyalty/loyalty-history";
+
+  // Mobile Recharge Api
+  static String operatorList = "loyalty/recharge/operator/list";
+  static String circleList = "loyalty/recharge/circle/list";
+  static String plans = "loyalty/recharge/plans";
+  static String recharge = "loyalty/recharge/mobile";
+
+  // bank api
+
+  static String banks = "loyalty/banks";
+  static String cashBackToBank = "loyalty/cashback/bank";
+  static String fetchCustomerBankAccounts = "loyalty/customer/bank/accounts";
+  static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
+  static String deleteCustomerBankAccount = "loyalty/customer/bank/account"; // delete method
+
+  // upi api
+
+  static String cashBackToUpi = "loyalty/cashback/upi";
+  static String upiVerify = "loyalty/cashback/upi/verify";
+  static String fetchCustomerUpiAccounts = "loyalty/customer/upi/ids";
+  static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
+  static String deleteCustomerUpiAccount = "loyalty/customer/upi/id"; // delete method
+
+
+
+
+
+
+
+
+
+
 }

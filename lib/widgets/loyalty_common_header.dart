@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
+import '../screens/loyality_points/loyality_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import 'button_with_flower.dart';
 
@@ -80,6 +81,8 @@ class CustomActionIcons extends StatelessWidget {
   final Alignment? beginsAt;
   final Alignment? endsAt;
 
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -110,7 +113,9 @@ class CustomActionIcons extends StatelessWidget {
 
 // Loyalty common heading screen
 class HeadingContainer extends StatelessWidget {
-  const HeadingContainer({
+
+  LoyaltyManager _loyaltyManager = Get.find();
+   HeadingContainer({
     Key? key,
   }) : super(key: key);
 
@@ -150,13 +155,16 @@ class HeadingContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Image.asset(AppImages.coins),
-                      Text(
-                        ' 52',
-                        style: AppStyle.shortHeading.copyWith(
-                            fontSize: 18.0.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            letterSpacing: 0.5),
+                      SizedBox(width: 4,),
+                      Obx(
+                        ()=> Text(
+                          _loyaltyManager.redeemablePoints.toString(),
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 18.0.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 0.5),
+                        ),
                       ),
                       Text(
                         ' Points',
@@ -193,13 +201,15 @@ class HeadingContainer extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        Text(
-                          '71',
-                          style: AppStyle.shortHeading.copyWith(
-                              fontSize: 14.0.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              letterSpacing: 0.5),
+                        Obx(
+                          ()=> Text(
+                            _loyaltyManager.pointsEarned.toString(),
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 14.0.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                letterSpacing: 0.5),
+                          ),
                         ),
                       ]),
                       // total redeemed row
@@ -212,13 +222,15 @@ class HeadingContainer extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          Text(
-                            '16',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 14.0.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                letterSpacing: 0.5),
+                          Obx(
+                            ()=> Text(
+                              _loyaltyManager.pointsRedeemed.toString(),
+                              style: AppStyle.shortHeading.copyWith(
+                                  fontSize: 14.0.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  letterSpacing: 0.5),
+                            ),
                           ),
                         ],
                       )

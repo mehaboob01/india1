@@ -39,10 +39,11 @@ class HomeMainIO extends StatefulWidget {
 }
 
 class _HomeMainIOState extends State<HomeMainIO> {
+  double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
-   final LocalAuthentication auth = LocalAuthentication();
-   int profileClciked = ProfileColor.INACTIVE.index;
-   String msg = "You are not authorized.";
+  final LocalAuthentication auth = LocalAuthentication();
+  int profileClciked = ProfileColor.INACTIVE.index;
+  String msg = "You are not authorized.";
 
   void showFirstTimePoints() async {
     if (_homeManager.loyalityPoints.toString() == "0") {
@@ -93,76 +94,79 @@ class _HomeMainIOState extends State<HomeMainIO> {
     }
   }
 
-  // Future<void> checkLogin() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
-  //
-  //   if (showAuth == true) {
-  //     {
-  //       try {
-  //         bool hasbiometrics =
-  //             await auth.canCheckBiometrics; //check if there is authencations,
-  //
-  //         if (hasbiometrics) {
-  //           List<BiometricType> availableBiometrics =
-  //               await auth.getAvailableBiometrics();
-  //           if (Platform.isAndroid) {
-  //             bool pass = await auth.authenticate(
-  //                 localizedReason: 'Authenticate with pattern/pin/passcode',
-  //                 biometricOnly: false);
-  //             if (pass) {
-  //               msg = "You are Authenticated.";
-  //               setState(() {});
-  //             } else {
-  //               SystemNavigator.pop();
-  //             }
-  //             // if (availableBiometrics.contains(BiometricType.face)) {
-  //             //
-  //             //   // bool pass = await auth.authenticate(
-  //             //   //     localizedReason: 'Authenticate with fingerprint',
-  //             //   //     biometricOnly: true);
-  //             //   //
-  //             //   // if(pass){
-  //             //   //   msg = "You are Autenciated.";
-  //             //   //   setState(() {
-  //             //   //
-  //             //   //   });
-  //             //   // }
-  //             //
-  //             // }
-  //           } else {
-  //             if (availableBiometrics.contains(BiometricType.fingerprint)) {
-  //               bool pass = await auth.authenticate(
-  //                   localizedReason: 'Authenticate with fingerprint/face',
-  //                   biometricOnly: true);
-  //               if (pass) {
-  //                 msg = "You are Authenicated.";
-  //                 setState(() {});
-  //               } else {
-  //                 SystemNavigator.pop();
-  //               }
-  //             }
-  //           }
-  //         } else {}
-  //       } on PlatformException catch (e) {
-  //         SystemNavigator.pop();
-  //
-  //         msg = "Error while opening fingerprint/face scanner";
-  //       }
-  //     }
-  //   }
-  // }
+  Future<void> checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
+
+    if (showAuth == true) {
+      {
+        try {
+          bool hasbiometrics =
+              await auth.canCheckBiometrics; //check if there is authencations,
+
+          if (hasbiometrics) {
+            List<BiometricType> availableBiometrics =
+                await auth.getAvailableBiometrics();
+            if (Platform.isAndroid) {
+              bool pass = await auth.authenticate(
+                  localizedReason: 'Authenticate with pattern/pin/passcode',
+                  biometricOnly: false);
+              if (pass) {
+                msg = "You are Authenticated.";
+                setState(() {});
+              } else {
+                SystemNavigator.pop();
+              }
+              // if (availableBiometrics.contains(BiometricType.face)) {
+              //
+              //   // bool pass = await auth.authenticate(
+              //   //     localizedReason: 'Authenticate with fingerprint',
+              //   //     biometricOnly: true);
+              //   //
+              //   // if(pass){
+              //   //   msg = "You are Autenciated.";
+              //   //   setState(() {
+              //   //
+              //   //   });
+              //   // }
+              //
+              // }
+            } else {
+              if (availableBiometrics.contains(BiometricType.fingerprint)) {
+                bool pass = await auth.authenticate(
+                    localizedReason: 'Authenticate with fingerprint/face',
+                    biometricOnly: true);
+                if (pass) {
+                  msg = "You are Authenicated.";
+                  setState(() {});
+                } else {
+                  SystemNavigator.pop();
+                }
+              }
+            }
+          } else {}
+        } on PlatformException catch (e) {
+          SystemNavigator.pop();
+
+          msg = "Error while opening fingerprint/face scanner";
+        }
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
 
+
     showFirstTimePoints();
-   // checkLogin();
+     //checkLogin();
   }
 
   @override
   Widget build(BuildContext context) {
+    widthIs = MediaQuery.of(context).size.width;
+    heightIs = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
         Get.defaultDialog(
@@ -182,26 +186,19 @@ class _HomeMainIOState extends State<HomeMainIO> {
       },
       child: Obx(
         () => GestureDetector(
-          onTap: () => {
-
-
-
-
-            profileClciked == 0
-
-
-          },
+          onTap: () => {profileClciked == 0},
           child: Scaffold(
             body: _homeManager.isLoading.value
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
-                        child: LoadingAnimationWidget.horizontalRotatingDots(
+                        child: LoadingAnimationWidget.inkDrop(
                           size: 36,
                           color: AppColors.primary,
                         ),
                       ),
+                      SizedBox(height: 8,),
                       Text('Loading ...',
                           style: AppStyle.shortHeading.copyWith(
                               color: AppColors.black,
@@ -267,64 +264,83 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-
                                             profileClciked == 1;
                                             showMenu<String>(
                                               context: context,
                                               shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.0),bottomRight: Radius.circular(13.0),topLeft: Radius.circular(13.0))
-                                              ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  13.0),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  13.0),
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  13.0))),
 
                                               position: RelativeRect.fromLTRB(
-                                                  25.0, 112.0,16.0,0.0),
+                                                  25.0, 112.0, 16.0, 0.0),
                                               //position where you want to show the menu on screen
                                               items: [
-
                                                 PopupMenuItem(
-
-
-                                                  child: ListTile(
-                                                    title: Text("My Profile"),
+                                                  child: Text(
+                                                    "My Profile",
+                                                    style: AppStyle.shortHeading
+                                                        .copyWith(
+                                                            fontSize: Dimens
+                                                                .font_14sp,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            letterSpacing: 1),
                                                   ),
                                                 ),
                                                 PopupMenuDivider(),
                                                 PopupMenuItem(
-
-                                                  child: ListTile(
-                                                    onTap: () =>    {
-                                                      Get.back(),
-
-                                            Get.toNamed(MRouter.loyaltyPoints),
-
-                                            },
-
-
-
-
-
-                                                    title: Text("My Rewards"),
-                                                  ),
+                                                  child: GestureDetector(
+                                                      onTap: () => {
+                                                            Get.back(),
+                                                            Get.toNamed(MRouter
+                                                                .loyaltyPoints),
+                                                          },
+                                                      child: Text(
+                                                        "My Rewards",
+                                                        style: AppStyle
+                                                            .shortHeading
+                                                            .copyWith(
+                                                                fontSize: Dimens
+                                                                    .font_14sp,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    1),
+                                                      )),
                                                 ),
                                               ],
                                               elevation: 8.0,
-                                            ).then<void>((String? itemSelected) {
+                                            ).then<void>(
+                                                (String? itemSelected) {
                                               if (itemSelected == null) return;
 
                                               if (itemSelected == "1") {
-
                                               } else if (itemSelected == "2") {
-                                                Get.toNamed(MRouter.loyaltyPoints);
+                                                Get.toNamed(
+                                                    MRouter.loyaltyPoints);
 
                                                 print("2nd itme ");
-
                                               } else if (itemSelected == "3") {
-
                                               } else {
                                                 //code here
                                               }
                                             });
                                           },
-                                          child: headingBox(image: AppImages.user_profile),
+                                          child: headingBox(
+                                              image: AppImages.user_profile),
                                         ),
                                         //headingBox(image: AppImages.user_profile),
                                       ],
@@ -450,9 +466,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: profileClciked == 1
-                ? Colors.orange
-                : Colors.white,
+            color: profileClciked == 1 ? Colors.orange : Colors.white,
             borderRadius: BorderRadius.circular(5)),
         child: text != null
             ? Center(

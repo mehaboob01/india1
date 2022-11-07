@@ -7,6 +7,7 @@ class AppColors {
   static const Color butngradient2 = Color(0xff00C376);
   static const Color backGroundgradient1 = Color(0xff004280);
   static const Color backGroundgradient2 = Color(0xff357CBE);
+  static const cardScreenBg = Color(0xFFD1D1D1);
 
 
   // linear gradient orange
@@ -324,6 +325,9 @@ AppBar appBar(titleOfAppbar) {
   );
 }
 
+
+
+
 AppBar transParentAppbar(titleOfAppbar) {
   return AppBar(
     centerTitle: false,
@@ -342,6 +346,39 @@ AppBar transParentAppbar(titleOfAppbar) {
         fontSize: Dimens.font_16sp,
       ),
     ),
+  );
+
+
+
+}
+
+
+Widget rupeeIcon(
+    {required Color color,
+      required String label,
+      required Color textColor,
+      bool? boldfont,
+      required double fontSize}) {
+  return Row(
+    children: [
+      SizedBox(
+        width: fontSize * 0.8,
+        height: fontSize * 0.8,
+        child: Image.asset(
+          AppImages.rupees_icon,
+          color: color,
+        ),
+      ),
+      const SizedBox(width: 4.0),
+      Text(
+        label,
+        style: AppStyle.shortHeading.copyWith(
+          fontSize: fontSize,
+          fontWeight: boldfont == true ? FontWeight.w600 : null,
+          color: textColor,
+        ),
+      ),
+    ],
   );
 }
 
@@ -377,6 +414,7 @@ class AppImages {
 
   // payments
   static const String mobilRechargeSvg = '${assetSvg}payments/Recharge.svg';
+  static const String contactPickerSvg = '${assetSvg}payments/contactPick.svg';
   static const String fastagSvg = '${assetSvg}payments/fasTag.svg';
   static const String dthSvg = '${assetSvg}payments/DTH.svg';
   // insurance
@@ -415,6 +453,7 @@ class AppImages {
   // bank and upi/vpa
   static const String bankImageSvg = '${assetSvg}bank.svg';
   static const String upiVpaSvg = '${assetSvg}UPI.svg';
+  static const String rupees_icon = '${assetPng}rupee_symbol.png';
 
   static const String walletIcon = '${assetSvg}payments/wallet_icon.svg';
 }

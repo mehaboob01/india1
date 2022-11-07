@@ -42,6 +42,9 @@ class HomeManager extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
     String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
+
+    print("customer id${customerId}");
+
     loyalityPoints.value = points.toString();
     try {
       isLoading.value = true;
@@ -52,8 +55,12 @@ class HomeManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
+
+      print("Response==>>${response.body.toString()}");
       var jsonData = jsonDecode(response.body);
       HomeModel homeModel = HomeModel.fromJson(jsonData);
+
+      print("Response of home Api${response.body}");
 
       if (response.statusCode == 200) {
         isLoading(false);
@@ -72,14 +79,14 @@ class HomeManager extends GetxController {
         Flushbar(
           title: "Error!",
           message: "Something went wrong",
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 1),
         )..show(Get.context!);
       }
     } catch (e) {
       Flushbar(
         title: "Error!",
         message: "Something went wrong",
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 1),
       )..show(Get.context!);
     } finally {
       isLoading(false);

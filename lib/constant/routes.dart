@@ -6,6 +6,7 @@ import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 import '../screens/loans/personal_loan_io/choose_amount_io.dart';
 import '../screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../screens/loyality_points/loyalty_page.dart';
+import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
@@ -22,6 +23,7 @@ class MRouter {
   static const String chooseAmountIO = 'ChooseAmountIO';
   static const String redeemPointsPage = 'RedeemPointsPage';
   static const String cashBackRedeemPage = 'CashBackRedeemPage';
+  static const String mobileRechargeIO = 'MobileRechargeIO';
 
   
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -37,6 +39,9 @@ class MRouter {
 
       case verifiedScreen:
         return CupertinoPageRoute(builder: (_) => VerifiedScreen());
+
+      case mobileRechargeIO:
+        return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
 
 
       case chooseAmountIO:
