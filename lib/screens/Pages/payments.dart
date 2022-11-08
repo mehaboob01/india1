@@ -1,11 +1,47 @@
+// import 'package:flutter/material.dart';
+// import 'package:india_one_ui/utils/extensions.dart';
+
 import 'package:flutter/material.dart';
 import 'package:india_one/constant/extensions.dart';
-import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/widgets/card.dart';
+
+import '../../constant/theme_manager.dart';
+import '../../widgets/card.dart';
+import '../../widgets/common_banner.dart';
+import '../../widgets/common_page_header.dart';
 
 
 class PaymentsPage extends StatelessWidget {
+  //const PaymentsPage({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonPageHeader(pageName: PageName.payments),
+              CommonPageCategoriesHeading(pageName: PageName.payments),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                child: const PaymentCards(),
+              ),
+               CommonBanner()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PaymentCards extends StatelessWidget {
+  const PaymentCards({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +55,7 @@ class PaymentsPage extends StatelessWidget {
         ),
         ItemCard(
           image: AppImages.fastagSvg,
-          label: 'Fastag',
+          label: 'FASTag',
           itembgColor: ItemCardbgColor.lightRed,
         ),
         ItemCard(

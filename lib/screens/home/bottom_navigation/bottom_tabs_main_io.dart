@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/Pages/loans.dart';
+import 'package:india_one/screens/Pages/payments.dart';
 
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/other_constants_io.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../Pages/insurance.dart';
+import '../../Pages/savings.dart';
 import '../../home_start/home_main_io.dart';
 import '../../insurances/insurances_main_io.dart';
 
@@ -77,7 +80,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                       }, selectedTabId == 1, 12),
                       HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/underline.svg', "${'payments'.tr}", () {
                         selectedTabId = 2;
-                        mainHomeWidget = PaymentsMainIO();
+                        mainHomeWidget = PaymentsPage();
                         setState(() {
                           showAuth();
                           selectedTabId;
@@ -87,7 +90,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                       HomeEachBottomTabIO(
                           'assets/images/insuranceInactive.svg','assets/images/underline.svg', "${'insurance'.tr}", () {
                         selectedTabId = 3;
-                        mainHomeWidget = InsurancesMainIO();
+                        mainHomeWidget = InsurancePage();
                         setState(() {
                           showAuth();
                           selectedTabId;
@@ -96,7 +99,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                       }, selectedTabId == 3, 12),
                       HomeEachBottomTabIO('assets/images/savingsInactive.svg','assets/images/underline.svg', "${'savings'.tr}", () {
                         selectedTabId = 4;
-                        mainHomeWidget = SavingsMainIO();
+                        mainHomeWidget = SavingsPage();
                         setState(() {
                           showAuth();
                           selectedTabId;

@@ -16,7 +16,7 @@ class CashBackController extends GetxController {
   final loyaltyBankAccountreEnteredTextEditingCtrl =
       TextEditingController().obs;
   final loyaltyBankAccountIFSCTextEditingCtrl = TextEditingController().obs;
-  final upiFormKey = GlobalKey<FormState>();
+  final upiFormKey = GlobalKey<FormBuilderState>();
   final bankAccountformKey = GlobalKey<FormState>();
 
 

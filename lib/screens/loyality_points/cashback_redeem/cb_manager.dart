@@ -14,8 +14,6 @@ import 'cb_models/upi_verify_model.dart';
 class CashBackManager extends GetxController {
   var isLoading = false.obs;
 
-
-
   //bank list for drop dowm
   var bankList = <String>[].obs;
   var bankListSend = <String>[];
@@ -87,7 +85,6 @@ class CashBackManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
 
-
       print("customer id${customerId}");
 
       var response = await http.post(
@@ -115,7 +112,6 @@ class CashBackManager extends GetxController {
         customerBankList.addAll(customerBankListSend);
         selectedplanList.addAll(localSelectedList);
 
-
         isLoading(false);
       } else {
         Flushbar(
@@ -139,22 +135,21 @@ class CashBackManager extends GetxController {
   cashBackToBankApi(
     bool? fromAccountList,
     String? bankIdOrBankAccountId,
-    Map<String, dynamic> data, String pointsToReedem,
+    Map<String, dynamic> data,
+    String pointsToReedem,
   ) async {
-
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       print("customer id${customerId}");
 
-      Map<String,dynamic> sendData= {};
-      if(fromAccountList==true){
-        sendData= {
+      Map<String, dynamic> sendData = {};
+      if (fromAccountList == true) {
+        sendData = {
           "bankId": fromAccountList == true ? "" : bankIdOrBankAccountId,
           "pointsToRedeem": data['pointsToRedeem'].toString(),
           "accountNumber": data['accountNumber'].toString(),
-          "bankAccountId":
-          fromAccountList == true ? bankIdOrBankAccountId : "",
+          "bankAccountId": fromAccountList == true ? bankIdOrBankAccountId : "",
           "ifscCode": fromAccountList == true
               ? data['IFSC'].toString()
               : data['ifscCode'].toString(),
@@ -164,15 +159,13 @@ class CashBackManager extends GetxController {
           "customerId": customerId,
           "saveBankDetails": true
         };
-      }else{
-        sendData=
-        {
-
+      } else {
+        sendData = {
           "pointsToRedeem": pointsToReedem,
-          "bankAccountId" : int.parse(bankIdOrBankAccountId.toString()),
+          "bankAccountId": int.parse(bankIdOrBankAccountId.toString()),
           "customerId": customerId,
         };
-    }
+      }
 
       //  print("points redeemed==>>");
       // print(data['pointsToRedeem']);
@@ -220,6 +213,7 @@ class CashBackManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       isLoading.value = true;
+
       var response = await http.post(Uri.parse(baseUrl + Apis.upiVerify),
           body: jsonEncode({"upiId": upiId, "customerId": customerId}),
           headers: {
@@ -258,16 +252,16 @@ class CashBackManager extends GetxController {
   }
 
   // cashbackToUpi Api
-  cashBackToUpiApi() async {
+  cashBackToUpiApi(String Upi, String points) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.cashBackToUpi),
           body: jsonEncode({
-            "pointsToRedeem": 30,
-            "upiId": "raj@okicici",
-            "customerId": "0ddfbf31-7d5c-40c9-9982-6f85ffe948c5"
+            "pointsToRedeem": points,
+            "upiId": Upi,
+            "customerId": customerId
           }),
           headers: {
             'Content-type': 'application/json',
