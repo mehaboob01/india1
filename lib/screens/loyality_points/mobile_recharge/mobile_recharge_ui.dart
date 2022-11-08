@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 
 import '../../../widgets/common_drop_down.dart';
 import '../../../widgets/common_radio_card.dart';
-import '../../onboarding_login/user_login/user_login_ui.dart';
 import 'mr_manager.dart';
 
 class MobileRechargeIO extends StatefulWidget {
@@ -75,7 +74,6 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
             }
           }
         }
-        // FocusScope.of(context).unfocus();
       } else {}
     });
   }

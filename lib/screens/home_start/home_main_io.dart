@@ -6,12 +6,9 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
-import 'package:india_one/widgets/text_io.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,16 +17,11 @@ import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/carasoul_slider.dart';
-import '../../widgets/divider_io.dart';
-import '../../widgets/home_blue_gradient_io.dart';
-import '../../widgets/home_each_tile_io.dart';
-import '../../widgets/icon_io.dart';
-import '../../widgets/pop_up_menu.dart';
+
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
 import '../Pages/savings.dart';
-import '../onboarding_login/otp_screen/otp_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
@@ -119,20 +111,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
               } else {
                 SystemNavigator.pop();
               }
-              // if (availableBiometrics.contains(BiometricType.face)) {
-              //
-              //   // bool pass = await auth.authenticate(
-              //   //     localizedReason: 'Authenticate with fingerprint',
-              //   //     biometricOnly: true);
-              //   //
-              //   // if(pass){
-              //   //   msg = "You are Autenciated.";
-              //   //   setState(() {
-              //   //
-              //   //   });
-              //   // }
-              //
-              // }
             } else {
               if (availableBiometrics.contains(BiometricType.fingerprint)) {
                 bool pass = await auth.authenticate(
@@ -160,10 +138,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
   void initState() {
     super.initState();
 
-
     showFirstTimePoints();
 
-     checkLogin();
+    checkLogin();
   }
 
   @override
@@ -201,7 +178,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
                           color: AppColors.primary,
                         ),
                       ),
-                      SizedBox(height: 8,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text('Loading ...',
                           style: AppStyle.shortHeading.copyWith(
                               color: AppColors.black,
@@ -246,9 +225,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                         headingBox(
                                             text: 'Aa',
                                             ontap: () {
-                                              // Get.toNamed(
-                                              //     MRouter.languageSelectionIO);
-
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -282,44 +258,31 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                           topLeft:
                                                               Radius.circular(
                                                                   13.0))),
-
                                               position: RelativeRect.fromLTRB(
                                                   25.0, 112.0, 16.0, 0.0),
-                                              //position where you want to show the menu on screen
                                               items: [
                                                 PopupMenuItem(
-
                                                   child: GestureDetector(
-                                                    onTap: (){
-
-                                                      Get.to(() => ProfileScreen());
-
-
-
+                                                    onTap: () {
+                                                      Get.to(() =>
+                                                          ProfileScreen());
                                                     },
-
                                                     child: Container(
-                                                      // height:36,
-
-
-
-
                                                       child: Text(
                                                         "My Profile",
-                                                        style: AppStyle.shortHeading
+                                                        style: AppStyle
+                                                            .shortHeading
                                                             .copyWith(
                                                                 fontSize: Dimens
                                                                     .font_14sp,
-                                                                color: Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
-                                                                    FontWeight.w400,
-                                                                letterSpacing: 1),
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    1),
                                                       ),
-                                                      // decoration: BoxDecoration(
-                                                      //
-                                                      // color: Colors.red
-                                                      //
-                                                      // ),
                                                     ),
                                                   ),
                                                 ),
@@ -368,7 +331,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                           child: headingBox(
                                               image: AppImages.user_profile),
                                         ),
-                                        //headingBox(image: AppImages.user_profile),
                                       ],
                                     ),
                                   ],
@@ -855,66 +817,6 @@ Widget nearestAtm({VoidCallback? onPressed}) {
     ),
   );
 }
-
-// showAlertDialog(BuildContext context, String message, String heading,
-//     String buttonAcceptTitle, String buttonCancelTitle) {
-//   // set up the buttons
-//   Widget cancelButton = RaisedButton(
-//     color: Colors.red,
-//     child: Text(
-//       buttonCancelTitle,
-//       style: TextStyle(color: AppColors.white),
-//     ),
-//     onPressed: () {
-//       Get.back();
-//     },
-//   );
-//   Widget continueButton = FlatButton(
-//     color: AppColors.blueDark,
-//     child: Text(
-//       buttonAcceptTitle,
-//       style: TextStyle(color: AppColors.white),
-//     ),
-//     onPressed: () {
-//       dataBox.erase();
-//       Navigator.pushAndRemoveUntil(
-//           context,
-//           MaterialPageRoute(
-//             builder: (context) => SignInScreen(),
-//           ),
-//               (route) => false);
-//     },
-//   );
-//
-//   // set up the AlertDialog
-//   AlertDialog alert = AlertDialog(
-//     title: Text(heading),
-//     content: Text(message),
-//     actions: [
-//       cancelButton,
-//       continueButton,
-//     ],
-//   );
-//
-//   // show the dialog
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return alert;
-//     },
-//   );
-// }
-// Widget confirmBtn() {
-//   return ElevatedButton(
-//       onPressed: () {
-//         if (Platform.isAndroid) {
-//           SystemNavigator.pop();
-//         } else if (Platform.isIOS) {
-//           exit(0);
-//         }
-//       },
-//       child: Text("Yes"));
-// }
 
 Widget confirmBtn() {
   return ElevatedButton(
