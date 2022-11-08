@@ -38,6 +38,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   void startTimer() {
     currentSeconds = widget.retryInSeconds!;
     timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if(mounted)
       setState(() {
         currentSeconds--;
         if (currentSeconds == 0) timer!.cancel();
@@ -64,6 +65,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   void dispose() {
     // TODO: implement dispose
     SmsAutoFill().unregisterListener();
+    timer!.cancel();
     super.dispose();
   }
 

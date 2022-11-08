@@ -50,4 +50,9 @@ class Apis
 
 
 
+  static String profile = "customers/profile";
+  static String addPersonalDetails = "customers/profile/personal-details";
+  static String additionalDetails = "customers/profile/additional-details";
+  static String residentialAddress = "customers/profile/residential-address";
+  static String getCityState = "city-state";
 }

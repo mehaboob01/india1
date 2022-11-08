@@ -136,6 +136,13 @@ class AppColors {
 
   static const facebookBlue = Color(0xFF07408A);
   static const googleRed = Color(0xFFDC4E41);
+  static const orangeColor = Color(0xFFF89635);
+  static const lightOrangeColor = Color(0xFFF2642C);
+  static const lightBlack = Color(0xFF2D2D2D);
+  static const lightGreyColor = Color(0xFFDDDDDD);
+  static const borderColor = Color(0xFF999999);
+  static const hintColor = Color(0xFFB6B6B6);
+  static const dimLightGreyColor = Color(0xFFD1D1D1);
 
   // text edting colors
   static const Color greyTextColor = Color(0xff777777);
