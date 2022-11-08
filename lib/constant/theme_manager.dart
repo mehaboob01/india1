@@ -9,6 +9,9 @@ class AppColors {
   static const Color backGroundgradient2 = Color(0xff357CBE);
   static const cardScreenBg = Color(0xFFD1D1D1);
 
+  static const Color referEarnGradient1 = Color(0xff014280);
+  static const Color referEarnGradient2 = Color(0xff9B79DD);
+
 
   // linear gradient orange
   static const Color orangeGradient1 = Color(0xffFFF46B);
@@ -383,6 +386,7 @@ Widget rupeeIcon(
 }
 
 class AppImages {
+  static const String referEarnSVG = 'assets/images/gift_box.png';
   static const String assetPng = 'assets/png/';
   static const String bottomNavHome = '${assetPng}home.png';
   static const String celebrationBg = '${assetPng}celebrationbg.png';
@@ -456,6 +460,13 @@ class AppImages {
   static const String rupees_icon = '${assetPng}rupee_symbol.png';
 
   static const String walletIcon = '${assetSvg}payments/wallet_icon.svg';
+
+
+  static const String loansPageSvg = '${assetSvg}payments/loansPageSVG.svg';
+  static const String paymentsPageSvg = '${assetSvg}payments/paymentsPageSVG.svg';
+  static const String insurancePageSvg = '${assetSvg}payments/insurancePageSVG.svg';
+  static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
+  static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
 }
 
 class Strings {

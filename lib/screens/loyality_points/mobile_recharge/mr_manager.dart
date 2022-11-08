@@ -18,6 +18,7 @@ class MrManager extends GetxController {
   var contact = Contact().obs;
 
   var isLoading = false.obs;
+  var isFetchPlanLoading = false.obs;
   var isPlansAvailable = false.obs;
 
   var operatorListString = <String>[].obs;
@@ -149,10 +150,11 @@ class MrManager extends GetxController {
   // check planes
 
   checkPlanesApi(String? operatorId, String? circleId, mobileNumber) async {
+    isFetchPlanLoading.value = true;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-      isLoading.value = true;
+
       var response = await http.post(Uri.parse(baseUrl + Apis.plans),
           body: jsonEncode({
             "operatorId": operatorId,
@@ -170,8 +172,7 @@ class MrManager extends GetxController {
       PlanesModel planesModel = PlanesModel.fromJson(jsonData);
 
       if (response.statusCode == 200) {
-        List<bool> localSelectedList=[];
-
+        List<bool> localSelectedList = [];
 
         plansList.clear();
         for (var index in planesModel.data!.plans!) {
@@ -184,8 +185,7 @@ class MrManager extends GetxController {
         selectedplanList.addAll(localSelectedList);
         print("plans List ");
         print(plansList.length);
-
-
+        isFetchPlanLoading(false);
       } else {
         Flushbar(
           title: "Error!",
@@ -200,7 +200,7 @@ class MrManager extends GetxController {
         duration: Duration(seconds: 2),
       )..show(Get.context!);
     } finally {
-      isLoading.value = false;
+      isFetchPlanLoading.value = false;
     }
   }
 
@@ -231,10 +231,11 @@ class MrManager extends GetxController {
         Flushbar(
           title: "successful!",
           message: "Recharge successful",
-          duration: Duration(seconds: 3),
-        )..show(Get.context!).then((value) =>  Navigator.of(context)
-            .pushNamedAndRemoveUntil(MRouter.homeScreen, (Route<dynamic> route) => false));
-
+          duration: Duration(seconds: 2),
+        )..show(Get.context!)
+            .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                MRouter.homeScreen, (Route<dynamic> route) => false))
+            .then((value) => plansList.clear());
       } else {
         Flushbar(
           title: "Error!",

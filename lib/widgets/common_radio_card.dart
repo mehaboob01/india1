@@ -170,9 +170,8 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                             : Colors.black,
                                       ),
                                     ),
-                                    const CommonDivider(
-                                        isvertical: true,
-                                        verticalPadding: EdgeInsets.zero),
+                                   Divider(thickness: 1,),
+                                    SizedBox(height: 2,),
                                     CardModel().rechargePlanModel[0]
                                                 ['data'] !=
                                             null
@@ -314,7 +313,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                 child: Text(
                                   '${widget.bankAccountName}', //'${CardModel().accountModel[0]['name']}',
                                   style: AppStyle.shortHeading.copyWith(
-                                    fontSize: 16.0.sp,
+                                    fontSize: Dimens.font_18sp,
                                     fontWeight: FontWeight.w600,
                                     color: widget.isSelected
                                         ? Colors.white

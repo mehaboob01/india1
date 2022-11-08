@@ -167,7 +167,7 @@ class LoyaltyScreen extends StatelessWidget {
                                                 "nonCacheTransaction"
                                             ? Rewardtype.recharge
                                             : Rewardtype.cashTransaction,
-                                date: _loyaltyManager.recentRewardTransactionsList[index].expiryDate!.toLocal().toString(),
+                                date: "Expired on 02 Nov 2022",
                                 points: _loyaltyManager
                                     .recentRewardTransactionsList[index].points!
                                     .toInt(),

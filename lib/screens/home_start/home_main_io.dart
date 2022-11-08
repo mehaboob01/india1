@@ -389,7 +389,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: LoansPage(),
+                          child: LoansCard(),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -408,7 +408,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: PaymentsPage(),
+                          child: PaymentCards(),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -427,7 +427,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: InsurancePage(),
+                          child: InsuranceCard(),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -446,7 +446,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: SavingsPage(),
+                          child: SavingsCard(),
                         )
                       ],
                     ),
@@ -653,7 +653,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
 // find nearest Atm -------------------------------
   Widget nearestAtm({VoidCallback? onPressed}) {
     return Container(
-      height: 20.0.wp,
+      height: 24.0.wp,
       margin: EdgeInsets.all(2.0.hp),
       padding: EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 2.0.wp),
       decoration: BoxDecoration(
