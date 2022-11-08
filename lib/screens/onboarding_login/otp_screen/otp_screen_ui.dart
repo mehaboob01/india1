@@ -1,23 +1,21 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/widgets/screen_bg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
-
+import '../../../core/data/local/shared_preference_keys.dart';
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
   String? phoneNumber;
   int? retryInSeconds;
-  //String signature = "{{ app signature }}";
-
-
 
   OtpScreen(this.phoneNumber, this.retryInSeconds);
 
@@ -25,7 +23,7 @@ class OtpScreen extends StatefulWidget {
   State<OtpScreen> createState() => _OtpState();
 }
 
-class _OtpState extends State<OtpScreen> with CodeAutoFill{
+class _OtpState extends State<OtpScreen> {
   final interval =  Duration(seconds: 1);
   OtpManager _otpManager = Get.put(OtpManager());
 
@@ -37,12 +35,16 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
   void startTimer()
   {
     timer = Timer.periodic(Duration(seconds: 1), (_) {
-      setState(() {
+
+    setState(() {
       currentSeconds--;
       if(currentSeconds == 0) timer!.cancel();
     });
     });
   }
+
+
+
 
   final GlobalKey<FormBuilderState> _userOtp = GlobalKey<FormBuilderState>();
   String get timerText => '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
@@ -59,25 +61,17 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    SmsAutoFill().unregisterListener();
-    super.dispose();
-  }
-
-  @override
   void initState() {
+
+
+
     listenOtp();
     startTimer();
+    //startTimeout();
     super.initState();
   }
 
   Widget build(BuildContext context) {
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +82,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                 height: MediaQuery.of(context).size.height,
                 color: AppColors.white,
                 child: Stack(
-                  children: [LoginBgScreen('assets/images/login_bg.png'), buildOtpCard()],
+                  children: [BgScreen(), buildOtpCard()],
                 ),
               ),
             ),
@@ -103,7 +97,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
       alignment: FractionalOffset.bottomCenter,
       child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*0.6,
+          height: 524,
           child: Padding(
             padding:  EdgeInsets.all(24.0),
             child: Column(
@@ -177,7 +171,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                               ))
                                         ],
                                       ):Text(
-                                        "enter_otp".tr,
+                                        "Enter OTP",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.black,
@@ -190,7 +184,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                       Row(
                                         children: [
                                           Text(
-                                            "otp_message".tr,
+                                            "We sent it to the number",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.black,
@@ -225,8 +219,11 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                             right: 12.0,
                           ),
                           child:
+
+
                           Column(
                             children: [
+
                               PinFieldAutoFill(
                                 currentCode: codeValue,
                                 onCodeChanged: (code) {
@@ -235,10 +232,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                   });
                                   if(codeValue!.length==4)
                                     {
-                                      print("verify api's");
-
-                                      log('Hitting verify apis');
-                                      _otpManager.callVerifyOtpApi(codeValue.toString(), context);
+                                      _otpManager.callVerifyOtpApi(
+                                          codeValue.toString(), context);
                                     }
                                 },
                                 codeLength: 4,
@@ -260,7 +255,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                             visible:
                                 _otpManager.wrongOtp == true ? true : false,
                             child: Text(
-                              "invalid_otp".tr,
+                              "Invalid OTP entered. Please enter valid OTP",
                               overflow: TextOverflow.visible,
                               maxLines: 1,
                               style: TextStyle(
@@ -288,7 +283,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                 Get.offAllNamed(MRouter.userLogin);
                               },
                               child: Text(
-                                "edit_number".tr,
+                                "Edit Number",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.black,
@@ -302,21 +297,15 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                   ? GestureDetector(
                                       onTap: () {
                                         if(currentSeconds == 0)
-
-                                        {
-                                          listenOtp();
-
-                                          _otpManager.callResendOtpApi(
-                                              widget.phoneNumber.toString(),
-                                              context,
-                                              true);
-                                        }
-
+                                        _otpManager.callResendOtpApi(
+                                            widget.phoneNumber.toString(),
+                                            context,
+                                            true);
                                       },
                                       child: Row(
                                         children: [
                                           Text(
-                                            'resend_otp'.tr,
+                                            'Resend OTP',
                                             style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.facebookBlue,
@@ -335,13 +324,24 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 4,),
+                                          SizedBox(width: 6,),
                                           Visibility(
                                             visible: currentSeconds == 0 ? false : true,
                                             child: SizedBox(
                                               width: 22,
                                               height: 22,
-                                              child:
+                                              child: Stack(
+
+
+                                                children:[
+                                                  CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                                                    backgroundColor: AppColors.facebookBlue,
+                                                    strokeWidth: 2,
+                                                    value: currentSeconds/timerMaxSeconds,
+                                                  ),
+
+
                                                   Center(
                                                     child: Padding(
                                                       padding:  EdgeInsets.all(2),
@@ -353,8 +353,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                                       ),
                                                 ),
                                                     ),
-                                                  ),
-
+                                                  ),]
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -363,7 +363,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                                   : Row(
                                       children: [
                                         Text(
-                                          'sending_otp'.tr,
+                                          'Sending',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.facebookBlue,
@@ -402,23 +402,17 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill{
                 color: AppColors.white,
                 width: 0.5,
               ),
-
+              // radius of 10
               color: AppColors.white // green as background color
               )),
     );
   }
 
-  void  listenOtp() async {
-    await SmsAutoFill().unregisterListener();
-    listenForCode();
+  void listenOtp() async {
+    // await SmsAutoFill().unregisterListener();
+    // listenForCode();
     await SmsAutoFill().listenForCode;
-
     print("OTP listen Called");
-  }
-
-  @override
-  void codeUpdated() {
-    // TODO: implement codeUpdated
   }
 
 

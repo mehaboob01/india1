@@ -46,7 +46,11 @@ class _HomeMainIOState extends State<HomeMainIO> {
         Container(
           color: AppColors.whiteColor,
           height: 5,
-        ),],
+        ),
+        /*GetX<HomePointsControllerIO>(builder: (loy) {
+          return Container(child: TextIO("loy.toString()"),);
+        }),*/
+      ],
     );
   }
 }

@@ -1,13 +1,14 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 
 import '../screens/home/home_ui.dart';
 
-import '../screens/onboarding_login/finger_print/finger_print_io.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/select_language/language_selection_io.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
+
 
 class MRouter {
   static const String splashRoute = 'SplashWidget';
@@ -15,7 +16,7 @@ class MRouter {
   static const String userLogin = 'UserLogin';
   static const String verifiedScreen = 'VerifiedScreen';
   static const String languageSelectionIO = 'LanguageSelectionIO';
-  static const String fingerPrintIO = 'FingerPrintIO';
+
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -28,14 +29,13 @@ class MRouter {
       case userLogin:
         return CupertinoPageRoute(builder: (_) => UserLogin());
 
+
+
       case verifiedScreen:
         return CupertinoPageRoute(builder: (_) => VerifiedScreen());
 
       case languageSelectionIO:
         return CupertinoPageRoute(builder: (_) => LanguageSelectionIO());
-
-      case fingerPrintIO:
-        return CupertinoPageRoute(builder: (_) => FingerPrintIO());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

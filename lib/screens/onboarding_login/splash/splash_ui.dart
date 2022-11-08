@@ -1,14 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
-import '../../../core/data/local/shared_preference_keys.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
@@ -28,61 +24,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // launch login screen
   Future<void> launchLoginWidget() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // //Return String
+    // String? stringValue = prefs.getString('CurrentUser');
+    // print("Current User");
+    // print(stringValue);
+
     Get.offAllNamed(MRouter.languageSelectionIO);
   }
 
-
-
-
-
-
-  void getSignature() async {
-    final String signature = await SmsAutoFill().getAppSignature;
-    debugPrint('signature $signature');
-  }
-  // Future<void> initMobileNumberState() async {
-  //
-  //   try {
-  //     var data = await autoFill.hint ?? '';
-  //     if (data.isNotEmpty) {
-  //       mobileNumber.value = data;
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  //
-  //   String val = mobileNumber.value.toString().replaceAll("+91", '');
-  //   val = val.startsWith('0') ? val.replaceFirst('0', "") : val;
-  //   validatePhone(val);
-  //   phoneNumberController!.value.text = val;
-  //
-  // }
-  // // validate phone
-  // validatePhone(value) {
-  //   String pattern = r'(^(?:[+0]9)?[0-9]{10}$)';
-  //   RegExp regExp = RegExp(pattern);
-  //   if (value.isEmpty) {
-  //     validateMobile.value = false;
-  //   } else if (!regExp.hasMatch(value)) {
-  //     validateMobile.value = false;
-  //   } else {
-  //     String val =
-  //     phoneNumberController!.value.text.toString().replaceAll("+91", '');
-  //     val = val.startsWith('0') ? val.replaceFirst('0', "") : val;
-  //     phoneNumberController!.value.text = val;
-  //     validateMobile.value = true;
-  //     // phoneNumberController!.value.selection = TextSelection.fromPosition(
-  //     //     TextPosition(offset: phoneNumberController!.value.text.length));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     return Scaffold(
       body: buildSplashForMobile(),
     );
@@ -119,5 +71,20 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-
+  // Future<void> requestCameraPermission() async {
+  //   final serviceStatus = await Permission.camera.isGranted;
+  //
+  //   bool isCameraOn = serviceStatus == ServiceStatus.enabled;
+  //
+  //   final status = await Permission.camera.request();
+  //
+  //   if (status == PermissionStatus.granted) {
+  //     print('Permission Granted');
+  //   } else if (status == PermissionStatus.denied) {
+  //     print('Permission denied');
+  //   } else if (status == PermissionStatus.permanentlyDenied) {
+  //     print('Permission Permanently Denied');
+  //     await openAppSettings();
+  //   }
+  // }
 }

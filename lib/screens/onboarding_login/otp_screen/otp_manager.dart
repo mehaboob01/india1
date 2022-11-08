@@ -12,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
 import 'otp_model.dart';
-import 'dart:developer';
 
 class OtpManager extends GetxController {
   var isLoading = false.obs;
@@ -21,7 +20,6 @@ class OtpManager extends GetxController {
 
   SharedPreferences? prefs;
 
-  //api call for resend otp
   callResendOtpApi(String phoneNumber, BuildContext context,
       bool? termConditionChecked) async {
     try {
@@ -62,75 +60,52 @@ class OtpManager extends GetxController {
         }
       });
     } catch (e) {
-      Flushbar(
-        title:  "Error",
-        message:  "Please try again..",
-        duration:  Duration(seconds: 3),
-      )..show(context);
+      var snackBar = SnackBar(
+        content: Text("Something went wrong!"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       // showSnackBar("Something went wrong");
     } finally {
       resendOtpLoading.value = false;
     }
   }
 
-  //api call for verify otp
+  callVerifyOtpApi(String OtpNumber, BuildContext context) async {
 
-  callVerifyOtpApi(String otpNumber, BuildContext context) async {
-    log('response :::: : ===========================');
-    debugPrint(' inside method');
-// printInfo("TEST LOG","TESTLOG");
+
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+       prefs = await SharedPreferences.getInstance();
+      //Return String
       String? tokenKey = prefs!.getString(SPKeys.TOKEN_KEY);
       isLoading.value = true;
-      Map<String, dynamic> verifyHeadersData = {"token": tokenKey, "otp": otpNumber, "preferredLanguage": "kn"};
-      Map<String, dynamic> headers = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "x-digital-api-key": "1234"
-      };
 
+      Map<String, dynamic> verifyHeadersData = {};
 
       verifyHeadersData['x-digital-api-key'] = '1234';
-       debugPrint('one');
 
       var response = await http.post(
           Uri.parse(baseUrl+Apis.verifyOtp),
           body: jsonEncode(
-              {"token": tokenKey, "otp": otpNumber, "preferredLanguage": "kn"}),
+              {"token": tokenKey, "otp": OtpNumber, "preferredLanguage": "kn"}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
 
+      var jsonData = jsonDecode(response.body);
 
-      debugPrint(' body: $verifyHeadersData');
-      debugPrint(' header: $headers');
-
-
-
-
-
-      log('response :::: : ===========================');
-
-       log('response :::: : $response');
-       log('response :::: : ===========================');
-
-       var jsonData = jsonDecode(response.body);
       VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
-       debugPrint('inside response ');
-       debugPrint('jsonData :::: : $jsonData');
-
-       debugPrint('verifyOtpModel :::: : $verifyOtpModel');
-
-         debugPrint('verifyOtpModel.status!.code :::: : ${verifyOtpModel.status!.code}');
 
       if (verifyOtpModel.status!.code == 2000) {
          prefs = await SharedPreferences.getInstance();
-        prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-        prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
-        prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+        prefs!.setString(
+            SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
+        prefs!.setString(
+            SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
+        prefs!.setString(
+            SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+
         Get.offAllNamed(MRouter.verifiedScreen);
       } else if (verifyOtpModel.status!.code == 4000) {
         wrongOtp.value = true;
@@ -147,7 +122,7 @@ class OtpManager extends GetxController {
         duration:  Duration(seconds: 3),
       )..show(context);
 
-
+      // showSnackBar("Something went wrong");
     } finally {
       isLoading.value = false;
     }
