@@ -31,6 +31,7 @@ import '../Pages/payments.dart';
 import '../Pages/savings.dart';
 import '../onboarding_login/otp_screen/otp_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
+import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
 class HomeMainIO extends StatefulWidget {
@@ -97,8 +98,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
+    String? finger = prefs.getString(SPKeys.finger);
 
-    if (showAuth == true) {
+    if (showAuth == true && finger == "  ") {
       {
         try {
           bool hasbiometrics =
@@ -160,7 +162,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
 
 
     showFirstTimePoints();
-     //checkLogin();
+
+     checkLogin();
   }
 
   @override
@@ -285,16 +288,39 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                               //position where you want to show the menu on screen
                                               items: [
                                                 PopupMenuItem(
-                                                  child: Text(
-                                                    "My Profile",
-                                                    style: AppStyle.shortHeading
-                                                        .copyWith(
-                                                            fontSize: Dimens
-                                                                .font_14sp,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            letterSpacing: 1),
+
+                                                  child: GestureDetector(
+                                                    onTap: (){
+
+                                                      Get.to(() => ProfileScreen());
+
+
+
+                                                    },
+
+                                                    child: Container(
+                                                      // height:36,
+
+
+
+
+                                                      child: Text(
+                                                        "My Profile",
+                                                        style: AppStyle.shortHeading
+                                                            .copyWith(
+                                                                fontSize: Dimens
+                                                                    .font_14sp,
+                                                                color: Colors.black,
+                                                                fontWeight:
+                                                                    FontWeight.w400,
+                                                                letterSpacing: 1),
+                                                      ),
+                                                      // decoration: BoxDecoration(
+                                                      //
+                                                      // color: Colors.red
+                                                      //
+                                                      // ),
+                                                    ),
                                                   ),
                                                 ),
                                                 PopupMenuDivider(),

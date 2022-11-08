@@ -16,6 +16,7 @@ class SPKeys {
 
   static const String LOGGED_IN = 'logged_in';
   static const String SHOW_AUTH = 'show_auth';
+  static const String finger = 'finger';
 
 
 

@@ -428,7 +428,9 @@ class _UserLoginState extends State<UserLogin> {
                             : AppColors.btnDisableColor,
                         borderRadius: BorderRadius.circular(6.0),
                       )
-                          : BoxDecoration(
+                          :
+
+                      BoxDecoration(
                         boxShadow: [
                           BoxShadow(
                             color: Colors.white70.withOpacity(0.8),

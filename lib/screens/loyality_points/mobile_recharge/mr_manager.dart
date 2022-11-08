@@ -228,6 +228,11 @@ class MrManager extends GetxController {
           });
 
       if (response.statusCode == 200) {
+
+
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+         prefs.setString(SPKeys.finger, "not");
         Flushbar(
           title: "successful!",
           message: "Recharge successful",
