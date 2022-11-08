@@ -43,6 +43,9 @@ class MRouter {
       case mobileRechargeIO:
         return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
 
+      case personalLoan:
+        return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
+
 
       case chooseAmountIO:
         return CupertinoPageRoute(builder: (_) => ChooseAmountIO());

@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../constant/routes.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'cb_models/bank_list_model.dart';
 import 'cb_models/customer_banks_model.dart';
+import 'cb_models/customer_upi_model.dart';
 import 'cb_models/upi_verify_model.dart';
 
 class CashBackManager extends GetxController {
@@ -25,6 +28,10 @@ class CashBackManager extends GetxController {
 // bank list for customer banks
   var customerBankList = <Account>[].obs;
   var customerBankListSend = <Account>[].obs;
+
+  // bank list for customer UPI'S
+  var customerUPIList = <UpiId>[].obs;
+  var customerUPIListSend = <UpiId>[].obs;
   RxMap<String, dynamic> getAccountCardData = <String, dynamic>{}.obs;
 
   RxInt selectedIndex = (-1).obs;
@@ -33,6 +40,7 @@ class CashBackManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    customerBankList.clear();
     callBankListApi();
     fetchCustomerBankAccounts();
   }
@@ -136,7 +144,7 @@ class CashBackManager extends GetxController {
     bool? fromAccountList,
     String? bankIdOrBankAccountId,
     Map<String, dynamic> data,
-    String pointsToReedem,
+    String pointsToReedem, BuildContext context,
   ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -184,10 +192,15 @@ class CashBackManager extends GetxController {
 
       if (response.statusCode == 200) {
         Flushbar(
-          title: "Success!",
-          message: "Cashback send in bank account!",
+          title: "successful!",
+          message: "Cashback sent in bank account !!",
           duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        )..show(Get.context!)
+            .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+            MRouter.homeScreen, (Route<dynamic> route) => false))
+            .then((value) => selectedIndex.value ==  -1);
+
+
       } else {
         Flushbar(
           title: "Error!",
@@ -275,10 +288,67 @@ class CashBackManager extends GetxController {
           message: "Cashback send in Upi!",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
+       // customerBankList.clear();
+
+
+
       } else {
         Flushbar(
           title: "Error!",
           message: "Something went wrong",
+          duration: Duration(seconds: 2),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Error!",
+        message: "Something went wrong",
+        duration: Duration(seconds: 2),
+      )..show(Get.context!);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // fetch customer bank accounts
+
+  fetchCustomerUpiAccounts() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+
+      print("customer id${customerId}");
+
+      var response = await http.post(
+          Uri.parse(baseUrl + Apis.fetchCustomerUpiAccounts),
+          body: jsonEncode({"customerId": customerId}),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+      var jsonData = jsonDecode(response.body);
+
+      FetchCustomerUpiModel fetchCustomerUpiModel =
+      FetchCustomerUpiModel.fromJson(jsonData);
+
+      if (response.statusCode == 200) {
+      //  List<bool> localSelectedList = [];
+
+        customerUPIList.clear();
+        for (var index in fetchCustomerUpiModel.data!.upiIds!) {
+          customerUPIListSend.add(index);
+         // localSelectedList.add(false);
+        }
+
+        customerUPIList.addAll(customerUPIListSend);
+       // selectedplanList.addAll(localSelectedList);
+
+        isLoading(false);
+      } else {
+        Flushbar(
+          title: "Error!",
+          message: "Not Verified",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
       }

@@ -53,6 +53,7 @@ class LoyaltyManager extends GetxController {
 
 
 
+
         redeemablePoints.value = loyaltyDashboardModel.data!.pointsSummary!.redeemablePoints!.toInt();
         pointsEarned.value = loyaltyDashboardModel.data!.pointsSummary!.pointsEarned!.toInt();
         pointsRedeemed.value = loyaltyDashboardModel.data!.pointsSummary!.pointsRedeemed!.toInt();

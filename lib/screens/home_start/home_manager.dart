@@ -26,24 +26,16 @@ class HomeManager extends GetxController {
   var atmRewards = '0'.obs;
   var loyalityPoints = '0'.obs;
 
-
   @override
- void onInit()
-  {
-  super.onInit();
-  callHomeApi();
+  void onInit() {
+    super.onInit();
+    callHomeApi();
   }
 
-
-
-
-
- void callHomeApi() async {
+  void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
     String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
-
-    print("customer id${customerId}");
 
     loyalityPoints.value = points.toString();
     try {
@@ -56,23 +48,19 @@ class HomeManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-      print("Response==>>${response.body.toString()}");
       var jsonData = jsonDecode(response.body);
       HomeModel homeModel = HomeModel.fromJson(jsonData);
 
-      print("Response of home Api${response.body}");
-
       if (response.statusCode == 200) {
         isLoading(false);
-        pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned.toString();
-        pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed.toString();
-        redeemablePoints.value = homeModel.data!.pointsSummary!.redeemablePoints.toString();
-       // atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0].toString() ;
-
-        atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0].toString();
-
-
-
+        pointsEarned.value =
+            homeModel.data!.pointsSummary!.pointsEarned.toString();
+        pointsRedeemed.value =
+            homeModel.data!.pointsSummary!.pointsRedeemed.toString();
+        redeemablePoints.value =
+            homeModel.data!.pointsSummary!.redeemablePoints.toString();
+        atmRewards.value =
+            homeModel.data!.atmRewards!.rewardsMultipliers![0].toString();
       } else {
         isLoading(false);
 

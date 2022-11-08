@@ -18,6 +18,7 @@ class MrManager extends GetxController {
   var contact = Contact().obs;
 
   var isLoading = false.obs;
+  var isMobileRechargeLoading = false.obs;
   var isFetchPlanLoading = false.obs;
   var isPlansAvailable = false.obs;
 
@@ -48,6 +49,8 @@ class MrManager extends GetxController {
   void onInit() {
     super.onInit();
     plansList.clear();
+
+
     callOperatorListApi();
     callCircleListApi();
   }
@@ -208,6 +211,12 @@ class MrManager extends GetxController {
 
   mobileRechargeApi(int? operatorId, int? circleId, String? phoneNumber,
       RxMap<String, dynamic> rechargeData, BuildContext context) async {
+
+    isMobileRechargeLoading(true);
+
+
+
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -229,19 +238,39 @@ class MrManager extends GetxController {
 
       if (response.statusCode == 200) {
 
+        Future.delayed(const Duration(seconds: 0), () async {
 
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-         prefs.setString(SPKeys.finger, "not");
-        Flushbar(
-          title: "successful!",
-          message: "Recharge successful",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!)
-            .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                MRouter.homeScreen, (Route<dynamic> route) => false))
-            .then((value) => plansList.clear());
+
+
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs!.setBool(SPKeys.SHOW_AUTH, false);
+
+          isMobileRechargeLoading(false);
+          Flushbar(
+            title: "successful!",
+            message: "Recharge successful",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!)
+              .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+              MRouter.homeScreen, (Route<dynamic> route) => false))
+              .then((value) => (){
+
+
+            plansList.clear();
+          }
+
+          );
+
+
+
+        });
+
+
+
       } else {
+        isMobileRechargeLoading(false);
         Flushbar(
           title: "Error!",
           message: "Something went wrong",
@@ -256,6 +285,7 @@ class MrManager extends GetxController {
       )..show(Get.context!);
     } finally {
       isLoading.value = false;
+      isMobileRechargeLoading(false);
     }
   }
 }

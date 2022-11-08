@@ -30,6 +30,8 @@ class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderDropdown(
+      iconEnabledColor: AppColors.primary,
+      iconDisabledColor: Colors.grey,
       name: widget.formName,
       validator: (value) => value == null ? widget.validationText : null,
       decoration: InputDecoration(
@@ -41,7 +43,7 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           labelStyle: AppStyle.shortHeading.copyWith(
-              color: AppColors.greyInlineText,
+              color: AppColors.greyText,
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
@@ -56,11 +58,11 @@ class _DropDownState extends State<DropDown> {
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
-                  width: 1.0, color: AppColors.greyInlineTextborder))),
+              borderSide:  BorderSide(
+                  width: 1.0, color: AppColors.primary))),
       icon: const Icon(
         Icons.keyboard_arrow_down_rounded,
-        color: AppColors.greyInlineText,
+       // color: AppColors.greyInlineText,
       ),
       iconSize: 30,
       isExpanded: true,
@@ -73,7 +75,7 @@ class _DropDownState extends State<DropDown> {
             value,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.black,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w600,
                 fontSize: 11.0.sp),
           ),
         );
@@ -81,6 +83,7 @@ class _DropDownState extends State<DropDown> {
       onChanged: (String? value) {
         setState(() {
           widget.onChanged(value);
+
           print('this is onchanged called');
         });
       },

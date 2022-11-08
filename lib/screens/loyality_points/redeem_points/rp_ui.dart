@@ -95,6 +95,7 @@ class RedeemPointsPage extends StatelessWidget {
                                                     color: Colors.white,
                                                   ),
                                                 ),
+
                                               ],
                                             )
                                           ],

@@ -66,7 +66,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
               padding:
                   EdgeInsets.symmetric(vertical: 3.0.hp, horizontal: 4.0.wp),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0.wp),
+                  borderRadius: BorderRadius.circular(6.0.wp),
                   gradient: widget.isSelected
                       ?  LinearGradient(
                           begin: Alignment.centerLeft,
@@ -164,7 +164,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     Text(
                                       'Validity : ${widget.rechargePlanValidity} days', //${CardModel().rechargePlanModel[0]['validity'].toString()}
                                       style: AppStyle.shortHeading.copyWith(
-                                        fontSize: 14.0.sp,
+                                        fontSize: 12.0.sp,
                                         color: widget.isSelected
                                             ? Colors.white
                                             : Colors.black,
@@ -179,7 +179,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                             'Enjoy ${widget.rechargePlanData} data', //${CardModel().rechargePlanModel[0]['data']}
                                             style: AppStyle.shortHeading
                                                 .copyWith(
-                                              fontSize: 14.0.sp,
+                                              fontSize: 12.0.sp,
                                               color: widget.isSelected
                                                   ? Colors.white
                                                   : Colors.black,

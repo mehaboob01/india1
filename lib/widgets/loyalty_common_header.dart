@@ -124,7 +124,7 @@ class HeadingContainer extends StatelessWidget {
     return Container(
         width: double.maxFinite,
         margin: EdgeInsets.symmetric(vertical: 4.0.wp),
-        height: 44.0.wp,
+        height: 50.0.wp,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
             gradient: const LinearGradient(
@@ -174,10 +174,31 @@ class HeadingContainer extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 14,),
+                  Obx(
+                    ()=>Visibility(
+                      visible: _loyaltyManager.redeemablePoints <= 14?true:false,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          'Note : You can redeem only if you have 15 points',
+                          style: AppStyle.shortHeading
+                              .copyWith(
+                            fontSize: Dimens.font_12sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+
                 ],
               ),
             ),
+
+
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -248,20 +269,22 @@ class HeadingContainer extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 )),
-            Positioned(
-              top: 32,
-              right: 18,
-              child: ButtonWithFlower(
-                buttonColor: Colors.white,
-                onPressed: () {
-                  Get.to(() => RedeemPointsPage());
-                },
-                buttonHeight: 10.0.wp,
-                buttonWidth: 40.0.wp,
-                label: 'Redeem Now',
-                labelSize: 10.0.sp,
-                labelWeight: FontWeight.w600,
-                labelColor: AppColors.butngradient1,
+            Obx(
+              ()=> Positioned(
+                top: 32,
+                right: 18,
+                child: ButtonWithFlower(
+                  buttonColor: Colors.white,
+                  onPressed: () {
+                    Get.to(() => RedeemPointsPage());
+                  },
+                  buttonHeight: 10.0.wp,
+                  buttonWidth: 44.0.wp,
+                  label: _loyaltyManager.redeemablePoints >= 14?'Redeem Now':'Earn more points',
+                  labelSize: Dimens.font_12sp,
+                  labelWeight: FontWeight.w600,
+                  labelColor: AppColors.butngradient1,
+                ),
               ),
             )
           ],

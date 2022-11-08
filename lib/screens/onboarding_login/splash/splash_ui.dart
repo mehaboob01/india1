@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     initDynamicLinks();
-    Timer(Duration(seconds: 2), () => launchLoginWidget());
+    Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
@@ -103,9 +103,9 @@ class _SplashScreenState extends State<SplashScreen> {
         tag: 'logo_image',
         child:
         Image.asset(
-          "assets/images/splash_logo.png",
-          width: 288,
-          height: 240,
+          "assets/images/splash_logo.gif",
+          width: 444,
+          height: 654,
         ),
       ),
     );
