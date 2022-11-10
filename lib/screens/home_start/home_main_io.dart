@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -166,7 +167,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
       },
       child: Obx(
         () => GestureDetector(
-          onTap: () => {profileClciked == 0},
+          onTap: () => {Get.back(), _homeManager.isClicked.value = false},
           child: Scaffold(
             body: _homeManager.isLoading.value
                 ? Column(
@@ -236,14 +237,16 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                         SizedBox(
                                           width: 2.0.wp,
                                         ),
-                                        headingBox(
-                                            image: AppImages.notify_icon),
+                                        GestureDetector(
+                                          child: headingBox(
+                                              image: AppImages.notify_icon),
+                                        ),
                                         SizedBox(
                                           width: 2.0.wp,
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            profileClciked == 1;
+                                            _homeManager.isClicked.value = true;
                                             showMenu<String>(
                                               context: context,
                                               shape: RoundedRectangleBorder(
@@ -262,12 +265,18 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                   25.0, 112.0, 16.0, 0.0),
                                               items: [
                                                 PopupMenuItem(
+                                                  height: Get.height * 0.02,
                                                   child: GestureDetector(
                                                     onTap: () {
+                                                      _homeManager.isClicked
+                                                          .value = false;
+                                                      Get.back();
                                                       Get.to(() =>
                                                           ProfileScreen());
                                                     },
                                                     child: Container(
+                                                      height: Get.height * 0.02,
+                                                      width: double.infinity,
                                                       child: Text(
                                                         "My Profile",
                                                         style: AppStyle
@@ -288,33 +297,46 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                 ),
                                                 PopupMenuDivider(),
                                                 PopupMenuItem(
+                                                  height: 0.02,
                                                   child: GestureDetector(
                                                       onTap: () => {
+                                                            _homeManager
+                                                                .isClicked
+                                                                .value = false,
                                                             Get.back(),
                                                             Get.toNamed(MRouter
                                                                 .loyaltyPoints),
                                                           },
-                                                      child: Text(
-                                                        "My Rewards",
-                                                        style: AppStyle
-                                                            .shortHeading
-                                                            .copyWith(
-                                                                fontSize: Dimens
-                                                                    .font_14sp,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                letterSpacing:
-                                                                    1),
+                                                      child: Container(
+                                                        height:
+                                                            Get.height * 0.02,
+                                                        width: double.infinity,
+                                                        child: Text(
+                                                          "My Rewards",
+                                                          style: AppStyle
+                                                              .shortHeading
+                                                              .copyWith(
+                                                                  fontSize: Dimens
+                                                                      .font_14sp,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  letterSpacing:
+                                                                      1),
+                                                        ),
                                                       )),
                                                 ),
                                               ],
                                               elevation: 8.0,
                                             ).then<void>(
                                                 (String? itemSelected) {
-                                              if (itemSelected == null) return;
+                                              if (itemSelected == null) {
+                                                _homeManager.isClicked.value =
+                                                    false;
+                                                return;
+                                              }
 
                                               if (itemSelected == "1") {
                                               } else if (itemSelected == "2") {
@@ -329,6 +351,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                             });
                                           },
                                           child: headingBox(
+                                              color:
+                                                  _homeManager.isClicked.value
+                                                      ? Colors.orange
+                                                      : Colors.white,
                                               image: AppImages.user_profile),
                                         ),
                                       ],
@@ -447,14 +473,18 @@ class _HomeMainIOState extends State<HomeMainIO> {
 
 // heading box -----------------------------------
   Widget headingBox(
-      {IconData? icon, String? image, String? text, VoidCallback? ontap}) {
+      {IconData? icon,
+      String? image,
+      String? text,
+      VoidCallback? ontap,
+      Color? color}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: profileClciked == 1 ? Colors.orange : Colors.white,
+            color: color ?? Colors.white,
             borderRadius: BorderRadius.circular(5)),
         child: text != null
             ? Center(
@@ -639,7 +669,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   }
 
 // find nearest Atm -------------------------------
-  Widget nearestAtm({VoidCallback? onPressed}) {
+  Widget nearestAtm() {
     return Container(
       height: 24.0.wp,
       margin: EdgeInsets.all(2.0.hp),
@@ -680,7 +710,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
               SizedBox(width: 6.0.wp),
               Flexible(
                 child: GestureDetector(
-                  onTap: onPressed,
+                  onTap: () {
+                    Get.toNamed(MRouter.map);
+                  },
                   child: Container(
                     height: 4.0.hp,
                     decoration: BoxDecoration(

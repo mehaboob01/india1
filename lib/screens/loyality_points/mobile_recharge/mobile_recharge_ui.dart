@@ -95,15 +95,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
     }
   }
 
-  // List<bool> selectedUpiCard = List.generate(_mr,index) => false).obs;
-
   @override
   Widget build(BuildContext context) {
-    // RxList selectedUpiCard =
-    //     List.generate(_mrManager.plansList.length, (index) => false).obs;
-    //
-    // print(selectedUpiCard[0]);
-    //
     List<bool> localSelectedList = [];
     void onCardTapped(int index) {
       print("card tapped");
@@ -211,18 +204,15 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                           FilteringTextInputFormatter
                                               .digitsOnly,
                                           new CustomInputFormatter(),
-                                          LengthLimitingTextInputFormatter(
-                                              12),
+                                          LengthLimitingTextInputFormatter(12),
                                         ],
                                         style: AppStyle.shortHeading.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,
                                             fontSize: Dimens.font_16sp),
                                         decoration: new InputDecoration(
-                                          suffixIconConstraints:
-                                              BoxConstraints(
-                                                  minHeight: 32,
-                                                  minWidth: 32),
+                                          suffixIconConstraints: BoxConstraints(
+                                              minHeight: 32, minWidth: 32),
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
                                           prefixIcon: Column(
@@ -230,9 +220,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        left: 8.0, top: 4.0),
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0, top: 4.0),
                                                 child: Text(
                                                   '+91 ',
                                                   style: AppStyle.shortHeading
@@ -241,8 +230,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                               AppColors.black,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          fontSize: Dimens
-                                                              .font_16sp),
+                                                          fontSize:
+                                                              Dimens.font_16sp),
                                                   textAlign: TextAlign.start,
                                                 ),
                                               ),
@@ -278,22 +267,17 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                     .value.phones.first.number
                                                     .replaceAll(' ', '');
                                                 String? mobileno = '';
-                                                var buffer =
-                                                    new StringBuffer();
+                                                var buffer = new StringBuffer();
                                                 if (data.isNotEmpty) {
-                                                  mobileno =
-                                                      data.substring(3);
+                                                  mobileno = data.substring(3);
                                                   for (int i = 0;
                                                       i < mobileno!.length;
                                                       i++) {
-                                                    buffer
-                                                        .write(mobileno![i]);
+                                                    buffer.write(mobileno![i]);
                                                     var nonZeroIndex = i + 1;
-                                                    if (nonZeroIndex % 4 ==
-                                                            0 &&
+                                                    if (nonZeroIndex % 4 == 0 &&
                                                         nonZeroIndex !=
-                                                            mobileno!
-                                                                .length) {
+                                                            mobileno!.length) {
                                                       buffer.write(' ');
                                                     }
                                                   }
@@ -301,28 +285,25 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       buffer.toString();
                                                   mobileno = autoSelectNumber;
                                                   mobileno =
-                                                      mobileno.toString() +
-                                                          ' ';
-                                                  mobileNumberController
-                                                      .text = mobileno.trim();
+                                                      mobileno.toString() + ' ';
+                                                  mobileNumberController.text =
+                                                      mobileno.trim();
                                                   print(
                                                       "Size==> ${mobileNumberController.text.length}");
                                                 }
                                               },
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        right: 8.0),
+                                                padding: const EdgeInsets.only(
+                                                    right: 8.0),
                                                 child: SvgPicture.asset(
-                                                    AppImages
-                                                        .contactPickerSvg,
+                                                    AppImages.contactPickerSvg,
                                                     color: AppColors.primary),
                                               )),
                                           border: const OutlineInputBorder(),
                                           labelStyle: AppStyle.shortHeading
                                               .copyWith(
-                                                  color: AppColors
-                                                      .greyInlineText,
+                                                  color:
+                                                      AppColors.greyInlineText,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: Dimens.font_14sp),
                                         ),
@@ -347,8 +328,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                             if (circleEnabled == true &&
                                                 operatorEnabled == true &&
                                                 mobileNumberEnabled == true) {
-                                              if (_mobileRecharge
-                                                  .currentState!
+                                              if (_mobileRecharge.currentState!
                                                   .validate()) {
                                                 var operatorId =
                                                     checkOperatorId(
@@ -374,10 +354,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       circleId,
                                                       _mobileRecharge
                                                           .currentState!
-                                                          .value[
-                                                              'mobileNumber']
-                                                          .replaceAll(
-                                                              ' ', ''));
+                                                          .value['mobileNumber']
+                                                          .replaceAll(' ', ''));
                                                 }
                                               }
                                             }
@@ -408,24 +386,18 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                 mobileNumberEnabled == true) {
                                               print("circle api call");
 
-                                              var operatorId =
-                                                  checkOperatorId(
-                                                      _mobileRecharge
-                                                              .currentState!
-                                                              .value[
-                                                          'operatorName']);
+                                              var operatorId = checkOperatorId(
+                                                  _mobileRecharge.currentState!
+                                                      .value['operatorName']);
                                               var circleId = checkCircleId(
-                                                  _mobileRecharge
-                                                      .currentState!
+                                                  _mobileRecharge.currentState!
                                                       .value['circleName']);
 
                                               print(
                                                   "operator Id == >$operatorId");
-                                              print(
-                                                  "circle Id == >$circleId");
+                                              print("circle Id == >$circleId");
 
-                                              if (_mobileRecharge
-                                                  .currentState!
+                                              if (_mobileRecharge.currentState!
                                                   .validate()) {
                                                 _mrManager.checkPlanesApi(
                                                     operatorId,
@@ -457,8 +429,6 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                 ),
               ),
 
-
-
               SizedBox(
                 height: 12,
               ),
@@ -468,9 +438,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
 
               Obx(
                 () => Visibility(
-                  visible: _mrManager.isPlansAvailable.value == true
-                      ? true
-                      : false,
+                  visible:
+                      _mrManager.isPlansAvailable.value == true ? true : false,
                   child: Obx(
                     () => _mrManager.isFetchPlanLoading.value == true
                         ? Container(
@@ -479,7 +448,6 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
                                 Center(
                                   child: LoadingAnimationWidget.inkDrop(
                                     size: 34,
@@ -503,25 +471,28 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                     height: heightIs * 0.3,
                                     child: Center(child: Text(""))))
                             : Padding(
-                                padding:
-                                    EdgeInsets.only(left: 8.0, right: 8.0),
+                                padding: EdgeInsets.only(left: 8.0, right: 8.0),
                                 child: Obx(
                                   () => Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 20.0, right: 20.0),
                                         child: Divider(thickness: 1),
                                       ),
                                       SizedBox(
                                         height: 12,
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional.centerStart,
+                                        alignment:
+                                            AlignmentDirectional.centerStart,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(left: 22.0),
+                                          padding:
+                                              const EdgeInsets.only(left: 22.0),
                                           child: Text(
                                             "Plans under ₹ 52",
-                                            style: AppStyle.shortHeading.copyWith(
+                                            style:
+                                                AppStyle.shortHeading.copyWith(
                                               fontSize: Dimens.font_16sp,
                                               fontWeight: FontWeight.w600,
                                               color: Colors.black,
@@ -545,15 +516,25 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                   child: Container(
                                                       child: GestureDetector(
                                                         onTap: () => {
-                                                          if (_mrManager.plansList
+                                                          if (_mrManager
+                                                              .plansList
                                                               .isNotEmpty)
-                                                            {onCardTapped(index)}
+                                                            {
+                                                              onCardTapped(
+                                                                  index)
+                                                            }
                                                         },
                                                         child: Obx(
                                                           () => CommonRadioCard(
                                                             radioCardType:
-                                                                RadioCardType.rechargePlan,
-                                                            rechargePlanAmount: _mrManager.plansList[index].amount.toString(),
+                                                                RadioCardType
+                                                                    .rechargePlan,
+                                                            rechargePlanAmount:
+                                                                _mrManager
+                                                                    .plansList[
+                                                                        index]
+                                                                    .amount
+                                                                    .toString(),
                                                             rechargePlanValidity:
                                                                 _mrManager
                                                                     .plansList[
@@ -569,8 +550,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                 _mrManager
                                                                     .selectedIndex
                                                                     .value,
-                                                            cardWidth:
-                                                                double.maxFinite,
+                                                            cardWidth: double
+                                                                .maxFinite,
                                                           ),
                                                         ),
                                                       ),
@@ -579,8 +560,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                             color: AppColors
                                                                 .cardScreenBg),
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                1.0.wp),
+                                                            BorderRadius
+                                                                .circular(
+                                                                    1.0.wp),
                                                       )),
                                                 );
                                               }),

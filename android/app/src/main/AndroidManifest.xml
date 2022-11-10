@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
         android:label="India1"
         android:icon="@mipmap/ic_launcher">
@@ -56,5 +59,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Change the API key -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAuQ53v6A20eQXtKfmmTutMIFP-XtZKSZ8"/>
     </application>
 </manifest>

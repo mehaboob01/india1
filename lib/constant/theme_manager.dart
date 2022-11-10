@@ -12,7 +12,6 @@ class AppColors {
   static const Color referEarnGradient1 = Color(0xff014280);
   static const Color referEarnGradient2 = Color(0xff9B79DD);
 
-
   // linear gradient orange
   static const Color orangeGradient1 = Color(0xffFFF46B);
   static const Color orangeGradient2 = Color(0xffF2642C);
@@ -335,9 +334,6 @@ AppBar appBar(titleOfAppbar) {
   );
 }
 
-
-
-
 AppBar transParentAppbar(titleOfAppbar) {
   return AppBar(
     centerTitle: false,
@@ -357,18 +353,14 @@ AppBar transParentAppbar(titleOfAppbar) {
       ),
     ),
   );
-
-
-
 }
-
 
 Widget rupeeIcon(
     {required Color color,
-      required String label,
-      required Color textColor,
-      bool? boldfont,
-      required double fontSize}) {
+    required String label,
+    required Color textColor,
+    bool? boldfont,
+    required double fontSize}) {
   return Row(
     children: [
       SizedBox(
@@ -412,6 +404,9 @@ class AppImages {
   static const String cardImageshadow = '${assetPng}shadow.png';
   static const String notificationBell = '${assetPng}notification_bell.png';
   static const String profileImage = '${assetPng}profile_image.png';
+  static const String locationIcon = '${assetPng}locationIcon.png';
+  static const String searchIcon = '${assetPng}searchIcon.png';
+  static const String markerIcon = '${assetPng}markerIcon.png';
 
   // loans
   static const String handRupeeSvg = '${assetSvg}loans/personal.svg';
@@ -468,10 +463,11 @@ class AppImages {
 
   static const String walletIcon = '${assetSvg}payments/wallet_icon.svg';
 
-
   static const String loansPageSvg = '${assetSvg}payments/loansPageSVG.svg';
-  static const String paymentsPageSvg = '${assetSvg}payments/paymentsPageSVG.svg';
-  static const String insurancePageSvg = '${assetSvg}payments/insurancePageSVG.svg';
+  static const String paymentsPageSvg =
+      '${assetSvg}payments/paymentsPageSVG.svg';
+  static const String insurancePageSvg =
+      '${assetSvg}payments/insurancePageSVG.svg';
   static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
   static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
 }

@@ -22,9 +22,8 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 
-
 class InsurancePage extends StatelessWidget {
- // const InsurancePage({super.key});
+  // const InsurancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class InsurancePage extends StatelessWidget {
                     bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const InsuranceCard(),
               ),
-               CommonBanner()
+              CommonBanner()
             ],
           ),
         ),

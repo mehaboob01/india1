@@ -29,8 +29,8 @@ class ProfileStepper {
     return InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: AppColors.dimLightGreyColor,
-        ),
+            // color: AppColors.dimLightGreyColor,
+            color: AppColors.primary),
         borderRadius: BorderRadius.circular(10),
       ),
       border: OutlineInputBorder(
@@ -40,6 +40,7 @@ class ProfileStepper {
         borderRadius: BorderRadius.circular(10),
       ),
       labelText: '$label',
+      alignLabelWithHint: false,
       errorStyle: GoogleFonts.roboto(
         fontSize: Dimens.font_14sp,
         fontWeight: FontWeight.w500,
@@ -143,13 +144,16 @@ class ProfileStepper {
     );
   }
 
-  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm) {
+  Widget personalDetails(
+      BuildContext context, GlobalKey<FormState> personalForm) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: personalForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -168,7 +172,8 @@ class ProfileStepper {
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
                 hint: 'Enter first name',
-                vaidation: (value) => profileController.nameValidation(value, 'Enter name min 3 character'),
+                vaidation: (value) => profileController.nameValidation(
+                    value, 'Enter name min 3 character'),
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -178,7 +183,8 @@ class ProfileStepper {
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
                 hint: 'Enter last name',
-                vaidation: (value) => profileController.nameValidation(value, 'Enter last name min 3 character'),
+                vaidation: (value) => profileController.nameValidation(
+                    value, 'Enter last name min 3 character'),
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -230,7 +236,8 @@ class ProfileStepper {
                 ),
                 onTap: () async {
                   selectedDate = await datePicker(context);
-                  String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
+                  String date = DateFormat('dd-MM-yyyy')
+                      .format(selectedDate ?? DateTime.now());
                   profileController.dobController.value.text = date;
                 },
                 isDisable: true,
@@ -286,7 +293,8 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Single', 'Married'].map<DropdownMenuItem<String>>((String value) {
+                item: <String>['Single', 'Married']
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value.toString()),
@@ -297,7 +305,9 @@ class ProfileStepper {
                 },
                 label: 'Marital status',
                 hint: 'Select your marital status',
-                value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
+                value: profileController.maritalStatus.value == ''
+                    ? null
+                    : profileController.maritalStatus.value,
               ),
               SizedBox(
                 height: 20,
@@ -318,7 +328,9 @@ class ProfileStepper {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: (value.toLowerCase() == profileController.gender.value) ? AppColors.homeGradient1Color : AppColors.greySecond,
+          color: (value.toLowerCase() == profileController.gender.value)
+              ? AppColors.homeGradient1Color
+              : AppColors.greySecond,
           width: 2,
         ),
       ),
@@ -346,7 +358,9 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: residentialForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -444,7 +458,9 @@ class ProfileStepper {
         value == null || value == '' ? title : value,
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: value == null || value == '' ? AppColors.hintColor : AppColors.lightBlack,
+          color: value == null || value == ''
+              ? AppColors.hintColor
+              : AppColors.lightBlack,
           fontSize: Dimens.font_18sp,
         ),
       ),
@@ -461,7 +477,9 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: occupationForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -480,13 +498,16 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Salaried'].map<DropdownMenuItem<String>>((String value) {
+                item: <String>['Salaried']
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value.toString()),
                   );
                 }).toList(),
-                value: profileController.employmentType.value == '' ? null : profileController.employmentType.value,
+                value: profileController.employmentType.value == ''
+                    ? null
+                    : profileController.employmentType.value,
                 onChanged: (value) {
                   profileController.employmentType.value = value;
                 },

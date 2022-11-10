@@ -59,6 +59,8 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   syncfusion_flutter_sliders: ^20.3.52
   flutter_contacts: ^1.1.5+1
+  google_maps_flutter: ^2.2.1
+  geolocator: ^9.0.2
 
 
   fluttertoast: ^8.1.1
@@ -103,6 +105,7 @@ flutter:
     - assets/png/
     - assets/svg/
     - assets/svg/loans/
+    - assets/svg/maps/
     - assets/svg/payments/
     - assets/svg/insurance/
     - assets/svg/savings/
