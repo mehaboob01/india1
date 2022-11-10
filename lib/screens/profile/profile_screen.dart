@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/profile/add_bank_account_screen.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
+import 'common/profile_stepper.dart';
 import 'stepper_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -13,13 +16,15 @@ class ProfileScreen extends StatelessWidget {
   ProfileController profileController = Get.put(ProfileController());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
-  RxBool isPersonalDetailsVisible = false.obs, isResidentialDetailsVisible = false.obs, isOccupationDetailsVisible = false.obs;
+  RxBool isPersonalDetailsVisible = false.obs, isResidentialDetailsVisible = false.obs, isOccupationDetailsVisible = false.obs, isBankAccountVisible = false.obs, isUpiIdVisible = false.obs;
 
   @override
   Widget build(BuildContext context) {
     getPersonalDetailButton();
     getResidentialDetailButton();
     getOccupationDetailButton();
+    getUpiIdButton();
+    getBankAccountDetailsButton();
     return Scaffold(
       body: Column(
         children: [
@@ -29,210 +34,209 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Obx(()=>Stack(
-              children: [
-                if(profileController.getProfileLoading.value == true)...[
-                  Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ]else...[
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Stack(
-                          alignment: Alignment.centerLeft,
+            child: Obx(() => Stack(
+                  children: [
+                    if (profileController.getProfileLoading.value == true) ...[
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ] else ...[
+                      SingleChildScrollView(
+                        child: Column(
                           children: [
-                            Container(
-                              height: 100,
-                              padding: EdgeInsets.only(
-                                left: 100,
-                              ),
-                              margin: EdgeInsets.only(
-                                left: 80,
-                                right: 20,
-                                top: 20,
-                                bottom: 20,
-                              ),
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  30,
-                                ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: <Color>[
-                                    AppColors.cardBg1,
-                                    AppColors.cardBg2,
-                                  ],
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Mobile number",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: Dimens.font_14sp,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Obx(
-                                        () => Text(
-                                      "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Dimens.font_18sp,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             Stack(
-                              alignment: Alignment.bottomRight,
+                              alignment: Alignment.centerLeft,
                               children: [
                                 Container(
-                                  height: 140,
-                                  width: 140,
+                                  height: 100,
+                                  padding: EdgeInsets.only(
+                                    left: 100,
+                                  ),
                                   margin: EdgeInsets.only(
-                                    left: 20,
+                                    left: 80,
                                     right: 20,
+                                    top: 20,
+                                    bottom: 20,
                                   ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColors.orangeColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                      size: 110,
-                                    ),
-                                  ),
+                                  width: Get.width,
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.lightOrangeColor.withOpacity(0.4),
-                                      width: 10,
-                                      style: BorderStyle.solid,
+                                    borderRadius: BorderRadius.circular(
+                                      30,
                                     ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: <Color>[
+                                        AppColors.cardBg1,
+                                        AppColors.cardBg2,
+                                      ],
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Mobile number",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: Dimens.font_14sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Obx(
+                                        () => Text(
+                                          "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: Dimens.font_18sp,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Container(
-                                  height: 45,
-                                  width: 45,
-                                  margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.lightOrangeColor,
+                                Stack(
+                                  alignment: Alignment.bottomRight,
+                                  children: [
+                                    Container(
+                                      height: 140,
+                                      width: 140,
+                                      margin: EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.orangeColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                          size: 110,
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.lightOrangeColor.withOpacity(0.4),
+                                          width: 10,
+                                          style: BorderStyle.solid,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 28,
-                                    color: AppColors.lightOrangeColor,
-                                  ),
-                                ),
+                                    Container(
+                                      height: 45,
+                                      width: 45,
+                                      margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.lightOrangeColor,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 28,
+                                        color: AppColors.lightOrangeColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            details(title: 'Personal details'),
+                            details(title: 'Residential address'),
+                            details(title: 'Occupation Details'),
+                            details(title: 'Bank account(s)'),
+                            details(title: 'UPI ID(s) / VPA Number(s)'),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  height: 48,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Spacer(),
+                                      Text(
+                                        'logout'.tr,
+                                        maxLines: 2,
+                                        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Spacer(),
+                                      SizedBox(
+                                        height: 48,
+                                        child: Image.asset(
+                                          "assets/images/btn_img.png",
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: 1 == 1
+                                      ? BoxDecoration(
+                                          gradient: new LinearGradient(
+                                            end: Alignment.topRight,
+                                            colors: [Colors.orange, Colors.redAccent],
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white70.withOpacity(0.8),
+                                              offset: Offset(
+                                                -6.0,
+                                                -6.0,
+                                              ),
+                                              blurRadius: 16.0,
+                                            ),
+                                            BoxShadow(
+                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                              offset: Offset(6.0, 6.0),
+                                              blurRadius: 16.0,
+                                            ),
+                                          ],
+                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                          borderRadius: BorderRadius.circular(6.0),
+                                        )
+                                      : BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white70.withOpacity(0.8),
+                                              offset: Offset(
+                                                -6.0,
+                                                -6.0,
+                                              ),
+                                              blurRadius: 16.0,
+                                            ),
+                                            BoxShadow(
+                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                              offset: Offset(6.0, 6.0),
+                                              blurRadius: 16.0,
+                                            ),
+                                          ],
+                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                          borderRadius: BorderRadius.circular(6.0),
+                                        )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        details(title: 'Personal details'),
-                        details(title: 'Residential address'),
-                        details(title: 'Occupation Details'),
-                        details(title: 'Bank account(s)'),
-                        details(title: 'UPI ID(s) / VPA Number(s)'),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              height: 48,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Spacer(),
-                                  Text(
-                                    'logout'.tr,
-                                    maxLines: 2,
-                                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Spacer(),
-                                  SizedBox(
-                                    height: 48,
-                                    child: Image.asset(
-                                      "assets/images/btn_img.png",
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              decoration: 1 == 1
-                                  ? BoxDecoration(
-                                gradient: new LinearGradient(
-                                  end: Alignment.topRight,
-                                  colors: [Colors.orange, Colors.redAccent],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white70.withOpacity(0.8),
-                                    offset: Offset(
-                                      -6.0,
-                                      -6.0,
-                                    ),
-                                    blurRadius: 16.0,
-                                  ),
-                                  BoxShadow(
-                                    color: AppColors.darkerGrey.withOpacity(0.4),
-                                    offset: Offset(6.0, 6.0),
-                                    blurRadius: 16.0,
-                                  ),
-                                ],
-                                color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                borderRadius: BorderRadius.circular(6.0),
-                              )
-                                  : BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white70.withOpacity(0.8),
-                                    offset: Offset(
-                                      -6.0,
-                                      -6.0,
-                                    ),
-                                    blurRadius: 16.0,
-                                  ),
-                                  BoxShadow(
-                                    color: AppColors.darkerGrey.withOpacity(0.4),
-                                    offset: Offset(6.0, 6.0),
-                                    blurRadius: 16.0,
-                                  ),
-                                ],
-                                color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                borderRadius: BorderRadius.circular(6.0),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ]
-
-              ],
-            )),
+                      ),
+                    ]
+                  ],
+                )),
           ),
         ],
       ),
@@ -293,6 +297,20 @@ class ProfileScreen extends StatelessWidget {
     isResidentialDetailsVisible.value = true;
   }
 
+  getBankAccountDetailsButton() {
+    if (profileController.bankDetailsModel.value.preferredAccount == null || profileController.bankDetailsModel.value.accounts == []) {
+      isBankAccountVisible.value = false;
+    }
+    isBankAccountVisible.value = true;
+  }
+
+  getUpiIdButton() {
+    if (profileController.upiIdModel.value.upiIds == []) {
+      isUpiIdVisible.value = false;
+    }
+    isUpiIdVisible.value = true;
+  }
+
   getOccupationDetailButton() {
     if (profileDetailsModel.employmentType == null && profileDetailsModel.occupation == null && profileDetailsModel.income == null && profileDetailsModel.panNumber == null) {
       isOccupationDetailsVisible.value = false;
@@ -348,10 +366,16 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 if ((title == 'Personal details' && (isPersonalDetailsVisible.value == true)) ||
                     (title == 'Residential address' && (isResidentialDetailsVisible.value == true)) ||
-                    (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true))) ...[
+                    (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true)) ||
+                    (title == 'Bank account(s)' && (isBankAccountVisible.value == true)) ||
+                    (title == 'UPI ID(s) / VPA Number(s)' && (isUpiIdVisible.value == true))) ...[
                   InkWell(
                     onTap: () {
-                      nextStep(title);
+                      if (title == 'Bank account(s)') {
+                        Get.to(() => AddBankAccountScreen());
+                      } else {
+                        nextStep(title);
+                      }
                     },
                     child: Icon(Icons.note_alt_outlined),
                   ),
@@ -360,11 +384,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             children: [
-              Container(
-                height: 2,
-                color: AppColors.lightGreyColor,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-              ),
+              ProfileStepper().divider(),
               if (title == 'Personal details') ...[
                 personalDetails(),
               ] else if (title == 'Residential address') ...[
@@ -529,78 +549,50 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget bankAccount() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Account 1:",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.lightBlack,
-                  fontSize: Dimens.font_16sp,
-                ),
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (profileController.getBankAccountLoading.value != false) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: CircularProgressIndicator(),
+            ),
+          ] else ...[
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: isBankAccountVisible.value == true
+                    ? [
+                        accountDetails(profileController.bankDetailsModel.value.preferredAccount!, null),
+                        if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(0),
+                            itemCount: profileController.bankDetailsModel.value.accounts!.length,
+                            itemBuilder: (context, index) => accountDetails(profileController.bankDetailsModel.value.accounts![index], index),
+                          ),
+                        ],
+                      ]
+                    : [
+                        Text("Could not find any bank account data!"),
+                      ],
               ),
-              SizedBox(
-                height: 10,
+            ),
+            if (isBankAccountVisible.value == false)
+              addDetailButton(
+                title: 'Add Bank Account',
+                callBack: () {
+                  Get.to(() => AddBankAccountScreen());
+                },
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: singleDetails(
-                      title: "Bank name",
-                      value: "State Bank of India",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: singleDetails(
-                      title: "Account number",
-                      value: "XXXXXXX6543",
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: singleDetails(
-                      title: "IFSC code",
-                      value: "INGV0005943",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: singleDetails(
-                      title: "Account type",
-                      value: "Savings account",
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        addDetailButton(
-          title: 'Add Bank Account',
-          callBack: () {
-            nextStep('Bank account');
-          },
-        ),
-      ],
+          ]
+        ],
+      ),
     );
   }
 
@@ -678,6 +670,73 @@ class ProfileScreen extends StatelessWidget {
     });
   }
 
+  Widget accountDetails(PreferredAccount account, int? index) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${index == null ? 'Primary Account:' : 'Account ${index + 1}:'}",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: AppColors.lightBlack,
+            fontSize: Dimens.font_16sp,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: singleDetails(
+                title: "Bank name",
+                value: "${account.name ?? ''}",
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              child: singleDetails(
+                title: "Account number",
+                value: "${account.maskAccountNumber ?? ''}",
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: singleDetails(
+                title: "IFSC code",
+                value: "${account.ifscCode ?? ''}",
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              child: singleDetails(
+                title: "Account type",
+                value: "${account.accountType ?? ''}",
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        ProfileStepper().divider(),
+        SizedBox(
+          height: 24,
+        ),
+      ],
+    );
+  }
+
   Widget upiId() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -689,17 +748,27 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              singleDetails(
-                title: "UPI ID 1",
-                value: "anilsaha@okicici",
-              ),
+              if (profileController.upiIdModel.value.upiIds != null && profileController.upiIdModel.value.upiIds != []) ...[
+                ListView.builder(
+                  itemCount: profileController.upiIdModel.value.upiIds!.length,
+                  itemBuilder: (context, index) {
+                    return singleDetails(
+                      title: "UPI ID $index",
+                      value: "${profileController.upiIdModel.value.upiIds![index]}",
+                    );
+                  },
+                ),
+              ] else ...[
+                Text("Could not find any upi id data!"),
+              ]
             ],
           ),
         ),
-        addDetailButton(
-          title: 'Add UPI / VPA Details',
-          callBack: () {},
-        ),
+        if (isUpiIdVisible.value == false)
+          addDetailButton(
+            title: 'Add UPI / VPA Details',
+            callBack: () {},
+          ),
       ],
     );
   }

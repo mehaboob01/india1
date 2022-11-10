@@ -5,13 +5,22 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../model/upi_id_model.dart';
 
 class ProfileController extends GetxController {
-  RxBool addPersonalLoading = false.obs, addResidentialLoading = false.obs, addOccupationLoading = false.obs, getProfileLoading = true.obs, getPinCodeLoading = false.obs, autoValidation = false.obs;
+  RxBool addPersonalLoading = false.obs,
+      addResidentialLoading = false.obs,
+      addOccupationLoading = false.obs,
+      getProfileLoading = true.obs,
+      getPinCodeLoading = false.obs,
+      getBankAccountLoading = false.obs,
+      getUpiIdLoading = false.obs,
+      autoValidation = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -34,10 +43,17 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> monthlyIncomeController = TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
-  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs;
+  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs;
+
+  Rx<TextEditingController> bankNameController = TextEditingController().obs;
+  Rx<TextEditingController> accountNumberController = TextEditingController().obs;
+  Rx<TextEditingController> ifscController = TextEditingController().obs;
 
   Rx<ProfileDetailsModel> profileDetailsModel = ProfileDetailsModel().obs;
   late SharedPreferences prefs;
+
+  Rx<BankDetailsModel> bankDetailsModel = BankDetailsModel().obs;
+  Rx<UpiIdModel> upiIdModel = UpiIdModel().obs;
 
   @override
   void onInit() {
@@ -46,6 +62,8 @@ class ProfileController extends GetxController {
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () {
       getProfileData();
+      getBankDetails();
+      getUpiIdDetails();
     });
   }
 
@@ -76,6 +94,28 @@ class ProfileController extends GetxController {
   nameValidation(value, message) {
     if (value.toString().trim().length < 3) {
       return message;
+    }
+    return null;
+  }
+
+  accountNumberValidation(value) {
+    String pattern = r'(^[0-9]{9,18}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length < 9) {
+      return 'Please enter valid account number of 9 digit';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid account number';
+    }
+    return null;
+  }
+
+  ifscValidation(value) {
+    String pattern = r'(^[A-Z]{4}0[A-Z0-9]{6}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length < 8) {
+      return 'Please enter valid ifsc code';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid ifsc code';
     }
     return null;
   }
@@ -123,7 +163,7 @@ class ProfileController extends GetxController {
       return null;
   }
 
-  Future addPersonalDetails() async {
+  Future addPersonalDetails({bool? isFromLoan = false, Function? callBack}) async {
     addPersonalLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -145,7 +185,11 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        Get.back();
+        if (isFromLoan == true) {
+          callBack!();
+        } else {
+          Get.back();
+        }
         getProfileData();
       } else {
         Fluttertoast.showToast(
@@ -167,7 +211,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addResidentialDetails() async {
+  Future addResidentialDetails({bool? isFromLoan = false, Function? callBack}) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -189,7 +233,11 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        Get.back();
+        if (isFromLoan == true) {
+          callBack!();
+        } else {
+          Get.back();
+        }
         getProfileData();
       } else {
         Fluttertoast.showToast(
@@ -211,7 +259,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addOccupationDetails() async {
+  Future addOccupationDetails({bool? isFromLoan = false, Function? callBack}) async {
     addOccupationLoading.value = true;
     print(employmentType.value);
     try {
@@ -232,7 +280,11 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        Get.back();
+        if (isFromLoan == true) {
+          callBack!();
+        } else {
+          Get.back();
+        }
         getProfileData();
       } else {
         Fluttertoast.showToast(
@@ -323,6 +375,99 @@ class ProfileController extends GetxController {
       );
     } finally {
       getPinCodeLoading.value = false;
+    }
+  }
+
+  Future getBankDetails() async {
+    getBankAccountLoading.value = true;
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.getBankAccount,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": customerId.value,
+          },
+        ),
+      );
+      if (response != null) {
+        bankDetailsModel.value = BankDetailsModel.fromJson(response);
+      } else {
+        Fluttertoast.showToast(
+          msg: "couldn't get bank account details.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (exception) {
+      Fluttertoast.showToast(
+        msg: "$exception",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      getBankAccountLoading.value = false;
+    }
+  }
+
+  Future getUpiIdDetails() async {
+    getUpiIdLoading.value = true;
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.getUpiIds,
+        method: Type.POST,
+      );
+      if (response != null) {
+        upiIdModel.value = UpiIdModel.fromJson(response);
+      } else {
+        Fluttertoast.showToast(
+          msg: "couldn't get upi id details.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (exception) {
+      Fluttertoast.showToast(
+        msg: "$exception",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      getUpiIdLoading.value = false;
+    }
+  }
+
+  Future addBankAccountData() async {
+    try {
+      getBankAccountLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.addBankAccount,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": customerId.value,
+            "bankAccount": {
+              "accountNumber": "${accountNumberController.value.text}",
+              "ifscCode": "${ifscController.value.text}",
+              "accountType": "${accountType.value}",
+            }
+          },
+        ),
+      );
+      if (response != null) {
+        if (response['account'] != null) {
+          getBankDetails();
+          Get.back();
+        }
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      getBankAccountLoading.value = false;
     }
   }
 }

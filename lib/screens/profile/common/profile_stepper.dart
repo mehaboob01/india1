@@ -11,6 +11,14 @@ class ProfileStepper {
   ProfileController profileController = Get.put(ProfileController());
   DateTime? selectedDate;
 
+  Widget divider() {
+    return Container(
+      height: 2,
+      color: AppColors.lightGreyColor,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+    );
+  }
+
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
@@ -143,7 +151,7 @@ class ProfileStepper {
     );
   }
 
-  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm) {
+  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm, {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -168,7 +176,9 @@ class ProfileStepper {
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
                 hint: 'Enter first name',
-                vaidation: (value) => profileController.nameValidation(value, 'Enter name min 3 character'),
+                vaidation: (value) {
+                  return profileController.nameValidation(value, 'Enter name min 3 character');
+                },
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -178,7 +188,9 @@ class ProfileStepper {
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
                 hint: 'Enter last name',
-                vaidation: (value) => profileController.nameValidation(value, 'Enter last name min 3 character'),
+                vaidation: (value) {
+                  return profileController.nameValidation(value, 'Enter last name min 3 character');
+                },
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -189,9 +201,7 @@ class ProfileStepper {
                 label: 'Mobile number',
                 hint: 'Enter mobile number',
                 prefix: '+91',
-                vaidation: (value) => profileController.mobileValidation(value),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                isDisable: true,
               ),
               SizedBox(
                 height: 20,
@@ -201,7 +211,12 @@ class ProfileStepper {
                 label: 'Alternate number',
                 hint: 'Enter alternate number',
                 prefix: '+91',
-                vaidation: (value) => profileController.mobileValidation(value),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.mobileValidation(value);
+                  }
+                  return null;
+                },
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -214,7 +229,12 @@ class ProfileStepper {
                 controller: profileController.emailController.value,
                 label: 'Email ID',
                 hint: 'Enter email ID',
-                vaidation: (value) => profileController.emailValidation(value),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.emailValidation(value);
+                  }
+                  return null;
+                },
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
@@ -234,10 +254,15 @@ class ProfileStepper {
                   profileController.dobController.value.text = date;
                 },
                 isDisable: true,
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter DOB',
-                ),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.nullCheckValidation(
+                      value,
+                      'Enter DOB',
+                    );
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,
@@ -368,23 +393,29 @@ class ProfileStepper {
                 controller: profileController.addressLine1Controller.value,
                 label: 'Address Line 1',
                 hint: 'Enter Door # , Building name, Flat #',
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter address line 1',
-                ),
+                vaidation: (value) {
+                  return profileController.nullCheckValidation(
+                    value,
+                    'Enter address line 1',
+                  );
+                },
               ),
               SizedBox(
                 height: 20,
               ),
               textField(
-                controller: profileController.addressLine2Controller.value,
-                label: 'Address Line 2',
-                hint: 'Enter area, landmark etc',
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter address line 2',
-                ),
-              ),
+                  controller: profileController.addressLine2Controller.value,
+                  label: 'Address Line 2',
+                  hint: 'Enter area, landmark etc',
+                  vaidation: (value) {
+                    if (value.toString().trim().isNotEmpty) {
+                      profileController.nullCheckValidation(
+                        value,
+                        'Enter address line 2',
+                      );
+                    }
+                    return null;
+                  }),
               SizedBox(
                 height: 20,
               ),
@@ -392,9 +423,14 @@ class ProfileStepper {
                 controller: profileController.pincodeController.value,
                 label: 'Pincode',
                 hint: 'Enter pincode here',
-                vaidation: (value) => profileController.pinCodeValidation(
-                  value,
-                ),
+                vaidation: (value) {
+                  if (value.toString().trim().isNotEmpty) {
+                    profileController.pinCodeValidation(
+                      value,
+                    );
+                  }
+                  return null;
+                },
                 onChanged: (value) {
                   if (value.toString().trim().length == 6) {
                     profileController.city.value = '';
@@ -455,7 +491,7 @@ class ProfileStepper {
     );
   }
 
-  Widget occupationDetails(GlobalKey<FormState> occupationForm) {
+  Widget occupationDetails(GlobalKey<FormState> occupationForm, {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(

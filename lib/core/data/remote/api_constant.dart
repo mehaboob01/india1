@@ -55,4 +55,7 @@ class Apis
   static String additionalDetails = "customers/profile/additional-details";
   static String residentialAddress = "customers/profile/residential-address";
   static String getCityState = "city-state";
+  static String addBankAccount = "loyalty/customer/bank/account";
+  static String getBankAccount = "loyalty/customer/bank/accounts";
+  static String getUpiIds = "loyalty/customer/upi/id";
 }

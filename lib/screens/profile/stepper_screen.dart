@@ -86,6 +86,11 @@ class _StepperScreenState extends State<StepperScreen> {
                             if (profileController.currentStep.value == 1) {
                               if (!personalForm.currentState!.validate()) {
                                 print("Not validate");
+                                Flushbar(
+                                  title: "Alert!",
+                                  message: "missing some values",
+                                  duration: Duration(seconds: 3),
+                                )..show(context);
                               } else if (profileController.gender.value == '') {
                                 Flushbar(
                                   title: "Alert!",
@@ -104,6 +109,11 @@ class _StepperScreenState extends State<StepperScreen> {
                             } else if (profileController.currentStep.value == 2) {
                               if (!residentialForm.currentState!.validate()) {
                                 print("Not validate");
+                                Flushbar(
+                                  title: "Alert!",
+                                  message: "missing some values",
+                                  duration: Duration(seconds: 3),
+                                )..show(context);
                               } else if (profileController.city.value == '') {
                                 Flushbar(
                                   title: "Alert!",
@@ -122,6 +132,11 @@ class _StepperScreenState extends State<StepperScreen> {
                             } else if (profileController.currentStep.value == 3) {
                               if (!occupationForm.currentState!.validate()) {
                                 print("Not validate");
+                                Flushbar(
+                                  title: "Alert!",
+                                  message: "missing some values",
+                                  duration: Duration(seconds: 3),
+                                )..show(context);
                               } else if (profileController.employmentType.value == '') {
                                 Flushbar(
                                   title: "Alert!",
