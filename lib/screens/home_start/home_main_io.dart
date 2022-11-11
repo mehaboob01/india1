@@ -90,9 +90,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
+    String? finger = prefs.getString(SPKeys.finger);
 
-
-    if (showAuth == true) {
+    if (showAuth == true && finger == "  ") {
       {
         try {
           bool hasbiometrics =
@@ -101,10 +101,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
           if (hasbiometrics) {
             List<BiometricType> availableBiometrics =
                 await auth.getAvailableBiometrics();
-
-
-            print("available matrics");
-            print(availableBiometrics);
             if (Platform.isAndroid) {
               bool pass = await auth.authenticate(
                   localizedReason: 'Authenticate with pattern/pin/passcode',
@@ -141,10 +137,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
   @override
   void initState() {
     super.initState();
-    //checkLogin();
+
     showFirstTimePoints();
 
-
+    checkLogin();
   }
 
   @override
@@ -265,7 +261,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                               position: RelativeRect.fromLTRB(
                                                   25.0, 112.0, 16.0, 0.0),
                                               items: [
-
                                                 PopupMenuItem(
                                                   child: GestureDetector(
                                                     onTap: () {
@@ -322,9 +317,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                               if (itemSelected == null) return;
 
                                               if (itemSelected == "1") {
-
-
-
                                               } else if (itemSelected == "2") {
                                                 Get.toNamed(
                                                     MRouter.loyaltyPoints);
@@ -637,9 +629,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
         label: 'Redeem Points Now',
-        onPressed: () => {
-         // Get.toNamed(MRouter.redeemPointsPage)
-        },
+        onPressed: () => {},
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,
