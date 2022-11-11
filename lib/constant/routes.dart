@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
+import 'package:india_one/screens/map/map_ui.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
@@ -19,13 +21,14 @@ class MRouter {
   static const String languageSelectionIO = 'LanguageSelectionIO';
   static const String fingerPrintIO = 'FingerPrintIO';
   static const String loyaltyPoints = 'LoyaltyPoints';
-  static const String personalLoan =  'PersonalLoan';
+  static const String personalLoan = 'PersonalLoan';
   static const String chooseAmountIO = 'ChooseAmountIO';
   static const String redeemPointsPage = 'RedeemPointsPage';
   static const String cashBackRedeemPage = 'CashBackRedeemPage';
   static const String mobileRechargeIO = 'MobileRechargeIO';
+  static const String generalHistory = 'GeneralHistory';
+  static const String map = 'Mapscreen';
 
-  
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashRoute:
@@ -58,7 +61,10 @@ class MRouter {
 
       case loyaltyPoints:
         return CupertinoPageRoute(builder: (_) => LoyaltyScreen());
-
+      case map:
+        return CupertinoPageRoute(builder: (_) => Maps());
+      case generalHistory:
+        return CupertinoPageRoute(builder: (_) => GeneralHistory());
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));
     }

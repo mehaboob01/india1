@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 class DropDown extends StatefulWidget {
-  const DropDown(
+   DropDown(
       {required this.data,
         Key? key,
         required this.validationText,
@@ -50,17 +49,17 @@ class _DropDownState extends State<DropDown> {
           EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
+              borderSide:  BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
+              borderSide:  BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
               borderSide:  BorderSide(
                   width: 1.0, color: AppColors.primary))),
-      icon: const Icon(
+      icon:  Icon(
         Icons.keyboard_arrow_down_rounded,
        // color: AppColors.greyInlineText,
       ),

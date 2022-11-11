@@ -23,7 +23,9 @@ class NumberStepper extends StatelessWidget {
     required this.lineWidth,
     required this.title,
     required this.callback,
-  })  : assert(curStep > 0 == true && curStep <= totalSteps + 1 && title.length == totalSteps),
+  })  : assert(curStep > 0 == true &&
+            curStep <= totalSteps + 1 &&
+            title.length == totalSteps),
         super(key: key);
 
   @override
@@ -36,9 +38,7 @@ class NumberStepper extends StatelessWidget {
       ),
       width: this.width,
       child: InkWell(
-        onTap: (){
-
-        },
+        onTap: () {},
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,12 +95,12 @@ class NumberStepper extends StatelessWidget {
       // step circles
       list.add(
         InkWell(
-          onTap: (){
+          onTap: () {
             callback(i);
           },
-          child:  Container(
-            width: 28.0,
-            height: 28.0,
+          child: Container(
+            width: 25.0,
+            height: 25.0,
             margin: EdgeInsets.symmetric(horizontal: 16),
             child: getInnerElementOfStepper(i),
             decoration: new BoxDecoration(
@@ -180,7 +180,7 @@ class NumberStepper extends StatelessWidget {
           borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
           border: new Border.all(
             color: currentStepColor,
-            width: 2.0,
+            width: 1.0,
           ),
         ),
         child: Container(
@@ -188,7 +188,7 @@ class NumberStepper extends StatelessWidget {
             borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
             color: currentStepColor,
           ),
-          margin: EdgeInsets.all(4),
+          margin: EdgeInsets.all(2.5),
         ),
       );
     } else

@@ -1,18 +1,77 @@
-  import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/l10n/messages_ar.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/services/local_notifications_service.dart';
+import 'package:india_one/utils/common_methods.dart';
 
 import 'localization/locale_string.dart';
 
+//
+// Receive Message/Notifications when app is in BG
+
+// Future<void> backgroundHandler(RemoteMessage message) async {
+//   LocalNotificationService.initialize();
+//
+//   print("background");
+//   print(message.data.toString());
+//   print(message.notification!.title.toString());
+//   LocalNotificationService.display(message);
+// }
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
+ // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // opened the app from terminated state
+    // FirebaseMessaging.instance.getInitialMessage().then((message){
+    //
+    // if(message!=null)
+    //   {
+    //     LocalNotificationService.display(message);
+    //     print("background but opend");
+    //     final routeFromMessage = message.data["route"];
+    //   //  Get.toNamed(routeFromMessage);
+    //   }
+    //
+    // });
+
+    // // notifications data when app is on foreground
+    // FirebaseMessaging.onMessage.listen((messsage) {
+    //   if (messsage.notification != null) {
+    //     print(messsage.notification!.body);
+    //     print(messsage.notification!.title);
+    //     LocalNotificationService.display(messsage);
+    //   }
+    //
+    // });
+
+    // when app is open but in background
+    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    //   LocalNotificationService.display(message);
+    //   print("background but opend");
+    //   final routeFromMessage = message.data["route"];
+    //   Navigator.of(context).pushNamed(routeFromMessage);
+    //
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {

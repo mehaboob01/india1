@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'cb_models/bank_list_model.dart';
 import 'cb_models/customer_banks_model.dart';
@@ -18,7 +19,7 @@ class CashBackManager extends GetxController {
   var isLoading = false.obs;
 
   //bank list for drop dowm
-  var bankList = <String>[].obs;
+  var bankList = <String>['ABHYUDAYA CO-OP BANK-1'].obs;
   var bankListSend = <String>[];
 
   var bankListId = <Bank>[].obs;
@@ -54,6 +55,7 @@ class CashBackManager extends GetxController {
         "x-digital-api-key": "1234"
       });
       var jsonData = jsonDecode(response.body);
+      print("response of bank lists${response.body}");
 
       BankListModel bankListModel = BankListModel.fromJson(jsonData);
 
@@ -67,6 +69,8 @@ class CashBackManager extends GetxController {
 
         bankList.addAll(bankListSend);
         bankListId.addAll(bankListIdSend);
+        // print("asdf");
+        // print(bankList.value);
         isLoading(false);
       } else {
         Flushbar(
@@ -152,21 +156,19 @@ class CashBackManager extends GetxController {
       print("customer id${customerId}");
 
       Map<String, dynamic> sendData = {};
-      if (fromAccountList == true) {
+      if (fromAccountList != true) {
         sendData = {
-          "bankId": fromAccountList == true ? "" : bankIdOrBankAccountId,
-          "pointsToRedeem": data['pointsToRedeem'].toString(),
+          "bankId":  bankIdOrBankAccountId,
+          "pointsToRedeem": data['pointsToRedeem'],
           "accountNumber": data['accountNumber'].toString(),
-          "bankAccountId": fromAccountList == true ? bankIdOrBankAccountId : "",
-          "ifscCode": fromAccountList == true
-              ? data['IFSC'].toString()
-              : data['ifscCode'].toString(),
-          "accountType": fromAccountList == true
-              ? data['type'].toString()
-              : data['accountType'].toString(),
+          // "bankAccountId":  "",
+          "ifscCode": data['ifscCode'].toString(),
+          "accountType": data['accountType'].toString(),
           "customerId": customerId,
           "saveBankDetails": true
         };
+
+
       } else {
         sendData = {
           "pointsToRedeem": pointsToReedem,
@@ -175,11 +177,9 @@ class CashBackManager extends GetxController {
         };
       }
 
-      //  print("points redeemed==>>");
-      // print(data['pointsToRedeem']);
-      // print(data['accountNumber']);
-      // print(data['ifscCode']);
-      // print(data['accountType']);
+
+
+      print("map data for bank ${sendData.toString()}");
 
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.cashBackToBank),
@@ -189,6 +189,16 @@ class CashBackManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
+
+      var jsonData = jsonDecode(response.body);
+
+      CommonResponseModel commonResponseModel = CommonResponseModel.fromJson(jsonData);
+
+      print("RESPOINSE");
+      print(response.statusCode);
+      print(response.body);
+
+
 
       if (response.statusCode == 200) {
         Flushbar(
@@ -201,10 +211,10 @@ class CashBackManager extends GetxController {
             .then((value) => selectedIndex.value ==  -1);
 
 
-      } else {
+      } else if(response.statusCode == 400) {
         Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
+          title: "Alert!",
+          message: "validation error",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
       }

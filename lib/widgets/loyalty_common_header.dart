@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 import '../screens/loyality_points/loyality_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import 'button_with_flower.dart';
-
 
 // Appbar section --------------------------------
 class CustomAppBar extends StatelessWidget {
@@ -81,8 +79,6 @@ class CustomActionIcons extends StatelessWidget {
   final Alignment? beginsAt;
   final Alignment? endsAt;
 
-
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -101,10 +97,13 @@ class CustomActionIcons extends StatelessWidget {
               },
               child: SvgPicture.asset(image, fit: BoxFit.fill))
           : isSvg!
-              ? SvgPicture.asset(
-                  image,
-                  color: imageColor,
-                  fit: BoxFit.fill,
+              ? GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    image,
+                    color: imageColor,
+                    fit: BoxFit.fill,
+                  ),
                 )
               : Image.asset(image, color: imageColor, fit: BoxFit.fill),
     );
@@ -113,9 +112,8 @@ class CustomActionIcons extends StatelessWidget {
 
 // Loyalty common heading screen
 class HeadingContainer extends StatelessWidget {
-
   LoyaltyManager _loyaltyManager = Get.find();
-   HeadingContainer({
+  HeadingContainer({
     Key? key,
   }) : super(key: key);
 
@@ -155,9 +153,11 @@ class HeadingContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Image.asset(AppImages.coins),
-                      SizedBox(width: 4,),
+                      SizedBox(
+                        width: 4,
+                      ),
                       Obx(
-                        ()=> Text(
+                        () => Text(
                           _loyaltyManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: 18.0.sp,
@@ -223,7 +223,7 @@ class HeadingContainer extends StatelessWidget {
                           ),
                         ),
                         Obx(
-                          ()=> Text(
+                          () => Text(
                             _loyaltyManager.pointsEarned.toString(),
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 14.0.sp,
@@ -244,7 +244,7 @@ class HeadingContainer extends StatelessWidget {
                             ),
                           ),
                           Obx(
-                            ()=> Text(
+                            () => Text(
                               _loyaltyManager.pointsRedeemed.toString(),
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: 14.0.sp,

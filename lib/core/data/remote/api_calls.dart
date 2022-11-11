@@ -17,45 +17,7 @@ class ApiCalls {
     );
 
 
-    // static Future<Response> post(String url, {dynamic body, dynamic headers}) async {
-    //   try {
-    //     print('hitting url => ' + url);
-    //     print('with parameter => ' + body.toString());
-    //     print('with headers => ' + headers.toString());
-    //     Response response;
-    //     Dio dio = new Dio();
-    //     response = await dio.post(url, data: body, options: Options(headers: headers));
-    //     print('response => ' + response.data.toString());
-    //     return response;
-    //   } catch (e) {
-    //     print(e);
-    //
-    //     return Response(
-    //         data: {'status': "false", "message":"somwthing went wrong"}, requestOptions: e as RequestOptions);
-    //   }
-    // }
-    //
-    // static Future<Response> get(String url, {dynamic headers}) async {
-    //   try {
-    //     print('hitting url => ' + url);
-    //     print('with headers => ' + headers.toString());
-    //     Response response;
-    //     Dio dio = new Dio();
-    //     response = await dio.get(url, options: Options(headers: headers));
-    //     print('response => ' + response.data.toString());
-    //     return response;
-    //   } catch (e) {
-    //     print(e);
-    //     if (e.toString() != null) {
-    //       print(e.toString());
-    //       // return (e.toString());
-    //     }
-    //     return Response(data: {
-    //       'status': "false",
-    //       "message": " AppMessages.somethingWentWrong",
-    //     }, requestOptions: null as RequestOptions);
-    //   }
-    // }
+
   }}
 
 class CommonResponseModel {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class AppColors {
   static const Color buttonColor = Color(0xff666666);
@@ -11,7 +12,6 @@ class AppColors {
 
   static const Color referEarnGradient1 = Color(0xff014280);
   static const Color referEarnGradient2 = Color(0xff9B79DD);
-
 
   // linear gradient orange
   static const Color orangeGradient1 = Color(0xffFFF46B);
@@ -163,12 +163,7 @@ class AppStyle {
       color: AppColors.white,
       fontSize: Dimens.font_16sp,
       fontFamily: 'Graphik');
-  // static const shortHeading2 = TextStyle(
-  //     fontWeight: FontWeight.w400,
-  //     color: AppColors.white,
-  //     fontSize: Dimens.font_14sp,
-  //     fontFamily: 'Graphik'
-  // );
+
 
   static const languageTextStyle = TextStyle(
       fontWeight: FontWeight.w600,
@@ -335,9 +330,6 @@ AppBar appBar(titleOfAppbar) {
   );
 }
 
-
-
-
 AppBar transParentAppbar(titleOfAppbar) {
   return AppBar(
     centerTitle: false,
@@ -357,18 +349,14 @@ AppBar transParentAppbar(titleOfAppbar) {
       ),
     ),
   );
-
-
-
 }
-
 
 Widget rupeeIcon(
     {required Color color,
-      required String label,
-      required Color textColor,
-      bool? boldfont,
-      required double fontSize}) {
+    required String label,
+    required Color textColor,
+    bool? boldfont,
+    required double fontSize}) {
   return Row(
     children: [
       SizedBox(
@@ -412,6 +400,9 @@ class AppImages {
   static const String cardImageshadow = '${assetPng}shadow.png';
   static const String notificationBell = '${assetPng}notification_bell.png';
   static const String profileImage = '${assetPng}profile_image.png';
+  static const String locationIcon = '${assetPng}locationIcon.png';
+  static const String searchIcon = '${assetPng}searchIcon.png';
+  static const String markerIcon = '${assetPng}markerIcon.png';
 
   // loans
   static const String handRupeeSvg = '${assetSvg}loans/personal.svg';
@@ -468,14 +459,22 @@ class AppImages {
 
   static const String walletIcon = '${assetSvg}payments/wallet_icon.svg';
 
-
   static const String loansPageSvg = '${assetSvg}payments/loansPageSVG.svg';
-  static const String paymentsPageSvg = '${assetSvg}payments/paymentsPageSVG.svg';
-  static const String insurancePageSvg = '${assetSvg}payments/insurancePageSVG.svg';
+  static const String paymentsPageSvg =
+      '${assetSvg}payments/paymentsPageSVG.svg';
+  static const String insurancePageSvg =
+      '${assetSvg}payments/insurancePageSVG.svg';
   static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
   static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
 }
+extension PercentSize on double {
+  double get hp => (Get.height * (this / 100));
+  double get wp => (Get.width * (this / 100));
+}
 
+extension ResponsiveText on double {
+  double get sp => Get.width / 100 * (this / 3);
+}
 class Strings {
   //Toast messages
 
@@ -486,3 +485,6 @@ class Strings {
 class AppFonts {
   static const appFont = 'Graphik';
 }
+
+double bottomMargin = 84;
+double bottomNavigationCircleRadius=81;

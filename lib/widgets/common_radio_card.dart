@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 import 'common_divider.dart';

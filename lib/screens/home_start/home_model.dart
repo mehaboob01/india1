@@ -33,22 +33,26 @@ class Data {
     this.pointsSummary,
     this.atmRewards,
     this.pointsConfiguration,
+    this.recentRewardTransactions,
   });
 
   PointsSummary? pointsSummary;
   AtmRewards? atmRewards;
   PointsConfiguration? pointsConfiguration;
+  dynamic recentRewardTransactions;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     pointsSummary: json["pointsSummary"] == null ? null : PointsSummary.fromJson(json["pointsSummary"]),
     atmRewards: json["atmRewards"] == null ? null : AtmRewards.fromJson(json["atmRewards"]),
     pointsConfiguration: json["pointsConfiguration"] == null ? null : PointsConfiguration.fromJson(json["pointsConfiguration"]),
+    recentRewardTransactions: json["recentRewardTransactions"],
   );
 
   Map<String, dynamic> toJson() => {
     "pointsSummary": pointsSummary == null ? null : pointsSummary!.toJson(),
     "atmRewards": atmRewards == null ? null : atmRewards!.toJson(),
     "pointsConfiguration": pointsConfiguration == null ? null : pointsConfiguration!.toJson(),
+    "recentRewardTransactions": recentRewardTransactions,
   };
 }
 
@@ -71,16 +75,24 @@ class AtmRewards {
 class PointsConfiguration {
   PointsConfiguration({
     this.redeemThreshold,
+    this.referFriendRewardPoints,
+    this.atmWithdrawRewardPoints,
   });
 
   int? redeemThreshold;
+  int? referFriendRewardPoints;
+  int? atmWithdrawRewardPoints;
 
   factory PointsConfiguration.fromJson(Map<String, dynamic> json) => PointsConfiguration(
     redeemThreshold: json["redeemThreshold"] == null ? null : json["redeemThreshold"],
+    referFriendRewardPoints: json["referFriendRewardPoints"] == null ? null : json["referFriendRewardPoints"],
+    atmWithdrawRewardPoints: json["atmWithdrawRewardPoints"] == null ? null : json["atmWithdrawRewardPoints"],
   );
 
   Map<String, dynamic> toJson() => {
     "redeemThreshold": redeemThreshold == null ? null : redeemThreshold,
+    "referFriendRewardPoints": referFriendRewardPoints == null ? null : referFriendRewardPoints,
+    "atmWithdrawRewardPoints": atmWithdrawRewardPoints == null ? null : atmWithdrawRewardPoints,
   };
 }
 

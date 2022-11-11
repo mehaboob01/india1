@@ -31,6 +31,7 @@ class _StepperScreenState extends State<StepperScreen> {
     super.initState();
     profileController.autoValidation.value = false;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,19 +45,24 @@ class _StepperScreenState extends State<StepperScreen> {
           Expanded(
             child: Column(
               children: [
-                Obx(
-                  () => NumberStepper(
-                    totalSteps: profileController.titleList.length,
-                    width: MediaQuery.of(context).size.width,
-                    curStep: profileController.currentStep.value,
-                    stepCompleteColor: AppColors.pointsColor,
-                    currentStepColor: AppColors.pointsColor,
-                    inactiveColor: Color(0xffbababa),
-                    lineWidth: 2,
-                    title: profileController.titleList,
-                    callback: (i){
-                      profileController.currentStep.value = i + 1;
-                    },
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    child: Obx(
+                      () => NumberStepper(
+                        totalSteps: profileController.titleList.length,
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        curStep: profileController.currentStep.value,
+                        stepCompleteColor: AppColors.pointsColor,
+                        currentStepColor: AppColors.pointsColor,
+                        inactiveColor: Color(0xffbababa),
+                        lineWidth: 2,
+                        title: profileController.titleList,
+                        callback: (i) {
+                          profileController.currentStep.value = i + 1;
+                        },
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -67,17 +73,24 @@ class _StepperScreenState extends State<StepperScreen> {
                         child: Column(
                           children: [
                             if (profileController.currentStep.value == 1) ...[
-                              ProfileStepper().personalDetails(context, personalForm),
-                            ] else if (profileController.currentStep.value == 2) ...[
-                              ProfileStepper().residentialDetails(residentialForm),
-                            ] else if (profileController.currentStep.value == 3) ...[
-                              ProfileStepper().occupationDetails(occupationForm),
+                              ProfileStepper()
+                                  .personalDetails(context, personalForm),
+                            ] else if (profileController.currentStep.value ==
+                                2) ...[
+                              ProfileStepper()
+                                  .residentialDetails(residentialForm),
+                            ] else if (profileController.currentStep.value ==
+                                3) ...[
+                              ProfileStepper()
+                                  .occupationDetails(occupationForm),
                             ]
                           ],
                         ),
                       )),
                 ),
-                Obx(() => profileController.addPersonalLoading.value || profileController.addResidentialLoading.value || profileController.addOccupationLoading.value
+                Obx(() => profileController.addPersonalLoading.value ||
+                        profileController.addResidentialLoading.value ||
+                        profileController.addOccupationLoading.value
                     ? CircularProgressIndicator()
                     : InkWell(
                         onTap: () {
@@ -92,7 +105,9 @@ class _StepperScreenState extends State<StepperScreen> {
                                   message: "Select gender",
                                   duration: Duration(seconds: 3),
                                 )..show(context);
-                              } else if (profileController.maritalStatus.value == '') {
+                              } else if (profileController
+                                      .maritalStatus.value ==
+                                  '') {
                                 Flushbar(
                                   title: "Alert!",
                                   message: "Select marital status",
@@ -101,7 +116,8 @@ class _StepperScreenState extends State<StepperScreen> {
                               } else {
                                 profileController.addPersonalDetails();
                               }
-                            } else if (profileController.currentStep.value == 2) {
+                            } else if (profileController.currentStep.value ==
+                                2) {
                               if (!residentialForm.currentState!.validate()) {
                                 print("Not validate");
                               } else if (profileController.city.value == '') {
@@ -119,10 +135,13 @@ class _StepperScreenState extends State<StepperScreen> {
                               } else {
                                 profileController.addResidentialDetails();
                               }
-                            } else if (profileController.currentStep.value == 3) {
+                            } else if (profileController.currentStep.value ==
+                                3) {
                               if (!occupationForm.currentState!.validate()) {
                                 print("Not validate");
-                              } else if (profileController.employmentType.value == '') {
+                              } else if (profileController
+                                      .employmentType.value ==
+                                  '') {
                                 Flushbar(
                                   title: "Alert!",
                                   message: "Select employment type",
@@ -146,7 +165,10 @@ class _StepperScreenState extends State<StepperScreen> {
                                   Text(
                                     'Save ${profileController.titleList[(profileController.currentStep.value) - 1]} Details',
                                     maxLines: 2,
-                                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
                                     textAlign: TextAlign.center,
                                   ),
                                   Spacer(),
@@ -183,12 +205,15 @@ class _StepperScreenState extends State<StepperScreen> {
                                     blurRadius: 16.0,
                                   ),
                                   BoxShadow(
-                                    color: AppColors.darkerGrey.withOpacity(0.4),
+                                    color:
+                                        AppColors.darkerGrey.withOpacity(0.4),
                                     offset: Offset(6.0, 6.0),
                                     blurRadius: 16.0,
                                   ),
                                 ],
-                                color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                color: 1 == 1
+                                    ? AppColors.btnColor
+                                    : AppColors.btnDisableColor,
                                 borderRadius: BorderRadius.circular(6.0),
                               )),
                         ),

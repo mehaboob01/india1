@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 
@@ -13,7 +15,9 @@ class ProfileScreen extends StatelessWidget {
   ProfileController profileController = Get.put(ProfileController());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
-  RxBool isPersonalDetailsVisible = false.obs, isResidentialDetailsVisible = false.obs, isOccupationDetailsVisible = false.obs;
+  RxBool isPersonalDetailsVisible = false.obs,
+      isResidentialDetailsVisible = false.obs,
+      isOccupationDetailsVisible = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -26,213 +30,244 @@ class ProfileScreen extends StatelessWidget {
           SafeArea(
             child: CustomAppBar(
               heading: 'Profile',
+              customActionIconsList: [
+                CustomActionIcons(
+                  image: "assets/svg/homeSvg.svg",
+                  isSvg: true,
+                )
+              ],
             ),
           ),
           Expanded(
-            child: Obx(()=>Stack(
-              children: [
-                if(profileController.getProfileLoading.value == true)...[
-                  Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ]else...[
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Stack(
-                          alignment: Alignment.centerLeft,
+            child: Obx(() => Stack(
+                  children: [
+                    if (profileController.getProfileLoading.value == true) ...[
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ] else ...[
+                      SingleChildScrollView(
+                        child: Column(
                           children: [
-                            Container(
-                              height: 100,
-                              padding: EdgeInsets.only(
-                                left: 100,
-                              ),
-                              margin: EdgeInsets.only(
-                                left: 80,
-                                right: 20,
-                                top: 20,
-                                bottom: 20,
-                              ),
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  30,
-                                ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: <Color>[
-                                    AppColors.cardBg1,
-                                    AppColors.cardBg2,
-                                  ],
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Mobile number",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: Dimens.font_14sp,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Obx(
-                                        () => Text(
-                                      "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Dimens.font_18sp,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            SizedBox(
+                              height: Get.height * 0.04,
                             ),
                             Stack(
-                              alignment: Alignment.bottomRight,
+                              alignment: Alignment.centerLeft,
                               children: [
                                 Container(
-                                  height: 140,
-                                  width: 140,
+                                  height: 80,
+                                  padding: EdgeInsets.only(
+                                    left: 100,
+                                  ),
                                   margin: EdgeInsets.only(
-                                    left: 20,
+                                    left: 80,
                                     right: 20,
+                                    top: 20,
+                                    bottom: 20,
                                   ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColors.orangeColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                      size: 110,
-                                    ),
-                                  ),
+                                  width: Get.width,
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.lightOrangeColor.withOpacity(0.4),
-                                      width: 10,
-                                      style: BorderStyle.solid,
+                                    borderRadius: BorderRadius.circular(
+                                      30,
                                     ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: <Color>[
+                                        AppColors.cardBg1,
+                                        AppColors.cardBg2,
+                                      ],
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Mobile number",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: Dimens.font_14sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Obx(
+                                        () => Text(
+                                          "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: Dimens.font_18sp,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Container(
-                                  height: 45,
-                                  width: 45,
-                                  margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.lightOrangeColor,
+                                Stack(
+                                  alignment: Alignment.bottomRight,
+                                  children: [
+                                    Container(
+                                      height: 135,
+                                      width: 135,
+                                      margin: EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.orangeColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                          size: 110,
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.lightOrangeColor
+                                              .withOpacity(0.4),
+                                          width: 10,
+                                          style: BorderStyle.solid,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 28,
-                                    color: AppColors.lightOrangeColor,
-                                  ),
-                                ),
+                                    Container(
+                                      height: 45,
+                                      width: 45,
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 25, bottom: 0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.lightOrangeColor,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 28,
+                                        color: AppColors.lightOrangeColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            details(title: 'Personal Details'),
+                            details(title: 'Residential Address'),
+                            details(title: 'Occupation Details'),
+                            details(title: 'Bank account(s)'),
+                            details(title: 'UPI ID(s) / VPA Number(s)'),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height: 48,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Spacer(),
+                                      Text(
+                                        'Logout'.tr,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Spacer(),
+                                      SizedBox(
+                                        height: 48,
+                                        child: Image.asset(
+                                          "assets/images/btn_img.png",
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: 1 == 1
+                                      ? BoxDecoration(
+                                          gradient: new LinearGradient(
+                                            end: Alignment.topRight,
+                                            colors: [
+                                              Colors.orange,
+                                              Colors.redAccent
+                                            ],
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white70
+                                                  .withOpacity(0.8),
+                                              offset: Offset(
+                                                -6.0,
+                                                -6.0,
+                                              ),
+                                              blurRadius: 16.0,
+                                            ),
+                                            BoxShadow(
+                                              color: AppColors.darkerGrey
+                                                  .withOpacity(0.4),
+                                              offset: Offset(6.0, 6.0),
+                                              blurRadius: 16.0,
+                                            ),
+                                          ],
+                                          color: 1 == 1
+                                              ? AppColors.btnColor
+                                              : AppColors.btnDisableColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6.0),
+                                        )
+                                      : BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white70
+                                                  .withOpacity(0.8),
+                                              offset: Offset(
+                                                -6.0,
+                                                -6.0,
+                                              ),
+                                              blurRadius: 16.0,
+                                            ),
+                                            BoxShadow(
+                                              color: AppColors.darkerGrey
+                                                  .withOpacity(0.4),
+                                              offset: Offset(6.0, 6.0),
+                                              blurRadius: 16.0,
+                                            ),
+                                          ],
+                                          color: 1 == 1
+                                              ? AppColors.btnColor
+                                              : AppColors.btnDisableColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6.0),
+                                        )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        details(title: 'Personal details'),
-                        details(title: 'Residential address'),
-                        details(title: 'Occupation Details'),
-                        details(title: 'Bank account(s)'),
-                        details(title: 'UPI ID(s) / VPA Number(s)'),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              height: 48,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Spacer(),
-                                  Text(
-                                    'logout'.tr,
-                                    maxLines: 2,
-                                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Spacer(),
-                                  SizedBox(
-                                    height: 48,
-                                    child: Image.asset(
-                                      "assets/images/btn_img.png",
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              decoration: 1 == 1
-                                  ? BoxDecoration(
-                                gradient: new LinearGradient(
-                                  end: Alignment.topRight,
-                                  colors: [Colors.orange, Colors.redAccent],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white70.withOpacity(0.8),
-                                    offset: Offset(
-                                      -6.0,
-                                      -6.0,
-                                    ),
-                                    blurRadius: 16.0,
-                                  ),
-                                  BoxShadow(
-                                    color: AppColors.darkerGrey.withOpacity(0.4),
-                                    offset: Offset(6.0, 6.0),
-                                    blurRadius: 16.0,
-                                  ),
-                                ],
-                                color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                borderRadius: BorderRadius.circular(6.0),
-                              )
-                                  : BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white70.withOpacity(0.8),
-                                    offset: Offset(
-                                      -6.0,
-                                      -6.0,
-                                    ),
-                                    blurRadius: 16.0,
-                                  ),
-                                  BoxShadow(
-                                    color: AppColors.darkerGrey.withOpacity(0.4),
-                                    offset: Offset(6.0, 6.0),
-                                    blurRadius: 16.0,
-                                  ),
-                                ],
-                                color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                borderRadius: BorderRadius.circular(6.0),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ]
-
-              ],
-            )),
+                      ),
+                    ]
+                  ],
+                )),
           ),
         ],
       ),
@@ -247,9 +282,9 @@ class ProfileScreen extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: AppColors.lightBlack,
-            fontSize: Dimens.font_12sp,
-          ),
+              color: AppColors.lightBlack,
+              fontSize: Dimens.font_12sp,
+              fontWeight: FontWeight.w400),
         ),
         SizedBox(
           height: 6,
@@ -257,9 +292,9 @@ class ProfileScreen extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: AppColors.lightBlack,
-            fontSize: Dimens.font_18sp,
-          ),
+              color: AppColors.lightBlack,
+              fontSize: Dimens.font_18sp,
+              fontWeight: FontWeight.w600),
         ),
         SizedBox(
           height: 16,
@@ -294,7 +329,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   getOccupationDetailButton() {
-    if (profileDetailsModel.employmentType == null && profileDetailsModel.occupation == null && profileDetailsModel.income == null && profileDetailsModel.panNumber == null) {
+    if (profileDetailsModel.employmentType == null &&
+        profileDetailsModel.occupation == null &&
+        profileDetailsModel.income == null &&
+        profileDetailsModel.panNumber == null) {
       isOccupationDetailsVisible.value = false;
     }
     isOccupationDetailsVisible.value = true;
@@ -303,11 +341,11 @@ class ProfileScreen extends StatelessWidget {
   nextStep(title) {
     int stepNumber = 1;
     switch (title) {
-      case 'Personal details':
+      case 'Personal Details':
         stepNumber = 1;
         break;
 
-      case 'Residential address':
+      case 'Residential Address':
         stepNumber = 2;
         break;
 
@@ -322,6 +360,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget details({required String title}) {
+    LinearGradient linearGradient = LinearGradient(colors: [
+      Color(0xFFF2642C),
+      Color(0xFFFFE943),
+    ]);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Card(
@@ -335,25 +377,38 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: ExpansionTile(
             initiallyExpanded: true,
+            iconColor: Colors.grey,
+            collapsedIconColor: Colors.grey,
             title: Row(
               children: [
                 Expanded(
                   child: Text(
                     title,
                     style: TextStyle(
-                      color: AppColors.lightBlack,
-                      fontSize: Dimens.font_18sp,
-                    ),
+                        color: AppColors.lightBlack,
+                        fontSize: Dimens.font_20sp,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
-                if ((title == 'Personal details' && (isPersonalDetailsVisible.value == true)) ||
-                    (title == 'Residential address' && (isResidentialDetailsVisible.value == true)) ||
-                    (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true))) ...[
+                if ((title == 'Personal Details' &&
+                        (isPersonalDetailsVisible.value == true)) ||
+                    (title == 'Residential Address' &&
+                        (isResidentialDetailsVisible.value == true)) ||
+                    (title == 'Occupation Details' &&
+                        (isOccupationDetailsVisible.value == true))) ...[
                   InkWell(
                     onTap: () {
                       nextStep(title);
                     },
-                    child: Icon(Icons.note_alt_outlined),
+                    child: ShaderMask(
+                        child: Icon(
+                          Icons.note_alt_outlined,
+                          color: Colors.white,
+                        ),
+                        shaderCallback: (bounds) {
+                          return linearGradient.createShader(bounds);
+                        }),
+                    // Icon(Icons.note_alt_outlined)
                   ),
                 ],
                 //
@@ -365,9 +420,9 @@ class ProfileScreen extends StatelessWidget {
                 color: AppColors.lightGreyColor,
                 margin: EdgeInsets.symmetric(horizontal: 10),
               ),
-              if (title == 'Personal details') ...[
+              if (title == 'Personal Details') ...[
                 personalDetails(),
-              ] else if (title == 'Residential address') ...[
+              ] else if (title == 'Residential Address') ...[
                 residentialAddress(),
               ] else if (title == 'Occupation Details') ...[
                 occupationDetails(),
@@ -408,7 +463,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       singleDetails(
                         title: "Mobile number",
-                        value: profileDetailsModel.mobileNumber ?? "",
+                        value: "+91 ${profileDetailsModel.mobileNumber}" ?? "",
                       ),
                       singleDetails(
                         title: "Email ID",
@@ -442,7 +497,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       singleDetails(
                         title: "Marital status",
-                        value: profileDetailsModel.maritalStatus ?? "Not updated",
+                        value:
+                            profileDetailsModel.maritalStatus ?? "Not updated",
                       ),
                     ],
                   ),
@@ -454,7 +510,7 @@ class ProfileScreen extends StatelessWidget {
             addDetailButton(
               title: 'Add Personal Details',
               callBack: () {
-                nextStep('Personal details');
+                nextStep('Personal Details');
               },
             ),
         ],
@@ -520,7 +576,7 @@ class ProfileScreen extends StatelessWidget {
             addDetailButton(
               title: 'Add Residential Details',
               callBack: () {
-                nextStep('Residential address');
+                nextStep('Residential Address');
               },
             ),
         ],
@@ -624,7 +680,8 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                               title: "Employment type",
-                              value: profileDetailsModel.employmentType ?? "No Type",
+                              value: profileDetailsModel.employmentType ??
+                                  "No Type",
                             ),
                           ),
                           SizedBox(
@@ -633,7 +690,8 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                               title: "Occupation",
-                              value: profileDetailsModel.occupation ?? "No Occupation",
+                              value: profileDetailsModel.occupation ??
+                                  "No Occupation",
                             ),
                           ),
                         ],

@@ -1,21 +1,6 @@
-// import 'package:flutter/material.dart';
-// import 'package:india_one_ui/utils/extensions.dart';
 
-// import '../common_widgets.dart/common_loyalty_card.dart';
-
-// import '../utils/theme_manager.dart';
-
-// class PaymentsPage extends StatelessWidget {
-//   const PaymentsPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-// }
 
 import 'package:flutter/material.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';

@@ -53,15 +53,17 @@ dependencies:
   flutter_launcher_icons: ^0.10.0
   local_auth: ^1.1.6
   firebase_dynamic_links: ^5.0.2
-  firebase_core: ^2.1.0
   rename: ^2.0.1
   change_app_package_name: ^1.1.0
   loading_animation_widget: ^1.2.0+3
   syncfusion_flutter_sliders: ^20.3.52
   flutter_contacts: ^1.1.5+1
-
-
+  google_maps_flutter: ^2.2.1
+  geolocator: ^9.0.2
+  firebase_messaging: ^14.1.0
+  firebase_core: ^2.2.0
   fluttertoast: ^8.1.1
+  flutter_local_notifications: ^12.0.3
 
 
 dev_dependencies:
@@ -103,6 +105,7 @@ flutter:
     - assets/png/
     - assets/svg/
     - assets/svg/loans/
+    - assets/svg/maps/
     - assets/svg/payments/
     - assets/svg/insurance/
     - assets/svg/savings/

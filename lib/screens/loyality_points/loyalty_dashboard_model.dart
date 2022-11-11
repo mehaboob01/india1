@@ -130,14 +130,14 @@ class RecentRewardTransaction {
   int? points;
   DateTime? date;
   String? typeId;
-  DateTime? expiryDate;
+  String? expiryDate;
 
   factory RecentRewardTransaction.fromJson(Map<String, dynamic> json) => RecentRewardTransaction(
     id: json["id"] == null ? null : json["id"],
     points: json["points"] == null ? null : json["points"],
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     typeId: json["typeId"] == null ? null : json["typeId"],
-    expiryDate: json["expiryDate"] == null ? null : DateTime.parse(json["expiryDate"]),
+    expiryDate: json["expiryDate"] == null ? null : (json["expiryDate"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -145,7 +145,7 @@ class RecentRewardTransaction {
     "points": points == null ? null : points,
     "date": date == null ? null : date!.toIso8601String(),
     "typeId": typeId == null ? null : typeId,
-    "expiryDate": expiryDate == null ? null : expiryDate!.toIso8601String(),
+    "expiryDate": expiryDate == null ? null : expiryDate!,
   };
 }
 

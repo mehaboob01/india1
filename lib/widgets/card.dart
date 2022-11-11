@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/theme_manager.dart';
-
 
 class ItemCard extends StatelessWidget {
   const ItemCard({
-
     required this.image,
     required this.label,
     required this.itembgColor,
@@ -70,7 +67,7 @@ class ItemCard extends StatelessWidget {
     LinearGradient itemCardbgColor;
     switch (bgtype) {
       case ItemCardbgColor.lightBlue:
-        itemCardbgColor =  LinearGradient(
+        itemCardbgColor = LinearGradient(
             //transform: matrix(1, 0, 0, -1, 0, 0);
             transform: GradientRotation(120.0),
             stops: [

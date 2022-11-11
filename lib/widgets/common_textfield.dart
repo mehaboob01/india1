@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 
@@ -9,6 +9,7 @@ class CommonTextField extends StatelessWidget {
       {
         this.hintText,
         this.labelText,
+        this.textLength,
         this.maxlines = 1,
         this.keyboardType = TextInputType.text,
         required this.inputController,
@@ -19,6 +20,7 @@ class CommonTextField extends StatelessWidget {
         required this.formName});
   final String? hintText;
   final String? labelText;
+  final int? textLength;
   final int maxlines;
   final TextInputType keyboardType;
   final TextEditingController inputController;
@@ -30,6 +32,11 @@ class CommonTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+
+        LengthLimitingTextInputFormatter(textLength),
+      ],
       name: formName,
       controller: inputController,
       maxLines: maxlines,

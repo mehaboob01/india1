@@ -20,7 +20,7 @@ class Apis
   static String loyaltyHistory = "loyalty/loyalty-history";
 
   // Mobile Recharge Api
-  static String operatorList = "loyalty/recharge/operator/list";
+  static String operatorList = "loyalty/recharge/operator/list?isPrepaid=1";
   static String circleList = "loyalty/recharge/circle/list";
   static String plans = "loyalty/recharge/plans";
   static String recharge = "loyalty/recharge/mobile";
@@ -49,7 +49,7 @@ class Apis
 
 
 
-
+  // profile section api's
   static String profile = "customers/profile";
   static String addPersonalDetails = "customers/profile/personal-details";
   static String additionalDetails = "customers/profile/additional-details";

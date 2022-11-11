@@ -7,16 +7,12 @@ import 'package:india_one/screens/Pages/payments.dart';
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../constant/other_constants_io.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../Pages/insurance.dart';
 import '../../Pages/savings.dart';
 import '../../home_start/home_main_io.dart';
-import '../../insurances/insurances_main_io.dart';
 
-import '../../payments/payments_main_io.dart';
-import '../../savings/savings_main_io.dart';
 
 class BottomTabsMainIO extends StatefulWidget {
   const BottomTabsMainIO({Key? key}) : super(key: key);
@@ -32,7 +28,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO();
+    mainHomeWidget = HomeMainIO(false);
     super.initState();
   }
 
@@ -61,8 +57,9 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                     children: [
                       HomeEachBottomTabIO('assets/images/homeInactive.svg','assets/images/underline.svg', "${'home'.tr}", () {
                         selectedTabId = 0;
-                        mainHomeWidget = HomeMainIO();
+                        mainHomeWidget = HomeMainIO(false);
                         setState(() {
+
 
                            showAuth();
                           selectedTabId;

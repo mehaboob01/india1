@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 
 import '../../constant/theme_manager.dart';
@@ -48,7 +47,7 @@ class LoansCard extends StatelessWidget {
       spacing: 2.0.wp,
       children:  [
         GestureDetector(
-          onTap: ()=> Get.toNamed(MRouter.chooseAmountIO),
+         // onTap: ()=> Get.toNamed(MRouter.chooseAmountIO),
           child: ItemCard(
             image: AppImages.handRupeeSvg,
             label: 'Personal',

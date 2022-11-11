@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,18 @@ class _SplashScreenState extends State<SplashScreen> {
   ];
   @override
   void initState() {
+
+
     super.initState();
+    FirebaseMessaging.instance.getToken().then((newToken){
+
+      print("FCM TOKEN ${newToken}");
+
+
+    });
+
+
+
     initDynamicLinks();
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }

@@ -9,6 +9,7 @@ import 'package:india_one/constant/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'model/mr_model.dart';
 import 'model/circle_model.dart';
@@ -67,11 +68,12 @@ class MrManager extends GetxController {
       });
       var jsonData = jsonDecode(response.body);
 
+
       RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
 
+
       if (response.statusCode == 200) {
-        print("Operator response");
-        print(response.body.toString());
+
         print(rcOperatorModel.data!.operators!);
         operatorList.clear();
         operatorListString.clear();
@@ -158,10 +160,16 @@ class MrManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
 
+      print("Send Mobile Recharge data ${operatorId}");
+      print("Send Mobile Recharge data ${circleId}");
+      print("Send Mobile Recharge data ${mobileNumber}");
+      print("Send Mobile Recharge data ${operatorId}");
+
+
       var response = await http.post(Uri.parse(baseUrl + Apis.plans),
           body: jsonEncode({
             "operatorId": operatorId,
-            "circleId": customerId,
+            "circleId": circleId,
             "mobileNumber": mobileNumber,
             "customerId": customerId,
           }),
@@ -171,6 +179,8 @@ class MrManager extends GetxController {
             "x-digital-api-key": "1234"
           });
       var jsonData = jsonDecode(response.body);
+
+      print("response ${response.body}");
 
       PlanesModel planesModel = PlanesModel.fromJson(jsonData);
 
@@ -189,6 +199,14 @@ class MrManager extends GetxController {
         print("plans List ");
         print(plansList.length);
         isFetchPlanLoading(false);
+        if(plansList.length == 0)
+          {
+            Flushbar(
+              title: "Alert!",
+              message: "No planes in List",
+              duration: Duration(seconds: 2),
+            )..show(Get.context!);
+          }
       } else {
         Flushbar(
           title: "Error!",
@@ -217,24 +235,38 @@ class MrManager extends GetxController {
 
 
 
+
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      print("Data for mobile recharge");
+
+      print(operatorId);
+      print(circleId);
+      print(phoneNumber);
+      print(customerId);
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.recharge),
           body: jsonEncode({
-            "operatorId": operatorId,
-            "circleId": circleId,
-            "mobileNumber": phoneNumber,
-            "amount": rechargeData['amount'],
-            "planType": rechargeData['planType'],
-            "customerId": customerId,
+            "operatorId": 1,
+            "circleId": 1,
+            "mobileNumber": phoneNumber.toString(),
+            "amount": 10,
+            "planType": rechargeData['planType'].toString(),
+            "customerId": customerId.toString(),
           }),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
+
+      // var jsonData = jsonDecode(response.body);
+      //
+      // CommonResponseModel commonResponseModel = CommonResponseModel.fromJson(jsonData);
+
+      print("response ofnrecharge${response.body}");
 
       if (response.statusCode == 200) {
 
@@ -269,7 +301,31 @@ class MrManager extends GetxController {
 
 
 
-      } else {
+      }else if(response.statusCode == 400)
+        {
+
+          Flushbar(
+            title: "Alert!",
+            message: "commonResponseModel.message",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+        }
+
+
+
+
+
+
+
+
+
+      else {
+
+
+
+
+
         isMobileRechargeLoading(false);
         Flushbar(
           title: "Error!",

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/your_accounts_page.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -308,7 +307,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
   final List<String> bankAccountType = [
     'Savings Account',
-    'Current Account',
+    'current',
     'Fixed Deposit',
     'Joint Account',
   ];
@@ -333,7 +332,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
     // TODO: implement initState
     super.initState();
     cashBackManager.selectedIndex.value = (-1);
-    cashBackManager.onInit();
+   // cashBackManager.onInit();
     cashBackManager.customerBankList.clear();
   }
 
@@ -378,7 +377,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           "accountType": "",
           "customerId": "",
           "saveBankDetails": true,
-          "bankDropDown": null,
+           "bankDropDown": null,
           "accountType": null
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -605,25 +604,33 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                     ],
                   ),
                 )
-              : const SizedBox.shrink(),
+              :  SizedBox.shrink(),
 
           // disable ui from here
-          DropDown(
-            onChanged: (value) {
-              //  return cashbackCtrl.bankAccontSelected!.value = value!;
-            },
-            formName: 'bankDropDown',
-            labelName: 'Bank name',
-            hintText: bankAccontDropDownHint!,
-            data: bankName,
-            validationText: '*Bank name is compulsory',
-          ),
+         Obx(
+         ()=> DropDown(
+
+                onChanged: (value) {
+
+                  // return cashBackManager.bankAccontSelected!.value = value!;
+                },
+                formName: 'bankDropDown',
+                labelName: 'Bank name',
+                hintText: bankAccontDropDownHint!,
+                data: cashBackManager.bankList.toList(),
+                validationText: '*Bank name is compulsory',
+              ),
+         ),
+
 
 
 
           sizedbox,
           // enter your account number ------------------------------------------------------------
           CommonTextField(
+            textLength: 9,
+
+
             formName: 'accountNumber',
             inputController:
                 widget.cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value,
@@ -640,6 +647,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           sizedbox,
           // comfirm account number -----------------------------------------------
           CommonTextField(
+            textLength: 9,
             formName: 're-account',
             inputController: widget
                 .cashbackCtrl.loyaltyBankAccountreEnteredTextEditingCtrl.value,
@@ -800,59 +808,59 @@ class LoyaltyUpiVpa extends StatelessWidget {
 
                         SizedBox(height: 16,),
 
-                        Obx(
-                        ()=> Container(
-
-                            height: 234,
-
-                              child:
-                              ListView.builder(
-                                  itemCount:2,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Container(
-                                          child: GestureDetector(
-                                            onTap: () => {
-                                              // if (_mrManager
-                                              //     .plansList.isNotEmpty)
-                                              //   {onCardTapped(index)}
-                                            },
-                                            child: CommonRadioCard(
-                                                    radioCardType:
-                                                    RadioCardType
-                                                        .upi,
-                                                   upiId: "cashBackManager.customerUPIList[index].upiId",
-                                                    cardWidth: double
-                                                        .maxFinite,
-                                                    isSelected:  true
-
-                                                    // index ==
-                                                    //     cashBackManager
-                                                    //         .selectedIndex
-                                                    //         .value,
-                                                  ),
-                                            ),
-                                          //
-                                          // decoration: BoxDecoration(
-                                          //
-                                          //   borderRadius:
-                                          //   BorderRadius
-                                          //       .circular(
-                                          //       1.0.wp),
-                                          // ),
-                                    ));
-                                  }),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                    color: AppColors.cardScreenBg),
-                                borderRadius:
-                                BorderRadius.circular(2.0.wp),
-
-                              )
-                          ),
-                        ),
+                        // Obx(
+                        // ()=> Container(
+                        //
+                        //     height: 234,
+                        //
+                        //       child:
+                        //       ListView.builder(
+                        //           itemCount:2,
+                        //           itemBuilder: (context, index) {
+                        //             return Padding(
+                        //               padding: EdgeInsets.all(4.0),
+                        //               child: Container(
+                        //                   child: GestureDetector(
+                        //                     onTap: () => {
+                        //                       // if (_mrManager
+                        //                       //     .plansList.isNotEmpty)
+                        //                       //   {onCardTapped(index)}
+                        //                     },
+                        //                     child: CommonRadioCard(
+                        //                             radioCardType:
+                        //                             RadioCardType
+                        //                                 .upi,
+                        //                            upiId: "cashBackManager.customerUPIList[index].upiId",
+                        //                             cardWidth: double
+                        //                                 .maxFinite,
+                        //                             isSelected:  true
+                        //
+                        //                             // index ==
+                        //                             //     cashBackManager
+                        //                             //         .selectedIndex
+                        //                             //         .value,
+                        //                           ),
+                        //                     ),
+                        //                   //
+                        //                   // decoration: BoxDecoration(
+                        //                   //
+                        //                   //   borderRadius:
+                        //                   //   BorderRadius
+                        //                   //       .circular(
+                        //                   //       1.0.wp),
+                        //                   // ),
+                        //             ));
+                        //           }),
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         border: Border.all(
+                        //             color: AppColors.cardScreenBg),
+                        //         borderRadius:
+                        //         BorderRadius.circular(2.0.wp),
+                        //
+                        //       )
+                        //   ),
+                        // ),
                         SizedBox(height: 30,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

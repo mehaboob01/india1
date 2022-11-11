@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/constant/theme_manager.dart';
 class CommonDivider extends StatelessWidget {
   const CommonDivider(
       {
