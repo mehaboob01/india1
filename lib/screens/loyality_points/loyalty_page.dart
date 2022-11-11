@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
@@ -38,12 +40,17 @@ class LoyaltyScreen extends StatelessWidget {
                                   color: const Color(0xff2d2d2d),
                                   fontWeight: FontWeight.w600),
                             ),
-                            Text(
-                              'History',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 11.0.sp,
-                                  color: const Color(0xff2364A1),
-                                  fontWeight: FontWeight.w600),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(MRouter.generalHistory);
+                              },
+                              child: Text(
+                                'History',
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: 11.0.sp,
+                                    color: const Color(0xff2364A1),
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ],
                         ),
@@ -74,7 +81,9 @@ class LoyaltyScreen extends StatelessWidget {
                               : _loyaltyManager.recentRewardTransactionsList
                                           .length ==
                                       0
-                                  ? Center(child: Text("No Rewards"))
+                                  ? Center(child: Text("No Rewards!", style: AppStyle.shortHeading.copyWith(
+                          color: const Color(0xff2d2d2d),
+                              fontWeight: FontWeight.w600),))
                                   : GridView(
                                       shrinkWrap: true,
                                       physics:
