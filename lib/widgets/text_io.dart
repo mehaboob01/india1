@@ -1,5 +1,8 @@
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
+
+import '../constant/theme_manager.dart';
 
 class TextIO extends StatefulWidget {
   String text;
@@ -7,12 +10,14 @@ class TextIO extends StatefulWidget {
   int maxlines;
   Color color;
   FontWeight fontWeight;
+  double padding;
 
   TextIO(this.text,
       {this.size = 18,
       this.maxlines = 1,
-      this.color = Colors.black,
-      this.fontWeight = FontWeight.normal,
+      this.color = AppColors.textColor,
+      this.fontWeight = FontWeight.w500,
+      this.padding = 9,
       Key? key})
       : super(key: key);
 
@@ -23,10 +28,17 @@ class TextIO extends StatefulWidget {
 class _TextIOState extends State<TextIO> {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      widget.text,
-      style: TextStyle(fontSize: widget.size, color: widget.color,fontWeight: widget.fontWeight),
-      maxLines: widget.maxlines,
+    return Padding(
+      padding: EdgeInsets.all(widget.padding),
+      child: AutoSizeText(
+        widget.text,
+        style: TextStyle(
+            fontSize: widget.size,
+            color: widget.color,
+            fontWeight: widget.fontWeight),
+        maxLines: widget.maxlines,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

@@ -1,9 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'localization/locale_string.dart';
+
+//"2022-11-01T20:45:13Z"
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -15,8 +22,10 @@ class MyApp extends StatelessWidget {
       title: 'India One',
       debugShowCheckedModeBanner: false,
       locale: Locale('en', 'US'),
+      translations: LocaleString(),
       onGenerateRoute: MRouter.generateRoute,
       initialRoute: MRouter.splashRoute,
+      //home: NotificationScreen(),
     );
   }
 }

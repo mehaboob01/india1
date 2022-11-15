@@ -1,40 +1,83 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
+import '../../../core/data/local/shared_preference_keys.dart';
+import '../../home_start/home_main_io.dart';
+import '../select_language/language_selection_io.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
+  final List locale = [
+    {'name': 'ENGLISH', 'locale': Locale('en', 'US')},
+    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
+    {'name': 'ಕನ್ನಡ', 'locale': Locale('ka', 'IN')},
+    {'name': 'मराठी', 'locale': Locale('ma', 'IN')},
+    {'name': 'తెలుగు', 'locale': Locale('te', 'IN')},
+    {'name': 'தமிழ்', 'locale': Locale('ta', 'IN')},
+    {'name': 'മലയാളം', 'locale': Locale('mal', 'IN')},
+    {'name': 'বাংলো', 'locale': Locale('ban', 'IN')},
+    {'name': 'ଓଡିଆ', 'locale': Locale('or', 'IN')},
+  ];
   @override
   void initState() {
     super.initState();
-    // requestCameraPermission();
+    initDynamicLinks();
+    Timer(Duration(seconds: 2), () => launchLoginWidget());
+  }
 
-    Timer(Duration(seconds: 3), () => launchLoginWidget());
+  Future<void> initDynamicLinks() async {
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      Get.toNamed(MRouter.splashRoute);
+    }).onError((error) {
+      print('onLink error');
+      print(error.message);
+    });
+  }
+
+  updateLanguage(Locale locale, int selectdLang) {
+    Get.updateLocale(locale);
+    setState(() {});
   }
 
   // launch login screen
   Future<void> launchLoginWidget() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // //Return String
-    // String? stringValue = prefs.getString('CurrentUser');
-    // print("Current User");
-    // print(stringValue);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
+    if (loggedIn == true) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool(SPKeys.SHOW_AUTH, true);
+      Get.offAllNamed(MRouter.homeScreen);
 
-    Get.offAllNamed(MRouter.languageSelectionIO);
+      int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
+      updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  LanguageSelectionIO('splash')));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       body: buildSplashForMobile(),
     );
@@ -53,8 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Center(
       child: Hero(
         tag: 'logo_image',
-        child:
-        Image.asset(
+        child: Image.asset(
           "assets/images/splash_logo.png",
           width: 288,
           height: 240,
@@ -70,21 +112,4 @@ class _SplashScreenState extends State<SplashScreen> {
       color: AppColors.white,
     );
   }
-
-  // Future<void> requestCameraPermission() async {
-  //   final serviceStatus = await Permission.camera.isGranted;
-  //
-  //   bool isCameraOn = serviceStatus == ServiceStatus.enabled;
-  //
-  //   final status = await Permission.camera.request();
-  //
-  //   if (status == PermissionStatus.granted) {
-  //     print('Permission Granted');
-  //   } else if (status == PermissionStatus.denied) {
-  //     print('Permission denied');
-  //   } else if (status == PermissionStatus.permanentlyDenied) {
-  //     print('Permission Permanently Denied');
-  //     await openAppSettings();
-  //   }
-  // }
 }

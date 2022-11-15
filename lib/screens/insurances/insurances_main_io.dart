@@ -21,7 +21,7 @@ class _InsurancesMainIOState extends State<InsurancesMainIO> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           overflow: TextOverflow.visible,
-          color:  AppColors.white,
+          color:  AppColors.primary,
           fontSize: Dimens.font_16sp,
         ),
       ),),
