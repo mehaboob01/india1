@@ -43,7 +43,8 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> monthlyIncomeController = TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
-  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs;
+  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs,
+      vehicleType = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController = TextEditingController().obs;

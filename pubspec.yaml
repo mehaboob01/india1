@@ -59,7 +59,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   syncfusion_flutter_sliders: ^20.3.52
   flutter_contacts: ^1.1.5+1
-
+  draggable_bottom_sheet_nullsafety: ^1.0.2
 
   fluttertoast: ^8.1.1
 

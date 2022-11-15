@@ -155,6 +155,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  draggable_bottom_sheet_nullsafety:
+    dependency: "direct main"
+    description:
+      name: draggable_bottom_sheet_nullsafety
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   enhance_stepper:
     dependency: "direct main"
     description:

@@ -53,10 +53,15 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        ItemCard(
-          image: AppImages.bikeSvg,
-          label: 'Bike',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.bikeLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.bikeSvg,
+            label: 'Bike',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
         ItemCard(image: AppImages.carSvg, label: 'Car', itembgColor: ItemCardbgColor.lightBlue),
         ItemCard(

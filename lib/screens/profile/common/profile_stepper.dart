@@ -69,10 +69,10 @@ class ProfileStepper {
       hintText: hint,
       hintStyle: TextStyle(
         color: AppColors.dotsColor,
+        overflow: TextOverflow.ellipsis,
       ),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       prefixIconConstraints: BoxConstraints(),
-      contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       labelStyle: TextStyle(
         fontWeight: FontWeight.w600,
         color: AppColors.hintColor,

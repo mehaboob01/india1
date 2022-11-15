@@ -1,29 +1,25 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/loans/personal_loan_io/choose_amount_io.dart';
 import 'package:india_one/screens/loans/personal_loan_io/pl_manager.dart';
-import 'package:india_one/screens/loans/providers_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
-import 'package:india_one/widgets/text_io.dart';
 
 import '../../../widgets/custom_slider.dart';
 import '../../profile/controller/profile_controller.dart';
+import '../providers_list.dart';
 
-enum ButtonState { inActive, active }
-
-class ChooseAmountIO extends StatefulWidget {
+class BikeLoanIO extends StatefulWidget {
   @override
-  State<ChooseAmountIO> createState() => _ChooseAmountIOState();
+  State<BikeLoanIO> createState() => _BikeLoanIOState();
 }
 
-class _ChooseAmountIOState extends State<ChooseAmountIO> {
+class _BikeLoanIOState extends State<BikeLoanIO> {
   PlManager _plManager = Get.put(PlManager());
   final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
@@ -43,7 +39,6 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
-  GlobalKey<FormState> occupationForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +52,7 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
             () => Column(
               children: [
                 CustomAppBar(
-                  heading: 'Personal loan',
+                  heading: 'Bike loan',
                   customActionIconsList: [
                     CustomActionIcons(
                       image: AppImages.bottomNavHome,
@@ -78,7 +73,7 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                             Obx(
                               () => Container(
                                 child: AnotherStepper(
-                                  stepperList: _plManager.titleList
+                                  stepperList: _plManager.bikeLoanTitleList
                                       .map((e) => StepperData(
                                             title: "$e",
                                           ))
@@ -96,9 +91,7 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                                 ? loanAmountUi()
                                 : _plManager.currentScreen.value == Steps.PERSONAL.index
                                     ? personalInfoUi()
-                                    : _plManager.currentScreen.value == Steps.RESIDENTIAL.index
-                                        ? residentialInfoUi()
-                                        : occupationInfoUi()
+                                    : residentialInfoUi()
                           ],
                         ),
                       ),
@@ -111,9 +104,7 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                       ? loanAmountButton()
                       : _plManager.currentScreen.value == Steps.PERSONAL.index
                           ? personalInfoButton()
-                          : _plManager.currentScreen.value == Steps.RESIDENTIAL.index
-                              ? residentialInfoButton()
-                              : occupationButton(),
+                          : residentialInfoButton(),
                 ),
               ],
             ),
@@ -128,8 +119,16 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
     return GestureDetector(
       onTap: () {
         _loanAmountKey.currentState!.save();
-        if (_loanAmountKey.currentState!.validate()) {
-          _plManager.updateScreen(Steps.PERSONAL.index);
+        if (profileController.vehicleType.value == '') {
+          Flushbar(
+            title: "Alert!",
+            message: "Select vehicle type",
+            duration: Duration(seconds: 3),
+          )..show(context);
+        } else {
+          if (_loanAmountKey.currentState!.validate()) {
+            _plManager.updateScreen(Steps.PERSONAL.index);
+          }
         }
       },
       child: Container(
@@ -249,9 +248,11 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                   duration: Duration(seconds: 3),
                 )..show(context);
               } else {
-                profileController.addPersonalDetails(isFromLoan: true,callBack: (){
-                  _plManager.updateScreen(Steps.RESIDENTIAL.index);
-                });
+                profileController.addPersonalDetails(
+                    isFromLoan: true,
+                    callBack: () {
+                      _plManager.updateScreen(Steps.RESIDENTIAL.index);
+                    });
               }
             },
             child: Container(
@@ -283,188 +284,61 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
   // RESIDENTIAL INFO BUTTON
 
   Widget residentialInfoButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: (){
-              profileController.autoValidation.value = true;
-              if (!residentialForm.currentState!.validate()) {
-                Flushbar(
-                  title: "Alert!",
-                  message: "missing some values",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.city.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Enter valid pincode for city",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.state.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Enter valid pincode for state",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else {
-                profileController.addResidentialDetails(
-                  isFromLoan: true,
-                  callBack: (){
-                    _plManager.updateScreen(Steps.OCCUPATION.index);
-                  }
-                );
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // OCCUPATION INFO BUTTON
-  Widget occupationButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.RESIDENTIAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: (){
-              profileController.autoValidation.value = true;
-              if (!occupationForm.currentState!.validate()) {
-                print("Not validate");
-                Flushbar(
-                  title: "Alert!",
-                  message: "missing some values",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.employmentType.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Select employment type",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else {
-                profileController.addOccupationDetails(
-                  isFromLoan: true,
-                  callBack: (){
-                    Get.to(() => ProviderList(
-                      title: 'Personal loan',
+    return InkWell(
+      onTap: () {
+        profileController.autoValidation.value = true;
+        if (!residentialForm.currentState!.validate()) {
+          Flushbar(
+            title: "Alert!",
+            message: "missing some values",
+            duration: Duration(seconds: 3),
+          )..show(context);
+        } else if (profileController.city.value == '') {
+          Flushbar(
+            title: "Alert!",
+            message: "Enter valid pincode for city",
+            duration: Duration(seconds: 3),
+          )..show(context);
+        } else if (profileController.state.value == '') {
+          Flushbar(
+            title: "Alert!",
+            message: "Enter valid pincode for state",
+            duration: Duration(seconds: 3),
+          )..show(context);
+        } else {
+          profileController.addResidentialDetails(
+              isFromLoan: true,
+              callBack: () {
+                Get.to(() => ProviderList(
+                      title: 'Bike loan',
                     ));
-                  }
-                );
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'SUBMIT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
+              });
+        }
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.height * 0.9,
+        height: 48,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'NEXT',
+              style: AppTextThemes.button,
             ),
-          ),
+          ],
         ),
-      ],
+        decoration: BoxDecoration(
+          gradient: new LinearGradient(
+            end: Alignment.topRight,
+            colors: [Colors.orange, Colors.redAccent],
+          ),
+
+          // color: termConditionChecked == true
+          //     ? AppColors.btnColor
+          //     : AppColors.btnDisableColor,
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
     );
   }
 
@@ -561,6 +435,23 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                 name: 'loan_amount',
               ),
             )),
+        DividerIO(
+          height: 28,
+        ),
+        ProfileStepper().commonDropDown(
+          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike'].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value.toString()),
+            );
+          }).toList(),
+          onChanged: (value) {
+            profileController.vehicleType.value = value;
+          },
+          label: 'Two wheeler required',
+          hint: 'Select the two wheeler you are buying',
+          value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
+        ),
         SizedBox(
           height: 54,
         )
@@ -585,15 +476,4 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
       residentialForm,
     );
   }
-
-  // Occupation info
-
-  Widget occupationInfoUi() {
-    return ProfileStepper().occupationDetails(
-      occupationForm,
-      isFromLoan: true,
-    );
-  }
 }
-
-enum Steps { LOAN_AMOUNT, PERSONAL, RESIDENTIAL, OCCUPATION }

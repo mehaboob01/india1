@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
@@ -24,8 +25,10 @@ class MRouter {
   static const String redeemPointsPage = 'RedeemPointsPage';
   static const String cashBackRedeemPage = 'CashBackRedeemPage';
   static const String mobileRechargeIO = 'MobileRechargeIO';
+  static const String bikeLoanIO = 'BikeLoanIO';
 
-  
+
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashRoute:
@@ -55,6 +58,9 @@ class MRouter {
 
       case loyaltyPoints:
         return CupertinoPageRoute(builder: (_) => LoyaltyScreen());
+
+      case bikeLoanIO:
+        return CupertinoPageRoute(builder: (_) => BikeLoanIO());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

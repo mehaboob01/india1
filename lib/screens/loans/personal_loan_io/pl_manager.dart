@@ -17,6 +17,11 @@ class  PlManager extends GetxController {
     "Residential",
     "Occupation",
   ];
+  List<String> bikeLoanTitleList = [
+    "Loan amount",
+    "Personal",
+    "Residential",
+  ];
 
   void updateScreen(screenIndex)
   {
