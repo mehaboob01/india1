@@ -8,7 +8,6 @@ import '../screens/loyality_points/loyality_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import 'button_with_flower.dart';
 
-
 // Appbar section --------------------------------
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -46,6 +45,7 @@ class CustomAppBar extends StatelessWidget {
                   heading,
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
+                      fontSize: Dimens.font_24sp,
                       fontWeight: FontWeight.w600),
                 ),
               ],
@@ -70,7 +70,8 @@ class CustomActionIcons extends StatelessWidget {
       this.beginsAt = Alignment.topLeft,
       this.endsAt = Alignment.bottomRight,
       this.stops = const [0.5, 1.0],
-      this.imageColor})
+      this.imageColor,
+      required this.onHeaderIconPressed})
       : super(key: key);
 
   final List<Color>? customGradientColors;
@@ -80,42 +81,43 @@ class CustomActionIcons extends StatelessWidget {
   final List<double>? stops;
   final Alignment? beginsAt;
   final Alignment? endsAt;
-
-
+  final VoidCallback onHeaderIconPressed;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 6.0.wp,
-      height: 6.0.wp,
-      child: customGradientColors != null
-          ? ShaderMask(
-              shaderCallback: (bounds) {
-                return LinearGradient(
-                        begin: beginsAt!,
-                        end: endsAt!,
-                        stops: stops,
-                        colors: List.generate(customGradientColors!.length,
-                            (index) => customGradientColors![index]))
-                    .createShader(bounds);
-              },
-              child: SvgPicture.asset(image, fit: BoxFit.fill))
-          : isSvg!
-              ? SvgPicture.asset(
-                  image,
-                  color: imageColor,
-                  fit: BoxFit.fill,
-                )
-              : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+    return GestureDetector(
+      onTap: onHeaderIconPressed,
+      child: SizedBox(
+        width: 6.0.wp,
+        height: 6.0.wp,
+        child: customGradientColors != null
+            ? ShaderMask(
+                shaderCallback: (bounds) {
+                  return LinearGradient(
+                          begin: beginsAt!,
+                          end: endsAt!,
+                          stops: stops,
+                          colors: List.generate(customGradientColors!.length,
+                              (index) => customGradientColors![index]))
+                      .createShader(bounds);
+                },
+                child: SvgPicture.asset(image, fit: BoxFit.fill))
+            : isSvg!
+                ? SvgPicture.asset(
+                    image,
+                    color: imageColor,
+                    fit: BoxFit.fill,
+                  )
+                : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+      ),
     );
   }
 }
 
 // Loyalty common heading screen
 class HeadingContainer extends StatelessWidget {
-
   LoyaltyManager _loyaltyManager = Get.find();
-   HeadingContainer({
+  HeadingContainer({
     Key? key,
   }) : super(key: key);
 
@@ -155,9 +157,11 @@ class HeadingContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Image.asset(AppImages.coins),
-                      SizedBox(width: 4,),
+                      SizedBox(
+                        width: 4,
+                      ),
                       Obx(
-                        ()=> Text(
+                        () => Text(
                           _loyaltyManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: 18.0.sp,
@@ -202,7 +206,7 @@ class HeadingContainer extends StatelessWidget {
                           ),
                         ),
                         Obx(
-                          ()=> Text(
+                          () => Text(
                             _loyaltyManager.pointsEarned.toString(),
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 14.0.sp,
@@ -223,7 +227,7 @@ class HeadingContainer extends StatelessWidget {
                             ),
                           ),
                           Obx(
-                            ()=> Text(
+                            () => Text(
                               _loyaltyManager.pointsRedeemed.toString(),
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: 14.0.sp,

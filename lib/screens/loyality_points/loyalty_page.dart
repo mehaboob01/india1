@@ -6,20 +6,15 @@ import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../constant/theme_manager.dart';
+import '../../utils/common_methods.dart';
 import 'loyality_manager.dart';
 
 class LoyaltyScreen extends StatelessWidget {
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
   @override
   Widget build(BuildContext context) {
-
-
-
-    DateTime date =DateTime.now();
-
-
-
-
+    print(CommonMethods().getFormatedDate(date: "2022-11-01T20:45:13.660Z"));
+    DateTime date = DateTime.now();
 
     // // list of your reward Card
     // List<YourRewardCard> yourRewarCardList = const <YourRewardCard>[
@@ -88,7 +83,7 @@ class LoyaltyScreen extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         HeadingContainer(),
+                        HeadingContainer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -109,71 +104,88 @@ class LoyaltyScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 4.0.wp),
                         Obx(
-                          () => _loyaltyManager.isLoading.value == true ?  Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(height: 24,),
-                              Center(
-                                child: LoadingAnimationWidget.inkDrop(
-                                  size: 36,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              SizedBox(height: 8,),
-                              Text('Loading ...',
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w400))
-                            ],
-                          ):
-
-                          _loyaltyManager.recentRewardTransactionsList.length == 0 ? Center(child: Text("No Rewards")):
-
-
-
-                              GridView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 1,
-                                    crossAxisSpacing: 4.0.wp,
-                                    mainAxisSpacing: 4.0.wp),
-                            children: List.generate(
-                              _loyaltyManager
-                                  .recentRewardTransactionsList.length,
-                              (index) => YourRewardCard(
-                                rewardState: date.isBefore(_loyaltyManager.recentRewardTransactionsList[index].expiryDate!.toLocal())?RewardState.won:RewardState.expired,
-                                rewardtype: _loyaltyManager
-                                            .recentRewardTransactionsList[index]
-                                            .typeId
-                                            .toString() ==
-                                        "referralBonnus"
-                                    ? Rewardtype.referralBonus
-                                    : _loyaltyManager
-                                                .recentRewardTransactionsList[
-                                                    index]
-                                                .typeId
-                                                .toString() ==
-                                            "cacheTransaction"
-                                        ? Rewardtype.cashTransaction
-                                        : _loyaltyManager
-                                                    .recentRewardTransactionsList[
-                                                        index]
-                                                    .typeId
-                                                    .toString() ==
-                                                "nonCacheTransaction"
-                                            ? Rewardtype.recharge
-                                            : Rewardtype.cashTransaction,
-                                date: "Expired on 02 Nov 2022",
-                                points: _loyaltyManager
-                                    .recentRewardTransactionsList[index].points!
-                                    .toInt(),
-                              ),
-                            ),
-                          ),
+                          () => _loyaltyManager.isLoading.value == true
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 24,
+                                    ),
+                                    Center(
+                                      child: LoadingAnimationWidget.inkDrop(
+                                        size: 36,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Loading ...',
+                                        style: AppStyle.shortHeading.copyWith(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w400))
+                                  ],
+                                )
+                              : _loyaltyManager.recentRewardTransactionsList
+                                          .length ==
+                                      0
+                                  ? Center(child: Text("No Rewards"))
+                                  : GridView(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 1,
+                                              crossAxisSpacing: 4.0.wp,
+                                              mainAxisSpacing: 4.0.wp),
+                                      children: List.generate(
+                                        _loyaltyManager
+                                            .recentRewardTransactionsList
+                                            .length,
+                                        (index) => YourRewardCard(
+                                          rewardState: date.isBefore(_loyaltyManager
+                                                  .recentRewardTransactionsList[
+                                                      index]
+                                                  .expiryDate!
+                                                  .toLocal())
+                                              ? RewardState.won
+                                              : RewardState.expired,
+                                          rewardtype: _loyaltyManager
+                                                      .recentRewardTransactionsList[
+                                                          index]
+                                                      .typeId
+                                                      .toString() ==
+                                                  "referralBonnus"
+                                              ? Rewardtype.referralBonus
+                                              : _loyaltyManager
+                                                          .recentRewardTransactionsList[
+                                                              index]
+                                                          .typeId
+                                                          .toString() ==
+                                                      "cacheTransaction"
+                                                  ? Rewardtype.cashTransaction
+                                                  : _loyaltyManager
+                                                              .recentRewardTransactionsList[
+                                                                  index]
+                                                              .typeId
+                                                              .toString() ==
+                                                          "nonCacheTransaction"
+                                                      ? Rewardtype.recharge
+                                                      : Rewardtype
+                                                          .cashTransaction,
+                                          date:
+                                              "Expired on ${CommonMethods().getOnlyDate(date: "2022-11-01T20:45:13.660Z")}",
+                                          points: _loyaltyManager
+                                              .recentRewardTransactionsList[
+                                                  index]
+                                              .points!
+                                              .toInt(),
+                                        ),
+                                      ),
+                                    ),
                         ),
                       ]),
                 ),

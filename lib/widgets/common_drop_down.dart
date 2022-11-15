@@ -3,16 +3,18 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
+
 class DropDown extends StatefulWidget {
   const DropDown(
       {required this.data,
-        Key? key,
-        required this.validationText,
-        required this.formName,
-        required this.labelName,
-        required this.hintText,
-        this.initialValue,
-        required this.onChanged})
+      Key? key,
+      required this.validationText,
+      required this.formName,
+      required this.labelName,
+      required this.hintText,
+      this.initialValue,
+      required this.onChanged,
+      this.isDropDownEnabled})
       : super(key: key);
   final List<String> data;
   final String validationText;
@@ -21,16 +23,18 @@ class DropDown extends StatefulWidget {
   final String hintText;
   final String? initialValue;
   final String? Function(String? value) onChanged;
-
+  final bool? isDropDownEnabled;
 
   @override
   _DropDownState createState() => _DropDownState();
 }
+
 class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderDropdown(
       name: widget.formName,
+      enabled: widget.isDropDownEnabled ?? true,
       validator: (value) => value == null ? widget.validationText : null,
       decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -45,7 +49,7 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
-          EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
+              EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
               borderSide: const BorderSide(

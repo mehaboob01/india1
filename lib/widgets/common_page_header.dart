@@ -1,16 +1,15 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/screens/onboarding_login/select_language/language_selection_io.dart';
 
 import '../constant/theme_manager.dart';
+import '../screens/notification/notification_screen.dart';
 import 'common_heading_icon.dart';
 
-
 class CommonPageHeader extends StatelessWidget {
-  CommonPageHeader({ required this.pageName});
+  CommonPageHeader({required this.pageName});
   final PageName pageName;
   // heading value ----------------------------------------------------------
   final List<String> heading = <String>[
@@ -151,9 +150,9 @@ class CommonPageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(4.0.wp, 10.0.hp, 4.0.wp, 4.0.hp),
+      padding: EdgeInsets.fromLTRB(4.0.wp, 6.0.hp, 4.0.wp, 4.0.hp),
       width: double.maxFinite,
-      height: Get.height * 0.4,
+      height: Get.height * 0.35,
       decoration: BoxDecoration(
           image: const DecorationImage(
               image: AssetImage(AppImages.homebg), fit: BoxFit.fill),
@@ -175,66 +174,75 @@ class CommonPageHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                 HeadingIconsBox(text: 'Aa'),
+                HeadingIconsBox(
+                  text: 'Aa',
+                  ontap: () => Get.to(() => LanguageSelectionIO('home')),
+                ),
                 SizedBox(
                   width: 2.0.wp,
                 ),
-                const HeadingIconsBox(image: AppImages.notificationBell),
+                HeadingIconsBox(
+                    image: AppImages.notificationBell,
+                    ontap: () async {
+                      Get.to(() => NotificationScreen());
+                    }),
                 SizedBox(width: 2.0.wp),
-                const HeadingIconsBox(image: AppImages.profileImage)
+                const HeadingIconsBox(
+                  image: AppImages.profileImage,
+                )
               ],
             ),
           ],
         ),
+        SizedBox(height: 2.0.hp),
         Expanded(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 4.0.wp, 0, 4.0.wp),
             child: Row(
               children: [
                 Expanded(
-                  flex: 3,
+                    flex: 3,
                     child: Container(
                       // color: Colors.red,
                       child: Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 2.0.hp),
-                              Padding(
-                                padding: EdgeInsets.only(right: 2.0.wp),
-                                child: Text(headerHeaderName(pageName),
-                                    style: AppStyle.shortHeading.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 14.0.sp,
-                                        height: 1.5,
-                                        fontWeight: FontWeight.w600)),
-                              ),
-                              SizedBox(height: 2.0.hp),
-                              Text(indiaOneTitle(pageName),
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: const Color(0xffFFEF37),
-                                      fontSize: Dimens.font_20sp,
-                                      fontWeight: FontWeight.w600)),
-                            ],
-                          )),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 2.0.hp),
+                          Padding(
+                            padding: EdgeInsets.only(right: 2.0.wp),
+                            child: Text(headerHeaderName(pageName),
+                                style: AppStyle.shortHeading.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 16.0.sp,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                          SizedBox(height: 2.0.hp),
+                          Text(indiaOneTitle(pageName),
+                              style: AppStyle.shortHeading.copyWith(
+                                  color: const Color(0xffFFEF37),
+                                  fontSize: Dimens.font_24sp,
+                                  fontWeight: FontWeight.w600)),
+                        ],
+                      )),
                     )),
                 Expanded(
-                   flex: 2
-                    ,
+                    flex: 2,
                     child: SizedBox(
                       // color: Colors.yellow,
                       //   child: Center(
-                          child: Container(
-                              padding: const EdgeInsets.all(0),
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: SvgPicture.asset(
-                                headerImageName(pageName),
-                                fit: BoxFit.contain,
-                              )),
-                        ))
+                      child: Container(
+                          padding: const EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                              // color: Colors.red,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: SvgPicture.asset(
+                            headerImageName(pageName),
+                            fit: BoxFit.contain,
+                          )),
+                    ))
               ],
             ),
           ),
@@ -245,7 +253,7 @@ class CommonPageHeader extends StatelessWidget {
 }
 
 class CommonPageCategoriesHeading extends StatelessWidget {
-  CommonPageCategoriesHeading({ required this.pageName});
+  CommonPageCategoriesHeading({required this.pageName});
   final PageName pageName;
   final List<String> categoreisHeading = <String>[
     'Loan categories',

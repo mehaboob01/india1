@@ -1,9 +1,11 @@
-  import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 
 import 'localization/locale_string.dart';
+
+//"2022-11-01T20:45:13Z"
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
       translations: LocaleString(),
       onGenerateRoute: MRouter.generateRoute,
       initialRoute: MRouter.splashRoute,
+      //home: NotificationScreen(),
     );
   }
 }

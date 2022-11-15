@@ -3,10 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
-
 class ItemCard extends StatelessWidget {
   const ItemCard({
-
     required this.image,
     required this.label,
     required this.itembgColor,
@@ -70,7 +68,7 @@ class ItemCard extends StatelessWidget {
     LinearGradient itemCardbgColor;
     switch (bgtype) {
       case ItemCardbgColor.lightBlue:
-        itemCardbgColor =  LinearGradient(
+        itemCardbgColor = LinearGradient(
             //transform: matrix(1, 0, 0, -1, 0, 0);
             transform: GradientRotation(120.0),
             stops: [
@@ -85,10 +83,10 @@ class ItemCard extends StatelessWidget {
       case ItemCardbgColor.skyBlue:
         itemCardbgColor = const LinearGradient(
             transform: GradientRotation(120.0),
-            stops: [
-              0.0,
-              0.5
-            ],
+            // stops: [
+            //   0.0,
+            //   0.5
+            // ],
             colors: [
               AppColors.violetIconGradient1,
               AppColors.violetIconGradient2
@@ -103,10 +101,10 @@ class ItemCard extends StatelessWidget {
       case ItemCardbgColor.lightRed2:
         itemCardbgColor = const LinearGradient(
             transform: GradientRotation(120.0),
-            stops: [
-              0.0,
-              0.5
-            ],
+            // stops: [
+            //   0.0,
+            //   0.5
+            // ],
             colors: [
               AppColors.yellowIconGradient1,
               AppColors.yellowIconGradient2

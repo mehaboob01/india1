@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +26,8 @@ class CashBackManager extends GetxController {
   RxMap<String, dynamic> addBankData = <String, dynamic>{}.obs;
 // bank list for customer banks
   var customerBankList = <Account>[].obs;
+  final editUpformKey = GlobalKey<FormBuilderState>();
+  final editaccountformKey = GlobalKey<FormBuilderState>();
   var customerBankListSend = <Account>[].obs;
   RxMap<String, dynamic> getAccountCardData = <String, dynamic>{}.obs;
 

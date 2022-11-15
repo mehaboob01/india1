@@ -34,8 +34,8 @@ class HomeManager extends GetxController {
 
   void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-    String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? points = prefs.getString(SPKeys.LOYALTY_POINT_GAINED);
 
     loyalityPoints.value = points.toString();
     try {
