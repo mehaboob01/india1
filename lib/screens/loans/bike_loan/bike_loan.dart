@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/loans/personal_loan_io/choose_amount_io.dart';
-import 'package:india_one/screens/loans/personal_loan_io/pl_manager.dart';
+import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
+import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -20,7 +20,7 @@ class BikeLoanIO extends StatefulWidget {
 }
 
 class _BikeLoanIOState extends State<BikeLoanIO> {
-  PlManager _plManager = Get.put(PlManager());
+  LoanController _plManager = Get.put(LoanController());
   final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;

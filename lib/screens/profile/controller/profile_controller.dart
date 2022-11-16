@@ -43,8 +43,7 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> monthlyIncomeController = TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
-  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs,
-      vehicleType = ''.obs;
+  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs, vehicleType = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController = TextEditingController().obs;
@@ -71,6 +70,7 @@ class ProfileController extends GetxController {
   getId() async {
     prefs = await SharedPreferences.getInstance();
     customerId.value = prefs.getString(SPKeys.CUSTOMER_ID) ?? '';
+    return customerId.value;
   }
 
   next() {
@@ -164,7 +164,7 @@ class ProfileController extends GetxController {
       return null;
   }
 
-  Future addPersonalDetails({bool? isFromLoan = false, Function? callBack}) async {
+  Future addPersonalDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
     addPersonalLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -173,6 +173,9 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (loanApplicationId != null || loanApplicationId != '') ...{
+              "loanApplicationId": loanApplicationId,
+            },
             "customerDetails": {
               "firstName": "${firstNameController.value.text}",
               "lastName": "${lastNameController.value.text}",
@@ -186,7 +189,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        if (isFromLoan == true) {
+        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
           callBack!();
         } else {
           Get.back();
@@ -212,7 +215,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addResidentialDetails({bool? isFromLoan = false, Function? callBack}) async {
+  Future addResidentialDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -221,6 +224,9 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (loanApplicationId != null || loanApplicationId != '') ...{
+              "loanApplicationId": loanApplicationId,
+            },
             "customerDetails": {
               "address": {
                 "addressLine1": "${addressLine1Controller.value.text}",
@@ -234,7 +240,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        if (isFromLoan == true) {
+        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
           callBack!();
         } else {
           Get.back();
@@ -260,7 +266,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addOccupationDetails({bool? isFromLoan = false, Function? callBack}) async {
+  Future addOccupationDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
     addOccupationLoading.value = true;
     print(employmentType.value);
     try {
@@ -270,6 +276,9 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (loanApplicationId != null || loanApplicationId != '') ...{
+              "loanApplicationId": loanApplicationId,
+            },
             "customerDetails": {
               "panNumber": "${panNumberController.value.text}",
               "occupation": "${occupationController.value.text}",
@@ -281,7 +290,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        if (isFromLoan == true) {
+        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
           callBack!();
         } else {
           Get.back();

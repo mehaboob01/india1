@@ -1,14 +1,10 @@
-
-
 // DEV URL
- final String baseUrl  = "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/";
+final String baseUrl = "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/";
 
 // UAT URL
 //final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/";
 
-class Apis
-{
-
+class Apis {
   // OnBoarding & login Api
   static String sendOtp = "auth/send-otp";
   static String verifyOtp = "auth/verify-otp";
@@ -41,15 +37,6 @@ class Apis
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
   static String deleteCustomerUpiAccount = "loyalty/customer/upi/id"; // delete method
 
-
-
-
-
-
-
-
-
-
   static String profile = "customers/profile";
   static String addPersonalDetails = "customers/profile/personal-details";
   static String additionalDetails = "customers/profile/additional-details";
@@ -58,4 +45,7 @@ class Apis
   static String addBankAccount = "loyalty/customer/bank/account";
   static String getBankAccount = "loyalty/customer/bank/accounts";
   static String getUpiIds = "loyalty/customer/upi/id";
+  static String recentTransactionLoan = "dashboards/loans";
+  static String createLoanApplication = "loan/application";
+  static String updateAmountLoan = "loan/application/update-amount";
 }

@@ -1,30 +1,29 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/loans/personal_loan_io/pl_manager.dart';
+import 'package:india_one/screens/loans/controller/loan_controller.dart';
+import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/providers_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
-import 'package:india_one/widgets/text_io.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../widgets/custom_slider.dart';
 import '../../profile/controller/profile_controller.dart';
 
 enum ButtonState { inActive, active }
 
-class ChooseAmountIO extends StatefulWidget {
+class PersonalLoan extends StatefulWidget {
   @override
-  State<ChooseAmountIO> createState() => _ChooseAmountIOState();
+  State<PersonalLoan> createState() => _PersonalLoanState();
 }
 
-class _ChooseAmountIOState extends State<ChooseAmountIO> {
-  PlManager _plManager = Get.put(PlManager());
+class _PersonalLoanState extends State<PersonalLoan> {
+  LoanController loanController = Get.put(LoanController());
   final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
@@ -34,11 +33,11 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
 
   @override
   void initState() {
-    loanAmountEditingController = TextEditingController();
     super.initState();
-
-    _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
-    _plManager.sliderValue.value = _plManager.minValue.value;
+    loanAmountEditingController = TextEditingController();
+    loanController.createLoanApplication(loanType: LoanType.PersonalLoan);
+    loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
+    loanController.sliderValue.value = loanController.minValue.value;
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -54,67 +53,80 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
         child: SizedBox(
           width: widthIs,
           child: Obx(
-            () => Column(
+            () => Stack(
               children: [
-                CustomAppBar(
-                  heading: 'Personal loan',
-                  customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
+                Column(
+                  children: [
+                    CustomAppBar(
+                      heading: 'Personal loan',
+                      customActionIconsList: [
+                        CustomActionIcons(
+                          image: AppImages.bottomNavHome,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Obx(
-                        () => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DividerIO(
-                              height: 21,
-                            ),
-                            Obx(
-                              () => Container(
-                                child: AnotherStepper(
-                                  stepperList: _plManager.titleList
-                                      .map((e) => StepperData(
-                                            title: "$e",
-                                          ))
-                                      .toList(),
-                                  stepperDirection: Axis.horizontal,
-                                  iconWidth: 25,
-                                  iconHeight: 25,
-                                  inverted: true,
-                                  activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Obx(
+                            () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DividerIO(
+                                  height: 21,
                                 ),
-                              ),
+                                Obx(
+                                  () => Container(
+                                    child: AnotherStepper(
+                                      stepperList: loanController.titleList
+                                          .map((e) => StepperData(
+                                                title: "$e",
+                                              ))
+                                          .toList(),
+                                      stepperDirection: Axis.horizontal,
+                                      iconWidth: 25,
+                                      iconHeight: 25,
+                                      inverted: true,
+                                      activeBarColor: AppColors.pointsColor,
+                                      activeIndex: loanController.currentScreen.value,
+                                    ),
+                                  ),
+                                ),
+                                loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                    ? loanAmountUi()
+                                    : loanController.currentScreen.value == Steps.PERSONAL.index
+                                        ? personalInfoUi()
+                                        : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                                            ? residentialInfoUi()
+                                            : occupationInfoUi()
+                              ],
                             ),
-                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
-                                ? loanAmountUi()
-                                : _plManager.currentScreen.value == Steps.PERSONAL.index
-                                    ? personalInfoUi()
-                                    : _plManager.currentScreen.value == Steps.RESIDENTIAL.index
-                                        ? residentialInfoUi()
-                                        : occupationInfoUi()
-                          ],
+                          ),
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                          ? loanAmountButton()
+                          : loanController.currentScreen.value == Steps.PERSONAL.index
+                              ? personalInfoButton()
+                              : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                                  ? residentialInfoButton()
+                                  : occupationButton(),
+                    ),
+                  ],
+                ),
+                if (loanController.createLoanLoading.value == true)
+                  Container(
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: LoadingAnimationWidget.inkDrop(
+                      size: 34,
+                      color: AppColors.primary,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
-                      ? loanAmountButton()
-                      : _plManager.currentScreen.value == Steps.PERSONAL.index
-                          ? personalInfoButton()
-                          : _plManager.currentScreen.value == Steps.RESIDENTIAL.index
-                              ? residentialInfoButton()
-                              : occupationButton(),
-                ),
               ],
             ),
           ),
@@ -129,7 +141,7 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          _plManager.updateScreen(Steps.PERSONAL.index);
+          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
         }
       },
       child: Container(
@@ -194,8 +206,183 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
     return Row(
       children: [
         Expanded(
+          child: Container(
+            height: 48,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'BACK',
+                  style: AppTextThemes.button,
+                ),
+              ],
+            ),
+            decoration: BoxDecoration(
+              gradient: new LinearGradient(
+                end: Alignment.topRight,
+                colors: [Colors.orange, Colors.redAccent],
+              ),
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              personalForm.currentState!.save();
+              profileController.autoValidation.value = true;
+              if (!personalForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.gender.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select gender",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.maritalStatus.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select marital status",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addPersonalDetails(
+                    isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    callBack: () {
+                      loanController.updateScreen(Steps.RESIDENTIAL.index);
+                    });
+              }
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'NEXT',
+                    style: AppTextThemes.button,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  end: Alignment.topRight,
+                  colors: [Colors.orange, Colors.redAccent],
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // RESIDENTIAL INFO BUTTON
+
+  Widget residentialInfoButton() {
+    return Row(
+      children: [
+        Expanded(
           child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
+            onTap: () => loanController.updateScreen(Steps.PERSONAL.index),
+            child: Container(
+              width: MediaQuery.of(context).size.height * 0.9,
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'BACK',
+                    style: AppTextThemes.button,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  end: Alignment.topRight,
+                  colors: [Colors.orange, Colors.redAccent],
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              profileController.autoValidation.value = true;
+              if (!residentialForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.city.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for city",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.state.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for state",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addPersonalDetails(
+                    isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    callBack: () {
+                      loanController.updateScreen(Steps.OCCUPATION.index);
+                    });
+              }
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.height * 0.9,
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'NEXT',
+                    style: AppTextThemes.button,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  end: Alignment.topRight,
+                  colors: [Colors.orange, Colors.redAccent],
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // OCCUPATION INFO BUTTON
+  Widget occupationButton() {
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => loanController.updateScreen(Steps.RESIDENTIAL.index),
             child: Container(
               width: MediaQuery.of(context).size.height * 0.9,
               height: 48,
@@ -228,195 +415,6 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
         Expanded(
           child: InkWell(
             onTap: () {
-              personalForm.currentState!.save();
-              profileController.autoValidation.value = true;
-              if (!personalForm.currentState!.validate()) {
-                Flushbar(
-                  title: "Alert!",
-                  message: "missing some values",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.gender.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Select gender",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.maritalStatus.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Select marital status",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else {
-                profileController.addPersonalDetails(isFromLoan: true,callBack: (){
-                  _plManager.updateScreen(Steps.RESIDENTIAL.index);
-                });
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // RESIDENTIAL INFO BUTTON
-
-  Widget residentialInfoButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: (){
-              profileController.autoValidation.value = true;
-              if (!residentialForm.currentState!.validate()) {
-                Flushbar(
-                  title: "Alert!",
-                  message: "missing some values",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.city.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Enter valid pincode for city",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else if (profileController.state.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Enter valid pincode for state",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else {
-                profileController.addResidentialDetails(
-                  isFromLoan: true,
-                  callBack: (){
-                    _plManager.updateScreen(Steps.OCCUPATION.index);
-                  }
-                );
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // OCCUPATION INFO BUTTON
-  Widget occupationButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.RESIDENTIAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: (){
               profileController.autoValidation.value = true;
               if (!occupationForm.currentState!.validate()) {
                 print("Not validate");
@@ -433,13 +431,13 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                 )..show(context);
               } else {
                 profileController.addOccupationDetails(
-                  isFromLoan: true,
-                  callBack: (){
-                    Get.to(() => ProviderList(
-                      title: 'Personal loan',
-                    ));
-                  }
-                );
+                    isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    callBack: () {
+                      Get.off(() => ProviderList(
+                            title: 'Personal loan',
+                          ));
+                    });
               }
             },
             child: Container(
@@ -486,8 +484,8 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -496,8 +494,8 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
             ],
           ),
@@ -505,10 +503,10 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
         Container(
           margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
           child: CustomSlider(
-            sliderValue: _plManager.sliderValue,
+            sliderValue: loanController.sliderValue,
             textEditingController: loanAmountEditingController,
-            minValue: _plManager.minValue,
-            maxValue: _plManager.maxValue,
+            minValue: loanController.minValue,
+            maxValue: loanController.maxValue,
           ),
         ),
         DividerIO(
@@ -552,10 +550,10 @@ class _ChooseAmountIOState extends State<ChooseAmountIO> {
                 ]),
                 onChanged: (value) {
                   double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
-                    _plManager.sliderValue.value = newVal;
+                  if (newVal >= loanController.minValue.value && newVal <= loanController.maxValue.value) {
+                    loanController.sliderValue.value = newVal;
                   } else {
-                    _plManager.sliderValue.value = _plManager.minValue.value;
+                    loanController.sliderValue.value = loanController.minValue.value;
                   }
                 },
                 name: 'loan_amount',

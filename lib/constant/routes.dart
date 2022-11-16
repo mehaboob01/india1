@@ -4,7 +4,7 @@ import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
-import '../screens/loans/personal_loan_io/choose_amount_io.dart';
+import '../screens/loans/personal_loan_io/personal_loan.dart';
 import '../screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../screens/loyality_points/loyalty_page.dart';
 import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
@@ -48,7 +48,7 @@ class MRouter {
 
 
       case chooseAmountIO:
-        return CupertinoPageRoute(builder: (_) => ChooseAmountIO());
+        return CupertinoPageRoute(builder: (_) => PersonalLoan());
 
       case cashBackRedeemPage:
         return CupertinoPageRoute(builder: (_) => CashBackRedeemPage());
