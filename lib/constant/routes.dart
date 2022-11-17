@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
+import 'package:india_one/screens/loans/car_loan/car_loan.dart';
+import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
+import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
@@ -26,6 +29,9 @@ class MRouter {
   static const String cashBackRedeemPage = 'CashBackRedeemPage';
   static const String mobileRechargeIO = 'MobileRechargeIO';
   static const String bikeLoanIO = 'BikeLoanIO';
+  static const String carLoanIO = 'CarLoanIO';
+  static const String goldLoanIO = 'GoldLoanIO';
+  static const String tractorLoanIO = 'TractorLoanIO';
 
 
 
@@ -61,6 +67,15 @@ class MRouter {
 
       case bikeLoanIO:
         return CupertinoPageRoute(builder: (_) => BikeLoanIO());
+
+      case carLoanIO:
+        return CupertinoPageRoute(builder: (_) => CarLoanIO());
+
+      case goldLoanIO:
+        return CupertinoPageRoute(builder: (_) => GoldLoanIO());
+
+      case tractorLoanIO:
+        return CupertinoPageRoute(builder: (_) => TractorLoanIO());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

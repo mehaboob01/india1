@@ -150,6 +150,8 @@ class AppColors {
   static const Color greyInlineText = Color(0xffb6b6b6);
   static const Color greyInlineTextborder = Color(0xffd1d1d1);
   static const Color checkBoxColor = Color(0xff2364A1);
+  static const Color lightGreyColors = Color(0xffF6F6F6);
+  static const Color lightSkyBlue = Color(0xffC2DFFB);
 
   // cash back screen
 

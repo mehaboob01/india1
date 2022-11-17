@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
-import 'package:india_one/screens/loans/providers_list.dart';
+import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -434,7 +434,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     isFromLoan: true,
                     loanApplicationId: loanController.createLoanModel.loanApplicationId,
                     callBack: () {
-                      Get.off(() => ProviderList(
+                      Get.off(() => LendersList(
                             title: 'Personal loan',
                           ));
                     });

@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
+import 'package:india_one/screens/loans/loan_common.dart';
+import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../widgets/custom_slider.dart';
 import '../../profile/controller/profile_controller.dart';
-import '../providers_list.dart';
+import '../lenders_list.dart';
 
 class BikeLoanIO extends StatefulWidget {
   @override
@@ -27,12 +29,13 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
 
   late TextEditingController loanAmountEditingController;
   ProfileController profileController = Get.put(ProfileController());
+  LoanController loanController = Get.put(LoanController());
 
   @override
   void initState() {
     loanAmountEditingController = TextEditingController();
     super.initState();
-
+    loanController.createLoanApplication(loanType: LoanType.BikeLoan);
     _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
     _plManager.sliderValue.value = _plManager.minValue.value;
   }
@@ -49,63 +52,76 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
         child: SizedBox(
           width: widthIs,
           child: Obx(
-            () => Column(
+            () => Stack(
               children: [
-                CustomAppBar(
-                  heading: 'Bike loan',
-                  customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
+                Column(
+                  children: [
+                    CustomAppBar(
+                      heading: 'Bike loan',
+                      customActionIconsList: [
+                        CustomActionIcons(
+                          image: AppImages.bottomNavHome,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Obx(
-                        () => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DividerIO(
-                              height: 21,
-                            ),
-                            Obx(
-                              () => Container(
-                                child: AnotherStepper(
-                                  stepperList: _plManager.bikeLoanTitleList
-                                      .map((e) => StepperData(
-                                            title: "$e",
-                                          ))
-                                      .toList(),
-                                  stepperDirection: Axis.horizontal,
-                                  iconWidth: 25,
-                                  iconHeight: 25,
-                                  inverted: true,
-                                  activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Obx(
+                            () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DividerIO(
+                                  height: 21,
                                 ),
-                              ),
+                                Obx(
+                                  () => Container(
+                                    child: AnotherStepper(
+                                      stepperList: _plManager.bikeLoanTitleList
+                                          .map((e) => StepperData(
+                                                title: "$e",
+                                              ))
+                                          .toList(),
+                                      stepperDirection: Axis.horizontal,
+                                      iconWidth: 25,
+                                      iconHeight: 25,
+                                      inverted: true,
+                                      activeBarColor: AppColors.pointsColor,
+                                      activeIndex: _plManager.currentScreen.value,
+                                    ),
+                                  ),
+                                ),
+                                _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                    ? loanAmountUi()
+                                    : _plManager.currentScreen.value == Steps.PERSONAL.index
+                                        ? personalInfoUi()
+                                        : residentialInfoUi()
+                              ],
                             ),
-                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
-                                ? loanAmountUi()
-                                : _plManager.currentScreen.value == Steps.PERSONAL.index
-                                    ? personalInfoUi()
-                                    : residentialInfoUi()
-                          ],
+                          ),
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                          ? loanAmountButton()
+                          : _plManager.currentScreen.value == Steps.PERSONAL.index
+                              ? personalInfoButton()
+                              : residentialInfoButton(),
+                    ),
+                  ],
+                ),
+                if (loanController.createLoanLoading.value == true)
+                  Container(
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: LoadingAnimationWidget.inkDrop(
+                      size: 34,
+                      color: AppColors.primary,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
-                      ? loanAmountButton()
-                      : _plManager.currentScreen.value == Steps.PERSONAL.index
-                          ? personalInfoButton()
-                          : residentialInfoButton(),
-                ),
               ],
             ),
           ),
@@ -127,7 +143,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           )..show(context);
         } else {
           if (_loanAmountKey.currentState!.validate()) {
-            _plManager.updateScreen(Steps.PERSONAL.index);
+            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
           }
         }
       },
@@ -250,8 +266,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
                     callBack: () {
-                      _plManager.updateScreen(Steps.RESIDENTIAL.index);
+                      loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
               }
             },
@@ -308,8 +325,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
+              loanApplicationId: loanController.createLoanModel.loanApplicationId,
               callBack: () {
-                Get.to(() => ProviderList(
+                Get.to(() => LendersList(
                       title: 'Bike loan',
                     ));
               });

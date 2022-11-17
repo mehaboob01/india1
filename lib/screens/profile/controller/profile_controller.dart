@@ -183,13 +183,14 @@ class ProfileController extends GetxController {
               "dateOfBirth": "${dobController.value.text}",
               "preferredLanguage": "EN",
               "email": "${emailController.value.text}",
-              "gender": "${gender.value}"
+              "gender": "${gender.value}",
+              "maritalStatus": "${maritalStatus.value}"
             }
           },
         ),
       );
       if (response != null) {
-        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
+        if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
           Get.back();
@@ -240,7 +241,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
+        if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
           Get.back();
@@ -276,7 +277,7 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-            if (loanApplicationId != null || loanApplicationId != '') ...{
+            if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
             },
             "customerDetails": {

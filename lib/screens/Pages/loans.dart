@@ -63,21 +63,40 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        ItemCard(image: AppImages.carSvg, label: 'Car', itembgColor: ItemCardbgColor.lightBlue),
-        ItemCard(
-          image: AppImages.tractorSvg,
-          label: 'Tractor',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.carLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.carSvg,
+            label: 'Car',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.tractorLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.tractorSvg,
+            label: 'Tractor',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
         ItemCard(
           image: AppImages.handSackSvg,
           label: 'MSME',
           itembgColor: ItemCardbgColor.lightBlue,
         ),
-        ItemCard(
-          image: AppImages.goldSvg,
-          label: 'Gold',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.goldLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.goldSvg,
+            label: 'Gold',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
         ItemCard(
           image: AppImages.creditCardSvg,

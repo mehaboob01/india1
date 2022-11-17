@@ -567,7 +567,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: isBankAccountVisible.value == true
                     ? [
-                        accountDetails(profileController.bankDetailsModel.value.preferredAccount!, null),
+                        accountDetails(profileController.bankDetailsModel.value.preferredAccount?? PreferredAccount(), null),
                         if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
                           ListView.builder(
                             shrinkWrap: true,

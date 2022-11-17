@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/loans/submission_page.dart';
+import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
+import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
-enum LoanType {PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan}
+enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan }
 
 class LoanCommon {
   Widget customButton({required String title}) {
@@ -65,6 +67,9 @@ class LoanCommon {
 
   Widget loanCard({
     Function? applyButtonClick,
+    bool? isPersonalLoan,
+    Providers? providers,
+    Lenders? lenders,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
@@ -94,6 +99,14 @@ class LoanCommon {
                       ),
                       height: 50,
                       width: 50,
+                      child: CachedNetworkImage(
+                        imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
+                        errorWidget: (context, _, error) {
+                          return Icon(
+                            Icons.warning_amber_outlined,
+                          );
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -101,7 +114,7 @@ class LoanCommon {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Bajaj Finance",
+                            (isPersonalLoan == true ? (providers?.name ?? '') : lenders?.loanTitle) ?? "Bajaj Finance",
                             style: TextStyle(
                               color: AppColors.lightBlack,
                               fontSize: Dimens.font_16sp,
@@ -109,7 +122,7 @@ class LoanCommon {
                             ),
                           ),
                           Text(
-                            "Easy loan processing",
+                            (isPersonalLoan == true ? providers?.subTitle : (lenders?.keywords?[0] ?? '')) ?? "Easy loan processing",
                             style: TextStyle(
                               color: AppColors.borderColor,
                               fontSize: Dimens.font_14sp,
@@ -131,15 +144,15 @@ class LoanCommon {
                   children: [
                     rowText(
                       value: 'Max amount',
-                      title: '₹ 3,00,000',
+                      title: '₹ ${lenders?.loanMaxAmount ?? 0}',
                     ),
                     rowText(
                       value: 'Tenure',
-                      title: '3-36 months',
+                      title: '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
                     ),
                     rowText(
                       value: 'Interest/m',
-                      title: '1.33-2.5%',
+                      title: '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
                     ),
                   ],
                 ),
@@ -151,7 +164,7 @@ class LoanCommon {
                       applyButtonClick();
                     },
                     child: LoanCommon().customButton(
-                      title: 'Apply Now',
+                      title: isPersonalLoan == true ? 'Explore' : 'Apply now',
                     ),
                   ),
                 ),
@@ -211,7 +224,7 @@ class LoanCommon {
     );
   }
 
-  bottomSheet(context) {
+  bottomSheet(context, {required String lenderId, required String providerId, required Function callBack}) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -278,7 +291,7 @@ class LoanCommon {
               ),
               InkWell(
                   onTap: () {
-                    Get.to(() => SubmissionPage());
+                    callBack();
                   },
                   child: LoanCommon().customButton(title: 'Apply for loan')),
               SizedBox(
@@ -288,6 +301,71 @@ class LoanCommon {
           ),
         );
       },
+    );
+  }
+
+  Widget filledButton({required String title, Function? callBack}) {
+    return InkWell(
+      onTap: (){
+        callBack!();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 14),
+        child: Text(
+          '$title',
+          style: AppTextThemes.button,
+          textAlign: TextAlign.center,
+        ),
+        decoration: BoxDecoration(
+          gradient: new LinearGradient(
+            end: Alignment.topRight,
+            colors: [Colors.orange, Colors.redAccent],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.8),
+              offset: Offset(
+                -6.0,
+                -6.0,
+              ),
+              blurRadius: 16.0,
+            ),
+            BoxShadow(
+              color: AppColors.darkerGrey.withOpacity(0.4),
+              offset: Offset(6.0, 6.0),
+              blurRadius: 16.0,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+    );
+  }
+
+  Widget borderButton({required String title, Function? callBack}) {
+    return InkWell(
+      onTap: (){
+        callBack!();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+        child: Text(
+          '$title',
+          style: TextStyle(
+            fontSize: Dimens.font_16sp,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Graphik',
+            color: AppColors.butngradient1,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.butngradient1,
+          ),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
     );
   }
 }

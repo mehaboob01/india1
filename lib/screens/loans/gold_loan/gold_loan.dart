@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
-import 'package:india_one/screens/loans/providers_list.dart';
+import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/widgets/divider_io.dart';
@@ -311,7 +311,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
           profileController.addResidentialDetails(
               isFromLoan: true,
               callBack: () {
-                Get.to(()=>ProviderList(
+                Get.to(()=>LendersList(
                   title: 'Bike loan',
                 ));
               });
