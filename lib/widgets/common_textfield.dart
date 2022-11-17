@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 
 class CommonTextField extends StatelessWidget {
   const CommonTextField(
-      {
-        this.hintText,
-        this.labelText,
-        this.textLength,
-        this.maxlines = 1,
-        this.keyboardType = TextInputType.text,
-        required this.inputController,
-        required this.inputValidator,
-        this.inputOnChanged,
-        this.isObscure = false,
-        this.inputOnSubmitted,
-        required this.formName});
+      {this.hintText,
+      this.labelText,
+      this.maxlines = 1,
+      this.keyboardType = TextInputType.text,
+      required this.inputController,
+      required this.inputValidator,
+      this.inputOnChanged,
+      this.isObscure = false,
+      this.inputOnSubmitted,
+      required this.formName,
+      this.initialValue,
+      this.isfieldEnabled});
   final String? hintText;
   final String? labelText;
-  final int? textLength;
   final int maxlines;
   final TextInputType keyboardType;
   final TextEditingController inputController;
@@ -29,15 +28,14 @@ class CommonTextField extends StatelessWidget {
   final void Function(dynamic)? inputOnSubmitted;
   final bool isObscure;
   final String formName;
+  final String? initialValue;
+  final bool? isfieldEnabled;
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-
-        LengthLimitingTextInputFormatter(textLength),
-      ],
       name: formName,
+      enabled: isfieldEnabled ?? true,
+      initialValue: initialValue ?? null,
       controller: inputController,
       maxLines: maxlines,
       keyboardType: keyboardType,
@@ -51,7 +49,7 @@ class CommonTextField extends StatelessWidget {
       decoration: InputDecoration(
           isDense: true,
           contentPadding:
-          EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
+              EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           hintText: hintText, //'Slide the amount above or enter', // dynamic
           hintStyle: AppStyle.shortHeading.copyWith(
               color: AppColors.greyInlineText,

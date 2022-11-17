@@ -28,7 +28,9 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO(false);
+    mainHomeWidget = HomeMainIO(
+      fromScreen: 'splash',
+    );
     super.initState();
   }
 
@@ -55,18 +57,20 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      HomeEachBottomTabIO('assets/images/homeInactive.svg','assets/images/underline.svg', "${'home'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/homeInactive.svg',
+                          'assets/images/underline.svg', "${'home'.tr}", () {
                         selectedTabId = 0;
-                        mainHomeWidget = HomeMainIO(false);
+                        mainHomeWidget = HomeMainIO(
+                          fromScreen: 'bottomNavBar',
+                        );
                         setState(() {
-
-
-                           showAuth();
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 0, 12),
-                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/underline.svg', "${'loans'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/loanInactive.svg',
+                          'assets/images/underline.svg', "${'loans'.tr}", () {
                         selectedTabId = 1;
                         mainHomeWidget = LoansPage();
                         setState(() {
@@ -75,7 +79,10 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                           mainHomeWidget;
                         });
                       }, selectedTabId == 1, 12),
-                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/underline.svg', "${'payments'.tr}", () {
+                      HomeEachBottomTabIO(
+                          'assets/images/paymentsInactive.svg',
+                          'assets/images/underline.svg',
+                          "${'payments'.tr}", () {
                         selectedTabId = 2;
                         mainHomeWidget = PaymentsPage();
                         setState(() {
@@ -85,7 +92,9 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         });
                       }, selectedTabId == 2, 12),
                       HomeEachBottomTabIO(
-                          'assets/images/insuranceInactive.svg','assets/images/underline.svg', "${'insurance'.tr}", () {
+                          'assets/images/insuranceInactive.svg',
+                          'assets/images/underline.svg',
+                          "${'insurance'.tr}", () {
                         selectedTabId = 3;
                         mainHomeWidget = InsurancePage();
                         setState(() {
@@ -94,7 +103,8 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                           mainHomeWidget;
                         });
                       }, selectedTabId == 3, 12),
-                      HomeEachBottomTabIO('assets/images/savingsInactive.svg','assets/images/underline.svg', "${'savings'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/savingsInactive.svg',
+                          'assets/images/underline.svg', "${'savings'.tr}", () {
                         selectedTabId = 4;
                         mainHomeWidget = SavingsPage();
                         setState(() {

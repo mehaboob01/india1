@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/common_radio_card.dart';
 
-
-class UserAccountPage extends StatelessWidget {
- // const UserAccountPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return _accountCard()[0];
-  }
+class UserAccountPage {
+  List<Widget> get accountCard => _accountCard();
+  List<Widget> get upiCard => _upiCard();
 
   List<Widget> _accountCard() {
     return [
@@ -22,26 +17,13 @@ class UserAccountPage extends StatelessWidget {
             radioCardType: RadioCardType.bankAccount,
             bankAccountName: CardModel().accountModel[0]['name'],
             bankAccountIFSC: CardModel().accountModel[0]['IFSC'],
-            bankAccountNumber: CardModel().accountModel[0]['accountNumber'].toString(),
+            bankAccountNumber:
+                CardModel().accountModel[0]['accountNumber'].toString(),
             bankAccountType: CardModel().accountModel[0]['type'],
             isSelected: false,
             cardWidth: double.maxFinite,
           ))
     ];
-  }
-}
-
-class UserUpiId extends StatelessWidget {
-  //const UserUpiId({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: _upiCard(),
-      )),
-    );
   }
 
   List<Widget> _upiCard() {
@@ -61,17 +43,14 @@ class UserUpiId extends StatelessWidget {
   }
 }
 
-// Text(
-//           'or',
-//           style: AppStyle.shortHeading.copyWith(
-//               color: const Color(0xff2d2d2d), fontWeight: FontWeight.w600),
-//         )
-
 class RowHeadingWithunderLineSubHeading extends StatelessWidget {
   const RowHeadingWithunderLineSubHeading(
-      { required this.heading, required this.subHeading});
+      {required this.heading,
+      required this.subHeading,
+      required this.onPressedSubHeading});
   final String heading;
   final String subHeading;
+  final VoidCallback onPressedSubHeading;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -82,13 +61,16 @@ class RowHeadingWithunderLineSubHeading extends StatelessWidget {
           style: AppStyle.shortHeading.copyWith(
               color: const Color(0xff2d2d2d), fontWeight: FontWeight.w600),
         ),
-        Text(
-          subHeading,
-          style: AppStyle.shortHeading.copyWith(
-              color: AppColors.backGroundgradient1,
-              decoration: TextDecoration.underline,
-              decorationThickness: 2,
-              fontWeight: FontWeight.w600),
+        GestureDetector(
+          onTap: onPressedSubHeading,
+          child: Text(
+            subHeading,
+            style: AppStyle.shortHeading.copyWith(
+                color: AppColors.backGroundgradient1,
+                decoration: TextDecoration.underline,
+                decorationThickness: 2,
+                fontWeight: FontWeight.w600),
+          ),
         ),
       ],
     );

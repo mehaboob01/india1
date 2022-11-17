@@ -7,10 +7,7 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 
-
 class LoansPage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +24,7 @@ class LoansPage extends StatelessWidget {
                     bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
-               CommonBanner()
+              CommonBanner()
             ],
           ),
         ),
@@ -65,7 +62,7 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue),
         ItemCard(
           image: AppImages.tractorSvg,
-          label: 'Tractor',
+          label: 'Farm EQP',
           itembgColor: ItemCardbgColor.lightBlue,
         ),
         ItemCard(

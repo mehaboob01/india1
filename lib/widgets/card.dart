@@ -82,10 +82,10 @@ class ItemCard extends StatelessWidget {
       case ItemCardbgColor.skyBlue:
         itemCardbgColor = const LinearGradient(
             transform: GradientRotation(120.0),
-            stops: [
-              0.0,
-              0.5
-            ],
+            // stops: [
+            //   0.0,
+            //   0.5
+            // ],
             colors: [
               AppColors.violetIconGradient1,
               AppColors.violetIconGradient2
@@ -100,10 +100,10 @@ class ItemCard extends StatelessWidget {
       case ItemCardbgColor.lightRed2:
         itemCardbgColor = const LinearGradient(
             transform: GradientRotation(120.0),
-            stops: [
-              0.0,
-              0.5
-            ],
+            // stops: [
+            //   0.0,
+            //   0.5
+            // ],
             colors: [
               AppColors.yellowIconGradient1,
               AppColors.yellowIconGradient2

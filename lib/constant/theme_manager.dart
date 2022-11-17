@@ -403,6 +403,12 @@ class AppImages {
   static const String locationIcon = '${assetPng}locationIcon.png';
   static const String searchIcon = '${assetPng}searchIcon.png';
   static const String markerIcon = '${assetPng}markerIcon.png';
+  static const String notificationWithBorderImage =
+      '${assetPng}notificationBellWithBorder.png';
+  static const String notificationActive =
+      '${assetPng}notificationBell_active.png';
+  static const String goldenHexagonal = '${assetPng}golden_hexagonal_bg.png';
+  static const String homeScreenPopUpBg = '${assetPng}home_screen_popup_bg.png';
 
   // loans
   static const String handRupeeSvg = '${assetSvg}loans/personal.svg';
@@ -445,10 +451,12 @@ class AppImages {
   static const String flower2 = '${assetPng}flower2.png';
 
   static const String assetSvg = 'assets/svg/';
-  static const String imagesAssetSvg = 'assets/svg/';
+  // static const String imagesAssetSvg = 'assets/svg/';
 
-  static const String user_profile = '${imagesAssetSvg}user_profile.svg';
-  static const String notify_icon = '${imagesAssetSvg}notify_icon.svg';
+  static const String user_profile = '${assetSvg}user_profile.svg';
+  static const String notify_icon = '${assetSvg}notify_icon.svg';
+  static const String golden_hexagon_partyThing =
+      '${assetSvg}golden_hexagon_partything.svg';
 
   // used card Image
 

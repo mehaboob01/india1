@@ -1,28 +1,28 @@
 import 'package:intl/intl.dart';
 
 class CommonMethods {
-
-  String getOnlyDate({required String? date}){
-    if(date == ''){
+  String getOnlyDate({required String? date}) {
+    if (date == '') {
       return '';
-
     }
-    DateTime startDateTemp =
-    DateFormat("yyyy-MM-dd").parse(date ?? '');
-    return DateFormat('dd MMM yyyy')
-        .format(startDateTemp);
 
+    //"2022-11-01T20:45:13Z"
+    DateTime startDateTemp =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(date ?? '');
+
+    return DateFormat('dd MMM yyyy').format(startDateTemp);
   }
+
   String getFormatedDate({required String? date}) {
     if (date == "") {
       return "";
     }
 
     DateTime startDateTemp =
-    DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(date ?? '');
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(date ?? '');
 
     String timediff = DateFormat('hh:mm a').format(startDateTemp).toLowerCase();
-    final time = 'time';
+
     print('$timediff in time');
     final dateNow = DateTime.now();
     final difference = dateNow.difference(startDateTemp);
