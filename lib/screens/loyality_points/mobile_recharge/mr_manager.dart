@@ -70,6 +70,8 @@ class MrManager extends GetxController {
 
 
       RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
+      print("Operator response");
+      print(response.body.toString());
 
 
       if (response.statusCode == 200) {
