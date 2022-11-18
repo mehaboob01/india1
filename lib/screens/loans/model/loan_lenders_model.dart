@@ -50,7 +50,7 @@ class Lenders {
 
   Lenders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    logoURL = json['logoURL'];
+    logoURL = json['logoUrl'];
     loanTitle = json['loanTitle'];
     loanType = json['loanType'];
     keywords = json['keywords'].cast<String>();
@@ -64,7 +64,7 @@ class Lenders {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['logoURL'] = this.logoURL;
+    data['logoUrl'] = this.logoURL;
     data['loanTitle'] = this.loanTitle;
     data['loanType'] = this.loanType;
     data['keywords'] = this.keywords;

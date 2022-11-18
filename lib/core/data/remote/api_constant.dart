@@ -1,5 +1,5 @@
 // DEV URL
-final String baseUrl = "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/";
+final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 
 // UAT URL
 //final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/";
@@ -46,6 +46,9 @@ class Apis {
   static String getBankAccount = "loyalty/customer/bank/accounts";
   static String getUpiIds = "loyalty/customer/upi/id";
   static String recentTransactionLoan = "dashboards/loans";
-  static String createLoanApplication = "loan/application";
-  static String updateAmountLoan = "loan/application/update-amount";
+  static String createLoanApplication = "loans/application";
+  static String updateAmountLoan = "loans/application/update-amount";
+  static String getProviders = "loans/providers";
+  static String getLenders = "loans/lenders";
+  static String applyLoan = "loans/apply";
 }

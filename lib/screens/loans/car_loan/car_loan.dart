@@ -89,7 +89,10 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                       iconHeight: 25,
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
-                                      activeIndex: _plManager.currentScreen.value,
+                                      activeIndex: _plManager.currentScreen.value-1,
+                                      callBack: (i) {
+                                        _plManager.currentScreen.value = i + 1;
+                                      },
                                     ),
                                   ),
                                 ),
@@ -493,6 +496,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromLoan: true,
     );
   }
 }

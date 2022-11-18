@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 import 'package:india_one/widgets/my_stepper/widgets/vertical_stepper.dart';
@@ -34,6 +33,7 @@ class AnotherStepper extends StatelessWidget {
     this.scrollPhysics,
     this.iconHeight,
     this.iconWidth,
+    this.callBack,
   }) : super(key: key);
 
   /// Stepper [List] of type [StepperData] to inflate stepper with data
@@ -83,23 +83,23 @@ class AnotherStepper extends StatelessWidget {
   /// Scroll physics for listview
   final ScrollPhysics? scrollPhysics;
 
+  final Function? callBack;
+
   @override
   Widget build(BuildContext context) {
-    var crossAxisAlign = stepperDirection == Axis.horizontal
-        ? CrossAxisAlignment.end
-        : CrossAxisAlignment.start;
+    var crossAxisAlign = stepperDirection == Axis.horizontal ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     if (inverted) {
       // invert Alignment in case of [Axis.vertical]
-      crossAxisAlign = crossAxisAlign == CrossAxisAlignment.end
-          ? CrossAxisAlignment.start
-          : CrossAxisAlignment.end;
+      crossAxisAlign = crossAxisAlign == CrossAxisAlignment.end ? CrossAxisAlignment.start : CrossAxisAlignment.end;
     }
     final Iterable<int> iterable = Iterable<int>.generate(stepperList.length);
     return Flex(
       crossAxisAlignment: crossAxisAlign,
       direction: stepperDirection,
       children: iterable
-          .map((index) => _getPreferredStepper(context, index: index))
+          .map(
+            (index) => _getPreferredStepper(context, index: index),
+          )
           .toList(),
     );
   }
@@ -119,6 +119,9 @@ class AnotherStepper extends StatelessWidget {
         subtitleTextStyle: subtitleTextStyle,
         iconHeight: iconHeight,
         iconWidth: iconWidth,
+        callBack: (index) {
+          callBack!(index);
+        },
       );
     } else {
       return VerticalStepperItem(

@@ -44,6 +44,9 @@ class ProfileScreen extends StatelessWidget {
                       SingleChildScrollView(
                         child: Column(
                           children: [
+                            SizedBox(
+                              height: 20,
+                            ),
                             Stack(
                               alignment: Alignment.centerLeft,
                               children: [

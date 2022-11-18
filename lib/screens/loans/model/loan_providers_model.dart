@@ -36,7 +36,7 @@ class Providers {
     id = json['id'];
     name = json['name'];
     subTitle = json['subTitle'];
-    logoURL = json['logoURL'];
+    logoURL = json['logoUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,7 +44,7 @@ class Providers {
     data['id'] = this.id;
     data['name'] = this.name;
     data['subTitle'] = this.subTitle;
-    data['logoURL'] = this.logoURL;
+    data['logoUrl'] = this.logoURL;
     return data;
   }
 }

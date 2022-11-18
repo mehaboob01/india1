@@ -4,8 +4,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
-import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
+import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -90,6 +90,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
                                       activeIndex: loanController.currentScreen.value,
+                                      callBack: (i) {
+                                        loanController.currentScreen.value = i;
+                                      },
                                     ),
                                   ),
                                 ),
@@ -141,7 +144,21 @@ class _PersonalLoanState extends State<PersonalLoan> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          if (profileController.gender.value == '') {
+            Flushbar(
+              title: "Alert!",
+              message: "Choose gender",
+              duration: Duration(seconds: 3),
+            )..show(context);
+          } else if (profileController.maritalStatus.value == '') {
+            Flushbar(
+              title: "Alert!",
+              message: "Choose marital status",
+              duration: Duration(seconds: 3),
+            )..show(context);
+          } else {
+            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          }
         }
       },
       child: Container(
@@ -581,6 +598,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromLoan: true,
     );
   }
 

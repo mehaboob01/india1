@@ -89,6 +89,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
                                       activeIndex: _plManager.currentScreen.value,
+                                      callBack: (i) {
+                                        _plManager.currentScreen.value = i;
+                                      },
                                     ),
                                   ),
                                 ),
@@ -367,93 +370,6 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DividerIO(
-          height: 38,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Loan Amount',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
-              ),
-              DividerIO(
-                height: 24,
-              ),
-              Text(
-                'Choose the loan amount you want from slider or enter in the text field',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
-          child: CustomSlider(
-            sliderValue: _plManager.sliderValue,
-            textEditingController: loanAmountEditingController,
-            minValue: _plManager.minValue,
-            maxValue: _plManager.maxValue,
-          ),
-        ),
-        DividerIO(
-          height: 18,
-        ),
-        Padding(
-            padding: EdgeInsets.only(
-              left: 4.0,
-              right: 4,
-            ),
-            child: FormBuilder(
-              key: _loanAmountKey,
-              initialValue: {
-                "loan_amount": "",
-              },
-              child: FormBuilderTextField(
-                keyboardType: TextInputType.number,
-                controller: loanAmountEditingController,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600),
-                decoration: new InputDecoration(
-                  prefixIcon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("₹", style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
-                  ),
-                  border: const OutlineInputBorder(),
-                  labelText: 'Loan amount',
-                  labelStyle: new TextStyle(color: Color(0xFF787878)),
-                ),
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context),
-                ]),
-                onChanged: (value) {
-                  double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
-                    _plManager.sliderValue.value = newVal;
-                  } else {
-                    _plManager.sliderValue.value = _plManager.minValue.value;
-                  }
-                },
-                name: 'loan_amount',
-              ),
-            )),
-        DividerIO(
           height: 28,
         ),
         ProfileStepper().commonDropDown(
@@ -467,7 +383,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
             profileController.vehicleType.value = value;
           },
           label: 'Two wheeler required',
-          hint: 'Select the two wheeler you are buying',
+          hint: 'Select the 2 wheeler you are buying',
           value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
         ),
         SizedBox(
@@ -492,6 +408,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromLoan: true,
     );
   }
 }

@@ -84,7 +84,10 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                                   iconHeight: 25,
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value,
+                                  activeIndex: _plManager.currentScreen.value-1,
+                                  callBack: (i) {
+                                    _plManager.currentScreen.value = i + 1;
+                                  },
                                 ),
                               ),
                             ),
