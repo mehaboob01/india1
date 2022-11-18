@@ -11,7 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
-import 'model/mr_model.dart';
+import 'model/mobile_recharge_model.dart';
+import 'model/operator_model.dart';
 import 'model/circle_model.dart';
 import 'model/recharge_plan_model.dart';
 
@@ -51,7 +52,6 @@ class MrManager extends GetxController {
     super.onInit();
     plansList.clear();
 
-
     callOperatorListApi();
     callCircleListApi();
   }
@@ -66,28 +66,31 @@ class MrManager extends GetxController {
         'Accept': 'application/json',
         "x-digital-api-key": "1234"
       });
-      var jsonData = jsonDecode(response.body);
 
-
-      RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
       print("Operator response");
       print(response.body.toString());
 
-
-      if (response.statusCode == 200) {
-
-        print(rcOperatorModel.data!.operators!);
-        operatorList.clear();
-        operatorListString.clear();
-        for (var index in rcOperatorModel.data!.operators!) {
-          operatorListSend.add(index);
-          operatorListStringSend.add(index.name.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
+        if (rcOperatorModel.status!.code == 2000) {
+          print(rcOperatorModel.data!.operators!);
+          operatorList.clear();
+          operatorListString.clear();
+          for (var index in rcOperatorModel.data!.operators!) {
+            operatorListSend.add(index);
+            operatorListStringSend.add(index.name.toString());
+          }
+          operatorList.addAll(operatorListSend);
+          operatorListString.addAll(operatorListStringSend);
+          isLoading(false);
+        } else {
+          Flushbar(
+            title: "Alert!",
+            message: rcOperatorModel.status!.message,
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
         }
-
-        operatorList.addAll(operatorListSend);
-        operatorListString.addAll(operatorListStringSend);
-
-        isLoading(false);
       } else {
         Flushbar(
           title: "Error!",
@@ -117,32 +120,31 @@ class MrManager extends GetxController {
         'Accept': 'application/json',
         "x-digital-api-key": "1234"
       });
-      var jsonData = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
 
-      RcCircleModel circleModel = RcCircleModel.fromJson(jsonData);
+        RcCircleModel circleModel = RcCircleModel.fromJson(jsonData);
 
-      if (response.statusCode == 200) {
-        print("Circles response");
-        print(response.body.toString());
-        print(circleModel.data!.circles!);
-        circleList.clear();
-        circleListString.clear();
-        for (var index in circleModel.data!.circles!) {
-          circleListSend.add(index);
-          circleListStringSend.add(index.name.toString());
+        if (circleModel.status!.code == 2000) {
+          circleList.clear();
+          circleListString.clear();
+          for (var index in circleModel.data!.circles!) {
+            circleListSend.add(index);
+            circleListStringSend.add(index.name.toString());
+          }
+
+          circleList.addAll(circleListSend);
+          circleListString.addAll(circleListStringSend);
+
+          isLoading(false);
+        } else {
+          Flushbar(
+            title: "Alert!",
+            message: circleModel.status!.message,
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
         }
-
-        circleList.addAll(circleListSend);
-        circleListString.addAll(circleListStringSend);
-
-        isLoading(false);
-      } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
-      }
+      } else {}
     } catch (e) {
       Flushbar(
         title: "Error!",
@@ -156,7 +158,10 @@ class MrManager extends GetxController {
 
   // check planes
 
-  checkPlanesApi(String? operatorId, String? circleId, mobileNumber) async {
+  checkPlanesApi(int? operatorId, int? circleId, mobileNumber) async {
+    selectedIndex.value = (-1);
+
+    plansList.clear();
     isFetchPlanLoading.value = true;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -166,7 +171,6 @@ class MrManager extends GetxController {
       print("Send Mobile Recharge data ${circleId}");
       print("Send Mobile Recharge data ${mobileNumber}");
       print("Send Mobile Recharge data ${operatorId}");
-
 
       var response = await http.post(Uri.parse(baseUrl + Apis.plans),
           body: jsonEncode({
@@ -180,35 +184,41 @@ class MrManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
-      var jsonData = jsonDecode(response.body);
-
       print("response ${response.body}");
 
-      PlanesModel planesModel = PlanesModel.fromJson(jsonData);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        PlanesModel planesModel = PlanesModel.fromJson(jsonData);
 
-      if (response.statusCode == 200) {
-        List<bool> localSelectedList = [];
+        if (planesModel.status!.code == 2000) {
+          List<bool> localSelectedList = [];
 
-        plansList.clear();
-        for (var index in planesModel.data!.plans!) {
-          plansListSend.add(index);
-          localSelectedList.add(false);
-        }
+          plansList.clear();
+          for (var index in planesModel.data!.plans!) {
+            plansListSend.add(index);
+            localSelectedList.add(false);
+          }
 
-        plansList.addAll(plansListSend);
-        isPlansAvailable(true);
-        selectedplanList.addAll(localSelectedList);
-        print("plans List ");
-        print(plansList.length);
-        isFetchPlanLoading(false);
-        if(plansList.length == 0)
-          {
+          plansList.addAll(plansListSend);
+          isPlansAvailable(true);
+          selectedplanList.addAll(localSelectedList);
+          print("plans List ");
+          print(plansList.length);
+          isFetchPlanLoading(false);
+          if (plansList.length == 0) {
             Flushbar(
               title: "Alert!",
               message: "No planes in List",
               duration: Duration(seconds: 2),
             )..show(Get.context!);
           }
+        } else {
+          Flushbar(
+            title: "Error!",
+            message: planesModel.status!.message,
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
       } else {
         Flushbar(
           title: "Error!",
@@ -231,13 +241,7 @@ class MrManager extends GetxController {
 
   mobileRechargeApi(int? operatorId, int? circleId, String? phoneNumber,
       RxMap<String, dynamic> rechargeData, BuildContext context) async {
-
     isMobileRechargeLoading(true);
-
-
-
-
-
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -248,13 +252,16 @@ class MrManager extends GetxController {
       print(circleId);
       print(phoneNumber);
       print(customerId);
+      print(rechargeData['amount'].toString());
+      print(rechargeData['planType'].toString());
+
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.recharge),
           body: jsonEncode({
-            "operatorId": 1,
-            "circleId": 1,
+            "operatorId": operatorId,
+            "circleId": circleId,
             "mobileNumber": phoneNumber.toString(),
-            "amount": 10,
+            "amount": int.parse(rechargeData['amount'].toString()),
             "planType": rechargeData['planType'].toString(),
             "customerId": customerId.toString(),
           }),
@@ -264,77 +271,54 @@ class MrManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-      // var jsonData = jsonDecode(response.body);
-      //
-      // CommonResponseModel commonResponseModel = CommonResponseModel.fromJson(jsonData);
-
-      print("response ofnrecharge${response.body}");
-
-      if (response.statusCode == 200) {
-
-        Future.delayed(const Duration(seconds: 0), () async {
-
-
-
-
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs!.setBool(SPKeys.SHOW_AUTH, false);
-
-          isMobileRechargeLoading(false);
-          Flushbar(
-            title: "successful!",
-            message: "Recharge successful",
-            duration: Duration(seconds: 2),
-          )..show(Get.context!)
-              .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-              MRouter.homeScreen, (Route<dynamic> route) => false))
-              .then((value) => (){
-
-
-            plansList.clear();
-          }
-
-          );
-
-
-
-        });
-
-
-
-      }else if(response.statusCode == 400)
+      if(response.statusCode == 200 || response.statusCode == 201)
         {
+          var jsonData = jsonDecode(response.body);
 
-          Flushbar(
-            title: "Alert!",
-            message: "commonResponseModel.message",
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
+          MobileRechargeModel mobileRechargeModel = MobileRechargeModel.fromJson(jsonData);
 
+          print("response ofnrecharge${response.body}");
+
+          if (mobileRechargeModel.status!.code == 2000) {
+            Future.delayed(const Duration(seconds: 0), () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs!.setBool(SPKeys.SHOW_AUTH, false);
+
+              isMobileRechargeLoading(false);
+              Flushbar(
+                title: "successful!",
+                message: "Recharge successful",
+                duration: Duration(seconds: 2),
+              )..show(Get.context!)
+                  .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                  MRouter.homeScreen, (Route<dynamic> route) => false))
+                  .then((value) => () {
+                plansList.clear();
+              });
+            });
+          }  else {
+            isMobileRechargeLoading(false);
+            Flushbar(
+              title: "Error!",
+              message: mobileRechargeModel.status!.message,
+              duration: Duration(seconds: 2),
+            )..show(Get.context!);
+          }
         }
 
-
-
-
-
-
-
-
-
-      else {
-
-
-
-
-
-        isMobileRechargeLoading(false);
+      else{
         Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
+          title: "Server Error!",
+          message: "Please try again ...",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
+
       }
+
+
+
+
+
     } catch (e) {
       Flushbar(
         title: "Error!",

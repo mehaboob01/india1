@@ -51,10 +51,10 @@ class _MapsState extends State<Maps> {
           child: CustomAppBar(
             heading: "Maps",
             customActionIconsList: [
-              CustomActionIcons(
-                image: AppImages.bottomNavHome,
-                isSvg: false,
-              )
+              // CustomActionIcons(
+              //   image: AppImages.bottomNavHome,
+              //   isSvg: false, onHeaderIconPressed: () {  },
+              // )
             ],
           ),
         ),

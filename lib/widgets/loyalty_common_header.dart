@@ -68,7 +68,7 @@ class CustomActionIcons extends StatelessWidget {
       this.beginsAt = Alignment.topLeft,
       this.endsAt = Alignment.bottomRight,
       this.stops = const [0.5, 1.0],
-      this.imageColor})
+      this.imageColor, required Future Function() onHeaderIconPressed})
       : super(key: key);
 
   final List<Color>? customGradientColors;
@@ -276,7 +276,9 @@ class HeadingContainer extends StatelessWidget {
                 child: ButtonWithFlower(
                   buttonColor: Colors.white,
                   onPressed: () {
-                    Get.to(() => RedeemPointsPage());
+                   _loyaltyManager.redeemablePoints >= 14? Get.to(() => RedeemPointsPage()):   Get.snackbar('Oops!!',
+                       'You can redeem only if you have 15+ points',
+                       snackPosition: SnackPosition.BOTTOM);
                   },
                   buttonHeight: 10.0.wp,
                   buttonWidth: 44.0.wp,

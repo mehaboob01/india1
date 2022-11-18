@@ -42,38 +42,51 @@ class LoyaltyManager extends GetxController {
           });
 
       print("Response ${response.body}");
-      var jsonData = jsonDecode(response.body);
-
-      LoyaltyDashboardModel loyaltyDashboardModel =
-          LoyaltyDashboardModel.fromJson(jsonData);
 
 
+      if(response.statusCode == 200 || response.statusCode == 201)
+        {
 
-      if (response.statusCode == 200) {
-        redeemablePoints.value = loyaltyDashboardModel
-            .data!.pointsSummary!.redeemablePoints!
-            .toInt();
-        pointsEarned.value =
-            loyaltyDashboardModel.data!.pointsSummary!.pointsEarned!.toInt();
-        pointsRedeemed.value =
-            loyaltyDashboardModel.data!.pointsSummary!.pointsRedeemed!.toInt();
+          print("http response");
+          var jsonData = jsonDecode(response.body);
+          LoyaltyDashboardModel loyaltyDashboardModel = LoyaltyDashboardModel.fromJson(jsonData);
+          if (loyaltyDashboardModel.status!.code == 2000) {
 
-        recentRewardTransactionsList.clear();
-        for (var index
-            in loyaltyDashboardModel.data!.recentRewardTransactions!) {
-          recentRewardTransactionSend.add(index);
+
+            print("model  response");
+
+            redeemablePoints.value = loyaltyDashboardModel.data!.pointsSummary!.redeemablePoints!.toInt();
+            pointsEarned.value = loyaltyDashboardModel.data!.pointsSummary!.pointsEarned!.toInt();
+            pointsRedeemed.value = loyaltyDashboardModel.data!.pointsSummary!.pointsRedeemed!.toInt();
+            recentRewardTransactionsList.clear();
+
+            for (var index in loyaltyDashboardModel.data!.recentRewardTransactions!)
+            {
+              recentRewardTransactionSend.add(index);
+            }
+
+            recentRewardTransactionsList.addAll(recentRewardTransactionSend);
+
+            isLoading(false);
+          } else {
+            Flushbar(
+              title: "Alert!",
+              message: loyaltyDashboardModel.status!.message,
+              duration: Duration(seconds: 2),
+            )..show(Get.context!);
+          }
         }
+      else{
 
-        recentRewardTransactionsList.addAll(recentRewardTransactionSend);
-
-        isLoading(false);
-      } else {
         Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
+          title: "Server Error!",
+          message:"Please try after again ...",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
+
+
       }
+
     } catch (e) {
       Flushbar(
         title: "Error!",

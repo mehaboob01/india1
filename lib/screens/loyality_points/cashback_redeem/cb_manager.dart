@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/model/common_model.dart';
 import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'cb_models/bank_list_model.dart';
@@ -42,12 +43,14 @@ class CashBackManager extends GetxController {
   RxInt selectedIndex = (-1).obs;
   var selectedplanList = <bool>[].obs;
 
+
   @override
   void onInit() {
     super.onInit();
     customerBankList.clear();
     callBankListApi();
     fetchCustomerBankAccounts();
+
   }
 
   // Bank list for drop down
@@ -317,6 +320,9 @@ class CashBackManager extends GetxController {
   // fetch customer bank accounts
 
   fetchCustomerUpiAccounts() async {
+
+
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -366,4 +372,83 @@ class CashBackManager extends GetxController {
       isLoading.value = false;
     }
   }
-}
+
+  // del bank account
+
+  delBankAccount() async {
+
+    try{
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      print("customer id${customerId}");
+      print("bankAccountId${""}");
+
+      var response = await http.delete(
+          Uri.parse(baseUrl + Apis.deleteCustomerBankAccount),
+          body: jsonEncode({
+
+            "customerId": customerId,
+            "bankAccountId": "19378f61-2302-44b1-bff4-0c6c328f1a69"
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+
+
+
+
+      if(response.statusCode == 200 || response.statusCode == 201){
+
+
+        var jsonData = jsonDecode(response.body);
+
+        CommonApiResponseModel commonApiResponseModel =
+        CommonApiResponseModel.fromJson(jsonData);
+
+        if(commonApiResponseModel.status!.code == 2000)
+
+        {
+          Flushbar(
+            title: "Success!!",
+            message: "bank del Successfully ..",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+        }
+        else{
+          Flushbar(
+            title: "Success!!",
+            message: "bank del Successfully ..",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+        }
+
+      }else{
+
+        Flushbar(
+          title: "Success!!",
+          message: "bank del Successfully ..",
+          duration: Duration(seconds: 2),
+        )..show(Get.context!);
+
+
+      }
+    }catch(e)
+    {
+      Flushbar(
+        title: "Error!",
+        message: "Something went wrong",
+        duration: Duration(seconds: 2),
+      )..show(Get.context!);
+    } finally {
+      isLoading.value = false;
+    }
+    }
+
+  }
+

@@ -37,13 +37,11 @@ class HomeManager extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     String? points = prefs.getString(SPKeys.LOYALTY_POINT_GAINED);
-
     print("Customer Id ${customerId}");
 
     loyalityPoints.value = points.toString();
     try {
       isLoading.value = true;
-      print("check URL" + baseUrl + Apis.dashboard + customerId.toString());
       var response = await http.get(
           Uri.parse(baseUrl + Apis.dashboard + customerId.toString()),
           headers: {
@@ -52,38 +50,39 @@ class HomeManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-
-
+      if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         HomeModel homeModel = HomeModel.fromJson(jsonData);
+        print("data response");
+        print("http success!!");
+        print(homeModel.data);
 
-
-      if (homeModel!.status!.code == 2000) {
-        isLoading(false);
-        pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
-        pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
-        redeemablePoints.value = homeModel.data!.pointsSummary!.redeemablePoints!;
-        atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
-      } else if(homeModel.status!.code == 4025) {
-        isLoading(false);
+        if (homeModel!.status!.code == 2000) {
+          isLoading(false);
+          print("http success in model!!");
+          pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
+          pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
+          redeemablePoints.value =
+              homeModel.data!.pointsSummary!.redeemablePoints!;
+          atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
+        } else {
+          Flushbar(
+            title: "Error!",
+            message: homeModel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
+      } else {
         Flushbar(
-          title: "Error!",
-          message: homeModel.status!.message.toString(),
-          duration: Duration(seconds: 2),
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
         )..show(Get.context!);
-      }
-      else{
-        Flushbar(
-          title: "Error!",
-          message: homeModel.status!.message.toString(),
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
-
       }
     } catch (e) {
       Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
+        title: "Server Error!",
+        message: "Please try after sometime",
         duration: Duration(seconds: 1),
       )..show(Get.context!);
     } finally {

@@ -31,10 +31,10 @@ class ProfileScreen extends StatelessWidget {
             child: CustomAppBar(
               heading: 'Profile',
               customActionIconsList: [
-                CustomActionIcons(
-                  image: "assets/svg/homeSvg.svg",
-                  isSvg: true,
-                )
+                // CustomActionIcons(
+                //   image: "assets/svg/homeSvg.svg",
+                //   isSvg: true,
+                // )
               ],
             ),
           ),

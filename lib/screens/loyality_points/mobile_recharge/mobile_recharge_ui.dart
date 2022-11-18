@@ -1,14 +1,12 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:india_one/constant/routes.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../../../constant/theme_manager.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
-
 import '../../../widgets/common_drop_down.dart';
 import '../../../widgets/common_radio_card.dart';
 import 'mr_manager.dart';
@@ -47,6 +45,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
       print("char length");
       print(charLength);
       if (charLength == 12) {
+        planSelected = false;
         FocusScope.of(context).unfocus();
         print("inside 12  : ");
 
@@ -63,10 +62,11 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
             var circleId = checkCircleId(
                 _mobileRecharge.currentState!.value['circleName']);
 
-            print("operator Id == >$operatorId");
-            print("circle Id == >$circleId");
+
 
             if (_mobileRecharge.currentState!.validate()) {
+
+
               _mrManager.checkPlanesApi(
                   operatorId,
                   circleId,
@@ -75,7 +75,10 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
             }
           }
         }
-      } else {}
+      } else {
+        mobileNumberEnabled = false;
+
+      }
     });
   }
 
@@ -128,7 +131,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
                 child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(MRouter.homeScreen, (Route route) => false);
+                    },
                     child: Container(
                       child: SvgPicture.asset(
                         "assets/images/homeInactive.svg",
@@ -138,7 +143,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
               ),
             ],
             leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 icon: Icon(
                   Icons.chevron_left,
                   color: AppColors.black,
@@ -464,6 +471,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       Obx(
                                                         () => DropDown(
                                                           onChanged: (value) {
+                                                            planSelected = false;
+
                                                             operatorEnabled =
                                                                 true;
                                                             _mobileRecharge
@@ -527,6 +536,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       Obx(
                                                         () => DropDown(
                                                           onChanged: (value) {
+                                                            planSelected = false;
+
+
                                                             circleEnabled =
                                                                 true;
                                                             _mobileRecharge
@@ -788,34 +800,52 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
   Widget rechargeButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("onTap");
 
-        _mobileRecharge.currentState!.save();
-        _mobileRecharge.currentState!.validate();
-        if (_mobileRecharge.currentState!.validate()) {
-          var operatorId = checkOperatorId(
-              _mobileRecharge.currentState!.value['operatorName']);
-          var circleId =
+
+
+        if(mobileNumberEnabled == true &&
+            circleEnabled == true &&
+            operatorEnabled == true &&
+            planSelected == true)
+
+          {
+            print("onTap");
+
+            _mobileRecharge.currentState!.save();
+            _mobileRecharge.currentState!.validate();
+            if (_mobileRecharge.currentState!.validate()) {
+              var operatorId = checkOperatorId(
+                  _mobileRecharge.currentState!.value['operatorName']);
+              var circleId =
               checkCircleId(_mobileRecharge.currentState!.value['circleName']);
 
-          print(operatorId);
-          print(circleId);
-          print(_mobileRecharge.currentState!.value['mobileNumber']
-              .replaceAll(' ', ''));
-          print(_mrManager.rechargeData);
+              print(operatorId);
+              print(circleId);
+              print(_mobileRecharge.currentState!.value['mobileNumber']
+                  .replaceAll(' ', ''));
+              print(_mrManager.rechargeData);
 
-          if (_mobileRecharge.currentState!.value != {}) {
-            _mrManager.mobileRechargeApi(
-                int.parse(operatorId.toString()),
-                int.parse(circleId.toString()),
-                _mobileRecharge.currentState!.value['mobileNumber']
-                    .replaceAll(' ', ''),
-                _mrManager.rechargeData,
-                context);
+              if (_mobileRecharge.currentState!.value != {}) {
 
-            return;
+
+                _mrManager.mobileRechargeApi(
+                    int.parse(operatorId.toString()),
+                    int.parse(circleId.toString()),
+                    _mobileRecharge.currentState!.value['mobileNumber']
+                        .replaceAll(' ', ''),
+                    _mrManager.rechargeData,
+                    context);
+                circleEnabled = false;
+                planSelected = false;
+                operatorEnabled = false;
+                _mrManager.selectedIndex.value = (-1);
+
+                return;
+              }
+            }
+
           }
-        }
+
       },
       child: Container(
         width: MediaQuery.of(context).size.height * 0.9,
@@ -867,18 +897,18 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
     );
   }
 
-  String? checkOperatorId(operatorName) {
+  int? checkOperatorId(operatorName) {
     for (var index in _mrManager.operatorList) {
       if (index.name == operatorName) {
-        return index.id;
+        return int.parse(index.id.toString());
       }
     }
   }
 
-  String? checkCircleId(circleName) {
+  int? checkCircleId(circleName) {
     for (var index in _mrManager.circleList) {
       if (index.name == circleName) {
-        return index.id;
+        return int.parse(index.id.toString());
       }
     }
   }

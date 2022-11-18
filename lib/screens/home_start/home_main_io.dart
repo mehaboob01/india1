@@ -27,7 +27,6 @@ import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
 class HomeMainIO extends StatefulWidget {
-
   bool? showPonitsPopup;
   HomeMainIO(this.showPonitsPopup);
 
@@ -43,7 +42,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
   String msg = "You are not authorized.";
 
   void showFirstTimePoints() async {
-    if (_homeManager.loyalityPoints.toString() == "0" || widget.showPonitsPopup == false) {
+    if (_homeManager.loyalityPoints.toString() == "0" ||
+        widget.showPonitsPopup == false) {
     } else {
       Future.delayed(
           Duration(milliseconds: 300),
@@ -141,10 +141,11 @@ class _HomeMainIOState extends State<HomeMainIO> {
   @override
   void initState() {
     super.initState();
+    _homeManager.callHomeApi();
 
-    showFirstTimePoints();
+    //showFirstTimePoints();
 
-   // checkLogin();
+    // checkLogin();
   }
 
   @override
@@ -173,8 +174,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
           onTap: () => {Get.back(), _homeManager.isClicked.value = false},
           child: Scaffold(
             body: _homeManager.isLoading.value
-                ?
-            CircularProgressbar()
+                ? CircularProgressbar()
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -292,14 +292,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                                 .value = false,
                                                             Get.back(),
                                                             Get.toNamed(
-
-
                                                               MRouter
-                                                                .loyaltyPoints,
-
-
-
-
+                                                                  .loyaltyPoints,
                                                             ),
                                                           },
                                                       child: Container(
@@ -371,16 +365,17 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                   ],
                                 ),
                                 // ways to Reedem ---------------------------------
-                                 SizedBox(height: 1.0.hp),
+                                SizedBox(height: 1.0.hp),
                                 Obx(
-                                      ()=>Visibility(
-                                    visible: _homeManager.redeemablePoints <= 14?true:false,
+                                  () => Visibility(
+                                    visible: _homeManager.redeemablePoints <= 14
+                                        ? true
+                                        : false,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 4.0),
                                       child: Text(
-                                        'Note : You can redeem only if you have 15 points',
-                                        style: AppStyle.shortHeading
-                                            .copyWith(
+                                        'Note : You can redeem only if you have 15 or more points',
+                                        style: AppStyle.shortHeading.copyWith(
                                           fontSize: Dimens.font_12sp,
                                           color: Colors.white,
                                         ),
@@ -639,43 +634,63 @@ class _HomeMainIOState extends State<HomeMainIO> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
           Text(
             'Ways to redeem :',
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
-          redeemWaySub(image: AppImages.mobilRechargeSvg, text: 'Recharge'),
-          redeemWaySub(image: AppImages.walletIcon, text: 'Cashback')
+          redeemWaySub(
+              image: AppImages.mobilRechargeSvg,
+              text: 'Recharge',
+              routName: MRouter.mobileRechargeIO),
+          redeemWaySub(
+              image: AppImages.walletIcon,
+              text: 'Cashback',
+              routName: MRouter.cashBackRedeemPage)
         ],
       ),
     );
   }
 
-  Widget redeemWaySub({required String image, required String text}) {
-    return Row(
-      children: [
-        SvgPicture.asset(image),
-        SizedBox(width: 1.0.wp),
-        Text(
-          text,
-          style: AppStyle.shortHeading.copyWith(
-              fontSize: 10.0.sp,
-              color: AppColors.textColorshade,
-              letterSpacing: 0.5),
+  Widget redeemWaySub(
+      {required String image, required String text, required String routName}) {
+    return GestureDetector(
+      onTap: () {
+        _homeManager.redeemablePoints >= 14?  Get.toNamed(routName): Get.snackbar('Oops!!',
+            'You can redeem only if you have 15+ points',
+            snackPosition: SnackPosition.BOTTOM);
+      },
+      child: Container(
+        child: Row(
+          children: [
+            SvgPicture.asset(image),
+            SizedBox(width: 1.0.wp),
+            Text(
+              text,
+              style: AppStyle.shortHeading.copyWith(
+                  fontSize: 10.0.sp,
+                  color: AppColors.textColorshade,
+                  letterSpacing: 0.5),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
   // redeem points container ------------------------
 
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
-        label:  _homeManager.redeemablePoints >= 14?'Redeem Points Now':'Earn more points',
+        label: _homeManager.redeemablePoints >= 14
+            ? 'Redeem Points Now'
+            : 'Earn more points',
         onPressed: () => {
-          _homeManager.redeemablePoints >= 14?
-          Get.toNamed(MRouter.redeemPointsPage):Get.toNamed(MRouter.map)
-        },
+              _homeManager.redeemablePoints >= 14
+                  ? Get.toNamed(MRouter.redeemPointsPage)
+                  : Get.snackbar(
+                      'Oops!!', 'You can redeem only if you have 15+ points',
+                      snackPosition: SnackPosition.BOTTOM)
+            },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,
@@ -727,7 +742,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
               Flexible(
                 child: GestureDetector(
                   onTap: () {
-                   // Get.toNamed(MRouter.map);
+                    // Get.toNamed(MRouter.map);
                   },
                   child: Container(
                     height: 4.0.hp,

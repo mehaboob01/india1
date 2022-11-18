@@ -240,12 +240,12 @@ class YourRewardCard extends StatelessWidget {
 
     switch (rewardState) {
       case RewardState.expired:
-        usedBg = AppImages.usedCardImage;
+        usedBg = AppImages.cardImageshadow;
         break;
       case RewardState.used:
         switch (rewardtype) {
           case Rewardtype.cashTransaction:
-            usedBg = AppImages.atmBg2; // to change later
+            usedBg = AppImages.referralBonusImage; // to change later
             break;
           case Rewardtype.referralBonus:
             usedBg = AppImages.referralBonusImage;

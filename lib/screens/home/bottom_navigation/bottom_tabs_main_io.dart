@@ -28,8 +28,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO(
-      fromScreen: 'splash',
+    mainHomeWidget = HomeMainIO(false
     );
     super.initState();
   }
@@ -60,9 +59,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                       HomeEachBottomTabIO('assets/images/homeInactive.svg',
                           'assets/images/underline.svg', "${'home'.tr}", () {
                         selectedTabId = 0;
-                        mainHomeWidget = HomeMainIO(
-                          fromScreen: 'bottomNavBar',
-                        );
+                        mainHomeWidget = HomeMainIO(false);
                         setState(() {
                           showAuth();
                           selectedTabId;
