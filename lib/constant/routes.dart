@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/loans/car_loan/car_loan.dart';
+import 'package:india_one/screens/loans/farm_loan/farm_loan.dart';
 import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
 import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
@@ -23,7 +24,7 @@ class MRouter {
   static const String languageSelectionIO = 'LanguageSelectionIO';
   static const String fingerPrintIO = 'FingerPrintIO';
   static const String loyaltyPoints = 'LoyaltyPoints';
-  static const String personalLoan =  'PersonalLoan';
+  static const String personalLoan = 'PersonalLoan';
   static const String chooseAmountIO = 'ChooseAmountIO';
   static const String redeemPointsPage = 'RedeemPointsPage';
   static const String cashBackRedeemPage = 'CashBackRedeemPage';
@@ -32,8 +33,7 @@ class MRouter {
   static const String carLoanIO = 'CarLoanIO';
   static const String goldLoanIO = 'GoldLoanIO';
   static const String tractorLoanIO = 'TractorLoanIO';
-
-
+  static const String farmLoan = 'FarmLoan';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -51,7 +51,6 @@ class MRouter {
 
       case mobileRechargeIO:
         return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
-
 
       case chooseAmountIO:
         return CupertinoPageRoute(builder: (_) => PersonalLoan());
@@ -76,6 +75,9 @@ class MRouter {
 
       case tractorLoanIO:
         return CupertinoPageRoute(builder: (_) => TractorLoanIO());
+
+      case farmLoan:
+        return CupertinoPageRoute(builder: (_) => FarmLoan());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

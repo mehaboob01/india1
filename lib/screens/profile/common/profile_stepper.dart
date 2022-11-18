@@ -152,13 +152,17 @@ class ProfileStepper {
     );
   }
 
-  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm, {bool? isFromLoan = false, LoanType? loanType}) {
+  Widget personalDetails(
+      BuildContext context, GlobalKey<FormState> personalForm,
+      {bool? isFromLoan = false, LoanType? loanType}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: personalForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -178,8 +182,10 @@ class ProfileStepper {
                 label: 'First Name',
                 hint: 'Enter first name',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    return profileController.nameValidation(value, 'Enter name min 3 character');
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(
+                        value, 'Enter name min 3 character');
                   } else {
                     return null;
                   }
@@ -194,8 +200,10 @@ class ProfileStepper {
                 label: 'Last Name',
                 hint: 'Enter last name',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    return profileController.nameValidation(value, 'Enter last name min 3 character');
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(
+                        value, 'Enter last name min 3 character');
                   } else {
                     return null;
                   }
@@ -212,7 +220,8 @@ class ProfileStepper {
                 prefix: '+91',
                 isDisable: true,
               ),
-              if (loanType != LoanType.GoldLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -242,7 +251,8 @@ class ProfileStepper {
                 label: 'Email ID',
                 hint: 'Enter email ID',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     return profileController.emailValidation(value);
                   } else {
                     return null;
@@ -250,7 +260,8 @@ class ProfileStepper {
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (loanType != LoanType.GoldLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -264,12 +275,14 @@ class ProfileStepper {
                   ),
                   onTap: () async {
                     selectedDate = await datePicker(context);
-                    String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
+                    String date = DateFormat('yyyy-MM-dd')
+                        .format(selectedDate ?? DateTime.now());
                     profileController.dobController.value.text = date;
                   },
                   isDisable: true,
                   vaidation: (value) {
-                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    if (isFromLoan == true ||
+                        value.toString().trim().isNotEmpty) {
                       return profileController.nullCheckValidation(
                         value,
                         'Enter DOB',
@@ -283,52 +296,55 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                "Gender",
-                style: TextStyle(
-                  color: AppColors.lightBlack,
-                  fontSize: Dimens.font_14sp,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Obx(
-                  () => Row(
-                    children: [
-                      radioButton(
-                        value: 'Male',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Female',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Other',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                    ],
+              if (loanType != LoanType.FarmLoan) ...[
+                Text(
+                  "Gender",
+                  style: TextStyle(
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_14sp,
                   ),
                 ),
-              ),
-              if (loanType != LoanType.GoldLoan) ...[
+                SizedBox(
+                  height: 5,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => Row(
+                      children: [
+                        radioButton(
+                          value: 'Male',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Female',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Other',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              if ( loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
                 commonDropDown(
-                  item: <String>['Single', 'Married', 'Widowed', 'Divorced'].map<DropdownMenuItem<String>>((String value) {
+                  item: <String>['Single', 'Married', 'Widowed', 'Divorced']
+                      .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value.toString()),
@@ -339,7 +355,9 @@ class ProfileStepper {
                   },
                   label: 'Marital status',
                   hint: 'Select your marital status',
-                  value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
+                  value: profileController.maritalStatus.value == ''
+                      ? null
+                      : profileController.maritalStatus.value,
                 ),
               ],
               SizedBox(
@@ -361,7 +379,9 @@ class ProfileStepper {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: (value.toLowerCase() == profileController.gender.value) ? AppColors.homeGradient1Color : AppColors.greySecond,
+          color: (value.toLowerCase() == profileController.gender.value)
+              ? AppColors.homeGradient1Color
+              : AppColors.greySecond,
           width: 2,
         ),
       ),
@@ -383,13 +403,16 @@ class ProfileStepper {
     );
   }
 
-  Widget residentialDetails(GlobalKey<FormState> residentialForm, {bool? isFromLoan = false}) {
+  Widget residentialDetails(GlobalKey<FormState> residentialForm,
+      {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: residentialForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -412,7 +435,8 @@ class ProfileStepper {
                 label: 'Address Line 1',
                 hint: 'Enter Door # , Building name, Flat #',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     return profileController.nullCheckValidation(
                       value,
                       'Enter address line 1',
@@ -445,7 +469,8 @@ class ProfileStepper {
                 label: 'Pincode',
                 hint: 'Enter pincode here',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     profileController.pinCodeValidation(
                       value,
                     );
@@ -501,7 +526,9 @@ class ProfileStepper {
         value == null || value == '' ? title : value,
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: value == null || value == '' ? AppColors.hintColor : AppColors.lightBlack,
+          color: value == null || value == ''
+              ? AppColors.hintColor
+              : AppColors.lightBlack,
           fontSize: Dimens.font_18sp,
         ),
       ),
@@ -512,13 +539,16 @@ class ProfileStepper {
     );
   }
 
-  Widget occupationDetails(GlobalKey<FormState> occupationForm, {bool? isFromLoan = false}) {
+  Widget occupationDetails(GlobalKey<FormState> occupationForm,
+      {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: occupationForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -537,13 +567,16 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Salaried'].map<DropdownMenuItem<String>>((String value) {
+                item: <String>['Salaried']
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value.toString()),
                   );
                 }).toList(),
-                value: profileController.employmentType.value == '' ? null : profileController.employmentType.value,
+                value: profileController.employmentType.value == ''
+                    ? null
+                    : profileController.employmentType.value,
                 onChanged: (value) {
                   profileController.employmentType.value = value;
                 },
@@ -558,7 +591,8 @@ class ProfileStepper {
                 label: 'Occupation',
                 hint: 'Enter what you do here',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     profileController.nameValidation(
                       value,
                       'Enter Occupation of min 3 char',
@@ -576,7 +610,8 @@ class ProfileStepper {
                 hint: 'Enter monthly income',
                 prefix: '₹',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     profileController.nullCheckValidation(
                       value,
                       'Enter valid amount',
@@ -597,7 +632,8 @@ class ProfileStepper {
                 label: 'PAN number',
                 hint: 'Enter your PAN number here',
                 vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true ||
+                      value.toString().trim().isNotEmpty) {
                     return profileController.panValidation(
                       value,
                     );

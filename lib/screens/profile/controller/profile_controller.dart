@@ -55,6 +55,9 @@ class ProfileController extends GetxController {
   Rx<BankDetailsModel> bankDetailsModel = BankDetailsModel().obs;
   Rx<UpiIdModel> upiIdModel = UpiIdModel().obs;
 
+  RxInt loanRequirement =( -1).obs;
+  RxInt subProduct =( -1).obs;
+  RxInt brand =( -1).obs;
   @override
   void onInit() {
     super.onInit();

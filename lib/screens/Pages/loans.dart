@@ -82,6 +82,15 @@ class LoansCard extends StatelessWidget {
             label: 'Tractor',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
+        ), InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.farmLoan);
+          },
+          child: ItemCard(
+            image: AppImages.tractorSvg,
+            label: 'Farm',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
         ItemCard(
           image: AppImages.handSackSvg,
