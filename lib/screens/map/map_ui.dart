@@ -1,4 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,29 +24,16 @@ class _MapsState extends State<Maps> {
     );
   }
 
-  late BitmapDescriptor customIcon;
+  MapManager mapManager = Get.put(MapManager());
+  late GoogleMapController mapController;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    getCustomIcon();
-    //get current location if wanted
-    super.initState();
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
-
-  getCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(12, 12)),
-      AppImages.markerIcon,
-    ).then((d) {
-      customIcon = d;
-    });
-  }
-
-  MapManager mapManager = Get.put(MapManager());
 
   _body() {
-    GoogleMapController _mapController;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -52,8 +42,8 @@ class _MapsState extends State<Maps> {
             heading: "Maps",
             customActionIconsList: [
               CustomActionIcons(
-                image: AppImages.bottomNavHome,
-                isSvg: false,
+                image: "assets/svg/homeSvg.svg",
+                isSvg: true,
               )
             ],
           ),
@@ -62,16 +52,17 @@ class _MapsState extends State<Maps> {
           child: Stack(children: [
             Obx(
               () => GoogleMap(
+                zoomGesturesEnabled: false,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
-                    mapManager.latitude.value,
-                    mapManager.longitude.value,
-                  ),
-                  zoom: 15,
+                      mapManager.latitude.value, mapManager.longitude.value),
+                  zoom: 14,
                 ),
                 onMapCreated: (controller) {
-                  _mapController = controller;
+                  mapController = controller;
                   for (var i = 0; i < mapManager.markersList.length; i++) {
                     mapManager.markersList.forEach((key, value) {
                       mapManager.addMarker(key, value);
@@ -83,71 +74,75 @@ class _MapsState extends State<Maps> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 20),
-              child: Row(
-                children: [
-                  //=------------------------=
-                  Container(
-                    height: Get.height * 0.06,
-                    width: Get.width * 0.73,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.backGroundgradient1,
-                          AppColors.backGroundgradient2
-                        ],
+              child: GestureDetector(
+                onTap: () async {
+                  await mapManager.getCurrentLocation(mapController);
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      height: Get.height * 0.06,
+                      width: Get.width * 0.73,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.backGroundgradient1,
+                            AppColors.backGroundgradient2
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(18, 15, 15, 15),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(AppImages.locationPinSvg),
+                            SizedBox(
+                              width: Get.width * 0.03,
+                            ),
+                            Text(
+                              "Enable your location",
+                              style: TextStyle(
+                                  color: Color(0xFFEEEEEECC),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14),
+                            ),
+                            Spacer(),
+                            Container(
+                              child: CustomActionIcons(
+                                image: AppImages.getLocationSvg,
+                                isSvg: true,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 15, 15, 15),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.location_on,
+                    SizedBox(
+                      width: Get.width * 0.03,
+                    ),
+                    Container(
+                        height: Get.height * 0.06,
+                        width: Get.width * 0.135,
+                        decoration: BoxDecoration(
                             color: Colors.white,
+                            border: Border.all(
+                                width: 1, color: AppColors.cardScreenBg),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: CustomActionIcons(
+                            image: AppImages.searchSvg,
+                            isSvg: true,
+                            customGradientColors: [
+                              Color(0xFF004280),
+                              Color(0xFF00C376),
+                            ],
                           ),
-                          SizedBox(
-                            width: Get.width * 0.03,
-                          ),
-                          Text(
-                            "Enable your location",
-                            style: TextStyle(
-                                color: Color(0xFFEEEEEECC),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14),
-                          ),
-                          Spacer(),
-                          ImageIcon(
-                            AssetImage(AppImages.locationIcon),
-                            color: Color(0xFFEEEEEE),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Get.width * 0.03,
-                  ),
-                  Container(
-                    height: Get.height * 0.06,
-                    width: Get.width * 0.135,
-                    decoration: BoxDecoration(
-                        // gradient: LinearGradient(
-                        //   colors: [
-                        //     AppColors.cardScreenBg,
-                        //     AppColors.white,
-                        //   ],
-                        // ),
-                        color: Colors.white,
-                        border:
-                            Border.all(width: 1, color: AppColors.cardScreenBg),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: ImageIcon(
-                      AssetImage(AppImages.searchIcon),
-                    ),
-                  )
-                ],
+                        )),
+                  ],
+                ),
               ),
             ),
             DraggableScrollableSheet(
@@ -244,14 +239,14 @@ class AtmDetailsCard extends StatelessWidget {
                     height: Get.height * 0.005,
                   ),
                   Text(
-                    "${address} ",
+                    "$address ",
                     style: TextStyle(fontWeight: FontWeight.w400),
                   ),
                   SizedBox(
                     height: Get.height * 0.005,
                   ),
                   Text(
-                    "${status}",
+                    "$status",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: mapManager.statusColor(index)),
@@ -271,10 +266,10 @@ class AtmDetailsCard extends StatelessWidget {
                         color: Color(0xFFF2642C),
                       ),
                       SizedBox(
-                        width: Get.width * 0.009,
+                        width: Get.width * 0.03,
                       ),
                       Text(
-                        "Get Directions",
+                        "Directions",
                         style: TextStyle(color: Color(0xFFF2642C)),
                       ),
                     ],

@@ -62,204 +62,212 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body:
-        cashBackManager.isLoading == true ? CircularProgressIndicator():
-
-        SafeArea(
-            child: Column(children: [
-          const Align(
-            alignment: Alignment.topCenter,
-            child:
-                CustomAppBar(heading: 'Redeeem points', customActionIconsList: [
-              CustomActionIcons(
-                image: AppImages.bottomNavHome,
-                //  customGradientColors: [Color(0xff95DFFF), Color(0xff014280)],
-              ),
-            ]),
-          ),
-          Expanded(
-            child: ListView(
-                shrinkWrap: true,
-                padding:
-                    EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 2.0.wp),
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 4.0.wp, horizontal: 2.0.wp),
-                    child: Text(
-                      'Enter the following details to proceed',
-                      style: AppStyle.shortHeading.copyWith(
-                          color: AppColors.black,
-                          fontSize: 14.0.sp,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 2.0.wp,
-                        bottom: 4.0.wp,
-                        left: 2.0.wp,
-                        right: 2.0.wp),
-                    child: Text(
-                      'Redemption mode',
-                      style: AppStyle.shortHeading.copyWith(
-                          fontSize: 11.0.sp,
-                          height: 1.2.sp,
-                          color: AppColors.greyTextColor,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Obx(() {
-                    return Center(
-                      child: CommonToggleCard(
-                        getController: cashbackCtrl,
-                        isSelectedlist: isSelectedRedeemMode,
-                        redeemCardList: [
-                          RedeemCard(
-                            imageSvg: AppImages.bankImageSvg,
-                            label: 'Bank account',
-                            isSelected: isSelectedRedeemMode[0],
+        body: cashBackManager.isLoading == true
+            ? CircularProgressIndicator()
+            : SafeArea(
+                child: Column(children: [
+                const Align(
+                  alignment: Alignment.topCenter,
+                  child: CustomAppBar(
+                      heading: 'Redeeem points',
+                      customActionIconsList: [
+                        CustomActionIcons(
+                          image: "assets/svg/homeSvg.svg",
+                          isSvg: true,
+                          //  customGradientColors: [Color(0xff95DFFF), Color(0xff014280)],
+                        ),
+                      ]),
+                ),
+                Expanded(
+                  child: ListView(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 4.0.wp, vertical: 2.0.wp),
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0.wp, horizontal: 2.0.wp),
+                          child: Text(
+                            'Enter the following details to proceed',
+                            style: AppStyle.shortHeading.copyWith(
+                                color: AppColors.black,
+                                fontSize: 14.0.sp,
+                                fontWeight: FontWeight.w600),
                           ),
-                          RedeemCard(
-                            imageSvg: AppImages.upiVpaSvg,
-                            label: 'UPI/VPA',
-                            isSelected: isSelectedRedeemMode[1],
-                          )
-                        ],
-                      ),
-                    );
-                  }),
-                  SizedBox(height: 4.0.wp),
-                  // cash back through bank account ----------------------------------------
-                  Obx(() {
-                    return isSelectedRedeemMode[0] == true
-                        ? LoyaltyBankAccount(
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 2.0.wp,
+                              bottom: 4.0.wp,
+                              left: 2.0.wp,
+                              right: 2.0.wp),
+                          child: Text(
+                            'Redemption mode',
+                            style: AppStyle.shortHeading.copyWith(
+                                fontSize: 11.0.sp,
+                                height: 1.2.sp,
+                                color: AppColors.greyTextColor,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Obx(() {
+                          return Center(
+                            child: CommonToggleCard(
+                              getController: cashbackCtrl,
+                              isSelectedlist: isSelectedRedeemMode,
+                              redeemCardList: [
+                                RedeemCard(
+                                  fontsize: 16,
+                                  imageSvg: AppImages.bankImageSvg,
+                                  label: 'Bank account',
+                                  isSelected: isSelectedRedeemMode[0],
+                                ),
+                                RedeemCard(
+                                  fontsize: 16,
+                                  imageSvg: AppImages.upiVpaSvg,
+                                  label: 'UPI/VPA',
+                                  isSelected: isSelectedRedeemMode[1],
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                        SizedBox(height: 4.0.wp),
+                        // cash back through bank account ----------------------------------------
+                        Obx(() {
+                          return isSelectedRedeemMode[0] == true
+                              ? LoyaltyBankAccount(
 
-                            //  key: bankAccountKey,
+                                  //  key: bankAccountKey,
 
-                            sliderValue: loyaltyBankSliderValue,
-                            cashbackCtrl: cashbackCtrl,
-                            textEditCtrl: cashbackCtrl
-                                .redeemPointBankSliderTextEditingCtrl.value,
-                            minValue: loyaltyBankMinValue,
-                            maxValue: loyaltyBankMaxValue)
-                        : LoyaltyUpiVpa(
-                            sliderValue: loyaltyUpiVpaSliderValue,
-                            cashbackCtrl: cashbackCtrl,
-                            textEditCtrl: cashbackCtrl
-                                .redeemPointUpiVpaSliderTextEditingCtrl.value,
-                            minValue: loyaltyUpiVpaMinValue,
-                            maxValue: loyaltyUpiVpaMaxValue);
-                  }),
-                ]),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Obx(() {
-              return Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 4.0.wp, vertical: 2.0.wp),
-                  child: isSelectedRedeemMode[0] == true
-                      ? cashBackManager.isLoading == true
-                          ? CircularProgressIndicator()
-                          : LoyaltySubmitButton(
-                              buttonEnabled:
-                                  cashbackCtrl.bankAccountSubmitEnable,
-                              onPressed: () {
-                                if (cashBackManager.selectedIndex.value != -1 &&
-                                    cashbackCtrl
-                                            .redeemPointBankSliderTextEditingCtrl
-                                            .value !=
-                                        0) {
-
-
-                                  print(cashBackManager
-                                      .customerBankList[
-                                          cashBackManager.selectedIndex.value]
-                                      .id);
-                                  print(cashbackCtrl
+                                  sliderValue: loyaltyBankSliderValue,
+                                  cashbackCtrl: cashbackCtrl,
+                                  textEditCtrl: cashbackCtrl
                                       .redeemPointBankSliderTextEditingCtrl
+                                      .value,
+                                  minValue: loyaltyBankMinValue,
+                                  maxValue: loyaltyBankMaxValue)
+                              : LoyaltyUpiVpa(
+                                  sliderValue: loyaltyUpiVpaSliderValue,
+                                  cashbackCtrl: cashbackCtrl,
+                                  textEditCtrl: cashbackCtrl
+                                      .redeemPointUpiVpaSliderTextEditingCtrl
+                                      .value,
+                                  minValue: loyaltyUpiVpaMinValue,
+                                  maxValue: loyaltyUpiVpaMaxValue);
+                        }),
+                      ]),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Obx(() {
+                    return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.0.wp, vertical: 2.0.wp),
+                        child: isSelectedRedeemMode[0] == true
+                            ? cashBackManager.isLoading == true
+                                ? CircularProgressIndicator()
+                                : LoyaltySubmitButton(
+                                    buttonEnabled:
+                                        cashbackCtrl.bankAccountSubmitEnable,
+                                    onPressed: () {
+                                      if (cashBackManager.selectedIndex.value !=
+                                              -1 &&
+                                          cashbackCtrl
+                                                  .redeemPointBankSliderTextEditingCtrl
+                                                  .value !=
+                                              0) {
+                                        print(cashBackManager
+                                            .customerBankList[cashBackManager
+                                                .selectedIndex.value]
+                                            .id);
+                                        print(cashbackCtrl
+                                            .redeemPointBankSliderTextEditingCtrl
+                                            .value
+                                            .text);
+                                        print(cashBackManager
+                                            .customerBankList[cashBackManager
+                                                .selectedIndex.value]
+                                            .id);
+
+                                        cashBackManager.cashBackToBankApi(
+                                            true,
+                                            cashBackManager
+                                                .customerBankList[
+                                                    cashBackManager
+                                                        .selectedIndex.value]
+                                                .id,
+                                            {},
+                                            cashbackCtrl
+                                                .redeemPointBankSliderTextEditingCtrl
+                                                .value
+                                                .text,
+                                            context);
+
+                                        return;
+                                      }
+
+                                      // add custom bank
+                                      if (cashbackCtrl
+                                              .bankAccountSubmitEnable.value ==
+                                          true) {
+                                        cashbackCtrl
+                                            .bankAccountKey.currentState!
+                                            .save();
+
+                                        if (cashbackCtrl
+                                            .bankAccountKey.currentState!
+                                            .validate()) {
+                                          var bankId = checkBankId(cashbackCtrl
+                                              .bankAccountKey!
+                                              .currentState!
+                                              .value['bankDropDown']);
+
+                                          cashBackManager.cashBackToBankApi(
+                                              false,
+                                              bankId,
+                                              cashbackCtrl.bankAccountKey!
+                                                  .currentState!.value,
+                                              "0",
+                                              context);
+                                        }
+                                      } else {
+                                        // i have to put this code in if part
+                                        null;
+                                      }
+                                      // cashbackCtrl.bankAccountformKey.currentState!
+                                      //     .validate();
+                                    })
+                            : LoyaltySubmitButton(
+                                buttonEnabled: cashbackCtrl.upiSubmitEnable,
+                                onPressed: () {
+                                  print("upi redeem now");
+
+                                  print(cashbackCtrl
+                                      .loyaltyUpiTextEditingCtrl.value.text);
+                                  print(cashbackCtrl
+                                      .redeemPointUpiVpaSliderTextEditingCtrl
                                       .value
                                       .text);
-                                  print(cashBackManager
-                                      .customerBankList[
-                                          cashBackManager.selectedIndex.value]
-                                      .id);
-
-                                  cashBackManager.cashBackToBankApi(
-                                      true,
-                                      cashBackManager
-                                          .customerBankList[cashBackManager
-                                              .selectedIndex.value]
-                                          .id,
-                                      {},
+                                  cashBackManager.cashBackToUpiApi(
                                       cashbackCtrl
-                                          .redeemPointBankSliderTextEditingCtrl
+                                          .loyaltyUpiTextEditingCtrl.value.text,
+                                      cashbackCtrl
+                                          .redeemPointUpiVpaSliderTextEditingCtrl
                                           .value
-                                          .text,
-                                  context);
-
-                                  return;
-                                }
-
-                                // add custom bank
-                                if (cashbackCtrl
-                                        .bankAccountSubmitEnable.value ==
-                                    true) {
-                                  cashbackCtrl.bankAccountKey.currentState!
-                                      .save();
-
-                                  if (cashbackCtrl.bankAccountKey.currentState!
-                                      .validate()) {
-                                    var bankId = checkBankId(cashbackCtrl
-                                        .bankAccountKey!
-                                        .currentState!
-                                        .value['bankDropDown']);
-
-                                    cashBackManager.cashBackToBankApi(
-                                        false,
-                                        bankId,
-                                        cashbackCtrl.bankAccountKey!
-                                            .currentState!.value,
-                                        "0",context);
-                                  }
-                                } else {
-                                  // i have to put this code in if part
-                                  null;
-                                }
-                                // cashbackCtrl.bankAccountformKey.currentState!
-                                //     .validate();
-                              })
-                      : LoyaltySubmitButton(
-                          buttonEnabled:
-                          cashbackCtrl.upiSubmitEnable,
-                          onPressed: () {
-
-
-
-                            print("upi redeem now");
-
-                            print(cashbackCtrl.loyaltyUpiTextEditingCtrl.value.text);
-                            print(cashbackCtrl.redeemPointUpiVpaSliderTextEditingCtrl.value.text);
-                            cashBackManager.cashBackToUpiApi(cashbackCtrl.loyaltyUpiTextEditingCtrl.value.text,cashbackCtrl.redeemPointUpiVpaSliderTextEditingCtrl.value.text);
-
-
-
-
-
-                          },
-                          // onPressed: () => print(
-                          //cashbackCtrl.loyaltyUpiTextEditingCtrl.value.text)),
-                        ));
-            }),
-          ),
-        ])));
+                                          .text);
+                                },
+                                // onPressed: () => print(
+                                //cashbackCtrl.loyaltyUpiTextEditingCtrl.value.text)),
+                              ));
+                  }),
+                ),
+              ])));
   }
 }
 
@@ -450,9 +458,9 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                         // onPressedSubHeading: () =>
                         //     Get.to(() => const ManageAccountsCard()),
                       ),
-
-                      SizedBox(height: 16,),
-
+                      SizedBox(
+                        height: 16,
+                      ),
                       Obx(
                         () => cashBackManager.isLoading.value == true
                             ? Container(
@@ -550,7 +558,6 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                                         ),
                                                       ),
                                                       decoration: BoxDecoration(
-
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -567,7 +574,9 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                     ),
                                   ),
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -578,14 +587,12 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                   EdgeInsets.symmetric(horizontal: 2.0.wp),
                             ),
                           ),
-
                           Text(
                             'or',
                             style: AppStyle.shortHeading.copyWith(
                                 color: const Color(0xff2d2d2d),
                                 fontWeight: FontWeight.w600),
                           ),
-
                           Expanded(
                             child: CommonDivider(
                               isvertical: false,
@@ -613,13 +620,11 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
               //  return cashbackCtrl.bankAccontSelected!.value = value!;
             },
             formName: 'bankDropDown',
-            labelName: 'Bank name',
+            labelName: 'Select your bank here',
             hintText: bankAccontDropDownHint!,
             data: bankName,
             validationText: '*Bank name is compulsory',
           ),
-
-
 
           sizedbox,
           // enter your account number ------------------------------------------------------------
@@ -632,8 +637,6 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
             keyboardType: TextInputType.number,
             inputValidator: (value) => CommonValidations().numberValidation(
                 value, '*Account number is mandatory', 'It only takes numbers'),
-
-
             inputOnChanged: (inputValue) {},
             inputOnSubmitted: (value) {},
           ),
@@ -786,115 +789,106 @@ class LoyaltyUpiVpa extends StatelessWidget {
                 },
               ),
               sizedbox,
-                 Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0.wp),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RowHeadingWithunderLineSubHeading(
-                          heading: 'Your UPI or VPA’s',
-                          subHeading: 'Manage',
-                          // onPressedSubHeading: () =>
-                          //     Get.to(() => const ManageAccountsCard()),
-                        ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0.wp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RowHeadingWithunderLineSubHeading(
+                      heading: 'Your UPI or VPA’s',
+                      subHeading: 'Manage',
+                      // onPressedSubHeading: () =>
+                      //     Get.to(() => const ManageAccountsCard()),
+                    ),
 
-                        SizedBox(height: 16,),
+                    SizedBox(
+                      height: 16,
+                    ),
 
-                        Obx(
-                        ()=> Container(
+                    Obx(
+                      () => Container(
+                          height: 234,
+                          child: ListView.builder(
+                              itemCount: 2,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Container(
+                                      child: GestureDetector(
+                                        onTap: () => {
+                                          // if (_mrManager
+                                          //     .plansList.isNotEmpty)
+                                          //   {onCardTapped(index)}
+                                        },
+                                        child: CommonRadioCard(
+                                            radioCardType: RadioCardType.upi,
+                                            upiId:
+                                                "cashBackManager.customerUPIList[index].upiId",
+                                            cardWidth: double.maxFinite,
+                                            isSelected: true
 
-                            height: 234,
-
-                              child:
-                              ListView.builder(
-                                  itemCount:2,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Container(
-                                          child: GestureDetector(
-                                            onTap: () => {
-                                              // if (_mrManager
-                                              //     .plansList.isNotEmpty)
-                                              //   {onCardTapped(index)}
-                                            },
-                                            child: CommonRadioCard(
-                                                    radioCardType:
-                                                    RadioCardType
-                                                        .upi,
-                                                   upiId: "cashBackManager.customerUPIList[index].upiId",
-                                                    cardWidth: double
-                                                        .maxFinite,
-                                                    isSelected:  true
-
-                                                    // index ==
-                                                    //     cashBackManager
-                                                    //         .selectedIndex
-                                                    //         .value,
-                                                  ),
+                                            // index ==
+                                            //     cashBackManager
+                                            //         .selectedIndex
+                                            //         .value,
                                             ),
-                                          //
-                                          // decoration: BoxDecoration(
-                                          //
-                                          //   borderRadius:
-                                          //   BorderRadius
-                                          //       .circular(
-                                          //       1.0.wp),
-                                          // ),
+                                      ),
+                                      //
+                                      // decoration: BoxDecoration(
+                                      //
+                                      //   borderRadius:
+                                      //   BorderRadius
+                                      //       .circular(
+                                      //       1.0.wp),
+                                      // ),
                                     ));
-                                  }),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                    color: AppColors.cardScreenBg),
-                                borderRadius:
-                                BorderRadius.circular(2.0.wp),
-
-                              )
+                              }),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: AppColors.cardScreenBg),
+                            borderRadius: BorderRadius.circular(2.0.wp),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: CommonDivider(
+                            isvertical: false,
+                            horizontalPadding:
+                                EdgeInsets.symmetric(horizontal: 2.0.wp),
                           ),
                         ),
-                        SizedBox(height: 30,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: CommonDivider(
-                                isvertical: false,
-                                horizontalPadding:
-                                EdgeInsets.symmetric(horizontal: 2.0.wp),
-                              ),
-                            ),
-
-                            Text(
-                              'or',
-                              style: AppStyle.shortHeading.copyWith(
-                                  color: const Color(0xff2d2d2d),
-                                  fontWeight: FontWeight.w600),
-                            ),
-
-                            Expanded(
-                              child: CommonDivider(
-                                isvertical: false,
-                                horizontalPadding:
-                                EdgeInsets.symmetric(horizontal: 2.0.wp),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'or',
+                          style: AppStyle.shortHeading.copyWith(
+                              color: const Color(0xff2d2d2d),
+                              fontWeight: FontWeight.w600),
                         ),
-                        sizedbox,
-                        // Text(
-                        //   'Your UPI or VPA’s',
-                        //   style: AppStyle.shortHeading.copyWith(
-                        //       color: const Color(0xff2d2d2d),
-                        //       fontWeight: FontWeight.w600),
-                        // ),
+                        Expanded(
+                          child: CommonDivider(
+                            isvertical: false,
+                            horizontalPadding:
+                                EdgeInsets.symmetric(horizontal: 2.0.wp),
+                          ),
+                        ),
                       ],
                     ),
-                  )
-                   ,
+                    sizedbox,
+                    // Text(
+                    //   'Your UPI or VPA’s',
+                    //   style: AppStyle.shortHeading.copyWith(
+                    //       color: const Color(0xff2d2d2d),
+                    //       fontWeight: FontWeight.w600),
+                    // ),
+                  ],
+                ),
+              ),
               sizedbox,
-              Row
-                (
+              Row(
                 children: [
                   //  VERIFY UPI ID
                   Flexible(
@@ -984,8 +978,7 @@ class LoyaltyUpiVpa extends StatelessWidget {
 }
 
 class LoyaltySubmitButton extends StatelessWidget {
-
-   LoyaltySubmitButton({
+  LoyaltySubmitButton({
     Key? key,
     required RxBool buttonEnabled,
     required this.onPressed,
@@ -1003,11 +996,7 @@ class LoyaltySubmitButton extends StatelessWidget {
             top: 2.0.wp,
             bottom: 4.0.wp,
           ),
-          child:
-
-
-
-          ButtonWithFlower(
+          child: ButtonWithFlower(
             onPressed: onPressed,
             label: 'Redeem Now',
             buttonWidth: double.maxFinite,

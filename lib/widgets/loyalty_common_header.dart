@@ -64,6 +64,7 @@ class CustomActionIcons extends StatelessWidget {
   const CustomActionIcons(
       {Key? key,
       this.customGradientColors,
+      this.onTap,
       required this.image,
       this.isSvg = true,
       this.beginsAt = Alignment.topLeft,
@@ -78,35 +79,39 @@ class CustomActionIcons extends StatelessWidget {
   final Color? imageColor;
   final List<double>? stops;
   final Alignment? beginsAt;
+  final onTap;
   final Alignment? endsAt;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 6.0.wp,
-      height: 6.0.wp,
-      child: customGradientColors != null
-          ? ShaderMask(
-              shaderCallback: (bounds) {
-                return LinearGradient(
-                        begin: beginsAt!,
-                        end: endsAt!,
-                        stops: stops,
-                        colors: List.generate(customGradientColors!.length,
-                            (index) => customGradientColors![index]))
-                    .createShader(bounds);
-              },
-              child: SvgPicture.asset(image, fit: BoxFit.fill))
-          : isSvg!
-              ? GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    image,
-                    color: imageColor,
-                    fit: BoxFit.fill,
-                  ),
-                )
-              : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: 6.0.wp,
+        height: 6.0.wp,
+        child: customGradientColors != null
+            ? ShaderMask(
+                shaderCallback: (bounds) {
+                  return LinearGradient(
+                          begin: beginsAt!,
+                          end: endsAt!,
+                          stops: stops,
+                          colors: List.generate(customGradientColors!.length,
+                              (index) => customGradientColors![index]))
+                      .createShader(bounds);
+                },
+                child: SvgPicture.asset(image, fit: BoxFit.fill))
+            : isSvg!
+                ? GestureDetector(
+                    onTap: onTap,
+                    child: SvgPicture.asset(
+                      image,
+                      color: imageColor,
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+      ),
     );
   }
 }
@@ -176,16 +181,18 @@ class HeadingContainer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 14,),
+                  SizedBox(
+                    height: 14,
+                  ),
                   Obx(
-                    ()=>Visibility(
-                      visible: _loyaltyManager.redeemablePoints <= 14?true:false,
+                    () => Visibility(
+                      visible:
+                          _loyaltyManager.redeemablePoints <= 14 ? true : false,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 4.0),
                         child: Text(
                           'Note : You can redeem only if you have 15 points',
-                          style: AppStyle.shortHeading
-                              .copyWith(
+                          style: AppStyle.shortHeading.copyWith(
                             fontSize: Dimens.font_12sp,
                             color: Colors.white,
                           ),
@@ -193,13 +200,9 @@ class HeadingContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
                 ],
               ),
             ),
-
-
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -271,9 +274,9 @@ class HeadingContainer extends StatelessWidget {
                   ),
                 )),
             Obx(
-              ()=> Positioned(
+              () => Positioned(
                 top: 32,
-                right: 18,
+                right: 20,
                 child: ButtonWithFlower(
                   buttonColor: Colors.white,
                   onPressed: () {
@@ -281,8 +284,10 @@ class HeadingContainer extends StatelessWidget {
                   },
                   buttonHeight: 10.0.wp,
                   buttonWidth: 44.0.wp,
-                  label: _loyaltyManager.redeemablePoints >= 14?'Redeem Now':'Earn more points',
-                  labelSize: Dimens.font_12sp,
+                  label: _loyaltyManager.redeemablePoints >= 14
+                      ? 'Redeem Now'
+                      : 'Earn more points',
+                  labelSize: 14,
                   labelWeight: FontWeight.w600,
                   labelColor: AppColors.butngradient1,
                 ),

@@ -61,9 +61,12 @@ dependencies:
   flutter_contacts: ^1.1.5+1
   google_maps_flutter: ^2.2.1
   geolocator: ^9.0.2
+  flutter_no_internet_widget:
+  social_share: ^2.2.1
 
 
   fluttertoast: ^8.1.1
+  connectivity: ^3.0.6
 
 
 dev_dependencies:
@@ -104,6 +107,7 @@ flutter:
     - assets/tile_images/
     - assets/png/
     - assets/svg/
+    - assets/svg/refer/
     - assets/svg/loans/
     - assets/svg/maps/
     - assets/svg/payments/

@@ -6,45 +6,48 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'map_model.dart';
 
 class MapManager extends GetxController {
-  @override
-  void onInit() {
-    // TODO: implement onInit
-
-    super.onInit();
-  }
-
   List<MapModel> dummydata = [
     MapModel(
+        latLng: LatLng(12.9075948553404, 77.60108253288585),
         distance: 1.3,
         address: "Bannerghata Main Road",
         status: "Open 24 Hours"),
     MapModel(
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
       distance: 12,
       address: "Bannerghata Main Road",
       status: "Closed",
     ),
     MapModel(
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
       distance: 2.1,
       address: "Bannerghata Main Road",
       status: "Open",
     ),
     MapModel(
+        latLng: LatLng(12.9075948553404, 77.60108253288585),
         distance: 1.3,
         address: "Bannerghata Main Road",
         status: "Open 24 Hours"),
     MapModel(
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
       distance: 1.3,
       address: "Bannerghata Main Road",
       status: "Closed",
     ),
     MapModel(
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
       distance: 1.3,
       address: "NYC Main Road",
       status: "Open",
     ),
     MapModel(
-        distance: 1.3, address: "Banglore Main Road", status: "Open 24 Hours"),
+        latLng: LatLng(12.9075948553404, 77.60108253288585),
+        distance: 1.3,
+        address: "Banglore Main Road",
+        status: "Open 24 Hours"),
     MapModel(
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
       distance: 1.3,
       address: " Main Road",
       status: "Closed",
@@ -53,6 +56,7 @@ class MapManager extends GetxController {
       distance: 1.3,
       address: "Hassan",
       status: "Open",
+      latLng: LatLng(12.9075948553404, 77.60108253288585),
     ),
   ];
 
@@ -68,7 +72,10 @@ class MapManager extends GetxController {
 
   var latitude = 12.9075948553404.obs;
   var longitude = 77.60108253288585.obs;
+
+  var locEnabled = false.obs;
   List<Marker> allMarkers = <Marker>[].obs;
+
   final Map<String, LatLng> markersList = const {
     "test 1": LatLng(12.9075948553404, 77.60108253288585),
     "test 2": LatLng(12.90604710573187, 77.6012971095981),
@@ -86,11 +93,28 @@ class MapManager extends GetxController {
     allMarkers.add(marker);
   }
 
-  getCurrentLocation() async {
+  getCurrentLocation(GoogleMapController controller) async {
+    getLocPermission();
+    Position position;
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium);
+    latitude.value = position.latitude;
+    longitude.value = position.longitude;
+    print(latitude.value);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 0,
+        target: LatLng(latitude.value, longitude.value),
+        zoom: 17.0,
+      ),
+    ));
+  }
+
+  getLocPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
@@ -105,17 +129,8 @@ class MapManager extends GetxController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    Position position;
-    position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.medium);
-    latitude.value = position.latitude;
-    longitude.value = position.longitude;
   }
 }

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/health_screen.dart';
+import 'package:india_one/screens/insurance_summary.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
+
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../constant/theme_manager.dart';
+import '../refer/refer_earn_ui.dart';
 import 'loyality_manager.dart';
 
 class LoyaltyScreen extends StatelessWidget {
@@ -42,7 +46,11 @@ class LoyaltyScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(MRouter.generalHistory);
+                                // Get.toNamed(MRouter.generalHistory);
+                                // Get.to(() => ReferEarn());
+                                // Get.to(() => InsuranceSummary());
+
+                                Get.to(() => HealthConsent());
                               },
                               child: Text(
                                 'History',
@@ -81,9 +89,13 @@ class LoyaltyScreen extends StatelessWidget {
                               : _loyaltyManager.recentRewardTransactionsList
                                           .length ==
                                       0
-                                  ? Center(child: Text("No Rewards!", style: AppStyle.shortHeading.copyWith(
-                          color: const Color(0xff2d2d2d),
-                              fontWeight: FontWeight.w600),))
+                                  ? Center(
+                                      child: Text(
+                                      "No Rewards!",
+                                      style: AppStyle.shortHeading.copyWith(
+                                          color: const Color(0xff2d2d2d),
+                                          fontWeight: FontWeight.w600),
+                                    ))
                                   : GridView(
                                       shrinkWrap: true,
                                       physics:

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -40,6 +41,15 @@ class _StepperScreenState extends State<StepperScreen> {
           SafeArea(
             child: CustomAppBar(
               heading: 'Profile',
+              customActionIconsList: [
+                CustomActionIcons(
+                  image: "assets/svg/homeSvg.svg",
+                  isSvg: true,
+                  onTap: () {
+                    Get.toNamed(MRouter.homeScreen);
+                  },
+                )
+              ],
             ),
           ),
           Expanded(

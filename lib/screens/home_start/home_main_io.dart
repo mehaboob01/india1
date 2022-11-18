@@ -1,14 +1,15 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
+
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -140,8 +141,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
     super.initState();
 
     showFirstTimePoints();
-
-   // checkLogin();
   }
 
   @override
@@ -166,119 +165,145 @@ class _HomeMainIOState extends State<HomeMainIO> {
         return false;
       },
       child: Obx(
-        () => GestureDetector(
-          onTap: () => {Get.back(), _homeManager.isClicked.value = false},
-          child: Scaffold(
-            body: _homeManager.isLoading.value
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+        () => Scaffold(
+          body: _homeManager.isLoading.value
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                        size: 36,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text('Loading ...',
+                        style: AppStyle.shortHeading.copyWith(
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w400))
+                  ],
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(
-                        child: LoadingAnimationWidget.inkDrop(
-                          size: 36,
-                          color: AppColors.primary,
+                      // top container ---------------------
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                            4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
+                        height: 50.0.hp,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(5.0.wp),
+                              bottomRight: Radius.circular(5.0.wp)),
+                          image: const DecorationImage(
+                              image: AssetImage(AppImages.homebg),
+                              fit: BoxFit.fill),
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Loading ...',
-                          style: AppStyle.shortHeading.copyWith(
-                              color: AppColors.black,
-                              fontWeight: FontWeight.w400))
-                    ],
-                  )
-                : SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // top container ---------------------
-                        Container(
-                          padding: EdgeInsets.fromLTRB(
-                              4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
-                          height: 50.0.hp,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(5.0.wp),
-                                bottomRight: Radius.circular(5.0.wp)),
-                            image: const DecorationImage(
-                                image: AssetImage(AppImages.homebg),
-                                fit: BoxFit.fill),
-                          ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text('welcome'.tr,
-                                          style: AppStyle.shortHeading.copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600)),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        headingBox(
-                                            text: 'Aa',
-                                            ontap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          LanguageSelectionIO(
-                                                              'home')));
-                                            }),
-                                        SizedBox(
-                                          width: 2.0.wp,
-                                        ),
-                                        GestureDetector(
-                                          child: headingBox(
-                                              image: AppImages.notify_icon),
-                                        ),
-                                        SizedBox(
-                                          width: 2.0.wp,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            _homeManager.isClicked.value = true;
-                                            showMenu<String>(
-                                              context: context,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  13.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  13.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  13.0))),
-                                              position: RelativeRect.fromLTRB(
-                                                  25.0, 112.0, 16.0, 0.0),
-                                              items: [
-                                                PopupMenuItem(
-                                                  height: Get.height * 0.02,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      _homeManager.isClicked
-                                                          .value = false;
-                                                      Get.back();
-                                                      Get.to(() =>
-                                                          ProfileScreen());
-                                                    },
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text('welcome'.tr,
+                                        style: AppStyle.shortHeading.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600)),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      headingBox(
+                                          text: 'Aa',
+                                          ontap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        LanguageSelectionIO(
+                                                            'home')));
+                                          }),
+                                      SizedBox(
+                                        width: 2.0.wp,
+                                      ),
+                                      GestureDetector(
+                                        child: headingBox(
+                                            image: AppImages.notify_icon),
+                                      ),
+                                      SizedBox(
+                                        width: 2.0.wp,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _homeManager.isClicked.value = true;
+                                          showMenu<String>(
+                                            context: context,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(13.0),
+                                                    bottomRight:
+                                                        Radius.circular(13.0),
+                                                    topLeft:
+                                                        Radius.circular(13.0))),
+                                            position: RelativeRect.fromLTRB(
+                                                25.0, 112.0, 16.0, 0.0),
+                                            items: [
+                                              PopupMenuItem(
+                                                height: Get.height * 0.02,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _homeManager.isClicked
+                                                        .value = false;
+                                                    Get.back();
+                                                    Get.to(
+                                                        () => ProfileScreen());
+                                                  },
+                                                  child: Container(
+                                                    height: Get.height * 0.02,
+                                                    width: double.infinity,
+                                                    child: Text(
+                                                      "My Profile",
+                                                      style: AppStyle
+                                                          .shortHeading
+                                                          .copyWith(
+                                                              fontSize:
+                                                                  Dimens
+                                                                      .font_14sp,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              letterSpacing: 1),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              PopupMenuDivider(),
+                                              PopupMenuItem(
+                                                height: 0.02,
+                                                child: GestureDetector(
+                                                    onTap: () => {
+                                                          _homeManager.isClicked
+                                                              .value = false,
+                                                          Get.back(),
+                                                          Get.toNamed(MRouter
+                                                              .loyaltyPoints),
+                                                        },
                                                     child: Container(
                                                       height: Get.height * 0.02,
                                                       width: double.infinity,
                                                       child: Text(
-                                                        "My Profile",
+                                                        "My Rewards",
                                                         style: AppStyle
                                                             .shortHeading
                                                             .copyWith(
@@ -292,180 +317,143 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                                 letterSpacing:
                                                                     1),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                PopupMenuDivider(),
-                                                PopupMenuItem(
-                                                  height: 0.02,
-                                                  child: GestureDetector(
-                                                      onTap: () => {
-                                                            _homeManager
-                                                                .isClicked
-                                                                .value = false,
-                                                            Get.back(),
-                                                            Get.toNamed(MRouter
-                                                                .loyaltyPoints),
-                                                          },
-                                                      child: Container(
-                                                        height:
-                                                            Get.height * 0.02,
-                                                        width: double.infinity,
-                                                        child: Text(
-                                                          "My Rewards",
-                                                          style: AppStyle
-                                                              .shortHeading
-                                                              .copyWith(
-                                                                  fontSize: Dimens
-                                                                      .font_14sp,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      1),
-                                                        ),
-                                                      )),
-                                                ),
-                                              ],
-                                              elevation: 8.0,
-                                            ).then<void>(
-                                                (String? itemSelected) {
-                                              if (itemSelected == null) {
-                                                _homeManager.isClicked.value =
-                                                    false;
-                                                return;
-                                              }
+                                                    )),
+                                              ),
+                                            ],
+                                            elevation: 8.0,
+                                          ).then<void>((String? itemSelected) {
+                                            if (itemSelected == null) {
+                                              _homeManager.isClicked.value =
+                                                  false;
+                                              return;
+                                            }
 
-                                              if (itemSelected == "1") {
-                                              } else if (itemSelected == "2") {
-                                                Get.toNamed(
-                                                    MRouter.loyaltyPoints);
+                                            if (itemSelected == "1") {
+                                            } else if (itemSelected == "2") {
+                                              Get.toNamed(
+                                                  MRouter.loyaltyPoints);
 
-                                                print("2nd itme ");
-                                              } else if (itemSelected == "3") {
-                                              } else {
-                                                //code here
-                                              }
-                                            });
-                                          },
-                                          child: headingBox(
-                                              color:
-                                                  _homeManager.isClicked.value
-                                                      ? Colors.orange
-                                                      : Colors.white,
-                                              image: AppImages.user_profile),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 2.0.hp),
-                                Text('cashback_india1_summary'.tr,
-                                    style: AppStyle.shortHeading.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600)),
-                                SizedBox(height: 2.0.hp),
-                                // balance card --------------------------
-                                Row(
-                                  children: [
-                                    Expanded(child: balanceCard(first: true)),
-                                    SizedBox(width: 2.0.wp),
-                                    Expanded(child: balanceCard(first: false))
-                                  ],
-                                ),
-                                // ways to Reedem ---------------------------------
-                                SizedBox(height: 2.0.hp),
-                                Flexible(child: redeemWay()),
-                                // Redeem points now -------------------------------
-                                SizedBox(height: 2.0.hp),
-                                Flexible(child: redeemPoints()),
-                              ]),
+                                              print("2nd itme ");
+                                            } else if (itemSelected == "3") {
+                                            } else {
+                                              //code here
+                                            }
+                                          });
+                                        },
+                                        child: headingBox(
+                                            color: _homeManager.isClicked.value
+                                                ? Colors.orange
+                                                : Colors.white,
+                                            image: AppImages.user_profile),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 2.0.hp),
+                              Text('cashback_india1_summary'.tr,
+                                  style: AppStyle.shortHeading.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600)),
+                              SizedBox(height: 2.0.hp),
+                              // balance card --------------------------
+                              Row(
+                                children: [
+                                  Expanded(child: balanceCard(first: true)),
+                                  SizedBox(width: 2.0.wp),
+                                  Expanded(child: balanceCard(first: false))
+                                ],
+                              ),
+                              // ways to Reedem ---------------------------------
+                              SizedBox(height: 2.0.hp),
+                              Flexible(child: redeemWay()),
+                              // Redeem points now -------------------------------
+                              SizedBox(height: 2.0.hp),
+                              Flexible(child: redeemPoints()),
+                            ]),
+                      ),
+                      nearestAtm(),
+                      // carosuel Images --------------------
+                      CarasoulImages(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 6.0.wp,
+                            top: 12.0.wp,
+                            bottom: 2.0.wp,
+                            right: 6.0.wp),
+                        child: Text(
+                          'Loans',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 16.0.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1),
                         ),
-                        nearestAtm(),
-                        // carosuel Images --------------------
-                        CarasoulImages(),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 6.0.wp,
-                              top: 12.0.wp,
-                              bottom: 2.0.wp,
-                              right: 6.0.wp),
-                          child: Text(
-                            'Loans',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 16.0.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                        child: LoansCard(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 6.0.wp,
+                            top: 12.0.wp,
+                            bottom: 2.0.wp,
+                            right: 6.0.wp),
+                        child: Text(
+                          'Payments',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 16.0.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: LoansCard(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                        child: PaymentCards(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 6.0.wp,
+                            top: 12.0.wp,
+                            bottom: 2.0.wp,
+                            right: 6.0.wp),
+                        child: Text(
+                          'Insurance',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 16.0.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 6.0.wp,
-                              top: 12.0.wp,
-                              bottom: 2.0.wp,
-                              right: 6.0.wp),
-                          child: Text(
-                            'Payments',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 16.0.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                        child: InsuranceCard(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 6.0.wp,
+                            top: 12.0.wp,
+                            bottom: 2.0.wp,
+                            right: 6.0.wp),
+                        child: Text(
+                          'Savings',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontSize: 16.0.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: PaymentCards(),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 6.0.wp,
-                              top: 12.0.wp,
-                              bottom: 2.0.wp,
-                              right: 6.0.wp),
-                          child: Text(
-                            'Insurance',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 16.0.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: InsuranceCard(),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 6.0.wp,
-                              top: 12.0.wp,
-                              bottom: 2.0.wp,
-                              right: 6.0.wp),
-                          child: Text(
-                            'Savings',
-                            style: AppStyle.shortHeading.copyWith(
-                                fontSize: 16.0.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                          child: SavingsCard(),
-                        )
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                        child: SavingsCard(),
+                      )
+                    ],
                   ),
-          ),
+                ),
         ),
       ),
     );

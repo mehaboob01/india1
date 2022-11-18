@@ -4,7 +4,7 @@ import 'package:india_one/constant/extensions.dart';
 import '../constant/theme_manager.dart';
 
 class CommonBanner extends StatelessWidget {
- // const CommonBanner({super.key});
+  // const CommonBanner({super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -15,7 +15,7 @@ class CommonBanner extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 2.0.hp),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
-            gradient:  LinearGradient(
+            gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
@@ -32,7 +32,7 @@ class CommonBanner extends StatelessWidget {
               flex: 4,
               child: Padding(
                 padding:
-                EdgeInsets.only(top: 6.0.wp, bottom: 6.0.wp, left: 4.0.wp),
+                    EdgeInsets.only(top: 6.0.wp, bottom: 6.0.wp, left: 4.0.wp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -44,15 +44,15 @@ class CommonBanner extends StatelessWidget {
                                 fontSize: 8.0.sp,
                                 height: 1.5),
                             text:
-                            'Refer a friend or a family member & get\na chance to',
+                                'Refer a friend or a family member & get\na chance to',
                             children: [
-                              TextSpan(
-                                  text: ' Earn upto 100 points',
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w600)),
-                            ])),
+                          TextSpan(
+                              text: ' Earn upto 100 points',
+                              style: AppStyle.shortHeading.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 12.0.sp,
+                                  fontWeight: FontWeight.w600)),
+                        ])),
                     // SizedBox(height: 1.0.wp),
                     SizedBox(height: 5.0.wp),
                     Row(
@@ -80,9 +80,9 @@ class CommonBanner extends StatelessWidget {
                   //color: Colors.red,
                   child: Center(
                       child: Image.asset(
-                        AppImages.referEarnSVG,
-                        fit: BoxFit.fill,
-                      )),
+                    AppImages.referEarnSVG,
+                    fit: BoxFit.fill,
+                  )),
                 ))
           ],
         ),

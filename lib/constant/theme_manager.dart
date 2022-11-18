@@ -451,6 +451,10 @@ class AppImages {
   static const String assetSvg = 'assets/svg/';
   static const String imagesAssetSvg = 'assets/svg/';
 
+  static const String getLocationSvg = '${assetSvg}maps/getlocationIcon.svg';
+  static const String locationPinSvg = '${assetSvg}maps/locationPinIcon.svg';
+  static const String searchSvg = '${assetSvg}maps/searchIcon.svg';
+
   static const String user_profile = '${imagesAssetSvg}user_profile.svg';
   static const String notify_icon = '${imagesAssetSvg}notify_icon.svg';
 

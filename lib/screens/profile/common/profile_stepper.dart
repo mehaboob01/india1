@@ -132,6 +132,7 @@ class ProfileStepper {
     required value,
   }) {
     return DropdownButtonFormField(
+      isExpanded: false,
       items: item,
       onChanged: onChanged,
       value: value,
@@ -207,7 +208,7 @@ class ProfileStepper {
                 label: 'Alternate number',
                 hint: 'Enter alternate number',
                 prefix: '+91',
-                vaidation: (value) => profileController.mobileValidation(value),
+                // vaidation: (value) => profileController.mobileValidation(value),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -220,7 +221,7 @@ class ProfileStepper {
                 controller: profileController.emailController.value,
                 label: 'Email ID',
                 hint: 'Enter email ID',
-                vaidation: (value) => profileController.emailValidation(value),
+                // vaidation: (value) => profileController.emailValidation(value),
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
@@ -502,7 +503,9 @@ class ProfileStepper {
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value.toString()),
+                    child: Container(
+                      child: Text(value.toString()),
+                    ),
                   );
                 }).toList(),
                 value: profileController.employmentType.value == ''

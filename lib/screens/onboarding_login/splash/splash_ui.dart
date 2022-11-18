@@ -18,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   final List locale = [
@@ -35,9 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     initDynamicLinks();
+
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
+
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
       Get.toNamed(MRouter.splashRoute);
@@ -49,36 +51,31 @@ class _SplashScreenState extends State<SplashScreen> {
 
   updateLanguage(Locale locale, int selectdLang) {
     Get.updateLocale(locale);
-    setState(() {
-    });
+    setState(() {});
   }
 
   // launch login screen
   Future<void> launchLoginWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
-    if(loggedIn == true )
-    {
+    if (loggedIn == true) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs!.setBool(SPKeys.SHOW_AUTH, true);
       Get.offAllNamed(MRouter.homeScreen);
 
       int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
       updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
-
-
-    }
-    else{
+    } else {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => LanguageSelectionIO('splash')));
+              builder: (BuildContext context) =>
+                  LanguageSelectionIO('splash')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -101,8 +98,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Center(
       child: Hero(
         tag: 'logo_image',
-        child:
-        Image.asset(
+        child: Image.asset(
           "assets/images/splash_logo.gif",
           width: 444,
           height: 654,
@@ -118,6 +114,4 @@ class _SplashScreenState extends State<SplashScreen> {
       color: AppColors.white,
     );
   }
-
-
 }

@@ -16,7 +16,6 @@ class OtpScreen extends StatefulWidget {
   String? phoneNumber;
   int? retryInSeconds;
 
-
   OtpScreen(this.phoneNumber, this.retryInSeconds);
 
   @override
@@ -24,7 +23,6 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpState extends State<OtpScreen> with CodeAutoFill {
-
   var _otpController = TextEditingController();
 
   final interval = Duration(seconds: 1);
@@ -34,15 +32,20 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   //static const timerMaxSeconds = 28;
   int currentSeconds = 0;
   Timer? timer;
+  bool isBlue = false;
 
   void startTimer() {
     currentSeconds = widget.retryInSeconds!;
     timer = Timer.periodic(Duration(seconds: 1), (_) {
-      if(mounted)
-      setState(() {
-        currentSeconds--;
-        if (currentSeconds == 0) timer!.cancel();
-      });
+      if (mounted)
+        setState(() {
+          currentSeconds--;
+          if (currentSeconds == 0) {
+            isBlue = true;
+            timer!.cancel();
+          }
+          ;
+        });
     });
   }
 
@@ -155,13 +158,13 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                       _otpManager.resendOtpLoading == true
                                           ? Text(
                                               "Resending OTP",
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontFamily: 'Graphik',
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.black,
-                                          fontSize: 26,
-                                        ),
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                fontFamily: 'Graphik',
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.black,
+                                                fontSize: 26,
+                                              ),
                                             )
                                           : _otpManager.isLoading == true
                                               ? Row(
@@ -171,7 +174,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                       maxLines: 2,
                                                       style: TextStyle(
                                                         fontFamily: 'Graphik',
-                                                        fontWeight: FontWeight.w600,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                         color: AppColors.black,
                                                         fontSize: 26,
                                                       ),
@@ -192,20 +196,19 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                 )
                                               : Text(
                                                   "enter_otp".tr,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontFamily: 'Graphik',
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.black,
-                                          fontSize: 26,
-                                        ),
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontFamily: 'Graphik',
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors.black,
+                                                    fontSize: 26,
+                                                  ),
                                                 ),
                                       SizedBox(
                                         height: 8,
                                       ),
                                       SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
-
                                         child: Row(
                                           children: [
                                             Text(
@@ -249,12 +252,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                           child: Column(
                             children: [
                               PinFieldAutoFill(
-
-
                                 decoration: UnderlineDecoration(
-
-
-
                                   lineHeight: 1,
                                   hintText: '••••',
                                   hintTextStyle: TextStyle(
@@ -287,7 +285,6 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                   }
                                   _otpManager.wrongOtp.value = false;
                                 },
-
                                 codeLength: 4,
                                 controller: _otpController,
                               ),
@@ -327,8 +324,6 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                           right: 12.0,
                         ),
                         child: Row(
-
-
                           children: [
                             GestureDetector(
                               onTap: () {
@@ -365,19 +360,23 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                               _otpController.clear();
                                               currentSeconds = 28;
                                               startTimer();
+                                              setState(() {
+                                                isBlue = false;
+                                              });
                                             } else {}
                                           });
                                         }
                                       },
                                       child: Row(
-
                                         children: [
                                           Text(
                                             'resend_otp'.tr,
                                             style: TextStyle(
                                               fontFamily: 'Graphik',
                                               fontWeight: FontWeight.w600,
-                                              color: AppColors.greyText,
+                                              color: isBlue
+                                                  ? AppColors.cardBg1
+                                                  : AppColors.greyText,
                                               fontSize: Dimens.font_16sp,
                                             ),
                                           ),
@@ -412,8 +411,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                 child: Padding(
                                                   padding: EdgeInsets.all(2),
                                                   child: Text(
-
-                                                    "00:"+currentSeconds.toString(),
+                                                    "00:" +
+                                                        currentSeconds
+                                                            .toString(),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily: 'Graphik',

@@ -11,7 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 
 class ProfileController extends GetxController {
-  RxBool addPersonalLoading = false.obs, addResidentialLoading = false.obs, addOccupationLoading = false.obs, getProfileLoading = true.obs, getPinCodeLoading = false.obs, autoValidation = false.obs;
+  RxBool addPersonalLoading = false.obs,
+      addResidentialLoading = false.obs,
+      addOccupationLoading = false.obs,
+      getProfileLoading = true.obs,
+      getPinCodeLoading = false.obs,
+      autoValidation = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -24,17 +29,27 @@ class ProfileController extends GetxController {
 
   Rx<TextEditingController> firstNameController = TextEditingController().obs;
   Rx<TextEditingController> lastNameController = TextEditingController().obs;
-  Rx<TextEditingController> mobileNumberController = TextEditingController().obs;
-  Rx<TextEditingController> alternateNumberController = TextEditingController().obs;
+  Rx<TextEditingController> mobileNumberController =
+      TextEditingController().obs;
+  Rx<TextEditingController> alternateNumberController =
+      TextEditingController().obs;
   Rx<TextEditingController> emailController = TextEditingController().obs;
-  Rx<TextEditingController> addressLine1Controller = TextEditingController().obs;
-  Rx<TextEditingController> addressLine2Controller = TextEditingController().obs;
+  Rx<TextEditingController> addressLine1Controller =
+      TextEditingController().obs;
+  Rx<TextEditingController> addressLine2Controller =
+      TextEditingController().obs;
   Rx<TextEditingController> pincodeController = TextEditingController().obs;
   Rx<TextEditingController> occupationController = TextEditingController().obs;
-  Rx<TextEditingController> monthlyIncomeController = TextEditingController().obs;
+  Rx<TextEditingController> monthlyIncomeController =
+      TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
-  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs;
+  RxString maritalStatus = ''.obs,
+      employmentType = ''.obs,
+      city = ''.obs,
+      state = ''.obs,
+      gender = ''.obs,
+      customerId = ''.obs;
 
   Rx<ProfileDetailsModel> profileDetailsModel = ProfileDetailsModel().obs;
   late SharedPreferences prefs;
@@ -92,7 +107,8 @@ class ProfileController extends GetxController {
   }
 
   emailValidation(value) {
-    String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    String pattern =
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
     RegExp regex = RegExp(pattern);
     if (value == null || value.isEmpty || !regex.hasMatch(value))
       return 'Enter a valid email address';
@@ -104,7 +120,7 @@ class ProfileController extends GetxController {
     if (value == '' || value == null) {
       return message;
     }
-    return null;
+    return "";
   }
 
   pinCodeValidation(value) {
@@ -269,25 +285,35 @@ class ProfileController extends GetxController {
       );
       if (response != null) {
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
-        firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
-        lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
-        mobileNumberController.value.text = profileDetailsModel.value.mobileNumber ?? '';
-        alternateNumberController.value.text = profileDetailsModel.value.alternateNumber ?? '';
+        firstNameController.value.text =
+            profileDetailsModel.value.firstName ?? '';
+        lastNameController.value.text =
+            profileDetailsModel.value.lastName ?? '';
+        mobileNumberController.value.text =
+            profileDetailsModel.value.mobileNumber ?? '';
+        alternateNumberController.value.text =
+            profileDetailsModel.value.alternateNumber ?? '';
         emailController.value.text = profileDetailsModel.value.email ?? '';
         dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
         gender.value = profileDetailsModel.value.gender ?? '';
         maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
-        addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
-        addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
-        pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
+        addressLine1Controller.value.text =
+            profileDetailsModel.value.address?.addressLine1 ?? '';
+        addressLine2Controller.value.text =
+            profileDetailsModel.value.address?.addressLine2 ?? '';
+        pincodeController.value.text =
+            profileDetailsModel.value.address?.postCode ?? '';
         city.value = profileDetailsModel.value.address?.city ?? '';
         state.value = profileDetailsModel.value.address?.state ?? '';
 
         employmentType.value = profileDetailsModel.value.employmentType ?? '';
-        occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-        monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
-        panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+        occupationController.value.text =
+            profileDetailsModel.value.occupation ?? '';
+        monthlyIncomeController.value.text =
+            "${profileDetailsModel.value.income ?? ''}";
+        panNumberController.value.text =
+            profileDetailsModel.value.panNumber ?? '';
       }
     } catch (exception) {
       print(exception);

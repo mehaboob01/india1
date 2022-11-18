@@ -3,10 +3,8 @@ import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 
-
 class ButtonWithFlower extends StatelessWidget {
   const ButtonWithFlower({
-
     required this.label,
     this.iconColor,
     this.buttonColor,
@@ -56,14 +54,14 @@ class ButtonWithFlower extends StatelessWidget {
                 ),
               ),
               Align(
-                  alignment: Alignment.centerRight,
+                  alignment: AlignmentDirectional.centerEnd,
                   child: iconToRight
                       ? Image.asset(
                           AppImages.bgflower,
                           fit: BoxFit.fill,
                           color: iconColor,
                         )
-                      : null)
+                      : null),
             ],
           ),
         ));

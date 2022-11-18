@@ -30,12 +30,6 @@ class ProfileScreen extends StatelessWidget {
           SafeArea(
             child: CustomAppBar(
               heading: 'Profile',
-              customActionIconsList: [
-                CustomActionIcons(
-                  image: "assets/svg/homeSvg.svg",
-                  isSvg: true,
-                )
-              ],
             ),
           ),
           Expanded(
@@ -274,7 +268,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget singleDetails({required String title, required String value}) {
+  Widget singleDetails(
+      {required String title, required String value, bool? isEmpty}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,13 +284,27 @@ class ProfileScreen extends StatelessWidget {
         SizedBox(
           height: 6,
         ),
-        Text(
-          value,
-          style: TextStyle(
-              color: AppColors.lightBlack,
-              fontSize: Dimens.font_18sp,
-              fontWeight: FontWeight.w600),
-        ),
+        if (isEmpty != null)
+          Text(
+            value,
+            style: isEmpty
+                ? TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF999999),
+                    fontSize: 16)
+                : TextStyle(
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_18sp,
+                    fontWeight: FontWeight.w600),
+          )
+        else
+          Text(
+            value,
+            style: TextStyle(
+                color: AppColors.lightBlack,
+                fontSize: Dimens.font_18sp,
+                fontWeight: FontWeight.w600),
+          ),
         SizedBox(
           height: 16,
         ),
@@ -458,21 +467,30 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       singleDetails(
-                        title: "First name",
-                        value: profileDetailsModel.firstName ?? "No First name",
-                      ),
+                          title: "First name",
+                          value:
+                              profileDetailsModel.firstName ?? "No First name",
+                          isEmpty: profileDetailsModel.firstName == null
+                              ? true
+                              : false),
                       singleDetails(
-                        title: "Mobile number",
-                        value: "+91 ${profileDetailsModel.mobileNumber}" ?? "",
-                      ),
+                          title: "Mobile number",
+                          value:
+                              "+91 ${profileDetailsModel.mobileNumber ?? ""}",
+                          isEmpty: profileDetailsModel.mobileNumber == null
+                              ? true
+                              : false),
                       singleDetails(
-                        title: "Email ID",
-                        value: profileDetailsModel.email ?? "No email ID",
-                      ),
+                          title: "Email ID",
+                          value: profileDetailsModel.email ?? "No email ID",
+                          isEmpty:
+                              profileDetailsModel.email == null ? true : false),
                       singleDetails(
-                        title: "Gender",
-                        value: profileDetailsModel.gender ?? "Not entered",
-                      ),
+                          title: "Gender",
+                          value: profileDetailsModel.gender ?? "Not entered",
+                          isEmpty: profileDetailsModel.gender == null
+                              ? true
+                              : false),
                     ],
                   ),
                 ),
@@ -484,22 +502,31 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       singleDetails(
-                        title: "Last name",
-                        value: profileDetailsModel.lastName ?? "No last name",
-                      ),
+                          title: "Last name",
+                          value: profileDetailsModel.lastName ?? "No last name",
+                          isEmpty: profileDetailsModel.lastName == null
+                              ? true
+                              : false),
                       singleDetails(
-                        title: "Alternate number",
-                        value: profileDetailsModel.mobileNumber ?? "No number",
-                      ),
+                          title: "Alternate number",
+                          value: profileDetailsModel.alternateNumber ??
+                              "No number",
+                          isEmpty: profileDetailsModel.alternateNumber == null
+                              ? true
+                              : false),
                       singleDetails(
-                        title: "Date of birth",
-                        value: profileDetailsModel.dateOfBirth ?? "No DOB",
-                      ),
+                          title: "Date of birth",
+                          value: profileDetailsModel.dateOfBirth ?? "No DOB",
+                          isEmpty: profileDetailsModel.dateOfBirth == null
+                              ? true
+                              : false),
                       singleDetails(
-                        title: "Marital status",
-                        value:
-                            profileDetailsModel.maritalStatus ?? "Not updated",
-                      ),
+                          title: "Marital status",
+                          value: profileDetailsModel.maritalStatus ??
+                              "Not updated",
+                          isEmpty: profileDetailsModel.maritalStatus == null
+                              ? true
+                              : false),
                     ],
                   ),
                 ),
@@ -535,37 +562,38 @@ class ProfileScreen extends StatelessWidget {
               children: isResidentialDetailsVisible.value == true
                   ? [
                       singleDetails(
-                        title: "Address line 1",
-                        value: "${address.addressLine1 ?? 'No Address'}",
-                      ),
+                          title: "Address line 1",
+                          value: "${address.addressLine1 ?? 'No Address'}",
+                          isEmpty: address.addressLine1 == null ? true : false),
                       singleDetails(
-                        title: "Address line 2",
-                        value: "${address.addressLine2 ?? 'No Address'}",
-                      ),
+                          title: "Address line 2",
+                          value: "${address.addressLine2 ?? 'No Address'}",
+                          isEmpty: address.addressLine2 == null ? true : false),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: singleDetails(
-                              title: "Pincode",
-                              value: "${address.postCode ?? 'No Postcode'}",
-                            ),
+                                title: "Pincode",
+                                value: "${address.postCode ?? 'No Postcode'}",
+                                isEmpty:
+                                    address.postCode == null ? true : false),
                           ),
                           SizedBox(
                             width: 8,
                           ),
                           Expanded(
                             child: singleDetails(
-                              title: "City",
-                              value: "${address.city ?? 'No City'}",
-                            ),
+                                title: "City",
+                                value: "${address.city ?? 'No City'}",
+                                isEmpty: address.city == null ? true : false),
                           ),
                         ],
                       ),
                       singleDetails(
-                        title: "State",
-                        value: "${address.state ?? 'No State'}",
-                      ),
+                          title: "State",
+                          value: "${address.state ?? 'No State'}",
+                          isEmpty: address.state == null ? true : false),
                     ]
                   : [
                       Text("Could not find any residential data!"),
@@ -682,6 +710,10 @@ class ProfileScreen extends StatelessWidget {
                               title: "Employment type",
                               value: profileDetailsModel.employmentType ??
                                   "No Type",
+                              isEmpty:
+                                  profileDetailsModel.employmentType == null
+                                      ? true
+                                      : false,
                             ),
                           ),
                           SizedBox(
@@ -692,6 +724,9 @@ class ProfileScreen extends StatelessWidget {
                               title: "Occupation",
                               value: profileDetailsModel.occupation ??
                                   "No Occupation",
+                              isEmpty: profileDetailsModel.occupation == null
+                                  ? true
+                                  : false,
                             ),
                           ),
                         ],
@@ -705,6 +740,9 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "Monthly income",
                               value: "${profileDetailsModel.income ?? 0}",
+                              isEmpty: profileDetailsModel.income == null
+                                  ? true
+                                  : false,
                             ),
                           ),
                           SizedBox(
@@ -714,6 +752,9 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "PAN number",
                               value: profileDetailsModel.panNumber ?? "No Pan",
+                              isEmpty: profileDetailsModel.panNumber == null
+                                  ? true
+                                  : false,
                             ),
                           ),
                         ],

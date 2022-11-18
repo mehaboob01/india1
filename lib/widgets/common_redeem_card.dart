@@ -4,18 +4,18 @@ import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 
-
 class RedeemCard extends StatelessWidget {
   const RedeemCard(
-      {
-      required this.isSelected,
+      {required this.isSelected,
       this.imagePng,
       this.imageSvg,
+      this.fontsize,
       required this.label});
   final bool isSelected;
   final String? imagePng;
   final String? imageSvg;
   final String label;
+  final double? fontsize;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,14 +30,14 @@ class RedeemCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0.wp),
                   gradient: isSelected
-                      ?  LinearGradient(
+                      ? LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
                               AppColors.backGroundgradient1,
                               AppColors.backGroundgradient2
                             ])
-                      :  LinearGradient(
+                      : LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           transform: GradientRotation(4.63),
@@ -80,7 +80,7 @@ class RedeemCard extends StatelessWidget {
                   Text(
                     label,
                     style: AppStyle.shortHeading.copyWith(
-                      fontSize: 12.0.sp,
+                      fontSize: fontsize != null ? fontsize : 12.0.sp,
                       height: 1.2.sp,
                       color: isSelected ? Colors.white : Colors.black,
                     ),
