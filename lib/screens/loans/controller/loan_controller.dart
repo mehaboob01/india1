@@ -55,10 +55,9 @@ class LoanController extends GetxController {
       return 'Car';
     } else if (loanType == LoanType.TractorLoan) {
       return 'Farm';
-    }else if(loanType == LoanType.FarmLoan)
-      {
-        return 'MSME';
-      }
+    } else if (loanType == LoanType.FarmLoan) {
+      return 'FarmEquipment';
+    }
     return '';
   }
 
@@ -80,7 +79,10 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         createLoanModel = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        maxValue.value = double.tryParse(
+                (createLoanModel.loanConfiguration?.maxLoanAmount ?? 0)
+                    .toString()) ??
+            0;
       }
     } catch (exception) {
       print(exception);
@@ -113,7 +115,8 @@ class LoanController extends GetxController {
     }
   }
 
-  Future getProviders({required bool isPersonalLoan,String? providerId}) async {
+  Future getProviders(
+      {required bool isPersonalLoan, String? providerId}) async {
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -124,8 +127,8 @@ class LoanController extends GetxController {
           {
             "customerId": customerId.value,
             "loanApplicationId": "${createLoanModel.loanApplicationId}",
-            if(providerId !=null || providerId !='')...{
-              "loanProviderId" : "$providerId"
+            if (providerId != null || providerId != '') ...{
+              "loanProviderId": "$providerId"
             }
           },
         ),
