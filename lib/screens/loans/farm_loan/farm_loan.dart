@@ -31,6 +31,7 @@ class _FarmLoanState extends State<FarmLoan> {
 
   late TextEditingController loanAmountEditingController;
   ProfileController profileController = Get.put(ProfileController());
+  LoanController loanController = Get.put(LoanController());
 
   LoanDetailsModel loanDetailsModel = LoanDetailsModel(loanRequirement: [
     LoanSubDetailsModel(name: 'Loan against tractor', subProduct: [
@@ -69,6 +70,15 @@ class _FarmLoanState extends State<FarmLoan> {
 
     _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
     _plManager.sliderValue.value = _plManager.minValue.value;
+    resetValues();
+    loanController.createLoanApplication(loanType: LoanType.FarmLoan);
+
+  }
+
+  void resetValues() {
+    profileController.loanRequirement.value = -1;
+    profileController.subProduct.value = -1;
+    profileController.brand.value = -1;
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -282,7 +292,7 @@ class _FarmLoanState extends State<FarmLoan> {
                   message: "missing some values",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } else if (profileController.gender.value == '') {
+              } /*else if (profileController.gender.value == '') {
                 Flushbar(
                   title: "Alert!",
                   message: "Select gender",
@@ -294,9 +304,10 @@ class _FarmLoanState extends State<FarmLoan> {
                   message: "Select marital status",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } else {
+              }*/ else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
                     callBack: () {
                       _plManager.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -355,10 +366,29 @@ class _FarmLoanState extends State<FarmLoan> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
+              loanApplicationId: loanController.createLoanModel.loanApplicationId,
               callBack: () {
-                Get.to(() => LendersList(
-                      title: 'Farm loan',
-                    ));
+                // Get.to(() => LendersList(
+                //       title: 'Farm loan',
+                //     ));
+
+                LoanCommon().bottomSheet(
+                  context,
+                  lenderId: "lenders.id ?? ''",
+                  callBack: () {
+                    ///todo need to add API for apply loan and redirect to proper screen
+                    Get.back();
+                    Get.back();
+                    // Get.off(() => LendersList(
+                    //           title: 'Farm loan',
+                    //         ));
+                    // loanController.applyLoan(
+                    //   providerId: '',
+                    //   lenderId: lenders.id ?? '',
+                    // );
+                  },
+                  providerId: '',
+                );
               });
         }
       },
@@ -601,12 +631,8 @@ class _FarmLoanState extends State<FarmLoan> {
   //Personal info UI
 
   Widget personalInfoUi() {
-    return ProfileStepper().personalDetails(
-      context,
-      personalForm,
-      isFromLoan: true,
-      loanType: LoanType.FarmLoan
-    );
+    return ProfileStepper().personalDetails(context, personalForm,
+        isFromLoan: true, loanType: LoanType.FarmLoan);
   }
 
   //Residential info

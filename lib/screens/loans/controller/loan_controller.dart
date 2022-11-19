@@ -55,7 +55,10 @@ class LoanController extends GetxController {
       return 'Car';
     } else if (loanType == LoanType.TractorLoan) {
       return 'Farm';
-    }
+    }else if(loanType == LoanType.FarmLoan)
+      {
+        return 'MSME';
+      }
     return '';
   }
 
