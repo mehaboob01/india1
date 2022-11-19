@@ -171,7 +171,7 @@ class _FarmLoanState extends State<FarmLoan> {
         if (msg != null) {
           Flushbar(
             title: "Alert!",
-            message: "Select vehicle type",
+            message: msg,
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
