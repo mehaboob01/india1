@@ -6,9 +6,7 @@
 // UAT URL
 //final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/";
 
-class Apis
-{
-
+class Apis {
   // OnBoarding & login Api
   static String sendOtp = "auth/send-otp";
   static String verifyOtp = "auth/verify-otp";
@@ -55,4 +53,20 @@ class Apis
   static String additionalDetails = "customers/profile/additional-details";
   static String residentialAddress = "customers/profile/residential-address";
   static String getCityState = "city-state";
+  static String addBankAccount = "loyalty/customer/bank/account";
+  static String getBankAccount = "loyalty/customer/bank/accounts";
+  static String getUpiIds = "loyalty/customer/upi/id";
+  static String recentTransactionLoan = "dashboards/loans";
+  static String createLoanApplication = "loan/application";
+  static String updateAmountLoan = "loan/application/update-amount";
+
+  static String getProviders = "loans/providers";
+  static String getLenders = "loans/lenders";
+  static String applyLoan = "loans/apply";
+
+
+
+
+
+
 }

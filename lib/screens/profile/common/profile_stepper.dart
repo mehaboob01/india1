@@ -11,6 +11,14 @@ class ProfileStepper {
   ProfileController profileController = Get.put(ProfileController());
   DateTime? selectedDate;
 
+  Widget divider() {
+    return Container(
+      height: 2,
+      color: AppColors.lightGreyColor,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+    );
+  }
+
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
@@ -29,8 +37,8 @@ class ProfileStepper {
     return InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-            // color: AppColors.dimLightGreyColor,
-            color: AppColors.primary),
+          color: AppColors.dimLightGreyColor,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       border: OutlineInputBorder(
@@ -40,7 +48,6 @@ class ProfileStepper {
         borderRadius: BorderRadius.circular(10),
       ),
       labelText: '$label',
-      alignLabelWithHint: false,
       errorStyle: GoogleFonts.roboto(
         fontSize: Dimens.font_14sp,
         fontWeight: FontWeight.w500,
@@ -62,10 +69,10 @@ class ProfileStepper {
       hintText: hint,
       hintStyle: TextStyle(
         color: AppColors.dotsColor,
+        overflow: TextOverflow.ellipsis,
       ),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       prefixIconConstraints: BoxConstraints(),
-      contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       labelStyle: TextStyle(
         fontWeight: FontWeight.w600,
         color: AppColors.hintColor,
@@ -144,16 +151,13 @@ class ProfileStepper {
     );
   }
 
-  Widget personalDetails(
-      BuildContext context, GlobalKey<FormState> personalForm) {
+  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm, {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: personalForm,
-          autovalidateMode: profileController.autoValidation.value == true
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -172,8 +176,9 @@ class ProfileStepper {
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
                 hint: 'Enter first name',
-                vaidation: (value) => profileController.nameValidation(
-                    value, 'Enter name min 3 character'),
+                vaidation: (value) {
+                  return profileController.nameValidation(value, 'Enter name min 3 character');
+                },
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -183,8 +188,9 @@ class ProfileStepper {
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
                 hint: 'Enter last name',
-                vaidation: (value) => profileController.nameValidation(
-                    value, 'Enter last name min 3 character'),
+                vaidation: (value) {
+                  return profileController.nameValidation(value, 'Enter last name min 3 character');
+                },
                 keyboardType: TextInputType.name,
               ),
               SizedBox(
@@ -195,9 +201,7 @@ class ProfileStepper {
                 label: 'Mobile number',
                 hint: 'Enter mobile number',
                 prefix: '+91',
-                vaidation: (value) => profileController.mobileValidation(value),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                isDisable: true,
               ),
               SizedBox(
                 height: 20,
@@ -207,7 +211,12 @@ class ProfileStepper {
                 label: 'Alternate number',
                 hint: 'Enter alternate number',
                 prefix: '+91',
-                vaidation: (value) => profileController.mobileValidation(value),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.mobileValidation(value);
+                  }
+                  return null;
+                },
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -220,7 +229,12 @@ class ProfileStepper {
                 controller: profileController.emailController.value,
                 label: 'Email ID',
                 hint: 'Enter email ID',
-                vaidation: (value) => profileController.emailValidation(value),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.emailValidation(value);
+                  }
+                  return null;
+                },
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(
@@ -236,15 +250,19 @@ class ProfileStepper {
                 ),
                 onTap: () async {
                   selectedDate = await datePicker(context);
-                  String date = DateFormat('dd-MM-yyyy')
-                      .format(selectedDate ?? DateTime.now());
+                  String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
                   profileController.dobController.value.text = date;
                 },
                 isDisable: true,
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter DOB',
-                ),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.nullCheckValidation(
+                      value,
+                      'Enter DOB',
+                    );
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,
@@ -293,8 +311,7 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Single', 'Married']
-                    .map<DropdownMenuItem<String>>((String value) {
+                item: <String>['Single', 'Married','Widowed','Divorced'].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value.toString()),
@@ -305,9 +322,7 @@ class ProfileStepper {
                 },
                 label: 'Marital status',
                 hint: 'Select your marital status',
-                value: profileController.maritalStatus.value == ''
-                    ? null
-                    : profileController.maritalStatus.value,
+                value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
               ),
               SizedBox(
                 height: 20,
@@ -328,9 +343,7 @@ class ProfileStepper {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: (value.toLowerCase() == profileController.gender.value)
-              ? AppColors.homeGradient1Color
-              : AppColors.greySecond,
+          color: (value.toLowerCase() == profileController.gender.value) ? AppColors.homeGradient1Color : AppColors.greySecond,
           width: 2,
         ),
       ),
@@ -358,9 +371,7 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: residentialForm,
-          autovalidateMode: profileController.autoValidation.value == true
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -382,23 +393,29 @@ class ProfileStepper {
                 controller: profileController.addressLine1Controller.value,
                 label: 'Address Line 1',
                 hint: 'Enter Door # , Building name, Flat #',
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter address line 1',
-                ),
+                vaidation: (value) {
+                  return profileController.nullCheckValidation(
+                    value,
+                    'Enter address line 1',
+                  );
+                },
               ),
               SizedBox(
                 height: 20,
               ),
               textField(
-                controller: profileController.addressLine2Controller.value,
-                label: 'Address Line 2',
-                hint: 'Enter area, landmark etc',
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter address line 2',
-                ),
-              ),
+                  controller: profileController.addressLine2Controller.value,
+                  label: 'Address Line 2',
+                  hint: 'Enter area, landmark etc',
+                  vaidation: (value) {
+                    if (value.toString().trim().isNotEmpty) {
+                      profileController.nullCheckValidation(
+                        value,
+                        'Enter address line 2',
+                      );
+                    }
+                    return null;
+                  }),
               SizedBox(
                 height: 20,
               ),
@@ -406,9 +423,14 @@ class ProfileStepper {
                 controller: profileController.pincodeController.value,
                 label: 'Pincode',
                 hint: 'Enter pincode here',
-                vaidation: (value) => profileController.pinCodeValidation(
-                  value,
-                ),
+                vaidation: (value) {
+                  if (value.toString().trim().isNotEmpty) {
+                    profileController.pinCodeValidation(
+                      value,
+                    );
+                  }
+                  return null;
+                },
                 onChanged: (value) {
                   if (value.toString().trim().length == 6) {
                     profileController.city.value = '';
@@ -458,9 +480,7 @@ class ProfileStepper {
         value == null || value == '' ? title : value,
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: value == null || value == ''
-              ? AppColors.hintColor
-              : AppColors.lightBlack,
+          color: value == null || value == '' ? AppColors.hintColor : AppColors.lightBlack,
           fontSize: Dimens.font_18sp,
         ),
       ),
@@ -471,15 +491,13 @@ class ProfileStepper {
     );
   }
 
-  Widget occupationDetails(GlobalKey<FormState> occupationForm) {
+  Widget occupationDetails(GlobalKey<FormState> occupationForm, {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
         child: Form(
           key: occupationForm,
-          autovalidateMode: profileController.autoValidation.value == true
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -498,16 +516,13 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Salaried']
-                    .map<DropdownMenuItem<String>>((String value) {
+                item: <String>['Salaried'].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value.toString()),
                   );
                 }).toList(),
-                value: profileController.employmentType.value == ''
-                    ? null
-                    : profileController.employmentType.value,
+                value: profileController.employmentType.value == '' ? null : profileController.employmentType.value,
                 onChanged: (value) {
                   profileController.employmentType.value = value;
                 },

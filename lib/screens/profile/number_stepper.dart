@@ -23,9 +23,7 @@ class NumberStepper extends StatelessWidget {
     required this.lineWidth,
     required this.title,
     required this.callback,
-  })  : assert(curStep > 0 == true &&
-            curStep <= totalSteps + 1 &&
-            title.length == totalSteps),
+  })  : assert(curStep > 0 == true && curStep <= totalSteps + 1 && title.length == totalSteps),
         super(key: key);
 
   @override
@@ -36,24 +34,21 @@ class NumberStepper extends StatelessWidget {
         left: 24.0,
         right: 24.0,
       ),
-      width: this.width,
-      child: InkWell(
-        onTap: () {},
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: _steps(),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: _title(),
-            ),
-          ],
-        ),
+      //width: this.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: _steps(),
+          ),
+          // SizedBox(
+          //   height: 8,
+          // ),
+          // Row(
+          //   children: _title(),
+          // ),
+        ],
       ),
     );
   }
@@ -99,17 +94,29 @@ class NumberStepper extends StatelessWidget {
             callback(i);
           },
           child: Container(
-            width: 25.0,
-            height: 25.0,
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            child: getInnerElementOfStepper(i),
-            decoration: new BoxDecoration(
-              color: circleColor,
-              borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
-              border: new Border.all(
-                color: borderColor,
-                width: 1.0,
-              ),
+            height: 70,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 28.0,
+                  height: 28.0,
+                  child: getInnerElementOfStepper(i),
+                  decoration: new BoxDecoration(
+                    color: circleColor,
+                    borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
+                    border: new Border.all(
+                      color: borderColor,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text("${title[i]}"),
+                )
+              ],
             ),
           ),
         ),
@@ -138,12 +145,15 @@ class NumberStepper extends StatelessWidget {
     for (int i = 0; i < totalSteps; i++) {
       bool showBold = (i + 1 < curStep || i + 1 == curStep);
       list.add(
-        Text(
-          "${title[i]}",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: showBold ? AppColors.lightBlack : AppColors.borderColor,
-            fontSize: Dimens.font_14sp,
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            "${title[i]}",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: showBold ? AppColors.lightBlack : AppColors.borderColor,
+              fontSize: Dimens.font_14sp,
+            ),
           ),
         ),
       );
@@ -180,7 +190,7 @@ class NumberStepper extends StatelessWidget {
           borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
           border: new Border.all(
             color: currentStepColor,
-            width: 1.0,
+            width: 2.0,
           ),
         ),
         child: Container(
@@ -188,7 +198,7 @@ class NumberStepper extends StatelessWidget {
             borderRadius: new BorderRadius.all(new Radius.circular(25.0)),
             color: currentStepColor,
           ),
-          margin: EdgeInsets.all(2.5),
+          margin: EdgeInsets.all(4),
         ),
       );
     } else

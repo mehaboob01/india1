@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
 import 'package:india_one/screens/map/map_ui.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
+import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
+import 'package:india_one/screens/loans/car_loan/car_loan.dart';
+import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
+import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
-import '../screens/loans/personal_loan_io/choose_amount_io.dart';
+import '../screens/loans/personal_loan_io/personal_loan.dart';
 import '../screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../screens/loyality_points/loyalty_page.dart';
 import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
@@ -30,6 +34,12 @@ class MRouter {
   static const String generalHistory = 'GeneralHistory';
   static const String map = 'Mapscreen';
   static const String notificationScreen = 'NotificationScreen';
+  static const String bikeLoanIO = 'BikeLoanIO';
+  static const String carLoanIO = 'CarLoanIO';
+  static const String goldLoanIO = 'GoldLoanIO';
+  static const String tractorLoanIO = 'TractorLoanIO';
+
+
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -53,7 +63,7 @@ class MRouter {
 
 
       case chooseAmountIO:
-        return CupertinoPageRoute(builder: (_) => ChooseAmountIO());
+        return CupertinoPageRoute(builder: (_) => PersonalLoan());
 
       case cashBackRedeemPage:
         return CupertinoPageRoute(builder: (_) => CashBackRedeemPage());
@@ -70,6 +80,18 @@ class MRouter {
 
       case notificationScreen:
         return CupertinoPageRoute(builder: (_) => NotificationScreen());
+
+      case bikeLoanIO:
+        return CupertinoPageRoute(builder: (_) => BikeLoanIO());
+
+      case carLoanIO:
+        return CupertinoPageRoute(builder: (_) => CarLoanIO());
+
+      case goldLoanIO:
+        return CupertinoPageRoute(builder: (_) => GoldLoanIO());
+
+      case tractorLoanIO:
+        return CupertinoPageRoute(builder: (_) => TractorLoanIO());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

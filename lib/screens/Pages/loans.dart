@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 
 import '../../constant/theme_manager.dart';
@@ -20,8 +21,7 @@ class LoansPage extends StatelessWidget {
               CommonPageHeader(pageName: PageName.loans),
               CommonPageCategoriesHeading(pageName: PageName.loans),
               Padding(
-                padding: EdgeInsets.only(
-                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
               CommonBanner()
@@ -42,37 +42,61 @@ class LoansCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 2.0.wp,
-      children:  [
-        GestureDetector(
-         // onTap: ()=> Get.toNamed(MRouter.chooseAmountIO),
+      children: [
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.chooseAmountIO);
+          },
           child: ItemCard(
             image: AppImages.handRupeeSvg,
             label: 'Personal',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        ItemCard(
-          image: AppImages.bikeSvg,
-          label: 'Bike',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.bikeLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.bikeSvg,
+            label: 'Bike',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
-        ItemCard(
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.carLoanIO);
+          },
+          child: ItemCard(
             image: AppImages.carSvg,
             label: 'Car',
-            itembgColor: ItemCardbgColor.lightBlue),
-        ItemCard(
-          image: AppImages.tractorSvg,
-          label: 'Farm EQP',
-          itembgColor: ItemCardbgColor.lightBlue,
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.tractorLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.tractorSvg,
+            label: 'Form',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.goldLoanIO);
+          },
+          child: ItemCard(
+            image: AppImages.goldSvg,
+            label: 'Gold',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
         ItemCard(
-          image: AppImages.handSackSvg,
-          label: 'MSME',
-          itembgColor: ItemCardbgColor.lightBlue,
-        ),
-        ItemCard(
-          image: AppImages.goldSvg,
-          label: 'Gold',
+          image: AppImages.creditCardSvg,
+          label: 'Emi Card',
           itembgColor: ItemCardbgColor.lightBlue,
         ),
         ItemCard(
