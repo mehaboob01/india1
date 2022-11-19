@@ -5,7 +5,6 @@ import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../constant/theme_manager.dart';
 import '../../utils/common_methods.dart';
 import 'loyality_manager.dart';
@@ -82,7 +81,7 @@ class LoyaltyScreen extends StatelessWidget {
                                             .recentRewardTransactionsList
                                             .length,
                                         (index) => YourRewardCard(
-                                          rewardState: isActive("2022-11-18T17:18:19Z"),
+                                          rewardState: isActive(_loyaltyManager.recentRewardTransactionsList[index].expiryDate!),
 
                                           // isActive(_loyaltyManager
                                           //         .recentRewardTransactionsList[

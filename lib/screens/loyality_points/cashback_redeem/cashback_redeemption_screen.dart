@@ -16,15 +16,23 @@ import '../../../widgets/common_textfield.dart';
 import '../../../widgets/common_toggle_card.dart';
 import '../../../widgets/custom_slider.dart';
 import '../../../widgets/loyalty_common_header.dart';
+import '../../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
+import '../loyality_manager.dart';
 import '../redeem_points/rp_manager.dart';
 import 'cb_manager.dart';
 
 class CashBackRedeemPage extends StatefulWidget {
+
+
+
+
   @override
   State<CashBackRedeemPage> createState() => _CashBackRedeemPageState();
 }
 
 class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
+
+  static bool cardTapped = false;
   final cashbackCtrl = Get.put(CashBackController());
 
   final List<bool> isSelectedRedeemMode = [true, false].obs;
@@ -33,15 +41,16 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
 
   final Rx<double> loyaltyBankMinValue = 0.0.obs;
 
-  final Rx<double> loyaltyBankMaxValue = 52.0.obs;
+   Rx<double> loyaltyBankMaxValue = 0.0.obs;
 
-  final Rx<double> loyaltyUpiVpaSliderValue = 200.0.obs;
+  final Rx<double> loyaltyUpiVpaSliderValue = 0.0.obs;
 
-  final Rx<double> loyaltyUpiVpaMinValue = 100.0.obs;
+  final Rx<double> loyaltyUpiVpaMinValue = 0.0.obs;
 
-  final Rx<double> loyaltyUpiVpaMaxValue = 1000.0.obs;
+  final Rx<double> loyaltyUpiVpaMaxValue = 0.0.obs;
 
   CashBackManager cashBackManager = Get.put(CashBackManager());
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
 
   String? checkBankId(bankName) {
     for (var index in cashBackManager.bankListId) {
@@ -59,6 +68,13 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
         return index.id;
       }
     }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    cashbackCtrl.onInit();
+    loyaltyBankMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
+    loyaltyUpiVpaMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
   }
 
 
@@ -171,64 +187,79 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                               buttonEnabled:
                                   cashbackCtrl.bankAccountSubmitEnable,
                               onPressed: () {
-                                if (cashBackManager.selectedIndex.value != -1 &&
+
+                                if(cashBackManager.cardTapped== true && cashBackManager.selectedIndex.value != -1 &&
                                     cashbackCtrl
-                                            .redeemPointBankSliderTextEditingCtrl
-                                            .value !=
-                                        0) {
+                                        .redeemPointBankSliderTextEditingCtrl
+                                        .value !=
+                                        0)
+                                  {
+                                    // add custom bank
+                                    if (cashbackCtrl
+                                        .bankAccountSubmitEnable.value ==
+                                        true) {
+                                      cashbackCtrl.bankAccountKey.currentState!
+                                          .save();
 
+                                      if (cashbackCtrl.bankAccountKey.currentState!
+                                          .validate()) {
+                                        var bankId = checkBankId(cashbackCtrl
+                                            .bankAccountKey!
+                                            .currentState!
+                                            .value['bankDropDown']);
 
-                                  print(cashBackManager
-                                      .customerBankList[
-                                          cashBackManager.selectedIndex.value]
-                                      .id);
-                                  print(cashbackCtrl
-                                      .redeemPointBankSliderTextEditingCtrl
-                                      .value
-                                      .text);
-                                  print(cashBackManager
-                                      .customerBankList[
-                                          cashBackManager.selectedIndex.value]
-                                      .id);
+                                        cashBackManager.cashBackToBankApi(
+                                            false,
+                                            bankId,
+                                            cashbackCtrl.bankAccountKey!
+                                                .currentState!.value,
+                                            "0",context);
+                                      }
+                                    }
+                                    return;
 
-                                  cashBackManager.cashBackToBankApi(
-                                      true,
-                                      cashBackManager
-                                          .customerBankList[cashBackManager
-                                              .selectedIndex.value]
-                                          .id,
-                                      {},
+                                  }
+
+                                  if (cashBackManager.selectedIndex.value != -1 &&
                                       cashbackCtrl
                                           .redeemPointBankSliderTextEditingCtrl
-                                          .value
-                                          .text,
-                                  context);
+                                          .value !=
+                                          0) {
 
-                                  return;
-                                }
 
-                                // add custom bank
-                                if (cashbackCtrl
-                                        .bankAccountSubmitEnable.value ==
-                                    true) {
-                                  cashbackCtrl.bankAccountKey.currentState!
-                                      .save();
-
-                                  if (cashbackCtrl.bankAccountKey.currentState!
-                                      .validate()) {
-                                    var bankId = checkBankId(cashbackCtrl
-                                        .bankAccountKey!
-                                        .currentState!
-                                        .value['bankDropDown']);
+                                    print(cashBackManager
+                                        .customerBankList[
+                                    cashBackManager.selectedIndex.value]
+                                        .id);
+                                    print(cashbackCtrl
+                                        .redeemPointBankSliderTextEditingCtrl
+                                        .value
+                                        .text);
+                                    print(cashBackManager
+                                        .customerBankList[
+                                    cashBackManager.selectedIndex.value]
+                                        .id);
 
                                     cashBackManager.cashBackToBankApi(
-                                        false,
-                                        bankId,
-                                        cashbackCtrl.bankAccountKey!
-                                            .currentState!.value,
-                                        "0",context);
+                                        true,
+                                        cashBackManager
+                                            .customerBankList[cashBackManager
+                                            .selectedIndex.value]
+                                            .id,
+                                        {},
+                                        cashbackCtrl
+                                            .redeemPointBankSliderTextEditingCtrl
+                                            .value
+                                            .text,
+                                        context);
+
+                                    return;
                                   }
-                                } else {
+
+
+
+
+                              else {
                                   // i have to put this code in if part
                                   null;
                                 }
@@ -306,10 +337,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
   ];
 
   final List<String> bankAccountType = [
-    'Savings Account',
-    'Current Account',
-    'Fixed Deposit',
-    'Joint Account',
+    'saving',
+    'current',
   ];
 
   bool toEnableButton() {
@@ -343,6 +372,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
     List<bool> localSelectedList = [];
     void onCardTapped(int index) {
+      cashBackManager.cardTapped.value = true;
+      print(cashBackManager.cardTapped.value);
       print("card tapped");
       cashBackManager.selectedIndex.value = index;
 
@@ -443,13 +474,14 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // RowHeadingWithunderLineSubHeading(
-                      //   heading: 'Your accounts',
-                      //   subHeading: 'Manage',
-                      //   // onPressedSubHeading: () =>
-                      //   //     Get.to(() => const ManageAccountsCard()),
-                      // ),
+                      RowHeadingWithunderLineSubHeading(
+                        heading: 'Your accounts',
+                        subHeading: 'Manage',
+                        onPressedSubHeading: () =>
+                            Get.to(() =>  ManageAccountsCard()),
+                      ),
 
+                      SizedBox(height: 16,),
                       SizedBox(height: 16,),
 
                       Obx(
@@ -509,6 +541,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                                                   .customerBankList
                                                                   .isNotEmpty)
                                                                 {
+
                                                                   onCardTapped(
                                                                       index)
                                                                 }
@@ -683,14 +716,14 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           ),
           sizedbox,
           // bank account type ---------------------------------------------------------
-          // DropDown(
-          //   onChanged: (value) {},
-          //   formName: 'accountType',
-          //   labelName: 'Account type',
-          //   data: bankAccountType,
-          //   hintText: 'Select account type',
-          //   validationText: '*Bank name is compulsory',
-          // ),
+          DropDown(
+            onChanged: (value) {},
+            formName: 'accountType',
+            labelName: 'Account type',
+            data: bankAccountType,
+            hintText: 'Select account type',
+            validationText: '*Bank name is compulsory',
+          ),
           sizedbox,
         ]),
       );
@@ -803,6 +836,7 @@ class LoyaltyUpiVpa extends StatelessWidget {
                         // ),
 
                         SizedBox(height: 16,),
+
 
                         // Obx(
                         // ()=> Container(

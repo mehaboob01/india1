@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/routes.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/model/common_model.dart';
-import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'cb_models/bank_list_model.dart';
 import 'cb_models/customer_banks_model.dart';
@@ -20,6 +19,7 @@ import 'cb_models/upi_verify_model.dart';
 
 class CashBackManager extends GetxController {
   var isLoading = false.obs;
+  var cardTapped = false.obs;
 
   //bank list for drop dowm
   var bankList = <String>['ABHYUDAYA CO-OP BANK-1'].obs;
@@ -161,6 +161,8 @@ class CashBackManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       print("customer id${customerId}");
+      print("data tab ${data}");
+
 
       Map<String, dynamic> sendData = {};
       if (fromAccountList != true) {
@@ -375,21 +377,23 @@ class CashBackManager extends GetxController {
 
   // del bank account
 
-  delBankAccount() async {
+  delBankAccount(String? id) async {
+    isLoading(true);
+
 
     try{
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       print("customer id${customerId}");
-      print("bankAccountId${""}");
+      print("bankAccountId${id}");
 
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerBankAccount),
           body: jsonEncode({
 
             "customerId": customerId,
-            "bankAccountId": "19378f61-2302-44b1-bff4-0c6c328f1a69"
+            "bankAccountId": id
           }),
           headers: {
             'Content-type': 'application/json',
@@ -412,6 +416,7 @@ class CashBackManager extends GetxController {
         if(commonApiResponseModel.status!.code == 2000)
 
         {
+          isLoading(false);
           Flushbar(
             title: "Success!!",
             message: "bank del Successfully ..",
@@ -420,21 +425,31 @@ class CashBackManager extends GetxController {
 
         }
         else{
+          isLoading(false);
           Flushbar(
-            title: "Success!!",
-            message: "bank del Successfully ..",
+            title: "Error!!",
+            message: commonApiResponseModel.status!.message,
             duration: Duration(seconds: 2),
           )..show(Get.context!);
 
         }
 
       }else{
-
+        isLoading(false);
         Flushbar(
           title: "Success!!",
           message: "bank del Successfully ..",
           duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        )..show(Get.context!).then((value) => (){
+
+          customerBankList.clear();
+          fetchCustomerBankAccounts();
+
+
+
+        });
+
+
 
 
       }

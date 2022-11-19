@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import 'package:india_one/screens/loyality_points/redeem_points/rp_manager.dart';
 
 import '../../../constant/theme_manager.dart';
@@ -230,7 +231,10 @@ class RedeemPointsPage extends StatelessWidget {
 
         // todo
 
-        Get.toNamed(MRouter.cashBackRedeemPage);
+        Navigator.push(
+            Get.context!,
+            MaterialPageRoute(
+                builder: (BuildContext context) => CashBackRedeemPage()));
         break;
     }
   }

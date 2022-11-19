@@ -334,14 +334,18 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     ),
                                   ),
                                   SizedBox(width: 2.0.wp),
-                                  Text(
-                                    '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
-                                    style: AppStyle.shortHeading.copyWith(
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: widget.isSelected
-                                          ? Colors.white
-                                          : Colors.black,
+                                  Expanded(
+                                    child: Text(
+
+                                      '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
+                                      style: AppStyle.shortHeading.copyWith(
+
+                                        fontSize: 12.0.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: widget.isSelected
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ],

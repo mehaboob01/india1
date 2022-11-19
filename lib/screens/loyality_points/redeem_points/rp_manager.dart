@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
+import '../loyality_manager.dart';
+
 class CashBackController extends GetxController {
   final size = Get.size;
   final carouselCtrl = CarouselController();
@@ -21,6 +23,34 @@ class CashBackController extends GetxController {
   final bankAccountformKey = GlobalKey<FormState>();
   final bankAccontSelected = ''.obs;
   final bankAccountType = ''.obs;
+  var sliderMaxValue = 0.obs;
+  Rx<double> sliderMaxValueDouble = 0.0.obs;
+
+
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loyaltyManager.callLoyaltyDashboardApi();
+    sliderMaxValue.value = _loyaltyManager.redeemablePoints.toInt();
+
+    print(sliderMaxValue);
+    print("sliderMaxValue");
+    sliderMaxValueDouble.value = sliderMaxValue.value.toDouble();
+
+    print(sliderMaxValueDouble);
+    print("sliderMaxValue double");
+
+
+
+
+
+
+  }
+
+
 
   final GlobalKey<FormBuilderState> bankAccountKey =
       GlobalKey<FormBuilderState>();

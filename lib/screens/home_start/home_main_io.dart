@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +21,7 @@ import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
 import '../Pages/savings.dart';
+import '../loyality_points/loyality_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
@@ -37,6 +37,8 @@ class HomeMainIO extends StatefulWidget {
 class _HomeMainIOState extends State<HomeMainIO> {
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+
   final LocalAuthentication auth = LocalAuthentication();
   int profileClciked = ProfileColor.INACTIVE.index;
   String msg = "You are not authorized.";
@@ -145,7 +147,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
 
     //showFirstTimePoints();
 
-    // checkLogin();
+    checkLogin();
   }
 
   @override
@@ -656,6 +658,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
       {required String image, required String text, required String routName}) {
     return GestureDetector(
       onTap: () {
+        _loyaltyManager.callLoyaltyDashboardApi();
+
+
         _homeManager.redeemablePoints >= 14?  Get.toNamed(routName): Get.snackbar('Oops!!',
             'You can redeem only if you have 15+ points',
             snackPosition: SnackPosition.BOTTOM);

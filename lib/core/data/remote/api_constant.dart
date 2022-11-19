@@ -1,7 +1,7 @@
 
 
 // DEV URL
- final String baseUrl  = "http://india1digital-env.eba-5k3w2wxz.ap-south-1.elasticbeanstalk.com/";
+ final String baseUrl  = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 
 // UAT URL
 //final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/";
@@ -29,7 +29,7 @@ class Apis
 
   static String banks = "loyalty/banks";
   static String cashBackToBank = "loyalty/cashback/bank";
-  static String fetchCustomerBankAccounts = "loyalty/customer/bank/accounts";
+  static String fetchCustomerBankAccounts = "customer/bank/accounts";
   static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
   static String deleteCustomerBankAccount = "loyalty/customer/bank/account"; // delete method
 
