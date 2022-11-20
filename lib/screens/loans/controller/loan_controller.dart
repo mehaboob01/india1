@@ -24,7 +24,7 @@ class LoanController extends GetxController {
 
   ProfileController profileController = Get.put(ProfileController());
 
-  late CreateLoanModel createLoanModel;
+  Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
 
@@ -76,8 +76,9 @@ class LoanController extends GetxController {
         ),
       );
       if (response != null) {
-        createLoanModel = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        createLoanModel.value = CreateLoanModel.fromJson(response);
+        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
       }
     } catch (exception) {
       print(exception);
@@ -95,12 +96,12 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.loanApplicationId}",
+          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanAmount": "$amount",
         }),
       );
       if (response != null) {
-        createLoanModel = CreateLoanModel.fromJson(response);
+        createLoanModel.value = CreateLoanModel.fromJson(response);
         updateScreen(Steps.PERSONAL.index);
       }
     } catch (exception) {
@@ -120,7 +121,7 @@ class LoanController extends GetxController {
         data: json.encode(
           {
             "customerId": customerId.value,
-            "loanApplicationId": "${createLoanModel.loanApplicationId}",
+            "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
             if(providerId !=null || providerId !='')...{
               "loanProviderId" : "$providerId"
             }
@@ -153,7 +154,7 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.loanApplicationId}",
+          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanProviderId": "$providerId",
           "loanLenderId": "$lenderId",
         }),

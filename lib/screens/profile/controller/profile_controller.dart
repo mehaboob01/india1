@@ -55,6 +55,54 @@ class ProfileController extends GetxController {
   Rx<BankDetailsModel> bankDetailsModel = BankDetailsModel().obs;
   Rx<UpiIdModel> upiIdModel = UpiIdModel().obs;
 
+  resetData() {
+    firstNameController.value.text = '';
+    lastNameController.value.text = '';
+    mobileNumberController.value.text = '';
+    alternateNumberController.value.text = '';
+    emailController.value.text = '';
+    addressLine1Controller.value.text = '';
+    addressLine2Controller.value.text = '';
+    pincodeController.value.text = '';
+    occupationController.value.text = '';
+    monthlyIncomeController.value.text = '';
+    panNumberController.value.text = '';
+    dobController.value.text = '';
+    bankNameController.value.text = '';
+    accountNumberController.value.text = '';
+    ifscController.value.text = '';
+    maritalStatus.value = '';
+    employmentType.value = '';
+    city.value = '';
+    state.value = '';
+    gender.value = '';
+    customerId.value = '';
+    accountType.value = '';
+    vehicleType.value = '';
+  }
+
+  setData() {
+    firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
+    lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
+    mobileNumberController.value.text = profileDetailsModel.value.mobileNumber ?? '';
+    alternateNumberController.value.text = profileDetailsModel.value.alternateNumber ?? '';
+    emailController.value.text = profileDetailsModel.value.email ?? '';
+    dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
+    gender.value = profileDetailsModel.value.gender ?? '';
+    maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
+
+    addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
+    addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
+    pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
+    city.value = profileDetailsModel.value.address?.city ?? '';
+    state.value = profileDetailsModel.value.address?.state ?? '';
+
+    employmentType.value = profileDetailsModel.value.employmentType ?? '';
+    occupationController.value.text = profileDetailsModel.value.occupation ?? '';
+    monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
+    panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -332,25 +380,7 @@ class ProfileController extends GetxController {
       );
       if (response != null) {
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
-        firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
-        lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
-        mobileNumberController.value.text = profileDetailsModel.value.mobileNumber ?? '';
-        alternateNumberController.value.text = profileDetailsModel.value.alternateNumber ?? '';
-        emailController.value.text = profileDetailsModel.value.email ?? '';
-        dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
-        gender.value = profileDetailsModel.value.gender ?? '';
-        maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
-
-        addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
-        addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
-        pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
-        city.value = profileDetailsModel.value.address?.city ?? '';
-        state.value = profileDetailsModel.value.address?.state ?? '';
-
-        employmentType.value = profileDetailsModel.value.employmentType ?? '';
-        occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-        monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
-        panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+        setData();
       }
     } catch (exception) {
       print(exception);

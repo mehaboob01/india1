@@ -23,7 +23,6 @@ class BikeLoanIO extends StatefulWidget {
 
 class _BikeLoanIOState extends State<BikeLoanIO> {
   LoanController _plManager = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -34,6 +33,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   @override
   void initState() {
     loanAmountEditingController = TextEditingController();
+    profileController.setData();
     super.initState();
     loanController.createLoanApplication(loanType: LoanType.BikeLoan);
     _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
@@ -42,6 +42,12 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    profileController.resetData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +143,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        _loanAmountKey.currentState!.save();
+        //TODO remove before push
+        //loanController.updateScreen(Steps.PERSONAL.index);
+
         if (profileController.vehicleType.value == '') {
           Flushbar(
             title: "Alert!",
@@ -145,9 +153,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-          if (_loanAmountKey.currentState!.validate()) {
             loanController.updateLoanAmount(amount: loanAmountEditingController.text);
-          }
         }
       },
       child: Container(
@@ -231,10 +237,6 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                   end: Alignment.topRight,
                   colors: [Colors.orange, Colors.redAccent],
                 ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
                 borderRadius: BorderRadius.circular(6.0),
               ),
             ),
@@ -260,16 +262,10 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                   message: "Select gender",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } else if (profileController.maritalStatus.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Select marital status",
-                  duration: Duration(seconds: 3),
-                )..show(context);
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -328,7 +324,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.loanApplicationId,
+              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
               callBack: () {
                 Get.to(() => LendersList(
                       title: 'Bike loan',
@@ -400,6 +396,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
       context,
       personalForm,
       isFromLoan: true,
+      loanType: LoanType.BikeLoan,
     );
   }
 

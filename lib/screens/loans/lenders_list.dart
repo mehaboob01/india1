@@ -76,14 +76,14 @@ class _LendersListState extends State<LendersList> {
                                 lenders: loanController.loanLendersModel.value.lenders?[index],
                                 applyButtonClick: () {
                                   if (isPersonalLoan == true) {
-                                    Get.off(
+                                    Get.to(
                                       () => ProvidersList(
                                         title: '${widget.title}',
                                         providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                       ),
                                     );
                                   } else {
-                                    Get.off(
+                                    Get.to(
                                       () => ProviderDetail(
                                         title: '${widget.title}',
                                         lenders: loanController.loanLendersModel.value.lenders![index],

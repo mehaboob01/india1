@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
@@ -30,6 +31,7 @@ class _StepperScreenState extends State<StepperScreen> {
   void initState() {
     super.initState();
     profileController.autoValidation.value = false;
+    profileController.setData();
   }
 
   @override
@@ -97,7 +99,16 @@ class _StepperScreenState extends State<StepperScreen> {
                                 }
                               } else if (profileController.currentStep.value == 2) {
                                 if (residentialForm.currentState!.validate()) {
-                                  profileController.addResidentialDetails();
+                                  if(profileController.city.value.isEmpty || profileController.state.value.isEmpty){
+                                    Fluttertoast.showToast(
+                                      msg: "Enter valid pin code",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      fontSize: 16.0,
+                                    );
+                                  }else {
+                                    profileController.addResidentialDetails();
+                                  }
                                 }
                               } else if (profileController.currentStep.value == 3) {
                                 if (occupationForm.currentState!.validate()) {

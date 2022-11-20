@@ -34,6 +34,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   @override
   void initState() {
     super.initState();
+    profileController.setData();
     loanAmountEditingController = TextEditingController();
     loanController.createLoanApplication(loanType: LoanType.PersonalLoan);
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
@@ -43,6 +44,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
   GlobalKey<FormState> occupationForm = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    profileController.resetData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +279,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -359,9 +366,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   duration: Duration(seconds: 3),
                 )..show(context);
               } else {
-                profileController.addPersonalDetails(
+                profileController.addResidentialDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.OCCUPATION.index);
                     });
@@ -449,9 +456,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
               } else {
                 profileController.addOccupationDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
-                      Get.off(() => LendersList(
+                      Get.to(() => LendersList(
                             title: 'Personal loan',
                           ));
                     });
@@ -464,7 +471,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'SUBMIT',
+                    'NEXT',
                     style: AppTextThemes.button,
                   ),
                 ],

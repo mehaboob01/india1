@@ -31,6 +31,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
 
   @override
   void initState() {
+    profileController.setData();
     loanAmountEditingController = TextEditingController();
     super.initState();
 
@@ -40,6 +41,12 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    profileController.resetData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

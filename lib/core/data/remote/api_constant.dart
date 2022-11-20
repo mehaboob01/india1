@@ -47,7 +47,7 @@ class Apis {
   static String getUpiIds = "loyalty/customer/upi/id";
   static String recentTransactionLoan = "dashboards/loans";
   static String createLoanApplication = "loans/application";
-  static String updateAmountLoan = "loans/application/update-amount";
+  static String updateAmountLoan = "loans/application/update-basic-details";
   static String getProviders = "loans/providers";
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";

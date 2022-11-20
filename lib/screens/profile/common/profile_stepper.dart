@@ -212,7 +212,7 @@ class ProfileStepper {
                 prefix: '+91',
                 isDisable: true,
               ),
-              if (loanType != LoanType.GoldLoan) ...[
+              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -250,7 +250,7 @@ class ProfileStepper {
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (loanType != LoanType.GoldLoan) ...[
+              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -323,7 +323,7 @@ class ProfileStepper {
                   ),
                 ),
               ),
-              if (loanType != LoanType.GoldLoan) ...[
+              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -340,6 +340,24 @@ class ProfileStepper {
                   label: 'Marital status',
                   hint: 'Select your marital status',
                   value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
+                ),
+              ],
+              if(loanType == LoanType.BikeLoan || loanType == LoanType.CarLoan)...[
+                SizedBox(
+                  height: 20,
+                ),
+                textField(
+                  controller: profileController.panNumberController.value,
+                  label: 'PAN number',
+                  hint: 'Enter your PAN number here',
+                  vaidation: (value) {
+                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                      return profileController.panValidation(
+                        value,
+                      );
+                    }
+                    return null;
+                  },
                 ),
               ],
               SizedBox(
