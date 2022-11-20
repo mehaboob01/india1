@@ -6,6 +6,7 @@ import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/widgets/another_stepper.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../widgets/loyalty_common_header.dart';
 
@@ -88,25 +89,30 @@ class _StepperScreenState extends State<StepperScreen> {
                 ),
                 Obx(
                   () => profileController.addPersonalLoading.value || profileController.addResidentialLoading.value || profileController.addOccupationLoading.value
-                      ? CircularProgressIndicator()
+                      ? LoadingAnimationWidget.inkDrop(
+                          size: 34,
+                          color: AppColors.primary,
+                        )
                       : InkWell(
                           onTap: () {
                             if (profileController.currentStep.value <= 3) {
                               profileController.autoValidation.value = true;
                               if (profileController.currentStep.value == 1) {
                                 if (personalForm.currentState!.validate()) {
-                                  profileController.addPersonalDetails();
+                                  profileController.addPersonalDetails(
+                                    loanApplicationId: null,
+                                  );
                                 }
                               } else if (profileController.currentStep.value == 2) {
                                 if (residentialForm.currentState!.validate()) {
-                                  if(profileController.city.value.isEmpty || profileController.state.value.isEmpty){
+                                  if (profileController.city.value.isEmpty || profileController.state.value.isEmpty) {
                                     Fluttertoast.showToast(
                                       msg: "Enter valid pin code",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       fontSize: 16.0,
                                     );
-                                  }else {
+                                  } else {
                                     profileController.addResidentialDetails();
                                   }
                                 }

@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
-import 'package:india_one/screens/loans/controller/loan_controller.dart';
-import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
-
-import '../../../../widgets/custom_slider.dart';
 
 class FarmLoan extends StatefulWidget {
   const FarmLoan({Key? key}) : super(key: key);
@@ -24,8 +21,7 @@ class FarmLoan extends StatefulWidget {
 
 class _FarmLoanState extends State<FarmLoan> {
   LoanController _plManager = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey =
-      GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -72,7 +68,6 @@ class _FarmLoanState extends State<FarmLoan> {
     _plManager.sliderValue.value = _plManager.minValue.value;
     resetValues();
     loanController.createLoanApplication(loanType: LoanType.FarmLoan);
-
   }
 
   void resetValues() {
@@ -135,11 +130,9 @@ class _FarmLoanState extends State<FarmLoan> {
                                 ),
                               ),
                             ),
-                            _plManager.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
+                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
                                 ? loanAmountUi()
-                                : _plManager.currentScreen.value ==
-                                        Steps.PERSONAL.index
+                                : _plManager.currentScreen.value == Steps.PERSONAL.index
                                     ? personalInfoUi()
                                     : residentialInfoUi()
                           ],
@@ -150,8 +143,7 @@ class _FarmLoanState extends State<FarmLoan> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value ==
-                          Steps.LOAN_AMOUNT.index
+                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
                       ? loanAmountButton()
                       : _plManager.currentScreen.value == Steps.PERSONAL.index
                           ? personalInfoButton()
@@ -292,7 +284,8 @@ class _FarmLoanState extends State<FarmLoan> {
                   message: "missing some values",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } /*else if (profileController.gender.value == '') {
+              }
+              /*else if (profileController.gender.value == '') {
                 Flushbar(
                   title: "Alert!",
                   message: "Select gender",
@@ -304,7 +297,8 @@ class _FarmLoanState extends State<FarmLoan> {
                   message: "Select marital status",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              }*/ else {
+              }*/
+              else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
                     loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
@@ -437,14 +431,8 @@ class _FarmLoanState extends State<FarmLoan> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? Colors.black
-                        : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? FontWeight.w600
-                        : FontWeight.w400),
+                    color: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
+                    fontWeight: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -453,14 +441,8 @@ class _FarmLoanState extends State<FarmLoan> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? Colors.grey
-                        : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? FontWeight.w600
-                        : FontWeight.w400),
+                    color: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
+                    fontWeight: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
             ],
           ),
@@ -535,9 +517,7 @@ class _FarmLoanState extends State<FarmLoan> {
           height: 28,
         ),
         ProfileStepper().commonDropDown(
-          item: loanDetailsModel.loanRequirement
-              .map<DropdownMenuItem<LoanSubDetailsModel>>(
-                  (LoanSubDetailsModel value) {
+          item: loanDetailsModel.loanRequirement.map<DropdownMenuItem<LoanSubDetailsModel>>((LoanSubDetailsModel value) {
             return DropdownMenuItem<LoanSubDetailsModel>(
               value: value,
               child: Text(value.name.toString()),
@@ -545,15 +525,11 @@ class _FarmLoanState extends State<FarmLoan> {
           }).toList(),
           onChanged: (value) {
             // profileController.loanRequirement.value = value.name;
-            profileController.loanRequirement.value =
-                loanDetailsModel.loanRequirement.indexOf(value!);
+            profileController.loanRequirement.value = loanDetailsModel.loanRequirement.indexOf(value!);
           },
           label: 'Loan requirement',
           hint: 'Choose the option for loan',
-          value: profileController.loanRequirement.value == -1
-              ? null
-              : loanDetailsModel
-                  .loanRequirement[profileController.loanRequirement.value],
+          value: profileController.loanRequirement.value == -1 ? null : loanDetailsModel.loanRequirement[profileController.loanRequirement.value],
         ),
         DividerIO(
           height: 28,
@@ -561,28 +537,18 @@ class _FarmLoanState extends State<FarmLoan> {
         Obx(() {
           if (profileController.loanRequirement.value != -1) {
             return ProfileStepper().commonDropDown(
-              item: loanDetailsModel
-                  .loanRequirement[profileController.loanRequirement.value]
-                  .subProduct
-                  .map<DropdownMenuItem<String>>((String value) {
+              item: loanDetailsModel.loanRequirement[profileController.loanRequirement.value].subProduct.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {
-                profileController.subProduct.value = loanDetailsModel
-                    .loanRequirement[profileController.loanRequirement.value]
-                    .subProduct
-                    .indexOf(value!);
+                profileController.subProduct.value = loanDetailsModel.loanRequirement[profileController.loanRequirement.value].subProduct.indexOf(value!);
               },
               label: 'Sub product',
               hint: 'Select sub product',
-              value: profileController.subProduct.value == -1
-                  ? null
-                  : loanDetailsModel
-                      .loanRequirement[profileController.loanRequirement.value]
-                      .subProduct[profileController.subProduct.value],
+              value: profileController.subProduct.value == -1 ? null : loanDetailsModel.loanRequirement[profileController.loanRequirement.value].subProduct[profileController.subProduct.value],
             );
           } else {
             return SizedBox();
@@ -594,28 +560,18 @@ class _FarmLoanState extends State<FarmLoan> {
         Obx(() {
           if (profileController.subProduct.value != -1) {
             return ProfileStepper().commonDropDown(
-              item: loanDetailsModel
-                  .loanRequirement[profileController.loanRequirement.value]
-                  .implementBrand
-                  .map<DropdownMenuItem<String>>((String value) {
+              item: loanDetailsModel.loanRequirement[profileController.loanRequirement.value].implementBrand.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {
-                profileController.brand.value = loanDetailsModel
-                    .loanRequirement[profileController.loanRequirement.value]
-                    .implementBrand
-                    .indexOf(value!);
+                profileController.brand.value = loanDetailsModel.loanRequirement[profileController.loanRequirement.value].implementBrand.indexOf(value!);
               },
               label: 'Implement brand',
               hint: 'Select brand',
-              value: profileController.brand.value == -1
-                  ? null
-                  : loanDetailsModel
-                      .loanRequirement[profileController.loanRequirement.value]
-                      .implementBrand[profileController.brand.value],
+              value: profileController.brand.value == -1 ? null : loanDetailsModel.loanRequirement[profileController.loanRequirement.value].implementBrand[profileController.brand.value],
             );
           } else {
             return SizedBox();
@@ -631,8 +587,12 @@ class _FarmLoanState extends State<FarmLoan> {
   //Personal info UI
 
   Widget personalInfoUi() {
-    return ProfileStepper().personalDetails(context, personalForm,
-        isFromLoan: true, loanType: LoanType.FarmLoan);
+    return ProfileStepper().personalDetails(
+      context,
+      personalForm,
+      isFromLoan: true,
+      loanType: LoanType.FarmLoan,
+    );
   }
 
   //Residential info
@@ -640,6 +600,7 @@ class _FarmLoanState extends State<FarmLoan> {
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromLoan: true,
     );
   }
 }

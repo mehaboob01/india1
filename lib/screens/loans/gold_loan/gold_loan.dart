@@ -29,6 +29,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
   late TextEditingController loanAmountEditingController;
   ProfileController profileController = Get.put(ProfileController());
 
+  LoanController loanController = Get.put(LoanController());
+
   @override
   void initState() {
     profileController.setData();
@@ -37,6 +39,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
 
     _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
     _plManager.sliderValue.value = _plManager.minValue.value;
+    loanController.createLoanApplication(loanType: LoanType.GoldLoan);
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -314,7 +317,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
               isFromLoan: true,
               callBack: () {
                 Get.to(() => LendersList(
-                      title: 'Bike loan',
+                      title: 'Gold loan',
                     ));
               });
         }

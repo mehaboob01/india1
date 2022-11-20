@@ -151,21 +151,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          if (profileController.gender.value == '') {
-            Flushbar(
-              title: "Alert!",
-              message: "Choose gender",
-              duration: Duration(seconds: 3),
-            )..show(context);
-          } else if (profileController.maritalStatus.value == '') {
-            Flushbar(
-              title: "Alert!",
-              message: "Choose marital status",
-              duration: Duration(seconds: 3),
-            )..show(context);
-          } else {
-            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
-          }
+          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
         }
       },
       child: Container(

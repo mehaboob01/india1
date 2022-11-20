@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/profile/add_bank_account_screen.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
@@ -38,7 +43,10 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     if (profileController.getProfileLoading.value == true) ...[
                       Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingAnimationWidget.inkDrop(
+                          size: 34,
+                          color: AppColors.primary,
+                        ),
                       )
                     ] else ...[
                       SingleChildScrollView(
@@ -110,15 +118,38 @@ class ProfileScreen extends StatelessWidget {
                                         left: 20,
                                         right: 20,
                                       ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.orangeColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.person,
-                                          color: Colors.white,
-                                          size: 110,
+                                      child: Obx(
+                                        () => InkWell(
+                                          onTap: () {
+                                            profileController.pickImage();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.orangeColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: profileController.uploadProfileLoading.value == true
+                                                ? LoadingAnimationWidget.inkDrop(
+                                                    size: 34,
+                                                    color: AppColors.primary,
+                                                  )
+                                                : ClipOval(
+                                                    child: profileController.image.value != ''
+                                                        ? Image.file(
+                                                            File(profileController.image.value),
+                                                          )
+                                                        : CachedNetworkImage(
+                                                            imageUrl: '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                            errorWidget: (context, _, error) {
+                                                              return Icon(
+                                                                Icons.person,
+                                                                color: Colors.white,
+                                                                size: 110,
+                                                              );
+                                                            },
+                                                          ),
+                                                  ),
+                                          ),
                                         ),
                                       ),
                                       decoration: BoxDecoration(
@@ -560,7 +591,10 @@ class ProfileScreen extends StatelessWidget {
           if (profileController.getBankAccountLoading.value != false) ...[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CircularProgressIndicator(),
+              child: LoadingAnimationWidget.inkDrop(
+                size: 34,
+                color: AppColors.primary,
+              ),
             ),
           ] else ...[
             Container(
@@ -570,7 +604,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: isBankAccountVisible.value == true
                     ? [
-                        accountDetails(profileController.bankDetailsModel.value.preferredAccount?? PreferredAccount(), null),
+                        accountDetails(profileController.bankDetailsModel.value.preferredAccount ?? PreferredAccount(), null),
                         if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
                           ListView.builder(
                             shrinkWrap: true,

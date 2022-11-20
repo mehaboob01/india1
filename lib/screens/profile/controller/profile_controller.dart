@@ -1,12 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart' as dio;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
+import 'package:india_one/screens/profile/model/upload_signed_model.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
@@ -20,7 +27,8 @@ class ProfileController extends GetxController {
       getPinCodeLoading = false.obs,
       getBankAccountLoading = false.obs,
       getUpiIdLoading = false.obs,
-      autoValidation = false.obs;
+      autoValidation = false.obs,
+      uploadProfileLoading = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -53,7 +61,10 @@ class ProfileController extends GetxController {
   late SharedPreferences prefs;
 
   Rx<BankDetailsModel> bankDetailsModel = BankDetailsModel().obs;
+  Rx<UploadSignedModel> uploadSignedModel = UploadSignedModel().obs;
   Rx<UpiIdModel> upiIdModel = UpiIdModel().obs;
+
+  RxString image = ''.obs;
 
   resetData() {
     firstNameController.value.text = '';
@@ -103,9 +114,11 @@ class ProfileController extends GetxController {
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
 
-  RxInt loanRequirement =( -1).obs;
-  RxInt subProduct =( -1).obs;
-  RxInt brand =( -1).obs;
+  RxInt loanRequirement = (-1).obs;
+  RxInt subProduct = (-1).obs;
+  RxInt brand = (-1).obs;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void onInit() {
     super.onInit();
@@ -113,8 +126,8 @@ class ProfileController extends GetxController {
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () {
       getProfileData();
-      getBankDetails();
-      getUpiIdDetails();
+      // getBankDetails();
+      // getUpiIdDetails();
     });
   }
 
@@ -215,6 +228,144 @@ class ProfileController extends GetxController {
       return null;
   }
 
+  Future pickImage() async {
+    image.value = (await _picker.pickImage(source: ImageSource.gallery))!.path;
+    uploadProfile(fileName: image.value.toString().split("/").last);
+  }
+
+  Future uploadProfile({required String fileName}) async {
+    uploadProfileLoading.value = true;
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.generateImageUploadUrl,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            "type": "ProfileImage",
+            "fileName": fileName,
+          },
+        ),
+      );
+      if (response != null) {
+        uploadSignedModel.value = UploadSignedModel.fromJson(response);
+        if (uploadSignedModel.value.uploadSignedURL != null) {
+          uploadProfilePic();
+        } else {
+          Fluttertoast.showToast(
+            msg: "something went wrong, try again!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: "something went wrong, try again!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      uploadProfileLoading.value = false;
+    }
+  }
+
+  Future uploadProfilePic() async {
+    uploadProfileLoading.value = true;
+    try {
+      Dio dioVar = Dio();
+      Uint8List unit8Image = File(image.value).readAsBytesSync();
+
+      Options options = Options(
+        contentType: lookupMimeType(image.value),
+        headers: {
+          'Accept': "*/*",
+          'Content-Length': unit8Image.length,
+          'Connection': 'keep-alive',
+          'User-Agent': 'ClinicPlush',
+        },
+      );
+
+      dio.Response response = await dioVar.put(
+        uploadSignedModel.value.uploadSignedURL ?? '',
+        data: Stream.fromIterable(unit8Image.map((e) => [e])),
+        options: options,
+      );
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        updateProfileImage();
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      uploadProfileLoading.value = false;
+    }
+  }
+
+  Future updateProfileImage() async {
+    uploadProfileLoading.value = true;
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.uploadProfilePic,
+        method: Type.PUT,
+        data: json.encode(
+          {
+            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            "fileName": uploadSignedModel.value.fileName,
+          },
+        ),
+      );
+      if (response != null) {
+        if (response['imageURL'] == null) {
+          Fluttertoast.showToast(
+            msg: "something went wrong, try again!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: "Profile updated successfully",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: "something went wrong, try again!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      uploadProfileLoading.value = false;
+    }
+  }
+
   Future addPersonalDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
     addPersonalLoading.value = true;
     try {
@@ -224,18 +375,18 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-            if (loanApplicationId != null || loanApplicationId != '') ...{
+            if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
             },
             "customerDetails": {
-              "firstName": "${firstNameController.value.text}",
-              "lastName": "${lastNameController.value.text}",
-              "mobileNumber": "${mobileNumberController.value.text}",
-              "dateOfBirth": "${dobController.value.text}",
+              "firstName": firstNameController.value.text.trim().isNotEmpty ? firstNameController.value.text : null,
+              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text : null,
+              "mobileNumber": mobileNumberController.value.text,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? dobController.value.text : null,
               "preferredLanguage": "EN",
-              "email": "${emailController.value.text}",
-              "gender": "${gender.value}",
-              "maritalStatus": "${maritalStatus.value}"
+              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text : null,
+              "gender": gender.value.isNotEmpty ? gender.value :null,
+              "maritalStatus": maritalStatus.value.isNotEmpty ? maritalStatus.value :null
             }
           },
         ),
@@ -377,7 +528,7 @@ class ProfileController extends GetxController {
         method: Type.POST,
         data: json.encode(
           {
-            "customerId": customerId.value,
+            "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
           },
         ),
       );

@@ -88,6 +88,7 @@ class _LendersListState extends State<LendersList> {
                                         title: '${widget.title}',
                                         lenders: loanController.loanLendersModel.value.lenders![index],
                                         personalLoan: isPersonalLoan,
+                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                       ),
                                     );
                                   }

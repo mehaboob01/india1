@@ -18,27 +18,30 @@ class ProfileDetailsModel {
   String? salaryMode;
   GeoLocation? geoLocation;
   Address? address;
+  String? imageName;
 
-  ProfileDetailsModel(
-      {this.id,
-        this.firstName,
-        this.lastName,
-        this.mobileNumber,
-        this.panNumber,
-        this.occupation,
-        this.income,
-        this.preferredLanguage,
-        this.dateOfBirth,
-        this.email,
-        this.membershipId,
-        this.uniqueId,
-        this.alternateNumber,
-        this.gender,
-        this.employmentType,
-        this.maritalStatus,
-        this.salaryMode,
-        this.geoLocation,
-        this.address});
+  ProfileDetailsModel({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.mobileNumber,
+    this.panNumber,
+    this.occupation,
+    this.income,
+    this.preferredLanguage,
+    this.dateOfBirth,
+    this.email,
+    this.membershipId,
+    this.uniqueId,
+    this.alternateNumber,
+    this.gender,
+    this.employmentType,
+    this.maritalStatus,
+    this.salaryMode,
+    this.geoLocation,
+    this.address,
+    this.imageName,
+  });
 
   ProfileDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -58,11 +61,9 @@ class ProfileDetailsModel {
     employmentType = json['employmentType'];
     maritalStatus = json['maritalStatus'];
     salaryMode = json['salaryMode'];
-    geoLocation = json['geoLocation'] != null
-        ? new GeoLocation.fromJson(json['geoLocation'])
-        : null;
-    address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
+    geoLocation = json['geoLocation'] != null ? new GeoLocation.fromJson(json['geoLocation']) : null;
+    address = json['address'] != null ? new Address.fromJson(json['address']) : null;
+    imageName = json['imageName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -90,6 +91,7 @@ class ProfileDetailsModel {
     if (this.address != null) {
       data['address'] = this.address!.toJson();
     }
+    data['imageName'] = this.imageName;
     return data;
   }
 }
@@ -120,12 +122,7 @@ class Address {
   String? city;
   String? state;
 
-  Address(
-      {this.addressLine1,
-        this.addressLine2,
-        this.postCode,
-        this.city,
-        this.state});
+  Address({this.addressLine1, this.addressLine2, this.postCode, this.city, this.state});
 
   Address.fromJson(Map<String, dynamic> json) {
     addressLine1 = json['addressLine1'];

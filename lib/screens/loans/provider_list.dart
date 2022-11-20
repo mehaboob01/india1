@@ -214,6 +214,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                       title: '${widget.title}',
                                                       lenders: loanController.loanLendersModel.value.lenders![index],
                                                       personalLoan: false,
+                                                      providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                                     ),
                                                   );
                                                 },
@@ -231,6 +232,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                       title: '${widget.title}',
                                                       lenders: loanController.loanLendersModel.value.lenders![index],
                                                       personalLoan: false,
+                                                      providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                                     ),
                                                   );
                                                 },
