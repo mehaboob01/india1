@@ -5,7 +5,7 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
-enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan }
+enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan,FarmLoan }
 
 class LoanCommon {
   Widget customButton({required String title}) {

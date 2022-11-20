@@ -212,7 +212,8 @@ class ProfileStepper {
                 prefix: '+91',
                 isDisable: true,
               ),
-              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan&& loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -250,7 +251,7 @@ class ProfileStepper {
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -283,47 +284,49 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                "Gender",
-                style: TextStyle(
-                  color: AppColors.lightBlack,
-                  fontSize: Dimens.font_14sp,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Obx(
-                  () => Row(
-                    children: [
-                      radioButton(
-                        value: 'Male',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Female',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Other',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                    ],
+              if (loanType != LoanType.FarmLoan) ...[
+                Text(
+                  "Gender",
+                  style: TextStyle(
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_14sp,
                   ),
                 ),
-              ),
-              if (loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+                SizedBox(
+                  height: 5,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => Row(
+                      children: [
+                        radioButton(
+                          value: 'Male',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Female',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Other',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),

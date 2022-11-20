@@ -55,6 +55,8 @@ class LoanController extends GetxController {
       return 'Car';
     } else if (loanType == LoanType.TractorLoan) {
       return 'Farm';
+    } else if (loanType == LoanType.FarmLoan) {
+      return 'FarmEquipment';
     }
     return '';
   }
@@ -76,9 +78,8 @@ class LoanController extends GetxController {
         ),
       );
       if (response != null) {
-        createLoanModel.value = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
-        minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
+        createLoanModel = CreateLoanModel.fromJson(response);
+        maxValue.value = double.tryParse((createLoanModel.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
       }
     } catch (exception) {
       print(exception);
@@ -96,12 +97,12 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+          "loanApplicationId": "${createLoanModel.loanApplicationId}",
           "loanAmount": "$amount",
         }),
       );
       if (response != null) {
-        createLoanModel.value = CreateLoanModel.fromJson(response);
+        createLoanModel = CreateLoanModel.fromJson(response);
         updateScreen(Steps.PERSONAL.index);
       }
     } catch (exception) {
@@ -121,7 +122,7 @@ class LoanController extends GetxController {
         data: json.encode(
           {
             "customerId": customerId.value,
-            "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+            "loanApplicationId": "${createLoanModel.loanApplicationId}",
             if(providerId !=null || providerId !='')...{
               "loanProviderId" : "$providerId"
             }
@@ -154,7 +155,7 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+          "loanApplicationId": "${createLoanModel.loanApplicationId}",
           "loanProviderId": "$providerId",
           "loanLenderId": "$lenderId",
         }),

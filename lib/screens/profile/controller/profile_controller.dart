@@ -103,6 +103,9 @@ class ProfileController extends GetxController {
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
 
+  RxInt loanRequirement =( -1).obs;
+  RxInt subProduct =( -1).obs;
+  RxInt brand =( -1).obs;
   @override
   void onInit() {
     super.onInit();
