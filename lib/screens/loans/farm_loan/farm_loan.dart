@@ -307,7 +307,7 @@ class _FarmLoanState extends State<FarmLoan> {
               }*/ else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       _plManager.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -366,7 +366,7 @@ class _FarmLoanState extends State<FarmLoan> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.loanApplicationId,
+              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
               callBack: () {
                 // Get.to(() => LendersList(
                 //       title: 'Farm loan',
