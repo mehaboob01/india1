@@ -118,8 +118,8 @@ class ItemCard extends StatelessWidget {
     switch (bgtype) {
       case ItemCardbgColor.lightBlue:
         itemCardbgColor = const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               AppColors.cardGradientblue1,
               AppColors.cardGradientcommon2
@@ -127,8 +127,8 @@ class ItemCard extends StatelessWidget {
         break;
       case ItemCardbgColor.skyBlue:
         itemCardbgColor = const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               AppColors.cardGradientskyBlue,
               AppColors.cardGradientcommon2
@@ -136,8 +136,8 @@ class ItemCard extends StatelessWidget {
         break;
       case ItemCardbgColor.lightRed:
         itemCardbgColor = const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               AppColors.cardGradientred1,
               AppColors.cardGradientcommon2
@@ -145,8 +145,8 @@ class ItemCard extends StatelessWidget {
         break;
       case ItemCardbgColor.lightRed2:
         itemCardbgColor = const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               AppColors.cardGradientred2,
               AppColors.cardGradientcommon2

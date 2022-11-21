@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/utils/common_webview.dart';
@@ -95,19 +94,7 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        InkWell(
-          onTap: () {
-            Get.to(() => CommonWebView(
-              title: 'MSME',
-              url: Apis.msme,
-            ));
-          },
-          child: ItemCard(
-            image: AppImages.handSackSvg,
-            label: 'MSME',
-            itembgColor: ItemCardbgColor.lightBlue,
-          ),
-        ),
+
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.goldLoanIO);
@@ -115,6 +102,19 @@ class LoansCard extends StatelessWidget {
           child: ItemCard(
             image: AppImages.goldSvg,
             label: 'Gold',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'Credit Card',
+              url: Apis.creditCard,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.creditCardSvg,
+            label: 'Emi Card',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 
 class CommonWebView extends StatefulWidget {
@@ -29,9 +28,7 @@ class _CommonWebViewState extends State<CommonWebView> {
             CustomAppBar(
               heading: '${widget.title}',
               customActionIconsList: [
-                CustomActionIcons(
-                  image: AppImages.bottomNavHome,
-                ),
+
               ],
             ),
             Expanded(

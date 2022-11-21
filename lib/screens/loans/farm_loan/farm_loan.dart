@@ -93,9 +93,9 @@ class _FarmLoanState extends State<FarmLoan> {
                 CustomAppBar(
                   heading: 'Farm loan',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome,
+                    // ),
                   ],
                 ),
                 Expanded(

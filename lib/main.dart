@@ -1,11 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/l10n/messages_ar.dart';
+import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
-import 'package:india_one/services/local_notifications_service.dart';
-import 'package:india_one/utils/common_methods.dart';
 
 import 'localization/locale_string.dart';
 
@@ -75,13 +72,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'India One',
-      debugShowCheckedModeBanner: false,
-      locale: Locale('en', 'US'),
-      translations: LocaleString(),
-      onGenerateRoute: MRouter.generateRoute,
-      initialRoute: MRouter.splashRoute,
+    return InternetWidget(
+      online: GetMaterialApp(
+        title: 'India One',
+        debugShowCheckedModeBanner: false,
+        locale: Locale('en', 'US'),
+        translations: LocaleString(),
+        onGenerateRoute: MRouter.generateRoute,
+        initialRoute: MRouter.splashRoute,
+      ),
+      offline: Text("No internet"),
     );
   }
 }

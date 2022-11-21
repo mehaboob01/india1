@@ -175,6 +175,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
         () => GestureDetector(
           onTap: () => {Get.back(), _homeManager.isClicked.value = false},
           child: Scaffold(
+            backgroundColor: Colors.white,
             body: _homeManager.isLoading.value
                 ? CircularProgressbar()
                 : SingleChildScrollView(

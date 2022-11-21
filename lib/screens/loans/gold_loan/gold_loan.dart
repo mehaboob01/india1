@@ -65,9 +65,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 CustomAppBar(
                   heading: 'Gold loan',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome, onHeaderIconPressed: () {  },
+                    // ),
                   ],
                 ),
                 Expanded(
