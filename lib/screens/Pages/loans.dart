@@ -94,20 +94,35 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        ItemCard(
-          image: AppImages.creditCardSvg,
-          label: 'Emi Card',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.emiCard);
+          },
+          child: ItemCard(
+            image: AppImages.creditCardSvg,
+            label: 'Emi Card',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
-        ItemCard(
-          image: AppImages.creditCardSvg,
-          label: 'Credit Card',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.creditCard);
+          },
+          child: ItemCard(
+            image: AppImages.creditCardSvg,
+            label: 'Credit Card',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         ),
-        ItemCard(
-          image: AppImages.creditScoreSvg,
-          label: 'Credit Score',
-          itembgColor: ItemCardbgColor.lightBlue,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.creditScore);
+          },
+          child: ItemCard(
+            image: AppImages.creditScoreSvg,
+            label: 'Credit Score',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
         )
       ],
     );

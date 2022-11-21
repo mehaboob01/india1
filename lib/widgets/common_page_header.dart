@@ -4,11 +4,17 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/screens/onboarding_login/select_language/language_selection_io.dart';
 
+import '../constant/routes.dart';
 import '../constant/theme_manager.dart';
+import '../screens/home_start/home_manager.dart';
 import '../screens/notification/notification_screen.dart';
+import '../screens/profile/profile_screen.dart';
 import 'common_heading_icon.dart';
 
 class CommonPageHeader extends StatelessWidget {
+
+  HomeManager _homeManager = Get.put(HomeManager());
+
   CommonPageHeader({required this.pageName});
   final PageName pageName;
   // heading value ----------------------------------------------------------
@@ -147,6 +153,38 @@ class CommonPageHeader extends StatelessWidget {
     return value;
   }
 
+  // heading box -----------------------------------
+  Widget headingBox(
+      {IconData? icon,
+        String? image,
+        String? text,
+        VoidCallback? ontap,
+        Color? color}) {
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+            color: color ?? Colors.white,
+            borderRadius: BorderRadius.circular(5)),
+        child: text != null
+            ? Center(
+            child: Text(
+              text,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ))
+            : image != null
+            ? Center(
+            child: SvgPicture.asset(
+              image,
+              color: Colors.black,
+            ))
+            : Icon(icon),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,28 +206,150 @@ class CommonPageHeader extends StatelessWidget {
                   style: AppStyle.shortHeading.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.0.sp)),
+                      fontSize: Dimens.font_16sp)),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                HeadingIconsBox(
-                  text: 'Aa',
-                  ontap: () => Get.to(() => LanguageSelectionIO('home')),
+                headingBox(
+                    text: 'Aa',
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext
+                              context) =>
+                                  LanguageSelectionIO(
+                                      'home')));
+                    }),
+                SizedBox(
+                  width: 2.0.wp,
+                ),
+                GestureDetector(
+                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
+                  child: headingBox(
+                      image: AppImages.notify_icon),
                 ),
                 SizedBox(
                   width: 2.0.wp,
                 ),
-                HeadingIconsBox(
-                    image: AppImages.notificationBell,
-                    ontap: () async {
-                      Get.to(() => NotificationScreen());
-                    }),
-                SizedBox(width: 2.0.wp),
-                const HeadingIconsBox(
-                  image: AppImages.profileImage,
-                )
+                GestureDetector(
+                  onTap: () {
+                    _homeManager.isClicked.value = true;
+                    showMenu<String>(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.only(
+                              bottomLeft:
+                              Radius.circular(
+                                  13.0),
+                              bottomRight:
+                              Radius.circular(
+                                  13.0),
+                              topLeft:
+                              Radius.circular(
+                                  13.0))),
+                      position: RelativeRect.fromLTRB(
+                          25.0, 118.0, 16.0, 0.0),
+                      items: [
+                        PopupMenuItem(
+                          height: Get.height * 0.02,
+                          child: GestureDetector(
+                            onTap: () {
+                              _homeManager.isClicked
+                                  .value = false;
+                              Get.back();
+                              Get.to(() =>
+                                  ProfileScreen());
+                            },
+                            child: Container(
+                              height: Get.height * 0.03,
+                              width: double.infinity,
+                              child: Text(
+                                "My Profile",
+                                style: AppStyle
+                                    .shortHeading
+                                    .copyWith(
+                                    fontSize: Dimens
+                                        .font_14sp,
+                                    color: Colors
+                                        .black,
+                                    fontWeight:
+                                    FontWeight
+                                        .w400,
+                                    letterSpacing:
+                                    1),
+                              ),
+                            ),
+                          ),
+                        ),
+                        PopupMenuDivider(),
+                        PopupMenuItem(
+                          height: 0.02,
+                          child: GestureDetector(
+                              onTap: () => {
+                                _homeManager
+                                    .isClicked
+                                    .value = false,
+                                Get.back(),
+                                Get.toNamed(
+                                  MRouter
+                                      .loyaltyPoints,
+                                ),
+                              },
+                              child: Container(
+                                height:
+                                Get.height * 0.02,
+                                width: double.infinity,
+                                child: Text(
+                                  "My Rewards",
+                                  style: AppStyle
+                                      .shortHeading
+                                      .copyWith(
+                                      fontSize: Dimens
+                                          .font_14sp,
+                                      color: Colors
+                                          .black,
+                                      fontWeight:
+                                      FontWeight
+                                          .w400,
+                                      letterSpacing:
+                                      1),
+                                ),
+                              )),
+                        ),
+                      ],
+                      elevation: 8.0,
+                    ).then<void>(
+                            (String? itemSelected) {
+                          if (itemSelected == null) {
+                            _homeManager.isClicked.value =
+                            false;
+                            return;
+                          }
+
+                          if (itemSelected == "1") {
+                          } else if (itemSelected == "2") {
+                            Get.toNamed(
+                                MRouter.loyaltyPoints);
+
+                            print("2nd itme ");
+                          } else if (itemSelected == "3") {
+                          } else {
+                            //code here
+                          }
+                        });
+                  },
+                  child: headingBox(
+                      color:
+                      _homeManager.isClicked.value
+                          ? Colors.orange
+                          : Colors.white,
+                      image: AppImages.user_profile),
+                ),
               ],
             ),
           ],
@@ -223,7 +383,7 @@ class CommonPageHeader extends StatelessWidget {
                           Text(indiaOneTitle(pageName),
                               style: AppStyle.shortHeading.copyWith(
                                   color: const Color(0xffFFEF37),
-                                  fontSize: Dimens.font_24sp,
+                                  fontSize: Dimens.font_16sp,
                                   fontWeight: FontWeight.w600)),
                         ],
                       )),
@@ -296,10 +456,12 @@ class CommonPageCategoriesHeading extends StatelessWidget {
       child: Text(categoreisTitle(pageName),
           style: AppStyle.shortHeading.copyWith(
               color: AppColors.blackColor,
-              fontSize: 18.0.sp,
+              fontSize: Dimens.font_20sp,
               fontWeight: FontWeight.w600)),
     );
   }
+
+
 }
 
 enum PageName { loans, insurance, payments, savings }

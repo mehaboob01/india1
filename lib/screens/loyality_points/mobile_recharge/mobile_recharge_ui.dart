@@ -9,6 +9,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import '../../../widgets/common_drop_down.dart';
 import '../../../widgets/common_radio_card.dart';
+import '../loyality_manager.dart';
 import 'mr_manager.dart';
 
 class MobileRechargeIO extends StatefulWidget {
@@ -32,6 +33,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
   int charLength = 0;
   List<Widget> plansList = [];
   MrManager _mrManager = Get.put(MrManager());
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
   List<Contact>? _contacts;
   bool _permissionDenied = false;
   final GlobalKey<FormBuilderState> _mobileRecharge =
@@ -180,6 +182,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                     ],
                   )
                 : Stack(children: [
+
                     Container(
                       height: heightIs,
                       width: widthIs,
@@ -680,7 +683,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                       .only(
                                                                   left: 22.0),
                                                           child: Text(
-                                                            "Plans under ₹ 52",
+                                                            "Plans under ₹${_loyaltyManager.redeemablePoints.toString()}",
                                                             style: AppStyle
                                                                 .shortHeading
                                                                 .copyWith(
@@ -698,12 +701,12 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                         ),
                                                       ),
                                                       SizedBox(
-                                                        height: 2,
+                                                        height: 8,
                                                       ),
                                                       Container(
                                                           width: widthIs * 0.9,
                                                           height:
-                                                              heightIs * 0.4,
+                                                              heightIs * 0.3,
                                                           child:
                                                               ListView.builder(
                                                                   itemCount:

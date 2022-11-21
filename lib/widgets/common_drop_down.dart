@@ -31,7 +31,8 @@ class DropDown extends StatefulWidget {
 class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
-    return FormBuilderDropdown(
+    return
+      FormBuilderDropdown(
       iconEnabledColor: AppColors.primary,
       iconDisabledColor: Colors.grey,
       name: widget.formName,
@@ -67,7 +68,7 @@ class _DropDownState extends State<DropDown> {
         Icons.keyboard_arrow_down_rounded,
        // color: AppColors.greyInlineText,
       ),
-      iconSize: 30,
+      iconSize: 34,
       isExpanded: true,
       elevation: 5,
       initialValue: widget.initialValue,
@@ -78,8 +79,8 @@ class _DropDownState extends State<DropDown> {
             value,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: 11.0.sp),
+                fontWeight: FontWeight.w500,
+                fontSize: Dimens.font_16sp),
           ),
         );
       }).toList(),

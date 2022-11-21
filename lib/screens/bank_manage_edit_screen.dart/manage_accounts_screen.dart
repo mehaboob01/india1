@@ -14,6 +14,10 @@ import 'edit_accounts_screen.dart';
 class ManageAccountsCard extends StatelessWidget {
   ManageAccountsCard({super.key});
   final cashBackManager = Get.find<CashBackManager>();
+  final List<String> bankAccountType = [
+    'saving',
+    'current',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +61,13 @@ class ManageAccountsCard extends StatelessWidget {
                                       isSelected: false,
                                       cardWidth: double.maxFinite,
                                       onEditPressed: () => Get.to(
-                                          () => EditAccountsCard(),
+                                          () => EditAccountsCard(cashBackManager.bankList.toList(),
+                                              cashBackManager.customerBankList[index].name,
+                                              cashBackManager.customerBankList[index].maskAccountNumber,
+                                              cashBackManager.customerBankList[index].ifscCode,
+                                              cashBackManager.customerBankList[index].accountType
+
+                                          ),
                                           arguments: [
                                             cashBackManager
                                                 .customerBankList[index],
@@ -102,7 +112,7 @@ class ManageAccountsCard extends StatelessWidget {
                             fontWeight: FontWeight.w600),
                       )
                     : const SizedBox.shrink(),
-                UserAccountPage().upiCard.isNotEmpty
+                cashBackManager.customerUPIList.isNotEmpty
                     ? Padding(
                         padding: EdgeInsets.only(top: 2.0.hp, bottom: 4.0.hp),
                         child: Container(
@@ -112,28 +122,26 @@ class ManageAccountsCard extends StatelessWidget {
                           ),
                           child: Column(
                             children: List.generate(
-                                UserAccountPage().upiCard.length,
+                                cashBackManager.customerUPIList.length,
                                 (index) => CommonRadioCard(
                                       isEditable: true,
                                       isSelected: false,
                                       onEditPressed: () => Get.to(
-                                          () => EditAccountsCard(),
+                                          () => EditAccountsCard(['upi data'],"upi id","","",""),
                                           fullscreenDialog: true,
                                           arguments: [
                                             //  JsonModel().upiModel[index],
                                             RedeemMode.isUPI
                                           ]),
                                       onDeletePressed: () {
-                                        CommonDeleteBottomSheet()
-                                            .deleteBottomSheet(
-                                                index: index, onDelete: () {});
-                                        // onDelete: () => JsonModel()
-                                        //     .accountModel
-                                        //     .removeAt(index));
+
+
+
+
                                       },
                                       cardWidth: double.maxFinite,
                                       radioCardType: RadioCardType.upi,
-                                      upiId: CardModel().upiModel[index]['upiId'],
+                                      upiId: cashBackManager.customerUPIList[index].upiId,
                                     )),
                           ),
                         ))

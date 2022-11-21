@@ -2,210 +2,315 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 
 import '../../constant/theme_manager.dart';
-import '../../utils/comman_validaters.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/common_drop_down.dart';
-import '../../widgets/common_textfield.dart';
 import '../../widgets/loyalty_common_header.dart';
-import '../loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
-import '../loyality_points/redeem_points/rp_manager.dart';
+import 'controller/update_bank_account_manager.dart';
 import 'delete_bottom_sheet.dart';
 
 class EditAccountsCard extends StatelessWidget {
-  EditAccountsCard({super.key});
-  final _data = Get.arguments[0];
-  final RedeemMode _redeemMode = Get.arguments[1];
-  final cashBackManager = Get.find<CashBackManager>();
-  final cashBackCtrl = Get.find<CashBackController>();
-  RxString accountName = ''.obs;
+  List<String> bankList;
+  List<String> bankAcntList = ['current', 'savings'];
+  String? bankName;
+  String? accountNumber;
+  String? ifscCode;
+  String? accountType;
 
-  final List<String> bankAccounts = [
-    'SBI',
-    'ICICI',
-    'Axis bank',
-    'Kotak Mahindra Bank',
-    'Canara bank'
-  ];
-  final List<String> bankAccountType = [
-    'Savings account',
-    'Current account',
-    'Fixed Deposit',
-    'Joint account',
-  ];
+  EditAccountsCard(this.bankList, this.bankName, this.accountNumber,
+      this.ifscCode, this.accountType);
+  double widthIs = 0, heightIs = 0;
+
+  CashBackManager cashBackManager = Get.put(CashBackManager());
+
+  final GlobalKey<FormBuilderState> _updateBankAccount = GlobalKey<FormBuilderState>();
+  UpdateBankAccount updateBankAccount = Get.put(UpdateBankAccount());
+
 
   @override
   Widget build(BuildContext context) {
-    List<String> getBankName = List.generate(
-        cashBackManager.customerBankList.length,
-        (index) => cashBackManager.customerBankList[index].name!);
+    widthIs = MediaQuery.of(context).size.width;
+    heightIs = MediaQuery.of(context).size.height;
 
-    final Map<String, dynamic> getformName =
-        _redeemMode == RedeemMode.isBankAccount
-            ? {
-                'name': _data.name,
-                'account': _data.maskAccountNumber,
-                'ifsc': _data.ifscCode,
-                'type': _data.accountType
-              }
-            : {'upi': _data.upiId};
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-            child: Column(children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: CustomAppBar(
-              heading: 'Manage accounts',
-              customActionIconsList: [
-                CustomActionIcons(
-                  onHeaderIconPressed: () => CommonDeleteBottomSheet()
-                      .deleteBottomSheet2(onDelete: () {
-                    if (_redeemMode == RedeemMode.isBankAccount) {
-                      print(
-                          '${cashBackManager.editaccountformKey.currentState!.initialValue} ,,  ${_data.name}');
-                    } else {
-                      print(
-                          '${cashBackManager.editUpformKey.currentState!.initialValue} ,,  ${_data.upiId}');
-                    }
-                  }),
-                  image: AppImages.deleteIconSvg,
-                  isSvg: true,
-                  customGradientColors: const [
-                    Color(0xff95DFFF),
-                    Color(0xff014280)
-                  ],
-                )
-              ],
+            child: SingleChildScrollView(
+          child: Column(children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: CustomAppBar(
+                heading: 'Manage accounts',
+                customActionIconsList: [
+                  CustomActionIcons(
+                    onHeaderIconPressed: () => CommonDeleteBottomSheet()
+                        .deleteBottomSheet2(onDelete: () {}),
+                    image: AppImages.deleteIconSvg,
+                    isSvg: true,
+                    customGradientColors: const [
+                      Color(0xff95DFFF),
+                      Color(0xff014280)
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Expanded(
-              child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 4.0.wp, vertical: 4.0.hp),
-                  children: [
-                Text(
-                  _redeemMode == RedeemMode.isBankAccount
-                      ? 'Your accounts'
-                      : 'Your UPI or VPA’s',
-                  style: AppStyle.shortHeading.copyWith(
-                      color: const Color(0xff2d2d2d),
-                      fontWeight: FontWeight.w600),
-                ),
-                _redeemMode == RedeemMode.isBankAccount
-                    ? FormBuilder(
-                        key: cashBackManager.editaccountformKey,
-                        initialValue: getformName,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 6.0.wp),
-                          child: Obx(() {
-                            return Column(
-                              children: [
-                                DropDown(
-                                  data: getBankName,
-                                  validationText: 'invalid input',
-                                  formName: 'name',
-                                  labelName: 'Bank Name',
-                                  onChanged: (value) => accountName.value,
-                                  hintText: 'Select Bank Name',
-                                  initialValue: accountName.value.isEmpty
-                                      ? _data.name
-                                      : null,
+            Container(
+              height: heightIs * 0.7,
+              width: widthIs,
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // user inputs
+                      FormBuilder(
+                        key: _updateBankAccount,
+                        initialValue: {
+                          "bankName": "",
+                          "accountNumber": accountNumber,
+                          "ifscCode": ifscCode,
+                          "accountType": ""
+                        },
+                        child: SingleChildScrollView(
+                          child: Container(
+                            padding: EdgeInsets.all(9),
+                            width: widthIs,
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: 4.0, left: 8, right: 8, top: 24),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Your accounts",
+                                      style: AppStyle.shortHeading.copyWith(
+                                        fontSize: Dimens.font_16sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 34,
+                                    ),
+                                    // bank name
+                                    DropDown(
+                                      onChanged: (value) {},
+                                      formName: 'bankDropDown',
+                                      labelName: 'Bank name',
+                                      hintText: bankName.toString(),
+                                      data: bankList,
+                                      validationText: ' name is compulsory',
+                                    ),
+                                    SizedBox(
+                                      height: 18,
+                                    ),
+                                    // account number
+                                    FormBuilderTextField(
+                                      keyboardType: TextInputType.emailAddress,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: Dimens.font_16sp),
+                                      decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 4.5.wp,
+                                              horizontal: 4.0.wp),
+                                          //'Slide the amount above or enter', // dynamic
+                                          hintStyle: AppStyle.shortHeading.copyWith(
+                                              color: AppColors.greyInlineText,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11.0.sp),
+                                          label: Text(
+                                            "Account Number", //'Points for cashback', // dynamic
+                                          ),
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          errorStyle: AppStyle.shortHeading.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11.0.sp,
+                                              color: Colors.red),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(
+                                                  width: 1.0,
+                                                  color: AppColors
+                                                      .greyInlineTextborder)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(
+                                                  width: 1.0,
+                                                  color: AppColors
+                                                      .greyInlineTextborder)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(width: 1.0, color: AppColors.greyInlineTextborder))),
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(context),
+                                      ]),
+                                      name: 'accountNumber',
+                                    ),
+                                    SizedBox(
+                                      height: 18,
+                                    ),
+                                    // ifsc code
+                                    FormBuilderTextField(
+                                      keyboardType: TextInputType.emailAddress,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: Dimens.font_16sp),
+                                      decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 4.5.wp,
+                                              horizontal: 4.0.wp),
+                                          //'Slide the amount above or enter', // dynamic
+                                          hintStyle: AppStyle.shortHeading.copyWith(
+                                              color: AppColors.greyInlineText,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11.0.sp),
+                                          label: Text(
+                                            "IFSC Code", //'Points for cashback', // dynamic
+                                          ),
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          errorStyle: AppStyle.shortHeading.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11.0.sp,
+                                              color: Colors.red),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(
+                                                  width: 1.0,
+                                                  color: AppColors
+                                                      .greyInlineTextborder)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(
+                                                  width: 1.0,
+                                                  color: AppColors
+                                                      .greyInlineTextborder)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(2.0.wp),
+                                              borderSide: const BorderSide(width: 1.0, color: AppColors.greyInlineTextborder))),
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(context),
+                                      ]),
+                                      name: 'ifscCode',
+                                    ),
+                                    SizedBox(
+                                      height: 18,
+                                    ),
+                                    // account type
+                                    FormBuilderDropdown(
+                                      iconEnabledColor: AppColors.primary,
+                                      iconDisabledColor: Colors.grey,
+                                      name: '',
+                                      enabled: true,
+                                      decoration: InputDecoration(
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          labelText: "Account type",
+                                          hintText: "",
+                                          hintStyle: AppStyle.shortHeading.copyWith(
+                                              color: AppColors.greyInlineText,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12.0.sp),
+                                          labelStyle: AppStyle.shortHeading.copyWith(
+                                              color: AppColors.greyText,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12.0.sp),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 4.0.wp,
+                                              horizontal: 4.0.wp),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide: BorderSide(
+                                                  width: 1.0,
+                                                  color: AppColors
+                                                      .greyInlineTextborder)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.wp),
+                                              borderSide:
+                                                  BorderSide(width: 1.0, color: AppColors.greyInlineTextborder)),
+                                          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2.0.wp), borderSide: BorderSide(width: 1.0, color: AppColors.primary))),
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        // color: AppColors.greyInlineText,
+                                      ),
+                                      iconSize: 30,
+                                      isExpanded: true,
+                                      elevation: 5,
+                                      initialValue: accountType,
+                                      items: bankAcntList.map((country) {
+                                        return DropdownMenuItem(
+                                          child: Text(country),
+                                          value: country,
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {},
+                                    )
+                                  ],
                                 ),
-                                SizedBox(height: 4.0.hp),
-                                CommonTextField(
-                                    inputController: cashBackCtrl
-                                        .loyaltyBankAccountTextEditingCtrl
-                                        .value,
-                                    labelText: 'Account Number',
-                                    initialValue:
-                                        _data.maskAccountNumber.toString(),
-                                    inputValidator: (value) =>
-                                        CommonValidations().numberValidation(
-                                            value,
-                                            'value is null',
-                                            'Invalid Value'),
-                                    formName: 'account'),
-                                SizedBox(height: 4.0.hp),
-                                CommonTextField(
-                                    inputController: cashBackCtrl
-                                        .loyaltyBankAccountTextEditingCtrl
-                                        .value,
-                                    labelText: 'IFSC Code',
-                                    initialValue: _data.ifscCode,
-                                    inputValidator: (value) =>
-                                        CommonValidations().numberValidation(
-                                            value,
-                                            'value is null',
-                                            'Invalid Value'),
-                                    formName: 'ifsc'),
-                                SizedBox(height: 4.0.hp),
-                                DropDown(
-                                  data: bankAccountType,
-                                  validationText: 'invalid input',
-                                  formName: 'type',
-                                  labelName: 'Account Type',
-                                  onChanged: (value) => value,
-                                  hintText: 'Select Account Type',
-                                  initialValue: _data.accountType,
-                                ),
-                              ],
-                            );
-                          }),
+                              ),
+                            ),
+                          ),
                         ),
-                      )
-                    : FormBuilder(
-                        key: cashBackManager.editUpformKey,
-                        initialValue: {'upi': _data.upiId},
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 6.0.wp),
-                            child: Obx(() {
-                              return Column(children: [
-                                CommonTextField(
-                                    inputController: cashBackCtrl
-                                        .loyaltyUpiTextEditingCtrl.value,
-                                    labelText: 'UPI / VPA',
-                                    initialValue: _data.upiId,
-                                    inputValidator: (value) =>
-                                        CommonValidations().textValidation(
-                                            value,
-                                            'value is null',
-                                            'Invalid Value'),
-                                    formName: 'upi'),
-                              ]);
-                            })))
-              ])),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 4.0.wp, vertical: 4.0.hp),
-                child: ButtonWithFlower(
-                  label: 'Save Changes',
-                  onPressed: () {
-                    cashBackManager.editUpformKey.currentState!.save();
-                    print(cashBackManager.editUpformKey.currentState!.value);
-                  },
-                  buttonWidth: double.maxFinite,
-                  buttonHeight: 12.0.wp,
-                  labelSize: 14.0.sp,
-                  labelColor: Colors.white,
-                  labelWeight: FontWeight.w600,
-                  iconToRight: true,
-                  iconColor: Colors.white,
-                  buttonGradient: const LinearGradient(
-                      begin: Alignment(-2, 0),
-                      end: Alignment.centerRight,
-                      colors: [
-                        AppColors.orangeGradient1,
-                        AppColors.orangeGradient2,
-                      ]),
+                      ),
+
+                      SizedBox(
+                        height: 12,
+                      ),
+
+                      // chirag code
+                    ],
+                  ),
                 ),
-              ))
-        ])));
+              ),
+            ),
+            Obx(
+             ()=> Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 4.0.wp, vertical: 4.0.hp),
+                    child: ButtonWithFlower(
+                      label: updateBankAccount.isLoading == true?'Saving..':'Save Changes',
+                      onPressed: () {
+                        _updateBankAccount.currentState!.save();
+                        _updateBankAccount.currentState!.validate();
+                        print(_updateBankAccount.currentState!.value);
+                        updateBankAccount.callUpdateBankAccount(_updateBankAccount.currentState!.value);
+
+                      },
+                      buttonWidth: double.maxFinite,
+                      buttonHeight: 12.0.wp,
+                      labelSize: 14.0.sp,
+                      labelColor: Colors.white,
+                      labelWeight: FontWeight.w600,
+                      iconToRight: true,
+                      iconColor: Colors.white,
+                      buttonGradient: const LinearGradient(
+                          begin: Alignment(-2, 0),
+                          end: Alignment.centerRight,
+                          colors: [
+                            AppColors.orangeGradient1,
+                            AppColors.orangeGradient2,
+                          ]),
+                    ),
+                  )),
+            )
+          ]),
+        )));
   }
 }

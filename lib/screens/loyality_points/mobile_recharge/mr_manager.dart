@@ -246,14 +246,6 @@ class MrManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-      print("Data for mobile recharge");
-
-      print(operatorId);
-      print(circleId);
-      print(phoneNumber);
-      print(customerId);
-      print(rechargeData['amount'].toString());
-      print(rechargeData['planType'].toString());
 
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.recharge),
@@ -271,54 +263,44 @@ class MrManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-      if(response.statusCode == 200 || response.statusCode == 201)
-        {
-          var jsonData = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
 
-          MobileRechargeModel mobileRechargeModel = MobileRechargeModel.fromJson(jsonData);
+        MobileRechargeModel mobileRechargeModel =
+            MobileRechargeModel.fromJson(jsonData);
 
-          print("response ofnrecharge${response.body}");
+        if (mobileRechargeModel.status!.code == 2000) {
+          Future.delayed(const Duration(seconds: 0), () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs!.setBool(SPKeys.SHOW_AUTH, false);
 
-          if (mobileRechargeModel.status!.code == 2000) {
-            Future.delayed(const Duration(seconds: 0), () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs!.setBool(SPKeys.SHOW_AUTH, false);
-
-              isMobileRechargeLoading(false);
-              Flushbar(
-                title: "successful!",
-                message: "Recharge successful",
-                duration: Duration(seconds: 2),
-              )..show(Get.context!)
-                  .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                  MRouter.homeScreen, (Route<dynamic> route) => false))
-                  .then((value) => () {
-                plansList.clear();
-              });
-            });
-          }  else {
             isMobileRechargeLoading(false);
             Flushbar(
-              title: "Error!",
-              message: mobileRechargeModel.status!.message,
+              title: "successful!",
+              message: "Recharge successful",
               duration: Duration(seconds: 2),
-            )..show(Get.context!);
-          }
+            )..show(Get.context!)
+                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                    MRouter.homeScreen, (Route<dynamic> route) => false))
+                .then((value) => () {
+                      plansList.clear();
+                    });
+          });
+        } else {
+          isMobileRechargeLoading(false);
+          Flushbar(
+            title: "Error!",
+            message: mobileRechargeModel.status!.message,
+            duration: Duration(seconds: 4),
+          )..show(Get.context!);
         }
-
-      else{
+      } else {
         Flushbar(
           title: "Server Error!",
           message: "Please try again ...",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
-
       }
-
-
-
-
-
     } catch (e) {
       Flushbar(
         title: "Error!",

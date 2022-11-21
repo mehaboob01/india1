@@ -8,17 +8,17 @@ class NotificationScreen extends StatelessWidget {
 
   final List<NotificationCard> notificationList = [
     NotificationCard(
-      dateTime: "2022-11-10T15:36:13.660Z",
+      dateTime: "2022-11-10T15:36:13Z",
       notificationHeading: 'Congrats! You earned points',
       notificationMsg: 'You just earned 10 points for referring',
     ),
     NotificationCard(
-      dateTime: "2022-11-09T23:36:13.660Z",
+      dateTime: "2022-11-09T23:36:13Z",
       notificationHeading: 'Loan application',
       notificationMsg: 'Your loan application is rejected',
     ),
     NotificationCard(
-      dateTime: "2022-10-08T15:36:13.660Z",
+      dateTime: "2022-10-08T15:36:13Z",
       notificationHeading: 'Insurance purchase',
       notificationMsg: 'Your insurance purchase is pending',
     )

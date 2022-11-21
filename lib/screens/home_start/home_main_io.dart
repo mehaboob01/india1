@@ -227,6 +227,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                           width: 2.0.wp,
                                         ),
                                         GestureDetector(
+                                          onTap: ()=> Get.toNamed(MRouter.notificationScreen),
                                           child: headingBox(
                                               image: AppImages.notify_icon),
                                         ),
@@ -515,7 +516,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   // balance card ----------------------------------------------
   Widget balanceCard({required bool first}) {
     return Container(
-        padding: EdgeInsets.all(2.0.wp),
+        padding: EdgeInsets.all(1.0.wp),
         height: 10.0.hp,
         decoration: BoxDecoration(
           color: AppColors.backGrounddarkheader,
@@ -539,7 +540,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                   Text(
                     'Current balance',
                     style: AppStyle.shortHeading.copyWith(
-                        fontSize: 12.0.sp,
+                        fontSize: Dimens.font_14sp,
                         color: Colors.white,
                         letterSpacing: 0.5),
                   ),
@@ -556,7 +557,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         () => Text(
                           _homeManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
                               letterSpacing: 0.5,
                               fontWeight: FontWeight.bold),
@@ -565,7 +566,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         ' Points',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
                             letterSpacing: 0.5),
                       ),
@@ -583,7 +584,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         'Total earned : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
                             letterSpacing: 0.5),
                       ),
@@ -591,7 +592,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         () => Text(
                           _homeManager.pointsEarned.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
                               letterSpacing: 0.5,
                               fontWeight: FontWeight.bold),
@@ -605,17 +606,17 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         'Total redeemed : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
-                            letterSpacing: 0.5),
+                            letterSpacing: 0.2),
                       ),
                       Obx(
                         () => Text(
                           _homeManager.pointsRedeemed.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
-                              letterSpacing: 0.5,
+                              letterSpacing: 0.2,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

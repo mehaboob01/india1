@@ -10,7 +10,7 @@ class CommonTextField extends StatelessWidget {
       this.labelText,
       this.maxlines = 1,
       this.keyboardType = TextInputType.text,
-      required this.inputController,
+        this.inputController,
       required this.inputValidator,
       this.inputOnChanged,
       this.isObscure = false,
@@ -22,7 +22,7 @@ class CommonTextField extends StatelessWidget {
   final String? labelText;
   final int maxlines;
   final TextInputType keyboardType;
-  final TextEditingController inputController;
+  final TextEditingController? inputController;
   final String? Function(String? value) inputValidator;
   final void Function(dynamic)? inputOnChanged;
   final void Function(dynamic)? inputOnSubmitted;

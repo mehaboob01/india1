@@ -56,6 +56,7 @@ class CashBackController extends GetxController {
       GlobalKey<FormBuilderState>();
 
   final upiSubmitEnable = false.obs;
+  final upiAddEnable = false.obs;
   final bankAccountSubmitEnable = false.obs;
 
   void onDispose() {

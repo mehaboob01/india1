@@ -10,6 +10,11 @@ import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
+import '../screens/insurances/bike_insurance/bike_insurance_web_view.dart';
+import '../screens/insurances/car_insurance/car_insurance_web_view.dart';
+import '../screens/loans/credit_card/credit_card_web_view.dart';
+import '../screens/loans/credit_score/credit_score_web_view.dart';
+import '../screens/loans/emi_card/emi_card_web_view.dart';
 import '../screens/loans/personal_loan_io/personal_loan.dart';
 import '../screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../screens/loyality_points/loyalty_page.dart';
@@ -38,6 +43,11 @@ class MRouter {
   static const String carLoanIO = 'CarLoanIO';
   static const String goldLoanIO = 'GoldLoanIO';
   static const String tractorLoanIO = 'TractorLoanIO';
+  static const String creditScore = 'CreditScore';
+  static const String creditCard = 'CreditCardWebView';
+  static const String emiCard = 'EmiCard';
+  static const String bikeInsurance = 'BikeInsurance';
+  static const String carInsurance = 'CarInsurance';
 
 
 
@@ -52,8 +62,20 @@ class MRouter {
       case userLogin:
         return CupertinoPageRoute(builder: (_) => UserLogin());
 
+      case emiCard:
+        return CupertinoPageRoute(builder: (_) => EmiCard());
+
+      case carInsurance:
+        return CupertinoPageRoute(builder: (_) => CarInsurance());
+
+      case bikeInsurance:
+        return CupertinoPageRoute(builder: (_) => BikeInsurance());
+
       case verifiedScreen:
         return CupertinoPageRoute(builder: (_) => VerifiedScreen());
+
+      case creditCard:
+        return CupertinoPageRoute(builder: (_) => CreditCardWebView());
 
       case mobileRechargeIO:
         return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
@@ -92,6 +114,8 @@ class MRouter {
 
       case tractorLoanIO:
         return CupertinoPageRoute(builder: (_) => TractorLoanIO());
+      case creditScore:
+        return CupertinoPageRoute(builder: (_) => CreditScore());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

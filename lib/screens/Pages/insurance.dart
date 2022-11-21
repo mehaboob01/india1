@@ -1,7 +1,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
@@ -44,17 +46,27 @@ class InsuranceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 2.0.wp,
-      children: const [
+      children:  [
 
-        ItemCard(
-          image: AppImages.bikeSvg,
-          label: '2 Wheeler',
-          itembgColor: ItemCardbgColor.lightRed2,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.bikeInsurance);
+          },
+          child: ItemCard(
+            image: AppImages.bikeSvg,
+            label: '2 Wheeler',
+            itembgColor: ItemCardbgColor.lightRed2,
+          ),
         ),
-        ItemCard(
-          image: AppImages.carSvg,
-          label: '4 Wheeler',
-          itembgColor: ItemCardbgColor.lightRed2,
+        InkWell(
+          onTap: () {
+            Get.toNamed(MRouter.carInsurance);
+          },
+          child: ItemCard(
+            image: AppImages.carSvg,
+            label: '4 Wheeler',
+            itembgColor: ItemCardbgColor.lightRed2,
+          ),
         ),
         ItemCard(
           image: AppImages.criticalIllnessSvg,

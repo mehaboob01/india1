@@ -48,7 +48,7 @@ class CommonDeleteBottomSheet {
                   style: AppStyle.shortHeading.copyWith(
                     color: const Color(0xff2d2d2d),
                     height: 1.5,
-                    fontSize: 12.0.sp,
+                    fontSize: Dimens.font_14sp,
                   ),
                 ),
                 const Spacer(),
