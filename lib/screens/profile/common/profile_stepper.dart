@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:intl/intl.dart';
 
@@ -151,7 +152,7 @@ class ProfileStepper {
     );
   }
 
-  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm, {bool? isFromLoan = false}) {
+  Widget personalDetails(BuildContext context, GlobalKey<FormState> personalForm, {bool? isFromLoan = false, LoanType? loanType}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -177,7 +178,11 @@ class ProfileStepper {
                 label: 'First Name',
                 hint: 'Enter first name',
                 vaidation: (value) {
-                  return profileController.nameValidation(value, 'Enter name min 3 character');
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(value, 'Enter name min 3 character');
+                  } else {
+                    return null;
+                  }
                 },
                 keyboardType: TextInputType.name,
               ),
@@ -189,7 +194,11 @@ class ProfileStepper {
                 label: 'Last Name',
                 hint: 'Enter last name',
                 vaidation: (value) {
-                  return profileController.nameValidation(value, 'Enter last name min 3 character');
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(value, 'Enter last name min 3 character');
+                  } else {
+                    return null;
+                  }
                 },
                 keyboardType: TextInputType.name,
               ),
@@ -203,25 +212,29 @@ class ProfileStepper {
                 prefix: '+91',
                 isDisable: true,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              textField(
-                controller: profileController.alternateNumberController.value,
-                label: 'Alternate number',
-                hint: 'Enter alternate number',
-                prefix: '+91',
-                vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    profileController.mobileValidation(value);
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-              ),
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan&& loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+                SizedBox(
+                  height: 20,
+                ),
+                textField(
+                  controller: profileController.alternateNumberController.value,
+                  label: 'Alternate number',
+                  hint: 'Enter alternate number',
+                  prefix: '+91',
+                  vaidation: (value) {
+                    if (value.toString().trim().isNotEmpty) {
+                      return profileController.mobileValidation(value);
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                ),
+              ],
               SizedBox(
                 height: 20,
               ),
@@ -231,99 +244,125 @@ class ProfileStepper {
                 hint: 'Enter email ID',
                 vaidation: (value) {
                   if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    profileController.emailValidation(value);
+                    return profileController.emailValidation(value);
+                  } else {
+                    return null;
                   }
-                  return null;
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
+              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+                SizedBox(
+                  height: 20,
+                ),
+                textField(
+                  controller: profileController.dobController.value,
+                  label: 'Date of birth (DD-MM-YYYY)',
+                  hint: 'DD-MM-YYYY',
+                  suffix: Icon(
+                    Icons.calendar_today_outlined,
+                    color: AppColors.greyText,
+                  ),
+                  onTap: () async {
+                    selectedDate = await datePicker(context);
+                    String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
+                    profileController.dobController.value.text = date;
+                  },
+                  isDisable: true,
+                  vaidation: (value) {
+                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                      return profileController.nullCheckValidation(
+                        value,
+                        'Enter DOB',
+                      );
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ],
               SizedBox(
                 height: 20,
               ),
-              textField(
-                controller: profileController.dobController.value,
-                label: 'Date of birth (DD-MM-YYYY)',
-                hint: 'DD-MM-YYYY',
-                suffix: Icon(
-                  Icons.calendar_today_outlined,
-                  color: AppColors.greyText,
-                ),
-                onTap: () async {
-                  selectedDate = await datePicker(context);
-                  String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
-                  profileController.dobController.value.text = date;
-                },
-                isDisable: true,
-                vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    profileController.nullCheckValidation(
-                      value,
-                      'Enter DOB',
-                    );
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Gender",
-                style: TextStyle(
-                  color: AppColors.lightBlack,
-                  fontSize: Dimens.font_14sp,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Obx(
-                  () => Row(
-                    children: [
-                      radioButton(
-                        value: 'Male',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Female',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                      radioButton(
-                        value: 'Other',
-                        callBack: (value) {
-                          profileController.gender.value = value.toString();
-                        },
-                        groupValue: profileController.gender.value,
-                      ),
-                    ],
+              if (loanType != LoanType.FarmLoan) ...[
+                Text(
+                  "Gender",
+                  style: TextStyle(
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_14sp,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              commonDropDown(
-                item: <String>['Single', 'Married','Widowed','Divorced'].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  profileController.maritalStatus.value = value;
-                },
-                label: 'Marital status',
-                hint: 'Select your marital status',
-                value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
-              ),
+                SizedBox(
+                  height: 5,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => Row(
+                      children: [
+                        radioButton(
+                          value: 'Male',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Female',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                        radioButton(
+                          value: 'Other',
+                          callBack: (value) {
+                            profileController.gender.value = value.toString();
+                          },
+                          groupValue: profileController.gender.value,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+                SizedBox(
+                  height: 20,
+                ),
+                commonDropDown(
+                  item: <String>['Single', 'Married', 'Widowed', 'Divorced'].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    profileController.maritalStatus.value = value;
+                  },
+                  label: 'Marital status',
+                  hint: 'Select your marital status',
+                  value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
+                ),
+              ],
+              if(loanType == LoanType.BikeLoan || loanType == LoanType.CarLoan)...[
+                SizedBox(
+                  height: 20,
+                ),
+                textField(
+                  controller: profileController.panNumberController.value,
+                  label: 'PAN number',
+                  hint: 'Enter your PAN number here',
+                  vaidation: (value) {
+                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                      return profileController.panValidation(
+                        value,
+                      );
+                    }
+                    return null;
+                  },
+                ),
+              ],
               SizedBox(
                 height: 20,
               ),
@@ -365,7 +404,7 @@ class ProfileStepper {
     );
   }
 
-  Widget residentialDetails(GlobalKey<FormState> residentialForm) {
+  Widget residentialDetails(GlobalKey<FormState> residentialForm, {bool? isFromLoan = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -394,10 +433,13 @@ class ProfileStepper {
                 label: 'Address Line 1',
                 hint: 'Enter Door # , Building name, Flat #',
                 vaidation: (value) {
-                  return profileController.nullCheckValidation(
-                    value,
-                    'Enter address line 1',
-                  );
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    return profileController.nullCheckValidation(
+                      value,
+                      'Enter address line 1',
+                    );
+                  }
+                  return null;
                 },
               ),
               SizedBox(
@@ -424,7 +466,7 @@ class ProfileStepper {
                 label: 'Pincode',
                 hint: 'Enter pincode here',
                 vaidation: (value) {
-                  if (value.toString().trim().isNotEmpty) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
                     profileController.pinCodeValidation(
                       value,
                     );
@@ -536,10 +578,15 @@ class ProfileStepper {
                 controller: profileController.occupationController.value,
                 label: 'Occupation',
                 hint: 'Enter what you do here',
-                vaidation: (value) => profileController.nameValidation(
-                  value,
-                  'Enter Occupation of min 3 char',
-                ),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.nameValidation(
+                      value,
+                      'Enter Occupation of min 3 char',
+                    );
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,
@@ -549,10 +596,15 @@ class ProfileStepper {
                 label: 'Monthly income',
                 hint: 'Enter monthly income',
                 prefix: '₹',
-                vaidation: (value) => profileController.nullCheckValidation(
-                  value,
-                  'Enter valid amount',
-                ),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    profileController.nullCheckValidation(
+                      value,
+                      'Enter valid amount',
+                    );
+                  }
+                  return null;
+                },
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
@@ -565,9 +617,14 @@ class ProfileStepper {
                 controller: profileController.panNumberController.value,
                 label: 'PAN number',
                 hint: 'Enter your PAN number here',
-                vaidation: (value) => profileController.panValidation(
-                  value,
-                ),
+                vaidation: (value) {
+                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                    return profileController.panValidation(
+                      value,
+                    );
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,

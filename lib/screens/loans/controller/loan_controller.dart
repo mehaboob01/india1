@@ -24,7 +24,7 @@ class LoanController extends GetxController {
 
   ProfileController profileController = Get.put(ProfileController());
 
-  late CreateLoanModel createLoanModel;
+  Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
 
@@ -46,15 +46,17 @@ class LoanController extends GetxController {
 
   getLoanType(LoanType loanType) {
     if (loanType == LoanType.PersonalLoan) {
-      return 'PersonalLoan';
+      return 'Personal';
     } else if (loanType == LoanType.GoldLoan) {
-      return 'GoldLoan';
+      return 'Gold';
     } else if (loanType == LoanType.BikeLoan) {
-      return 'BikeLoan';
+      return 'TwoWheeler';
     } else if (loanType == LoanType.CarLoan) {
-      return 'CarLoan';
+      return 'FourWheeler';
     } else if (loanType == LoanType.TractorLoan) {
-      return 'TractorLoan';
+      return 'Farm';
+    } else if (loanType == LoanType.FarmLoan) {
+      return 'FarmEquipment';
     }
     return '';
   }
@@ -68,16 +70,15 @@ class LoanController extends GetxController {
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.createLoanApplication,
         method: Type.POST,
-        data: json.encode(
-          {
-            "customerId": customerId.value,
-            "loanType": "${getLoanType(loanType)}",
-          },
-        ),
+        data: json.encode({
+          "customerId": customerId.value,
+          "loanType": "${getLoanType(loanType)}",
+        }),
       );
       if (response != null) {
-        createLoanModel = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        createLoanModel.value = CreateLoanModel.fromJson(response);
+        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
       }
     } catch (exception) {
       print(exception);
@@ -95,12 +96,12 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.loanApplicationId}",
+          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanAmount": "$amount",
         }),
       );
       if (response != null) {
-        createLoanModel = CreateLoanModel.fromJson(response);
+        createLoanModel.value = CreateLoanModel.fromJson(response);
         updateScreen(Steps.PERSONAL.index);
       }
     } catch (exception) {
@@ -110,7 +111,7 @@ class LoanController extends GetxController {
     }
   }
 
-  Future getProviders({required bool isPersonalLoan,String? providerId}) async {
+  Future getProviders({required bool isPersonalLoan, String? providerId}) async {
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -120,9 +121,9 @@ class LoanController extends GetxController {
         data: json.encode(
           {
             "customerId": customerId.value,
-            "loanApplicationId": "${createLoanModel.loanApplicationId}",
-            if(providerId !=null || providerId !='')...{
-              "loanProviderId" : "$providerId"
+            "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+            if (providerId != null || providerId != '') ...{
+              "loanProviderId": "$providerId",
             }
           },
         ),
@@ -153,8 +154,10 @@ class LoanController extends GetxController {
         method: Type.POST,
         data: json.encode({
           "customerId": customerId.value,
-          "loanApplicationId": "${createLoanModel.loanApplicationId}",
-          "loanProviderId": "$providerId",
+          "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+          if (providerId != '') ...{
+            "loanProviderId": "$providerId",
+          },
           "loanLenderId": "$lenderId",
         }),
       );

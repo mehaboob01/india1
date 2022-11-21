@@ -32,16 +32,19 @@ class CreateLoanModel {
 
 class LoanConfiguration {
   num? maxLoanAmount;
+  num? minLoanAmount;
 
-  LoanConfiguration({this.maxLoanAmount});
+  LoanConfiguration({this.maxLoanAmount,this.minLoanAmount,});
 
   LoanConfiguration.fromJson(Map<String, dynamic> json) {
     maxLoanAmount = json['maxLoanAmount'];
+    minLoanAmount = json['minLoanAmount'];
   }
-
+//9409993057
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['maxLoanAmount'] = this.maxLoanAmount;
+    data['minLoanAmount'] = this.minLoanAmount;
     return data;
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/core/data/remote/api_constant.dart';
+import 'package:india_one/utils/common_webview.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
@@ -73,17 +75,39 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
+        // InkWell(
+        //   onTap: () {
+        //     Get.toNamed(MRouter.tractorLoanIO);
+        //   },
+        //   child: ItemCard(
+        //     image: AppImages.tractorSvg,
+        //     label: 'Tractor',
+        //     itembgColor: ItemCardbgColor.lightBlue,
+        //   ),
+        // ),
         InkWell(
           onTap: () {
-            Get.toNamed(MRouter.tractorLoanIO);
+            Get.toNamed(MRouter.farmLoan);
           },
           child: ItemCard(
             image: AppImages.tractorSvg,
-            label: 'Form',
+            label: 'Farm',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'MSME',
+              url: Apis.msme,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.handSackSvg,
+            label: 'MSME',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.goldLoanIO);
@@ -96,17 +120,10 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed(MRouter.emiCard);
-          },
-          child: ItemCard(
-            image: AppImages.creditCardSvg,
-            label: 'Emi Card',
-            itembgColor: ItemCardbgColor.lightBlue,
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(MRouter.creditCard);
+            Get.to(() => CommonWebView(
+                  title: 'Credit Card',
+                  url: Apis.creditCard,
+                ));
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,
@@ -116,7 +133,10 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed(MRouter.creditScore);
+            Get.to(() => CommonWebView(
+                  title: 'Credit Score',
+                  url: Apis.creditScore,
+                ));
           },
           child: ItemCard(
             image: AppImages.creditScoreSvg,

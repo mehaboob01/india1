@@ -4,7 +4,6 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
-import 'package:india_one/screens/loans/submission_page.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -12,12 +11,14 @@ class ProviderDetail extends StatelessWidget {
   final String title;
   final Lenders lenders;
   final bool personalLoan;
+  final String providerId;
 
   ProviderDetail({
     Key? key,
     required this.title,
     required this.lenders,
     required this.personalLoan,
+    required this.providerId,
   }) : super(key: key);
 
   LoanController loanController = Get.put(LoanController());
@@ -88,36 +89,36 @@ class ProviderDetail extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                            Text(
-                              "Other details",
-                              style: TextStyle(
-                                color: AppColors.lightBlack,
-                                fontSize: Dimens.font_20sp,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          Text(
+                            "Other details",
+                            style: TextStyle(
+                              color: AppColors.lightBlack,
+                              fontSize: Dimens.font_20sp,
+                              fontWeight: FontWeight.w500,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            ListView.builder(
-                              itemCount: 20,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ExpansionTile(
-                                  tilePadding: EdgeInsets.all(0),
-                                  title: Text(
-                                    'Interest Rate',
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ListView.builder(
+                            itemCount: 20,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ExpansionTile(
+                                tilePadding: EdgeInsets.all(0),
+                                title: Text(
+                                  'Interest Rate',
+                                ),
+                                children: [
+                                  Text("Demo text"),
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                  children: [
-                                    Text("Demo text"),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
+                                ],
+                              );
+                            },
+                          ),
                           SizedBox(
                             height: 70,
                           ),
@@ -138,7 +139,7 @@ class ProviderDetail extends StatelessWidget {
                     callBack: () {
                       Get.back();
                       loanController.applyLoan(
-                        providerId: '',
+                        providerId: providerId ?? '',
                         lenderId: lenders.id ?? '',
                       );
                     },

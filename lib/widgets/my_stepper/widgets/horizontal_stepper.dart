@@ -19,7 +19,8 @@ class HorizontalStepperItem extends StatelessWidget {
       required this.titleTextStyle,
       required this.subtitleTextStyle,
       this.iconHeight,
-      this.iconWidth})
+      this.iconWidth,
+      this.callBack,})
       : super(key: key);
 
   /// Stepper item of type [StepperData] to inflate stepper with data
@@ -57,6 +58,8 @@ class HorizontalStepperItem extends StatelessWidget {
 
   /// Width of [StepperData.iconWidget]
   final double? iconWidth;
+
+  final Function? callBack;
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +112,19 @@ class HorizontalStepperItem extends StatelessWidget {
               height: barHeight,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: index <= activeIndex
-                ? dot
-                : ColorFiltered(
-                    colorFilter: Utils.getGreyScaleColorFilter(),
-                    child: dot,
-                  ),
+          InkWell(
+            onTap: (){
+              callBack!(index);
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: index <= activeIndex
+                  ? dot
+                  : ColorFiltered(
+                      colorFilter: Utils.getGreyScaleColorFilter(),
+                      child: dot,
+                    ),
+            ),
           ),
           Flexible(
             child: Container(

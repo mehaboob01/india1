@@ -5,6 +5,7 @@ import 'package:india_one/screens/map/map_ui.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
 import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/loans/car_loan/car_loan.dart';
+import 'package:india_one/screens/loans/farm_loan/farm_loan.dart';
 import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
 import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
@@ -50,6 +51,7 @@ class MRouter {
   static const String carInsurance = 'CarInsurance';
 
 
+  static const String farmLoan = 'FarmLoan';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -116,6 +118,9 @@ class MRouter {
         return CupertinoPageRoute(builder: (_) => TractorLoanIO());
       case creditScore:
         return CupertinoPageRoute(builder: (_) => CreditScore());
+
+      case farmLoan:
+        return CupertinoPageRoute(builder: (_) => FarmLoan());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -14,8 +13,6 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../../../widgets/custom_slider.dart';
-
 class CarLoanIO extends StatefulWidget {
   @override
   State<CarLoanIO> createState() => _CarLoanIOState();
@@ -23,7 +20,6 @@ class CarLoanIO extends StatefulWidget {
 
 class _CarLoanIOState extends State<CarLoanIO> {
   LoanController _plManager = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -33,6 +29,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
 
   @override
   void initState() {
+    profileController.setData();
     loanAmountEditingController = TextEditingController();
     super.initState();
     loanController.createLoanApplication(loanType: LoanType.CarLoan);
@@ -43,6 +40,12 @@ class _CarLoanIOState extends State<CarLoanIO> {
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    profileController.resetData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +92,10 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                       iconHeight: 25,
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
-                                      activeIndex: _plManager.currentScreen.value,
+                                      activeIndex: _plManager.currentScreen.value - 1,
+                                      callBack: (i) {
+                                        _plManager.currentScreen.value = i + 1;
+                                      },
                                     ),
                                   ),
                                 ),
@@ -135,7 +141,6 @@ class _CarLoanIOState extends State<CarLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        _loanAmountKey.currentState!.save();
         if (profileController.vehicleType.value == '') {
           Flushbar(
             title: "Alert!",
@@ -143,9 +148,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-          if (_loanAmountKey.currentState!.validate()) {
-            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
-          }
+          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
         }
       },
       child: Container(
@@ -267,7 +270,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.loanApplicationId,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       _plManager.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -326,7 +329,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.loanApplicationId,
+              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
               callBack: () {
                 Get.to(() => LendersList(
                       title: 'Car loan',
@@ -370,95 +373,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
         DividerIO(
           height: 38,
         ),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Loan Amount',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
-              ),
-              DividerIO(
-                height: 24,
-              ),
-              Text(
-                'Choose the loan amount you want from slider or enter in the text field',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
-          child: CustomSlider(
-            sliderValue: _plManager.sliderValue,
-            textEditingController: loanAmountEditingController,
-            minValue: _plManager.minValue,
-            maxValue: _plManager.maxValue,
-          ),
-        ),
-        DividerIO(
-          height: 18,
-        ),
-        Padding(
-            padding: EdgeInsets.only(
-              left: 4.0,
-              right: 4,
-            ),
-            child: FormBuilder(
-              key: _loanAmountKey,
-              initialValue: {
-                "loan_amount": "",
-              },
-              child: FormBuilderTextField(
-                keyboardType: TextInputType.number,
-                controller: loanAmountEditingController,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600),
-                decoration: new InputDecoration(
-                  prefixIcon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("₹", style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
-                  ),
-                  border: const OutlineInputBorder(),
-                  labelText: 'Loan amount',
-                  labelStyle: new TextStyle(color: Color(0xFF787878)),
-                ),
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context),
-                ]),
-                onChanged: (value) {
-                  double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
-                    _plManager.sliderValue.value = newVal;
-                  } else {
-                    _plManager.sliderValue.value = _plManager.minValue.value;
-                  }
-                },
-                name: 'loan_amount',
-              ),
-            )),
-        DividerIO(
-          height: 28,
-        ),
         ProfileStepper().commonDropDown(
-          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike'].map<DropdownMenuItem<String>>((String value) {
+          item: <String>['4 wheeler - New', '4 wheeler - Preowned'].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value.toString()),
@@ -467,8 +383,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
           onChanged: (value) {
             profileController.vehicleType.value = value;
           },
-          label: 'Two wheeler required',
-          hint: 'Select the two wheeler you are buying',
+          label: '4 wheeler required',
+          hint: 'Select the car you are willing to buy',
           value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
         ),
         SizedBox(
@@ -485,6 +401,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
       context,
       personalForm,
       isFromLoan: true,
+      loanType: LoanType.CarLoan,
     );
   }
 
@@ -493,6 +410,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromLoan: true,
     );
   }
 }
