@@ -182,7 +182,17 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                             ? cashBackManager.isLoading == true
                                 ? CircularProgressIndicator()
                                 : LoyaltySubmitButton(
-                                    buttonEnabled: cashbackCtrl.bankAccountSubmitEnable,
+                                    buttonEnabled: (loyaltyBankSliderValue
+                                                        .value !=
+                                                    0.0 &&
+                                                cashBackManager
+                                                        .selectedIndex.value !=
+                                                    (-1)) ||
+                                            cashbackCtrl
+                                                .bankAccountSubmitEnable.value
+                                        ? true.obs
+                                        : false
+                                            .obs, //cashbackCtrl.bankAccountSubmitEnable,
                                     onPressed: () {
                                       if (cashBackManager.cardTapped.value ==
                                           true) {
@@ -234,7 +244,7 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                             .save();
 
                                         var bankId = checkBankId(cashbackCtrl
-                                            .bankAccountKey!
+                                            .bankAccountKey
                                             .currentState!
                                             .value['bankDropDown']);
                                         print("api for card tapped");
@@ -242,7 +252,7 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                         cashBackManager.cashBackToBankApi(
                                             false,
                                             bankId,
-                                            cashbackCtrl.bankAccountKey!
+                                            cashbackCtrl.bankAccountKey
                                                 .currentState!.value,
                                             "0",
                                             context);
@@ -256,7 +266,8 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                             : LoyaltySubmitButton(
                                 buttonEnabled: cashbackCtrl.upiSubmitEnable,
                                 onPressed: () {
-                                  cashbackCtrl.bankAccountSubmitEnable.value = true;
+                                  cashbackCtrl.bankAccountSubmitEnable.value =
+                                      true;
                                   print("upi redeem now");
 
                                   print(cashbackCtrl
@@ -312,18 +323,19 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
   final enableButton = List.generate(4, (index) => false).obs;
 
-  final RxList<String> data = <String>[].obs;
+  final bankAccontSelected = ''.obs;
+  final banktypeSelected = ''.obs;
 
   final cashBackManager = Get.find<CashBackManager>();
   double widthIs = 0, heightIs = 0;
 
-  final List<String> bankName = [
+  final RxList<String> bankName = <String>[
     'Axis Bank Ltd.',
-    'Bandhan Bank Ltd.',
-    'CSB Bank Limited',
+    'AHMEDABAD MERCANTILE CO-OP BANK',
+    'AHMEDNAGAR MERCHANTS CO-OP BANK',
     'City Union Bank Ltd.',
     'DCB Bank Ltd.',
-  ];
+  ].obs;
 
   final List<String> bankAccountType = [
     'Saving account',
@@ -331,7 +343,9 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
   ];
 
   bool toEnableButton() {
-    if (widget.cashbackCtrl.redeemPointBankSliderTextEditingCtrl.value.text
+    if (bankAccontSelected.isNotEmpty &&
+        banktypeSelected.isNotEmpty &&
+        widget.cashbackCtrl.redeemPointBankSliderTextEditingCtrl.value.text
             .isNotEmpty &&
         widget.cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value.text
             .isNotEmpty &&
@@ -347,11 +361,17 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     cashBackManager.selectedIndex.value = (-1);
     // cashBackManager.onInit();
     cashBackManager.customerBankList.clear();
+    widget.textEditCtrl.text = '';
+  }
+
+  @override
+  void dispose() {
+    widget.cashbackCtrl.bankAccountKey.currentState!.reset();
+    super.dispose();
   }
 
   @override
@@ -361,10 +381,17 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
     List<bool> localSelectedList = []; // for bank
 
+    void clearData() {
+      widget.cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value.text = '';
+      widget.cashbackCtrl.loyaltyBankAccountreEnteredTextEditingCtrl.value
+          .text = '';
+      widget.cashbackCtrl.loyaltyBankAccountIFSCTextEditingCtrl.value.text = '';
+    }
+
     void onCardTapped(int index) {
+      clearData();
       cashBackManager.cardTapped.value = true;
-      print(cashBackManager.cardTapped.value);
-      print("card tapped");
+
       cashBackManager.selectedIndex.value = index;
 
       cashBackManager.addBankData.value = {
@@ -385,9 +412,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
         key: widget.cashbackCtrl.bankAccountKey,
         onChanged: () {
           widget.cashbackCtrl.bankAccountSubmitEnable.value =
-              toEnableButton() || cashBackManager.selectedIndex != -1
-                  ? true
-                  : false;
+              toEnableButton() ? true : false;
         },
         initialValue: {
           "bankId": "",
@@ -395,11 +420,10 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           "accountNumber": "",
           "bankAccountId": "",
           "ifscCode": "",
-          "accountType": "",
+          "accountType": null,
           "customerId": "",
           "saveBankDetails": true,
           "bankDropDown": null,
-          "accountType": null
         },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -520,55 +544,48 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                                 return Padding(
                                                   padding: EdgeInsets.all(4.0),
                                                   child: Container(
-                                                      child: GestureDetector(
-                                                        onTap: () => {
-                                                          // if (_mrManager
-                                                          //     .plansList.isNotEmpty)
-                                                          //   {onCardTapped(index)}
-                                                        },
-                                                        child: Obx(
-                                                          () => GestureDetector(
-                                                            onTap: () => {
-                                                              if (cashBackManager
-                                                                  .customerBankList
-                                                                  .isNotEmpty)
-                                                                {
-                                                                  onCardTapped(
-                                                                      index)
-                                                                }
-                                                            },
-                                                            child:
-                                                                CommonRadioCard(
-                                                              radioCardType:
-                                                                  RadioCardType
-                                                                      .bankAccount,
-                                                              bankAccountIFSC:
-                                                                  cashBackManager
-                                                                      .customerBankList[
-                                                                          index]
-                                                                      .ifscCode,
-                                                              bankAccountName:
-                                                                  cashBackManager
-                                                                      .customerBankList[
-                                                                          index]
-                                                                      .name,
-                                                              bankAccountNumber:
-                                                                  cashBackManager
-                                                                      .customerBankList[
-                                                                          index]
-                                                                      .maskAccountNumber,
-                                                              bankAccountType:
-                                                                  cashBackManager
-                                                                      .customerBankList[
-                                                                          index]
-                                                                      .accountType,
-                                                              cardWidth: double
-                                                                  .maxFinite,
-                                                              isSelected: index ==
-                                                                  cashBackManager
-                                                                      .selectedIndex
-                                                                      .value,
-                                                            ),
+                                                      child: Obx(
+                                                        () => GestureDetector(
+                                                          onTap: () => {
+                                                            if (cashBackManager
+                                                                .customerBankList
+                                                                .isNotEmpty)
+                                                              {
+                                                                onCardTapped(
+                                                                    index),
+                                                              }
+                                                          },
+                                                          child:
+                                                              CommonRadioCard(
+                                                            radioCardType:
+                                                                RadioCardType
+                                                                    .bankAccount,
+                                                            bankAccountIFSC:
+                                                                cashBackManager
+                                                                    .customerBankList[
+                                                                        index]
+                                                                    .ifscCode,
+                                                            bankAccountName:
+                                                                cashBackManager
+                                                                    .customerBankList[
+                                                                        index]
+                                                                    .name,
+                                                            bankAccountNumber:
+                                                                cashBackManager
+                                                                    .customerBankList[
+                                                                        index]
+                                                                    .maskAccountNumber,
+                                                            bankAccountType:
+                                                                cashBackManager
+                                                                    .customerBankList[
+                                                                        index]
+                                                                    .accountType,
+                                                            cardWidth: double
+                                                                .maxFinite,
+                                                            isSelected: index ==
+                                                                cashBackManager
+                                                                    .selectedIndex
+                                                                    .value,
                                                           ),
                                                         ),
                                                       ),
@@ -630,23 +647,25 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
               : SizedBox.shrink(),
 
           // disable ui from here
-          Obx(
-            () => DropDown(
-              onChanged: (value) {
-                // return cashBackManager.bankAccontSelected!.value = value!;
-              },
-              formName: 'bankDropDown',
-              labelName: 'Bank name',
-              hintText: bankAccontDropDownHint!,
-              data: cashBackManager.bankList.toList(),
-              validationText: '*Bank name is compulsory',
-            ),
+          DropDown(
+            onChanged: (value) {
+              return bankAccontSelected.value = value!;
+            },
+            formName: 'bankDropDown',
+            isDropDownEnabled:
+                cashBackManager.selectedIndex.value != -1 ? false : true,
+            labelName: 'Bank name',
+            hintText: bankAccontDropDownHint!,
+            data: bankName, //cashBackManager.bankList,
+            validationText: '*Bank name is compulsory',
           ),
 
           sizedbox,
           // enter your account number ------------------------------------------------------------
           CommonTextField(
             formName: 'accountNumber',
+            isfieldEnabled:
+                cashBackManager.selectedIndex.value != -1 ? false : true,
             inputController:
                 widget.cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value,
             hintText: 'Enter your account number here',
@@ -661,6 +680,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           // comfirm account number -----------------------------------------------
           CommonTextField(
             formName: 're-account',
+            isfieldEnabled:
+                cashBackManager.selectedIndex.value != -1 ? false : true,
             inputController: widget
                 .cashbackCtrl.loyaltyBankAccountreEnteredTextEditingCtrl.value,
             hintText: 'Re-enter your account number here',
@@ -687,6 +708,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
 
           CommonTextField(
             formName: 'ifscCode',
+            isfieldEnabled:
+                cashBackManager.selectedIndex.value != -1 ? false : true,
             inputController:
                 widget.cashbackCtrl.loyaltyBankAccountIFSCTextEditingCtrl.value,
             hintText: 'Enter your IFSC code here',
@@ -700,8 +723,12 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           sizedbox,
           // bank account type ---------------------------------------------------------
           DropDown(
-            onChanged: (value) {},
+            onChanged: (value) {
+              return banktypeSelected.value = value!;
+            },
             formName: 'accountType',
+            isDropDownEnabled:
+                cashBackManager.selectedIndex.value != -1 ? false : true,
             labelName: 'Account type',
             data: bankAccountType,
             hintText: 'Select account type',
@@ -833,107 +860,111 @@ class LoyaltyUpiVpa extends StatelessWidget {
               ),
               sizedbox,
 
-              cashBackManager.customerUPIList.isNotEmpty?
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0.wp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RowHeadingWithunderLineSubHeading(
-                      heading: 'Your UPI or VPA’s',
-                      subHeading: 'Manage',
-                      onPressedSubHeading: () {
-                        Get.to(() => ManageAccountsCard());
-                      },
-                    ),
-
-                    SizedBox(
-                      height: 16,
-                    ),
-
-                    // list of upi's list
-
-                    Container(
-                        height: 234,
-                        child: ListView.builder(
-                            itemCount: cashBackManager.customerUPIList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                  padding: EdgeInsets.all(4.0),
-                                  child: Container(
-                                    child: GestureDetector(
-                                      onTap: () => {
-                                        if (cashBackManager
-                                            .customerUPIList.isNotEmpty)
-                                          {onUpiCardTapped(index)}
-                                      },
-                                      child: Obx(
-                                        () => CommonRadioCard(
-                                          radioCardType: RadioCardType.upi,
-                                          upiId: cashBackManager
-                                              .customerUPIList[index].upiId,
-                                          cardWidth: double.maxFinite,
-                                          isSelected: index ==
-                                              cashBackManager
-                                                  .selectedUpiIndex.value,
-                                        ),
-                                      ),
-                                    ),
-                                    //
-                                    // decoration: BoxDecoration(
-                                    //
-                                    //   borderRadius:
-                                    //   BorderRadius
-                                    //       .circular(
-                                    //       1.0.wp),
-                                    // ),
-                                  ));
-                            }),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: AppColors.cardScreenBg),
-                          borderRadius: BorderRadius.circular(2.0.wp),
-                        )),
-
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: CommonDivider(
-                            isvertical: false,
-                            horizontalPadding:
-                                EdgeInsets.symmetric(horizontal: 2.0.wp),
+              cashBackManager.customerUPIList.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.0.wp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RowHeadingWithunderLineSubHeading(
+                            heading: 'Your UPI or VPA’s',
+                            subHeading: 'Manage',
+                            onPressedSubHeading: () {
+                              Get.to(() => ManageAccountsCard());
+                            },
                           ),
-                        ),
-                        Text(
-                          'or',
-                          style: AppStyle.shortHeading.copyWith(
-                              color: const Color(0xff2d2d2d),
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Expanded(
-                          child: CommonDivider(
-                            isvertical: false,
-                            horizontalPadding:
-                                EdgeInsets.symmetric(horizontal: 2.0.wp),
+
+                          SizedBox(
+                            height: 16,
                           ),
-                        ),
-                      ],
-                    ),
-                    sizedbox,
-                    Text(
-                      'Add UPI details',
-                      style: AppStyle.shortHeading.copyWith(
-                          color: const Color(0xff2d2d2d),
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ):
-              sizedbox,
+
+                          // list of upi's list
+
+                          Container(
+                              height: 234,
+                              child: ListView.builder(
+                                  itemCount:
+                                      cashBackManager.customerUPIList.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                        padding: EdgeInsets.all(4.0),
+                                        child: Container(
+                                          child: GestureDetector(
+                                            onTap: () => {
+                                              if (cashBackManager
+                                                  .customerUPIList.isNotEmpty)
+                                                {onUpiCardTapped(index)}
+                                            },
+                                            child: Obx(
+                                              () => CommonRadioCard(
+                                                radioCardType:
+                                                    RadioCardType.upi,
+                                                upiId: cashBackManager
+                                                    .customerUPIList[index]
+                                                    .upiId,
+                                                cardWidth: double.maxFinite,
+                                                isSelected: index ==
+                                                    cashBackManager
+                                                        .selectedUpiIndex.value,
+                                              ),
+                                            ),
+                                          ),
+                                          //
+                                          // decoration: BoxDecoration(
+                                          //
+                                          //   borderRadius:
+                                          //   BorderRadius
+                                          //       .circular(
+                                          //       1.0.wp),
+                                          // ),
+                                        ));
+                                  }),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border:
+                                    Border.all(color: AppColors.cardScreenBg),
+                                borderRadius: BorderRadius.circular(2.0.wp),
+                              )),
+
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: CommonDivider(
+                                  isvertical: false,
+                                  horizontalPadding:
+                                      EdgeInsets.symmetric(horizontal: 2.0.wp),
+                                ),
+                              ),
+                              Text(
+                                'or',
+                                style: AppStyle.shortHeading.copyWith(
+                                    color: const Color(0xff2d2d2d),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Expanded(
+                                child: CommonDivider(
+                                  isvertical: false,
+                                  horizontalPadding:
+                                      EdgeInsets.symmetric(horizontal: 2.0.wp),
+                                ),
+                              ),
+                            ],
+                          ),
+                          sizedbox,
+                          Text(
+                            'Add UPI details',
+                            style: AppStyle.shortHeading.copyWith(
+                                color: const Color(0xff2d2d2d),
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    )
+                  : sizedbox,
               Row(
                 children: [
                   //  VERIFY UPI ID
@@ -1005,8 +1036,6 @@ class LoyaltyUpiVpa extends StatelessWidget {
                                     .toString());
                                 cashbackCtrl.upiAddEnable.value = false;
                                 _upiAddKey.currentState!.reset();
-
-
                               }
                             }),
                         // child: Container(
@@ -1028,7 +1057,6 @@ class LoyaltyUpiVpa extends StatelessWidget {
 }
 
 class LoyaltySubmitButton extends StatelessWidget {
-
   final cashbackCtrl = Get.put(CashBackController());
   LoyaltySubmitButton({
     Key? key,

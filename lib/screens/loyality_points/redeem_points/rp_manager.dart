@@ -25,10 +25,9 @@ class CashBackController extends GetxController {
   final bankAccountType = ''.obs;
   var sliderMaxValue = 0.obs;
   Rx<double> sliderMaxValueDouble = 0.0.obs;
-
+  final Rx<double> sliderValue = 0.0.obs;
 
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
-
 
   @override
   void onInit() {
@@ -42,15 +41,7 @@ class CashBackController extends GetxController {
 
     print(sliderMaxValueDouble);
     print("sliderMaxValue double");
-
-
-
-
-
-
   }
-
-
 
   final GlobalKey<FormBuilderState> bankAccountKey =
       GlobalKey<FormBuilderState>();

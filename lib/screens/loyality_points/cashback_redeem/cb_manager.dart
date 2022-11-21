@@ -22,7 +22,8 @@ class CashBackManager extends GetxController {
   var cardUpiTapped = false.obs;
 
   //bank list for drop dowm
-  var bankList = <String>['ABHYUDAYA CO-OP BANK-1'].obs;
+  final bankList = <String>[].obs;
+
   var bankListSend = <String>[];
 
   var bankListId = <Bank>[].obs;
@@ -43,8 +44,7 @@ class CashBackManager extends GetxController {
   RxInt selectedIndex = (-1).obs;
   RxInt selectedUpiIndex = (-1).obs;
   var selectedplanList = <bool>[].obs; // for bank
-  var selectedplanUpiList = <bool>[].obs;// for upi
-
+  var selectedplanUpiList = <bool>[].obs; // for upi
 
   @override
   void onInit() {
@@ -53,7 +53,6 @@ class CashBackManager extends GetxController {
     callBankListApi();
     fetchCustomerBankAccounts();
     fetchCustomerUpiAccounts();
-
   }
 
   // Bank list for drop down
@@ -118,7 +117,6 @@ class CashBackManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-
       print("response==> ${response.body.toString()}");
       var jsonData = jsonDecode(response.body);
 
@@ -155,7 +153,6 @@ class CashBackManager extends GetxController {
     }
   }
 
-
   // fetch upi's  accounts
 
   fetchCustomerUpiAccounts() async {
@@ -173,7 +170,7 @@ class CashBackManager extends GetxController {
       var jsonData = jsonDecode(response.body);
 
       FetchCustomerUpiModel fetchCustomerUpiModel =
-      FetchCustomerUpiModel.fromJson(jsonData);
+          FetchCustomerUpiModel.fromJson(jsonData);
 
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
@@ -211,7 +208,8 @@ class CashBackManager extends GetxController {
     bool? fromAccountList,
     String? bankIdOrBankAccountId,
     Map<String, dynamic> data,
-    String pointsToReedem, BuildContext context,
+    String pointsToReedem,
+    BuildContext context,
   ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -222,15 +220,16 @@ class CashBackManager extends GetxController {
       print("points to redeem ==>  ${pointsToReedem}");
       print("bank account id ==>  ${bankIdOrBankAccountId}");
 
-      String? accountType = data['accountType'].toString() == "Saving account"? "savings":"current";
+      String? accountType = data['accountType'].toString() == "Saving account"
+          ? "savings"
+          : "current";
       print("account type ==> ${accountType}");
-
 
       Map<String, dynamic> sendData = {};
       if (fromAccountList != true) {
         print("from custom data");
         sendData = {
-          "bankId":  bankIdOrBankAccountId,
+          "bankId": bankIdOrBankAccountId,
           "pointsToRedeem": data['pointsToRedeem'],
           "accountNumber": data['accountNumber'].toString(),
           // "bankAccountId":  "",
@@ -239,8 +238,6 @@ class CashBackManager extends GetxController {
           "customerId": customerId,
           "saveBankDetails": true
         };
-
-
       } else {
         print("from list data");
         sendData = {
@@ -249,8 +246,6 @@ class CashBackManager extends GetxController {
           "customerId": customerId,
         };
       }
-
-
 
       print("map data for bank ${sendData.toString()}");
 
@@ -265,39 +260,33 @@ class CashBackManager extends GetxController {
       print("Response of points to bank api");
       print(response.body);
 
-      if(response.statusCode == 200 || response.statusCode == 201)
-        {
-          var jsonData = jsonDecode(response.body);
-          CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
-          if (commonApiResponseModel.status!.code == 2000) {
-            Flushbar(
-              title: "successful!",
-              message: "Cashback sent in bank account !!",
-              duration: Duration(seconds: 2),
-            )..show(Get.context!)
-                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                MRouter.homeScreen, (Route<dynamic> route) => false))
-                .then((value) => selectedIndex.value ==  -1);
-
-
-          } else {
-            Flushbar(
-              title: "Alert!",
-              message: commonApiResponseModel.status!.message,
-              duration: Duration(seconds: 2),
-            )..show(Get.context!);
-          }
-
-        }else{
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        CommonApiResponseModel commonApiResponseModel =
+            CommonApiResponseModel.fromJson(jsonData);
+        if (commonApiResponseModel.status!.code == 2000) {
+          Flushbar(
+            title: "successful!",
+            message: "Cashback sent in bank account !!",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!)
+              .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                  MRouter.homeScreen, (Route<dynamic> route) => false))
+              .then((value) => selectedIndex.value == -1);
+        } else {
+          Flushbar(
+            title: "Alert!",
+            message: commonApiResponseModel.status!.message,
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
+      } else {
         Flushbar(
           title: "Server Error!",
           message: "Server Error ..",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
-
       }
-
-
     } catch (e) {
       Flushbar(
         title: "Error!",
@@ -324,33 +313,27 @@ class CashBackManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-
       print("Response of add upi${response.body}");
-
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel commonApiResponseModel =
+            CommonApiResponseModel.fromJson(jsonData);
 
-        if(commonApiResponseModel.status!.code == 2000)
-          {
-            Flushbar(
-              title: "Upi Added!",
-              message: "upi added successfully ...",
-              duration: Duration(seconds: 3),
-            )..show(Get.context!);
-            fetchCustomerUpiAccounts();
-          }else
-            {
-              Flushbar(
-                title: "Something went wrong ..",
-                message: commonApiResponseModel.status!.message.toString(),
-                duration: Duration(seconds: 2),
-              )..show(Get.context!);
-
-            }
-
-
+        if (commonApiResponseModel.status!.code == 2000) {
+          Flushbar(
+            title: "Upi Added!",
+            message: "upi added successfully ...",
+            duration: Duration(seconds: 3),
+          )..show(Get.context!);
+          fetchCustomerUpiAccounts();
+        } else {
+          Flushbar(
+            title: "Something went wrong ..",
+            message: commonApiResponseModel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
       } else {
         Flushbar(
           title: "Server Error!",
@@ -393,9 +376,7 @@ class CashBackManager extends GetxController {
           message: "Cashback send in Upi!",
           duration: Duration(seconds: 2),
         )..show(Get.context!);
-       // customerBankList.clear();
-
-
+        // customerBankList.clear();
 
       } else {
         Flushbar(
@@ -419,9 +400,7 @@ class CashBackManager extends GetxController {
   delBankAccount(String? id) async {
     isLoading(true);
 
-
-    try{
-
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       print("customer id${customerId}");
@@ -429,75 +408,48 @@ class CashBackManager extends GetxController {
 
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerBankAccount),
-          body: jsonEncode({
-
-            "customerId": customerId,
-            "bankAccountId": id
-          }),
+          body: jsonEncode({"customerId": customerId, "bankAccountId": id}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
 
-
-
       print("response delete==> ${response.body}");
 
-
-
-
-
-      if(response.statusCode == 200 || response.statusCode == 201){
-
-
+      if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
 
         CommonApiResponseModel commonApiResponseModel =
-        CommonApiResponseModel.fromJson(jsonData);
+            CommonApiResponseModel.fromJson(jsonData);
 
-        if(commonApiResponseModel.status!.code == 2000)
-
-        {
+        if (commonApiResponseModel.status!.code == 2000) {
           isLoading(false);
           Flushbar(
             title: "Success!!",
             message: "bank del Successfully ..",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
-
-        }
-        else{
+        } else {
           isLoading(false);
           Flushbar(
             title: "Error!!",
             message: commonApiResponseModel.status!.message,
             duration: Duration(seconds: 2),
           )..show(Get.context!);
-
         }
-
-      }else{
+      } else {
         isLoading(false);
         Flushbar(
           title: "Error!!",
           message: "Server Error ...",
           duration: Duration(seconds: 2),
-        )..show(Get.context!).then((value) => (){
-
-          customerBankList.clear();
-          fetchCustomerBankAccounts();
-
-
-
-        });
-
-
-
-
+        )..show(Get.context!).then((value) => () {
+              customerBankList.clear();
+              fetchCustomerBankAccounts();
+            });
       }
-    }catch(e)
-    {
+    } catch (e) {
       Flushbar(
         title: "Error!",
         message: "Something went wrong",
@@ -506,7 +458,5 @@ class CashBackManager extends GetxController {
     } finally {
       isLoading.value = false;
     }
-    }
-
   }
-
+}

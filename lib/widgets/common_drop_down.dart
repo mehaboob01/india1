@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../constant/theme_manager.dart';
 
 class DropDown extends StatefulWidget {
-   DropDown(
+  DropDown(
       {required this.data,
       Key? key,
       required this.validationText,
@@ -31,8 +31,7 @@ class DropDown extends StatefulWidget {
 class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
-    return
-      FormBuilderDropdown(
+    return FormBuilderDropdown(
       iconEnabledColor: AppColors.primary,
       iconDisabledColor: Colors.grey,
       name: widget.formName,
@@ -54,19 +53,18 @@ class _DropDownState extends State<DropDown> {
               EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
+              borderSide: BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
+              borderSide: BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
-                  width: 1.0, color: AppColors.primary))),
-      icon:  Icon(
+              borderSide: BorderSide(width: 1.0, color: AppColors.primary))),
+      icon: Icon(
         Icons.keyboard_arrow_down_rounded,
-       // color: AppColors.greyInlineText,
+        // color: AppColors.greyInlineText,
       ),
       iconSize: 34,
       isExpanded: true,
@@ -85,6 +83,7 @@ class _DropDownState extends State<DropDown> {
         );
       }).toList(),
       onChanged: (String? value) {
+        print('this is DropDownValue $value');
         setState(() {
           widget.onChanged(value);
 

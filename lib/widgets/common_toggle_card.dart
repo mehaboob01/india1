@@ -5,11 +5,8 @@ import '../screens/loyality_points/cashback_redeem/cb_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_manager.dart';
 import 'common_redeem_card.dart';
 
-
-
 class CommonToggleCard extends StatelessWidget {
-
-   CommonToggleCard({
+  CommonToggleCard({
     Key? key,
     required this.getController,
     required this.redeemCardList,
@@ -21,7 +18,6 @@ class CommonToggleCard extends StatelessWidget {
   final List<bool> isSelectedlist;
   CashBackManager cashBackManager = Get.put(CashBackManager());
 
-
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
@@ -29,14 +25,10 @@ class CommonToggleCard extends StatelessWidget {
         renderBorder: false,
         splashColor: Colors.transparent,
         isSelected: isSelectedlist,
-        onPressed: (index){
-
+        onPressed: (index) {
           getController.changeSelection(index, isSelectedlist);
           cashBackManager.onInit();
-
-
         },
-
         children: redeemCardList);
   }
 }
