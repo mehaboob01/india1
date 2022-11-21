@@ -6,6 +6,8 @@ import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
+import 'package:india_one/screens/loans/model/farm_loan_product_model.dart';
+import 'package:india_one/screens/loans/model/farm_loan_requirment_model.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 import 'package:india_one/screens/loans/submission_page.dart';
@@ -15,6 +17,7 @@ import '../personal_loan_io/personal_loan.dart';
 
 class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
+  RxBool farmLoanProductLoading = false.obs;
   Rx<double> sliderValue = 100000.0.obs;
   Rx<double> minValue = 0.0.obs;
   Rx<double> maxValue = 0.0.obs;
@@ -27,7 +30,8 @@ class LoanController extends GetxController {
   Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
-
+  Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
+  RxInt farmCompletedIndex = 0.obs;
   List<String> titleList = [
     "Loan amount",
     "Personal",
@@ -38,6 +42,19 @@ class LoanController extends GetxController {
     "Loan amount",
     "Personal",
     "Residential",
+  ];
+  List<String> farmLoanTitleList = [
+    "Loan details",
+    "Personal",
+    "Residential",
+  ];
+
+  List<FarmLoanRequirementModel> loanRequirements = [
+    FarmLoanRequirementModel(
+        key: "LoanAgainstTractor", name: "Loan against tractor"),
+    FarmLoanRequirementModel(
+        key: "TrackBasedPersonalLoan", name: "Track based personal loan"),
+    FarmLoanRequirementModel(key: "ImplementFinance", name: "Implement finance")
   ];
 
   void updateScreen(screenIndex) {
@@ -77,8 +94,14 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         createLoanModel.value = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
-        minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
+        maxValue.value = double.tryParse(
+                (createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0)
+                    .toString()) ??
+            0;
+        minValue.value = double.tryParse(
+                (createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0)
+                    .toString()) ??
+            0;
       }
     } catch (exception) {
       print(exception);
@@ -111,7 +134,8 @@ class LoanController extends GetxController {
     }
   }
 
-  Future getProviders({required bool isPersonalLoan, String? providerId}) async {
+  Future getProviders(
+      {required bool isPersonalLoan, String? providerId}) async {
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -158,7 +182,10 @@ class LoanController extends GetxController {
           if (providerId != '') ...{
             "loanProviderId": "$providerId",
           },
-          "loanLenderId": "$lenderId",
+          if (lenderId != '')...{
+            "loanLenderId": "$lenderId",
+          }
+
         }),
       );
       if (response != null) {
@@ -172,6 +199,64 @@ class LoanController extends GetxController {
       print(exception);
     } finally {
       createLoanLoading.value = false;
+    }
+  }
+
+  Future fetchFarmLoanProducts({
+    required String requirementId,
+  }) async {
+    try {
+      farmLoanProductLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.fetchFarmProducts,
+        method: Type.POST,
+        data: json.encode({
+          "requirementId": requirementId,
+        }),
+      );
+      if (response != null) {
+        profileController.subProduct.value = (-1);
+        profileController.brand.value = (-1);
+        farmLoanProductModel.value = FarmLoanProductModel.fromJson(response);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      farmLoanProductLoading.value = false;
+    }
+  }
+
+  Future<bool> updateFarmLoanDetails() async {
+    try {
+      farmLoanProductLoading.value = true;
+      customerId.value = await profileController.getId();
+
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.updateFarmLoanDetails,
+        method: Type.POST,
+        data: json.encode({
+          "customerId": customerId.value,
+          "loanApplicationId": createLoanModel.value.loanApplicationId,
+          "farmLoanRequirement":
+              loanRequirements[profileController.loanRequirement.value].key,
+          if (farmLoanProductModel.value.subProducts != null)
+            "farmSubProduct": farmLoanProductModel
+                .value.subProducts![profileController.subProduct.value],
+          if (farmLoanProductModel.value.brands != null)
+            "farmBrand": farmLoanProductModel
+                .value.brands![profileController.brand.value]
+        }),
+      );
+      if (response != null) {
+        return true;
+      }else{
+        return false;
+      }
+    } catch (exception) {
+      print(exception);
+      return false;
+    } finally {
+      farmLoanProductLoading.value = false;
     }
   }
 }

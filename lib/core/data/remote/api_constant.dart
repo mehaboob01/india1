@@ -76,6 +76,8 @@ class Apis {
   static String getProviders = "loans/providers";
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";
+  static String fetchFarmProducts = "loans/fetch-farm-products";
+  static String updateFarmLoanDetails = "loans/application/update-basic-details";
 
   //uploadProfile
   static String generateImageUploadUrl = "images/generate-pre-signed-url";
