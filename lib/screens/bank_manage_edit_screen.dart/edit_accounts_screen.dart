@@ -35,6 +35,7 @@ class EditAccountsCard extends StatelessWidget {
     heightIs = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(

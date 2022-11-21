@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/onboarding_login/select_language/each_language_io.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
@@ -47,6 +46,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(child: buildSelectLanScreen()),
     );
   }

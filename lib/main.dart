@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
+
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 
@@ -72,16 +72,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return InternetWidget(
-      online: GetMaterialApp(
-        title: 'India One',
-        debugShowCheckedModeBanner: false,
-        locale: Locale('en', 'US'),
-        translations: LocaleString(),
-        onGenerateRoute: MRouter.generateRoute,
-        initialRoute: MRouter.splashRoute,
-      ),
-      offline: Text("No internet"),
-    );
+    return GetMaterialApp(
+          title: 'India One',
+          debugShowCheckedModeBanner: false,
+          locale: Locale('en', 'US'),
+          translations: LocaleString(),
+          onGenerateRoute: MRouter.generateRoute,
+          initialRoute: MRouter.splashRoute,
+        
+        );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/routes.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/your_reward_card.dart';
@@ -14,6 +13,7 @@ class LoyaltyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: Column(
           children: [
@@ -39,7 +39,7 @@ class LoyaltyScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(MRouter.generalHistory);
+                                // Get.toNamed(MRouter.generalHistory);
                               },
                               child: Text(
                                 'History',

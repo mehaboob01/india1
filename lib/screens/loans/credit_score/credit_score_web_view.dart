@@ -19,6 +19,7 @@ class _CreditScoreState extends State<CreditScore> {
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar:appBar('Credit Score'),
+        resizeToAvoidBottomInset: false, 
 
 
       body:

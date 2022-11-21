@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/widgets/screen_bg.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
@@ -34,12 +32,13 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   //static const timerMaxSeconds = 28;
   int currentSeconds = 0;
   Timer? timer;
-
+ bool isBlue = false;
   void startTimer() {
     currentSeconds = widget.retryInSeconds!;
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if(mounted)
       setState(() {
+        isBlue=true;
         currentSeconds--;
         if (currentSeconds == 0) timer!.cancel();
       });
@@ -82,6 +81,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -377,7 +377,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             style: TextStyle(
                                               fontFamily: 'Graphik',
                                               fontWeight: FontWeight.w600,
-                                              color: AppColors.greyText,
+                                              color:isBlue
+                                                  ? AppColors.cardBg1
+                                                  : AppColors.greyText,
                                               fontSize: Dimens.font_16sp,
                                             ),
                                           ),

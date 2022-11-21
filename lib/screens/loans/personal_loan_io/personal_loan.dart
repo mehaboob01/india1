@@ -56,6 +56,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: SizedBox(
           width: widthIs,

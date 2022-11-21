@@ -151,6 +151,7 @@ class NoRouteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: Center(child: Text('${'no_route_defined'} "$screenName"')),
     );
   }

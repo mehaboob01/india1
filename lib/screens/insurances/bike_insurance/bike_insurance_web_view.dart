@@ -20,7 +20,7 @@ class _BikeInsuranceState extends State<BikeInsurance> {
     return Scaffold(
       appBar:appBar('Bike Insurance'),
 
-
+  resizeToAvoidBottomInset: false, 
       body:
       SafeArea(
           child: Column(

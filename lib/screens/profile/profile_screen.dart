@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/profile/add_bank_account_screen.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -31,6 +32,7 @@ class ProfileScreen extends StatelessWidget {
     getUpiIdButton();
     getBankAccountDetailsButton();
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: Column(
         children: [
           SafeArea(
@@ -59,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                               alignment: Alignment.centerLeft,
                               children: [
                                 Container(
-                                  height: 100,
+                                  height: 95,
                                   padding: EdgeInsets.only(
                                     left: 100,
                                   ),
@@ -97,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
                                       ),
                                       Obx(
                                         () => Text(
-                                          "${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                          "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: Dimens.font_18sp,
@@ -112,8 +114,8 @@ class ProfileScreen extends StatelessWidget {
                                   alignment: Alignment.bottomRight,
                                   children: [
                                     Container(
-                                      height: 140,
-                                      width: 140,
+                                      height: 130,
+                                      width: 130,
                                       margin: EdgeInsets.only(
                                         left: 20,
                                         right: 20,
@@ -144,7 +146,7 @@ class ProfileScreen extends StatelessWidget {
                                                               return Icon(
                                                                 Icons.person,
                                                                 color: Colors.white,
-                                                                size: 110,
+                                                                size: 100,
                                                               );
                                                             },
                                                           ),
@@ -185,8 +187,8 @@ class ProfileScreen extends StatelessWidget {
                             SizedBox(
                               height: 30,
                             ),
-                            details(title: 'Personal details'),
-                            details(title: 'Residential address'),
+                            details(title: 'Personal Details'),
+                            details(title: 'Residential Address'),
                             details(title: 'Occupation Details'),
                             details(title: 'Bank account(s)'),
                             details(title: 'UPI ID(s) / VPA Number(s)'),
@@ -203,7 +205,7 @@ class ProfileScreen extends StatelessWidget {
                                     children: [
                                       Spacer(),
                                       Text(
-                                        'logout'.tr,
+                                        'Logout'.tr,
                                         maxLines: 2,
                                         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
                                         textAlign: TextAlign.center,
@@ -277,7 +279,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget singleDetails({required String title, required String value}) {
+  Widget singleDetails({required String title, required String value, bool? isEmpty}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,18 +289,35 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             color: AppColors.lightBlack,
             fontSize: Dimens.font_12sp,
+            fontWeight: FontWeight.w400
           ),
         ),
         SizedBox(
           height: 6,
         ),
-        Text(
-          value,
-          style: TextStyle(
-            color: AppColors.lightBlack,
-            fontSize: Dimens.font_18sp,
+         if (isEmpty != null)
+          Text(
+            value,
+            style: isEmpty
+                ? TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF999999),
+                    fontSize: 16)
+                : TextStyle(
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_18sp,
+                    fontWeight: FontWeight.w600),
+          )
+        else
+          Text(
+            value,
+            style: TextStyle(
+                color: AppColors.lightBlack,
+                fontSize: Dimens.font_18sp,
+                fontWeight: FontWeight.w600),
           ),
-        ),
+     
+      
         SizedBox(
           height: 16,
         ),
@@ -374,6 +393,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget details({required String title}) {
+     LinearGradient linearGradient = LinearGradient(colors: [
+      Color(0xFFF2642C),
+      Color(0xFFFFE943),
+    ]);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Card(
@@ -386,6 +409,8 @@ class ProfileScreen extends StatelessWidget {
             dividerColor: Colors.transparent,
           ),
           child: ExpansionTile(
+            iconColor: Colors.grey,
+            collapsedIconColor: Colors.grey,
             initiallyExpanded: true,
             title: Row(
               children: [
@@ -395,11 +420,12 @@ class ProfileScreen extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.lightBlack,
                       fontSize: Dimens.font_18sp,
+                      fontWeight: FontWeight.w500
                     ),
                   ),
                 ),
-                if ((title == 'Personal details' && (isPersonalDetailsVisible.value == true)) ||
-                    (title == 'Residential address' && (isResidentialDetailsVisible.value == true)) ||
+                if ((title == 'Personal Details' && (isPersonalDetailsVisible.value == true)) ||
+                    (title == 'Residential Address' && (isResidentialDetailsVisible.value == true)) ||
                     (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true)) ||
                     (title == 'Bank account(s)' && (isBankAccountVisible.value == true)) ||
                     (title == 'UPI ID(s) / VPA Number(s)' && (isUpiIdVisible.value == true))) ...[
@@ -411,7 +437,14 @@ class ProfileScreen extends StatelessWidget {
                         nextStep(title);
                       }
                     },
-                    child: Icon(Icons.note_alt_outlined),
+                    child: ShaderMask(
+                        child: Icon(
+                          Icons.note_alt_outlined,
+                          color: Colors.white,
+                        ),
+                        shaderCallback: (bounds) {
+                          return linearGradient.createShader(bounds);
+                        }),
                   ),
                 ],
                 //
@@ -419,9 +452,9 @@ class ProfileScreen extends StatelessWidget {
             ),
             children: [
               ProfileStepper().divider(),
-              if (title == 'Personal details') ...[
+              if (title == 'Personal Details') ...[
                 personalDetails(),
-              ] else if (title == 'Residential address') ...[
+              ] else if (title == 'Residential Address') ...[
                 residentialAddress(),
               ] else if (title == 'Occupation Details') ...[
                 occupationDetails(),
@@ -459,18 +492,22 @@ class ProfileScreen extends StatelessWidget {
                       singleDetails(
                         title: "First name",
                         value: profileDetailsModel.firstName ?? "No First name",
+                        isEmpty: profileDetailsModel.firstName==null ? true :false
                       ),
                       singleDetails(
                         title: "Mobile number",
-                        value: profileDetailsModel.mobileNumber ?? "",
+                        isEmpty: profileDetailsModel.mobileNumber!.isEmpty ?true :false,
+                        value:  "+91 ${profileDetailsModel.mobileNumber ?? ""}",
                       ),
                       singleDetails(
                         title: "Email ID",
                         value: profileDetailsModel.email ?? "No email ID",
+                        isEmpty: profileDetailsModel.email==null ? true :false
                       ),
                       singleDetails(
                         title: "Gender",
                         value: profileDetailsModel.gender ?? "Not entered",
+                        isEmpty: profileDetailsModel.gender==null ? true :false
                       ),
                     ],
                   ),
@@ -485,18 +522,24 @@ class ProfileScreen extends StatelessWidget {
                       singleDetails(
                         title: "Last name",
                         value: profileDetailsModel.lastName ?? "No last name",
+                        isEmpty: profileDetailsModel.lastName==null ? true :false
                       ),
                       singleDetails(
                         title: "Alternate number",
-                        value: profileDetailsModel.mobileNumber ?? "No number",
+                        value: 
+                        profileDetailsModel.alternateNumber!=null? 
+                        "+91 ${profileDetailsModel.alternateNumber ?? "No Number"}" : "No Number",
+                        isEmpty: profileDetailsModel.alternateNumber==null ? true :false
                       ),
                       singleDetails(
                         title: "Date of birth",
                         value: profileDetailsModel.dateOfBirth ?? "No DOB",
+                        isEmpty: profileDetailsModel.dateOfBirth==null ? true :false
                       ),
                       singleDetails(
                         title: "Marital status",
                         value: profileDetailsModel.maritalStatus ?? "Not updated",
+                        isEmpty: profileDetailsModel.maritalStatus==null ? true :false
                       ),
                     ],
                   ),
@@ -535,10 +578,12 @@ class ProfileScreen extends StatelessWidget {
                       singleDetails(
                         title: "Address line 1",
                         value: "${address.addressLine1 ?? 'No Address'}",
+                        isEmpty: address.addressLine1==null ? true :false
                       ),
                       singleDetails(
                         title: "Address line 2",
                         value: "${address.addressLine2 ?? 'No Address'}",
+                        isEmpty: address.addressLine2==null ? true :false
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -547,6 +592,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "Pincode",
                               value: "${address.postCode ?? 'No Postcode'}",
+                              isEmpty: address.postCode==null ? true :false
                             ),
                           ),
                           SizedBox(
@@ -556,6 +602,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "City",
                               value: "${address.city ?? 'No City'}",
+                              isEmpty: address.city==null ? true :false
                             ),
                           ),
                         ],
@@ -563,6 +610,7 @@ class ProfileScreen extends StatelessWidget {
                       singleDetails(
                         title: "State",
                         value: "${address.state ?? 'No State'}",
+                        isEmpty: address.state==null ? true :false
                       ),
                     ]
                   : [
@@ -654,6 +702,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "Employment type",
                               value: profileDetailsModel.employmentType ?? "No Type",
+                              isEmpty: profileDetailsModel.employmentType==null ? true :false
                             ),
                           ),
                           SizedBox(
@@ -663,6 +712,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "Occupation",
                               value: profileDetailsModel.occupation ?? "No Occupation",
+                              isEmpty: profileDetailsModel.occupation==null ? true :false
                             ),
                           ),
                         ],
@@ -676,6 +726,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "Monthly income",
                               value: "${profileDetailsModel.income ?? 0}",
+                              isEmpty: profileDetailsModel.income==null ? true :false
                             ),
                           ),
                           SizedBox(
@@ -685,6 +736,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                               title: "PAN number",
                               value: profileDetailsModel.panNumber ?? "No Pan",
+                              isEmpty: profileDetailsModel.panNumber==null ? true :false
                             ),
                           ),
                         ],
@@ -728,6 +780,7 @@ class ProfileScreen extends StatelessWidget {
               child: singleDetails(
                 title: "Bank name",
                 value: "${account.name ?? ''}",
+                isEmpty: account.name==null ? true :false
               ),
             ),
             SizedBox(
@@ -737,6 +790,7 @@ class ProfileScreen extends StatelessWidget {
               child: singleDetails(
                 title: "Account number",
                 value: "${account.maskAccountNumber ?? ''}",
+                isEmpty: account.maskAccountNumber==null ? true :false
               ),
             ),
           ],
@@ -750,6 +804,7 @@ class ProfileScreen extends StatelessWidget {
               child: singleDetails(
                 title: "IFSC code",
                 value: "${account.ifscCode ?? ''}",
+                isEmpty: account.ifscCode==null ? true :false
               ),
             ),
             SizedBox(
@@ -759,6 +814,7 @@ class ProfileScreen extends StatelessWidget {
               child: singleDetails(
                 title: "Account type",
                 value: "${account.accountType ?? ''}",
+                isEmpty: account.accountType==null ? true :false
               ),
             ),
           ],
@@ -792,6 +848,7 @@ class ProfileScreen extends StatelessWidget {
                     return singleDetails(
                       title: "UPI ID $index",
                       value: "${profileController.upiIdModel.value.upiIds![index]}",
+                      isEmpty: profileController.upiIdModel.value.upiIds==null ? true :false
                     );
                   },
                 ),

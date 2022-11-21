@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
-import '../../home_start/home_main_io.dart';
 import '../select_language/language_selection_io.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
@@ -96,6 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: buildSplashForMobile(),
     );
   }

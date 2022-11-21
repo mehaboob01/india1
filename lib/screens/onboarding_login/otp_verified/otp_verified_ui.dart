@@ -26,6 +26,7 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: buildSplashForMobile(),
     );
   }

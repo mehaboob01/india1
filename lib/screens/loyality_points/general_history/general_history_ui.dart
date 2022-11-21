@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_manager.dart';
 
 class GeneralHistory extends StatefulWidget {
@@ -17,6 +16,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       appBar: AppBar(
         title: const Text(
           "History",

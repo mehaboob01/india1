@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -12,7 +11,6 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../../widgets/custom_slider.dart';
 import '../../profile/controller/profile_controller.dart';
 import '../lenders_list.dart';
 
@@ -54,6 +52,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: SizedBox(
           width: widthIs,

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/screens/onboarding_login/select_language/language_selection_io.dart';
 
 import '../constant/routes.dart';
 import '../constant/theme_manager.dart';
 import '../screens/home_start/home_manager.dart';
-import '../screens/notification/notification_screen.dart';
 import '../screens/profile/profile_screen.dart';
-import 'common_heading_icon.dart';
 
 class CommonPageHeader extends StatelessWidget {
 
@@ -236,8 +233,9 @@ class CommonPageHeader extends StatelessWidget {
                   width: 2.0.wp,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async{
                     _homeManager.isClicked.value = true;
+                    print(_homeManager.isClicked);
                     showMenu<String>(
                       context: context,
                       shape: RoundedRectangleBorder(
@@ -343,12 +341,12 @@ class CommonPageHeader extends StatelessWidget {
                           }
                         });
                   },
-                  child: headingBox(
+                  child: Obx(()=> headingBox(
                       color:
                       _homeManager.isClicked.value
                           ? Colors.orange
                           : Colors.white,
-                      image: AppImages.user_profile),
+                      image: AppImages.user_profile),)
                 ),
               ],
             ),

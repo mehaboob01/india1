@@ -19,7 +19,7 @@ class _EmiCardState extends State<EmiCard> {
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar:appBar('Emi Card'),
-
+  resizeToAvoidBottomInset: false, 
 
       body:
       SafeArea(

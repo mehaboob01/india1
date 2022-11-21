@@ -125,6 +125,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
     heightIs = MediaQuery.of(context).size.height;
     return Obx(
       () => Scaffold(
+          resizeToAvoidBottomInset: false, 
         backgroundColor: AppColors.white,
         appBar: AppBar(
             elevation: 2,

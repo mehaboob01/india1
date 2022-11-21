@@ -20,7 +20,7 @@ class _CarInsuranceState extends State<CarInsurance> {
     return Scaffold(
       appBar:appBar('Car Insurance'),
 
-
+  resizeToAvoidBottomInset: false, 
       body:
       SafeArea(
           child: Column(

@@ -38,10 +38,11 @@ class ProfileStepper {
     return InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: AppColors.dimLightGreyColor,
+          color: Colors.blue,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
+      focusColor: Colors.blue,
       border: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.dimLightGreyColor,
@@ -96,6 +97,7 @@ class ProfileStepper {
     List<TextInputFormatter>? inputFormatters,
   }) {
     return TextFormField(
+      
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters ?? [],
@@ -265,7 +267,7 @@ class ProfileStepper {
                   ),
                   onTap: () async {
                     selectedDate = await datePicker(context);
-                    String date = DateFormat('yyyy-MM-dd').format(selectedDate ?? DateTime.now());
+                    String date = DateFormat('dd-MM-yyyy').format(selectedDate ?? DateTime.now());
                     profileController.dobController.value.text = date;
                   },
                   isDisable: true,

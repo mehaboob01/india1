@@ -45,6 +45,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: SizedBox(
           width: widthIs,

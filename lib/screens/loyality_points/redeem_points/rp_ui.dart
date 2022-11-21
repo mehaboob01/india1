@@ -11,7 +11,6 @@ import '../../../widgets/circular_progressbar.dart';
 import '../../../widgets/common_redeem_card.dart';
 import '../../../widgets/common_toggle_card.dart';
 import '../../../widgets/loyalty_common_header.dart';
-import '../cashback_redeem/cb_manager.dart';
 import '../loyality_manager.dart';
 
 class RedeemPointsPage extends StatelessWidget {
@@ -29,6 +28,7 @@ class RedeemPointsPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+          resizeToAvoidBottomInset: false, 
           backgroundColor: Colors.white,
           body: Obx(
             () => _loyaltyManager.isLoading.value == true

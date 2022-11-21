@@ -52,6 +52,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: SizedBox(
           width: widthIs,

@@ -20,7 +20,7 @@ class _CreditCardWebViewState extends State<CreditCardWebView> {
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar:appBar('Credit Card'),
-
+  resizeToAvoidBottomInset: false, 
 
       body:
       SafeArea(

@@ -85,6 +85,7 @@ class _UserLoginState extends State<UserLogin> {
     ]);
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false, 
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());

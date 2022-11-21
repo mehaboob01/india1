@@ -38,6 +38,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
+        resizeToAvoidBottomInset: false, 
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
