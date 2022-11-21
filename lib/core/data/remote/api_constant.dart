@@ -29,7 +29,7 @@ class Apis {
   static String updateBank = "customer/bank/account";
   static String fetchCustomerBankAccounts = "customer/bank/accounts";
   static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
-  static String deleteCustomerBankAccount = "loyalty/customer/bank/account"; // delete method
+  static String deleteCustomerBankAccount = "customer/bank/account"; // delete method
 
   // upi api
 
@@ -37,7 +37,7 @@ class Apis {
   static String upiAdd = "customer/upi/id";
   static String fetchCustomerUpiAccounts = "customer/upi/ids";
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
-  static String deleteCustomerUpiAccount = "loyalty/customer/upi/id"; // delete method
+  static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method
 
 
 

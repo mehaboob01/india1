@@ -263,6 +263,9 @@ class MrManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
+
+      print("REsponse of mobile recharge ${response.body}");
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
 

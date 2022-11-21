@@ -467,8 +467,15 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                       RowHeadingWithunderLineSubHeading(
                         heading: 'Your accounts',
                         subHeading: 'Manage',
-                        onPressedSubHeading: () =>
-                            Get.to(() => ManageAccountsCard()),
+                        onPressedSubHeading: () {
+                          cashBackManager.fetchCustomerBankAccounts();
+                          cashBackManager.fetchCustomerUpiAccounts();
+
+                          Get.to(() => ManageAccountsCard());
+
+
+                        }
+                            ,
                       ),
                       SizedBox(
                         height: 16,
@@ -842,8 +849,14 @@ class LoyaltyUpiVpa extends StatelessWidget {
                     RowHeadingWithunderLineSubHeading(
                       heading: 'Your UPI or VPA’s',
                       subHeading: 'Manage',
-                      onPressedSubHeading: () {
+                      onPressedSubHeading: () async {
                         Get.to(() => ManageAccountsCard());
+                      await  Future.delayed(Duration(seconds: 2), () {
+                          // 5s over, navigate to a new page
+                        cashBackManager.fetchCustomerUpiAccounts();
+
+                        });
+
                       },
                     ),
 

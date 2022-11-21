@@ -50,6 +50,9 @@ class CashBackManager extends GetxController {
   void onInit() {
     super.onInit();
     customerBankList.clear();
+    customerBankListSend.clear();
+    customerUPIList.clear();
+    customerUPIListSend.clear();
     callBankListApi();
     fetchCustomerBankAccounts();
     fetchCustomerUpiAccounts();
@@ -103,6 +106,8 @@ class CashBackManager extends GetxController {
   // fetch customer bank accounts
 
   fetchCustomerBankAccounts() async {
+    customerBankList.clear();
+    customerUPIListSend.clear();
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -159,6 +164,10 @@ class CashBackManager extends GetxController {
   // fetch upi's  accounts
 
   fetchCustomerUpiAccounts() async {
+    customerUPIList.clear();
+    customerUPIListSend.clear();
+
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -171,6 +180,8 @@ class CashBackManager extends GetxController {
             "x-digital-api-key": "1234"
           });
       var jsonData = jsonDecode(response.body);
+
+
 
       FetchCustomerUpiModel fetchCustomerUpiModel =
       FetchCustomerUpiModel.fromJson(jsonData);
@@ -185,7 +196,7 @@ class CashBackManager extends GetxController {
 
         customerUPIList.addAll(customerUPIListSend);
         selectedplanUpiList.addAll(localSelectedList);
-        print("upi list${customerUPIList.length} ");
+        print("upi list :: ${customerUPIList.length} ");
 
         isLoading(false);
       } else {
@@ -507,6 +518,101 @@ class CashBackManager extends GetxController {
       isLoading.value = false;
     }
     }
+
+  // del bank account
+  delUpiAccount(String? id) async {
+    isLoading(true);
+
+
+    try{
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      print("customer id${customerId}");
+      print("upi ID${id}");
+
+      var response = await http.delete(
+          Uri.parse(baseUrl + Apis.deleteCustomerUpiAccount),
+          body: jsonEncode(
+
+              {"customerId": customerId,
+                "customerUpiId": id
+              }
+
+             ),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+
+
+      print("response delete==> ${response.body}");
+
+
+
+
+
+      if(response.statusCode == 200 || response.statusCode == 201){
+
+
+        var jsonData = jsonDecode(response.body);
+
+        CommonApiResponseModel commonApiResponseModel =
+        CommonApiResponseModel.fromJson(jsonData);
+
+        if(commonApiResponseModel.status!.code == 2000)
+
+        {
+          isLoading(false);
+          Flushbar(
+            title: "Success!!",
+            message: "Upi del Successfully ..",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+        }
+        else{
+          isLoading(false);
+          Flushbar(
+            title: "Error!!",
+            message: commonApiResponseModel.status!.message,
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+        }
+
+      }else{
+        isLoading(false);
+        Flushbar(
+          title: "Error!!",
+          message: "Server Error ...",
+          duration: Duration(seconds: 2),
+        )..show(Get.context!).then((value) => (){
+
+          customerBankList.clear();
+          fetchCustomerBankAccounts();
+
+
+
+        });
+
+
+
+
+      }
+    }catch(e)
+    {
+      Flushbar(
+        title: "Error!",
+        message: "Something went wrong",
+        duration: Duration(seconds: 2),
+      )..show(Get.context!);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   }
 

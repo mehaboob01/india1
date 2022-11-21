@@ -39,10 +39,11 @@ class LoyaltyScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(MRouter.generalHistory);
+                                //Get.toNamed(MRouter.generalHistory);
                               },
+                              // history text will be there
                               child: Text(
-                                'History',
+                                '',
                                 style: AppStyle.shortHeading.copyWith(
                                     fontSize: 11.0.sp,
                                     color: const Color(0xff2364A1),
