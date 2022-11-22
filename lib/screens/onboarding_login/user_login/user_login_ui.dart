@@ -19,7 +19,6 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLoginState extends State<UserLogin> {
-
   String? mobileno = '';
   int charLength = 0;
   bool? termConditionChecked = false;
@@ -30,9 +29,8 @@ class _UserLoginState extends State<UserLogin> {
   LoginManager _loginManager = Get.put(LoginManager());
   var _textController = new TextEditingController();
 
-
   //fun for show mobile numbers
-  Future<void> getMobilePopup()async{
+  Future<void> getMobilePopup() async {
     try {
       var data = await autofill.hint ?? '';
       var buffer = new StringBuffer();
@@ -48,14 +46,12 @@ class _UserLoginState extends State<UserLogin> {
         var autoSelectNumber = buffer.toString();
         mobileno = autoSelectNumber;
         mobileno = mobileno.toString() + ' ';
-        _textController.text = FlutterLibphonenumber().formatNumberSync(mobileno.toString());
-
-
+        _textController.text =
+            FlutterLibphonenumber().formatNumberSync(mobileno.toString());
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
+
   _onTextChanged(String? value) {
     setState(() {
       charLength = value!.length;
@@ -85,6 +81,7 @@ class _UserLoginState extends State<UserLogin> {
     ]);
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
@@ -170,14 +167,12 @@ class _UserLoginState extends State<UserLogin> {
                         ),
                       ),
                       SizedBox(height: 32),
-
                       Padding(
                           padding: EdgeInsets.only(
                             left: 12.0,
                             right: 12.0,
                           ),
-                          child:
-                          FormBuilderTextField(
+                          child: FormBuilderTextField(
                             autofocus: false,
                             controller: _textController,
                             onChanged: _onTextChanged,
@@ -195,20 +190,25 @@ class _UserLoginState extends State<UserLogin> {
                                 color: AppColors.black,
                                 fontSize: Dimens.font_24sp),
                             decoration: new InputDecoration(
-                              errorStyle:  GoogleFonts.roboto(fontSize: Dimens.font_14sp,  fontWeight: FontWeight.w500,),
+                              errorStyle: GoogleFonts.roboto(
+                                fontSize: Dimens.font_14sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                               prefixIcon: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text('+91 ',   style: TextStyle(
-                                        letterSpacing: 3,
-
-                                        fontFamily: 'Graphik',
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.black,
-                                        fontSize: Dimens.font_24sp),
-                                    textAlign: TextAlign.start,),
+                                    child: Text(
+                                      '+91 ',
+                                      style: TextStyle(
+                                          letterSpacing: 3,
+                                          fontFamily: 'Graphik',
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.black,
+                                          fontSize: Dimens.font_24sp),
+                                      textAlign: TextAlign.start,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -216,10 +216,9 @@ class _UserLoginState extends State<UserLogin> {
                               hintStyle: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   color: AppColors.dotsColor,
-
                                   fontSize: Dimens.font_28sp),
                               labelStyle:
-                              new TextStyle(color: Color(0xFF787878)),
+                                  new TextStyle(color: Color(0xFF787878)),
                             ),
                             validator: (value) {
                               if (value!.isEmpty)
@@ -230,8 +229,7 @@ class _UserLoginState extends State<UserLogin> {
                                 return null;
                             },
                             name: 'mobile',
-                          )
-                      ),
+                          )),
                       SizedBox(
                         height: 44,
                       ),
@@ -347,174 +345,168 @@ class _UserLoginState extends State<UserLogin> {
                 GestureDetector(
                   onTap: termConditionChecked == true
                       ? () {
-                    setState(() async {
-                      alertTextShow = false;
-                      _loginKey.currentState!.save();
-                      if (_loginKey.currentState!.validate()) {
-                        var appSignatureId =
-                        await SmsAutoFill().getAppSignature;
+                          setState(() async {
+                            alertTextShow = false;
+                            _loginKey.currentState!.save();
+                            if (_loginKey.currentState!.validate()) {
+                              var appSignatureId =
+                                  await SmsAutoFill().getAppSignature;
 
-                        _loginManager.callSentOtpApi(
-                            _loginKey.currentState!.value['mobile'].replaceAll(' ', '')
-
-                                .toString(),
-                            context,
-                            termConditionChecked,
-                            appSignatureId);
-                      } else {
-
-                      }
-                    });
-                  }
+                              _loginManager.callSentOtpApi(
+                                  _loginKey.currentState!.value['mobile']
+                                      .replaceAll(' ', '')
+                                      .toString(),
+                                  context,
+                                  termConditionChecked,
+                                  appSignatureId);
+                            } else {}
+                          });
+                        }
                       : () {
-                    setState(() {
-                      _loginKey.currentState!.save();
-                      _loginKey.currentState!.validate();
-                      if ( _loginKey.currentState!.validate()) alertTextShow = true;
-                    });
-                  },
+                          setState(() {
+                            _loginKey.currentState!.save();
+                            _loginKey.currentState!.validate();
+                            if (_loginKey.currentState!.validate())
+                              alertTextShow = true;
+                          });
+                        },
                   child: Obx(() => _loginManager.isLoading == false
-                      ?
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 48,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          Text(
-                            'request_otp'.tr,
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            height: 48,
-                            child: Image.asset(
-                              "assets/images/btn_img.png",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
-                      ),
-                      decoration: termConditionChecked == true
-                          ? BoxDecoration(
-                        gradient: new LinearGradient(
-                          end: Alignment.topRight,
-                          colors: [Colors.orange, Colors.redAccent],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white70.withOpacity(0.8),
-                            offset: Offset(
-                              -6.0,
-                              -6.0,
-                            ),
-                            blurRadius: 16.0,
-                          ),
-                          BoxShadow(
-                            color:
-                            AppColors.darkerGrey.withOpacity(0.4),
-                            offset: Offset(6.0, 6.0),
-                            blurRadius: 16.0,
-                          ),
-                        ],
-                        color: termConditionChecked == true
-                            ? AppColors.btnColor
-                            : AppColors.btnDisableColor,
-                        borderRadius: BorderRadius.circular(6.0),
-                      )
-                          :
-
-                      BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white70.withOpacity(0.8),
-                            offset: Offset(
-                              -6.0,
-                              -6.0,
-                            ),
-                            blurRadius: 16.0,
-                          ),
-                          BoxShadow(
-                            color:
-                            AppColors.darkerGrey.withOpacity(0.4),
-                            offset: Offset(6.0, 6.0),
-                            blurRadius: 16.0,
-                          ),
-                        ],
-                        color: termConditionChecked == true
-                            ? AppColors.btnColor
-                            : AppColors.btnDisableColor,
-                        borderRadius: BorderRadius.circular(6.0),
-                      ))
-                      :
-                  Container(
-                    width: MediaQuery.of(context).size.height * 0.9,
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        Row(
-                          children: [
-                            Text(
-                              'sending_otp'.tr,
-                              style: AppTextThemes.button,
-                            ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                            Container(
-                                height: 18,
-                                width: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                  color: AppColors.white,
-                                ))
-                          ],
-                        ),
-                        Spacer(),
-                        SizedBox(
+                      ? Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
                           height: 48,
-                          child: Image.asset(
-                            "assets/images/btn_img.png",
-                            fit: BoxFit.fill,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              Text(
+                                'request_otp'.tr,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                height: 48,
+                                child: Image.asset(
+                                  "assets/images/btn_img.png",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: new LinearGradient(
-                        end: Alignment.topRight,
-                        colors: [Colors.orange, Colors.redAccent],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withOpacity(0.8),
-                          offset: Offset(
-                            -6.0,
-                            -6.0,
+                          decoration: termConditionChecked == true
+                              ? BoxDecoration(
+                                  gradient: new LinearGradient(
+                                    end: Alignment.topRight,
+                                    colors: [Colors.orange, Colors.redAccent],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white70.withOpacity(0.8),
+                                      offset: Offset(
+                                        -6.0,
+                                        -6.0,
+                                      ),
+                                      blurRadius: 16.0,
+                                    ),
+                                    BoxShadow(
+                                      color:
+                                          AppColors.darkerGrey.withOpacity(0.4),
+                                      offset: Offset(6.0, 6.0),
+                                      blurRadius: 16.0,
+                                    ),
+                                  ],
+                                  color: termConditionChecked == true
+                                      ? AppColors.btnColor
+                                      : AppColors.btnDisableColor,
+                                  borderRadius: BorderRadius.circular(6.0),
+                                )
+                              : BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white70.withOpacity(0.8),
+                                      offset: Offset(
+                                        -6.0,
+                                        -6.0,
+                                      ),
+                                      blurRadius: 16.0,
+                                    ),
+                                    BoxShadow(
+                                      color:
+                                          AppColors.darkerGrey.withOpacity(0.4),
+                                      offset: Offset(6.0, 6.0),
+                                      blurRadius: 16.0,
+                                    ),
+                                  ],
+                                  color: termConditionChecked == true
+                                      ? AppColors.btnColor
+                                      : AppColors.btnDisableColor,
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ))
+                      : Container(
+                          width: MediaQuery.of(context).size.height * 0.9,
+                          height: 48,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              Row(
+                                children: [
+                                  Text(
+                                    'sending_otp'.tr,
+                                    style: AppTextThemes.button,
+                                  ),
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  Container(
+                                      height: 18,
+                                      width: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                        color: AppColors.white,
+                                      ))
+                                ],
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                height: 48,
+                                child: Image.asset(
+                                  "assets/images/btn_img.png",
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
-                          blurRadius: 16.0,
-                        ),
-                        BoxShadow(
-                          color: AppColors.darkerGrey.withOpacity(0.4),
-                          offset: Offset(6.0, 6.0),
-                          blurRadius: 16.0,
-                        ),
-                      ],
-                      // color: termConditionChecked == true
-                      //     ? AppColors.btnColor
-                      //     : AppColors.btnDisableColor,
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                  )
-                  ),
+                          decoration: BoxDecoration(
+                            gradient: new LinearGradient(
+                              end: Alignment.topRight,
+                              colors: [Colors.orange, Colors.redAccent],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.8),
+                                offset: Offset(
+                                  -6.0,
+                                  -6.0,
+                                ),
+                                blurRadius: 16.0,
+                              ),
+                              BoxShadow(
+                                color: AppColors.darkerGrey.withOpacity(0.4),
+                                offset: Offset(6.0, 6.0),
+                                blurRadius: 16.0,
+                              ),
+                            ],
+                            // color: termConditionChecked == true
+                            //     ? AppColors.btnColor
+                            //     : AppColors.btnDisableColor,
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                        )),
                 ),
                 SizedBox(
                   height: 28,
@@ -533,8 +525,7 @@ class _UserLoginState extends State<UserLogin> {
               ),
               // radius of 10
               color: AppColors.white // green as background color
-          )
-      ),
+              )),
     );
   }
 }

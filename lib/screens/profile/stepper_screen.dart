@@ -38,6 +38,7 @@ class _StepperScreenState extends State<StepperScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           SafeArea(
@@ -77,18 +78,25 @@ class _StepperScreenState extends State<StepperScreen> {
                         child: Column(
                           children: [
                             if (profileController.currentStep.value == 1) ...[
-                              ProfileStepper().personalDetails(context, personalForm),
-                            ] else if (profileController.currentStep.value == 2) ...[
-                              ProfileStepper().residentialDetails(residentialForm),
-                            ] else if (profileController.currentStep.value == 3) ...[
-                              ProfileStepper().occupationDetails(occupationForm),
+                              ProfileStepper()
+                                  .personalDetails(context, personalForm),
+                            ] else if (profileController.currentStep.value ==
+                                2) ...[
+                              ProfileStepper()
+                                  .residentialDetails(residentialForm),
+                            ] else if (profileController.currentStep.value ==
+                                3) ...[
+                              ProfileStepper()
+                                  .occupationDetails(occupationForm),
                             ]
                           ],
                         ),
                       )),
                 ),
                 Obx(
-                  () => profileController.addPersonalLoading.value || profileController.addResidentialLoading.value || profileController.addOccupationLoading.value
+                  () => profileController.addPersonalLoading.value ||
+                          profileController.addResidentialLoading.value ||
+                          profileController.addOccupationLoading.value
                       ? LoadingAnimationWidget.inkDrop(
                           size: 34,
                           color: AppColors.primary,
@@ -103,9 +111,11 @@ class _StepperScreenState extends State<StepperScreen> {
                                     loanApplicationId: null,
                                   );
                                 }
-                              } else if (profileController.currentStep.value == 2) {
+                              } else if (profileController.currentStep.value ==
+                                  2) {
                                 if (residentialForm.currentState!.validate()) {
-                                  if (profileController.city.value.isEmpty || profileController.state.value.isEmpty) {
+                                  if (profileController.city.value.isEmpty ||
+                                      profileController.state.value.isEmpty) {
                                     Fluttertoast.showToast(
                                       msg: "Enter valid pin code",
                                       toastLength: Toast.LENGTH_SHORT,
@@ -116,7 +126,8 @@ class _StepperScreenState extends State<StepperScreen> {
                                     profileController.addResidentialDetails();
                                   }
                                 }
-                              } else if (profileController.currentStep.value == 3) {
+                              } else if (profileController.currentStep.value ==
+                                  3) {
                                 if (occupationForm.currentState!.validate()) {
                                   profileController.addOccupationDetails();
                                 }
@@ -135,7 +146,10 @@ class _StepperScreenState extends State<StepperScreen> {
                                     Text(
                                       'Save ${profileController.titleList[(profileController.currentStep.value) - 1]} Details',
                                       maxLines: 2,
-                                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
                                       textAlign: TextAlign.center,
                                     ),
                                     Spacer(),
@@ -172,12 +186,15 @@ class _StepperScreenState extends State<StepperScreen> {
                                       blurRadius: 16.0,
                                     ),
                                     BoxShadow(
-                                      color: AppColors.darkerGrey.withOpacity(0.4),
+                                      color:
+                                          AppColors.darkerGrey.withOpacity(0.4),
                                       offset: Offset(6.0, 6.0),
                                       blurRadius: 16.0,
                                     ),
                                   ],
-                                  color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                  color: 1 == 1
+                                      ? AppColors.btnColor
+                                      : AppColors.btnDisableColor,
                                   borderRadius: BorderRadius.circular(6.0),
                                 )),
                           ),

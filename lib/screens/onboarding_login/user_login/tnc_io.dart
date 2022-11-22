@@ -19,9 +19,9 @@ class _Tnc_IOState extends State<Tnc_IO> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBar('term_condition'),
-      body:
-      SafeArea(
+      body: SafeArea(
           child: Column(
         children: [
           LinearProgressIndicator(
@@ -40,10 +40,7 @@ class _Tnc_IOState extends State<Tnc_IO> {
             ),
           ),
         ],
-      )
-
-
-          ),
+      )),
     );
   }
 }

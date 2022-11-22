@@ -21,7 +21,11 @@ class ProfileScreen extends StatelessWidget {
   ProfileController profileController = Get.put(ProfileController());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
-  RxBool isPersonalDetailsVisible = false.obs, isResidentialDetailsVisible = false.obs, isOccupationDetailsVisible = false.obs, isBankAccountVisible = false.obs, isUpiIdVisible = false.obs;
+  RxBool isPersonalDetailsVisible = false.obs,
+      isResidentialDetailsVisible = false.obs,
+      isOccupationDetailsVisible = false.obs,
+      isBankAccountVisible = false.obs,
+      isUpiIdVisible = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class ProfileScreen extends StatelessWidget {
     getUpiIdButton();
     getBankAccountDetailsButton();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           SafeArea(
@@ -84,7 +89,8 @@ class ProfileScreen extends StatelessWidget {
                                     ),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -128,22 +134,35 @@ class ProfileScreen extends StatelessWidget {
                                               color: AppColors.orangeColor,
                                               shape: BoxShape.circle,
                                             ),
-                                            child: profileController.uploadProfileLoading.value == true
-                                                ? LoadingAnimationWidget.inkDrop(
+                                            child: profileController
+                                                        .uploadProfileLoading
+                                                        .value ==
+                                                    true
+                                                ? LoadingAnimationWidget
+                                                    .inkDrop(
                                                     size: 34,
                                                     color: AppColors.primary,
                                                   )
                                                 : ClipOval(
-                                                    child: profileController.image.value != ''
+                                                    child: profileController
+                                                                .image.value !=
+                                                            ''
                                                         ? Image.file(
-                                                            File(profileController.image.value),
+                                                            File(
+                                                                profileController
+                                                                    .image
+                                                                    .value),
                                                           )
                                                         : CachedNetworkImage(
-                                                            imageUrl: '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
-                                                            errorWidget: (context, _, error) {
+                                                            imageUrl:
+                                                                '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                            errorWidget:
+                                                                (context, _,
+                                                                    error) {
                                                               return Icon(
                                                                 Icons.person,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 size: 110,
                                                               );
                                                             },
@@ -155,7 +174,8 @@ class ProfileScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: AppColors.lightOrangeColor.withOpacity(0.4),
+                                          color: AppColors.lightOrangeColor
+                                              .withOpacity(0.4),
                                           width: 10,
                                           style: BorderStyle.solid,
                                         ),
@@ -164,7 +184,8 @@ class ProfileScreen extends StatelessWidget {
                                     Container(
                                       height: 45,
                                       width: 45,
-                                      margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 25, bottom: 0),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle,
@@ -196,7 +217,8 @@ class ProfileScreen extends StatelessWidget {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
                                   height: 48,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -205,7 +227,10 @@ class ProfileScreen extends StatelessWidget {
                                       Text(
                                         'logout'.tr,
                                         maxLines: 2,
-                                        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                       Spacer(),
@@ -222,11 +247,15 @@ class ProfileScreen extends StatelessWidget {
                                       ? BoxDecoration(
                                           gradient: new LinearGradient(
                                             end: Alignment.topRight,
-                                            colors: [Colors.orange, Colors.redAccent],
+                                            colors: [
+                                              Colors.orange,
+                                              Colors.redAccent
+                                            ],
                                           ),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.white70.withOpacity(0.8),
+                                              color: Colors.white70
+                                                  .withOpacity(0.8),
                                               offset: Offset(
                                                 -6.0,
                                                 -6.0,
@@ -234,18 +263,23 @@ class ProfileScreen extends StatelessWidget {
                                               blurRadius: 16.0,
                                             ),
                                             BoxShadow(
-                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                              color: AppColors.darkerGrey
+                                                  .withOpacity(0.4),
                                               offset: Offset(6.0, 6.0),
                                               blurRadius: 16.0,
                                             ),
                                           ],
-                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                          borderRadius: BorderRadius.circular(6.0),
+                                          color: 1 == 1
+                                              ? AppColors.btnColor
+                                              : AppColors.btnDisableColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6.0),
                                         )
                                       : BoxDecoration(
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.white70.withOpacity(0.8),
+                                              color: Colors.white70
+                                                  .withOpacity(0.8),
                                               offset: Offset(
                                                 -6.0,
                                                 -6.0,
@@ -253,13 +287,17 @@ class ProfileScreen extends StatelessWidget {
                                               blurRadius: 16.0,
                                             ),
                                             BoxShadow(
-                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                              color: AppColors.darkerGrey
+                                                  .withOpacity(0.4),
                                               offset: Offset(6.0, 6.0),
                                               blurRadius: 16.0,
                                             ),
                                           ],
-                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
-                                          borderRadius: BorderRadius.circular(6.0),
+                                          color: 1 == 1
+                                              ? AppColors.btnColor
+                                              : AppColors.btnDisableColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6.0),
                                         )),
                             ),
                             SizedBox(
@@ -332,7 +370,8 @@ class ProfileScreen extends StatelessWidget {
   }
 
   getBankAccountDetailsButton() {
-    if (profileController.bankDetailsModel.value.preferredAccount == null || profileController.bankDetailsModel.value.accounts == []) {
+    if (profileController.bankDetailsModel.value.preferredAccount == null ||
+        profileController.bankDetailsModel.value.accounts == []) {
       isBankAccountVisible.value = false;
     }
     isBankAccountVisible.value = true;
@@ -346,7 +385,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   getOccupationDetailButton() {
-    if (profileDetailsModel.employmentType == null && profileDetailsModel.occupation == null && profileDetailsModel.income == null && profileDetailsModel.panNumber == null) {
+    if (profileDetailsModel.employmentType == null &&
+        profileDetailsModel.occupation == null &&
+        profileDetailsModel.income == null &&
+        profileDetailsModel.panNumber == null) {
       isOccupationDetailsVisible.value = false;
     }
     isOccupationDetailsVisible.value = true;
@@ -398,11 +440,16 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                if ((title == 'Personal details' && (isPersonalDetailsVisible.value == true)) ||
-                    (title == 'Residential address' && (isResidentialDetailsVisible.value == true)) ||
-                    (title == 'Occupation Details' && (isOccupationDetailsVisible.value == true)) ||
-                    (title == 'Bank account(s)' && (isBankAccountVisible.value == true)) ||
-                    (title == 'UPI ID(s) / VPA Number(s)' && (isUpiIdVisible.value == true))) ...[
+                if ((title == 'Personal details' &&
+                        (isPersonalDetailsVisible.value == true)) ||
+                    (title == 'Residential address' &&
+                        (isResidentialDetailsVisible.value == true)) ||
+                    (title == 'Occupation Details' &&
+                        (isOccupationDetailsVisible.value == true)) ||
+                    (title == 'Bank account(s)' &&
+                        (isBankAccountVisible.value == true)) ||
+                    (title == 'UPI ID(s) / VPA Number(s)' &&
+                        (isUpiIdVisible.value == true))) ...[
                   InkWell(
                     onTap: () {
                       if (title == 'Bank account(s)') {
@@ -496,7 +543,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       singleDetails(
                         title: "Marital status",
-                        value: profileDetailsModel.maritalStatus ?? "Not updated",
+                        value:
+                            profileDetailsModel.maritalStatus ?? "Not updated",
                       ),
                     ],
                   ),
@@ -604,14 +652,25 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: isBankAccountVisible.value == true
                     ? [
-                        accountDetails(profileController.bankDetailsModel.value.preferredAccount ?? PreferredAccount(), null),
-                        if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
+                        accountDetails(
+                            profileController
+                                    .bankDetailsModel.value.preferredAccount ??
+                                PreferredAccount(),
+                            null),
+                        if (profileController.bankDetailsModel.value.accounts !=
+                                null &&
+                            profileController.bankDetailsModel.value.accounts !=
+                                []) ...[
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.all(0),
-                            itemCount: profileController.bankDetailsModel.value.accounts!.length,
-                            itemBuilder: (context, index) => accountDetails(profileController.bankDetailsModel.value.accounts![index], index),
+                            itemCount: profileController
+                                .bankDetailsModel.value.accounts!.length,
+                            itemBuilder: (context, index) => accountDetails(
+                                profileController
+                                    .bankDetailsModel.value.accounts![index],
+                                index),
                           ),
                         ],
                       ]
@@ -653,7 +712,8 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                               title: "Employment type",
-                              value: profileDetailsModel.employmentType ?? "No Type",
+                              value: profileDetailsModel.employmentType ??
+                                  "No Type",
                             ),
                           ),
                           SizedBox(
@@ -662,7 +722,8 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                               title: "Occupation",
-                              value: profileDetailsModel.occupation ?? "No Occupation",
+                              value: profileDetailsModel.occupation ??
+                                  "No Occupation",
                             ),
                           ),
                         ],
@@ -785,13 +846,15 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (profileController.upiIdModel.value.upiIds != null && profileController.upiIdModel.value.upiIds != []) ...[
+              if (profileController.upiIdModel.value.upiIds != null &&
+                  profileController.upiIdModel.value.upiIds != []) ...[
                 ListView.builder(
                   itemCount: profileController.upiIdModel.value.upiIds!.length,
                   itemBuilder: (context, index) {
                     return singleDetails(
                       title: "UPI ID $index",
-                      value: "${profileController.upiIdModel.value.upiIds![index]}",
+                      value:
+                          "${profileController.upiIdModel.value.upiIds![index]}",
                     );
                   },
                 ),

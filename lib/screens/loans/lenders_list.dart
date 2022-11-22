@@ -33,6 +33,7 @@ class _LendersListState extends State<LendersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -64,31 +65,56 @@ class _LendersListState extends State<LendersList> {
                 Expanded(
                   child: Obx(
                     () => (isPersonalLoan
-                            ? (loanController.loanProvidersModel.value.providers == null || loanController.loanProvidersModel.value.providers == [])
-                            : (loanController.loanLendersModel.value.lenders == null || loanController.loanLendersModel.value.lenders == []))
+                            ? (loanController
+                                        .loanProvidersModel.value.providers ==
+                                    null ||
+                                loanController
+                                        .loanProvidersModel.value.providers ==
+                                    [])
+                            : (loanController.loanLendersModel.value.lenders ==
+                                    null ||
+                                loanController.loanLendersModel.value.lenders ==
+                                    []))
                         ? Center(child: Text("No providers found"))
                         : ListView.builder(
                             shrinkWrap: true,
-                            itemCount: isPersonalLoan ? loanController.loanProvidersModel.value.providers!.length : loanController.loanLendersModel.value.lenders!.length,
+                            itemCount: isPersonalLoan
+                                ? loanController
+                                    .loanProvidersModel.value.providers!.length
+                                : loanController
+                                    .loanLendersModel.value.lenders!.length,
                             itemBuilder: (context, index) {
                               return LoanCommon().loanCard(
-                                providers: loanController.loanProvidersModel.value.providers?[index],
-                                lenders: loanController.loanLendersModel.value.lenders?[index],
+                                providers: loanController
+                                    .loanProvidersModel.value.providers?[index],
+                                lenders: loanController
+                                    .loanLendersModel.value.lenders?[index],
                                 applyButtonClick: () {
                                   if (isPersonalLoan == true) {
                                     Get.to(
                                       () => ProvidersList(
                                         title: '${widget.title}',
-                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                        providerId: loanController
+                                                .loanProvidersModel
+                                                .value
+                                                .providers?[index]
+                                                .id ??
+                                            '',
                                       ),
                                     );
                                   } else {
                                     Get.to(
                                       () => ProviderDetail(
                                         title: '${widget.title}',
-                                        lenders: loanController.loanLendersModel.value.lenders![index],
+                                        lenders: loanController.loanLendersModel
+                                            .value.lenders![index],
                                         personalLoan: isPersonalLoan,
-                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                        providerId: loanController
+                                                .loanProvidersModel
+                                                .value
+                                                .providers?[index]
+                                                .id ??
+                                            '',
                                       ),
                                     );
                                   }

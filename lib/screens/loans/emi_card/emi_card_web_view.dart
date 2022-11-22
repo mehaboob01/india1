@@ -18,34 +18,27 @@ class _EmiCardState extends State<EmiCard> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar:appBar('Emi Card'),
-
-
-      body:
-      SafeArea(
-          child: Column(
-            children: [
-              LinearProgressIndicator(
-                color: AppColors.primary,
-                backgroundColor: Colors.black38,
-                value: progress,
+        resizeToAvoidBottomInset: false,
+        appBar: appBar('Emi Card'),
+        body: SafeArea(
+            child: Column(
+          children: [
+            LinearProgressIndicator(
+              color: AppColors.primary,
+              backgroundColor: Colors.black38,
+              value: progress,
+            ),
+            Expanded(
+              child: WebView(
+                initialUrl:
+                    'https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A',
+                javascriptMode: JavascriptMode.unrestricted,
+                onProgress: (progress) => setState(() {
+                  this.progress = progress / 100 as double;
+                }),
               ),
-              Expanded(
-                child: WebView(
-                  initialUrl:
-                  'https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A',
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onProgress: (progress) => setState(() {
-                    this.progress = progress / 100 as double;
-                  }),
-                ),
-              ),
-            ],
-          )
-
-
-      )
-
-    );
+            ),
+          ],
+        )));
   }
 }

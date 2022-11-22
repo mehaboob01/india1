@@ -227,13 +227,17 @@ class _ProvidersListState extends State<ProvidersList> {
                                               child: LoanCommon().filledButton(
                                                 title: 'Apply',
                                                 callBack: () {
-                                                  Get.to(
-                                                    () => ProviderDetail(
-                                                      title: '${widget.title}',
-                                                      lenders: loanController.loanLendersModel.value.lenders![index],
-                                                      personalLoan: false,
-                                                      providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
-                                                    ),
+                                                  LoanCommon().bottomSheet(
+                                                    context,
+                                                    lenderId: loanController.loanLendersModel.value.lenders![index].id ?? '',
+                                                    callBack: () {
+                                                      Get.back();
+                                                      loanController.applyLoan(
+                                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                                        lenderId: loanController.loanLendersModel.value.lenders![index].id ?? '',
+                                                      );
+                                                    },
+                                                    providerId: '',
                                                   );
                                                 },
                                               ),

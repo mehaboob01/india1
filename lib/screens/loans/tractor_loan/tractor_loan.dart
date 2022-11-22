@@ -21,7 +21,8 @@ class TractorLoanIO extends StatefulWidget {
 
 class _TractorLoanIOState extends State<TractorLoanIO> {
   LoanController _plManager = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _loanAmountKey =
+      GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -45,11 +46,12 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
           width: widthIs,
           child: Obx(
-                () => Column(
+            () => Column(
               children: [
                 CustomAppBar(
                   heading: 'Tractor loan',
@@ -65,37 +67,40 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                     child: Padding(
                       padding: const EdgeInsets.all(9.0),
                       child: Obx(
-                            () => Column(
+                        () => Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             DividerIO(
                               height: 21,
                             ),
                             Obx(
-                                  () => Container(
+                              () => Container(
                                 child: AnotherStepper(
                                   stepperList: _plManager.bikeLoanTitleList
                                       .map((e) => StepperData(
-                                    title: "$e",
-                                  ))
+                                            title: "$e",
+                                          ))
                                       .toList(),
                                   stepperDirection: Axis.horizontal,
                                   iconWidth: 25,
                                   iconHeight: 25,
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value-1,
+                                  activeIndex:
+                                      _plManager.currentScreen.value - 1,
                                   callBack: (i) {
                                     _plManager.currentScreen.value = i + 1;
                                   },
                                 ),
                               ),
                             ),
-                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                            _plManager.currentScreen.value ==
+                                    Steps.LOAN_AMOUNT.index
                                 ? loanAmountUi()
-                                : _plManager.currentScreen.value == Steps.PERSONAL.index
-                                ? personalInfoUi()
-                                : residentialInfoUi()
+                                : _plManager.currentScreen.value ==
+                                        Steps.PERSONAL.index
+                                    ? personalInfoUi()
+                                    : residentialInfoUi()
                           ],
                         ),
                       ),
@@ -104,11 +109,12 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                  child: _plManager.currentScreen.value ==
+                          Steps.LOAN_AMOUNT.index
                       ? loanAmountButton()
                       : _plManager.currentScreen.value == Steps.PERSONAL.index
-                      ? personalInfoButton()
-                      : residentialInfoButton(),
+                          ? personalInfoButton()
+                          : residentialInfoButton(),
                 ),
               ],
             ),
@@ -313,9 +319,9 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
           profileController.addResidentialDetails(
               isFromLoan: true,
               callBack: () {
-                Get.to(()=>LendersList(
-                  title: 'Bike loan',
-                ));
+                Get.to(() => LendersList(
+                      title: 'Bike loan',
+                    ));
               });
         }
       },
@@ -364,8 +370,13 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index
+                        ? Colors.black
+                        : AppColors.black26Color,
+                    fontWeight:
+                        _plManager.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? FontWeight.w600
+                            : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -374,8 +385,13 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index
+                        ? Colors.grey
+                        : AppColors.black26Color,
+                    fontWeight:
+                        _plManager.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? FontWeight.w600
+                            : FontWeight.w400),
               ),
             ],
           ),
@@ -406,20 +422,29 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: Dimens.font_16sp,
+                    fontWeight: FontWeight.w600),
                 decoration: new InputDecoration(
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹", style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600)),
+                      Text("₹",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Dimens.font_16sp,
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide:
+                        BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   border: const OutlineInputBorder(),
                   labelText: 'Loan amount',
@@ -430,7 +455,8 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 ]),
                 onChanged: (value) {
                   double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
+                  if (newVal >= _plManager.minValue.value &&
+                      newVal <= _plManager.maxValue.value) {
                     _plManager.sliderValue.value = newVal;
                   } else {
                     _plManager.sliderValue.value = _plManager.minValue.value;
@@ -443,7 +469,8 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
           height: 28,
         ),
         ProfileStepper().commonDropDown(
-          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike'].map<DropdownMenuItem<String>>((String value) {
+          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike']
+              .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value.toString()),
@@ -454,7 +481,9 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
           },
           label: 'Two wheeler required',
           hint: 'Select the two wheeler you are buying',
-          value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
+          value: profileController.vehicleType.value == ''
+              ? null
+              : profileController.vehicleType.value,
         ),
         SizedBox(
           height: 54,

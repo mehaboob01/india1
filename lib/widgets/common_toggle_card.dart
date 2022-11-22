@@ -32,7 +32,12 @@ class CommonToggleCard extends StatelessWidget {
         onPressed: (index){
 
           getController.changeSelection(index, isSelectedlist);
-          cashBackManager.onInit();
+          cashBackManager.fetchCustomerUpiAccounts();
+          cashBackManager.fetchCustomerBankAccounts();
+          cashBackManager.selectedUpiIndex.value = (-1);
+
+
+
 
 
         },

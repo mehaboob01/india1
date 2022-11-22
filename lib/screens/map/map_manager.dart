@@ -1,16 +1,25 @@
+import 'dart:convert';
+
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/data/local/shared_preference_keys.dart';
+import 'package:http/http.dart' as http;
+import '../../core/data/remote/api_constant.dart';
 import 'map_model.dart';
 
 class MapManager extends GetxController {
+  var isLoading = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
 
     super.onInit();
+    getLocations();
   }
 
   List<MapModel> dummydata = [
@@ -117,5 +126,66 @@ class MapManager extends GetxController {
         desiredAccuracy: LocationAccuracy.medium);
     latitude.value = position.latitude;
     longitude.value = position.longitude;
+  }
+
+
+
+
+  void getLocations() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    print("Customer Id ${customerId}");
+
+
+
+      isLoading.value = true;
+      var response = await http.get(
+          Uri.parse(baseUrl + Apis.mapLocations + customerId.toString()+"&lat=12.947271&lon=77.561571"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("response for map==> ${response.body}");
+
+    //   if (response.statusCode == 200 || response.statusCode == 201) {
+    //     var jsonData = jsonDecode(response.body);
+    //     HomeModel homeModel = HomeModel.fromJson(jsonData);
+    //     print("data response");
+    //     print("http success!!");
+    //     print(homeModel.data);
+    //
+    //     if (homeModel!.status!.code == 2000) {
+    //       isLoading(false);
+    //       print("http success in model!!");
+    //       pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
+    //       pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
+    //       redeemablePoints.value =
+    //       homeModel.data!.pointsSummary!.redeemablePoints!;
+    //       atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
+    //     } else {
+    //       Flushbar(
+    //         title: "Error!",
+    //         message: homeModel.status!.message.toString(),
+    //         duration: Duration(seconds: 2),
+    //       )..show(Get.context!);
+    //     }
+    //   } else {
+    //     Flushbar(
+    //       title: "Server Error!",
+    //       message: "Please try after sometime ...",
+    //       duration: Duration(seconds: 1),
+    //     )..show(Get.context!);
+    //   }
+    // } catch (e) {
+    //   Flushbar(
+    //     title: "Server Error!",
+    //     message: "Please try after sometime",
+    //     duration: Duration(seconds: 1),
+    //   )..show(Get.context!);
+    // } finally {
+    //   isLoading(false);
+    // }
   }
 }

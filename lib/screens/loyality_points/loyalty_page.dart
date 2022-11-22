@@ -14,6 +14,7 @@ class LoyaltyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -82,7 +83,10 @@ class LoyaltyScreen extends StatelessWidget {
                                             .recentRewardTransactionsList
                                             .length,
                                         (index) => YourRewardCard(
-                                          rewardState: isActive(_loyaltyManager.recentRewardTransactionsList[index].expiryDate!),
+                                          rewardState: isActive(_loyaltyManager
+                                              .recentRewardTransactionsList[
+                                                  index]
+                                              .expiryDate!),
 
                                           // isActive(_loyaltyManager
                                           //         .recentRewardTransactionsList[
@@ -152,7 +156,7 @@ class LoyaltyScreen extends StatelessWidget {
   RewardState isActive(String dateTime) {
     DateTime dateNow = DateTime.now();
     DateTime startDateTemp =
-    DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateTime);
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateTime);
     final difference = dateNow.difference(startDateTemp);
 
     if (difference.inHours.abs() <= 12 && difference.isNegative) {

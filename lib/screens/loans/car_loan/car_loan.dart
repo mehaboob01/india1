@@ -81,21 +81,23 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                 ),
                                 Obx(
                                   () => Container(
-                                    child: AnotherStepper(
-                                      stepperList: _plManager.bikeLoanTitleList
-                                          .map((e) => StepperData(
-                                                title: "$e",
-                                              ))
-                                          .toList(),
-                                      stepperDirection: Axis.horizontal,
-                                      iconWidth: 25,
-                                      iconHeight: 25,
-                                      inverted: true,
-                                      activeBarColor: AppColors.pointsColor,
-                                      activeIndex: _plManager.currentScreen.value - 1,
-                                      callBack: (i) {
-                                        _plManager.currentScreen.value = i + 1;
-                                      },
+                                    child: IgnorePointer(
+                                      child: AnotherStepper(
+                                        stepperList: _plManager.bikeLoanTitleList
+                                            .map((e) => StepperData(
+                                                  title: "$e",
+                                                ))
+                                            .toList(),
+                                        stepperDirection: Axis.horizontal,
+                                        iconWidth: 25,
+                                        iconHeight: 25,
+                                        inverted: true,
+                                        activeBarColor: AppColors.pointsColor,
+                                        activeIndex: _plManager.currentScreen.value,
+                                        callBack: (i) {
+                                          _plManager.currentScreen.value = i;
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -148,63 +150,10 @@ class _CarLoanIOState extends State<CarLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.CarLoan);
         }
       },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      child: LoanCommon().nextButton(),
     );
   }
 
@@ -215,30 +164,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
         Expanded(
           child: GestureDetector(
             onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -276,26 +202,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -305,62 +212,54 @@ class _CarLoanIOState extends State<CarLoanIO> {
   // RESIDENTIAL INFO BUTTON
 
   Widget residentialInfoButton() {
-    return InkWell(
-      onTap: () {
-        profileController.autoValidation.value = true;
-        if (!residentialForm.currentState!.validate()) {
-          Flushbar(
-            title: "Alert!",
-            message: "missing some values",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.city.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for city",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.state.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for state",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else {
-          profileController.addResidentialDetails(
-              isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
-              callBack: () {
-                Get.to(() => LendersList(
-                      title: 'Car loan',
-                    ));
-              });
-        }
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'NEXT',
-              style: AppTextThemes.button,
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
+            child: LoanCommon().backButton(context: context),
           ),
-
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
         ),
-      ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              profileController.autoValidation.value = true;
+              if (!residentialForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.city.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for city",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.state.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for state",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addResidentialDetails(
+                    isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    callBack: () {
+                      Get.to(() => LendersList(
+                            title: 'Car loan',
+                          ));
+                    });
+              }
+            },
+            child: LoanCommon().nextButton(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -374,13 +273,17 @@ class _CarLoanIOState extends State<CarLoanIO> {
           height: 38,
         ),
         ProfileStepper().commonDropDown(
-          item: <String>['4 wheeler - New', '4 wheeler - Preowned'].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value.toString()),
+          item: [
+            {"name": "4 wheeler - New", "value": "FourWheelerNew"},
+            {"name": "4 wheeler - Preowned", "value": "FourWheelerPreowned"},
+          ].map((value) {
+            return DropdownMenuItem(
+              value: value['value'],
+              child: Text(value['name'].toString()),
             );
           }).toList(),
           onChanged: (value) {
+            print(value);
             profileController.vehicleType.value = value;
           },
           label: '4 wheeler required',

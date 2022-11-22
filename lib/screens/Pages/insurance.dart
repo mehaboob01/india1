@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +13,7 @@ class InsurancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -46,8 +45,7 @@ class InsuranceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 2.0.wp,
-      children:  [
-
+      children: [
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.bikeInsurance);
@@ -78,7 +76,6 @@ class InsuranceCard extends StatelessWidget {
           label: 'Accident',
           itembgColor: ItemCardbgColor.lightRed2,
         ),
-
       ],
     );
   }

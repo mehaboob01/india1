@@ -47,6 +47,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(child: buildSelectLanScreen()),
     );
   }
@@ -63,7 +64,6 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
 
   Widget buildContentOfScreen() {
     return Container(
-
       padding: EdgeInsets.all(6),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -99,7 +99,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                 ),
               )),
           Padding(
-            padding:  EdgeInsets.symmetric(vertical: 4.0,horizontal: 4),
+            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4),
             child: Container(
               width: MediaQuery.of(context).size.width,
               // height: MediaQuery.of(context).size.height * 0.7,
@@ -116,7 +116,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               await SharedPreferences.getInstance();
                           prefs.setInt(
                               SPKeys.SELECTED_LANGUAGE, Language.ENGLISH.index);
-                          updateLanguage(locale[Language.ENGLISH.index]['locale'],
+                          updateLanguage(
+                              locale[Language.ENGLISH.index]['locale'],
                               Language.ENGLISH.index);
                         },
                             selectedLanguage == Language.ENGLISH.index
@@ -131,7 +132,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           prefs.setInt(
                               SPKeys.SELECTED_LANGUAGE, Language.KANNADA.index);
 
-                          updateLanguage(locale[Language.KANNADA.index]['locale'],
+                          updateLanguage(
+                              locale[Language.KANNADA.index]['locale'],
                               Language.KANNADA.index);
                         },
                             selectedLanguage == Language.KANNADA.index
@@ -160,7 +162,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           prefs.setInt(
                               SPKeys.SELECTED_LANGUAGE, Language.MARATHI.index);
 
-                          updateLanguage(locale[Language.MARATHI.index]['locale'],
+                          updateLanguage(
+                              locale[Language.MARATHI.index]['locale'],
                               Language.MARATHI.index);
                         },
                             selectedLanguage == Language.MARATHI.index
@@ -174,7 +177,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               await SharedPreferences.getInstance();
                           prefs.setInt(
                               SPKeys.SELECTED_LANGUAGE, Language.TELUGU.index);
-                          updateLanguage(locale[Language.TELUGU.index]['locale'],
+                          updateLanguage(
+                              locale[Language.TELUGU.index]['locale'],
                               Language.TELUGU.index);
                         },
                             selectedLanguage == Language.TELUGU.index
@@ -200,8 +204,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                         EachLanguageIO("മലയാളം", () async {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          prefs.setInt(
-                              SPKeys.SELECTED_LANGUAGE, Language.MALAYALAM.index);
+                          prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                              Language.MALAYALAM.index);
                           updateLanguage(
                               locale[Language.MALAYALAM.index]['locale'],
                               Language.MALAYALAM.index);
@@ -217,7 +221,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               await SharedPreferences.getInstance();
                           prefs.setInt(
                               SPKeys.SELECTED_LANGUAGE, Language.BENGALI.index);
-                          updateLanguage(locale[Language.BENGALI.index]['locale'],
+                          updateLanguage(
+                              locale[Language.BENGALI.index]['locale'],
                               Language.BENGALI.index);
                         },
                             selectedLanguage == Language.BENGALI.index
@@ -247,7 +252,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
               ),
             ),
           ),
-        SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Visibility(
             visible: widget.fromScreen == "home" ? false : true,
             child: GestureDetector(

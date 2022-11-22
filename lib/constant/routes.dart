@@ -50,7 +50,6 @@ class MRouter {
   static const String bikeInsurance = 'BikeInsurance';
   static const String carInsurance = 'CarInsurance';
 
-
   static const String farmLoan = 'FarmLoan';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -84,7 +83,6 @@ class MRouter {
 
       case personalLoan:
         return CupertinoPageRoute(builder: (_) => MobileRechargeIO());
-
 
       case chooseAmountIO:
         return CupertinoPageRoute(builder: (_) => PersonalLoan());
@@ -151,6 +149,7 @@ class NoRouteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(child: Text('${'no_route_defined'} "$screenName"')),
     );
   }

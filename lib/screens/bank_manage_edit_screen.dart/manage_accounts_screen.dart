@@ -16,15 +16,14 @@ class ManageAccountsCard extends StatelessWidget {
   ManageAccountsCard({super.key});
   CashBackManager cashBackManager = Get.put(CashBackManager());
 
-
   final List<String> bankAccountType = [
     'saving',
     'current',
   ];
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(children: [
@@ -37,8 +36,7 @@ class ManageAccountsCard extends StatelessWidget {
           Obx(
             () => cashBackManager.isLoading == true
                 ? CircularProgressbar()
-                :
-            Expanded(
+                : Expanded(
                     child: ListView(
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(
@@ -71,20 +69,29 @@ class ManageAccountsCard extends StatelessWidget {
                                             cardWidth: double.maxFinite,
                                             onEditPressed: () => Get.to(
                                                 () => EditAccountsCard(
-                                                    cashBackManager.bankList
-                                                        .toList(),
-                                                    cashBackManager
-                                                        .customerBankList[index]
-                                                        .name,
-                                                    cashBackManager
-                                                        .customerBankList[index]
-                                                        .maskAccountNumber,
-                                                    cashBackManager
-                                                        .customerBankList[index]
-                                                        .ifscCode,
-                                                    cashBackManager
-                                                        .customerBankList[index]
-                                                        .accountType),
+                                                      cashBackManager.bankList
+                                                          .toList(),
+                                                      cashBackManager
+                                                          .customerBankList[
+                                                              index]
+                                                          .name,
+                                                      cashBackManager
+                                                          .customerBankList[
+                                                              index]
+                                                          .maskAccountNumber,
+                                                      cashBackManager
+                                                          .customerBankList[
+                                                              index]
+                                                          .ifscCode,
+                                                      cashBackManager
+                                                          .customerBankList[
+                                                              index]
+                                                          .accountType,
+                                                      cashBackManager
+                                                          .customerBankList[
+                                                              index]
+                                                          .id,
+                                                    ),
                                                 arguments: [
                                                   cashBackManager
                                                       .customerBankList[index],
@@ -129,8 +136,6 @@ class ManageAccountsCard extends StatelessWidget {
                                 ),
                               ))
                           : const SizedBox.shrink(),
-
-
                       cashBackManager.customerUPIList.isNotEmpty
                           ? Text(
                               'Your UPI or VPA’s',
@@ -150,15 +155,19 @@ class ManageAccountsCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(2.0.wp),
                                 ),
                                 child: Column(
-                                  children:
-
-                                  List.generate(
+                                  children: List.generate(
                                       cashBackManager.customerUPIList.length,
                                       (index) => CommonRadioCard(
                                             isEditable: true,
                                             isSelected: false,
                                             onEditPressed: () => Get.to(
-                                                () => EditUpi(cashBackManager.customerUPIList[index].upiId,cashBackManager.customerUPIList[index].id),
+                                                () => EditUpi(
+                                                    cashBackManager
+                                                        .customerUPIList[index]
+                                                        .upiId,
+                                                    cashBackManager
+                                                        .customerUPIList[index]
+                                                        .id),
                                                 fullscreenDialog: true,
                                                 arguments: [
                                                   //  JsonModel().upiModel[index],
@@ -175,15 +184,14 @@ class ManageAccountsCard extends StatelessWidget {
                                                     cashBackManager
                                                         .customerUPIList[index]
                                                         .id);
-                                                 Get.back();
-                                                await Future.delayed(Duration(seconds: 1), () {
-                                                  cashBackManager.fetchCustomerUpiAccounts();
-                                                   Get.back();
 
+                                                Get.back();
+                                                await Future.delayed(
+                                                    Duration(seconds: 1), () {
+                                                  cashBackManager
+                                                      .fetchCustomerUpiAccounts();
+                                                  Get.back();
                                                 });
-
-
-
                                               });
                                             },
                                             cardWidth: double.maxFinite,

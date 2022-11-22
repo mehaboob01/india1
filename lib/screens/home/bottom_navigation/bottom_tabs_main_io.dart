@@ -7,12 +7,10 @@ import 'package:india_one/screens/Pages/payments.dart';
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../Pages/insurance.dart';
 import '../../Pages/savings.dart';
 import '../../home_start/home_main_io.dart';
-
 
 class BottomTabsMainIO extends StatefulWidget {
   const BottomTabsMainIO({Key? key}) : super(key: key);
@@ -28,8 +26,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO(false
-    );
+    mainHomeWidget = HomeMainIO(false);
     super.initState();
   }
 
@@ -38,11 +35,12 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
           SizedBox(
-            height: heightIs - bottomMargin+9,
+            height: heightIs - bottomMargin + 9,
             child: mainHomeWidget,
           ),
           Align(
