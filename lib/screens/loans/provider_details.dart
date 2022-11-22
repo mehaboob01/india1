@@ -35,9 +35,9 @@ class ProviderDetail extends StatelessWidget {
                 CustomAppBar(
                   heading: '$title',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome,
+                    // ),
                   ],
                 ),
                 Container(

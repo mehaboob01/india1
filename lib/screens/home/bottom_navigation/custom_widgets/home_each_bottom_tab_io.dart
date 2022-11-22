@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
-import '../../../../constant/other_constants_io.dart';
 import '../../../../widgets/text_io.dart';
 
 class HomeEachBottomTabIO extends StatefulWidget {

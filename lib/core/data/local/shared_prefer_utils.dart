@@ -90,15 +90,5 @@ class SPUtil {
     return _prefs!.remove(key);
   }
 
-// static Future<bool> putUserData(String key, ResponseUserData? userDTO) {
-//   String encodedBusiness = json.encode(userDTO!.toJson());
-//   return _prefs!.setString(key, encodedBusiness);
-// }
-//
-// static ResponseUserData? getUserData(String key) {
-//   String strCustomerData = getString(key);
-//   if (strCustomerData.isEmpty || strCustomerData.length == 0) {
-//     return null;
-//   }
-//
+
 }

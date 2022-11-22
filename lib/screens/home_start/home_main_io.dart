@@ -6,9 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,15 +16,20 @@ import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/carasoul_slider.dart';
 
+import '../../widgets/circular_progressbar.dart';
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
 import '../Pages/payments.dart';
 import '../Pages/savings.dart';
+import '../loyality_points/loyality_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
 class HomeMainIO extends StatefulWidget {
+  bool? showPonitsPopup;
+  HomeMainIO(this.showPonitsPopup);
+
   @override
   State<HomeMainIO> createState() => _HomeMainIOState();
 }
@@ -34,12 +37,15 @@ class HomeMainIO extends StatefulWidget {
 class _HomeMainIOState extends State<HomeMainIO> {
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+
   final LocalAuthentication auth = LocalAuthentication();
   int profileClciked = ProfileColor.INACTIVE.index;
   String msg = "You are not authorized.";
 
   void showFirstTimePoints() async {
-    if (_homeManager.loyalityPoints.toString() == "0") {
+    if (_homeManager.loyalityPoints.toString() == "0" ||
+        widget.showPonitsPopup == false) {
     } else {
       Future.delayed(
           Duration(milliseconds: 300),
@@ -137,8 +143,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
   @override
   void initState() {
     super.initState();
+    _homeManager.callHomeApi();
 
-    showFirstTimePoints();
+    //showFirstTimePoints();
 
     checkLogin();
   }
@@ -166,27 +173,11 @@ class _HomeMainIOState extends State<HomeMainIO> {
       },
       child: Obx(
         () => GestureDetector(
-          onTap: () => {profileClciked == 0},
+          onTap: () => {Get.back(), _homeManager.isClicked.value = false},
           child: Scaffold(
+            backgroundColor: Colors.white,
             body: _homeManager.isLoading.value
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: LoadingAnimationWidget.inkDrop(
-                          size: 36,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Loading ...',
-                          style: AppStyle.shortHeading.copyWith(
-                              color: AppColors.black,
-                              fontWeight: FontWeight.w400))
-                    ],
-                  )
+                ? CircularProgressbar()
                 : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,7 +186,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         Container(
                           padding: EdgeInsets.fromLTRB(
                               4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
-                          height: 50.0.hp,
+                          height: 54.0.hp,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(5.0.wp),
@@ -236,14 +227,17 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                         SizedBox(
                                           width: 2.0.wp,
                                         ),
-                                        headingBox(
-                                            image: AppImages.notify_icon),
+                                        GestureDetector(
+                                          onTap: ()=> Get.toNamed(MRouter.notificationScreen),
+                                          child: headingBox(
+                                              image: AppImages.notify_icon),
+                                        ),
                                         SizedBox(
                                           width: 2.0.wp,
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            profileClciked == 1;
+                                            _homeManager.isClicked.value = true;
                                             showMenu<String>(
                                               context: context,
                                               shape: RoundedRectangleBorder(
@@ -259,15 +253,21 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                               Radius.circular(
                                                                   13.0))),
                                               position: RelativeRect.fromLTRB(
-                                                  25.0, 112.0, 16.0, 0.0),
+                                                  25.0, 118.0, 16.0, 0.0),
                                               items: [
                                                 PopupMenuItem(
+                                                  height: Get.height * 0.02,
                                                   child: GestureDetector(
                                                     onTap: () {
+                                                      _homeManager.isClicked
+                                                          .value = false;
+                                                      Get.back();
                                                       Get.to(() =>
                                                           ProfileScreen());
                                                     },
                                                     child: Container(
+                                                      height: Get.height * 0.03,
+                                                      width: double.infinity,
                                                       child: Text(
                                                         "My Profile",
                                                         style: AppStyle
@@ -288,33 +288,48 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                 ),
                                                 PopupMenuDivider(),
                                                 PopupMenuItem(
+                                                  height: 0.02,
                                                   child: GestureDetector(
                                                       onTap: () => {
+                                                            _homeManager
+                                                                .isClicked
+                                                                .value = false,
                                                             Get.back(),
-                                                            Get.toNamed(MRouter
-                                                                .loyaltyPoints),
+                                                            Get.toNamed(
+                                                              MRouter
+                                                                  .loyaltyPoints,
+                                                            ),
                                                           },
-                                                      child: Text(
-                                                        "My Rewards",
-                                                        style: AppStyle
-                                                            .shortHeading
-                                                            .copyWith(
-                                                                fontSize: Dimens
-                                                                    .font_14sp,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                letterSpacing:
-                                                                    1),
+                                                      child: Container(
+                                                        height:
+                                                            Get.height * 0.02,
+                                                        width: double.infinity,
+                                                        child: Text(
+                                                          "My Rewards",
+                                                          style: AppStyle
+                                                              .shortHeading
+                                                              .copyWith(
+                                                                  fontSize: Dimens
+                                                                      .font_14sp,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  letterSpacing:
+                                                                      1),
+                                                        ),
                                                       )),
                                                 ),
                                               ],
                                               elevation: 8.0,
                                             ).then<void>(
                                                 (String? itemSelected) {
-                                              if (itemSelected == null) return;
+                                              if (itemSelected == null) {
+                                                _homeManager.isClicked.value =
+                                                    false;
+                                                return;
+                                              }
 
                                               if (itemSelected == "1") {
                                               } else if (itemSelected == "2") {
@@ -329,6 +344,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                             });
                                           },
                                           child: headingBox(
+                                              color:
+                                                  _homeManager.isClicked.value
+                                                      ? Colors.orange
+                                                      : Colors.white,
                                               image: AppImages.user_profile),
                                         ),
                                       ],
@@ -350,7 +369,25 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                   ],
                                 ),
                                 // ways to Reedem ---------------------------------
-                                SizedBox(height: 2.0.hp),
+                                SizedBox(height: 1.0.hp),
+                                Obx(
+                                  () => Visibility(
+                                    visible: _homeManager.redeemablePoints <= 14
+                                        ? true
+                                        : false,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: Text(
+                                        'Note : You can redeem only if you have 15 or more points',
+                                        style: AppStyle.shortHeading.copyWith(
+                                          fontSize: Dimens.font_12sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 1.0.hp),
                                 Flexible(child: redeemWay()),
                                 // Redeem points now -------------------------------
                                 SizedBox(height: 2.0.hp),
@@ -447,14 +484,18 @@ class _HomeMainIOState extends State<HomeMainIO> {
 
 // heading box -----------------------------------
   Widget headingBox(
-      {IconData? icon, String? image, String? text, VoidCallback? ontap}) {
+      {IconData? icon,
+      String? image,
+      String? text,
+      VoidCallback? ontap,
+      Color? color}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: profileClciked == 1 ? Colors.orange : Colors.white,
+            color: color ?? Colors.white,
             borderRadius: BorderRadius.circular(5)),
         child: text != null
             ? Center(
@@ -476,7 +517,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   // balance card ----------------------------------------------
   Widget balanceCard({required bool first}) {
     return Container(
-        padding: EdgeInsets.all(2.0.wp),
+        padding: EdgeInsets.all(1.0.wp),
         height: 10.0.hp,
         decoration: BoxDecoration(
           color: AppColors.backGrounddarkheader,
@@ -500,7 +541,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                   Text(
                     'Current balance',
                     style: AppStyle.shortHeading.copyWith(
-                        fontSize: 12.0.sp,
+                        fontSize: Dimens.font_14sp,
                         color: Colors.white,
                         letterSpacing: 0.5),
                   ),
@@ -517,7 +558,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         () => Text(
                           _homeManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
                               letterSpacing: 0.5,
                               fontWeight: FontWeight.bold),
@@ -526,7 +567,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         ' Points',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
                             letterSpacing: 0.5),
                       ),
@@ -544,7 +585,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         'Total earned : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
                             letterSpacing: 0.5),
                       ),
@@ -552,7 +593,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                         () => Text(
                           _homeManager.pointsEarned.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
                               letterSpacing: 0.5,
                               fontWeight: FontWeight.bold),
@@ -566,17 +607,17 @@ class _HomeMainIOState extends State<HomeMainIO> {
                       Text(
                         'Total redeemed : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: 15,
+                            fontSize: Dimens.font_14sp,
                             color: Colors.white,
-                            letterSpacing: 0.5),
+                            letterSpacing: 0.2),
                       ),
                       Obx(
                         () => Text(
                           _homeManager.pointsRedeemed.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: 18,
+                              fontSize: Dimens.font_16sp,
                               color: Colors.white,
-                              letterSpacing: 0.5,
+                              letterSpacing: 0.2,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -602,34 +643,61 @@ class _HomeMainIOState extends State<HomeMainIO> {
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
-          redeemWaySub(image: AppImages.mobilRechargeSvg, text: 'Recharge'),
-          redeemWaySub(image: AppImages.walletIcon, text: 'Cashback')
+          redeemWaySub(
+              image: AppImages.mobilRechargeSvg,
+              text: 'Recharge',
+              routName: MRouter.mobileRechargeIO),
+          redeemWaySub(
+              image: AppImages.walletIcon,
+              text: 'Cashback',
+              routName: MRouter.cashBackRedeemPage)
         ],
       ),
     );
   }
 
-  Widget redeemWaySub({required String image, required String text}) {
-    return Row(
-      children: [
-        SvgPicture.asset(image),
-        SizedBox(width: 1.0.wp),
-        Text(
-          text,
-          style: AppStyle.shortHeading.copyWith(
-              fontSize: 10.0.sp,
-              color: AppColors.textColorshade,
-              letterSpacing: 0.5),
+  Widget redeemWaySub(
+      {required String image, required String text, required String routName}) {
+    return GestureDetector(
+      onTap: () {
+        _loyaltyManager.callLoyaltyDashboardApi();
+
+
+        _homeManager.redeemablePoints >= 14?  Get.toNamed(routName): Get.snackbar('Oops!!',
+            'You can redeem only if you have 15+ points',
+            snackPosition: SnackPosition.BOTTOM);
+      },
+      child: Container(
+        child: Row(
+          children: [
+            SvgPicture.asset(image),
+            SizedBox(width: 1.0.wp),
+            Text(
+              text,
+              style: AppStyle.shortHeading.copyWith(
+                  fontSize: 10.0.sp,
+                  color: AppColors.textColorshade,
+                  letterSpacing: 0.5),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
   // redeem points container ------------------------
 
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
-        label: 'Redeem Points Now',
-        onPressed: () => {},
+        label: _homeManager.redeemablePoints >= 14
+            ? 'Redeem Points Now'
+            : 'Earn more points',
+        onPressed: () => {
+              _homeManager.redeemablePoints >= 14
+                  ? Get.toNamed(MRouter.redeemPointsPage)
+                  : Get.snackbar(
+                      'Oops!!', 'You can redeem only if you have 15+ points',
+                      snackPosition: SnackPosition.BOTTOM)
+            },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,
@@ -639,7 +707,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   }
 
 // find nearest Atm -------------------------------
-  Widget nearestAtm({VoidCallback? onPressed}) {
+  Widget nearestAtm() {
     return Container(
       height: 24.0.wp,
       margin: EdgeInsets.all(2.0.hp),
@@ -680,7 +748,9 @@ class _HomeMainIOState extends State<HomeMainIO> {
               SizedBox(width: 6.0.wp),
               Flexible(
                 child: GestureDetector(
-                  onTap: onPressed,
+                  onTap: () {
+                    // Get.toNamed(MRouter.map);
+                  },
                   child: Container(
                     height: 4.0.hp,
                     decoration: BoxDecoration(
@@ -822,6 +892,7 @@ Widget confirmBtn() {
   return ElevatedButton(
       onPressed: () {
         if (Platform.isAndroid) {
+          Get.back();
           SystemNavigator.pop();
         } else if (Platform.isIOS) {
           exit(0);

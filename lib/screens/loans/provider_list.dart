@@ -46,9 +46,9 @@ class _ProvidersListState extends State<ProvidersList> {
                 CustomAppBar(
                   heading: '${widget.title}',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome,
+                    // ),
                   ],
                 ),
                 Padding(

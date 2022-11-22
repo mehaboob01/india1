@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -34,9 +35,20 @@ class _SplashScreenState extends State<SplashScreen> {
   ];
   @override
   void initState() {
+
+
     super.initState();
+    FirebaseMessaging.instance.getToken().then((newToken){
+
+      print("FCM TOKEN ${newToken}");
+
+
+    });
+
+
+
     initDynamicLinks();
-    Timer(Duration(seconds: 2), () => launchLoginWidget());
+    Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
@@ -103,9 +115,9 @@ class _SplashScreenState extends State<SplashScreen> {
         tag: 'logo_image',
         child:
         Image.asset(
-          "assets/images/splash_logo.png",
-          width: 288,
-          height: 240,
+          "assets/images/splash_logo.gif",
+          width: 444,
+          height: 654,
         ),
       ),
     );

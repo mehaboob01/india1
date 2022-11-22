@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 import '../screens/loyality_points/loyality_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import 'button_with_flower.dart';
-
 
 // Appbar section --------------------------------
 class CustomAppBar extends StatelessWidget {
@@ -70,7 +68,7 @@ class CustomActionIcons extends StatelessWidget {
       this.beginsAt = Alignment.topLeft,
       this.endsAt = Alignment.bottomRight,
       this.stops = const [0.5, 1.0],
-      this.imageColor})
+      this.imageColor, required Future Function() onHeaderIconPressed})
       : super(key: key);
 
   final List<Color>? customGradientColors;
@@ -80,8 +78,6 @@ class CustomActionIcons extends StatelessWidget {
   final List<double>? stops;
   final Alignment? beginsAt;
   final Alignment? endsAt;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +97,13 @@ class CustomActionIcons extends StatelessWidget {
               },
               child: SvgPicture.asset(image, fit: BoxFit.fill))
           : isSvg!
-              ? SvgPicture.asset(
-                  image,
-                  color: imageColor,
-                  fit: BoxFit.fill,
+              ? GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    image,
+                    color: imageColor,
+                    fit: BoxFit.fill,
+                  ),
                 )
               : Image.asset(image, color: imageColor, fit: BoxFit.fill),
     );
@@ -113,9 +112,8 @@ class CustomActionIcons extends StatelessWidget {
 
 // Loyalty common heading screen
 class HeadingContainer extends StatelessWidget {
-
   LoyaltyManager _loyaltyManager = Get.find();
-   HeadingContainer({
+  HeadingContainer({
     Key? key,
   }) : super(key: key);
 
@@ -124,7 +122,7 @@ class HeadingContainer extends StatelessWidget {
     return Container(
         width: double.maxFinite,
         margin: EdgeInsets.symmetric(vertical: 4.0.wp),
-        height: 44.0.wp,
+        height: 50.0.wp,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
             gradient: const LinearGradient(
@@ -155,9 +153,11 @@ class HeadingContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Image.asset(AppImages.coins),
-                      SizedBox(width: 4,),
+                      SizedBox(
+                        width: 4,
+                      ),
                       Obx(
-                        ()=> Text(
+                        () => Text(
                           _loyaltyManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: 18.0.sp,
@@ -174,10 +174,31 @@ class HeadingContainer extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 14,),
+                  Obx(
+                    ()=>Visibility(
+                      visible: _loyaltyManager.redeemablePoints <= 14?true:false,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          'Note : You can redeem only if you have 15 points',
+                          style: AppStyle.shortHeading
+                              .copyWith(
+                            fontSize: Dimens.font_12sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+
                 ],
               ),
             ),
+
+
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -202,7 +223,7 @@ class HeadingContainer extends StatelessWidget {
                           ),
                         ),
                         Obx(
-                          ()=> Text(
+                          () => Text(
                             _loyaltyManager.pointsEarned.toString(),
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 14.0.sp,
@@ -223,7 +244,7 @@ class HeadingContainer extends StatelessWidget {
                             ),
                           ),
                           Obx(
-                            ()=> Text(
+                            () => Text(
                               _loyaltyManager.pointsRedeemed.toString(),
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: 14.0.sp,
@@ -248,20 +269,24 @@ class HeadingContainer extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 )),
-            Positioned(
-              top: 32,
-              right: 18,
-              child: ButtonWithFlower(
-                buttonColor: Colors.white,
-                onPressed: () {
-                  Get.to(() => RedeemPointsPage());
-                },
-                buttonHeight: 10.0.wp,
-                buttonWidth: 40.0.wp,
-                label: 'Redeem Now',
-                labelSize: 10.0.sp,
-                labelWeight: FontWeight.w600,
-                labelColor: AppColors.butngradient1,
+            Obx(
+              ()=> Positioned(
+                top: 32,
+                right: 18,
+                child: ButtonWithFlower(
+                  buttonColor: Colors.white,
+                  onPressed: () {
+                   _loyaltyManager.redeemablePoints >= 14? Get.to(() => RedeemPointsPage()):   Get.snackbar('Oops!!',
+                       'You can redeem only if you have 15+ points',
+                       snackPosition: SnackPosition.BOTTOM);
+                  },
+                  buttonHeight: 10.0.wp,
+                  buttonWidth: 44.0.wp,
+                  label: _loyaltyManager.redeemablePoints >= 14?'Redeem Now':'Earn more points',
+                  labelSize: Dimens.font_12sp,
+                  labelWeight: FontWeight.w600,
+                  labelColor: AppColors.butngradient1,
+                ),
               ),
             )
           ],

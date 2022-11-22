@@ -63,9 +63,9 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     CustomAppBar(
                       heading: 'Car loan',
                       customActionIconsList: [
-                        CustomActionIcons(
-                          image: AppImages.bottomNavHome,
-                        ),
+                        // CustomActionIcons(
+                        //   image: AppImages.bottomNavHome,
+                        // ),
                       ],
                     ),
                     Expanded(

@@ -20,11 +20,12 @@ class HomeManager extends GetxController {
   final index = 0.obs;
   var isLoading = false.obs;
   final datadelete = 'to mushc'.obs;
-  var pointsEarned = '0'.obs;
-  var pointsRedeemed = '0'.obs;
-  var redeemablePoints = '0'.obs;
-  var atmRewards = '0'.obs;
+  RxInt pointsEarned = 0.obs;
+  RxInt pointsRedeemed = 0.obs;
+  RxInt redeemablePoints = 0.obs;
+  RxInt atmRewards = 0.obs;
   var loyalityPoints = '0'.obs;
+  var isClicked = false.obs;
 
   @override
   void onInit() {
@@ -34,8 +35,9 @@ class HomeManager extends GetxController {
 
   void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-    String? points = prefs!.getString(SPKeys.LOYALTY_POINT_GAINED);
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? points = prefs.getString(SPKeys.LOYALTY_POINT_GAINED);
+    print("Customer Id ${customerId}");
 
     loyalityPoints.value = points.toString();
     try {
@@ -48,32 +50,39 @@ class HomeManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-      var jsonData = jsonDecode(response.body);
-      HomeModel homeModel = HomeModel.fromJson(jsonData);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        HomeModel homeModel = HomeModel.fromJson(jsonData);
+        print("data response");
+        print("http success!!");
+        print(homeModel.data);
 
-      if (response.statusCode == 200) {
-        isLoading(false);
-        pointsEarned.value =
-            homeModel.data!.pointsSummary!.pointsEarned.toString();
-        pointsRedeemed.value =
-            homeModel.data!.pointsSummary!.pointsRedeemed.toString();
-        redeemablePoints.value =
-            homeModel.data!.pointsSummary!.redeemablePoints.toString();
-        atmRewards.value =
-            homeModel.data!.atmRewards!.rewardsMultipliers![0].toString();
+        if (homeModel!.status!.code == 2000) {
+          isLoading(false);
+          print("http success in model!!");
+          pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
+          pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
+          redeemablePoints.value =
+              homeModel.data!.pointsSummary!.redeemablePoints!;
+          atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
+        } else {
+          Flushbar(
+            title: "Error!",
+            message: homeModel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
       } else {
-        isLoading(false);
-
         Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
+          title: "Server Error!",
+          message: "Please try after sometime ...",
           duration: Duration(seconds: 1),
         )..show(Get.context!);
       }
     } catch (e) {
       Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
+        title: "Server Error!",
+        message: "Please try after sometime",
         duration: Duration(seconds: 1),
       )..show(Get.context!);
     } finally {

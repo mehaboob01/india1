@@ -54,10 +54,10 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                 CustomAppBar(
                   heading: 'Tractor loan',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome,
+                    //
+                    // ),
                   ],
                 ),
                 Expanded(

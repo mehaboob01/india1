@@ -26,7 +26,7 @@ class LoansPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
-              CommonBanner(),
+              CommonBanner()
             ],
           ),
         ),
@@ -95,19 +95,19 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        InkWell(
-          onTap: () {
-            Get.to(() => CommonWebView(
-                  title: 'MSME',
-                  url: Apis.msme,
-                ));
-          },
-          child: ItemCard(
-            image: AppImages.handSackSvg,
-            label: 'MSME',
-            itembgColor: ItemCardbgColor.lightBlue,
-          ),
-        ),
+        // InkWell(
+        //   onTap: () {
+        //     Get.to(() => CommonWebView(
+        //       title: 'MSME',
+        //       url: Apis.msme,
+        //     ));
+        //   },
+        //   child: ItemCard(
+        //     image: AppImages.handSackSvg,
+        //     label: 'MSME',
+        //     itembgColor: ItemCardbgColor.lightBlue,
+        //   ),
+        // ),
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.goldLoanIO);
@@ -115,6 +115,19 @@ class LoansCard extends StatelessWidget {
           child: ItemCard(
             image: AppImages.goldSvg,
             label: 'Gold',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'Credit Card',
+              url: Apis.creditCard,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.creditCardSvg,
+            label: 'Emi Card',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),

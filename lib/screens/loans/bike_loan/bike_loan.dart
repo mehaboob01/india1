@@ -63,9 +63,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                     CustomAppBar(
                       heading: 'Bike loan',
                       customActionIconsList: [
-                        CustomActionIcons(
-                          image: AppImages.bottomNavHome,
-                        ),
+                        // CustomActionIcons(
+                        //   image: AppImages.bottomNavHome, onHeaderIconPressed: () {  },
+                        // ),
                       ],
                     ),
                     Expanded(

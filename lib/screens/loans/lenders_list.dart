@@ -42,9 +42,9 @@ class _LendersListState extends State<LendersList> {
                 CustomAppBar(
                   heading: '${widget.title}',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    // //   image: AppImages.bottomNavHome, onHeaderIconPressed: () {  },
+                    // // ),
                   ],
                 ),
                 Padding(

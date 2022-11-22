@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
-class CashBackController extends GetxController {
+import '../loyality_manager.dart';
 
+class CashBackController extends GetxController {
   final size = Get.size;
   final carouselCtrl = CarouselController();
   final index = 0.obs;
@@ -13,16 +14,49 @@ class CashBackController extends GetxController {
   final redeemPointUpiVpaSliderTextEditingCtrl = TextEditingController().obs;
   final loyaltyBankAccountTextEditingCtrl = TextEditingController().obs;
   final loyaltyUpiTextEditingCtrl = TextEditingController().obs;
+  final editaccountformKey = GlobalKey<FormBuilderState>();
+  final editUpformKey = GlobalKey<FormBuilderState>();
   final loyaltyBankAccountreEnteredTextEditingCtrl =
       TextEditingController().obs;
   final loyaltyBankAccountIFSCTextEditingCtrl = TextEditingController().obs;
   final upiFormKey = GlobalKey<FormBuilderState>();
   final bankAccountformKey = GlobalKey<FormState>();
+  final bankAccontSelected = ''.obs;
+  final bankAccountType = ''.obs;
+  var sliderMaxValue = 0.obs;
+  Rx<double> sliderMaxValueDouble = 0.0.obs;
 
 
-  final GlobalKey<FormBuilderState> bankAccountKey = GlobalKey<FormBuilderState>();
+  LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loyaltyManager.callLoyaltyDashboardApi();
+    sliderMaxValue.value = _loyaltyManager.redeemablePoints.toInt();
+
+    print(sliderMaxValue);
+    print("sliderMaxValue");
+    sliderMaxValueDouble.value = sliderMaxValue.value.toDouble();
+
+    print(sliderMaxValueDouble);
+    print("sliderMaxValue double");
+
+
+
+
+
+
+  }
+
+
+
+  final GlobalKey<FormBuilderState> bankAccountKey =
+      GlobalKey<FormBuilderState>();
 
   final upiSubmitEnable = false.obs;
+  final upiAddEnable = false.obs;
   final bankAccountSubmitEnable = false.obs;
 
   void onDispose() {
@@ -65,10 +99,4 @@ class CashBackController extends GetxController {
   bool getCtrlString(RxList<String> list) {
     return list.first.isNotEmpty ? true : false;
   }
-
-
-
-
-
-
 }

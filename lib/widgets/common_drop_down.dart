@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
+
 class DropDown extends StatefulWidget {
-  const DropDown(
+   DropDown(
       {required this.data,
-        Key? key,
-        required this.validationText,
-        required this.formName,
-        required this.labelName,
-        required this.hintText,
-        this.initialValue,
-        required this.onChanged})
+      Key? key,
+      required this.validationText,
+      required this.formName,
+      required this.labelName,
+      required this.hintText,
+      this.initialValue,
+      required this.onChanged,
+      this.isDropDownEnabled})
       : super(key: key);
   final List<String> data;
   final String validationText;
@@ -21,16 +22,21 @@ class DropDown extends StatefulWidget {
   final String hintText;
   final String? initialValue;
   final String? Function(String? value) onChanged;
-
+  final bool? isDropDownEnabled;
 
   @override
   _DropDownState createState() => _DropDownState();
 }
+
 class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
-    return FormBuilderDropdown(
+    return
+      FormBuilderDropdown(
+      iconEnabledColor: AppColors.primary,
+      iconDisabledColor: Colors.grey,
       name: widget.formName,
+      enabled: widget.isDropDownEnabled ?? true,
       validator: (value) => value == null ? widget.validationText : null,
       decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -41,28 +47,28 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           labelStyle: AppStyle.shortHeading.copyWith(
-              color: AppColors.greyInlineText,
+              color: AppColors.greyText,
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
-          EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
+              EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
+              borderSide:  BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
+              borderSide:  BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
-                  width: 1.0, color: AppColors.greyInlineTextborder))),
-      icon: const Icon(
+              borderSide:  BorderSide(
+                  width: 1.0, color: AppColors.primary))),
+      icon:  Icon(
         Icons.keyboard_arrow_down_rounded,
-        color: AppColors.greyInlineText,
+       // color: AppColors.greyInlineText,
       ),
-      iconSize: 30,
+      iconSize: 34,
       isExpanded: true,
       elevation: 5,
       initialValue: widget.initialValue,
@@ -73,14 +79,15 @@ class _DropDownState extends State<DropDown> {
             value,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 11.0.sp),
+                fontWeight: FontWeight.w500,
+                fontSize: Dimens.font_16sp),
           ),
         );
       }).toList(),
       onChanged: (String? value) {
         setState(() {
           widget.onChanged(value);
+
           print('this is onchanged called');
         });
       },

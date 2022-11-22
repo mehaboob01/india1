@@ -67,9 +67,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     CustomAppBar(
                       heading: 'Personal loan',
                       customActionIconsList: [
-                        CustomActionIcons(
-                          image: AppImages.bottomNavHome,
-                        ),
+                        // CustomActionIcons(
+                        //   image: AppImages.bottomNavHome,
+                        // ),
                       ],
                     ),
                     Expanded(

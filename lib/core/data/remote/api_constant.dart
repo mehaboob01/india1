@@ -1,5 +1,5 @@
 // DEV URL
-final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+ final String baseUrl  = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
@@ -17,7 +17,7 @@ class Apis {
   static String loyaltyHistory = "loyalty/loyalty-history";
 
   // Mobile Recharge Api
-  static String operatorList = "loyalty/recharge/operator/list";
+  static String operatorList = "loyalty/recharge/operator/list?isPrepaid=1";
   static String circleList = "loyalty/recharge/circle/list";
   static String plans = "loyalty/recharge/plans";
   static String recharge = "loyalty/recharge/mobile";
@@ -26,18 +26,28 @@ class Apis {
 
   static String banks = "loyalty/banks";
   static String cashBackToBank = "loyalty/cashback/bank";
-  static String fetchCustomerBankAccounts = "loyalty/customer/bank/accounts";
+  static String updateBank = "customer/bank/account";
+  static String fetchCustomerBankAccounts = "customer/bank/accounts";
   static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
-  static String deleteCustomerBankAccount = "loyalty/customer/bank/account"; // delete method
+  static String deleteCustomerBankAccount = "customer/bank/account"; // delete method
 
   // upi api
 
   static String cashBackToUpi = "loyalty/cashback/upi";
-  static String upiVerify = "loyalty/cashback/upi/verify";
-  static String fetchCustomerUpiAccounts = "loyalty/customer/upi/ids";
+  static String upiAdd = "customer/upi/id";
+  static String fetchCustomerUpiAccounts = "customer/upi/ids";
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
-  static String deleteCustomerUpiAccount = "loyalty/customer/upi/id"; // delete method
+  static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method
 
+
+
+
+
+
+
+
+
+  // profile section api's
   static String profile = "customers/profile";
   static String addPersonalDetails = "customers/profile/personal-details";
   static String additionalDetails = "customers/profile/additional-details";
@@ -47,8 +57,20 @@ class Apis {
   static String getBankAccount = "loyalty/customer/bank/accounts";
   static String getUpiIds = "loyalty/customer/upi/id";
 
-  //Loans
-  static String recentTransactionLoan = "dashboards/loans";
+  // //Loans
+  // static String recentTransactionLoan = "dashboards/loans";
+  // static String createLoanApplication = "loan/application";
+  // static String updateAmountLoan = "loan/application/update-amount";
+  //
+  // static String getProviders = "loans/providers";
+  // static String getLenders = "loans/lenders";
+  // static String applyLoan = "loans/apply";
+
+
+
+
+
+
   static String createLoanApplication = "loans/application";
   static String updateAmountLoan = "loans/application/update-basic-details";
   static String getProviders = "loans/providers";

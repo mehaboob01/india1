@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 
 
 import '../constant/theme_manager.dart';

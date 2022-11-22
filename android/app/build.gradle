@@ -64,6 +64,13 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+
+        lintOptions {
+            disable 'InvalidPackage'
+            disable "Instantiatable"
+            checkReleaseBuilds false
+            abortOnError false
+        }
     }
 
     // end
@@ -78,4 +85,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:31.0.1')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
 }

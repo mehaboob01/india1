@@ -252,6 +252,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
 
 
                                 decoration: UnderlineDecoration(
+
+
+
                                   lineHeight: 1,
                                   hintText: '••••',
                                   hintTextStyle: TextStyle(
@@ -282,6 +285,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                     _otpManager.callVerifyOtpApi(
                                         codeValue.toString(), context);
                                   }
+                                  _otpManager.wrongOtp.value = false;
                                 },
 
                                 codeLength: 4,
@@ -328,6 +332,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                _otpManager.wrongOtp.value = false;
                                 Get.offAllNamed(MRouter.userLogin);
                               },
                               child: Text(
