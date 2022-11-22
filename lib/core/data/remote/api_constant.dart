@@ -76,6 +76,7 @@ class Apis {
   //miscellaneous
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
   static String creditCard = "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
+  static String emiCard = "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
   static String msme = "https://flutter.dev/";
   static String creditScore =
       "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";

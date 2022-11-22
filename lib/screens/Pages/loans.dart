@@ -111,7 +111,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.tractorSvg,
-            label: 'Farm',
+            label: 'Farm EQP',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -141,8 +141,8 @@ class LoansCard extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => CommonWebView(
-                  title: 'Credit Card',
-                  url: Apis.creditCard,
+                  title: 'Emi Card',
+                  url: Apis.emiCard,
                 ));
           },
           child: ItemCard(
