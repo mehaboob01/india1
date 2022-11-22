@@ -101,17 +101,19 @@ class ProviderDetail extends StatelessWidget {
                             height: 10,
                           ),
                           ListView.builder(
-                            itemCount: 20,
+                            itemCount: loanController.otherDetails.length,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return ExpansionTile(
                                 tilePadding: EdgeInsets.all(0),
                                 title: Text(
-                                  'Interest Rate',
+                                  '${loanController.otherDetails[index]['title']}',
                                 ),
                                 children: [
-                                  Text("Demo text"),
+                                  Text(
+                                    '${loanController.otherDetails[index]['value']}',
+                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),

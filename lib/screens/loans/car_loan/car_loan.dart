@@ -153,60 +153,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
           loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.CarLoan);
         }
       },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      child: LoanCommon().nextButton(),
     );
   }
 
@@ -217,30 +164,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
         Expanded(
           child: GestureDetector(
             onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -278,26 +202,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -312,30 +217,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
         Expanded(
           child: GestureDetector(
             onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -374,30 +256,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],

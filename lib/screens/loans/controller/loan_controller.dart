@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/Pages/recent_transaction_model.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
@@ -27,6 +29,15 @@ class LoanController extends GetxController {
   Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
+  Rx<RecentTransactionModel> recentTransactionModel = RecentTransactionModel().obs;
+
+  List otherDetails = [
+    {"title": "Interest rate", "value": ""},
+    {"title": "Vehicle loan process", "value": ""},
+    {"title": "Loan amount", "value": ""},
+    {"title": "Loan tenure", "value": ""},
+    {"title": "Loan interest rate", "value": ""},
+  ];
 
   List<String> titleList = [
     "Loan amount",
@@ -39,6 +50,21 @@ class LoanController extends GetxController {
     "Personal",
     "Residential",
   ];
+
+  statusTextColor(String status) {
+    if (status.toLowerCase() ==
+        "pending") {
+      return const Color(0xFF4F0AD2);
+    } else if (status.toLowerCase() ==
+        "approved") {
+      return const Color(0xFF00C376);
+    } else if (status.toLowerCase() ==
+        "rejected") {
+      return const Color(0XffED1C24);
+    } else {
+      return Colors.black;
+    }
+  }
 
   void updateScreen(screenIndex) {
     currentScreen.value = screenIndex;
@@ -79,6 +105,11 @@ class LoanController extends GetxController {
         createLoanModel.value = CreateLoanModel.fromJson(response);
         maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
         minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
+        if (createLoanModel.value.loanAmount != null) {
+          if (double.parse(createLoanModel.value.loanAmount.toString()) >= minValue.value && double.parse(createLoanModel.value.loanAmount.toString()) <= maxValue.value) {
+            sliderValue.value = double.parse(createLoanModel.value.loanAmount.toString());
+          }
+        }
       }
     } catch (exception) {
       print(exception);
@@ -173,6 +204,30 @@ class LoanController extends GetxController {
         Future.delayed(Duration(seconds: 3), () {
           Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
         });
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      createLoanLoading.value = false;
+    }
+  }
+
+  Future recentTransactions({LoanType? loanType}) async {
+    try {
+      createLoanLoading.value = true;
+      customerId.value = await profileController.getId();
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.recentTransactionLoan,
+        method: Type.POST,
+        data: json.encode({
+          "customerId": customerId.value,
+          if (loanType != null) ...{
+            "loanType": "${getLoanType(loanType)}",
+          }
+        }),
+      );
+      if (response != null) {
+        recentTransactionModel.value = RecentTransactionModel.fromJson(response);
       }
     } catch (exception) {
       print(exception);

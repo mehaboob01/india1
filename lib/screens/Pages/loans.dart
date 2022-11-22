@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
+import 'package:india_one/screens/Pages/loan_dashboard_history.dart';
+import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/utils/common_webview.dart';
 
 import '../../constant/theme_manager.dart';
@@ -10,7 +11,20 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 
-class LoansPage extends StatelessWidget {
+class LoansPage extends StatefulWidget {
+  @override
+  State<LoansPage> createState() => _LoansPageState();
+}
+
+class _LoansPageState extends State<LoansPage> {
+  LoanController loanController = Get.put(LoanController());
+
+  @override
+  void initState() {
+    super.initState();
+    loanController.recentTransactions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +40,11 @@ class LoansPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
-              CommonBanner()
+              CommonBanner(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: LoanDashboardHistory(isFromLoans: true),
+              ),
             ],
           ),
         ),
@@ -121,9 +139,9 @@ class LoansCard extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => CommonWebView(
-              title: 'Credit Card',
-              url: Apis.creditCard,
-            ));
+                  title: 'Credit Card',
+                  url: Apis.creditCard,
+                ));
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,

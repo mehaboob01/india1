@@ -28,17 +28,22 @@ class _PersonalLoanState extends State<PersonalLoan> {
 
   double widthIs = 0, heightIs = 0;
 
-  late TextEditingController loanAmountEditingController;
+  TextEditingController loanAmountEditingController = TextEditingController();
   ProfileController profileController = Get.put(ProfileController());
 
   @override
   void initState() {
     super.initState();
     profileController.setData();
-    loanAmountEditingController = TextEditingController();
     loanController.createLoanApplication(loanType: LoanType.PersonalLoan);
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
-    loanController.sliderValue.value = loanController.minValue.value;
+    if (loanController.createLoanModel.value.loanAmount != null) {
+      if (double.parse(loanController.createLoanModel.value.loanAmount.toString()) >= loanController.minValue.value &&
+          double.parse(loanController.createLoanModel.value.loanAmount.toString()) <= loanController.maxValue.value) {
+        loanController.sliderValue.value = double.parse(loanController.createLoanModel.value.loanAmount.toString());
+        loanAmountEditingController.text = loanController.createLoanModel.value.loanAmount.toString();
+      }
+    }
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -151,63 +156,19 @@ class _PersonalLoanState extends State<PersonalLoan> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          double newVal = double.tryParse(loanAmountEditingController.text.toString()) ?? 0;
+          if (newVal <= loanController.minValue.value && newVal >= loanController.maxValue.value) {
+            Flushbar(
+              title: "Alert!",
+              message: "Amount must between min and max loan amount",
+              duration: Duration(seconds: 3),
+            )..show(context);
+          } else {
+            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          }
         }
       },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      child: LoanCommon().nextButton(),
     );
   }
 
@@ -216,24 +177,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            height: 48,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'BACK',
-                  style: AppTextThemes.button,
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-              gradient: new LinearGradient(
-                end: Alignment.topRight,
-                colors: [Colors.orange, Colors.redAccent],
-              ),
-              borderRadius: BorderRadius.circular(6.0),
-            ),
+          child: InkWell(
+            onTap: () => loanController.updateScreen(Steps.LOAN_AMOUNT.index),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -271,25 +217,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     });
               }
             },
-            child: Container(
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -304,26 +232,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
         Expanded(
           child: GestureDetector(
             onTap: () => loanController.updateScreen(Steps.PERSONAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -360,26 +269,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -393,30 +283,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
         Expanded(
           child: GestureDetector(
             onTap: () => loanController.updateScreen(Steps.RESIDENTIAL.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -450,26 +317,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],

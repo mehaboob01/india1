@@ -151,60 +151,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.BikeLoan);
         }
       },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      child: LoanCommon().nextButton(),
     );
   }
 
@@ -215,26 +162,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
         Expanded(
           child: GestureDetector(
             onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -266,26 +194,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child:  LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -295,62 +204,54 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   // RESIDENTIAL INFO BUTTON
 
   Widget residentialInfoButton() {
-    return InkWell(
-      onTap: () {
-        profileController.autoValidation.value = true;
-        if (!residentialForm.currentState!.validate()) {
-          Flushbar(
-            title: "Alert!",
-            message: "missing some values",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.city.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for city",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.state.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for state",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else {
-          profileController.addResidentialDetails(
-              isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
-              callBack: () {
-                Get.to(() => LendersList(
-                      title: 'Bike loan',
-                    ));
-              });
-        }
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'NEXT',
-              style: AppTextThemes.button,
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
+            child: LoanCommon().backButton(context: context),
           ),
-
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
         ),
-      ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              profileController.autoValidation.value = true;
+              if (!residentialForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.city.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for city",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.state.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for state",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addResidentialDetails(
+                    isFromLoan: true,
+                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    callBack: () {
+                      Get.to(() => LendersList(
+                            title: 'Bike loan',
+                          ));
+                    });
+              }
+            },
+            child: LoanCommon().nextButton(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -369,8 +270,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
             {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
           ].map((value) {
             return DropdownMenuItem(
-              value: value,
-              child: Text(value.toString()),
+              value: value['value'],
+              child: Text(value['name'].toString()),
             );
           }).toList(),
           onChanged: (value) {
