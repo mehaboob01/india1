@@ -52,6 +52,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
           width: widthIs,
@@ -92,16 +93,19 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                       iconHeight: 25,
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
-                                      activeIndex: _plManager.currentScreen.value - 1,
+                                      activeIndex:
+                                          _plManager.currentScreen.value - 1,
                                       callBack: (i) {
                                         _plManager.currentScreen.value = i + 1;
                                       },
                                     ),
                                   ),
                                 ),
-                                _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                _plManager.currentScreen.value ==
+                                        Steps.LOAN_AMOUNT.index
                                     ? loanAmountUi()
-                                    : _plManager.currentScreen.value == Steps.PERSONAL.index
+                                    : _plManager.currentScreen.value ==
+                                            Steps.PERSONAL.index
                                         ? personalInfoUi()
                                         : residentialInfoUi()
                               ],
@@ -112,9 +116,11 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                      child: _plManager.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
                           ? loanAmountButton()
-                          : _plManager.currentScreen.value == Steps.PERSONAL.index
+                          : _plManager.currentScreen.value ==
+                                  Steps.PERSONAL.index
                               ? personalInfoButton()
                               : residentialInfoButton(),
                     ),
@@ -148,7 +154,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          loanController.updateLoanAmount(
+              amount: loanAmountEditingController.text);
         }
       },
       child: Container(
@@ -270,7 +277,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       _plManager.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -329,7 +337,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+              loanApplicationId:
+                  loanController.createLoanModel.value.loanApplicationId,
               callBack: () {
                 Get.to(() => LendersList(
                       title: 'Car loan',
@@ -374,7 +383,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
           height: 38,
         ),
         ProfileStepper().commonDropDown(
-          item: <String>['4 wheeler - New', '4 wheeler - Preowned'].map<DropdownMenuItem<String>>((String value) {
+          item: <String>['4 wheeler - New', '4 wheeler - Preowned']
+              .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value.toString()),
@@ -385,7 +395,9 @@ class _CarLoanIOState extends State<CarLoanIO> {
           },
           label: '4 wheeler required',
           hint: 'Select the car you are willing to buy',
-          value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
+          value: profileController.vehicleType.value == ''
+              ? null
+              : profileController.vehicleType.value,
         ),
         SizedBox(
           height: 54,

@@ -11,6 +11,9 @@ class Apis {
   static String verifyOtp = "auth/verify-otp";
   static String dashboard = "dashboards/home/";
 
+  //map location's
+  static String mapLocations = "atms/locations?customer-id=";
+
   // Loyalty Program Api
 
   static String loyaltyDashBoard = "dashboards/loyalty-program";
@@ -35,6 +38,7 @@ class Apis {
 
   static String cashBackToUpi = "loyalty/cashback/upi";
   static String upiAdd = "customer/upi/id";
+  static String upiUpdate = "customer/upi/id";
   static String fetchCustomerUpiAccounts = "customer/upi/ids";
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
   static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../constant/theme_manager.dart';
@@ -7,13 +5,13 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 
-
 class PaymentsPage extends StatelessWidget {
   //const PaymentsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,7 +25,7 @@ class PaymentsPage extends StatelessWidget {
                     bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const PaymentCards(),
               ),
-               CommonBanner()
+              CommonBanner()
             ],
           ),
         ),

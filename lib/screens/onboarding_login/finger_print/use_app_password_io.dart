@@ -33,6 +33,7 @@ class _UseAppPasswordIOState extends State<UseAppPasswordIO> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
           child: SizedBox(
         width: MediaQuery.of(context).size.width,

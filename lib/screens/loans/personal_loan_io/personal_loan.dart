@@ -24,7 +24,8 @@ class PersonalLoan extends StatefulWidget {
 
 class _PersonalLoanState extends State<PersonalLoan> {
   LoanController loanController = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _loanAmountKey =
+      GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -56,6 +57,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
           width: widthIs,
@@ -96,18 +98,22 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                       iconHeight: 25,
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
-                                      activeIndex: loanController.currentScreen.value,
+                                      activeIndex:
+                                          loanController.currentScreen.value,
                                       callBack: (i) {
                                         loanController.currentScreen.value = i;
                                       },
                                     ),
                                   ),
                                 ),
-                                loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                loanController.currentScreen.value ==
+                                        Steps.LOAN_AMOUNT.index
                                     ? loanAmountUi()
-                                    : loanController.currentScreen.value == Steps.PERSONAL.index
+                                    : loanController.currentScreen.value ==
+                                            Steps.PERSONAL.index
                                         ? personalInfoUi()
-                                        : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                                        : loanController.currentScreen.value ==
+                                                Steps.RESIDENTIAL.index
                                             ? residentialInfoUi()
                                             : occupationInfoUi()
                               ],
@@ -118,11 +124,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                      child: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
                           ? loanAmountButton()
-                          : loanController.currentScreen.value == Steps.PERSONAL.index
+                          : loanController.currentScreen.value ==
+                                  Steps.PERSONAL.index
                               ? personalInfoButton()
-                              : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                              : loanController.currentScreen.value ==
+                                      Steps.RESIDENTIAL.index
                                   ? residentialInfoButton()
                                   : occupationButton(),
                     ),
@@ -151,7 +160,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          loanController.updateLoanAmount(
+              amount: loanAmountEditingController.text);
         }
       },
       child: Container(
@@ -265,7 +275,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -354,7 +365,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
               } else {
                 profileController.addResidentialDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.OCCUPATION.index);
                     });
@@ -442,7 +454,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
               } else {
                 profileController.addOccupationDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       Get.to(() => LendersList(
                             title: 'Personal loan',
@@ -494,8 +507,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color:
+                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? Colors.black
+                            : AppColors.black26Color,
+                    fontWeight:
+                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? FontWeight.w600
+                            : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -504,8 +523,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color:
+                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? Colors.grey
+                            : AppColors.black26Color,
+                    fontWeight:
+                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
+                            ? FontWeight.w600
+                            : FontWeight.w400),
               ),
             ],
           ),
@@ -536,20 +561,29 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: Dimens.font_16sp,
+                    fontWeight: FontWeight.w600),
                 decoration: new InputDecoration(
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹", style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600)),
+                      Text("₹",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Dimens.font_16sp,
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide:
+                        BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
-                    borderSide: const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide:
+                        const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   border: const OutlineInputBorder(),
                   labelText: 'Loan amount',
@@ -560,10 +594,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 ]),
                 onChanged: (value) {
                   double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= loanController.minValue.value && newVal <= loanController.maxValue.value) {
+                  if (newVal >= loanController.minValue.value &&
+                      newVal <= loanController.maxValue.value) {
                     loanController.sliderValue.value = newVal;
                   } else {
-                    loanController.sliderValue.value = loanController.minValue.value;
+                    loanController.sliderValue.value =
+                        loanController.minValue.value;
                   }
                 },
                 name: 'loan_amount',

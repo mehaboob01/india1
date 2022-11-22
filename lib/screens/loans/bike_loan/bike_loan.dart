@@ -54,6 +54,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
           width: widthIs,
@@ -94,16 +95,19 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                                       iconHeight: 25,
                                       inverted: true,
                                       activeBarColor: AppColors.pointsColor,
-                                      activeIndex: _plManager.currentScreen.value,
+                                      activeIndex:
+                                          _plManager.currentScreen.value,
                                       callBack: (i) {
                                         _plManager.currentScreen.value = i;
                                       },
                                     ),
                                   ),
                                 ),
-                                _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                _plManager.currentScreen.value ==
+                                        Steps.LOAN_AMOUNT.index
                                     ? loanAmountUi()
-                                    : _plManager.currentScreen.value == Steps.PERSONAL.index
+                                    : _plManager.currentScreen.value ==
+                                            Steps.PERSONAL.index
                                         ? personalInfoUi()
                                         : residentialInfoUi()
                               ],
@@ -114,9 +118,11 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                      child: _plManager.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
                           ? loanAmountButton()
-                          : _plManager.currentScreen.value == Steps.PERSONAL.index
+                          : _plManager.currentScreen.value ==
+                                  Steps.PERSONAL.index
                               ? personalInfoButton()
                               : residentialInfoButton(),
                     ),
@@ -153,7 +159,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          loanController.updateLoanAmount(
+              amount: loanAmountEditingController.text);
         }
       },
       child: Container(
@@ -265,7 +272,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -324,7 +332,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
         } else {
           profileController.addResidentialDetails(
               isFromLoan: true,
-              loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+              loanApplicationId:
+                  loanController.createLoanModel.value.loanApplicationId,
               callBack: () {
                 Get.to(() => LendersList(
                       title: 'Bike loan',
@@ -369,7 +378,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           height: 28,
         ),
         ProfileStepper().commonDropDown(
-          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike'].map<DropdownMenuItem<String>>((String value) {
+          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike']
+              .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value.toString()),
@@ -380,7 +390,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           },
           label: 'Two wheeler required',
           hint: 'Select the 2 wheeler you are buying',
-          value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
+          value: profileController.vehicleType.value == ''
+              ? null
+              : profileController.vehicleType.value,
         ),
         SizedBox(
           height: 54,

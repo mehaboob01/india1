@@ -15,8 +15,10 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Navigator.of(context)
-        .pushNamedAndRemoveUntil(MRouter.mobileRechargeIO, (Route<dynamic> route) => false));
+    Timer(
+        Duration(seconds: 2),
+        () => Navigator.of(context).pushNamedAndRemoveUntil(
+            MRouter.mobileRechargeIO, (Route<dynamic> route) => false));
   }
 
   Future<void> launchLoginWidget() async {
@@ -26,6 +28,7 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: buildSplashForMobile(),
     );
   }
@@ -44,12 +47,12 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-          // child: Image.asset(
-          //   "assets/images/complete.gif",
-          //   width: 284,
-          //   height: 284,
-          // ),
-        ),
+            // child: Image.asset(
+            //   "assets/images/complete.gif",
+            //   width: 284,
+            //   height: 284,
+            // ),
+            ),
         Text(
           "Recharge successful",
           overflow: TextOverflow.visible,

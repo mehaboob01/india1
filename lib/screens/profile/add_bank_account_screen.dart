@@ -18,6 +18,7 @@ class AddBankAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           SafeArea(
@@ -31,7 +32,10 @@ class AddBankAccountScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Form(
                   key: bankAccountKey,
-                  autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+                  autovalidateMode:
+                      profileController.autoValidation.value == true
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.disabled,
                   child: Column(
                     children: [
                       SizedBox(
@@ -51,14 +55,18 @@ class AddBankAccountScreen extends StatelessWidget {
                         height: 20,
                       ),
                       ProfileStepper().textField(
-                        controller: profileController.accountNumberController.value,
+                        controller:
+                            profileController.accountNumberController.value,
                         label: 'Account number',
                         hint: 'Enter account number',
-                        vaidation: (value) => profileController.accountNumberValidation(
+                        vaidation: (value) =>
+                            profileController.accountNumberValidation(
                           value,
                         ),
                         keyboardType: TextInputType.number,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
                       SizedBox(
                         height: 20,
@@ -75,7 +83,8 @@ class AddBankAccountScreen extends StatelessWidget {
                         height: 20,
                       ),
                       ProfileStepper().commonDropDown(
-                        item: <String>['savings'].map<DropdownMenuItem<String>>((String value) {
+                        item: <String>['savings']
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value.toString()),
@@ -86,7 +95,9 @@ class AddBankAccountScreen extends StatelessWidget {
                         },
                         label: 'Account type',
                         hint: 'Select account type',
-                        value: profileController.accountType.value == '' ? null : profileController.accountType.value,
+                        value: profileController.accountType.value == ''
+                            ? null
+                            : profileController.accountType.value,
                       ),
                       SizedBox(
                         height: 20,
@@ -97,14 +108,17 @@ class AddBankAccountScreen extends StatelessWidget {
                             : InkWell(
                                 onTap: () {
                                   profileController.autoValidation.value = true;
-                                  if (!bankAccountKey.currentState!.validate()) {
+                                  if (!bankAccountKey.currentState!
+                                      .validate()) {
                                     print("Not validate");
                                     Flushbar(
                                       title: "Alert!",
                                       message: "missing some values",
                                       duration: Duration(seconds: 3),
                                     )..show(context);
-                                  } else if (profileController.accountType.value == '') {
+                                  } else if (profileController
+                                          .accountType.value ==
+                                      '') {
                                     Flushbar(
                                       title: "Alert!",
                                       message: "Select account type",
@@ -124,7 +138,10 @@ class AddBankAccountScreen extends StatelessWidget {
                                       Text(
                                         'Save Bank Details',
                                         maxLines: 2,
-                                        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                       Spacer(),
@@ -161,12 +178,15 @@ class AddBankAccountScreen extends StatelessWidget {
                                         blurRadius: 16.0,
                                       ),
                                       BoxShadow(
-                                        color: AppColors.darkerGrey.withOpacity(0.4),
+                                        color: AppColors.darkerGrey
+                                            .withOpacity(0.4),
                                         offset: Offset(6.0, 6.0),
                                         blurRadius: 16.0,
                                       ),
                                     ],
-                                    color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                    color: 1 == 1
+                                        ? AppColors.btnColor
+                                        : AppColors.btnDisableColor,
                                     borderRadius: BorderRadius.circular(6.0),
                                   ),
                                 ),

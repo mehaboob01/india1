@@ -22,14 +22,13 @@ class _CommonWebViewState extends State<CommonWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
             CustomAppBar(
               heading: '${widget.title}',
-              customActionIconsList: [
-
-              ],
+              customActionIconsList: [],
             ),
             Expanded(
               child: InAppWebView(

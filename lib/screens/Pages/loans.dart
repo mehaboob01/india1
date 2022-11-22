@@ -13,6 +13,7 @@ class LoansPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -22,7 +23,8 @@ class LoansPage extends StatelessWidget {
               CommonPageHeader(pageName: PageName.loans),
               CommonPageCategoriesHeading(pageName: PageName.loans),
               Padding(
-                padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                padding: EdgeInsets.only(
+                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
               CommonBanner()
@@ -108,9 +110,9 @@ class LoansCard extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => CommonWebView(
-              title: 'Credit Card',
-              url: Apis.creditCard,
-            ));
+                  title: 'Credit Card',
+                  url: Apis.creditCard,
+                ));
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,

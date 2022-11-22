@@ -18,16 +18,17 @@ class EditAccountsCard extends StatelessWidget {
   String? accountNumber;
   String? ifscCode;
   String? accountType;
+  String? id;
 
   EditAccountsCard(this.bankList, this.bankName, this.accountNumber,
-      this.ifscCode, this.accountType);
+      this.ifscCode, this.accountType, this.id);
   double widthIs = 0, heightIs = 0;
 
   CashBackManager cashBackManager = Get.put(CashBackManager());
 
-  final GlobalKey<FormBuilderState> _updateBankAccount = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _updateBankAccount =
+      GlobalKey<FormBuilderState>();
   UpdateBankAccount updateBankAccount = Get.put(UpdateBankAccount());
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class EditAccountsCard extends StatelessWidget {
     heightIs = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -71,7 +73,8 @@ class EditAccountsCard extends StatelessWidget {
                           "bankName": "",
                           "accountNumber": accountNumber,
                           "ifscCode": ifscCode,
-                          "accountType": ""
+                          "accountType": "",
+                          "id": id,
                         },
                         child: SingleChildScrollView(
                           child: Container(
@@ -103,7 +106,7 @@ class EditAccountsCard extends StatelessWidget {
                                       formName: 'bankDropDown',
                                       labelName: 'Bank name',
                                       hintText: bankName.toString(),
-                                      data: bankList,
+                                      data: cashBackManager.bankList,
                                       validationText: ' name is compulsory',
                                     ),
                                     SizedBox(
@@ -279,19 +282,39 @@ class EditAccountsCard extends StatelessWidget {
               ),
             ),
             Obx(
-             ()=> Align(
+              () => Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 4.0.wp, vertical: 4.0.hp),
                     child: ButtonWithFlower(
-                      label: updateBankAccount.isLoading == true?'Saving..':'Save Changes',
+                      label: updateBankAccount.isLoading == true
+                          ? 'Saving..'
+                          : 'Save Changes',
                       onPressed: () {
+                        // method for checkBankID
+
+                        String? checkBankId(bankName) {
+                          for (var index in cashBackManager.bankListId) {
+                            if (index.name == bankName) {
+                              return index.id;
+                            }
+                          }
+                        }
+                        // above method is for check id
+
                         _updateBankAccount.currentState!.save();
                         _updateBankAccount.currentState!.validate();
                         print(_updateBankAccount.currentState!.value);
-                        updateBankAccount.callUpdateBankAccount(_updateBankAccount.currentState!.value);
 
+                        print("bankId for updtae bank account${bankName}");
+                        print(
+                            "json value update bank ${_updateBankAccount.currentState!.value}");
+
+                        var bankId = checkBankId(bankName);
+                        print("BAnk IDddd==>${bankId}");
+                        updateBankAccount.callUpdateBankAccount(
+                            _updateBankAccount.currentState!.value, bankId, id);
                       },
                       buttonWidth: double.maxFinite,
                       buttonHeight: 12.0.wp,

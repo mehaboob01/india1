@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/no_internet_ui/no_internet_ui.dart';
 
 import 'localization/locale_string.dart';
 
@@ -81,7 +82,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: MRouter.generateRoute,
         initialRoute: MRouter.splashRoute,
       ),
-      offline: Text("No internet"),
+      offline: NoInternet(),
     );
   }
 }

@@ -26,6 +26,7 @@ class ProviderDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -60,7 +61,8 @@ class ProviderDetail extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16.0, top: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -75,7 +77,8 @@ class ProviderDetail extends StatelessWidget {
                           SizedBox(
                             height: 12,
                           ),
-                          if (lenders.keywords != null || lenders.keywords != [])
+                          if (lenders.keywords != null ||
+                              lenders.keywords != [])
                             ListView.builder(
                               itemCount: lenders.keywords!.length,
                               shrinkWrap: true,
@@ -130,7 +133,8 @@ class ProviderDetail extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              padding:
+                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               child: InkWell(
                 onTap: () {
                   LoanCommon().bottomSheet(

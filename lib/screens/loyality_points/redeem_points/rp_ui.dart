@@ -29,10 +29,11 @@ class RedeemPointsPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
           body: Obx(
             () => _loyaltyManager.isLoading.value == true
-                ?  CircularProgressbar()
+                ? CircularProgressbar()
                 : SafeArea(
                     child: Column(children: [
                     CustomAppBar(heading: 'Redeem points'),

@@ -2,42 +2,30 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:get/get.dart';
-import 'package:india_one/core/data/model/common_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/model/common_model.dart';
 import '../../../core/data/remote/api_constant.dart';
 
-class UpdateBankAccount extends GetxController {
+class UpdateUpiAccount extends GetxController {
   var isLoading = false.obs;
 
-  callUpdateBankAccount(Map<String, dynamic> data, String? bankId, String? id) async {
+  callUpdateUpiAccount(Map<String, dynamic> data, String? id) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
 
-      print("data json========>>> $data");
+
+      print(data['upiId']);
+      print(id);
+
+
+      print("data json for upi  $data");
 
       isLoading(true);
-      var response = await http.put(Uri.parse(baseUrl + Apis.updateBank),
-          body: jsonEncode(
-
-
-              {
-                "customerId": customerId,
-                "bankAccount": {
-                  "id" : id,
-                  "bankId": bankId,
-                  "accountNumber": data['accountNumber'],
-                  "ifscCode": data['ifscCode'],
-                  "accountType": data['accountType']
-                }
-              }
-
-
-
-          ),
+      var response = await http.put(Uri.parse(baseUrl + Apis.upiUpdate),
+          body: jsonEncode({"customerId": customerId, "upiId": data['upiId'],"id": id}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -51,14 +39,14 @@ class UpdateBankAccount extends GetxController {
         var jsonData = jsonDecode(response.body);
 
         CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           Flushbar(
             title: "Success!",
-            message: "Bank details updated ...",
+            message: "Upi details updated ...",
             duration: Duration(seconds: 2),
-          )..show(Get.context!);
+          )..show(Get.context!).then((value) => Get.back());
 
           isLoading(false);
         } else {
