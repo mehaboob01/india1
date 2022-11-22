@@ -160,33 +160,28 @@ class _MapsState extends State<Maps> {
                   padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
                   child: Container(
                       height: Get.height * 0.25,
-                      child: ListView.builder(
-                        controller: scrollController,
-                        padding: EdgeInsets.all(0),
-                        itemCount: mapManager.dummydata.length,
-                        shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                AtmDetailsCard(
-                                  index: index,
-                                  address: mapManager.dummydata[index].address
-                                      .toString(),
-                                  status: mapManager.dummydata[index].status
-                                      .toString(),
-                                  distance: mapManager
-                                      .dummydata[index].distance!
-                                      .toDouble(),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
+                      child:
+
+                      Obx(
+                        ()=> ListView.builder(
+                          controller: scrollController,
+                          padding: EdgeInsets.all(0),
+                          itemCount: mapManager.mapCoordinateList.length,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: AtmDetailsCard(
+                                index: index,
+                                address: mapManager.mapCoordinateList[index].address.toString(),
+                                atmName:  mapManager.mapCoordinateList[index].name.toString(),
+
+                              ),
+                            );
+                          }),
+                        ),
                       )),
                 );
               },
@@ -202,13 +197,15 @@ class AtmDetailsCard extends StatelessWidget {
   AtmDetailsCard({
     key,
     required this.address,
-    required this.status,
-    required this.distance,
+     this.status,
+     this.distance,
+    required this.atmName,
     required this.index,
   }) : super(key: key);
-  double distance;
+  double? distance;
   String address;
-  String status;
+  String? status;
+  String atmName;
   int index;
 
   MapManager mapManager = Get.put(MapManager());
@@ -228,7 +225,7 @@ class AtmDetailsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "India1 ATM",
+                      atmName.toString(),
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF000000),
@@ -238,25 +235,14 @@ class AtmDetailsCard extends StatelessWidget {
                     height: Get.height * 0.005,
                   ),
                   Text(
-                    "${distance.toString()} Kms",
+                    "",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                   ),
                   SizedBox(
                     height: Get.height * 0.005,
                   ),
-                  Text(
-                    "${address} ",
-                    style: TextStyle(fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.005,
-                  ),
-                  Text(
-                    "${status}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: mapManager.statusColor(index)),
-                  ),
+                  Text(address.toString(), softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
+
                 ],
               ),
               Container(

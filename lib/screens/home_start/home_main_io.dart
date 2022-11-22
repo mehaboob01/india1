@@ -322,19 +322,21 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                     height: 0.02,
                                                     child: GestureDetector(
                                                         onTap: () => {
-                                                              _homeManager
-                                                                      .isClicked
-                                                                      .value =
-                                                                  false,
-                                                              Get.back(),
+                                                          _homeManager
+                                                              .isClicked
+                                                              .value =
+                                                          false,
+
+                                                             Get.back(),
                                                               Get.toNamed(
                                                                 MRouter
                                                                     .loyaltyPoints,
                                                               ),
+
                                                             },
                                                         child: Container(
                                                           height:
-                                                              Get.height * 0.02,
+                                                              Get.height * 0.03,
                                                           width:
                                                               double.infinity,
                                                           child: Text(

@@ -13,6 +13,11 @@ import '../../core/data/remote/api_constant.dart';
 import 'map_model.dart';
 
 class MapManager extends GetxController {
+  var mapCoordinateList = <Location>[].obs;
+  var mapCoordinateListSend = <Location>[];
+
+  var mapPlotList = <Location>[].obs;
+  var mapPlotListSend = <Location>[];
   var isLoading = false.obs;
   @override
   void onInit() {
@@ -78,11 +83,7 @@ class MapManager extends GetxController {
   var latitude = 12.9075948553404.obs;
   var longitude = 77.60108253288585.obs;
   List<Marker> allMarkers = <Marker>[].obs;
-  final Map<String, LatLng> markersList = const {
-    "test 1": LatLng(12.9075948553404, 77.60108253288585),
-    "test 2": LatLng(12.90604710573187, 77.6012971095981),
-    "test 3": LatLng(12.905019912142421, 77.60148019087413),
-  }.obs;
+  RxMap markersList = {}.obs;
 
   addMarker(
     String markerId,
@@ -128,19 +129,19 @@ class MapManager extends GetxController {
     longitude.value = position.longitude;
   }
 
-
-
-
   void getLocations() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-    print("Customer Id ${customerId}");
-
-
+    mapCoordinateList.clear();
+    mapCoordinateListSend.clear();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
 
       isLoading.value = true;
       var response = await http.get(
-          Uri.parse(baseUrl + Apis.mapLocations + customerId.toString()+"&lat=12.947271&lon=77.561571"),
+          Uri.parse(baseUrl +
+              Apis.mapLocations +
+              customerId.toString() +
+              "&lat=12.947271&lon=77.561571"),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -149,43 +150,44 @@ class MapManager extends GetxController {
 
       print("response for map==> ${response.body}");
 
-    //   if (response.statusCode == 200 || response.statusCode == 201) {
-    //     var jsonData = jsonDecode(response.body);
-    //     HomeModel homeModel = HomeModel.fromJson(jsonData);
-    //     print("data response");
-    //     print("http success!!");
-    //     print(homeModel.data);
-    //
-    //     if (homeModel!.status!.code == 2000) {
-    //       isLoading(false);
-    //       print("http success in model!!");
-    //       pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
-    //       pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
-    //       redeemablePoints.value =
-    //       homeModel.data!.pointsSummary!.redeemablePoints!;
-    //       atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
-    //     } else {
-    //       Flushbar(
-    //         title: "Error!",
-    //         message: homeModel.status!.message.toString(),
-    //         duration: Duration(seconds: 2),
-    //       )..show(Get.context!);
-    //     }
-    //   } else {
-    //     Flushbar(
-    //       title: "Server Error!",
-    //       message: "Please try after sometime ...",
-    //       duration: Duration(seconds: 1),
-    //     )..show(Get.context!);
-    //   }
-    // } catch (e) {
-    //   Flushbar(
-    //     title: "Server Error!",
-    //     message: "Please try after sometime",
-    //     duration: Duration(seconds: 1),
-    //   )..show(Get.context!);
-    // } finally {
-    //   isLoading(false);
-    // }
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        MapCordinatesModel mapCordinatesModel =
+            MapCordinatesModel.fromJson(jsonData);
+
+        for (var index in mapCordinatesModel.data!.locations!) {
+          mapCoordinateList.add(index);
+          mapCoordinateListSend.add(index);
+        }
+        mapCoordinateList.addAll(mapCoordinateListSend);
+
+        isLoading(false);
+
+        if (mapCordinatesModel!.status!.code == 2000) {
+          isLoading(false);
+          print("http success in model!!");
+        } else {
+          Flushbar(
+            title: "Error!",
+            message: mapCordinatesModel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
+      } else {
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Server Error!",
+        message: "Please try after sometime",
+        duration: Duration(seconds: 1),
+      )..show(Get.context!);
+    } finally {
+      isLoading(false);
+    }
   }
 }

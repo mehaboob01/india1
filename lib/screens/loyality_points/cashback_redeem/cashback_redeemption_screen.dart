@@ -73,14 +73,28 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
     loyaltyBankSliderValue.value = 0.0;
     loyaltyBankMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
     loyaltyUpiVpaMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
+
+
+
+
+
+
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: cashBackManager.isLoading == true
+        body:
+
+        cashBackManager.isLoading == true
             ? CircularProgressIndicator()
             : SafeArea(
                 child: Column(children: [
@@ -560,7 +574,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                                     padding:
                                         EdgeInsets.only(left: 8.0, right: 8.0),
                                     child: Obx(
-                                      () => Container(
+                                      () =>
+                                          Container(
                                           width: widthIs * 0.9,
                                           height: heightIs * 0.3,
                                           child: ListView.builder(
@@ -655,7 +670,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                           Text(
                             'or',
                             style: AppStyle.shortHeading.copyWith(
-                                color: const Color(0xff2d2d2d),
+                                color:  Color(0xff2d2d2d),
                                 fontWeight: FontWeight.w600),
                           ),
                           Expanded(
@@ -671,7 +686,7 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
                       Text(
                         'Add account details',
                         style: AppStyle.shortHeading.copyWith(
-                            color: const Color(0xff2d2d2d),
+                            color:  Color(0xff2d2d2d),
                             fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -993,7 +1008,7 @@ class _LoyaltyUpiVpaState extends State<LoyaltyUpiVpa> {
                               Text(
                                 'or',
                                 style: AppStyle.shortHeading.copyWith(
-                                    color: const Color(0xff2d2d2d),
+                                    color:  Color(0xff2d2d2d),
                                     fontWeight: FontWeight.w600),
                               ),
                               Expanded(

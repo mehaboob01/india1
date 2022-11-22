@@ -40,7 +40,7 @@ class LoyaltyScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                //Get.toNamed(MRouter.generalHistory);
+                                Get.toNamed(MRouter.generalHistory);
                               },
                               // history text will be there
                               child: Text(

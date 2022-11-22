@@ -22,7 +22,7 @@ class LoyaltyManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    callLoyaltyDashboardApi();
+   // callLoyaltyDashboardApi();
   }
 
   callLoyaltyDashboardApi() async {
