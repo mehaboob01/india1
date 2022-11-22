@@ -22,8 +22,7 @@ class GoldLoanIO extends StatefulWidget {
 
 class _GoldLoanIOState extends State<GoldLoanIO> {
   LoanController _plManager = Get.put(LoanController());
-  final GlobalKey<FormBuilderState> _loanAmountKey =
-      GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
 
@@ -57,7 +56,6 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SizedBox(
           width: widthIs,
@@ -84,7 +82,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                               height: 21,
                             ),
                             Obx(
-                              () => Container(
+                              () => IgnorePointer(
                                 child: AnotherStepper(
                                   stepperList: _plManager.bikeLoanTitleList
                                       .map((e) => StepperData(
@@ -96,19 +94,16 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                                   iconHeight: 25,
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
-                                  activeIndex:
-                                      _plManager.currentScreen.value - 1,
+                                  activeIndex: _plManager.currentScreen.value,
                                   callBack: (i) {
-                                    _plManager.currentScreen.value = i + 1;
+                                    _plManager.currentScreen.value = i;
                                   },
                                 ),
                               ),
                             ),
-                            _plManager.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
+                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
                                 ? loanAmountUi()
-                                : _plManager.currentScreen.value ==
-                                        Steps.PERSONAL.index
+                                : _plManager.currentScreen.value == Steps.PERSONAL.index
                                     ? personalInfoUi()
                                     : residentialInfoUi()
                           ],
@@ -119,8 +114,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value ==
-                          Steps.LOAN_AMOUNT.index
+                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
                       ? loanAmountButton()
                       : _plManager.currentScreen.value == Steps.PERSONAL.index
                           ? personalInfoButton()
@@ -144,60 +138,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
           _plManager.updateScreen(Steps.PERSONAL.index);
         }
       },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+      child: LoanCommon().nextButton(),
     );
   }
 
@@ -208,30 +149,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
         Expanded(
           child: GestureDetector(
             onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'BACK',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-
-                // color: termConditionChecked == true
-                //     ? AppColors.btnColor
-                //     : AppColors.btnDisableColor,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child:LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -268,26 +186,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                     });
               }
             },
-            child: Container(
-              width: MediaQuery.of(context).size.height * 0.9,
-              height: 48,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'NEXT',
-                    style: AppTextThemes.button,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-            ),
+            child: LoanCommon().nextButton(),
           ),
         ),
       ],
@@ -297,61 +196,53 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
   // RESIDENTIAL INFO BUTTON
 
   Widget residentialInfoButton() {
-    return InkWell(
-      onTap: () {
-        profileController.autoValidation.value = true;
-        if (!residentialForm.currentState!.validate()) {
-          Flushbar(
-            title: "Alert!",
-            message: "missing some values",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.city.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for city",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.state.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for state",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else {
-          profileController.addResidentialDetails(
-              isFromLoan: true,
-              callBack: () {
-                Get.to(() => LendersList(
-                      title: 'Gold loan',
-                    ));
-              });
-        }
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'NEXT',
-              style: AppTextThemes.button,
-            ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
+            child:LoanCommon().backButton(context: context),
           ),
-
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
         ),
-      ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              profileController.autoValidation.value = true;
+              if (!residentialForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.city.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for city",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.state.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for state",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addResidentialDetails(
+                    isFromLoan: true,
+                    callBack: () {
+                      Get.to(() => LendersList(
+                            title: 'Gold loan',
+                          ));
+                    });
+              }
+            },
+            child: LoanCommon().nextButton(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -373,13 +264,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index
-                        ? Colors.black
-                        : AppColors.black26Color,
-                    fontWeight:
-                        _plManager.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? FontWeight.w600
-                            : FontWeight.w400),
+                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
+                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -388,13 +274,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index
-                        ? Colors.grey
-                        : AppColors.black26Color,
-                    fontWeight:
-                        _plManager.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? FontWeight.w600
-                            : FontWeight.w400),
+                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
+                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
             ],
           ),
@@ -425,29 +306,20 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: Dimens.font_16sp,
-                    fontWeight: FontWeight.w600),
+                style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600),
                 decoration: new InputDecoration(
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Dimens.font_16sp,
-                              fontWeight: FontWeight.w600)),
+                      Text("₹", style: TextStyle(color: Colors.black, fontSize: Dimens.font_16sp, fontWeight: FontWeight.w600)),
                     ],
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
-                    borderSide:
-                        const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide: const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   border: const OutlineInputBorder(),
                   labelText: 'Loan amount',
@@ -458,8 +330,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 ]),
                 onChanged: (value) {
                   double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value &&
-                      newVal <= _plManager.maxValue.value) {
+                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
                     _plManager.sliderValue.value = newVal;
                   } else {
                     _plManager.sliderValue.value = _plManager.minValue.value;

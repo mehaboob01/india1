@@ -5,9 +5,54 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
-enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan,FarmLoan }
+enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan, FarmLoan }
 
 class LoanCommon {
+  Widget backButton({context}) {
+    return Container(
+      width: MediaQuery.of(context).size.height * 0.9,
+      height: 48,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'BACK',
+            style: AppTextThemes.button,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        gradient: new LinearGradient(
+          end: Alignment.topRight,
+          colors: [Colors.orange, Colors.redAccent],
+        ),
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+    );
+  }
+
+  Widget nextButton() {
+    return Container(
+      height: 48,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'NEXT',
+            style: AppTextThemes.button,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        gradient: new LinearGradient(
+          end: Alignment.topRight,
+          colors: [Colors.orange, Colors.redAccent],
+        ),
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+    );
+  }
+
   Widget customButton({required String title}) {
     return Container(
       width: double.maxFinite,
@@ -306,11 +351,11 @@ class LoanCommon {
 
   Widget filledButton({required String title, Function? callBack}) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         callBack!();
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
         child: Text(
           '$title',
           style: AppTextThemes.button,
@@ -344,7 +389,7 @@ class LoanCommon {
 
   Widget borderButton({required String title, Function? callBack}) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         callBack!();
       },
       child: Container(

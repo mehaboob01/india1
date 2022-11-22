@@ -30,15 +30,13 @@ class _ProvidersListState extends State<ProvidersList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loanController.getProviders(
-          isPersonalLoan: false, providerId: widget.providerId);
+      loanController.getProviders(isPersonalLoan: false, providerId: widget.providerId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -69,20 +67,15 @@ class _ProvidersListState extends State<ProvidersList> {
                 ),
                 Expanded(
                   child: Obx(
-                    () => (loanController.loanLendersModel.value.lenders ==
-                                null ||
-                            loanController.loanLendersModel.value.lenders == [])
+                    () => (loanController.loanLendersModel.value.lenders == null || loanController.loanLendersModel.value.lenders == [])
                         ? Center(child: Text("No providers found"))
                         : ListView.builder(
                             shrinkWrap: true,
-                            itemCount: loanController
-                                .loanLendersModel.value.lenders!.length,
+                            itemCount: loanController.loanLendersModel.value.lenders!.length,
                             itemBuilder: (context, index) {
-                              Lenders? lenders = loanController
-                                  .loanLendersModel.value.lenders?[index];
+                              Lenders? lenders = loanController.loanLendersModel.value.lenders?[index];
                               return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 8.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                                 child: Card(
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(
@@ -96,8 +89,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                           height: 16,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
+                                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                           child: Row(
                                             children: [
                                               Container(
@@ -106,55 +98,39 @@ class _ProvidersListState extends State<ProvidersList> {
                                                     color: Colors.grey,
                                                     width: 1,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
+                                                  borderRadius: BorderRadius.circular(12),
                                                 ),
                                                 height: 50,
                                                 width: 50,
                                                 child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      lenders?.logoURL ?? '',
-                                                  errorWidget:
-                                                      (context, _, error) {
+                                                  imageUrl: lenders?.logoURL ?? '',
+                                                  errorWidget: (context, _, error) {
                                                     return Icon(
-                                                      Icons
-                                                          .warning_amber_outlined,
+                                                      Icons.warning_amber_outlined,
                                                     );
                                                   },
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 16.0),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        lenders?.loanTitle ??
-                                                            "Bajaj Finance",
+                                                        lenders?.loanTitle ?? "Bajaj Finance",
                                                         style: TextStyle(
-                                                          color: AppColors
-                                                              .lightBlack,
-                                                          fontSize:
-                                                              Dimens.font_16sp,
-                                                          fontWeight:
-                                                              FontWeight.w600,
+                                                          color: AppColors.lightBlack,
+                                                          fontSize: Dimens.font_16sp,
+                                                          fontWeight: FontWeight.w600,
                                                         ),
                                                       ),
                                                       Text(
-                                                        lenders?.keywords?[0] ??
-                                                            '',
+                                                        lenders?.keywords?[0] ?? '',
                                                         style: TextStyle(
-                                                          color: AppColors
-                                                              .borderColor,
-                                                          fontSize:
-                                                              Dimens.font_14sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          color: AppColors.borderColor,
+                                                          fontSize: Dimens.font_14sp,
+                                                          fontWeight: FontWeight.w500,
                                                         ),
                                                       ),
                                                     ],
@@ -167,39 +143,29 @@ class _ProvidersListState extends State<ProvidersList> {
                                         SizedBox(
                                           height: 16,
                                         ),
-                                        if (lenders?.keywords != null ||
-                                            lenders?.keywords != []) ...[
+                                        if (lenders?.keywords != null || lenders?.keywords != []) ...[
                                           SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
                                             child: Row(
                                               children: [
-                                                ...lenders!.keywords!.map((e) =>
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
+                                                ...lenders!.keywords!.map((e) => Container(
+                                                      padding: EdgeInsets.symmetric(
                                                         horizontal: 8,
                                                         vertical: 4,
                                                       ),
-                                                      margin:
-                                                          EdgeInsets.symmetric(
+                                                      margin: EdgeInsets.symmetric(
                                                         horizontal: 4,
                                                       ),
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: AppColors
-                                                            .lightSkyBlue,
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: AppColors.lightSkyBlue,
                                                       ),
                                                       child: Text(
                                                         e ?? '',
                                                         style: TextStyle(
-                                                          color: AppColors
-                                                              .borderColor,
-                                                          fontSize:
-                                                              Dimens.font_14sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          color: AppColors.borderColor,
+                                                          fontSize: Dimens.font_14sp,
+                                                          fontWeight: FontWeight.w500,
                                                         ),
                                                       ),
                                                     ))
@@ -214,27 +180,22 @@ class _ProvidersListState extends State<ProvidersList> {
                                           padding: EdgeInsets.all(16.0),
                                           decoration: BoxDecoration(
                                             color: AppColors.lightGreyColors,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                           ),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               LoanCommon().rowText(
                                                 value: 'Max amount',
-                                                title:
-                                                    '₹ ${lenders?.loanMaxAmount ?? 0}',
+                                                title: '₹ ${lenders?.loanMaxAmount ?? 0}',
                                               ),
                                               LoanCommon().rowText(
                                                 value: 'Tenure',
-                                                title:
-                                                    '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
+                                                title: '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
                                               ),
                                               LoanCommon().rowText(
                                                 value: 'Interest/m',
-                                                title:
-                                                    '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
+                                                title: '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
                                               ),
                                             ],
                                           ),
@@ -251,17 +212,9 @@ class _ProvidersListState extends State<ProvidersList> {
                                                   Get.to(
                                                     () => ProviderDetail(
                                                       title: '${widget.title}',
-                                                      lenders: loanController
-                                                          .loanLendersModel
-                                                          .value
-                                                          .lenders![index],
+                                                      lenders: loanController.loanLendersModel.value.lenders![index],
                                                       personalLoan: false,
-                                                      providerId: loanController
-                                                              .loanProvidersModel
-                                                              .value
-                                                              .providers?[index]
-                                                              .id ??
-                                                          '',
+                                                      providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                                     ),
                                                   );
                                                 },
@@ -274,21 +227,17 @@ class _ProvidersListState extends State<ProvidersList> {
                                               child: LoanCommon().filledButton(
                                                 title: 'Apply',
                                                 callBack: () {
-                                                  Get.to(
-                                                    () => ProviderDetail(
-                                                      title: '${widget.title}',
-                                                      lenders: loanController
-                                                          .loanLendersModel
-                                                          .value
-                                                          .lenders![index],
-                                                      personalLoan: false,
-                                                      providerId: loanController
-                                                              .loanProvidersModel
-                                                              .value
-                                                              .providers?[index]
-                                                              .id ??
-                                                          '',
-                                                    ),
+                                                  LoanCommon().bottomSheet(
+                                                    context,
+                                                    lenderId: loanController.loanLendersModel.value.lenders![index].id ?? '',
+                                                    callBack: () {
+                                                      Get.back();
+                                                      loanController.applyLoan(
+                                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                                        lenderId: loanController.loanLendersModel.value.lenders![index].id ?? '',
+                                                      );
+                                                    },
+                                                    providerId: '',
                                                   );
                                                 },
                                               ),

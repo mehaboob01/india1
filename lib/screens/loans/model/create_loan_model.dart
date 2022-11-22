@@ -2,27 +2,37 @@ class CreateLoanModel {
   String? loanApplicationId;
   String? loanStage;
   String? loanType;
+  String? status;
+  num? loanAmount;
   LoanConfiguration? loanConfiguration;
 
   CreateLoanModel({
     this.loanApplicationId,
-    this.loanStage,
     this.loanType,
-    this.loanConfiguration,
+    this.status,
+    this.loanStage,
+    this.loanAmount,
+    this.loanConfiguration
   });
 
   CreateLoanModel.fromJson(Map<String, dynamic> json) {
     loanApplicationId = json['loanApplicationId'];
-    loanStage = json['loanStage'];
     loanType = json['loanType'];
-    loanConfiguration = json['loanConfiguration'] != null ? new LoanConfiguration.fromJson(json['loanConfiguration']) : this.loanConfiguration ?? null;
+    status = json['status'];
+    loanStage = json['loanStage'];
+    loanAmount = json['loanAmount'];
+    loanConfiguration = json['loanConfiguration'] != null
+        ? new LoanConfiguration.fromJson(json['loanConfiguration'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['loanApplicationId'] = this.loanApplicationId;
-    data['loanStage'] = this.loanStage;
     data['loanType'] = this.loanType;
+    data['status'] = this.status;
+    data['loanStage'] = this.loanStage;
+    data['loanAmount'] = this.loanAmount;
     if (this.loanConfiguration != null) {
       data['loanConfiguration'] = this.loanConfiguration!.toJson();
     }

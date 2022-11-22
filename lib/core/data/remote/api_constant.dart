@@ -1,5 +1,5 @@
 // DEV URL
- final String baseUrl  = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
@@ -43,14 +43,6 @@ class Apis {
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
   static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method
 
-
-
-
-
-
-
-
-
   // profile section api's
   static String profile = "customers/profile";
   static String addPersonalDetails = "customers/profile/personal-details";
@@ -70,11 +62,7 @@ class Apis {
   // static String getLenders = "loans/lenders";
   // static String applyLoan = "loans/apply";
 
-
-
-
-
-
+  static String recentTransactionLoan = "dashboards/loans";
   static String createLoanApplication = "loans/application";
   static String updateAmountLoan = "loans/application/update-basic-details";
   static String getProviders = "loans/providers";
@@ -89,5 +77,6 @@ class Apis {
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
   static String creditCard = "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
   static String msme = "https://flutter.dev/";
-  static String creditScore = "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
+  static String creditScore =
+      "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
 }
