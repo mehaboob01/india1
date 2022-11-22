@@ -82,7 +82,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                               height: 21,
                             ),
                             Obx(
-                              () => Container(
+                              () => IgnorePointer(
                                 child: AnotherStepper(
                                   stepperList: _plManager.bikeLoanTitleList
                                       .map((e) => StepperData(
@@ -94,9 +94,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                                   iconHeight: 25,
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value - 1,
+                                  activeIndex: _plManager.currentScreen.value,
                                   callBack: (i) {
-                                    _plManager.currentScreen.value = i + 1;
+                                    _plManager.currentScreen.value = i;
                                   },
                                 ),
                               ),

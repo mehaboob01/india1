@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -12,7 +11,6 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../../widgets/custom_slider.dart';
 import '../../profile/controller/profile_controller.dart';
 import '../lenders_list.dart';
 
@@ -82,7 +80,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                                   height: 21,
                                 ),
                                 Obx(
-                                  () => Container(
+                                  () => IgnorePointer(
                                     child: AnotherStepper(
                                       stepperList: _plManager.bikeLoanTitleList
                                           .map((e) => StepperData(
@@ -143,9 +141,6 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        //TODO remove before push
-        //loanController.updateScreen(Steps.PERSONAL.index);
-
         if (profileController.vehicleType.value == '') {
           Flushbar(
             title: "Alert!",
@@ -153,7 +148,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-            loanController.updateLoanAmount(amount: loanAmountEditingController.text);
+          loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.BikeLoan);
         }
       },
       child: Container(
@@ -369,8 +364,11 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           height: 28,
         ),
         ProfileStepper().commonDropDown(
-          item: <String>['2 wheeler - Scooty', '2 wheeler - Bike'].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          item: [
+            {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
+            {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
+          ].map((value) {
+            return DropdownMenuItem(
               value: value,
               child: Text(value.toString()),
             );

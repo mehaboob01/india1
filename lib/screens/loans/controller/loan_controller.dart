@@ -87,7 +87,7 @@ class LoanController extends GetxController {
     }
   }
 
-  Future updateLoanAmount({required String amount}) async {
+  Future updateLoanAmount({required String amount, LoanType? type}) async {
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -98,6 +98,12 @@ class LoanController extends GetxController {
           "customerId": customerId.value,
           "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanAmount": "$amount",
+          if (type == LoanType.BikeLoan) ...{
+            "twoWheelerType": profileController.vehicleType.value,
+          },
+          if (type == LoanType.CarLoan) ...{
+            "fourWheelerType": profileController.vehicleType.value,
+          },
         }),
       );
       if (response != null) {

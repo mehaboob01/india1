@@ -84,7 +84,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                   height: 21,
                                 ),
                                 Obx(
-                                  () => Container(
+                                  () => IgnorePointer(
                                     child: AnotherStepper(
                                       stepperList: loanController.titleList
                                           .map((e) => StepperData(

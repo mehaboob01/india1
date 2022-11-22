@@ -26,7 +26,7 @@ class LoansPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const LoansCard(),
               ),
-              CommonBanner()
+              CommonBanner(),
             ],
           ),
         ),
@@ -98,9 +98,9 @@ class LoansCard extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => CommonWebView(
-              title: 'MSME',
-              url: Apis.msme,
-            ));
+                  title: 'MSME',
+                  url: Apis.msme,
+                ));
           },
           child: ItemCard(
             image: AppImages.handSackSvg,
