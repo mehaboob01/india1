@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
@@ -228,9 +229,53 @@ class ProfileController extends GetxController {
       return null;
   }
 
-  Future pickImage() async {
-    image.value = (await _picker.pickImage(source: ImageSource.gallery))!.path;
-    uploadProfile(fileName: image.value.toString().split("/").last);
+  Future pickImage(context) async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Text(
+                'Select Image mode',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimens.font_18sp,
+                  color: AppColors.black,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Camera'),
+              leading: Icon(Icons.camera_alt_outlined),
+              onTap: () async {
+                image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
+                Get.back();
+                uploadProfile(fileName: image.value.toString().split("/").last);
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text('Gallery'),
+              leading: Icon(Icons.photo_size_select_actual_outlined),
+              onTap: () async {
+                image.value = (await _picker.pickImage(source: ImageSource.gallery))!.path;
+                Get.back();
+                uploadProfile(fileName: image.value.toString().split("/").last);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future uploadProfile({required String fileName}) async {
@@ -300,8 +345,6 @@ class ProfileController extends GetxController {
         data: Stream.fromIterable(unit8Image.map((e) => [e])),
         options: options,
       );
-
-      print(response.statusCode);
       if (response.statusCode == 200) {
         updateProfileImage();
       }
@@ -379,14 +422,18 @@ class ProfileController extends GetxController {
               "loanApplicationId": loanApplicationId,
             },
             "customerDetails": {
-              "firstName": firstNameController.value.text.trim().isNotEmpty ? firstNameController.value.text : null,
+              "firstName": firstNameController.value.text,
               "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text : null,
               "mobileNumber": mobileNumberController.value.text,
+              "alternateNumber": alternateNumberController.value.text,
               "dateOfBirth": dobController.value.text.trim().isNotEmpty ? dobController.value.text : null,
               "preferredLanguage": "EN",
               "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text : null,
-              "gender": gender.value.isNotEmpty ? gender.value :null,
-              "maritalStatus": maritalStatus.value.isNotEmpty ? maritalStatus.value :null
+              "gender": gender.value.isNotEmpty ? gender.value : null,
+              "maritalStatus": maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
+              if (loanApplicationId != null) ...{
+                "panNumber": panNumberController.value.text,
+              }
             }
           },
         ),
@@ -493,7 +540,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        if (isFromLoan == true || loanApplicationId != null || loanApplicationId != '') {
+        if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
           Get.back();

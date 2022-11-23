@@ -127,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                                       child: Obx(
                                         () => InkWell(
                                           onTap: () {
-                                            profileController.pickImage();
+                                            profileController.pickImage(context);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(

@@ -6,6 +6,7 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
+import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -35,15 +36,19 @@ class _PersonalLoanState extends State<PersonalLoan> {
   void initState() {
     super.initState();
     profileController.setData();
-    loanController.createLoanApplication(loanType: LoanType.PersonalLoan);
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
-    if (loanController.createLoanModel.value.loanAmount != null) {
-      if (double.parse(loanController.createLoanModel.value.loanAmount.toString()) >= loanController.minValue.value &&
-          double.parse(loanController.createLoanModel.value.loanAmount.toString()) <= loanController.maxValue.value) {
-        loanController.sliderValue.value = double.parse(loanController.createLoanModel.value.loanAmount.toString());
-        loanAmountEditingController.text = loanController.createLoanModel.value.loanAmount.toString();
-      }
-    }
+    loanController.createLoanApplication(
+        loanType: LoanType.PersonalLoan,
+        callBack: (CreateLoanModel createLoanModel) {
+          loanController.minValue.value =double.parse( loanController.createLoanModel.value.loanConfiguration!.minLoanAmount.toString());
+          loanController.maxValue.value =double.parse( loanController.createLoanModel.value.loanConfiguration!.maxLoanAmount.toString());
+          if (createLoanModel.loanAmount != null) {
+            if (double.parse(createLoanModel.loanAmount.toString()) >= loanController.minValue.value && double.parse(createLoanModel.loanAmount.toString()) <= loanController.maxValue.value) {
+              loanController.sliderValue.value = double.parse(createLoanModel.loanAmount.toString());
+              loanAmountEditingController.text = createLoanModel.loanAmount.toString();
+            }
+          }
+        });
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -63,7 +68,6 @@ class _PersonalLoanState extends State<PersonalLoan> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-
         child: SizedBox(
           width: widthIs,
           child: Obx(

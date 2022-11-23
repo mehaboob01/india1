@@ -6,6 +6,7 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
+import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -21,7 +22,6 @@ class GoldLoanIO extends StatefulWidget {
 }
 
 class _GoldLoanIOState extends State<GoldLoanIO> {
-  LoanController _plManager = Get.put(LoanController());
   final GlobalKey<FormBuilderState> _loanAmountKey = GlobalKey<FormBuilderState>();
 
   double widthIs = 0, heightIs = 0;
@@ -37,9 +37,20 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
     loanAmountEditingController = TextEditingController();
     super.initState();
 
-    _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
-    _plManager.sliderValue.value = _plManager.minValue.value;
-    loanController.createLoanApplication(loanType: LoanType.GoldLoan);
+    loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
+    loanController.sliderValue.value = loanController.minValue.value;
+    loanController.createLoanApplication(
+        loanType: LoanType.GoldLoan,
+        callBack: (CreateLoanModel createLoanModel) {
+          loanController.minValue.value = double.parse(loanController.createLoanModel.value.loanConfiguration!.minLoanAmount.toString());
+          loanController.maxValue.value = double.parse(loanController.createLoanModel.value.loanConfiguration!.maxLoanAmount.toString());
+          if (createLoanModel.loanAmount != null) {
+            if (double.parse(createLoanModel.loanAmount.toString()) >= loanController.minValue.value && double.parse(createLoanModel.loanAmount.toString()) <= loanController.maxValue.value) {
+              loanController.sliderValue.value = double.parse(createLoanModel.loanAmount.toString());
+              loanAmountEditingController.text = createLoanModel.loanAmount.toString();
+            }
+          }
+        });
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
@@ -84,7 +95,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                             Obx(
                               () => IgnorePointer(
                                 child: AnotherStepper(
-                                  stepperList: _plManager.bikeLoanTitleList
+                                  stepperList: loanController.bikeLoanTitleList
                                       .map((e) => StepperData(
                                             title: "$e",
                                           ))
@@ -94,16 +105,16 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                                   iconHeight: 25,
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
-                                  activeIndex: _plManager.currentScreen.value,
+                                  activeIndex: loanController.currentScreen.value,
                                   callBack: (i) {
-                                    _plManager.currentScreen.value = i;
+                                    loanController.currentScreen.value = i;
                                   },
                                 ),
                               ),
                             ),
-                            _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                            loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
                                 ? loanAmountUi()
-                                : _plManager.currentScreen.value == Steps.PERSONAL.index
+                                : loanController.currentScreen.value == Steps.PERSONAL.index
                                     ? personalInfoUi()
                                     : residentialInfoUi()
                           ],
@@ -114,9 +125,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                  child: loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
                       ? loanAmountButton()
-                      : _plManager.currentScreen.value == Steps.PERSONAL.index
+                      : loanController.currentScreen.value == Steps.PERSONAL.index
                           ? personalInfoButton()
                           : residentialInfoButton(),
                 ),
@@ -133,9 +144,18 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
     return GestureDetector(
       onTap: () {
         _loanAmountKey.currentState!.save();
-
         if (_loanAmountKey.currentState!.validate()) {
-          _plManager.updateScreen(Steps.PERSONAL.index);
+          double newVal = double.tryParse(loanAmountEditingController.text.toString()) ?? 0;
+
+          if (newVal <= loanController.minValue.value && newVal >= loanController.maxValue.value) {
+            Flushbar(
+              title: "Alert!",
+              message: "Amount must between min and max loan amount",
+              duration: Duration(seconds: 3),
+            )..show(context);
+          } else {
+            loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.GoldLoan);
+          }
         }
       },
       child: LoanCommon().nextButton(),
@@ -148,8 +168,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.LOAN_AMOUNT.index),
-            child:LoanCommon().backButton(context: context),
+            onTap: () => loanController.updateScreen(Steps.LOAN_AMOUNT.index),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -182,7 +202,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
                     callBack: () {
-                      _plManager.updateScreen(Steps.RESIDENTIAL.index);
+                      loanController.updateScreen(Steps.RESIDENTIAL.index);
                     });
               }
             },
@@ -200,8 +220,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () => _plManager.updateScreen(Steps.PERSONAL.index),
-            child:LoanCommon().backButton(context: context),
+            onTap: () => loanController.updateScreen(Steps.PERSONAL.index),
+            child: LoanCommon().backButton(context: context),
           ),
         ),
         SizedBox(
@@ -264,8 +284,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.black : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
@@ -274,8 +294,8 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
-                    fontWeight: _plManager.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
+                    color: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? Colors.grey : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen == Steps.LOAN_AMOUNT.index ? FontWeight.w600 : FontWeight.w400),
               ),
             ],
           ),
@@ -283,10 +303,10 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
         Container(
           margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
           child: CustomSlider(
-            sliderValue: _plManager.sliderValue,
+            sliderValue: loanController.sliderValue,
             textEditingController: loanAmountEditingController,
-            minValue: _plManager.minValue,
-            maxValue: _plManager.maxValue,
+            minValue: loanController.minValue,
+            maxValue: loanController.maxValue,
           ),
         ),
         DividerIO(
@@ -330,10 +350,10 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 ]),
                 onChanged: (value) {
                   double newVal = double.tryParse(value.toString()) ?? 0;
-                  if (newVal >= _plManager.minValue.value && newVal <= _plManager.maxValue.value) {
-                    _plManager.sliderValue.value = newVal;
+                  if (newVal >= loanController.minValue.value && newVal <= loanController.maxValue.value) {
+                    loanController.sliderValue.value = newVal;
                   } else {
-                    _plManager.sliderValue.value = _plManager.minValue.value;
+                    loanController.sliderValue.value = loanController.minValue.value;
                   }
                 },
                 name: 'loan_amount',
