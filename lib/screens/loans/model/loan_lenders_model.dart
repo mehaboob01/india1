@@ -35,18 +35,22 @@ class Lenders {
   num? maxTenureInMonths;
   double? minInterestRate;
   double? maxInterestRate;
+  String? loanApplyType;
+  String? redirectUrl;
 
   Lenders(
       {this.id,
-        this.logoURL,
-        this.loanTitle,
-        this.loanType,
-        this.keywords,
-        this.loanMaxAmount,
-        this.minTenureInMonths,
-        this.maxTenureInMonths,
-        this.minInterestRate,
-        this.maxInterestRate});
+      this.logoURL,
+      this.loanTitle,
+      this.loanType,
+      this.keywords,
+      this.loanMaxAmount,
+      this.minTenureInMonths,
+      this.maxTenureInMonths,
+      this.minInterestRate,
+      this.maxInterestRate,
+      this.loanApplyType,
+      this.redirectUrl});
 
   Lenders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,6 +63,8 @@ class Lenders {
     maxTenureInMonths = json['maxTenureInMonths'];
     minInterestRate = json['minInterestRate'];
     maxInterestRate = json['maxInterestRate'];
+    loanApplyType = json['loanApplyType'];
+    redirectUrl = json['redirectUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +79,8 @@ class Lenders {
     data['maxTenureInMonths'] = this.maxTenureInMonths;
     data['minInterestRate'] = this.minInterestRate;
     data['maxInterestRate'] = this.maxInterestRate;
+    data['loanApplyType'] = this.loanApplyType;
+    data['redirectUrl'] = this.redirectUrl;
     return data;
   }
 }

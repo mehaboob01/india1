@@ -69,6 +69,7 @@ class _FarmLoanState extends State<FarmLoan> {
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
     loanController.sliderValue.value = loanController.minValue.value;
     resetValues();
+    profileController.setData();
     loanController.createLoanApplication(loanType: LoanType.FarmLoan);
   }
 

@@ -107,6 +107,7 @@ class LoanController extends GetxController {
 
   Future createLoanApplication({
     required LoanType loanType,
+    Function? callBack,
   }) async {
     try {
       createLoanLoading.value = true;
@@ -123,11 +124,7 @@ class LoanController extends GetxController {
         createLoanModel.value = CreateLoanModel.fromJson(response);
         maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
         minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
-        if (createLoanModel.value.loanAmount != null) {
-          if (double.parse(createLoanModel.value.loanAmount.toString()) >= minValue.value && double.parse(createLoanModel.value.loanAmount.toString()) <= maxValue.value) {
-            sliderValue.value = double.parse(createLoanModel.value.loanAmount.toString());
-          }
-        }
+        callBack!(createLoanModel.value);
       }
     } catch (exception) {
       print(exception);

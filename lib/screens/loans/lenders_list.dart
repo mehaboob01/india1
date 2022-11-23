@@ -5,6 +5,7 @@ import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/provider_details.dart';
 import 'package:india_one/screens/loans/provider_list.dart';
+import 'package:india_one/utils/common_webview.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -65,58 +66,42 @@ class _LendersListState extends State<LendersList> {
                 Expanded(
                   child: Obx(
                     () => (isPersonalLoan
-                            ? (loanController
-                                        .loanProvidersModel.value.providers ==
-                                    null ||
-                                loanController
-                                        .loanProvidersModel.value.providers ==
-                                    [])
-                            : (loanController.loanLendersModel.value.lenders ==
-                                    null ||
-                                loanController.loanLendersModel.value.lenders ==
-                                    []))
+                            ? (loanController.loanProvidersModel.value.providers == null || loanController.loanProvidersModel.value.providers == [])
+                            : (loanController.loanLendersModel.value.lenders == null || loanController.loanLendersModel.value.lenders == []))
                         ? Center(child: Text("No providers found"))
                         : ListView.builder(
                             shrinkWrap: true,
-                            itemCount: isPersonalLoan
-                                ? loanController
-                                    .loanProvidersModel.value.providers!.length
-                                : loanController
-                                    .loanLendersModel.value.lenders!.length,
+                            itemCount: isPersonalLoan ? loanController.loanProvidersModel.value.providers!.length : loanController.loanLendersModel.value.lenders!.length,
                             itemBuilder: (context, index) {
                               return LoanCommon().loanCard(
-                                providers: loanController
-                                    .loanProvidersModel.value.providers?[index],
-                                lenders: loanController
-                                    .loanLendersModel.value.lenders?[index],
+                                providers: loanController.loanProvidersModel.value.providers?[index],
+                                lenders: loanController.loanLendersModel.value.lenders?[index],
                                 applyButtonClick: () {
                                   if (isPersonalLoan == true) {
                                     Get.to(
                                       () => ProvidersList(
                                         title: '${widget.title}',
-                                        providerId: loanController
-                                                .loanProvidersModel
-                                                .value
-                                                .providers?[index]
-                                                .id ??
-                                            '',
+                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
                                       ),
                                     );
                                   } else {
-                                    Get.to(
-                                      () => ProviderDetail(
-                                        title: '${widget.title}',
-                                        lenders: loanController.loanLendersModel
-                                            .value.lenders![index],
-                                        personalLoan: isPersonalLoan,
-                                        providerId: loanController
-                                                .loanProvidersModel
-                                                .value
-                                                .providers?[index]
-                                                .id ??
-                                            '',
-                                      ),
-                                    );
+                                    if (loanController.loanLendersModel.value.lenders![index].loanApplyType == 'Api') {
+                                      Get.to(
+                                        () => ProviderDetail(
+                                          title: '${widget.title}',
+                                          lenders: loanController.loanLendersModel.value.lenders![index],
+                                          personalLoan: isPersonalLoan,
+                                          providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                        ),
+                                      );
+                                    } else {
+                                      Get.to(
+                                        () => CommonWebView(
+                                          title: 'Gold Loan',
+                                          url: loanController.loanLendersModel.value.lenders![index].redirectUrl ?? '',
+                                        ),
+                                      );
+                                    }
                                   }
                                 },
                                 isPersonalLoan: isPersonalLoan,
