@@ -321,7 +321,8 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             Visibility(
                               visible: alertTextShow == true ? true : false,
-                              child: Expanded(
+                              child:
+                              Expanded(
                                 child: Text(
                                   'checkbox_select_error'.tr,
                                   overflow: TextOverflow.visible,

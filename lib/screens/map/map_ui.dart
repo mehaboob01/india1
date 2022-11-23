@@ -231,26 +231,49 @@ class AtmDetailsCard extends StatelessWidget {
                         color: Color(0xFF000000),
                         fontSize: 16),
                   ),
+
                   SizedBox(
                     height: Get.height * 0.005,
                   ),
-                  Text(
-                    "",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                  Row(
+                    children: [
+
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+
+                        child: Container(
+                          height: 26,
+                          width: 240,
+                          child: Text(
+                            address.toString(),
+                            overflow: TextOverflow.visible,
+                            maxLines: 4,
+                            style: TextStyle(
+                              overflow: TextOverflow.visible,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primary,
+                              fontSize: Dimens.font_14sp,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ]
+
+
                   ),
-                  SizedBox(
-                    height: Get.height * 0.005,
-                  ),
-                  Text(address.toString(), softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
+               //   Text(, softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
 
                 ],
               ),
               Container(
-                  height: Get.height * 0.04,
+                  height: 38,
+
+
                   decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFF2642C)),
                       borderRadius: BorderRadius.circular(6)),
-                  width: Get.width * 0.3,
+                  width: 80,
                   child: Row(
                     children: [
                       Icon(
@@ -258,10 +281,10 @@ class AtmDetailsCard extends StatelessWidget {
                         color: Color(0xFFF2642C),
                       ),
                       SizedBox(
-                        width: Get.width * 0.009,
+                        width: Get.width * 0.008,
                       ),
                       Text(
-                        "Get Directions",
+                        "Routes",
                         style: TextStyle(color: Color(0xFFF2642C)),
                       ),
                     ],

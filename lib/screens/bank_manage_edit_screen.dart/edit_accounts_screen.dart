@@ -35,6 +35,13 @@ class EditAccountsCard extends StatelessWidget {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
 
+    print("bankName==>  ${bankName}");
+    print("account number==>  ${accountNumber}");
+    print("ac type==>  ${accountType}");
+    print("bank id==>  ${ id}");
+    print("ifsc code==>  ${ifscCode}");
+    print("act type==>  ${accountType}");
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -70,11 +77,12 @@ class EditAccountsCard extends StatelessWidget {
                       FormBuilder(
                         key: _updateBankAccount,
                         initialValue: {
-                          "bankName": "",
+                          "bankName": bankName.toString(),
                           "accountNumber": accountNumber,
                           "ifscCode": ifscCode,
-                          "accountType": "",
+                          "accountType": accountType,
                           "id": id,
+
                         },
                         child: SingleChildScrollView(
                           child: Container(
@@ -102,8 +110,9 @@ class EditAccountsCard extends StatelessWidget {
                                     ),
                                     // bank name
                                     DropDown(
+
                                       onChanged: (value) {},
-                                      formName: 'bankDropDown',
+                                      formName: 'bankName',
                                       labelName: 'Bank name',
                                       hintText: bankName.toString(),
                                       data: cashBackManager.bankList,
@@ -216,7 +225,7 @@ class EditAccountsCard extends StatelessWidget {
                                     FormBuilderDropdown(
                                       iconEnabledColor: AppColors.primary,
                                       iconDisabledColor: Colors.grey,
-                                      name: '',
+                                      name: 'accountType',
                                       enabled: true,
                                       decoration: InputDecoration(
                                           floatingLabelBehavior:
@@ -291,7 +300,7 @@ class EditAccountsCard extends StatelessWidget {
                       label: updateBankAccount.isLoading == true
                           ? 'Saving..'
                           : 'Save Changes',
-                      onPressed: () {
+                      onPressed: () async {
                         // method for checkBankID
 
                         String? checkBankId(bankName) {
@@ -306,15 +315,17 @@ class EditAccountsCard extends StatelessWidget {
                         _updateBankAccount.currentState!.save();
                         _updateBankAccount.currentState!.validate();
                         print(_updateBankAccount.currentState!.value);
+                        var bankId  = checkBankId(bankName);
 
-                        print("bankId for updtae bank account${bankName}");
+                        print("bankId for updtae bank account${bankId}");
                         print(
                             "json value update bank ${_updateBankAccount.currentState!.value}");
 
-                        var bankId = checkBankId(bankName);
-                        print("BAnk IDddd==>${bankId}");
+
                         updateBankAccount.callUpdateBankAccount(
-                            _updateBankAccount.currentState!.value, bankId, id);
+                            _updateBankAccount.currentState!.value, bankId,id);
+                        await cashBackManager.fetchCustomerBankAccounts();
+                        await cashBackManager.fetchCustomerUpiAccounts();
                       },
                       buttonWidth: double.maxFinite,
                       buttonHeight: 12.0.wp,

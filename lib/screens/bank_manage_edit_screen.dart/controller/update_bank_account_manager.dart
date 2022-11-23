@@ -58,7 +58,7 @@ class UpdateBankAccount extends GetxController {
             title: "Success!",
             message: "Bank details updated ...",
             duration: Duration(seconds: 2),
-          )..show(Get.context!);
+          )..show(Get.context!).then((value) => Get.back());
 
           isLoading(false);
         } else {
