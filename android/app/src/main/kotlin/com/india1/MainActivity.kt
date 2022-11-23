@@ -1,4 +1,4 @@
-package com.india1.india_one
+package com.india1
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

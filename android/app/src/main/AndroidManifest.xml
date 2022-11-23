@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.india1.india_one">
+    package="com.india1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+<!--    <uses-permission android:name="om.google.android.gms.permission.AD_ID" tools:node/>-->
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
@@ -70,6 +71,6 @@
             android:value="2" />
         <!-- Change the API key -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC-qFQR2kp1uRueCguzvoWE2VS0u8HLnJA"/>
+            android:value="AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k"/>
     </application>
 </manifest>

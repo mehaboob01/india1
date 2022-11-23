@@ -85,10 +85,6 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
 
 
 
-
-
-
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -394,11 +390,11 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
     widget.textEditCtrl.text = '';
   }
 
-  @override
-  void dispose() {
-    widget.cashbackCtrl.bankAccountKey.currentState!.reset();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   widget.cashbackCtrl.bankAccountKey.currentState!.reset();
+  //   super.dispose();
+  // }
 
   void clearData() {
     widget.cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value.text = '';
@@ -440,7 +436,10 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
       cashBackManager.selectedplanList.value = localSelectedList;
     }
 
-    return SingleChildScrollView(child: Obx(() {
+    return SingleChildScrollView(child:
+
+
+    Obx(() {
       return FormBuilder(
         key: widget.cashbackCtrl.bankAccountKey,
         onChanged: () {
@@ -785,7 +784,8 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
           sizedbox,
         ]),
       );
-    }));
+    })
+    );
   }
 }
 
