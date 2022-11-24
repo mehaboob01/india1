@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
-import 'package:india_one/screens/Pages/loan_dashboard_history.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/utils/common_webview.dart';
 
@@ -43,10 +42,12 @@ class _LoansPageState extends State<LoansPage> {
                 child: const LoansCard(),
               ),
               CommonBanner(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: LoanDashboardHistory(isFromLoans: true),
-              ),
+
+              // loans history
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+              //   child: LoanDashboardHistory(isFromLoans: true),
+              // ),
             ],
           ),
         ),

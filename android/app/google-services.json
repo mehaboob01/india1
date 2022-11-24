@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "859728047213",
-    "project_id": "india1-4c3a2",
-    "storage_bucket": "india1-4c3a2.appspot.com"
+    "project_number": "952438329741",
+    "project_id": "indiaone-d2990",
+    "storage_bucket": "indiaone-d2990.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859728047213:android:2e5077d8762c917abb6364",
+        "mobilesdk_app_id": "1:952438329741:android:24e5022bbf512b6ef6adc4",
         "android_client_info": {
-          "package_name": "com.india1.india_one"
+          "package_name": "com.india1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "859728047213-q93rv71cfsrm4a6h64k6mp9nsp8nc29i.apps.googleusercontent.com",
+          "client_id": "952438329741-9v5slol2aqjh8ll4uclo9v8ihgqllbl1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyByWIareCxWcgoMo-trNfIR-IXqcunJbLo"
+          "current_key": "AIzaSyBl7tpd-ixAxZ1hhfP9IQ046flrBJVU2Pc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "859728047213-q93rv71cfsrm4a6h64k6mp9nsp8nc29i.apps.googleusercontent.com",
+              "client_id": "952438329741-9v5slol2aqjh8ll4uclo9v8ihgqllbl1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -218,7 +218,7 @@ class HeadingContainer extends StatelessWidget {
                         Text(
                           'Total earned : ',
                           style: AppStyle.shortHeading.copyWith(
-                            fontSize: 11.0.sp,
+                            fontSize: 10.0.sp,
                             color: Colors.white,
                           ),
                         ),
@@ -226,7 +226,7 @@ class HeadingContainer extends StatelessWidget {
                           () => Text(
                             _loyaltyManager.pointsEarned.toString(),
                             style: AppStyle.shortHeading.copyWith(
-                                fontSize: 14.0.sp,
+                                fontSize: Dimens.font_12sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                                 letterSpacing: 0.5),
@@ -239,7 +239,7 @@ class HeadingContainer extends StatelessWidget {
                           Text(
                             'Total redeemed : ',
                             style: AppStyle.shortHeading.copyWith(
-                              fontSize: 11.0.sp,
+                              fontSize: 10.0.sp,
                               color: Colors.white,
                             ),
                           ),
@@ -247,7 +247,7 @@ class HeadingContainer extends StatelessWidget {
                             () => Text(
                               _loyaltyManager.pointsRedeemed.toString(),
                               style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 14.0.sp,
+                                  fontSize: Dimens.font_12sp,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                   letterSpacing: 0.5),

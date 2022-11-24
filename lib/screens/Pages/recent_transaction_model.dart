@@ -1,5 +1,5 @@
 class RecentTransactionModel {
-  List<RecentTransactions>? recentTransactions;
+  List<RecentTransactions>? recentTransactions = [];
 
   RecentTransactionModel({this.recentTransactions});
 

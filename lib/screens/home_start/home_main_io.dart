@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:location/location.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,7 @@ import '../Pages/payments.dart';
 import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
+import '../map/map_ui.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
@@ -95,6 +97,32 @@ class _HomeMainIOState extends State<HomeMainIO> {
               ).show());
     }
   }
+
+  Future<bool> _handleLocationPermission() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return false;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return true;
+      }
+    }
+    return true;
+  }
+
 
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -789,8 +817,16 @@ class _HomeMainIOState extends State<HomeMainIO> {
               SizedBox(width: 6.0.wp),
               Flexible(
                 child: GestureDetector(
-                  onTap: () {
-                     Get.toNamed(MRouter.map);
+                  onTap: () async {
+
+                    await Location().requestService();
+                    await _handleLocationPermission();
+                    if (_handleLocationPermission() == true) {
+                      Get.to(() => Maps());
+                    } else {
+                      //Get.back();
+                      Get.to(() => Maps());
+                    }
                   },
                   child: Container(
                     height: 4.0.hp,
@@ -945,7 +981,13 @@ Widget confirmBtn() {
 Widget cancelBtn() {
   return ElevatedButton(
       onPressed: () {
-        Get.back();
+        if (Platform.isAndroid) {
+          Get.back();
+          Get.back();
+
+        } else if (Platform.isIOS) {
+          Get.back();
+        }
       },
       child: Text("No"));
 }

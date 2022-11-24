@@ -98,7 +98,7 @@ class LoanDashboardHistory extends StatelessWidget {
               ] else ...[
                 ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: isFromLoans?0:16),
-                  itemCount: isFromLoans && loanController.recentTransactionModel.value.recentTransactions!.length > 5 ? 5 : loanController.recentTransactionModel.value.recentTransactions!.length,
+                  itemCount:  loanController.recentTransactionModel.value.recentTransactions!.length,
                   primary: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {

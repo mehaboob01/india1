@@ -3,10 +3,9 @@ final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
-//final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/";
+//final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/v1/";
 
 class Apis {
-  // OnBoarding & login Api
   static String sendOtp = "auth/send-otp";
   static String verifyOtp = "auth/verify-otp";
   static String dashboard = "dashboards/home/";
@@ -80,6 +79,7 @@ class Apis {
   static String creditCard = "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
   static String emiCard = "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
   static String msme = "https://flutter.dev/";
-  static String creditScore =
-      "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
+  static String creditScore = "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
+  static String fdLink = "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
+  static String digiGold = "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
 }

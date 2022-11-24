@@ -12,13 +12,24 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
+import '../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
+import '../loyality_points/cashback_redeem/cb_manager.dart';
 import 'common/profile_stepper.dart';
 import 'stepper_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+
   ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  CashBackManager cashBackManager = Get.put(CashBackManager());
+
   ProfileController profileController = Get.put(ProfileController());
+
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
   RxBool isPersonalDetailsVisible = false.obs,
@@ -28,7 +39,16 @@ class ProfileScreen extends StatelessWidget {
       isUpiIdVisible = false.obs;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cashBackManager.fetchCustomerBankAccounts();
+    cashBackManager.fetchCustomerUpiAccounts();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     getPersonalDetailButton();
     getResidentialDetailButton();
     getOccupationDetailButton();
@@ -154,6 +174,7 @@ class ProfileScreen extends StatelessWidget {
                                                                     .value),
                                                           )
                                                         : CachedNetworkImage(
+                                                      fit: BoxFit.fitWidth,
                                                             imageUrl:
                                                                 '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
                                                             errorWidget:
@@ -453,13 +474,14 @@ class ProfileScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (title == 'Bank account(s)') {
-                        Get.to(() => AddBankAccountScreen());
+                        Get.to(() => ManageAccountsCard());
                       } else {
                         nextStep(title);
                       }
                     },
                     child: Icon(Icons.note_alt_outlined),
                   ),
+
                 ],
                 //
               ],
@@ -769,107 +791,107 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget accountDetails(PreferredAccount account, int? index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "${index == null ? 'Primary Account:' : 'Account ${index + 1}:'}",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: AppColors.lightBlack,
-            fontSize: Dimens.font_16sp,
+    return Obx(
+      ()=> Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${index == null ? 'Primary Account:' : 'Account ${index + 1}:'}",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: AppColors.lightBlack,
+              fontSize: Dimens.font_16sp,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: singleDetails(
-                title: "Bank name",
-                value: "${account.name ?? ''}",
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: singleDetails(
+                  title: "Bank name",
+                  value: "${account.name ?? cashBackManager.customerBankList[0].name}",
+                ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: singleDetails(
-                title: "Account number",
-                value: "${account.maskAccountNumber ?? ''}",
+              SizedBox(
+                width: 8,
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: singleDetails(
-                title: "IFSC code",
-                value: "${account.ifscCode ?? ''}",
+              Expanded(
+                child: singleDetails(
+                  title: "Account number",
+                  value: "${account.maskAccountNumber ?? cashBackManager.customerBankList[0].maskAccountNumber}",
+                ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: singleDetails(
-                title: "Account type",
-                value: "${account.accountType ?? ''}",
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: singleDetails(
+                  title: "IFSC code",
+                  value: "${account.ifscCode ?? cashBackManager.customerBankList[0].ifscCode}",
+                ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        ProfileStepper().divider(),
-        SizedBox(
-          height: 24,
-        ),
-      ],
+              SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                child: singleDetails(
+                  title: "Account type",
+                  value: "${account.accountType ?? cashBackManager.customerBankList[0].accountType}",
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          ProfileStepper().divider(),
+          SizedBox(
+            height: 24,
+          ),
+        ],
+      ),
     );
   }
 
   Widget upiId() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (profileController.upiIdModel.value.upiIds != null &&
-                  profileController.upiIdModel.value.upiIds != []) ...[
+    return Obx(
+     ()=> Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+
                 ListView.builder(
-                  itemCount: profileController.upiIdModel.value.upiIds!.length,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
                     return singleDetails(
-                      title: "UPI ID $index",
+                      title: "UPI ID ${cashBackManager.customerUPIList[0].id}",
                       value:
-                          "${profileController.upiIdModel.value.upiIds![index]}",
+                      "${cashBackManager.customerUPIList[0].upiId}",
                     );
-                  },
-                ),
-              ] else ...[
-                Text("Could not find any upi id data!"),
-              ]
-            ],
+                  },)
+              ],
+            ),
           ),
-        ),
-        if (isUpiIdVisible.value == false)
-          addDetailButton(
-            title: 'Add UPI / VPA Details',
-            callBack: () {},
-          ),
-      ],
+          if (isUpiIdVisible.value == false)
+            addDetailButton(
+              title: 'Add UPI / VPA Details',
+              callBack: () {},
+            ),
+        ],
+      ),
     );
   }
 

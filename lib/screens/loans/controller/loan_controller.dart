@@ -20,7 +20,7 @@ import '../personal_loan_io/personal_loan.dart';
 class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
   RxBool farmLoanProductLoading = false.obs;
-  Rx<double> sliderValue = 100000.0.obs;
+  Rx<double> sliderValue = 0.0.obs;
   Rx<double> minValue = 0.0.obs;
   Rx<double> maxValue = 0.0.obs;
   RxString customerId = ''.obs;
@@ -122,8 +122,9 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         createLoanModel.value = CreateLoanModel.fromJson(response);
-        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
         minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
+        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
+        sliderValue.value= double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
         callBack!(createLoanModel.value);
       }
     } catch (exception) {

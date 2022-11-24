@@ -27,6 +27,8 @@ class CashBackManager extends GetxController {
 
   var bankListId = <Bank>[].obs;
   var bankListIdSend = <Bank>[];
+
+
   var addAccountDetails = false.obs;
   RxMap<String, dynamic> addBankData = <String, dynamic>{}.obs;
   RxMap<String, dynamic> addUpiData = <String, dynamic>{}.obs;
@@ -110,6 +112,9 @@ class CashBackManager extends GetxController {
   fetchCustomerBankAccounts() async {
     customerBankList.clear();
     customerBankListSend.clear();
+
+    // for profile
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -138,12 +143,16 @@ class CashBackManager extends GetxController {
 
         for (var index in fetchCustomerBanksModel.data!.accounts!) {
           customerBankListSend.add(index);
+
           localSelectedList.add(false);
         }
         customerBankList.addAll(customerBankListSend);
 
         selectedplanList.addAll(localSelectedList);
         isLoading(false);
+
+
+        customerBankList.addAll(customerBankListSend);
       } else {
         Flushbar(
           title: "Error!",

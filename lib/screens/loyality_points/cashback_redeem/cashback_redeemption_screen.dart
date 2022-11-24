@@ -69,10 +69,16 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
   void initState() {
     // TODO: implement initState
     cashbackCtrl.onInit();
+    callFun();
     cashBackManager.fetchCustomerBankAccounts();
-    loyaltyBankSliderValue.value = 0.0;
+  //  loyaltyBankSliderValue.value = 0.0;
     loyaltyBankMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
     loyaltyUpiVpaMaxValue.value = cashbackCtrl.sliderMaxValueDouble.toDouble();
+
+  }
+  void callFun() async{
+    await cashBackManager.fetchCustomerBankAccounts();
+    await cashBackManager.fetchCustomerUpiAccounts();
 
   }
 
@@ -383,12 +389,17 @@ class _LoyaltyBankAccountState extends State<LoyaltyBankAccount> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    cashBackManager.fetchCustomerBankAccounts();
+    cashBackManager.fetchCustomerUpiAccounts();
     cashBackManager.selectedIndex.value = (-1);
-    // cashBackManager.onInit();
-    cashBackManager.customerBankList.clear();
+
+    // cashBackManager.fetchCustomerBankAccounts();
+   //  cashBackManager.customerBankList.clear();
     clearData();
     widget.textEditCtrl.text = '';
   }
+
+
 
   // @override
   // void dispose() {
@@ -810,6 +821,8 @@ class LoyaltyUpiVpa extends StatefulWidget {
   State<LoyaltyUpiVpa> createState() => _LoyaltyUpiVpaState();
 }
 
+
+
 class _LoyaltyUpiVpaState extends State<LoyaltyUpiVpa> {
   final sizedbox = SizedBox(height: 4.0.wp);
 
@@ -821,14 +834,26 @@ class _LoyaltyUpiVpaState extends State<LoyaltyUpiVpa> {
 
   final GlobalKey<FormBuilderState> _upiAddKey = GlobalKey<FormBuilderState>();
 
+
+  // loyalty init state
   @override
   void initState() {
     super.initState();
     // TODO: implement initState
 
     cashBackManager.selectedUpiIndex.value = (-1);
-    cashBackManager.customerUPIList.clear();
+    callFun();
+
+
+
+    //cashBackManager.customerUPIList.clear();
     widget.textEditCtrl.text = '';
+  }
+
+  void callFun() async{
+   await cashBackManager.fetchCustomerBankAccounts();
+   await cashBackManager.fetchCustomerUpiAccounts();
+
   }
 
   // upi card tapped
