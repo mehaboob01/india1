@@ -9,6 +9,7 @@ import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
+import 'loan_dashboard_history.dart';
 
 class LoansPage extends StatefulWidget {
   @override
@@ -43,11 +44,11 @@ class _LoansPageState extends State<LoansPage> {
               ),
               CommonBanner(),
 
-              // loans history
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-              //   child: LoanDashboardHistory(isFromLoans: true),
-              // ),
+            //  loans history
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: LoanDashboardHistory(isFromLoans: true),
+              ),
             ],
           ),
         ),
