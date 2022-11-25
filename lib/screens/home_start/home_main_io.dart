@@ -1,12 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
+
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/map/map_manager.dart';
+import 'package:india_one/screens/map/map_ui.dart';
+
 import 'package:local_auth/local_auth.dart';
 import 'package:location/location.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -25,12 +29,11 @@ import '../Pages/payments.dart';
 import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
-import '../map/map_ui.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
-class HomeMainIO extends StatefulWidget {
+class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
   HomeMainIO(this.showPonitsPopup);
 
@@ -38,7 +41,88 @@ class HomeMainIO extends StatefulWidget {
   State<HomeMainIO> createState() => _HomeMainIOState();
 }
 
-class _HomeMainIOState extends State<HomeMainIO> {
+class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+  //  WidgetsBinding.instance.addObserver(this); // observer
+    _homeManager.callHomeApi();
+    cashbackCtrl.onInit();
+
+    // showFirstTimePoints();
+
+      checkLogin();
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return false;
+      } else {
+        Get.to(Maps());
+        return true;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      return false;
+    } else if (_permissionGranted == PermissionStatus.deniedForever) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Allow application to access your location?'),
+          content: const Text(
+              'You need to allow location\'s access in parameters to see nearby ATM\'s'),
+          actions: <Widget>[
+            // if user deny again, we do nothing
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Don\'t allow'),
+            ),
+
+            // if user is agree, you can redirect him to the app parameters :)
+            TextButton(
+              onPressed: () {
+                Geolocator.openAppSettings();
+                Navigator.pop(context);
+              },
+              child: const Text('Allow'),
+            ),
+          ],
+        ),
+      );
+      return false;
+    } else {
+      Get.to(Maps());
+      return true;
+    }
+  }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // TODO: implement didChangeAppLifecycleState
+  //   super.didChangeAppLifecycleState(state);
+  //   print("state : ${state}");
+  //   if (state == AppLifecycleState.resumed) {
+  //
+  //     checkLogin();
+  //   }
+  // }
+
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
@@ -49,9 +133,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
   String msg = "You are not authorized.";
 
   void showFirstTimePoints() async {
-    if (_homeManager.loyalityPoints.toString() == "0" ||
-        widget.showPonitsPopup == false) {
-    } else {
+    if (_homeManager.loyalityPoints.toString() == "0") {
       Future.delayed(
           Duration(milliseconds: 300),
           () => Alert(
@@ -98,38 +180,13 @@ class _HomeMainIOState extends State<HomeMainIO> {
     }
   }
 
-  Future<bool> _handleLocationPermission() async {
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return false;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return true;
-      }
-    }
-    return true;
-  }
-
-
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
     String? finger = prefs.getString(SPKeys.finger);
+    print("check auth status${_homeManager.showAuth.value}");
 
-    if (showAuth == true && finger == "  ") {
+    if (showAuth == true  || _homeManager.showAuth.value == true) {
       {
         try {
           bool hasbiometrics =
@@ -144,7 +201,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
                   biometricOnly: false);
               if (pass) {
                 msg = "You are Authenticated.";
-                setState(() {});
+                setState(() {
+                  _homeManager.showAuth.value = true;
+
+                });
               } else {
                 SystemNavigator.pop();
               }
@@ -154,8 +214,13 @@ class _HomeMainIOState extends State<HomeMainIO> {
                     localizedReason: 'Authenticate with fingerprint/face',
                     biometricOnly: true);
                 if (pass) {
+
+
                   msg = "You are Authenicated.";
-                  setState(() {});
+                  setState(() {
+                    _homeManager.showAuth.value = true;
+
+                  });
                 } else {
                   SystemNavigator.pop();
                 }
@@ -169,17 +234,6 @@ class _HomeMainIOState extends State<HomeMainIO> {
         }
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _homeManager.callHomeApi();
-    cashbackCtrl.onInit();
-
-    //showFirstTimePoints();
-
-    checkLogin();
   }
 
   RefreshController _refreshController =
@@ -317,6 +371,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                     height: Get.height * 0.02,
                                                     child: GestureDetector(
                                                       onTap: () {
+                                                        _homeManager.showAuth.value = false;
                                                         _homeManager.isClicked
                                                             .value = false;
                                                         Get.back();
@@ -350,17 +405,16 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                     height: 0.02,
                                                     child: GestureDetector(
                                                         onTap: () => {
-                                                          _homeManager
-                                                              .isClicked
-                                                              .value =
-                                                          false,
-
-                                                             Get.back(),
+                                              _homeManager.showAuth.value = false,
+                                                              _homeManager
+                                                                      .isClicked
+                                                                      .value =
+                                                                  false,
+                                                              Get.back(),
                                                               Get.toNamed(
                                                                 MRouter
                                                                     .loyaltyPoints,
                                                               ),
-
                                                             },
                                                         child: Container(
                                                           height:
@@ -728,6 +782,7 @@ class _HomeMainIOState extends State<HomeMainIO> {
       {required String image, required String text, required String routName}) {
     return GestureDetector(
       onTap: () {
+        _homeManager.showAuth.value = false;
         _loyaltyManager.callLoyaltyDashboardApi();
 
         _homeManager.redeemablePoints >= 14
@@ -775,6 +830,10 @@ class _HomeMainIOState extends State<HomeMainIO> {
         labelWeight: FontWeight.w600);
   }
 
+
+
+  MapManager mapManager = Get.put(MapManager());
+
 // find nearest Atm -------------------------------
   Widget nearestAtm() {
     return Container(
@@ -818,15 +877,8 @@ class _HomeMainIOState extends State<HomeMainIO> {
               Flexible(
                 child: GestureDetector(
                   onTap: () async {
-
-                    await Location().requestService();
                     await _handleLocationPermission();
-                    if (_handleLocationPermission() == true) {
-                      Get.to(() => Maps());
-                    } else {
-                      //Get.back();
-                      Get.to(() => Maps());
-                    }
+
                   },
                   child: Container(
                     height: 4.0.hp,
@@ -981,13 +1033,7 @@ Widget confirmBtn() {
 Widget cancelBtn() {
   return ElevatedButton(
       onPressed: () {
-        if (Platform.isAndroid) {
-          Get.back();
-          Get.back();
-
-        } else if (Platform.isIOS) {
-          Get.back();
-        }
+        Get.back();
       },
       child: Text("No"));
 }

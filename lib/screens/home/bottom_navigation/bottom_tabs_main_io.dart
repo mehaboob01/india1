@@ -26,7 +26,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO(false);
+    mainHomeWidget = HomeMainIO(true);
     super.initState();
   }
 

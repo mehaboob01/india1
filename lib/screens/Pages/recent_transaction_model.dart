@@ -3,7 +3,10 @@ class RecentTransactionModel {
 
   RecentTransactionModel({this.recentTransactions});
 
+
+
   RecentTransactionModel.fromJson(Map<String, dynamic> json) {
+
     if (json['recentTransactions'] != null) {
       recentTransactions = <RecentTransactions>[];
       json['recentTransactions'].forEach((v) {
@@ -51,6 +54,12 @@ class RecentTransactions {
     loanAmount = json['loanAmount'];
     loanAppliedOn = json['loanAppliedOn'];
     status = json['status'];
+
+    //
+
+
+
+
   }
 
   Map<String, dynamic> toJson() {

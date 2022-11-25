@@ -19,6 +19,8 @@ class ProfileDetailsModel {
   GeoLocation? geoLocation;
   Address? address;
   String? imageName;
+  String? imageUrl;
+
 
   ProfileDetailsModel({
     this.id,
@@ -41,6 +43,7 @@ class ProfileDetailsModel {
     this.geoLocation,
     this.address,
     this.imageName,
+    this.imageUrl
   });
 
   ProfileDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -64,6 +67,7 @@ class ProfileDetailsModel {
     geoLocation = json['geoLocation'] != null ? new GeoLocation.fromJson(json['geoLocation']) : null;
     address = json['address'] != null ? new Address.fromJson(json['address']) : null;
     imageName = json['imageName'];
+    imageUrl = json['imageUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +89,7 @@ class ProfileDetailsModel {
     data['employmentType'] = this.employmentType;
     data['maritalStatus'] = this.maritalStatus;
     data['salaryMode'] = this.salaryMode;
+    data['imageUrl'] = this.imageUrl;
     if (this.geoLocation != null) {
       data['geoLocation'] = this.geoLocation!.toJson();
     }

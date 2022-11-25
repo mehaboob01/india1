@@ -9,6 +9,7 @@ import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
+import '../home_start/home_manager.dart';
 import 'loan_dashboard_history.dart';
 
 class LoansPage extends StatefulWidget {
@@ -17,11 +18,14 @@ class LoansPage extends StatefulWidget {
 }
 
 class _LoansPageState extends State<LoansPage> {
+  HomeManager _homeManager = Get.put(HomeManager());
+
   LoanController loanController = Get.put(LoanController());
 
   @override
   void initState() {
     super.initState();
+    _homeManager.showAuth.value = false;
     loanController.recentTransactions();
   }
 
@@ -87,16 +91,16 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(MRouter.carLoanIO);
-          },
-          child: ItemCard(
-            image: AppImages.carSvg,
-            label: 'Car',
-            itembgColor: ItemCardbgColor.lightBlue,
-          ),
-        ),
+        // InkWell(
+        //   onTap: () {
+        //     Get.toNamed(MRouter.carLoanIO);
+        //   },
+        //   child: ItemCard(
+        //     image: AppImages.carSvg,
+        //     label: 'Car',
+        //     itembgColor: ItemCardbgColor.lightBlue,
+        //   ),
+        // ),
         // InkWell(
         //   onTap: () {
         //     Get.toNamed(MRouter.tractorLoanIO);

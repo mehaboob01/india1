@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
@@ -14,6 +15,7 @@ import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 import 'package:india_one/screens/loans/submission_page.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:http/http.dart' as http;
 
 import '../personal_loan_io/personal_loan.dart';
 
@@ -34,7 +36,8 @@ class LoanController extends GetxController {
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
   Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
   RxInt farmCompletedIndex = 0.obs;
-  Rx<RecentTransactionModel> recentTransactionModel = RecentTransactionModel().obs;
+  Rx<RecentTransactionModel> recentTransactionModel =
+      RecentTransactionModel().obs;
 
   List otherDetails = [
     {"title": "Interest rate", "value": ""},
@@ -70,14 +73,11 @@ class LoanController extends GetxController {
   ];
 
   statusTextColor(String status) {
-    if (status.toLowerCase() ==
-        "pending") {
+    if (status.toLowerCase() == "pending") {
       return const Color(0xFF4F0AD2);
-    } else if (status.toLowerCase() ==
-        "approved") {
+    } else if (status.toLowerCase() == "approved") {
       return const Color(0xFF00C376);
-    } else if (status.toLowerCase() ==
-        "rejected") {
+    } else if (status.toLowerCase() == "rejected") {
       return const Color(0XffED1C24);
     } else {
       return Colors.black;
@@ -122,9 +122,18 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         createLoanModel.value = CreateLoanModel.fromJson(response);
-        minValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
-        maxValue.value = double.tryParse((createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0).toString()) ?? 0;
-        sliderValue.value= double.tryParse((createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0).toString()) ?? 0;
+        minValue.value = double.tryParse(
+                (createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0)
+                    .toString()) ??
+            0;
+        maxValue.value = double.tryParse(
+                (createLoanModel.value.loanConfiguration?.maxLoanAmount ?? 0)
+                    .toString()) ??
+            0;
+        sliderValue.value = double.tryParse(
+                (createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0)
+                    .toString()) ??
+            0;
         callBack!(createLoanModel.value);
       }
     } catch (exception) {
@@ -153,6 +162,7 @@ class LoanController extends GetxController {
           },
         }),
       );
+
       if (response != null) {
         createLoanModel.value = CreateLoanModel.fromJson(response);
         updateScreen(Steps.PERSONAL.index);
@@ -212,10 +222,9 @@ class LoanController extends GetxController {
           if (providerId != '') ...{
             "loanProviderId": "$providerId",
           },
-          if (lenderId != '')...{
+          if (lenderId != '') ...{
             "loanLenderId": "$lenderId",
           }
-
         }),
       );
       if (response != null) {
@@ -279,7 +288,7 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         return true;
-      }else{
+      } else {
         return false;
       }
     } catch (exception) {
@@ -294,18 +303,47 @@ class LoanController extends GetxController {
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
-      var response = await DioApiCall().commonApiCall(
-        endpoint: Apis.recentTransactionLoan,
-        method: Type.POST,
-        data: json.encode({
-          "customerId": customerId.value,
-          if (loanType != null) ...{
-            "loanType": "${getLoanType(loanType)}",
-          }
-        }),
-      );
-      if (response != null) {
-        recentTransactionModel.value = RecentTransactionModel.fromJson(response);
+
+      print("customer id===> ${customerId.value}");
+      var response = await http.post(Uri.parse(baseUrl + Apis.recentTransactionLoan),
+          body: json.encode({
+            "customerId": customerId.value,
+            // "loanType": "${getLoanType(loanType)}",
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+      // var response = await DioApiCall().commonApiCall(
+      //   endpoint: Apis.recentTransactionLoan,
+      //   method: Type.POST,
+      //   data: json.encode({
+      //     "customerId": customerId.value,
+      //
+      //     // "loanType": "${getLoanType(loanType)}",
+      //   }),
+      // );
+
+      print("Json data ==> ${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        print("Json data ==> ${response.body}");
+        var jsonData = jsonDecode(response.body);
+
+        print("sending json data${jsonData}");
+        print("data json data${jsonData['data']}");
+
+
+
+        recentTransactionModel.value = RecentTransactionModel.fromJson(jsonData['data']);
+      } else {
+        Flushbar(
+          title: "Error!",
+          message: "Something went wrong ...",
+          duration: Duration(seconds: 2),
+        )..show(Get.context!);
       }
     } catch (exception) {
       print(exception);

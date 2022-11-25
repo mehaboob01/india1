@@ -1,14 +1,15 @@
-import 'dart:async';
-
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/map/map_manager.dart';
+import 'package:india_one/screens/map/map_model.dart';
 
 import 'package:india_one/widgets/loyalty_common_header.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Maps extends StatefulWidget {
   Maps({key});
@@ -26,28 +27,71 @@ class _MapsState extends State<Maps> {
     );
   }
 
-  late BitmapDescriptor customIcon;
+  MapManager mapManager = Get.put(MapManager());
+  var _controller = TextEditingController();
+
+  List<dynamic> _placeList = [];
+  Map<dynamic, dynamic> _latLongList = {};
 
   @override
   void initState() {
-    // TODO: implement initState
-    getCustomIcon();
-
-    mapManager.getCurrentLocation();
-
     super.initState();
-  }
-
-  getCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(12, 12)),
-      AppImages.markerIcon,
-    ).then((d) {
-      customIcon = d;
+    _controller.addListener(() {
+      _onChanged();
     });
   }
 
-  MapManager mapManager = Get.put(MapManager());
+  _onChanged() {
+    if (_controller.text != null) {
+      getSuggestion(_controller.text);
+    } else {
+      _controller.clear();
+    }
+  }
+
+  void getSuggestion(String input) async {
+    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
+    String type = '(regions)';
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+    String request =
+        '$baseURL?input=$input&components=country:IN&key=$kPLACES_API_KEY';
+
+    var response = await http.get(Uri.parse(request));
+    if (response.statusCode == 200) {
+      print(response.body);
+      setState(() {
+        _placeList = json.decode(response.body)['predictions'];
+      });
+    } else {
+      throw Exception('Failed to load predictions');
+    }
+  }
+
+  void getLatLng(String placeId) async {
+    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
+    String baseURL =
+        "https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${kPLACES_API_KEY}";
+    var response = await http.get(Uri.parse(baseURL));
+    var result = json.decode(response.body);
+    if (response.statusCode == 200) {
+      _latLongList = result["results"][0]["geometry"]["location"];
+      var lat = result["results"][0]["geometry"]["location"]["lat"];
+      var lng = result["results"][0]["geometry"]["location"]["lng"];
+
+      mapManager
+        ..mapController!
+            .animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(target: LatLng(lat, lng), zoom: 11)))
+            .then((value) {
+          mapManager.getLocations(lat, lng);
+        });
+
+      _controller.clear();
+    } else {
+      throw Exception('Failed to load predictions');
+    }
+  }
 
   _body() {
     return Column(
@@ -63,13 +107,16 @@ class _MapsState extends State<Maps> {
           child: Stack(children: [
             Obx(
               () => GoogleMap(
+                buildingsEnabled: false,
                 mapType: MapType.normal,
                 zoomGesturesEnabled: true,
+                zoomControlsEnabled: false,
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 initialCameraPosition: mapManager.cameraPosition.value,
                 onMapCreated: (controller) async {
                   mapManager.mapController = controller;
+                  mapManager.getCurrentLocation();
                 },
                 markers: mapManager.allMarkers.toSet(),
               ),
@@ -79,8 +126,8 @@ class _MapsState extends State<Maps> {
               child: Row(
                 children: [
                   Container(
-                    height: Get.height * 0.06,
                     width: Get.width * 0.73,
+                    height: Get.height * 0.06,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -91,34 +138,44 @@ class _MapsState extends State<Maps> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 15, 15, 15),
+                      padding: const EdgeInsets.all(5.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.location_on,
                             color: Colors.white,
                           ),
-                          SizedBox(
-                            width: Get.width * 0.03,
+                          Expanded(
+                            child: SizedBox(
+                                height: Get.height * 0.06,
+                                child: Obx(
+                                  () => TextFormField(
+                                    onTap: () {
+                                      _controller.text;
+                                    },
+                                    cursorColor: Colors.white,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    style: TextStyle(color: Colors.white),
+                                    controller: _controller,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: mapManager.locationText.value,
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      focusColor: Colors.white,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          mapManager.locationText.value = "";
+                                        },
+                                        icon: Icon(Icons.clear),
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+
+
+                                )),
                           ),
-                          Text(
-                            "Enable your location",
-                            style: TextStyle(
-                                color: Color(0xFFEEEEEECC),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              mapManager.getCurrentLocation();
-                            },
-                            child: ImageIcon(
-                              AssetImage(AppImages.locationIcon),
-                              color: Color(0xFFEEEEEE),
-                            ),
-                          )
                         ],
                       ),
                     ),
@@ -126,67 +183,108 @@ class _MapsState extends State<Maps> {
                   SizedBox(
                     width: Get.width * 0.03,
                   ),
-                  Container(
-                    height: Get.height * 0.06,
-                    width: Get.width * 0.135,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border:
-                            Border.all(width: 1, color: AppColors.cardScreenBg),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: ImageIcon(
-                      AssetImage(AppImages.searchIcon),
+                  GestureDetector(
+                    onTap: () {
+                      mapManager.locationText.value = "Search Location";
+                      mapManager.getCurrentLocation();
+                    },
+                    child: Container(
+                      height: Get.height * 0.06,
+                      width: Get.width * 0.135,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 1, color: AppColors.cardScreenBg),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ImageIcon(
+                        AssetImage(
+                          AppImages.locationIcon,
+                        ),
+                      ),
                     ),
                   )
                 ],
               ),
             ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.4,
-              maxChildSize: 0.85,
-              minChildSize: 0.4,
-              builder: (context, scrollController) {
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
-                  child: Container(
-                      height: Get.height * 0.25,
-                      child: Obx(() => mapManager.mapCoordinateList.length != 0
-                          ? ListView.builder(
-                              controller: scrollController,
-                              padding: EdgeInsets.all(0),
-                              itemCount: mapManager.mapCoordinateList.length,
-                              shrinkWrap: true,
-                              itemBuilder: ((context, index) {
-                                if (mapManager.markersList.isEmpty) {}
+            Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Visibility(
+                  visible: _placeList.length > 0,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          getLatLng(_placeList[index]["place_id"]);
+                          mapManager.locationText.value =
+                              _placeList[index]["description"];
+                          _placeList.clear();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: ListTile(
+                            title: Text(_placeList[index]["description"]),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.4,
+                maxChildSize: 0.85,
+                minChildSize: 0.4,
+                builder: (context, scrollController) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
+                    child: Container(
+                        height: Get.height * 0.25,
+                        child:
+                            Obx(() => mapManager.mapCoordinateList.length != 0
+                                ? ListView.builder(
+                                    controller: scrollController,
+                                    padding: EdgeInsets.all(0),
+                                    itemCount:
+                                        mapManager.mapCoordinateList.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: ((context, index) {
+                                      if (mapManager.markersList.isEmpty) {}
 
-                                return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: AtmDetailsCard(
-                                      index: index,
-                                      address: mapManager
-                                          .mapCoordinateList[index].address
-                                          .toString(),
-                                      atmName: mapManager
-                                          .mapCoordinateList[index].name
-                                          .toString(),
-                                    ));
-                              }),
-                            )
-                          : Container())),
-                );
-              },
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: AtmDetailsCard(
+                                            index: index,
+                                            address: mapManager
+                                                .mapCoordinateList[index]
+                                                .address
+                                                .toString(),
+                                            atmName: mapManager
+                                                .mapCoordinateList[index].name
+                                                .toString(),
+                                          ));
+                                    }),
+                                  )
+                                : Container())),
+                  );
+                },
+              ),
             ),
           ]),
         ),
       ],
     );
-  }
-
-  noATMnearby() {
-    return ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("No ATM nearby")));
   }
 }
 
