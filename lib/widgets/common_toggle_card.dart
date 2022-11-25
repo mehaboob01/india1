@@ -5,22 +5,17 @@ import '../screens/loyality_points/cashback_redeem/cb_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_manager.dart';
 import 'common_redeem_card.dart';
 
-
-
 class CommonToggleCard extends StatelessWidget {
-
-   CommonToggleCard({
+  CommonToggleCard({
     Key? key,
-    required this.getController,
     required this.redeemCardList,
     required this.isSelectedlist,
   }) : super(key: key);
 
-  final CashBackController getController;
   final List<RedeemCard> redeemCardList;
   final List<bool> isSelectedlist;
   CashBackManager cashBackManager = Get.put(CashBackManager());
-
+  CashBackController getController = Get.put(CashBackController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +24,10 @@ class CommonToggleCard extends StatelessWidget {
         renderBorder: false,
         splashColor: Colors.transparent,
         isSelected: isSelectedlist,
-        onPressed: (index){
-
+        onPressed: (index) {
           getController.changeSelection(index, isSelectedlist);
-          cashBackManager.fetchCustomerUpiAccounts();
-          cashBackManager.fetchCustomerBankAccounts();
-          cashBackManager.selectedUpiIndex.value = (-1);
-
-
-
-
-
+          // cashBackManager.onInit();
         },
-
         children: redeemCardList);
   }
 }

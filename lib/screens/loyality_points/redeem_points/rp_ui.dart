@@ -145,7 +145,7 @@ class RedeemPointsPage extends StatelessWidget {
                                       SizedBox(height: 4.0.wp),
                                       Obx(() {
                                         return CommonToggleCard(
-                                          getController: homeCtrl,
+
                                           isSelectedlist: isSelectedRedeemType,
                                           redeemCardList: [
                                             RedeemCard(
@@ -171,7 +171,8 @@ class RedeemPointsPage extends StatelessWidget {
                       padding: EdgeInsets.all(6.0.wp),
                       child: Obx(() {
                         return ButtonWithFlower(
-                          onPressed: () {
+                          onPressed: isSelectedRedeemType
+                              .any((element) => element == true)?() {
                             bool redeemIndex =
                                 isSelectedRedeemType.any((element) => element);
                             RedeemType redeemType;
@@ -188,7 +189,7 @@ class RedeemPointsPage extends StatelessWidget {
                             goToScreen(redeemType: redeemType);
                             print(
                                 '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
-                          },
+                          }: ()=> null,
                           label: 'Proceed',
                           buttonWidth: double.maxFinite,
                           buttonHeight: 12.0.wp,

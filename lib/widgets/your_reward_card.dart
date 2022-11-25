@@ -251,7 +251,7 @@ class YourRewardCard extends StatelessWidget {
             usedBg = AppImages.referralBonusImage;
             break;
           case Rewardtype.recharge:
-            usedBg = AppImages.rechargeImage;
+            usedBg = AppImages.referralBonusImage;
             break;
           case Rewardtype.loan:
             usedBg = AppImages.loanImage;
@@ -341,7 +341,7 @@ class YourRewardCard extends StatelessWidget {
                         getRewardType(rewardtype),
                         SizedBox(height: 1.0.wp),
                         Text(
-                          rewardState == RewardState.won
+                          rewardState == RewardState.won ||  rewardState == RewardState.used
                               ? 'Use by $date'
                               : 'Expired on $date',
                           style: TextStyle(
