@@ -26,6 +26,7 @@ class HomeManager extends GetxController {
   RxInt atmRewards = 0.obs;
   var loyalityPoints = '0'.obs;
   var isClicked = false.obs;
+  var showAuth = false.obs;
 
   @override
   void onInit() {
@@ -39,7 +40,7 @@ class HomeManager extends GetxController {
     String? points = prefs.getString(SPKeys.LOYALTY_POINT_GAINED);
     print("Customer Id ${customerId}");
 
-    loyalityPoints.value = points.toString();
+    loyalityPoints.value = "0";
     try {
       isLoading.value = true;
       var response = await http.get(
@@ -49,6 +50,8 @@ class HomeManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
+
+      print("response home===>${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
@@ -60,7 +63,7 @@ class HomeManager extends GetxController {
         if (homeModel!.status!.code == 2000) {
           isLoading(false);
           print("http success in model!!");
-          pointsEarned.value = homeModel.data!.pointsSummary!.redeemablePoints!;
+          pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned!;
           pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
           redeemablePoints.value =
               homeModel.data!.pointsSummary!.redeemablePoints!;

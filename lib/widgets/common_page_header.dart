@@ -343,12 +343,14 @@ class CommonPageHeader extends StatelessWidget {
                           }
                         });
                   },
-                  child: headingBox(
-                      color:
-                      _homeManager.isClicked.value
-                          ? Colors.orange
-                          : Colors.white,
-                      image: AppImages.user_profile),
+                  child: Obx(
+                   ()=> headingBox(
+                        color:
+                        _homeManager.isClicked.value
+                            ? Colors.orange
+                            : Colors.white,
+                        image: AppImages.user_profile),
+                  ),
                 ),
               ],
             ),

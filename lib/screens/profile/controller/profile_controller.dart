@@ -18,9 +18,12 @@ import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
 
 class ProfileController extends GetxController {
+
+  HomeManager _homeManager = Get.put(HomeManager());
   RxBool addPersonalLoading = false.obs,
       addResidentialLoading = false.obs,
       addOccupationLoading = false.obs,
@@ -66,6 +69,7 @@ class ProfileController extends GetxController {
   Rx<UpiIdModel> upiIdModel = UpiIdModel().obs;
 
   RxString image = ''.obs;
+  RxString imageUrl = ''.obs;
 
   resetData() {
     firstNameController.value.text = '';
@@ -123,6 +127,7 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _homeManager.showAuth.value = false;
     getId();
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () {
@@ -313,6 +318,7 @@ class ProfileController extends GetxController {
         );
       }
     } catch (e) {
+      uploadProfileLoading.value = false;
       Fluttertoast.showToast(
         msg: "${e.toString()}",
         toastLength: Toast.LENGTH_SHORT,
@@ -320,7 +326,7 @@ class ProfileController extends GetxController {
         fontSize: 16.0,
       );
     } finally {
-      uploadProfileLoading.value = false;
+    //  uploadProfileLoading.value = false;
     }
   }
 
@@ -347,8 +353,15 @@ class ProfileController extends GetxController {
       );
       if (response.statusCode == 200) {
         updateProfileImage();
+        Fluttertoast.showToast(
+          msg: "Update Image Successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
       }
     } catch (e) {
+      uploadProfileLoading.value = false;
       Fluttertoast.showToast(
         msg: "${e.toString()}",
         toastLength: Toast.LENGTH_SHORT,
@@ -356,7 +369,7 @@ class ProfileController extends GetxController {
         fontSize: 16.0,
       );
     } finally {
-      uploadProfileLoading.value = false;
+    //  uploadProfileLoading.value = false;
     }
   }
 
@@ -398,6 +411,7 @@ class ProfileController extends GetxController {
         );
       }
     } catch (e) {
+      uploadProfileLoading.value = false;
       Fluttertoast.showToast(
         msg: "${e.toString()}",
         toastLength: Toast.LENGTH_SHORT,
@@ -442,7 +456,14 @@ class ProfileController extends GetxController {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
+
           Get.back();
+          Fluttertoast.showToast(
+            msg: "Update Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
         }
         getProfileData();
       } else {
@@ -494,6 +515,12 @@ class ProfileController extends GetxController {
           callBack!();
         } else {
           Get.back();
+          Fluttertoast.showToast(
+            msg: "Update Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
         }
         getProfileData();
       } else {
@@ -544,6 +571,12 @@ class ProfileController extends GetxController {
           callBack!();
         } else {
           Get.back();
+          Fluttertoast.showToast(
+            msg: "Update Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
         }
         getProfileData();
       } else {
@@ -581,6 +614,7 @@ class ProfileController extends GetxController {
       );
       if (response != null) {
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
+
         setData();
       }
     } catch (exception) {

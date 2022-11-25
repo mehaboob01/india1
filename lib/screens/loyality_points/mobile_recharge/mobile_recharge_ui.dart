@@ -9,6 +9,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import '../../../widgets/common_drop_down.dart';
 import '../../../widgets/common_radio_card.dart';
+import '../../home_start/home_manager.dart';
 import '../loyality_manager.dart';
 import 'mr_manager.dart';
 
@@ -19,7 +20,11 @@ class MobileRechargeIO extends StatefulWidget {
   State<MobileRechargeIO> createState() => _MobileRechargeIOState();
 }
 
-class _MobileRechargeIOState extends State<MobileRechargeIO> {
+class _MobileRechargeIOState extends State<MobileRechargeIO>{
+
+  HomeManager _homeManager = Get.put(HomeManager());
+
+
   double widthIs = 0, heightIs = 0;
 
   bool? mobileNumberEnabled = false;
@@ -82,6 +87,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
   @override
   void initState() {
     // _fetchContacts();
+    _homeManager.showAuth.value = false;
 
     _mrManager.plansList.clear();
     _mrManager.selectedIndex.value = (-1);

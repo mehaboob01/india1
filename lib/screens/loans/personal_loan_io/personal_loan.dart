@@ -8,6 +8,7 @@ import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
+import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -65,95 +66,99 @@ class _PersonalLoanState extends State<PersonalLoan> {
   Widget build(BuildContext context) {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: SizedBox(
-          width: widthIs,
-          child: Obx(
-            () => Stack(
-              children: [
-                Column(
-                  children: [
-                    CustomAppBar(
-                      heading: 'Personal loan',
-                      customActionIconsList: [
-                        // CustomActionIcons(
-                        //   image: AppImages.bottomNavHome,
-                        // ),
-                      ],
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                DividerIO(
-                                  height: 21,
-                                ),
-                                Obx(
-                                  () => IgnorePointer(
-                                    child: AnotherStepper(
-                                      stepperList: loanController.titleList
-                                          .map((e) => StepperData(
-                                                title: "$e",
-                                              ))
-                                          .toList(),
-                                      stepperDirection: Axis.horizontal,
-                                      iconWidth: 25,
-                                      iconHeight: 25,
-                                      inverted: true,
-                                      activeBarColor: AppColors.pointsColor,
-                                      activeIndex: loanController.currentScreen.value,
-                                      callBack: (i) {
-                                        loanController.currentScreen.value = i;
-                                      },
+    return
+
+      Obx(  ()=>   loanController.createLoanLoading == true ? CircularProgressbar():
+     Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: SizedBox(
+            width: widthIs,
+            child: Obx(
+              () => Stack(
+                children: [
+                  Column(
+                    children: [
+                      CustomAppBar(
+                        heading: 'Personal loan',
+                        customActionIconsList: [
+                          // CustomActionIcons(
+                          //   image: AppImages.bottomNavHome,
+                          // ),
+                        ],
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Obx(
+                              () => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DividerIO(
+                                    height: 21,
+                                  ),
+                                  Obx(
+                                    () => IgnorePointer(
+                                      child: AnotherStepper(
+                                        stepperList: loanController.titleList
+                                            .map((e) => StepperData(
+                                                  title: "$e",
+                                                ))
+                                            .toList(),
+                                        stepperDirection: Axis.horizontal,
+                                        iconWidth: 25,
+                                        iconHeight: 25,
+                                        inverted: true,
+                                        activeBarColor: AppColors.pointsColor,
+                                        activeIndex: loanController.currentScreen.value,
+                                        callBack: (i) {
+                                          loanController.currentScreen.value = i;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                                loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
-                                    ? loanAmountUi()
-                                    : loanController.currentScreen.value == Steps.PERSONAL.index
-                                        ? personalInfoUi()
-                                        : loanController.currentScreen.value == Steps.RESIDENTIAL.index
-                                            ? residentialInfoUi()
-                                            : occupationInfoUi()
-                              ],
+                                  loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                      ? loanAmountUi()
+                                      : loanController.currentScreen.value == Steps.PERSONAL.index
+                                          ? personalInfoUi()
+                                          : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                                              ? residentialInfoUi()
+                                              : occupationInfoUi()
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
-                          ? loanAmountButton()
-                          : loanController.currentScreen.value == Steps.PERSONAL.index
-                              ? personalInfoButton()
-                              : loanController.currentScreen.value == Steps.RESIDENTIAL.index
-                                  ? residentialInfoButton()
-                                  : occupationButton(),
-                    ),
-                  ],
-                ),
-                if (loanController.createLoanLoading.value == true)
-                  Container(
-                    alignment: Alignment.center,
-                    color: Colors.white,
-                    child: LoadingAnimationWidget.inkDrop(
-                      size: 34,
-                      color: AppColors.primary,
-                    ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: loanController.currentScreen.value == Steps.LOAN_AMOUNT.index
+                            ? loanAmountButton()
+                            : loanController.currentScreen.value == Steps.PERSONAL.index
+                                ? personalInfoButton()
+                                : loanController.currentScreen.value == Steps.RESIDENTIAL.index
+                                    ? residentialInfoButton()
+                                    : occupationButton(),
+                      ),
+                    ],
                   ),
-              ],
+                  if (loanController.createLoanLoading.value == true)
+                    Container(
+                      alignment: Alignment.center,
+                      color: Colors.white,
+                      child: LoadingAnimationWidget.inkDrop(
+                        size: 34,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+    ),
+      );
   }
 
   // LOAN AMOUNT BUTTON
