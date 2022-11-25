@@ -30,7 +30,8 @@ import 'home_manager.dart';
 
 class HomeMainIO extends StatefulWidget {
   bool? showPonitsPopup;
-  HomeMainIO(this.showPonitsPopup);
+  List<FocusNode> focusNodes;
+  HomeMainIO(this.showPonitsPopup,this.focusNodes);
 
   @override
   State<HomeMainIO> createState() => _HomeMainIOState();
@@ -241,106 +242,76 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                             MainAxisAlignment.spaceBetween,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          headingBox(
-                                              text: 'Aa',
-                                              ontap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            LanguageSelectionIO(
-                                                                'home')));
-                                              }),
-                                          SizedBox(
-                                            width: 2.0.wp,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () => Get.toNamed(
-                                                MRouter.notificationScreen),
+                                          Focus(
+                                            focusNode: widget.focusNodes[5],
                                             child: headingBox(
-                                                image: AppImages.notify_icon),
+                                                text: 'Aa',
+                                                ontap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              LanguageSelectionIO(
+                                                                  'home')));
+                                                }),
                                           ),
                                           SizedBox(
                                             width: 2.0.wp,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              _homeManager.isClicked.value =
-                                                  true;
-                                              showMenu<String>(
-                                                context: context,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius
-                                                        .only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    13.0),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    13.0),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    13.0))),
-                                                position: RelativeRect.fromLTRB(
-                                                    25.0, 118.0, 16.0, 0.0),
-                                                items: [
-                                                  PopupMenuItem(
-                                                    height: Get.height * 0.02,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        _homeManager.isClicked
-                                                            .value = false;
-                                                        Get.back();
-                                                        Get.to(() =>
-                                                            ProfileScreen());
-                                                      },
-                                                      child: Container(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: double.infinity,
-                                                        child: Text(
-                                                          "My Profile",
-                                                          style: AppStyle
-                                                              .shortHeading
-                                                              .copyWith(
-                                                                  fontSize: Dimens
-                                                                      .font_14sp,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      1),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  PopupMenuDivider(),
-                                                  PopupMenuItem(
-                                                    height: 0.02,
-                                                    child: GestureDetector(
-                                                        onTap: () => {
-                                                          _homeManager
-                                                              .isClicked
-                                                              .value =
-                                                          false,
+                                          Focus(
+                                            focusNode: widget.focusNodes[6],
 
-                                                             Get.back(),
-                                                              Get.toNamed(
-                                                                MRouter
-                                                                    .loyaltyPoints,
-                                                              ),
+                                            child: GestureDetector(
+                                              onTap: () => Get.toNamed(
+                                                  MRouter.notificationScreen),
+                                              child: headingBox(
+                                                  image: AppImages.notify_icon),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 2.0.wp,
+                                          ),
+                                          Focus(
+                                            focusNode: widget.focusNodes[7],
 
-                                                            },
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                _homeManager.isClicked.value =
+                                                    true;
+                                                showMenu<String>(
+                                                  context: context,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius
+                                                          .only(
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                      13.0),
+                                                              bottomRight:
+                                                                  Radius.circular(
+                                                                      13.0),
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                      13.0))),
+                                                  position: RelativeRect.fromLTRB(
+                                                      25.0, 118.0, 16.0, 0.0),
+                                                  items: [
+                                                    PopupMenuItem(
+                                                      height: Get.height * 0.02,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _homeManager.isClicked
+                                                              .value = false;
+                                                          Get.back();
+                                                          Get.to(() =>
+                                                              ProfileScreen());
+                                                        },
                                                         child: Container(
                                                           height:
                                                               Get.height * 0.03,
-                                                          width:
-                                                              double.infinity,
+                                                          width: double.infinity,
                                                           child: Text(
-                                                            "My Rewards",
+                                                            "My Profile",
                                                             style: AppStyle
                                                                 .shortHeading
                                                                 .copyWith(
@@ -354,38 +325,79 @@ class _HomeMainIOState extends State<HomeMainIO> {
                                                                     letterSpacing:
                                                                         1),
                                                           ),
-                                                        )),
-                                                  ),
-                                                ],
-                                                elevation: 8.0,
-                                              ).then<void>(
-                                                  (String? itemSelected) {
-                                                if (itemSelected == null) {
-                                                  _homeManager.isClicked.value =
-                                                      false;
-                                                  return;
-                                                }
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    PopupMenuDivider(),
+                                                    PopupMenuItem(
+                                                      height: 0.02,
+                                                      child: GestureDetector(
+                                                          onTap: () => {
+                                                            _homeManager
+                                                                .isClicked
+                                                                .value =
+                                                            false,
 
-                                                if (itemSelected == "1") {
-                                                } else if (itemSelected ==
-                                                    "2") {
-                                                  Get.toNamed(
-                                                      MRouter.loyaltyPoints);
+                                                               Get.back(),
+                                                                Get.toNamed(
+                                                                  MRouter
+                                                                      .loyaltyPoints,
+                                                                ),
 
-                                                  print("2nd itme ");
-                                                } else if (itemSelected ==
-                                                    "3") {
-                                                } else {
-                                                  //code here
-                                                }
-                                              });
-                                            },
-                                            child: headingBox(
-                                                color:
-                                                    _homeManager.isClicked.value
-                                                        ? Colors.orange
-                                                        : Colors.white,
-                                                image: AppImages.user_profile),
+                                                              },
+                                                          child: Container(
+                                                            height:
+                                                                Get.height * 0.03,
+                                                            width:
+                                                                double.infinity,
+                                                            child: Text(
+                                                              "My Rewards",
+                                                              style: AppStyle
+                                                                  .shortHeading
+                                                                  .copyWith(
+                                                                      fontSize: Dimens
+                                                                          .font_14sp,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      letterSpacing:
+                                                                          1),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                  elevation: 8.0,
+                                                ).then<void>(
+                                                    (String? itemSelected) {
+                                                  if (itemSelected == null) {
+                                                    _homeManager.isClicked.value =
+                                                        false;
+                                                    return;
+                                                  }
+
+                                                  if (itemSelected == "1") {
+                                                  } else if (itemSelected ==
+                                                      "2") {
+                                                    Get.toNamed(
+                                                        MRouter.loyaltyPoints);
+
+                                                    print("2nd itme ");
+                                                  } else if (itemSelected ==
+                                                      "3") {
+                                                  } else {
+                                                    //code here
+                                                  }
+                                                });
+                                              },
+                                              child: headingBox(
+                                                  color:
+                                                      _homeManager.isClicked.value
+                                                          ? Colors.orange
+                                                          : Colors.white,
+                                                  image: AppImages.user_profile),
+                                            ),
                                           ),
                                         ],
                                       ),
