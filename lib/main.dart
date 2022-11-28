@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
- // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   runApp(MyApp());
 }
 
@@ -39,15 +50,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-   // opened the app from terminated state
+    // opened the app from terminated state
     FirebaseMessaging.instance.getInitialMessage().then((message){
 
-    if(message!=null)
+      if(message!=null)
       {
-       // LocalNotificationService.display(message);
+        // LocalNotificationService.display(message);
         print("background but opend");
         final routeFromMessage = message.data["route"];
-      //  Get.toNamed(routeFromMessage);
+        //  Get.toNamed(routeFromMessage);
       }
 
     });
@@ -57,14 +68,14 @@ class _MyAppState extends State<MyApp> {
       if (messsage.notification != null) {
         print(messsage.notification!.body);
         print(messsage.notification!.title);
-      //  LocalNotificationService.display(messsage);
+        //  LocalNotificationService.display(messsage);
       }
 
     });
 
-   // when app is open but in background
+    // when app is open but in background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-     // LocalNotificationService.display(message);
+      // LocalNotificationService.display(message);
       print("background but opend");
       final routeFromMessage = message.data["route"];
       Navigator.of(context).pushNamed(routeFromMessage);

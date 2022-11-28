@@ -4,6 +4,9 @@ class SPKeys {
   static const String TOKEN_KEY = "token_key";
   static const String ACCESS_TOKEN = 'access_token';
   static const String REFRESH_TOKEN = 'refreshToken';
+  static const String DEVICE_ID = 'deviceId';
+  static const String DEVICE_TOKEN = 'deviceToken';
+
 
 
 

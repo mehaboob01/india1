@@ -54,9 +54,9 @@ class CashBackManager extends GetxController {
     customerBankListSend.clear();
     customerUPIList.clear();
     customerUPIListSend.clear();
-    bankList.clear();
-    bankListIdSend.clear();
-    callBankListApi();
+    // bankList.clear();
+    // bankListIdSend.clear();
+    // callBankListApi();
     fetchCustomerBankAccounts();
     fetchCustomerUpiAccounts();
   }

@@ -15,6 +15,8 @@ import '../cashback_redeem/cb_manager.dart';
 import '../loyality_manager.dart';
 
 class RedeemPointsPage extends StatelessWidget {
+
+  final cashbackManager = Get.put(CashBackManager());
   RedeemPointsPage();
   final homeCtrl = Get.put(CashBackController());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
@@ -231,12 +233,16 @@ class RedeemPointsPage extends StatelessWidget {
         break;
       case RedeemType.isCashback:
 
+
+
         // todo
+      cashbackManager.callBankListApi();
 
         Navigator.push(
             Get.context!,
             MaterialPageRoute(
                 builder: (BuildContext context) => CashBackRedeemPage()));
+
         break;
     }
   }

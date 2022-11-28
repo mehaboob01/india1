@@ -83,4 +83,8 @@ class Apis {
   static String creditScore = "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
   static String fdLink = "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
   static String digiGold = "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
+
+  // token related api's
+
+  static String sendToken = "auth/device/token";
 }

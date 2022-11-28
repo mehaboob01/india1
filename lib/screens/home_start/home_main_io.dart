@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,6 +31,8 @@ import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
+import '../profile/controller/profile_controller.dart';
+import '../profile/model/profile_details_model.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
@@ -45,13 +48,15 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-  //  WidgetsBinding.instance.addObserver(this); // observer
+    //  WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
+    _homeManager.sendTokens();
     cashbackCtrl.onInit();
+    _profileController.getProfileData();
 
     // showFirstTimePoints();
 
-      checkLogin();
+    checkLogin();
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -126,6 +131,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+  ProfileController _profileController = Get.put(ProfileController());
+  ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
+
   final cashbackCtrl = Get.put(CashBackController());
 
   final LocalAuthentication auth = LocalAuthentication();
@@ -186,7 +194,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     String? finger = prefs.getString(SPKeys.finger);
     print("check auth status${_homeManager.showAuth.value}");
 
-    if (showAuth == true  || _homeManager.showAuth.value == true) {
+    if (showAuth == true || _homeManager.showAuth.value == true) {
       {
         try {
           bool hasbiometrics =
@@ -203,7 +211,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
-
                 });
               } else {
                 SystemNavigator.pop();
@@ -214,12 +221,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     localizedReason: 'Authenticate with fingerprint/face',
                     biometricOnly: true);
                 if (pass) {
-
-
                   msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
-
                   });
                 } else {
                   SystemNavigator.pop();
@@ -242,6 +246,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void _onLoading() async {
     // your api here
     _homeManager.callHomeApi();
+    _homeManager.sendTokens();
+    _profileController.getProfileData();
     _refreshController.loadComplete();
     cashbackCtrl.onInit();
   }
@@ -250,6 +256,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
+    _homeManager.sendTokens();
+    _profileController.getProfileData();
   }
 
   @override
@@ -311,12 +319,26 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: Text('welcome'.tr,
-                                            style: AppStyle.shortHeading
-                                                .copyWith(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+
+                                          children: [
+                                            Text('welcome'.tr,
+                                                style: AppStyle.shortHeading
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600)),
+                                            SizedBox(width: 2,),
+                                            Text( "${_profileController.profileDetailsModel.value.firstName ?? ''}",
+                                                style: AppStyle.shortHeading
+                                                    .copyWith(
                                                     color: Colors.white,
                                                     fontWeight:
-                                                        FontWeight.w600)),
+                                                    FontWeight.w600)),
+                                          ],
+                                        ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -371,7 +393,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                     height: Get.height * 0.02,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        _homeManager.showAuth.value = false;
+                                                        _homeManager.showAuth
+                                                            .value = false;
                                                         _homeManager.isClicked
                                                             .value = false;
                                                         Get.back();
@@ -405,7 +428,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                     height: 0.02,
                                                     child: GestureDetector(
                                                         onTap: () => {
-                                              _homeManager.showAuth.value = false,
+                                                              _homeManager
+                                                                      .showAuth
+                                                                      .value =
+                                                                  false,
                                                               _homeManager
                                                                       .isClicked
                                                                       .value =
@@ -830,8 +856,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-
-
   MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
@@ -878,7 +902,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 child: GestureDetector(
                   onTap: () async {
                     await _handleLocationPermission();
-
                   },
                   child: Container(
                     height: 4.0.hp,

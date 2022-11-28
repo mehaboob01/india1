@@ -103,29 +103,43 @@ class OtpManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
-      var jsonData = jsonDecode(response.body);
-      VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
 
-      if (response.statusCode == 200) {
-        prefs = await SharedPreferences.getInstance();
-        prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-        prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
-        prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-        loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
-        prefs!.setString(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained.toString());
-        prefs!.setBool(SPKeys.LOGGED_IN, true);
-        Get.offAllNamed(MRouter.homeScreen);
-      } else if (response.statusCode == 400) {
-        wrongOtp.value = true;
-        isLoading.value = false;
-      } else {
-        isLoading.value = false;
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 3),
-        )..show(context);
+
+      if(response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
+
+        if (verifyOtpModel.status!.code == 2000) {
+          prefs = await SharedPreferences.getInstance();
+          prefs!.setString(
+              SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
+          prefs!.setString(SPKeys.REFRESH_TOKEN,
+              verifyOtpModel.data!.refreshToken.toString());
+          prefs!.setString(
+              SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+          loyaltyPoints.value =
+              verifyOtpModel.data!.loyaltyPointsGained.toString();
+          prefs!.setString(SPKeys.LOYALTY_POINT_GAINED,
+              verifyOtpModel.data!.loyaltyPointsGained.toString());
+          prefs!.setBool(SPKeys.LOGGED_IN, true);
+          Get.offAllNamed(MRouter.homeScreen);
+        } else {
+          wrongOtp.value = true;
+          isLoading.value = false;
+          Flushbar(
+            title: "Error!",
+            message: verifyOtpModel.status!.message,
+            duration: Duration(seconds: 3),
+          )
+            ..show(context);
+        }
       }
+
+
+
+
+
+
     } catch (e) {
       isLoading.value = false;
       Flushbar(
