@@ -87,4 +87,8 @@ class Apis {
   // token related api's
 
   static String sendToken = "auth/device/token";
+
+  //insurance
+  static String insuranceDashboard = "dashboards/insurances";
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/loans/controller/loan_controller.dart';
 
 import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
@@ -7,6 +8,8 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 import '../home_start/home_manager.dart';
+import 'insurance_dashboard_history.dart';
+import 'loan_dashboard_history.dart';
 
 class InsurancePage extends StatefulWidget {
   @override
@@ -15,12 +18,15 @@ class InsurancePage extends StatefulWidget {
 
 class _InsurancePageState extends State<InsurancePage> {
   HomeManager _homeManager = Get.put(HomeManager());
+  LoanController loanController = Get.put(LoanController());
+
   @override
   void initState() {
     super.initState();
     _homeManager.showAuth.value = false;
-
+    loanController.insuranceRecentTransactions();
   }
+
   // const InsurancePage({super.key});
   @override
   Widget build(BuildContext context) {
@@ -35,11 +41,14 @@ class _InsurancePageState extends State<InsurancePage> {
               CommonPageHeader(pageName: PageName.insurance),
               CommonPageCategoriesHeading(pageName: PageName.insurance),
               Padding(
-                padding: EdgeInsets.only(
-                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const InsuranceCard(),
               ),
-              CommonBanner()
+              CommonBanner(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: InsuranceDashboardHistory(isFromInsurance: true),
+              ),
             ],
           ),
         ),

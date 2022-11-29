@@ -157,19 +157,10 @@ class ProfileScreen extends StatelessWidget {
                                                           )
                                                         : ClipOval(
 
-                                                            child: profileController
-                                                                        .image
-                                                                        .value !=
-                                                                    ''
-                                                                ? Image.file(
-                                                                    File(profileController
-                                                                        .image
-                                                                        .value),
-                                                                  )
-                                                                : CachedNetworkImage(
-                                                              fit: BoxFit.fitWidth,
+                                                            child: CachedNetworkImage(
+                                                              fit: BoxFit.fill,
                                                                     imageUrl:
-                                                                        '${profileController.profileDetailsModel.value.imageUrl.toString()}',
+                                                                    '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
                                                                     errorWidget:
                                                                         (context,
                                                                             _,
