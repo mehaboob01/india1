@@ -238,6 +238,7 @@ class RedeemPointsPage extends StatelessWidget {
         // todo
       cashbackManager.callBankListApi();
 
+
         Navigator.push(
             Get.context!,
             MaterialPageRoute(

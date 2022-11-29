@@ -2,27 +2,33 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/core/data/model/common_model.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
 import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
 
 class ProfileController extends GetxController {
-
   HomeManager _homeManager = Get.put(HomeManager());
   RxBool addPersonalLoading = false.obs,
       addResidentialLoading = false.obs,
@@ -32,7 +38,8 @@ class ProfileController extends GetxController {
       getBankAccountLoading = false.obs,
       getUpiIdLoading = false.obs,
       autoValidation = false.obs,
-      uploadProfileLoading = false.obs;
+      uploadProfileLoading = false.obs,
+      logoutLoading = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -45,20 +52,33 @@ class ProfileController extends GetxController {
 
   Rx<TextEditingController> firstNameController = TextEditingController().obs;
   Rx<TextEditingController> lastNameController = TextEditingController().obs;
-  Rx<TextEditingController> mobileNumberController = TextEditingController().obs;
-  Rx<TextEditingController> alternateNumberController = TextEditingController().obs;
+  Rx<TextEditingController> mobileNumberController =
+      TextEditingController().obs;
+  Rx<TextEditingController> alternateNumberController =
+      TextEditingController().obs;
   Rx<TextEditingController> emailController = TextEditingController().obs;
-  Rx<TextEditingController> addressLine1Controller = TextEditingController().obs;
-  Rx<TextEditingController> addressLine2Controller = TextEditingController().obs;
+  Rx<TextEditingController> addressLine1Controller =
+      TextEditingController().obs;
+  Rx<TextEditingController> addressLine2Controller =
+      TextEditingController().obs;
   Rx<TextEditingController> pincodeController = TextEditingController().obs;
   Rx<TextEditingController> occupationController = TextEditingController().obs;
-  Rx<TextEditingController> monthlyIncomeController = TextEditingController().obs;
+  Rx<TextEditingController> monthlyIncomeController =
+      TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
-  RxString maritalStatus = ''.obs, employmentType = ''.obs, city = ''.obs, state = ''.obs, gender = ''.obs, customerId = ''.obs, accountType = ''.obs, vehicleType = ''.obs;
+  RxString maritalStatus = ''.obs,
+      employmentType = ''.obs,
+      city = ''.obs,
+      state = ''.obs,
+      gender = ''.obs,
+      customerId = ''.obs,
+      accountType = ''.obs,
+      vehicleType = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
-  Rx<TextEditingController> accountNumberController = TextEditingController().obs;
+  Rx<TextEditingController> accountNumberController =
+      TextEditingController().obs;
   Rx<TextEditingController> ifscController = TextEditingController().obs;
 
   Rx<ProfileDetailsModel> profileDetailsModel = ProfileDetailsModel().obs;
@@ -100,21 +120,27 @@ class ProfileController extends GetxController {
   setData() {
     firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
     lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
-    mobileNumberController.value.text = profileDetailsModel.value.mobileNumber ?? '';
-    alternateNumberController.value.text = profileDetailsModel.value.alternateNumber ?? '';
+    mobileNumberController.value.text =
+        profileDetailsModel.value.mobileNumber ?? '';
+    alternateNumberController.value.text =
+        profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
     dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
-    addressLine1Controller.value.text = profileDetailsModel.value.address?.addressLine1 ?? '';
-    addressLine2Controller.value.text = profileDetailsModel.value.address?.addressLine2 ?? '';
-    pincodeController.value.text = profileDetailsModel.value.address?.postCode ?? '';
+    addressLine1Controller.value.text =
+        profileDetailsModel.value.address?.addressLine1 ?? '';
+    addressLine2Controller.value.text =
+        profileDetailsModel.value.address?.addressLine2 ?? '';
+    pincodeController.value.text =
+        profileDetailsModel.value.address?.postCode ?? '';
     city.value = profileDetailsModel.value.address?.city ?? '';
     state.value = profileDetailsModel.value.address?.state ?? '';
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
-    occupationController.value.text = profileDetailsModel.value.occupation ?? '';
+    occupationController.value.text =
+        profileDetailsModel.value.occupation ?? '';
     monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
@@ -203,7 +229,8 @@ class ProfileController extends GetxController {
   }
 
   emailValidation(value) {
-    String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    String pattern =
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
     RegExp regex = RegExp(pattern);
     if (value == null || value.isEmpty || !regex.hasMatch(value))
       return 'Enter a valid email address';
@@ -262,7 +289,8 @@ class ProfileController extends GetxController {
               title: Text('Camera'),
               leading: Icon(Icons.camera_alt_outlined),
               onTap: () async {
-                image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
+                image.value =
+                    (await _picker.pickImage(source: ImageSource.camera))!.path;
                 Get.back();
                 uploadProfile(fileName: image.value.toString().split("/").last);
               },
@@ -272,7 +300,9 @@ class ProfileController extends GetxController {
               title: Text('Gallery'),
               leading: Icon(Icons.photo_size_select_actual_outlined),
               onTap: () async {
-                image.value = (await _picker.pickImage(source: ImageSource.gallery))!.path;
+                image.value =
+                    (await _picker.pickImage(source: ImageSource.gallery))!
+                        .path;
                 Get.back();
                 uploadProfile(fileName: image.value.toString().split("/").last);
               },
@@ -326,7 +356,7 @@ class ProfileController extends GetxController {
         fontSize: 16.0,
       );
     } finally {
-    //  uploadProfileLoading.value = false;
+      //  uploadProfileLoading.value = false;
     }
   }
 
@@ -369,7 +399,7 @@ class ProfileController extends GetxController {
         fontSize: 16.0,
       );
     } finally {
-    //  uploadProfileLoading.value = false;
+      //  uploadProfileLoading.value = false;
     }
   }
 
@@ -423,7 +453,10 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addPersonalDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
+  Future addPersonalDetails(
+      {bool? isFromLoan = false,
+      Function? callBack,
+      String? loanApplicationId}) async {
     addPersonalLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -437,14 +470,21 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "firstName": firstNameController.value.text,
-              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text : null,
+              "lastName": lastNameController.value.text.trim().isNotEmpty
+                  ? lastNameController.value.text
+                  : null,
               "mobileNumber": mobileNumberController.value.text,
               "alternateNumber": alternateNumberController.value.text,
-              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? dobController.value.text : null,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty
+                  ? dobController.value.text
+                  : null,
               "preferredLanguage": "EN",
-              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text : null,
+              "email": emailController.value.text.trim().isNotEmpty
+                  ? emailController.value.text
+                  : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
-              "maritalStatus": maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
+              "maritalStatus":
+                  maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
               if (loanApplicationId != null) ...{
                 "panNumber": panNumberController.value.text,
               }
@@ -456,7 +496,6 @@ class ProfileController extends GetxController {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
-
           Get.back();
           Fluttertoast.showToast(
             msg: "Update Successfully!",
@@ -486,7 +525,10 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addResidentialDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
+  Future addResidentialDetails(
+      {bool? isFromLoan = false,
+      Function? callBack,
+      String? loanApplicationId}) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -543,7 +585,10 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addOccupationDetails({bool? isFromLoan = false, Function? callBack, String? loanApplicationId}) async {
+  Future addOccupationDetails(
+      {bool? isFromLoan = false,
+      Function? callBack,
+      String? loanApplicationId}) async {
     addOccupationLoading.value = true;
     print(employmentType.value);
     try {
@@ -744,6 +789,71 @@ class ProfileController extends GetxController {
       print(exception);
     } finally {
       getBankAccountLoading.value = false;
+    }
+  }
+
+  logoutApi(BuildContext context) async {
+    try {
+      logoutLoading.value = true;
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
+      String? customerID = prefs.getString(SPKeys.CUSTOMER_ID);
+      var response = await http.post(Uri.parse(baseUrl + Apis.log_out),
+          body: jsonEncode({
+            "customerId":customerID,
+            "deviceId" : deviceId
+
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("response of send otp${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+
+        if (commonApiResponseModel.status!.code == 2000) {
+          logoutLoading.value = false;
+          if (Platform.isAndroid) {
+            SharedPreferences preferences =
+            await SharedPreferences.getInstance();
+            await preferences.clear();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(MRouter.splashRoute, (Route<dynamic> route) => false);
+
+          } else if (Platform.isIOS) {
+            exit(0);
+          }
+
+
+
+        } else {
+          Flushbar(
+            title: "Server Error!",
+            message: commonApiResponseModel.status!.message.toString(),
+            duration: Duration(seconds: 1),
+          )..show(Get.context!);
+        }
+      } else {
+        logoutLoading.value = false;
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      var snackBar = SnackBar(
+        content: Text("Something went wrong!"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } finally {
+      logoutLoading.value = false;
     }
   }
 }

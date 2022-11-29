@@ -9,6 +9,7 @@ import 'package:india_one/screens/loans/farm_loan/farm_loan.dart';
 import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
 import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
+import '../screens/Pages/loans.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
 import '../screens/insurances/bike_insurance/bike_insurance_web_view.dart';
@@ -49,6 +50,7 @@ class MRouter {
   static const String emiCard = 'EmiCard';
   static const String bikeInsurance = 'BikeInsurance';
   static const String carInsurance = 'CarInsurance';
+  static const String loanPage = 'LoansPage';
 
   static const String farmLoan = 'FarmLoan';
 
@@ -59,6 +61,9 @@ class MRouter {
 
       case homeScreen:
         return CupertinoPageRoute(builder: (_) => BottomTabsMainIO());
+
+      case loanPage:
+        return CupertinoPageRoute(builder: (_) => LoansPage());
 
       case userLogin:
         return CupertinoPageRoute(builder: (_) => UserLogin());

@@ -33,7 +33,7 @@ class HomeManager extends GetxController {
   void onInit() {
     super.onInit();
     callHomeApi();
-    sendTokens();
+    //sendTokens();
   }
 
   void callHomeApi() async {

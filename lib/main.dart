@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/no_internet_ui/no_internet_ui.dart';
 
 import 'localization/locale_string.dart';
@@ -25,17 +29,21 @@ import 'localization/locale_string.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // for notification
   await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  initializeNotification();
+
+
+  // for firebase analytics
+
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
   runApp(MyApp());
 }
 
@@ -97,4 +105,109 @@ class _MyAppState extends State<MyApp> {
       offline: NoInternet(),
     );
   }
+}
+
+
+//fcm
+
+FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+void initializeNotification() {
+  print("initializeNotification");
+  setupFCMNotification();
+  initializeLocalNotificationPlugin();
+}
+
+setupFCMNotification() async {
+  if (Platform.isIOS) {
+    await iOSPermission();
+    await Future.delayed(Duration(milliseconds: 20));
+  }
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    if (message != null) {
+      print('Remote message: ${message.toString()}');
+    }
+  });
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    print('A new onMessage.listen received!');
+    if (notification != null && android != null) {
+      showForegroundNotification(notification.title!, notification.body!);
+    }
+  });
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AppleNotification? apple = message.notification?.apple;
+    print('A new onMessage.listen received!');
+    if (notification != null && apple != null) {
+      showForegroundNotification(notification.title!, notification.body!);
+    }
+  });
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print('A new onMessageOpenedApp event was published!');
+  });
+  await getPushToken();
+  //notifyListeners();
+}
+
+Future iOSPermission() async {
+  await _firebaseMessaging.requestPermission(
+    sound: true,
+    badge: false,
+    alert: true,
+  );
+  await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+    sound: true,
+    badge: false,
+    alert: true,
+  );
+  // _firebaseMessaging.setForegroundNotificationPresentationOptions(
+  // )
+  _firebaseMessaging.onTokenRefresh.listen((settings) {
+    print("Settings registered: $settings");
+  });
+}
+
+Future getPushToken() async {
+  await _firebaseMessaging.getToken().then((token) {
+    print('FCM Token: $token' );
+    /*  if (token != null && !_fcmToken.isClosed) {
+        //this.token = token;
+        _fcmToken.sink.add(token);
+      }*/
+  });
+}
+
+Future initializeLocalNotificationPlugin() async {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  AndroidInitializationSettings androidInitializationSettings = AndroidInitializationSettings("@mipmap/ic_launcher");
+
+
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+      android: androidInitializationSettings);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+}
+
+Future showForegroundNotification(String title, String body) async {
+  // var android = AndroidNotificationDetails("id", "channel", "description");
+  var android = AndroidNotificationDetails(
+      "id",
+      "channel",
+      channelDescription: "description",icon: "notificationimg",
+      playSound: true,channelShowBadge: true,color: AppColors.primary
+  );
+  // var ios = IOSNotificationDetails();
+
+  // var platform = new NotificationDetails(android: android, iOS: ios);
+  var platform = new NotificationDetails(android: android);
+  await _flutterLocalNotificationsPlugin.show(0, title, body, platform,
+      payload: body);
 }

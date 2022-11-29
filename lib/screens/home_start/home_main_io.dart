@@ -50,13 +50,13 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     super.initState();
     //  WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
-    _homeManager.sendTokens();
+   // _homeManager.sendTokens();
     cashbackCtrl.onInit();
     _profileController.getProfileData();
 
     // showFirstTimePoints();
 
-    checkLogin();
+    //checkLogin();
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -110,23 +110,23 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   // TODO: implement didChangeAppLifecycleState
-  //   super.didChangeAppLifecycleState(state);
-  //   print("state : ${state}");
-  //   if (state == AppLifecycleState.resumed) {
-  //
-  //     checkLogin();
-  //   }
-  // }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    print("state : ${state}");
+    if (state == AppLifecycleState.resumed) {
+
+      checkLogin();
+    }
+  }
 
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
@@ -246,7 +246,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void _onLoading() async {
     // your api here
     _homeManager.callHomeApi();
-    _homeManager.sendTokens();
+  //  _homeManager.sendTokens();
     _profileController.getProfileData();
     _refreshController.loadComplete();
     cashbackCtrl.onInit();
@@ -256,7 +256,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
-    _homeManager.sendTokens();
+   // _homeManager.sendTokens();
     _profileController.getProfileData();
   }
 
@@ -844,9 +844,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         onPressed: () => {
               _homeManager.redeemablePoints >= 14
                   ? Get.toNamed(MRouter.redeemPointsPage)
-                  : Get.snackbar(
-                      'Oops!!', 'You can redeem only if you have 15+ points',
-                      snackPosition: SnackPosition.BOTTOM)
+                  : Get.toNamed(MRouter.map)
             },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,

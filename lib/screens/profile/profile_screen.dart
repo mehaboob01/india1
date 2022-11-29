@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/profile/add_bank_account_screen.dart';
@@ -10,6 +11,7 @@ import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
@@ -156,7 +158,6 @@ class ProfileScreen extends StatelessWidget {
                                                                 .primary,
                                                           )
                                                         : ClipOval(
-
                                                             child: profileController
                                                                         .image
                                                                         .value !=
@@ -167,7 +168,8 @@ class ProfileScreen extends StatelessWidget {
                                                                         .value),
                                                                   )
                                                                 : CachedNetworkImage(
-                                                              fit: BoxFit.fitWidth,
+                                                                    fit: BoxFit
+                                                                        .fitWidth,
                                                                     imageUrl:
                                                                         '${profileController.profileDetailsModel.value.imageUrl.toString()}',
                                                                     errorWidget:
@@ -237,7 +239,11 @@ class ProfileScreen extends StatelessWidget {
                                       height: 30,
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () async{
+
+
+                                         profileController.logoutApi(context);
+                                      },
                                       child: Container(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -486,12 +492,9 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () {
                       if (title == 'Bank account(s)') {
                         Get.to(() => ManageAccountsCard());
-                      }
-                      else if(title == 'UPI ID(s) / VPA Number(s)')
-                      {
+                      } else if (title == 'UPI ID(s) / VPA Number(s)') {
                         Get.to(() => ManageAccountsCard());
-                      }
-                      else {
+                      } else {
                         nextStep(title);
                       }
                     },

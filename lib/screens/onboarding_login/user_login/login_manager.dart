@@ -39,6 +39,8 @@ class LoginManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
+      print("response of send otp${response.body}");
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         LoginModel userSignInModelDto = LoginModel.fromJson(jsonData);

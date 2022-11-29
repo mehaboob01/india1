@@ -233,6 +233,9 @@ class CashBackManager extends GetxController {
     String pointsToReedem,
     BuildContext context,
   ) async {
+
+    print("cashbank to bank");
+    print("points to redeemed ${double.parse(pointsToReedem)}");
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -252,7 +255,7 @@ class CashBackManager extends GetxController {
         print("from custom data");
         sendData = {
           "bankId": bankIdOrBankAccountId,
-          "pointsToRedeem": data['pointsToRedeem'],
+          "pointsToRedeem": pointsToReedem,
           "accountNumber": data['accountNumber'].toString(),
           // "bankAccountId":  "",
           "ifscCode": data['ifscCode'].toString(),
@@ -263,7 +266,7 @@ class CashBackManager extends GetxController {
       } else {
         print("from list data");
         sendData = {
-          "pointsToRedeem": int.parse(pointsToReedem),
+          "pointsToRedeem": pointsToReedem,
           "bankAccountId": bankIdOrBankAccountId,
           "customerId": customerId,
         };

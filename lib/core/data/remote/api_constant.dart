@@ -87,4 +87,14 @@ class Apis {
   // token related api's
 
   static String sendToken = "auth/device/token";
+
+  // logout
+  static String log_out = "auth/log-out";
+
+  // notifications
+
+   static String notifications = "notifications/list";
+
+
+
 }
