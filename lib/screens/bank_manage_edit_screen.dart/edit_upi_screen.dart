@@ -37,7 +37,7 @@ class EditUpi extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: CustomAppBar(
-                heading: 'Update Upi details',
+                heading: 'Update UPI details',
                 customActionIconsList: [
                   CustomActionIcons(
                     onHeaderIconPressed: () => CommonDeleteBottomSheet()
@@ -80,7 +80,7 @@ class EditUpi extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Your Upi's",
+                                      "Your UPI's",
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: Dimens.font_16sp,
                                         fontWeight: FontWeight.w600,
@@ -108,7 +108,7 @@ class EditUpi extends StatelessWidget {
                                               fontWeight: FontWeight.w400,
                                               fontSize: 11.0.sp),
                                           label: Text(
-                                            "Upi", //'Points for cashback', // dynamic
+                                            "UPI", //'Points for cashback', // dynamic
                                           ),
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
@@ -132,7 +132,7 @@ class EditUpi extends StatelessWidget {
                                                       .greyInlineTextborder)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.circular(2.0.wp),
-                                              borderSide: const BorderSide(width: 1.0, color: AppColors.greyInlineTextborder))),
+                                              borderSide: const BorderSide(width: 1.0, color: Colors.blue))),
                                       validator: FormBuilderValidators.compose([
                                         FormBuilderValidators.required(context),
                                       ]),

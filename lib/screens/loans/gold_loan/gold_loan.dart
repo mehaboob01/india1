@@ -336,7 +336,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                     ],
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                    borderSide: BorderSide(color: Colors.blue, width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border

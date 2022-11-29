@@ -8,6 +8,7 @@ import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/widgets/another_stepper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../constant/routes.dart';
 import '../../widgets/loyalty_common_header.dart';
 
 class StepperScreen extends StatefulWidget {
@@ -44,6 +45,12 @@ class _StepperScreenState extends State<StepperScreen> {
           SafeArea(
             child: CustomAppBar(
               heading: 'Profile',
+              customActionIconsList: [
+                 CustomActionIcons(image: "assets/svg/homeSvg.svg", isSvg: true,onHeaderIconPressed: () async{
+                    Get.toNamed(MRouter.homeScreen);
+                  })
+
+              ],
             ),
           ),
           Expanded(

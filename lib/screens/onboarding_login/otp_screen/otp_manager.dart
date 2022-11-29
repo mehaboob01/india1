@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/local/shared_preference_keys.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
@@ -12,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
 import 'otp_model.dart';
-import 'dart:developer';
 
 class OtpManager extends GetxController {
   var isLoading = false.obs;
@@ -49,7 +47,7 @@ class OtpManager extends GetxController {
           }).then((value) {
         if (value.statusCode == 200) {
           var snackBar = SnackBar(
-            content: Text("OTP Resend Successfully!"),
+            content: Text("OTP Resent Successfully!"),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           return true;
@@ -108,21 +106,29 @@ class OtpManager extends GetxController {
 
       if (response.statusCode == 200) {
         prefs = await SharedPreferences.getInstance();
-        prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-        prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
-        prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-        loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
-        prefs!.setString(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained.toString());
+        prefs!.setString(
+            SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
+        prefs!.setString(
+            SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
+        prefs!.setString(
+            SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+        loyaltyPoints.value =
+            verifyOtpModel.data!.loyaltyPointsGained.toString();
+        prefs!.setString(SPKeys.LOYALTY_POINT_GAINED,
+            verifyOtpModel.data!.loyaltyPointsGained.toString());
         prefs!.setBool(SPKeys.LOGGED_IN, true);
         Get.offAllNamed(MRouter.homeScreen);
       } else if (response.statusCode == 400) {
         wrongOtp.value = true;
         isLoading.value = false;
+        Flushbar(
+          title: 'wrong',
+        );
       } else {
         isLoading.value = false;
         Flushbar(
           title: "Error!",
-          message: "Something went wrong",
+          message: "Something went wrong ",
           duration: Duration(seconds: 3),
         )..show(context);
       }
@@ -130,7 +136,7 @@ class OtpManager extends GetxController {
       isLoading.value = false;
       Flushbar(
         title: "Error!",
-        message: "Something went wrong",
+        message: "Something went wrong ",
         duration: Duration(seconds: 3),
       )..show(context);
     } finally {

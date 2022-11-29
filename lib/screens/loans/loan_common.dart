@@ -5,7 +5,14 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
-enum LoanType { PersonalLoan, GoldLoan, BikeLoan, CarLoan, TractorLoan, FarmLoan }
+enum LoanType {
+  PersonalLoan,
+  GoldLoan,
+  BikeLoan,
+  CarLoan,
+  TractorLoan,
+  FarmLoan
+}
 
 class LoanCommon {
   Widget backButton({context}) {
@@ -16,7 +23,7 @@ class LoanCommon {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'BACK',
+            'Back',
             style: AppTextThemes.button,
           ),
         ],
@@ -24,7 +31,7 @@ class LoanCommon {
       decoration: BoxDecoration(
         gradient: new LinearGradient(
           end: Alignment.topRight,
-          colors: [Colors.orange, Colors.redAccent],
+          colors: [Color(0xFF357CBE), Color(0xFF004280)],
         ),
         borderRadius: BorderRadius.circular(6.0),
       ),
@@ -32,23 +39,26 @@ class LoanCommon {
   }
 
   Widget nextButton() {
-    return Container(
-      height: 48,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'NEXT',
-            style: AppTextThemes.button,
-          ),
-        ],
-      ),
-      decoration: BoxDecoration(
-        gradient: new LinearGradient(
-          end: Alignment.topRight,
-          colors: [Colors.orange, Colors.redAccent],
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: Container(
+        height: 48,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Next',
+              style: AppTextThemes.button,
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.circular(6.0),
+        decoration: BoxDecoration(
+          gradient: new LinearGradient(
+            end: Alignment.topRight,
+            colors: [Colors.orange, Colors.redAccent],
+          ),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
       ),
     );
   }
@@ -73,13 +83,13 @@ class LoanCommon {
             ],
           ),
           Spacer(),
-          SizedBox(
-            height: 48,
-            child: Image.asset(
-              "assets/images/btn_img.png",
-              fit: BoxFit.fill,
-            ),
-          ),
+          // SizedBox(
+          //   height: 48,
+          //   child: Image.asset(
+          //     "assets/images/btn_img.png",
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
         ],
       ),
       decoration: BoxDecoration(
@@ -145,7 +155,10 @@ class LoanCommon {
                       height: 50,
                       width: 50,
                       child: CachedNetworkImage(
-                        imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
+                        imageUrl: (isPersonalLoan == true
+                                ? (providers?.logoURL ?? '')
+                                : lenders?.logoURL) ??
+                            '',
                         errorWidget: (context, _, error) {
                           return Icon(
                             Icons.warning_amber_outlined,
@@ -159,7 +172,10 @@ class LoanCommon {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            (isPersonalLoan == true ? (providers?.name ?? '') : lenders?.loanTitle) ?? "Bajaj Finance",
+                            (isPersonalLoan == true
+                                    ? (providers?.name ?? '')
+                                    : lenders?.loanTitle) ??
+                                "Bajaj Finance",
                             style: TextStyle(
                               color: AppColors.lightBlack,
                               fontSize: Dimens.font_16sp,
@@ -167,7 +183,10 @@ class LoanCommon {
                             ),
                           ),
                           Text(
-                            (isPersonalLoan == true ? providers?.subTitle : (lenders?.keywords?[0] ?? '')) ?? "Easy loan processing",
+                            (isPersonalLoan == true
+                                    ? providers?.subTitle
+                                    : (lenders?.keywords?[0] ?? '')) ??
+                                "Easy loan processing",
                             style: TextStyle(
                               color: AppColors.borderColor,
                               fontSize: Dimens.font_14sp,
@@ -193,17 +212,20 @@ class LoanCommon {
                     ),
                     rowText(
                       value: 'Tenure',
-                      title: '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
+                      title:
+                          '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
                     ),
                     rowText(
                       value: 'Interest/m',
-                      title: '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
+                      title:
+                          '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
                     ),
                   ],
                 ),
               ] else ...[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
                   child: InkWell(
                     onTap: () {
                       applyButtonClick();
@@ -269,7 +291,10 @@ class LoanCommon {
     );
   }
 
-  bottomSheet(context, {required String lenderId, required String providerId, required Function callBack}) {
+  bottomSheet(context,
+      {required String lenderId,
+      required String providerId,
+      required Function callBack}) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(

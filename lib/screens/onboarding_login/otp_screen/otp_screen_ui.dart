@@ -32,6 +32,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   //static const timerMaxSeconds = 28;
   int currentSeconds = 0;
   Timer? timer;
+  bool isBlue = false;
 
   void startTimer() {
     currentSeconds = widget.retryInSeconds!;
@@ -39,7 +40,11 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
       if (mounted)
         setState(() {
           currentSeconds--;
-          if (currentSeconds == 0) timer!.cancel();
+          if (currentSeconds == 0) {
+            isBlue = true;
+            timer!.cancel();
+          }
+          ;
         });
     });
   }
@@ -367,7 +372,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             style: TextStyle(
                                               fontFamily: 'Graphik',
                                               fontWeight: FontWeight.w600,
-                                              color: AppColors.greyText,
+                                              color: isBlue
+                                                  ? AppColors.cardBg1
+                                                  : AppColors.greyText,
                                               fontSize: Dimens.font_16sp,
                                             ),
                                           ),

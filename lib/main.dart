@@ -5,6 +5,7 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/no_internet_ui/no_internet_ui.dart';
+import 'package:india_one/screens/helpers/version_validator.dart';
 
 import 'localization/locale_string.dart';
 
@@ -24,7 +25,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
- // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   runApp(MyApp());
 }
 
@@ -39,17 +40,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-   // opened the app from terminated state
-    FirebaseMessaging.instance.getInitialMessage().then((message){
-
-    if(message!=null)
-      {
-       // LocalNotificationService.display(message);
+    // opened the app from terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        // LocalNotificationService.display(message);
         print("background but opend");
         final routeFromMessage = message.data["route"];
-      //  Get.toNamed(routeFromMessage);
+        //  Get.toNamed(routeFromMessage);
       }
-
     });
 
     // // notifications data when app is on foreground
@@ -57,18 +55,16 @@ class _MyAppState extends State<MyApp> {
       if (messsage.notification != null) {
         print(messsage.notification!.body);
         print(messsage.notification!.title);
-      //  LocalNotificationService.display(messsage);
+        //  LocalNotificationService.display(messsage);
       }
-
     });
 
-   // when app is open but in background
+    // when app is open but in background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-     // LocalNotificationService.display(message);
+      // LocalNotificationService.display(message);
       print("background but opend");
       final routeFromMessage = message.data["route"];
       Navigator.of(context).pushNamed(routeFromMessage);
-
     });
   }
 

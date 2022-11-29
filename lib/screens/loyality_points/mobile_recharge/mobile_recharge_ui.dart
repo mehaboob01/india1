@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../constant/theme_manager.dart';
@@ -20,10 +21,8 @@ class MobileRechargeIO extends StatefulWidget {
   State<MobileRechargeIO> createState() => _MobileRechargeIOState();
 }
 
-class _MobileRechargeIOState extends State<MobileRechargeIO>{
-
+class _MobileRechargeIOState extends State<MobileRechargeIO> {
   HomeManager _homeManager = Get.put(HomeManager());
-
 
   double widthIs = 0, heightIs = 0;
 
@@ -86,7 +85,6 @@ class _MobileRechargeIOState extends State<MobileRechargeIO>{
 
   @override
   void initState() {
-    // _fetchContacts();
     _homeManager.showAuth.value = false;
 
     _mrManager.plansList.clear();
@@ -98,11 +96,33 @@ class _MobileRechargeIOState extends State<MobileRechargeIO>{
   fetchContacts() async {
     if (!await FlutterContacts.requestPermission(readonly: true)) {
       setState(() => _permissionDenied = true);
-      // final contacts = await FlutterContacts.getContacts();
-      // setState(() => _contacts = contacts);
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Allow application to access your Contacts?'),
+          content: const Text(
+              'You need to allow permissions to allow access to contacts in settings'),
+          actions: <Widget>[
+            // if user deny again, we do nothing
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Don\'t allow'),
+            ),
+
+            // if user is agree, you can redirect him to the app parameters :)
+            TextButton(
+              onPressed: () {
+                Geolocator.openAppSettings();
+                Navigator.pop(context);
+              },
+              child: const Text('Allow'),
+            ),
+          ],
+        ),
+      );
     } else if (!await FlutterContacts.requestPermission(readonly: false)) {
       setState(() => _permissionDenied = false);
-    } else {}
+    }
   }
 
   @override

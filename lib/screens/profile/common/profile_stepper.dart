@@ -38,10 +38,11 @@ class ProfileStepper {
     return InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: AppColors.dimLightGreyColor,
+          color: Colors.blue,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
+      focusColor: Colors.blue,
       border: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.dimLightGreyColor,
@@ -181,12 +182,12 @@ class ProfileStepper {
               textField(
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
-                hint: 'Enter first name',
+                hint: 'Enter your first name',
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.nameValidation(
-                        value, 'Enter name min 3 character');
+                        value, '*First Name is Mandatory');
                   } else {
                     return null;
                   }
@@ -199,12 +200,12 @@ class ProfileStepper {
               textField(
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
-                hint: 'Enter last name',
+                hint: 'Enter your last name',
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.nameValidation(
-                        value, 'Enter last name min 3 character');
+                        value, '*Last Name is Mandatory');
                   } else {
                     return null;
                   }
@@ -252,7 +253,7 @@ class ProfileStepper {
               textField(
                 controller: profileController.emailController.value,
                 label: 'Email ID',
-                hint: 'Enter email ID',
+                hint: 'Enter email ID here',
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       value.toString().trim().isNotEmpty) {
@@ -273,7 +274,7 @@ class ProfileStepper {
                 textField(
                   controller: profileController.dobController.value,
                   label: 'Date of birth (DD-MM-YYYY)',
-                  hint: 'DD-MM-YYYY',
+                  hint: 'yyyy-MM-dd',
                   suffix: Icon(
                     Icons.calendar_today_outlined,
                     color: AppColors.greyText,
@@ -578,6 +579,7 @@ class ProfileStepper {
 
   Widget occupationDetails(GlobalKey<FormState> occupationForm,
       {bool? isFromLoan = false}) {
+    var temp;
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -617,26 +619,43 @@ class ProfileStepper {
                 onChanged: (value) {
                   profileController.employmentType.value = value;
                 },
-                label: 'Select your employment type',
-                hint: 'Select your employment type',
+                label: 'Choose your employment type',
+                hint: 'Choose your employment type',
               ),
               SizedBox(
                 height: 20,
               ),
-              textField(
-                controller: profileController.occupationController.value,
-                label: 'Occupation',
-                hint: 'Enter what you do here',
-                vaidation: (value) {
-                  if (isFromLoan == true ||
-                      value.toString().trim().isNotEmpty) {
-                    profileController.nameValidation(
-                      value,
-                      'Enter Occupation of min 3 char',
-                    );
-                  }
-                  return null;
+              // textField(
+              //   controller: profileController.occupationController.value,
+              //   label: 'Occupation',
+              //   hint: 'Enter what you do here',
+              //   vaidation: (value) {
+              //     if (isFromLoan == true ||
+              //         value.toString().trim().isNotEmpty) {
+              //       profileController.nameValidation(
+              //         value,
+              //         'Enter Occupation of min 3 char',
+              //       );
+              //     }
+              //     return null;
+              //   },
+              // ),
+              commonDropDown(
+                item: ['Savings Account']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+                value: profileController.accountType == ''
+                    ? null
+                    : profileController.accountType.value,
+                onChanged: (value) {
+                  temp = value;
                 },
+                label: 'Salary Mode',
+                hint: 'Salary Mode',
               ),
               SizedBox(
                 height: 20,

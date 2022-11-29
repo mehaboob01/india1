@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -22,6 +24,9 @@ import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/carasoul_slider.dart';
 
+// import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../widgets/circular_progressbar.dart';
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
@@ -45,65 +50,64 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-  //  WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
     cashbackCtrl.onInit();
-
-    // showFirstTimePoints();
-
-      checkLogin();
+    checkLogin();
   }
 
-  Future<bool> _handleLocationPermission() async {
-    Location location = new Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return false;
-      } else {
-        Get.to(Maps());
-        return true;
-      }
-    }
-    _permissionGranted = await location.hasPermission();
+  // Future<bool> _handleLocationPermission() async {
+  // Location location = new Location();
+  // bool _serviceEnabled;
+  // PermissionStatus _permissionGranted;
+  // _serviceEnabled = await location.serviceEnabled();
+  // if (!_serviceEnabled) {
+  //   _serviceEnabled = await location.requestService();
+  //   if (!_serviceEnabled) {
+  //     return false;
+  //   } else {
+  //     Get.to(Maps());
+  //     return true;
+  //   }
+  // }
+  // _permissionGranted = await location.hasPermission();
 
-    _permissionGranted = await location.requestPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      return false;
-    } else if (_permissionGranted == PermissionStatus.deniedForever) {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Allow application to access your location?'),
-          content: const Text(
-              'You need to allow location\'s access in parameters to see nearby ATM\'s'),
-          actions: <Widget>[
-            // if user deny again, we do nothing
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Don\'t allow'),
-            ),
+  // _permissionGranted = await location.requestPermission();
+  // if (_permissionGranted == PermissionStatus.denied ||
+  //     _permissionGranted == PermissionStatus.deniedForever) {
+  //   return false;
+  // }
+  //  else if (_permissionGranted == PermissionStatus.deniedForever) {
+  //   showDialog<String>(
+  //     context: context,
+  //     builder: (BuildContext context) => AlertDialog(
+  //       title: const Text('Allow application to access your location?'),
+  //       content: const Text(
+  //           'You need to allow location\'s access in settings to see nearby ATM\'s'),
+  //       actions: <Widget>[
+  //         // if user deny again, we do nothing
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Don\'t allow'),
+  //         ),
 
-            // if user is agree, you can redirect him to the app parameters :)
-            TextButton(
-              onPressed: () {
-                Geolocator.openAppSettings();
-                Navigator.pop(context);
-              },
-              child: const Text('Allow'),
-            ),
-          ],
-        ),
-      );
-      return false;
-    } else {
-      Get.to(Maps());
-      return true;
-    }
-  }
+  //         // if user is agree, you can redirect him to the app parameters :)
+  //         TextButton(
+  //           onPressed: () {
+  //             Geolocator.openAppSettings();
+  //             Navigator.pop(context);
+  //           },
+  //           child: const Text('Allow'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //   return false;
+  // }
+  // else {
+  //   Get.to(Maps());
+  //   return true;
+  // }
+  // }
 
   // @override
   // void dispose() {
@@ -186,7 +190,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     String? finger = prefs.getString(SPKeys.finger);
     print("check auth status${_homeManager.showAuth.value}");
 
-    if (showAuth == true  || _homeManager.showAuth.value == true) {
+    if (showAuth == true || _homeManager.showAuth.value == true) {
       {
         try {
           bool hasbiometrics =
@@ -203,7 +207,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
-
                 });
               } else {
                 SystemNavigator.pop();
@@ -214,12 +217,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     localizedReason: 'Authenticate with fingerprint/face',
                     biometricOnly: true);
                 if (pass) {
-
-
                   msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
-
                   });
                 } else {
                   SystemNavigator.pop();
@@ -371,7 +371,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                     height: Get.height * 0.02,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        _homeManager.showAuth.value = false;
+                                                        _homeManager.showAuth
+                                                            .value = false;
                                                         _homeManager.isClicked
                                                             .value = false;
                                                         Get.back();
@@ -405,7 +406,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                     height: 0.02,
                                                     child: GestureDetector(
                                                         onTap: () => {
-                                              _homeManager.showAuth.value = false,
+                                                              _homeManager
+                                                                      .showAuth
+                                                                      .value =
+                                                                  false,
                                                               _homeManager
                                                                       .isClicked
                                                                       .value =
@@ -814,7 +818,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     return ButtonWithFlower(
         label: _homeManager.redeemablePoints >= 14
             ? 'Redeem Points Now'
-            : 'Earn more points',
+            : 'Earn More Points',
         onPressed: () => {
               _homeManager.redeemablePoints >= 14
                   ? Get.toNamed(MRouter.redeemPointsPage)
@@ -830,11 +834,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-
-
   MapManager mapManager = Get.put(MapManager());
 
-// find nearest Atm -------------------------------
   Widget nearestAtm() {
     return Container(
       height: 24.0.wp,
@@ -877,8 +878,55 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               Flexible(
                 child: GestureDetector(
                   onTap: () async {
-                    await _handleLocationPermission();
+                    var status = Permission.location.request();
+                    if (await status.isGranted) {
+                      log("message");
+                    } else if (await status.isDenied) {
+                      log("message 1 ");
+                    } else if (await status.isPermanentlyDenied) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Ok"),
+                            );
+                          });
+                    }
+                    // Location location = new Location();
+                    // PermissionStatus _permissionGranted;
 
+                    // _permissionGranted = await location.hasPermission();
+
+                    // if (_permissionGranted == PermissionStatus.deniedForever ) {
+                    //   log("message ${_permissionGranted}");
+                    //   showDialog<String>(
+                    //     context: context,
+                    //     builder: (BuildContext context) => AlertDialog(
+                    //       title: const Text(
+                    //           'Allow application to access your location?'),
+                    //       content: const Text(
+                    //           'You need to allow location\'s access in settings to see nearby ATM\'s'),
+                    //       actions: <Widget>[
+                    //         // if user deny again, we do nothing
+                    //         TextButton(
+                    //           onPressed: () => Navigator.pop(context),
+                    //           child: const Text('Don\'t allow'),
+                    //         ),
+
+                    //         // if user has agreed, you can redirect him to the app parameters :)
+                    //         TextButton(
+                    //           onPressed: () {
+                    //             Geolocator.openAppSettings();
+                    //             Navigator.pop(context);
+                    //           },
+                    //           child: const Text('Allow'),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
+                    // } else {
+                    //   await _handleLocationPermission();
+                    // }
                   },
                   child: Container(
                     height: 4.0.hp,

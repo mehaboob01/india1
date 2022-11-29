@@ -38,7 +38,7 @@ class EditAccountsCard extends StatelessWidget {
     print("bankName==>  ${bankName}");
     print("account number==>  ${accountNumber}");
     print("ac type==>  ${accountType}");
-    print("bank id==>  ${ id}");
+    print("bank id==>  ${id}");
     print("ifsc code==>  ${ifscCode}");
     print("act type==>  ${accountType}");
 
@@ -82,7 +82,6 @@ class EditAccountsCard extends StatelessWidget {
                           "ifscCode": ifscCode,
                           "accountType": accountType,
                           "id": id,
-
                         },
                         child: SingleChildScrollView(
                           child: Container(
@@ -110,7 +109,6 @@ class EditAccountsCard extends StatelessWidget {
                                     ),
                                     // bank name
                                     DropDown(
-
                                       onChanged: (value) {},
                                       formName: 'bankName',
                                       labelName: 'Bank name',
@@ -162,7 +160,7 @@ class EditAccountsCard extends StatelessWidget {
                                                       .greyInlineTextborder)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.circular(2.0.wp),
-                                              borderSide: const BorderSide(width: 1.0, color: AppColors.greyInlineTextborder))),
+                                              borderSide: const BorderSide(width: 1.0, color: Colors.blue))),
                                       validator: FormBuilderValidators.compose([
                                         FormBuilderValidators.required(context),
                                       ]),
@@ -212,7 +210,7 @@ class EditAccountsCard extends StatelessWidget {
                                                       .greyInlineTextborder)),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.circular(2.0.wp),
-                                              borderSide: const BorderSide(width: 1.0, color: AppColors.greyInlineTextborder))),
+                                              borderSide: const BorderSide(width: 1.0, color: Colors.blue))),
                                       validator: FormBuilderValidators.compose([
                                         FormBuilderValidators.required(context),
                                       ]),
@@ -315,15 +313,14 @@ class EditAccountsCard extends StatelessWidget {
                         _updateBankAccount.currentState!.save();
                         _updateBankAccount.currentState!.validate();
                         print(_updateBankAccount.currentState!.value);
-                        var bankId  = checkBankId(bankName);
+                        var bankId = checkBankId(bankName);
 
                         print("bankId for updtae bank account${bankId}");
                         print(
                             "json value update bank ${_updateBankAccount.currentState!.value}");
 
-
                         updateBankAccount.callUpdateBankAccount(
-                            _updateBankAccount.currentState!.value, bankId,id);
+                            _updateBankAccount.currentState!.value, bankId, id);
                         await cashBackManager.fetchCustomerBankAccounts();
                         await cashBackManager.fetchCustomerUpiAccounts();
                       },

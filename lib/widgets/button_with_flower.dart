@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../constant/theme_manager.dart';
 
-
 class ButtonWithFlower extends StatelessWidget {
   const ButtonWithFlower({
-
     required this.label,
     this.iconColor,
     this.buttonColor,
@@ -62,7 +60,7 @@ class ButtonWithFlower extends StatelessWidget {
                           fit: BoxFit.fill,
                           color: iconColor,
                         )
-                      : null)
+                      : null),
             ],
           ),
         ));

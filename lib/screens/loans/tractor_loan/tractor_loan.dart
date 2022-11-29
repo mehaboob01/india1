@@ -439,7 +439,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                   ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
+                        BorderSide(color: Colors.blue, width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border

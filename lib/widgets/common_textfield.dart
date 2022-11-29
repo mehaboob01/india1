@@ -10,7 +10,7 @@ class CommonTextField extends StatelessWidget {
       this.labelText,
       this.maxlines = 1,
       this.keyboardType = TextInputType.text,
-        this.inputController,
+      this.inputController,
       required this.inputValidator,
       this.inputOnChanged,
       this.isObscure = false,
@@ -77,8 +77,7 @@ class CommonTextField extends StatelessWidget {
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide: const BorderSide(
-                  width: 1.0, color: AppColors.greyInlineTextborder))),
+              borderSide: const BorderSide(width: 1.0, color: Colors.blue))),
     );
   }
 }

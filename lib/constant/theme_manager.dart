@@ -167,7 +167,6 @@ class AppStyle {
       fontSize: Dimens.font_16sp,
       fontFamily: 'Graphik');
 
-
   static const languageTextStyle = TextStyle(
       fontWeight: FontWeight.w600,
       color: AppColors.black,
@@ -478,6 +477,7 @@ class AppImages {
   static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
   static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
 }
+
 extension PercentSize on double {
   double get hp => (Get.height * (this / 100));
   double get wp => (Get.width * (this / 100));
@@ -486,6 +486,7 @@ extension PercentSize on double {
 extension ResponsiveText on double {
   double get sp => Get.width / 100 * (this / 3);
 }
+
 class Strings {
   //Toast messages
 
@@ -498,4 +499,5 @@ class AppFonts {
 }
 
 double bottomMargin = 84;
-double bottomNavigationCircleRadius=81;
+double bottomNavigationCircleRadius = 81;
+String kPLACESAPIKEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
