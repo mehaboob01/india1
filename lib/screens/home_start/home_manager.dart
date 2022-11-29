@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:india_one/core/data/model/common_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
@@ -32,6 +33,7 @@ class HomeManager extends GetxController {
   void onInit() {
     super.onInit();
     callHomeApi();
+    //sendTokens();
   }
 
   void callHomeApi() async {
@@ -90,6 +92,60 @@ class HomeManager extends GetxController {
       )..show(Get.context!);
     } finally {
       isLoading(false);
+    }
+  }
+
+  void sendTokens() async {
+    try {
+      isLoading.value = true;
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
+      String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
+      String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+      var response = await http.put(Uri.parse(baseUrl + Apis.sendToken),
+          body: jsonEncode({
+            "customerId": customerId,
+            "deviceId" : deviceId,
+            "deviceToken" : deviceToken
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("send tokens${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+
+        if (commonApiResponseModel.status!.code == 2000) {
+
+
+        } else {
+          Flushbar(
+            title: "Server Error!",
+            message: commonApiResponseModel.status!.message.toString(),
+            duration: Duration(seconds: 1),
+          )..show(Get.context!);
+        }
+      } else {
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Server Error!",
+        message: "Please try after sometime ...",
+        duration: Duration(seconds: 1),
+      )..show(Get.context!);
+    } finally {
+      isLoading.value = false;
     }
   }
 }

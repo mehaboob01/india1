@@ -4,16 +4,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../constant/theme_manager.dart';
 
 class DropDown extends StatefulWidget {
-   DropDown(
+  DropDown(
       {required this.data,
-      Key? key,
-      required this.validationText,
-      required this.formName,
-      required this.labelName,
-      required this.hintText,
-      this.initialValue,
-      required this.onChanged,
-      this.isDropDownEnabled})
+        Key? key,
+        required this.validationText,
+        required this.formName,
+        required this.labelName,
+        required this.hintText,
+        this.initialValue,
+        required this.onChanged,
+        this.isDropDownEnabled,
+         this.onTapped})
       : super(key: key);
   final List<String> data;
   final String validationText;
@@ -23,6 +24,7 @@ class DropDown extends StatefulWidget {
   final String? initialValue;
   final String? Function(String? value) onChanged;
   final bool? isDropDownEnabled;
+  final VoidCallback? onTapped;
 
   @override
   _DropDownState createState() => _DropDownState();
@@ -31,8 +33,8 @@ class DropDown extends StatefulWidget {
 class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
-    return
-      FormBuilderDropdown(
+    return FormBuilderDropdown(
+      onTap: widget.onTapped,
       iconEnabledColor: AppColors.primary,
       iconDisabledColor: Colors.grey,
       name: widget.formName,
@@ -47,26 +49,25 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           labelStyle: AppStyle.shortHeading.copyWith(
-              color: AppColors.greyText,
+              color: AppColors.greyInlineText,
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
-              EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
+          EdgeInsets.symmetric(vertical: 1.0.hp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
+              borderSide: BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
+              borderSide: BorderSide(
                   width: 1.0, color: AppColors.greyInlineTextborder)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
-              borderSide:  BorderSide(
-                  width: 1.0, color: AppColors.primary))),
-      icon:  Icon(
+              borderSide: BorderSide(width: 1.0, color: AppColors.primary))),
+      icon: Icon(
         Icons.keyboard_arrow_down_rounded,
-       // color: AppColors.greyInlineText,
+        color: AppColors.greyInlineText,
       ),
       iconSize: 34,
       isExpanded: true,
@@ -85,6 +86,7 @@ class _DropDownState extends State<DropDown> {
         );
       }).toList(),
       onChanged: (String? value) {
+        print('this is DropDownValue $value');
         setState(() {
           widget.onChanged(value);
 

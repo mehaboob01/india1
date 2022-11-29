@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,9 +23,6 @@ import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/carasoul_slider.dart';
 
-// import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import '../../widgets/circular_progressbar.dart';
 import '../Pages/insurance.dart';
 import '../Pages/loans.dart';
@@ -35,6 +31,8 @@ import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
+import '../profile/controller/profile_controller.dart';
+import '../profile/model/profile_details_model.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 
@@ -50,86 +48,92 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    //  WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
+   // _homeManager.sendTokens();
     cashbackCtrl.onInit();
-    checkLogin();
+    _profileController.getProfileData();
+
+    // showFirstTimePoints();
+
+    //checkLogin();
   }
 
-  // Future<bool> _handleLocationPermission() async {
-  // Location location = new Location();
-  // bool _serviceEnabled;
-  // PermissionStatus _permissionGranted;
-  // _serviceEnabled = await location.serviceEnabled();
-  // if (!_serviceEnabled) {
-  //   _serviceEnabled = await location.requestService();
-  //   if (!_serviceEnabled) {
-  //     return false;
-  //   } else {
-  //     Get.to(Maps());
-  //     return true;
-  //   }
-  // }
-  // _permissionGranted = await location.hasPermission();
+  Future<bool> _handleLocationPermission() async {
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return false;
+      } else {
+        Get.to(Maps());
+        return true;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
 
-  // _permissionGranted = await location.requestPermission();
-  // if (_permissionGranted == PermissionStatus.denied ||
-  //     _permissionGranted == PermissionStatus.deniedForever) {
-  //   return false;
-  // }
-  //  else if (_permissionGranted == PermissionStatus.deniedForever) {
-  //   showDialog<String>(
-  //     context: context,
-  //     builder: (BuildContext context) => AlertDialog(
-  //       title: const Text('Allow application to access your location?'),
-  //       content: const Text(
-  //           'You need to allow location\'s access in settings to see nearby ATM\'s'),
-  //       actions: <Widget>[
-  //         // if user deny again, we do nothing
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text('Don\'t allow'),
-  //         ),
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      return false;
+    } else if (_permissionGranted == PermissionStatus.deniedForever) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Allow application to access your location?'),
+          content: const Text(
+              'You need to allow location\'s access in parameters to see nearby ATM\'s'),
+          actions: <Widget>[
+            // if user deny again, we do nothing
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Don\'t allow'),
+            ),
 
-  //         // if user is agree, you can redirect him to the app parameters :)
-  //         TextButton(
-  //           onPressed: () {
-  //             Geolocator.openAppSettings();
-  //             Navigator.pop(context);
-  //           },
-  //           child: const Text('Allow'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  //   return false;
-  // }
-  // else {
-  //   Get.to(Maps());
-  //   return true;
-  // }
-  // }
+            // if user is agree, you can redirect him to the app parameters :)
+            TextButton(
+              onPressed: () {
+                Geolocator.openAppSettings();
+                Navigator.pop(context);
+              },
+              child: const Text('Allow'),
+            ),
+          ],
+        ),
+      );
+      return false;
+    } else {
+      Get.to(Maps());
+      return true;
+    }
+  }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   // TODO: implement didChangeAppLifecycleState
-  //   super.didChangeAppLifecycleState(state);
-  //   print("state : ${state}");
-  //   if (state == AppLifecycleState.resumed) {
-  //
-  //     checkLogin();
-  //   }
-  // }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    print("state : ${state}");
+    if (state == AppLifecycleState.resumed) {
+
+      checkLogin();
+    }
+  }
 
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
+  ProfileController _profileController = Get.put(ProfileController());
+  ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
+
   final cashbackCtrl = Get.put(CashBackController());
 
   final LocalAuthentication auth = LocalAuthentication();
@@ -242,6 +246,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void _onLoading() async {
     // your api here
     _homeManager.callHomeApi();
+  //  _homeManager.sendTokens();
+    _profileController.getProfileData();
     _refreshController.loadComplete();
     cashbackCtrl.onInit();
   }
@@ -250,6 +256,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
+   // _homeManager.sendTokens();
+    _profileController.getProfileData();
   }
 
   @override
@@ -311,12 +319,26 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
-                                        child: Text('welcome'.tr,
-                                            style: AppStyle.shortHeading
-                                                .copyWith(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+
+                                          children: [
+                                            Text('welcome'.tr,
+                                                style: AppStyle.shortHeading
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600)),
+                                            SizedBox(width: 2,),
+                                            Text( "${_profileController.profileDetailsModel.value.firstName ?? ''}",
+                                                style: AppStyle.shortHeading
+                                                    .copyWith(
                                                     color: Colors.white,
                                                     fontWeight:
-                                                        FontWeight.w600)),
+                                                    FontWeight.w600)),
+                                          ],
+                                        ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -818,13 +840,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     return ButtonWithFlower(
         label: _homeManager.redeemablePoints >= 14
             ? 'Redeem Points Now'
-            : 'Earn More Points',
+            : 'Earn more points',
         onPressed: () => {
               _homeManager.redeemablePoints >= 14
                   ? Get.toNamed(MRouter.redeemPointsPage)
-                  : Get.snackbar(
-                      'Oops!!', 'You can redeem only if you have 15+ points',
-                      snackPosition: SnackPosition.BOTTOM)
+                  : Get.toNamed(MRouter.map)
             },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
@@ -836,6 +856,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   MapManager mapManager = Get.put(MapManager());
 
+// find nearest Atm -------------------------------
   Widget nearestAtm() {
     return Container(
       height: 24.0.wp,
@@ -878,51 +899,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               Flexible(
                 child: GestureDetector(
                   onTap: () async {
-                    var status = Permission.location.request();
-                    if (await status.isPermanentlyDenied) {
-                      print("object");
-                    } else {
-                      if (await status.isGranted) {
-                        log("message");
-                      } else if (await status.isDenied) {
-                        log("message 1 ");
-                      }
-                    }
-                    // Location location = new Location();
-                    // PermissionStatus _permissionGranted;
-
-                    // _permissionGranted = await location.hasPermission();
-
-                    // if (_permissionGranted == PermissionStatus.deniedForever ) {
-                    //   log("message ${_permissionGranted}");
-                    //   showDialog<String>(
-                    //     context: context,
-                    //     builder: (BuildContext context) => AlertDialog(
-                    //       title: const Text(
-                    //           'Allow application to access your location?'),
-                    //       content: const Text(
-                    //           'You need to allow location\'s access in settings to see nearby ATM\'s'),
-                    //       actions: <Widget>[
-                    //         // if user deny again, we do nothing
-                    //         TextButton(
-                    //           onPressed: () => Navigator.pop(context),
-                    //           child: const Text('Don\'t allow'),
-                    //         ),
-
-                    //         // if user has agreed, you can redirect him to the app parameters :)
-                    //         TextButton(
-                    //           onPressed: () {
-                    //             Geolocator.openAppSettings();
-                    //             Navigator.pop(context);
-                    //           },
-                    //           child: const Text('Allow'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   );
-                    // } else {
-                    //   await _handleLocationPermission();
-                    // }
+                    await _handleLocationPermission();
                   },
                   child: Container(
                     height: 4.0.hp,

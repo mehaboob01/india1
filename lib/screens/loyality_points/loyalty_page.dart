@@ -94,21 +94,15 @@ class LoyaltyScreen extends StatelessWidget {
                                           //         .expiryDate!)
                                           //     ? RewardState.expired
                                           //     ? :RewardState.used,
-                                          rewardtype: _loyaltyManager
-                                                      .recentRewardTransactionsList[
-                                                          index]
-                                                      .typeId
-                                                      .toString() ==
-                                                  "referralBonnus"
-                                              ? Rewardtype.referralBonus
-                                              : _loyaltyManager
-                                                          .recentRewardTransactionsList[
-                                                              index]
-                                                          .typeId
-                                                          .toString() ==
-                                                      "cacheTransaction"
-                                                  ? Rewardtype.cashTransaction
-                                                  : _loyaltyManager
+                                          rewardtype: _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "referralBonnus" ? Rewardtype.referralBonus : _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "cacheTransaction" ? Rewardtype.cashTransaction
+                                                  :
+                                          _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "Recharge" ? Rewardtype.recharge:
+
+
+
+
+
+                                          _loyaltyManager
                                                               .recentRewardTransactionsList[
                                                                   index]
                                                               .typeId
@@ -120,7 +114,7 @@ class LoyaltyScreen extends StatelessWidget {
                                           date: CommonMethods().getOnlyDate(
                                               date: _loyaltyManager
                                                   .recentRewardTransactionsList[
-                                                      index]
+                                              index]
                                                   .expiryDate!),
                                           points: _loyaltyManager
                                               .recentRewardTransactionsList[

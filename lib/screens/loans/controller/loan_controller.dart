@@ -7,6 +7,7 @@ import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/Pages/recent_transaction_model.dart';
+import 'package:india_one/screens/insurances/model/insurance_recent_transaction_model.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/model/farm_loan_product_model.dart';
@@ -38,6 +39,8 @@ class LoanController extends GetxController {
   RxInt farmCompletedIndex = 0.obs;
   Rx<RecentTransactionModel> recentTransactionModel =
       RecentTransactionModel().obs;
+  Rx<InsuranceRecentTransactionModel> insuranceRecentTransactionModel =
+      InsuranceRecentTransactionModel().obs;
 
   List otherDetails = [
     {"title": "Interest rate", "value": ""},
@@ -338,6 +341,49 @@ class LoanController extends GetxController {
 
 
         recentTransactionModel.value = RecentTransactionModel.fromJson(jsonData['data']);
+      } else {
+        Flushbar(
+          title: "Error!",
+          message: "Something went wrong ...",
+          duration: Duration(seconds: 2),
+        )..show(Get.context!);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      createLoanLoading.value = false;
+    }
+  }
+
+  Future insuranceRecentTransactions() async {
+    try {
+      createLoanLoading.value = true;
+      customerId.value = await profileController.getId();
+
+      print("customer id===> ${customerId.value}");
+      var response = await http.post(Uri.parse(baseUrl + Apis.insuranceDashboard),
+          body: json.encode({
+            "customerId": customerId.value,
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("Json data ==> ${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        print("Json data ==> ${response.body}");
+        var jsonData = jsonDecode(response.body);
+
+        print("sending json data${jsonData}");
+        print("data json data${jsonData['data']}");
+
+
+
+        insuranceRecentTransactionModel.value = InsuranceRecentTransactionModel.fromJson(jsonData['data']);
       } else {
         Flushbar(
           title: "Error!",

@@ -15,6 +15,8 @@ import '../cashback_redeem/cb_manager.dart';
 import '../loyality_manager.dart';
 
 class RedeemPointsPage extends StatelessWidget {
+
+  final cashbackManager = Get.put(CashBackManager());
   RedeemPointsPage();
   final homeCtrl = Get.put(CashBackController());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
@@ -145,7 +147,7 @@ class RedeemPointsPage extends StatelessWidget {
                                       SizedBox(height: 4.0.wp),
                                       Obx(() {
                                         return CommonToggleCard(
-                                          getController: homeCtrl,
+
                                           isSelectedlist: isSelectedRedeemType,
                                           redeemCardList: [
                                             RedeemCard(
@@ -171,7 +173,8 @@ class RedeemPointsPage extends StatelessWidget {
                       padding: EdgeInsets.all(6.0.wp),
                       child: Obx(() {
                         return ButtonWithFlower(
-                          onPressed: () {
+                          onPressed: isSelectedRedeemType
+                              .any((element) => element == true)?() {
                             bool redeemIndex =
                                 isSelectedRedeemType.any((element) => element);
                             RedeemType redeemType;
@@ -188,7 +191,7 @@ class RedeemPointsPage extends StatelessWidget {
                             goToScreen(redeemType: redeemType);
                             print(
                                 '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
-                          },
+                          }: ()=> null,
                           label: 'Proceed',
                           buttonWidth: double.maxFinite,
                           buttonHeight: 12.0.wp,
@@ -230,12 +233,17 @@ class RedeemPointsPage extends StatelessWidget {
         break;
       case RedeemType.isCashback:
 
+
+
         // todo
+      cashbackManager.callBankListApi();
+
 
         Navigator.push(
             Get.context!,
             MaterialPageRoute(
                 builder: (BuildContext context) => CashBackRedeemPage()));
+
         break;
     }
   }

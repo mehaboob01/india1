@@ -1,5 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as d;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 import 'api_constant.dart';
 
@@ -20,7 +23,7 @@ class DioApiCall {
     if (headers != null) {
       dio.options.headers.addAll(headers);
     }
-    Response? response;
+    d.Response? response;
     try {
       if (method == Type.PUT)
         response = await dio.put(
@@ -37,14 +40,22 @@ class DioApiCall {
           endpoint,
         );
       if (response != null) {
-        if (response.data['status']['code'] != 2000) {
-          Fluttertoast.showToast(msg: "${response.data['status']['message']}", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, fontSize: 16.0);
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          if (response.data['status']['code'] != 2000) {
+            Fluttertoast.showToast(msg: "${response.data['status']['message']}", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, fontSize: 16.0);
+            return null;
+          }
+          if (response.data['data'] != null) {
+            return response.data['data'];
+          }
+        }else {
+          Flushbar(
+            title: "Error!",
+            message: "Something went wrong ...",
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
           return null;
         }
-        if (response.data['data'] != null) {
-          return response.data['data'];
-        }
-        return null;
       }
       return null;
     } catch (exception) {

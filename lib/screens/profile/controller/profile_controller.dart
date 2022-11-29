@@ -2,20 +2,28 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/core/data/model/common_model.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
 import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
@@ -31,7 +39,8 @@ class ProfileController extends GetxController {
       getBankAccountLoading = false.obs,
       getUpiIdLoading = false.obs,
       autoValidation = false.obs,
-      uploadProfileLoading = false.obs;
+      uploadProfileLoading = false.obs,
+      logoutLoading = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -82,6 +91,7 @@ class ProfileController extends GetxController {
 
   RxString image = ''.obs;
   RxString imageUrl = ''.obs;
+  CroppedFile? croppedFile;
 
   resetData() {
     firstNameController.value.text = '';
@@ -133,8 +143,7 @@ class ProfileController extends GetxController {
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
     occupationController.value.text =
         profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text =
-        "${profileDetailsModel.value.income ?? "0"}";
+    monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
 
@@ -215,9 +224,7 @@ class ProfileController extends GetxController {
     RegExp regExp = new RegExp(pattern);
     if (value.length == 0) {
       return 'Please enter mobile number';
-    } 
-    
-    else if (!regExp.hasMatch(value)) {
+    } else if (!regExp.hasMatch(value)) {
       return 'Please enter valid mobile number';
     }
     return null;
@@ -287,7 +294,7 @@ class ProfileController extends GetxController {
                 image.value =
                     (await _picker.pickImage(source: ImageSource.camera))!.path;
                 Get.back();
-                uploadProfile(fileName: image.value.toString().split("/").last);
+                await cropImage();
               },
             ),
             Divider(),
@@ -299,7 +306,7 @@ class ProfileController extends GetxController {
                     (await _picker.pickImage(source: ImageSource.gallery))!
                         .path;
                 Get.back();
-                uploadProfile(fileName: image.value.toString().split("/").last);
+                await cropImage();
               },
             ),
           ],
@@ -308,7 +315,32 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future uploadProfile({required String fileName}) async {
+  Future cropImage() async{
+    croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.value,
+      cropStyle: CropStyle.circle,
+      aspectRatio: CropAspectRatio(ratioX: 0.1 , ratioY: 0.1),
+      maxHeight: 140,
+      maxWidth: 140,
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Profile',
+            toolbarWidgetColor: Colors.black,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent
+        ),
+        IOSUiSettings(
+          title: 'Profile',
+        ),
+      ],
+    );
+    if (croppedFile?.path != null) {
+      await uploadProfile(croppedFile: croppedFile!);
+    }
+  }
+
+  Future uploadProfile({required CroppedFile croppedFile}) async {
     uploadProfileLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -318,14 +350,14 @@ class ProfileController extends GetxController {
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             "type": "ProfileImage",
-            "fileName": fileName,
+            "fileName": croppedFile.path.toString().split("/").last,
           },
         ),
       );
       if (response != null) {
         uploadSignedModel.value = UploadSignedModel.fromJson(response);
         if (uploadSignedModel.value.uploadSignedURL != null) {
-          uploadProfilePic();
+          uploadProfilePic(croppedFile);
         } else {
           Fluttertoast.showToast(
             msg: "something went wrong, try again!",
@@ -355,14 +387,14 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future uploadProfilePic() async {
+  Future uploadProfilePic(CroppedFile croppedFile) async {
     uploadProfileLoading.value = true;
     try {
       Dio dioVar = Dio();
-      Uint8List unit8Image = File(image.value).readAsBytesSync();
+      Uint8List unit8Image = File(croppedFile.path).readAsBytesSync();
 
       Options options = Options(
-        contentType: lookupMimeType(image.value),
+        contentType: lookupMimeType(croppedFile.path),
         headers: {
           'Accept': "*/*",
           'Content-Length': unit8Image.length,
@@ -426,6 +458,8 @@ class ProfileController extends GetxController {
             gravity: ToastGravity.BOTTOM,
             fontSize: 16.0,
           );
+          profileDetailsModel.value.imageName = "${response['imageURL'].toString().split("/").last}";
+          profileDetailsModel.refresh();
         }
       } else {
         Fluttertoast.showToast(
@@ -784,6 +818,71 @@ class ProfileController extends GetxController {
       print(exception);
     } finally {
       getBankAccountLoading.value = false;
+    }
+  }
+
+  logoutApi(BuildContext context) async {
+    try {
+      logoutLoading.value = true;
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
+      String? customerID = prefs.getString(SPKeys.CUSTOMER_ID);
+      var response = await http.post(Uri.parse(baseUrl + Apis.log_out),
+          body: jsonEncode({
+            "customerId":customerID,
+            "deviceId" : deviceId
+
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("response of send otp${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+
+        if (commonApiResponseModel.status!.code == 2000) {
+          logoutLoading.value = false;
+          if (Platform.isAndroid) {
+            SharedPreferences preferences =
+            await SharedPreferences.getInstance();
+            await preferences.clear();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(MRouter.splashRoute, (Route<dynamic> route) => false);
+
+          } else if (Platform.isIOS) {
+            exit(0);
+          }
+
+
+
+        } else {
+          Flushbar(
+            title: "Server Error!",
+            message: commonApiResponseModel.status!.message.toString(),
+            duration: Duration(seconds: 1),
+          )..show(Get.context!);
+        }
+      } else {
+        logoutLoading.value = false;
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      var snackBar = SnackBar(
+        content: Text("Something went wrong!"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } finally {
+      logoutLoading.value = false;
     }
   }
 }

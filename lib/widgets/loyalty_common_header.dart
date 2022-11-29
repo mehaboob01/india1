@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:india_one/constant/routes.dart';
 
 import '../constant/theme_manager.dart';
 import '../screens/loyality_points/loyality_manager.dart';
@@ -276,9 +277,7 @@ class HeadingContainer extends StatelessWidget {
                 child: ButtonWithFlower(
                   buttonColor: Colors.white,
                   onPressed: () {
-                   _loyaltyManager.redeemablePoints >= 14? Get.to(() => RedeemPointsPage()):   Get.snackbar('Oops!!',
-                       'You can redeem only if you have 15+ points',
-                       snackPosition: SnackPosition.BOTTOM);
+                   _loyaltyManager.redeemablePoints >= 14? Get.to(() => RedeemPointsPage()):   Get.toNamed(MRouter.map);
                   },
                   buttonHeight: 10.0.wp,
                   buttonWidth: 44.0.wp,

@@ -95,7 +95,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                 arguments: [
                                                   cashBackManager
                                                       .customerBankList[index],
-                                                  RedeemMode.isBankAccount
+
                                                 ]),
                                             onDeletePressed:
                                                 () =>
@@ -208,3 +208,5 @@ class ManageAccountsCard extends StatelessWidget {
         ])));
   }
 }
+
+enum RedeemMode {isBankAccount, isUPI}
