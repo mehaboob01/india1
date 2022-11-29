@@ -879,18 +879,14 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 child: GestureDetector(
                   onTap: () async {
                     var status = Permission.location.request();
-                    if (await status.isGranted) {
-                      log("message");
-                    } else if (await status.isDenied) {
-                      log("message 1 ");
-                    } else if (await status.isPermanentlyDenied) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Ok"),
-                            );
-                          });
+                    if (await status.isPermanentlyDenied) {
+                      print("object");
+                    } else {
+                      if (await status.isGranted) {
+                        log("message");
+                      } else if (await status.isDenied) {
+                        log("message 1 ");
+                      }
                     }
                     // Location location = new Location();
                     // PermissionStatus _permissionGranted;
