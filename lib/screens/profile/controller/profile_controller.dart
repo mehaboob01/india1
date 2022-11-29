@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -90,6 +91,7 @@ class ProfileController extends GetxController {
 
   RxString image = ''.obs;
   RxString imageUrl = ''.obs;
+  CroppedFile? croppedFile;
 
   resetData() {
     firstNameController.value.text = '';
@@ -292,7 +294,7 @@ class ProfileController extends GetxController {
                 image.value =
                     (await _picker.pickImage(source: ImageSource.camera))!.path;
                 Get.back();
-                uploadProfile(fileName: image.value.toString().split("/").last);
+                await cropImage();
               },
             ),
             Divider(),
@@ -304,7 +306,7 @@ class ProfileController extends GetxController {
                     (await _picker.pickImage(source: ImageSource.gallery))!
                         .path;
                 Get.back();
-                uploadProfile(fileName: image.value.toString().split("/").last);
+                await cropImage();
               },
             ),
           ],
@@ -313,7 +315,32 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future uploadProfile({required String fileName}) async {
+  Future cropImage() async{
+    croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.value,
+      cropStyle: CropStyle.circle,
+      aspectRatio: CropAspectRatio(ratioX: 0.1 , ratioY: 0.1),
+      maxHeight: 140,
+      maxWidth: 140,
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Profile',
+            toolbarWidgetColor: Colors.black,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent
+        ),
+        IOSUiSettings(
+          title: 'Profile',
+        ),
+      ],
+    );
+    if (croppedFile?.path != null) {
+      await uploadProfile(croppedFile: croppedFile!);
+    }
+  }
+
+  Future uploadProfile({required CroppedFile croppedFile}) async {
     uploadProfileLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -323,14 +350,14 @@ class ProfileController extends GetxController {
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             "type": "ProfileImage",
-            "fileName": fileName,
+            "fileName": croppedFile.path.toString().split("/").last,
           },
         ),
       );
       if (response != null) {
         uploadSignedModel.value = UploadSignedModel.fromJson(response);
         if (uploadSignedModel.value.uploadSignedURL != null) {
-          uploadProfilePic();
+          uploadProfilePic(croppedFile);
         } else {
           Fluttertoast.showToast(
             msg: "something went wrong, try again!",
@@ -360,14 +387,14 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future uploadProfilePic() async {
+  Future uploadProfilePic(CroppedFile croppedFile) async {
     uploadProfileLoading.value = true;
     try {
       Dio dioVar = Dio();
-      Uint8List unit8Image = File(image.value).readAsBytesSync();
+      Uint8List unit8Image = File(croppedFile.path).readAsBytesSync();
 
       Options options = Options(
-        contentType: lookupMimeType(image.value),
+        contentType: lookupMimeType(croppedFile.path),
         headers: {
           'Accept': "*/*",
           'Content-Length': unit8Image.length,
@@ -431,6 +458,8 @@ class ProfileController extends GetxController {
             gravity: ToastGravity.BOTTOM,
             fontSize: 16.0,
           );
+          profileDetailsModel.value.imageName = "${response['imageURL'].toString().split("/").last}";
+          profileDetailsModel.refresh();
         }
       } else {
         Fluttertoast.showToast(

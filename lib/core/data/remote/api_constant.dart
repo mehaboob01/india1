@@ -97,4 +97,8 @@ class Apis {
 
 
 
+
+  //insurance
+  static String insuranceDashboard = "dashboards/insurances";
+
 }
