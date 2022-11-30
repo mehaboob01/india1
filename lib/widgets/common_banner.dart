@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:india_one/constant/routes.dart';
 
 import '../constant/theme_manager.dart';
 
@@ -7,7 +9,10 @@ class CommonBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+
+      //  Get.toNamed(MRouter.referEarn);
+      },
       child: Container(
         width: double.maxFinite,
         height: 32.0.wp,

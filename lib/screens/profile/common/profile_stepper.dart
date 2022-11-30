@@ -138,7 +138,7 @@ class ProfileStepper {
     required onChanged,
     required hint,
     required label,
-    required value,
+    value,
   }) {
     return DropdownButtonFormField(
       items: item,
@@ -333,7 +333,7 @@ class ProfileStepper {
                           groupValue: profileController.gender.value,
                         ),
                         radioButton(
-                          value: 'Other',
+                          value: 'Others',
                           callBack: (value) {
                             profileController.gender.value = value.toString();
                           },
@@ -605,22 +605,28 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
-              commonDropDown(
-                item: <String>['Salaried']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                value: profileController.employmentType.value == ''
-                    ? null
-                    : profileController.employmentType.value,
-                onChanged: (value) {
-                  profileController.employmentType.value = value;
-                },
-                label: 'Choose your employment type',
-                hint: 'Choose your employment type',
+              ButtonTheme(
+                alignedDropdown: true,
+                child: commonDropDown(
+                  item: <String>['Self Employed',
+                    'Salaried',
+                    'Business Owner',
+                    'Other']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  // value: profileController.employmentType.value == ''
+                  //     ? null
+                  //     : profileController.employmentType.value,
+                  onChanged: (value) {
+                    profileController.employmentType.value = value;
+                  },
+                  label: 'Choose your employment type',
+                  hint: 'Choose your employment type',
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -640,22 +646,28 @@ class ProfileStepper {
               //     return null;
               //   },
               // ),
-              commonDropDown(
-                item: ['Savings Account']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                value: profileController.accountType == ''
-                    ? null
-                    : profileController.accountType.value,
-                onChanged: (value) {
-                  temp = value;
-                },
-                label: 'Salary Mode',
-                hint: 'Salary Mode',
+              ButtonTheme(
+                alignedDropdown: true,
+                child: commonDropDown(
+                  item: ['Cash',
+                    'Cheque',
+                    'BankTransfer',
+                    'PayCards']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  // value: profileController.accountType == ''
+                  //     ? null
+                  //     : profileController.accountType.value,
+                  onChanged: (value) {
+                    temp = value;
+                  },
+                  label: 'Salary Mode',
+                  hint: 'Salary Mode',
+                ),
               ),
               SizedBox(
                 height: 20,

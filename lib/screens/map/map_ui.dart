@@ -31,6 +31,7 @@ class _MapsState extends State<Maps> {
   var _controller = TextEditingController();
 
   List<dynamic> _placeList = [];
+  Map<dynamic, dynamic> _latLongList = {};
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _MapsState extends State<Maps> {
   }
 
   _onChanged() {
-    if (_controller.text.isNotEmpty) {
+    if (_controller.text != null) {
       getSuggestion(_controller.text);
     } else {
       _controller.clear();
@@ -49,10 +50,12 @@ class _MapsState extends State<Maps> {
   }
 
   void getSuggestion(String input) async {
+    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
+    String type = '(regions)';
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$input&components=country:IN&key=$kPLACESAPIKEY';
+        '$baseURL?input=$input&components=country:IN&key=$kPLACES_API_KEY';
 
     var response = await http.get(Uri.parse(request));
     if (response.statusCode == 200) {
@@ -66,11 +69,13 @@ class _MapsState extends State<Maps> {
   }
 
   void getLatLng(String placeId) async {
+    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
     String baseURL =
-        "https://maps.googleapis.com/maps/api/geocode/json?place_id=$placeId&key=$kPLACESAPIKEY";
+        "https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${kPLACES_API_KEY}";
     var response = await http.get(Uri.parse(baseURL));
     var result = json.decode(response.body);
     if (response.statusCode == 200) {
+      _latLongList = result["results"][0]["geometry"]["location"];
       var lat = result["results"][0]["geometry"]["location"]["lat"];
       var lng = result["results"][0]["geometry"]["location"]["lng"];
 
@@ -113,7 +118,7 @@ class _MapsState extends State<Maps> {
                   mapManager.mapController = controller;
                   mapManager.getCurrentLocation();
                 },
-                markers: mapManager.allMarkersPlot.toSet(),
+                markers: mapManager.allMarkers.toSet(),
               ),
             ),
             Padding(
@@ -167,6 +172,8 @@ class _MapsState extends State<Maps> {
                                       ),
                                     ),
                                   ),
+
+
                                 )),
                           ),
                         ],
@@ -177,9 +184,9 @@ class _MapsState extends State<Maps> {
                     width: Get.width * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () async {
+                    onTap: () {
                       mapManager.locationText.value = "Search Location";
-                      await mapManager.getCurrentLocation();
+                      mapManager.getCurrentLocation();
                     },
                     child: Container(
                       height: Get.height * 0.06,
@@ -250,7 +257,7 @@ class _MapsState extends State<Maps> {
                                         mapManager.mapCoordinateList.length,
                                     shrinkWrap: true,
                                     itemBuilder: ((context, index) {
-                                      // if (mapManager.markersList.isEmpty) {}
+                                      if (mapManager.markersList.isEmpty) {}
 
                                       return Container(
                                           decoration: BoxDecoration(
@@ -369,7 +376,7 @@ class AtmDetailsCard extends StatelessWidget {
                     width: Get.width * 0.25,
                     child: GestureDetector(
                       onTap: () {
-                        mapManager.openDirections(
+                        mapManager.openMap(
                           mapManager.mapCoordinateList[index].geoLocation!.lat!
                               .toDouble(),
                           mapManager.mapCoordinateList[index].geoLocation!.lon!
