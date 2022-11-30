@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
 
 
 import '../constant/theme_manager.dart';
@@ -241,18 +240,18 @@ class YourRewardCard extends StatelessWidget {
 
     switch (rewardState) {
       case RewardState.expired:
-        usedBg = AppImages.usedCardImage;
+        usedBg = AppImages.cardImageshadow;
         break;
       case RewardState.used:
         switch (rewardtype) {
           case Rewardtype.cashTransaction:
-            usedBg = AppImages.atmBg2; // to change later
+            usedBg = AppImages.referralBonusImage; // to change later
             break;
           case Rewardtype.referralBonus:
             usedBg = AppImages.referralBonusImage;
             break;
           case Rewardtype.recharge:
-            usedBg = AppImages.rechargeImage;
+            usedBg = AppImages.referralBonusImage;
             break;
           case Rewardtype.loan:
             usedBg = AppImages.loanImage;
@@ -342,7 +341,7 @@ class YourRewardCard extends StatelessWidget {
                         getRewardType(rewardtype),
                         SizedBox(height: 1.0.wp),
                         Text(
-                          rewardState == RewardState.won
+                          rewardState == RewardState.won ||  rewardState == RewardState.used
                               ? 'Use by $date'
                               : 'Expired on $date',
                           style: TextStyle(

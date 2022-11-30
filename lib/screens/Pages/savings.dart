@@ -1,37 +1,108 @@
 import 'package:flutter/material.dart';
-import 'package:india_one/constant/extensions.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../constant/theme_manager.dart';
+import '../../core/data/remote/api_constant.dart';
+import '../../utils/common_webview.dart';
 import '../../widgets/card.dart';
+import '../../widgets/common_banner.dart';
+import '../../widgets/common_page_header.dart';
+import '../home_start/home_manager.dart';
 
+class SavingsPage extends StatefulWidget {
+  @override
+  State<SavingsPage> createState() => _SavingsPageState();
+}
 
-class SavingsPage extends StatelessWidget {
- // const SavingsPage({super.key});
+class _SavingsPageState extends State<SavingsPage> {
+  HomeManager _homeManager = Get.put(HomeManager());
+  @override
+  void initState() {
+    super.initState();
+    _homeManager.showAuth.value = false;
+
+  }
+  //const SavingsPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonPageHeader(pageName: PageName.savings),
+              CommonPageCategoriesHeading(pageName: PageName.savings),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                child: const SavingsCard(),
+              ),
+              CommonBanner()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SavingsCard extends StatelessWidget {
+  const SavingsCard({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 2.0.wp,
       children:  [
-        ItemCard(
-          image: AppImages.fd,
-          label: 'FD(Fixed Deposit)',
-          isblue: true,
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'Fixed Deposit',
+              url: Apis.fdLink,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.fdSvg,
+            label: 'FD(Fixed Deposit)',
+            itembgColor: ItemCardbgColor.skyBlue,
+          ),
         ),
-        ItemCard(
-          image: AppImages.rd,
-          label: 'RD(Recurring Deposit)',
-          isblue: true,
+        // ItemCard(
+        //   image: AppImages.rd,
+        //   label: 'RD(Recurring Deposit)',
+        //   itembgColor: ItemCardbgColor.skyBlue,
+        // ),
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'Digi Gold',
+              url: Apis.digiGold,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.goldSvg,
+            label: 'Digi Gold',
+            itembgColor: ItemCardbgColor.skyBlue,
+          ),
         ),
-        ItemCard(
-          image: AppImages.gold,
-          label: 'Digi Gold',
-          isblue: true,
-        ),
-        ItemCard(
-          image: AppImages.digiSilver,
-          label: 'Digi Silver',
-          isblue: true,
+        InkWell(
+          onTap: () {
+            Get.to(() => CommonWebView(
+              title: 'Digi Silver',
+              url: Apis.digiGold,
+            ));
+          },
+          child: ItemCard(
+            image: AppImages.digiSilverSvg,
+            label: 'Digi Silver',
+            itembgColor: ItemCardbgColor.skyBlue,
+          ),
         ),
       ],
     );

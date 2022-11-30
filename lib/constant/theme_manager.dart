@@ -7,6 +7,27 @@ class AppColors {
   static const Color butngradient2 = Color(0xff00C376);
   static const Color backGroundgradient1 = Color(0xff004280);
   static const Color backGroundgradient2 = Color(0xff357CBE);
+  static const cardScreenBg = Color(0xFFD1D1D1);
+
+  static const Color referEarnGradient1 = Color(0xff014280);
+  static const Color referEarnGradient2 = Color(0xff9B79DD);
+
+  // linear gradient orange
+  static const Color orangeGradient1 = Color(0xffFFF46B);
+  static const Color orangeGradient2 = Color(0xffF2642C);
+  static const Color cardGradientwhite1 = Color(0xffEBFFF0);
+  // loans icons bg
+  static const Color blueIconGradient1 = Color(0xff95DFFF);
+  static const Color blueIconGradient2 = Color(0xff014280);
+  // insurance icons bg
+  static const Color yellowIconGradient1 = Color(0xffFFEF37);
+  static const Color yellowIconGradient2 = Color(0xff014280);
+  // payments icons bg
+  static const Color redIconGradient1 = Color(0xffF36D39);
+  static const Color redIconGradient2 = Color(0xff014280);
+  // savings icon bg
+  static const Color violetIconGradient1 = Color(0xff9B79DD);
+  static const Color violetIconGradient2 = Color(0xff014280);
   static Color backGrounddarkheader = const Color(0xff000000).withOpacity(0.3);
   static const Color textColorshade = Color(0xffEEEEEE);
   static const Color yellowgradient1 = Color(0xffffee48);
@@ -18,13 +39,13 @@ class AppColors {
   static const Color cardGradientskyBlue = Color(0xffF3EDFF);
   static const Color pointsColor = Color(0xffF2642C);
   // linear gradient orange
-  static const Color orangeGradient1 = Color(0xffFFF46B);
-  static const Color orangeGradient2 = Color(0xffF2642C);
+
   static const primary = Color(0xFF08469B);
   static const greyText = Color(0xFF555555);
   static const btnColor = Color(0xFF2b6dd4);
   static const btnDisableColor = Color(0xffbcc3ce);
   static const dotsColor = Color(0xffD9D9D9);
+  static const loanScreenBg = Color(0xFFD1D1D1);
 
   static Color activeTabColor = const Color.fromRGBO(101, 88, 245, 1.0);
   static Color passiveTabColor = Color(0xff666666);
@@ -114,6 +135,22 @@ class AppColors {
 
   static const facebookBlue = Color(0xFF07408A);
   static const googleRed = Color(0xFFDC4E41);
+  static const orangeColor = Color(0xFFF89635);
+  static const lightOrangeColor = Color(0xFFF2642C);
+  static const lightBlack = Color(0xFF2D2D2D);
+  static const lightGreyColor = Color(0xFFDDDDDD);
+  static const borderColor = Color(0xFF999999);
+  static const hintColor = Color(0xFFB6B6B6);
+  static const dimLightGreyColor = Color(0xFFD1D1D1);
+
+  // text edting colors
+  static const Color greyTextColor = Color(0xff777777);
+  static const Color greyEditingHeader = Color(0xff999999);
+  static const Color greyInlineText = Color(0xffa6a1a1);
+  static const Color greyInlineTextborder = Color(0xffd1d1d1);
+  static const Color checkBoxColor = Color(0xff2364A1);
+  static const Color lightGreyColors = Color(0xffF6F6F6);
+  static const Color lightSkyBlue = Color(0xffC2DFFB);
 
   // cash back screen
 
@@ -128,12 +165,6 @@ class AppStyle {
       color: AppColors.white,
       fontSize: Dimens.font_16sp,
       fontFamily: 'Graphik');
-  // static const shortHeading2 = TextStyle(
-  //     fontWeight: FontWeight.w400,
-  //     color: AppColors.white,
-  //     fontSize: Dimens.font_14sp,
-  //     fontFamily: 'Graphik'
-  // );
 
   static const languageTextStyle = TextStyle(
       fontWeight: FontWeight.w600,
@@ -321,7 +352,37 @@ AppBar transParentAppbar(titleOfAppbar) {
   );
 }
 
+Widget rupeeIcon(
+    {required Color color,
+    required String label,
+    required Color textColor,
+    bool? boldfont,
+    required double fontSize}) {
+  return Row(
+    children: [
+      SizedBox(
+        width: fontSize * 0.8,
+        height: fontSize * 0.8,
+        child: Image.asset(
+          AppImages.rupees_icon,
+          color: color,
+        ),
+      ),
+      const SizedBox(width: 4.0),
+      Text(
+        label,
+        style: AppStyle.shortHeading.copyWith(
+          fontSize: fontSize,
+          fontWeight: boldfont == true ? FontWeight.w600 : null,
+          color: textColor,
+        ),
+      ),
+    ],
+  );
+}
+
 class AppImages {
+  static const String referEarnSVG = 'assets/images/gift_box.png';
   static const String assetPng = 'assets/png/';
   static const String bottomNavHome = '${assetPng}home.png';
   static const String celebrationBg = '${assetPng}celebrationbg.png';
@@ -340,29 +401,42 @@ class AppImages {
   static const String cardImageshadow = '${assetPng}shadow.png';
   static const String notificationBell = '${assetPng}notification_bell.png';
   static const String profileImage = '${assetPng}profile_image.png';
+  static const String locationIcon = '${assetPng}locationIcon.png';
+  static const String searchIcon = '${assetPng}searchIcon.png';
+  static const String markerIcon = '${assetPng}markerIcon.png';
+  static const String notificationWithBorderImage =
+      '${assetPng}notificationBellWithBorder.png';
+  static const String notificationActive =
+      '${assetPng}notificationBell_active.png';
+  static const String goldenHexagonal = '${assetPng}golden_hexagonal_bg.png';
+  static const String homeScreenPopUpBg = '${assetPng}home_screen_popup_bg.png';
 
   // loans
-  static const String handRupee = '${assetPng}loans/hand_rupee.png';
-  static const String bike = '${assetPng}loans/bike.png';
-  static const String tractor = '${assetPng}loans/tractor.png';
-  static const String handSack = '${assetPng}loans/hand_sack.png';
-  static const String gold = '${assetPng}loans/gold.png';
-  static const String creditCard = '${assetPng}loans/credit_card.png';
+  static const String handRupeeSvg = '${assetSvg}loans/personal.svg';
+  static const String carSvg = '${assetSvg}loans/car.svg';
+  static const String bikeSvg = '${assetSvg}loans/bike.svg';
+  static const String tractorSvg = '${assetSvg}loans/tractor.svg';
+  static const String handSackSvg = '${assetSvg}loans/MSME.svg';
+  static const String goldSvg = '${assetSvg}loans/gold.svg';
+  static const String creditCardSvg = '${assetSvg}loans/credit_card.svg';
+  static const String creditScoreSvg = '${assetSvg}loans/speedMeter.svg';
+
   // payments
-  static const String mobilRecharge = '${assetPng}payments/Recharge.png';
-  static const String fastag = '${assetPng}payments/Union.png';
-  static const String dth = '${assetPng}payments/DTH.png';
+  static const String mobilRechargeSvg = '${assetSvg}payments/Recharge.svg';
+  static const String contactPickerSvg = '${assetSvg}payments/contactPick.svg';
+  static const String fastagSvg = '${assetSvg}payments/fasTag.svg';
+  static const String dthSvg = '${assetSvg}payments/DTH.svg';
   // insurance
-  static const String car = '${assetPng}insurance/car.png';
-  static const String life = '${assetPng}insurance/life.png';
-  static const String criticalIllness =
-      '${assetPng}insurance/critical_illness.png';
-  static const String accident = '${assetPng}insurance/accident.png';
-  static const String hopicash = '${assetPng}insurance/Hospicash.png';
+
+  static const String lifeSvg = '${assetSvg}insurance/life.svg';
+  static const String criticalIllnessSvg =
+      '${assetSvg}insurance/critical_illness.svg';
+  static const String accidentSvg = '${assetSvg}insurance/accident.svg';
+  static const String hopicashSvg = '${assetSvg}insurance/hopicash.svg';
   // saving
-  static const String fd = '${assetPng}savings/FD.png';
+  static const String fdSvg = '${assetSvg}savings/fd.svg';
   static const String rd = '${assetPng}savings/RD.png';
-  static const String digiSilver = '${assetPng}savings/Digi_Silver.png';
+  static const String digiSilverSvg = '${assetSvg}savings/digi_silver.svg';
   // reward card
   static const String rewardWon = '${assetPng}rewardCard/Orange BG.png';
   static const String rewardUsed = '${assetPng}rewardCard/Grey BG.png';
@@ -377,10 +451,39 @@ class AppImages {
   //loyalty flower
   static const String flower2 = '${assetPng}flower2.png';
 
-  static const String assetSvg = 'assets/images/';
+  static const String assetSvg = 'assets/svg/';
+  // static const String imagesAssetSvg = 'assets/svg/';
 
   static const String user_profile = '${assetSvg}user_profile.svg';
   static const String notify_icon = '${assetSvg}notify_icon.svg';
+  static const String golden_hexagon_partyThing =
+      '${assetSvg}golden_hexagon_partything.svg';
+
+  // used card Image
+
+  // bank and upi/vpa
+  static const String bankImageSvg = '${assetSvg}bank.svg';
+  static const String upiVpaSvg = '${assetSvg}UPI.svg';
+  static const String rupees_icon = '${assetPng}rupee_symbol.png';
+
+  static const String walletIcon = '${assetSvg}payments/wallet_icon.svg';
+
+  static const String loansPageSvg = '${assetSvg}payments/loansPageSVG.svg';
+  static const String paymentsPageSvg =
+      '${assetSvg}payments/paymentsPageSVG.svg';
+  static const String insurancePageSvg =
+      '${assetSvg}payments/insurancePageSVG.svg';
+  static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
+  static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
+}
+
+extension PercentSize on double {
+  double get hp => (Get.height * (this / 100));
+  double get wp => (Get.width * (this / 100));
+}
+
+extension ResponsiveText on double {
+  double get sp => Get.width / 100 * (this / 3);
 }
 
 class Strings {
@@ -393,3 +496,7 @@ class Strings {
 class AppFonts {
   static const appFont = 'Graphik';
 }
+
+double bottomMargin = 84;
+double bottomNavigationCircleRadius = 81;
+String kPLACESAPIKEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";

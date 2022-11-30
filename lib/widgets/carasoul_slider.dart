@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/constant/extensions.dart';
+import 'package:india_one/constant/routes.dart';
 
 
 import '../constant/theme_manager.dart';
@@ -65,7 +65,9 @@ class CarasoulImages extends StatelessWidget {
 
   Widget carosuelWidget1() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed(MRouter.loanPage);
+      },
       child: Container(
         width: double.maxFinite,
         margin: EdgeInsets.symmetric(horizontal: 2.0.hp),

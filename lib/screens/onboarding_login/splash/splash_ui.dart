@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,6 +10,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../home_start/home_main_io.dart';
 import '../select_language/language_selection_io.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
@@ -17,7 +21,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   final List locale = [
@@ -34,9 +37,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.instance.getToken().then((deviceToken) async {
+      print("FCM / DEVICE TOKEN ${deviceToken}");
+      String? deviceId = await _getDeviceId();
+      print("device ID ${deviceId}");
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs!.setString(SPKeys.DEVICE_ID, deviceId.toString());
+      prefs!.setString(SPKeys.DEVICE_TOKEN, deviceToken.toString());
+    });
+
+
+
+
     initDynamicLinks();
-    Timer(Duration(seconds: 2), () => launchLoginWidget());
+    Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
+
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
       Get.toNamed(MRouter.splashRoute);
@@ -46,37 +63,50 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  Future<String?> _getDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) { // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if(Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.id; // unique ID on Android
+    }
+  }
+
   updateLanguage(Locale locale, int selectdLang) {
     Get.updateLocale(locale);
-    setState(() {
-    });
+    setState(() {});
   }
 
   // launch login screen
   Future<void> launchLoginWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
-    if(loggedIn == true )
-    {
+    if (loggedIn == true) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs!.setBool(SPKeys.SHOW_AUTH, true);
       Get.offAllNamed(MRouter.homeScreen);
+
       int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
       updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
-    }
-    else{
+    } else {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => LanguageSelectionIO('splash')));}
+              builder: (BuildContext context) =>
+                  LanguageSelectionIO('splash')));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: buildSplashForMobile(),
     );
   }
@@ -94,11 +124,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Center(
       child: Hero(
         tag: 'logo_image',
-        child:
-        Image.asset(
-          "assets/images/splash_logo.png",
-          width: 288,
-          height: 240,
+        child: Image.asset(
+          "assets/images/splash_logo.gif",
+          width: 444,
+          height: 654,
         ),
       ),
     );
@@ -111,6 +140,4 @@ class _SplashScreenState extends State<SplashScreen> {
       color: AppColors.white,
     );
   }
-
-
 }

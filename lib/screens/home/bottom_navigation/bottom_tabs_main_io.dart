@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/Pages/loans.dart';
+import 'package:india_one/screens/Pages/payments.dart';
 
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../constant/other_constants_io.dart';
-
+import '../../../core/data/local/shared_preference_keys.dart';
+import '../../Pages/insurance.dart';
+import '../../Pages/savings.dart';
 import '../../home_start/home_main_io.dart';
-import '../../insurances/insurances_main_io.dart';
-import '../../loans/loans_main_io.dart';
-import '../../payments/payments_main_io.dart';
-import '../../savings/savings_main_io.dart';
 
 class BottomTabsMainIO extends StatefulWidget {
   const BottomTabsMainIO({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
 
   @override
   void initState() {
-    mainHomeWidget = HomeMainIO();
+    mainHomeWidget = HomeMainIO(true);
     super.initState();
   }
 
@@ -35,11 +35,12 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
     heightIs = MediaQuery.of(context).size.height;
     widthIs = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
           SizedBox(
-            height: heightIs - bottomMargin+9,
+            height: heightIs - bottomMargin + 9,
             child: mainHomeWidget,
           ),
           Align(
@@ -53,43 +54,56 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      HomeEachBottomTabIO('assets/images/homeInactive.svg','assets/images/underline.svg', "${'home'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/homeInactive.svg',
+                          'assets/images/underline.svg', "${'home'.tr}", () {
                         selectedTabId = 0;
-                        mainHomeWidget = HomeMainIO();
+                        mainHomeWidget = HomeMainIO(false);
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 0, 12),
-                      HomeEachBottomTabIO('assets/images/loanInactive.svg','assets/images/underline.svg', "${'loans'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/loanInactive.svg',
+                          'assets/images/underline.svg', "${'loans'.tr}", () {
                         selectedTabId = 1;
-                        mainHomeWidget = LoansMainIO();
+                        mainHomeWidget = LoansPage();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 1, 12),
-                      HomeEachBottomTabIO('assets/images/paymentsInactive.svg','assets/images/underline.svg', "${'payments'.tr}", () {
+                      HomeEachBottomTabIO(
+                          'assets/images/paymentsInactive.svg',
+                          'assets/images/underline.svg',
+                          "${'payments'.tr}", () {
                         selectedTabId = 2;
-                        mainHomeWidget = PaymentsMainIO();
+                        mainHomeWidget = PaymentsPage();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 2, 12),
                       HomeEachBottomTabIO(
-                          'assets/images/insuranceInactive.svg','assets/images/underline.svg', "${'insurance'.tr}", () {
+                          'assets/images/insuranceInactive.svg',
+                          'assets/images/underline.svg',
+                          "${'insurance'.tr}", () {
                         selectedTabId = 3;
-                        mainHomeWidget = InsurancesMainIO();
+                        mainHomeWidget = InsurancePage();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
                       }, selectedTabId == 3, 12),
-                      HomeEachBottomTabIO('assets/images/savingsInactive.svg','assets/images/underline.svg', "${'savings'.tr}", () {
+                      HomeEachBottomTabIO('assets/images/savingsInactive.svg',
+                          'assets/images/underline.svg', "${'savings'.tr}", () {
                         selectedTabId = 4;
-                        mainHomeWidget = SavingsMainIO();
+                        mainHomeWidget = SavingsPage();
                         setState(() {
+                          showAuth();
                           selectedTabId;
                           mainHomeWidget;
                         });
@@ -103,5 +117,10 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
         ],
       ),
     );
+  }
+
+  Future<void> showAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs!.setBool(SPKeys.SHOW_AUTH, false);
   }
 }
