@@ -14,6 +14,9 @@ import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
 import '../screens/insurances/bike_insurance/bike_insurance_web_view.dart';
 import '../screens/insurances/car_insurance/car_insurance_web_view.dart';
+import '../screens/insurances/health/health_insurance.dart';
+import '../screens/insurances/health/health_insurance_fill_details.dart';
+import '../screens/insurances/health/insurance_summary.dart';
 import '../screens/loans/credit_card/credit_card_web_view.dart';
 import '../screens/loans/credit_score/credit_score_web_view.dart';
 import '../screens/loans/emi_card/emi_card_web_view.dart';
@@ -51,8 +54,10 @@ class MRouter {
   static const String bikeInsurance = 'BikeInsurance';
   static const String carInsurance = 'CarInsurance';
   static const String loanPage = 'LoansPage';
-
   static const String farmLoan = 'FarmLoan';
+  static const String healthInsurance = 'HealthInsurance';
+  static const String healthInsuranceFillDetails = 'HealthInsuranceFillDetails';
+  static const String insuranceSummary = 'InsuranceSummary';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -124,6 +129,15 @@ class MRouter {
 
       case farmLoan:
         return CupertinoPageRoute(builder: (_) => FarmLoan());
+
+      // case healthInsurance:
+      //   return CupertinoPageRoute(builder: (_) => HealthInsurance());
+
+      case healthInsuranceFillDetails:
+        return CupertinoPageRoute(builder: (_) => HealthInsuranceFillDetails());
+
+      case insuranceSummary:
+        return CupertinoPageRoute(builder: (_) => InsuranceSummary());
 
       default:
         return CupertinoPageRoute(builder: (_) => NoRouteScreen(settings.name));

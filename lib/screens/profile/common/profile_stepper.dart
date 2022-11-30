@@ -11,6 +11,7 @@ import '../../../constant/theme_manager.dart';
 class ProfileStepper {
   ProfileController profileController = Get.put(ProfileController());
   DateTime? selectedDate;
+  DateTime? selectedNomineeDate;
 
   Widget divider() {
     return Container(
@@ -704,6 +705,226 @@ class ProfileStepper {
           ),
         ),
       ),
+    );
+  }
+
+  Widget nomineeDetails(BuildContext context, GlobalKey<FormState> nomineeForm,
+      {bool? isFromLoan = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
+      child: SingleChildScrollView(
+        child: Form(
+          key: nomineeForm,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Nominee",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.lightBlack,
+                  fontSize: Dimens.font_18sp,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              textField(
+                controller: profileController.nomineeNameController.value,
+                label: 'Nominee name',
+                hint: 'Mention nominee name',
+                vaidation: (value) {
+                  if (value.toString().trim().isNotEmpty) {
+                    profileController.nameValidation(
+                      value,
+                      'Enter name of min 3 char',
+                    );
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              commonDropDown(
+                item: <String>['Brother', 'Sister']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+                value: profileController.nomineeRelationship.value == ''
+                    ? null
+                    : profileController.nomineeRelationship.value,
+                onChanged: (value) {
+                  profileController.nomineeRelationship.value = value;
+                },
+                label: 'Relationship',
+                hint: 'Relationship with you',
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              textField(
+                controller: profileController.nomineeDobController.value,
+                label: 'Date of birth (DD-MM-YYYY)',
+                hint: 'DD-MM-YYYY',
+                suffix: Icon(
+                  Icons.calendar_today_outlined,
+                  color: AppColors.greyText,
+                ),
+                onTap: () async {
+                  selectedNomineeDate = await datePicker(context);
+                  String date = DateFormat('yyyy-MM-dd')
+                      .format(selectedNomineeDate ?? DateTime.now());
+                  profileController.nomineeDobController.value.text = date;
+                },
+                isDisable: true,
+                vaidation: (value) {
+                  if (value.toString().trim().isNotEmpty) {
+                    return profileController.nullCheckValidation(
+                      value,
+                      'Enter DOB',
+                    );
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget healthStepper(GlobalKey<FormState> nomineeForm/* GlobalKey<FormState> nomineeForm,
+      {bool? isFromLoan = false}*/) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
+      child: SingleChildScrollView(
+        child: Form(
+          key: nomineeForm,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Proposed member's health",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.03,
+              ),
+              Text(
+                "Do the proposed member to be insured suffer from below listed issues?",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  // color:
+                    color: Colors.grey.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(8)),
+                width: double.maxFinite,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
+                  child: Text(
+                    """
+Diabetes, Hypertension, Thyroid Disorder, Nervous 
+disorder, fits, mental condition, heart & circulatory disorder, Respiratory disorder, Disorders of stomach including intestine, Kidney stones, Prostrate disorder, Disorder of spine and joints, Tumours or cancer, Ever reported positive for hepatitis B, HIV / AIDS or other sexually transmitted disease or is pregnant at the time of application
+data""",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  pickBox("Yes"),
+                  pickBox("No"),
+                ],
+              ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Text(
+                "Do any of the proposed members to be insured suffer from any  pre-existing diseases?",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.11),
+                    borderRadius: BorderRadius.circular(8)),
+                width: double.maxFinite,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
+                  child: Text(
+                    """
+Please choose “Yes” in case any of the proposed person to be insured has been / are under any continuous medication for treatment for any illness (Excluding vitamins, supplements) or under treatment for any illness.""",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  pickBox("Yes"),
+                  pickBox("No"),
+                ],
+              ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  pickBox(String? text) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+          height: Get.height * 0.055,
+          width: Get.width * 0.43,
+          child: radioButton(
+              value: text.toString(),
+              groupValue: "groupValue",
+              callBack: () {})),
     );
   }
 }

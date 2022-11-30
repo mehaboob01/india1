@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/insurances/health/health_insurance.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 
 import '../../constant/routes.dart';
@@ -41,7 +42,8 @@ class _InsurancePageState extends State<InsurancePage> {
               CommonPageHeader(pageName: PageName.insurance),
               CommonPageCategoriesHeading(pageName: PageName.insurance),
               Padding(
-                padding: EdgeInsets.only(bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                padding: EdgeInsets.only(
+                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
                 child: const InsuranceCard(),
               ),
               CommonBanner(),
@@ -87,15 +89,31 @@ class InsuranceCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightRed2,
           ),
         ),
-        ItemCard(
-          image: AppImages.criticalIllnessSvg,
-          label: 'Critical Illness',
-          itembgColor: ItemCardbgColor.lightRed2,
+        InkWell(
+          onTap: () {
+            // Get.toNamed(MRouter.healthInsurance, arguments: [
+            //   {"isAccidentInsurance": false}
+            // ]);
+            Get.to(()=>HealthInsurance(isAccidentInsurance: false,));
+          },
+          child: ItemCard(
+            image: AppImages.criticalIllnessSvg,
+            label: 'Critical Illness',
+            itembgColor: ItemCardbgColor.lightRed2,
+          ),
         ),
-        ItemCard(
-          image: AppImages.accidentSvg,
-          label: 'Accident',
-          itembgColor: ItemCardbgColor.lightRed2,
+        InkWell(
+          onTap: () {
+            // Get.toNamed(MRouter.healthInsurance, arguments: [
+            //   {"isAccidentInsurance": true}
+            // ]);
+            Get.to(()=>HealthInsurance(isAccidentInsurance: false,));
+          },
+          child: ItemCard(
+            image: AppImages.accidentSvg,
+            label: 'Accident',
+            itembgColor: ItemCardbgColor.lightRed2,
+          ),
         ),
       ],
     );

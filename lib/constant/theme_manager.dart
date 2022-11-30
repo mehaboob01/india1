@@ -476,6 +476,9 @@ class AppImages {
       '${assetSvg}payments/insurancePageSVG.svg';
   static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
   static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
+
+  static const String imgSearch = assetSvg + 'ic_search.svg';
+
 }
 
 extension PercentSize on double {
