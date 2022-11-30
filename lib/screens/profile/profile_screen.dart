@@ -616,10 +616,10 @@ class ProfileScreen extends StatelessWidget {
                               : false),
                       singleDetails(
                           title: "Date of birth",
-                          value: DateFormat('dd-MM-yyyy').format(DateTime.parse(
+                          value: profileDetailsModel.dateOfBirth != null?
+                          DateFormat('dd-MM-yyyy').format(DateTime.parse(
                                   profileDetailsModel.dateOfBirth
-                                      .toString())) ??
-                              "No DOB",
+                                      .toString())) : "No DOB",
                           isEmpty: profileDetailsModel.dateOfBirth == null
                               ? true
                               : false),

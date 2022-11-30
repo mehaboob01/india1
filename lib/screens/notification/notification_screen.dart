@@ -3,16 +3,29 @@ import 'package:get/get.dart';
 
 import 'package:india_one/screens/notification/notiication_card.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../constant/theme_manager.dart';
 import 'notification_manager.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
 
-  NotificationManager _notificationManager = Get.put(NotificationManager());
 
   NotificationScreen({super.key});
 
+  @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
 
+class _NotificationScreenState extends State<NotificationScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _notificationManager.callNotificationsApi();
+  }
+  NotificationManager _notificationManager = Get.put(NotificationManager());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +38,34 @@ class NotificationScreen extends StatelessWidget {
             SizedBox(height: 10),
             Expanded(
               child: Obx(
-               ()=> ListView.separated(
+
+
+               ()=>  _notificationManager.isLoading.value == true ?
+               Shimmer.fromColors(
+                 baseColor: AppColors.greySecond.withOpacity(0.5),
+                 highlightColor: AppColors.darkGrey!,
+                 child: ListView.builder(
+                   itemCount: _notificationManager.notificationList.length,
+                   itemBuilder: (context, index) {
+                     return Card(
+                       elevation: 1.0,
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(16),
+                       ),
+                       child: SizedBox(height: 80),
+                     );
+                   },
+                 ),
+               ):
+
+                   _notificationManager.notificationList.length == 0 ? Center(child: Text("No notifications!",style: TextStyle(
+                       fontSize: Dimens.font_20sp,
+                       fontWeight: FontWeight.w600,
+                       color: AppColors.greyText),)):
+
+
+
+                   ListView.separated(
                     itemBuilder: (context, index) => NotificationCard(notificationHeading: _notificationManager.notificationList[index].title!, notificationMsg: _notificationManager.notificationList[index].body!, dateTime: _notificationManager.notificationList[index].date!,
 
                     ),

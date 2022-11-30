@@ -64,6 +64,8 @@ class CashBackManager extends GetxController {
   // Bank list for drop down
   callBankListApi() async {
     bankList.clear();
+    bankListSend.clear();
+    bankListId.clear();
     bankListIdSend.clear();
     try {
       var response = await http.get(Uri.parse(baseUrl + Apis.banks), headers: {
@@ -138,21 +140,23 @@ class CashBackManager extends GetxController {
 
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
-        customerBankList.clear();
-        customerBankListSend.clear();
+
+
 
         for (var index in fetchCustomerBanksModel.data!.accounts!) {
           customerBankListSend.add(index);
 
           localSelectedList.add(false);
         }
+
+
         customerBankList.addAll(customerBankListSend);
 
         selectedplanList.addAll(localSelectedList);
         isLoading(false);
 
 
-        customerBankList.addAll(customerBankListSend);
+
       } else {
         Flushbar(
           title: "Error!",

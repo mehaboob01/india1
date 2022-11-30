@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -141,7 +142,7 @@ class CashBackRedeemPage extends StatelessWidget {
                           }
                         },
                         inputOnChanged: (inputValue) {
-                          if (inputValue.isNotEmpty) {
+                          if (inputValue!.isNotEmpty) {
                             double data = double.parse(inputValue).toDouble();
                             if (data <=
                                     _loyaltyManager.redeemablePoints.value &&
@@ -593,17 +594,50 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         hintText: 'Enter your account number here',
                         labelText: 'Account number',
                         keyboardType: TextInputType.number,
+                        inputFormat : [
+                          LengthLimitingTextInputFormatter(18),
+                        ],
                         inputValidator: (value) {
                           if (value != null) {
                             return CommonValidations().numberValidation(
-                                value,
-                                '*Account number is mandatory',
-                                'It only takes numbers');
+                                value : value,
+                                nullError : '*Account number is mandatory',
+                                invalidInputError :  'It only takes numbers',
+                                minValue : 8
+                            );
                           } else {
                             return '';
                           }
                         },
-                        inputOnChanged: (inputValue) {},
+                        inputOnChanged: (inputValuee) {
+                         //  redoCtrl.accountFormKey.currentState!.save();
+                         //  redoCtrl.accountFormKey.currentState.validate();
+                         //
+                         // print( redoCtrl.accountFormKey.currentState!.value['accountNumber']) ;
+                         //
+                         //
+                         //
+                         //  if(inputValue!.length<7)
+                         //    {
+                         //
+                         //
+                         //
+                         //
+                         //
+                         //
+                         //
+                         //      return "error";
+                         //
+                         //    }
+                         //
+
+
+
+
+
+
+
+                        },
                         inputOnSubmitted: (value) {},
                       ),
                       sizedbox,

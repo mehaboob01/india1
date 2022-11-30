@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:india_one/constant/extensions.dart';
 
@@ -15,6 +16,7 @@ class CommonTextField extends StatelessWidget {
       this.inputOnChanged,
       this.isObscure = false,
       this.inputOnSubmitted,
+      this.inputFormat,
       required this.formName,
       this.initialValue,
       this.isfieldEnabled});
@@ -24,9 +26,10 @@ class CommonTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController? inputController;
   final String? Function(String? value) inputValidator;
-  final void Function(dynamic)? inputOnChanged;
-  final void Function(dynamic)? inputOnSubmitted;
+  final String? Function(String? value)? inputOnChanged;
+  final String? Function(String? value)? inputOnSubmitted;
   final bool isObscure;
+  final List<TextInputFormatter>? inputFormat;
   final String formName;
   final String? initialValue;
   final bool? isfieldEnabled;
@@ -38,6 +41,7 @@ class CommonTextField extends StatelessWidget {
       initialValue: initialValue ?? null,
       controller: inputController,
       maxLines: maxlines,
+      inputFormatters: inputFormat,
       keyboardType: keyboardType,
       validator: inputValidator,
       obscureText: isObscure,

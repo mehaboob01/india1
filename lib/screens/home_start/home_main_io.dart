@@ -240,8 +240,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onLoading() async {
     // your api here

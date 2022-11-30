@@ -146,10 +146,7 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.to(() => CommonWebView(
-                  title: 'Emi Card',
-                  url: Apis.emiCard,
-                ));
+            Get.toNamed(MRouter.emiCard);
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,
@@ -159,10 +156,7 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.to(() => CommonWebView(
-                  title: 'Credit Card',
-                  url: Apis.creditCard,
-                ));
+            Get.toNamed(MRouter.creditCard);
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,
@@ -172,10 +166,7 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.to(() => CommonWebView(
-                  title: 'Credit Score',
-                  url: Apis.creditScore,
-                ));
+            Get.toNamed(MRouter.creditScore);
           },
           child: ItemCard(
             image: AppImages.creditScoreSvg,
