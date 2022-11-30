@@ -623,6 +623,8 @@ class ProfileController extends GetxController {
       Function? callBack,
       String? loanApplicationId}) async {
     addOccupationLoading.value = true;
+
+    print("empployment type ${employmentType.value}");
     print(employmentType.value);
     try {
       var response = await DioApiCall().commonApiCall(
@@ -639,7 +641,7 @@ class ProfileController extends GetxController {
               "occupation": "${occupationController.value.text}",
               "income": "${monthlyIncomeController.value.text}",
               "preferredLanguage": "EN",
-              "employmentType": "${employmentType.value}",
+              "employmentType": "${employmentType.value.toString() == "Self Employed"?"SelfEmployed":employmentType.value.toString() == "Business Owner"?"BusinessOwner":employmentType.value}",
             }
           },
         ),
@@ -853,9 +855,9 @@ class ProfileController extends GetxController {
         if (commonApiResponseModel.status!.code == 2000) {
           logoutLoading.value = false;
           if (Platform.isAndroid) {
-            SharedPreferences preferences =
-            await SharedPreferences.getInstance();
+            SharedPreferences preferences = await SharedPreferences.getInstance();
             await preferences.clear();
+
             Navigator.of(context)
                 .pushNamedAndRemoveUntil(MRouter.splashRoute, (Route<dynamic> route) => false);
 

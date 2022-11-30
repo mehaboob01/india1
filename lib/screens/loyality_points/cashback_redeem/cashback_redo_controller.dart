@@ -15,5 +15,6 @@ class CashBackRedoController extends GetxController {
   final bankTypeDropDownTapped = false.obs; // account type dropdown ontap
   final redeemPointsSliderValue = 0.0.obs; // slider value
   final redeemPointsMinValue = 0.0.obs; // slider minimum value
+  final accountNumberAutoValidate = false.obs; // account number auto validate
 
 }

@@ -585,6 +585,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                       // enter your account number ------------------------------------------------------------
                       CommonTextField(
                         formName: 'accountNumber',
+                        isAutoValidate : redoCtrl.accountNumberAutoValidate.value,
                         isfieldEnabled:
                             cashBackManager.selectedIndex.value != (-1)
                                 ? false
@@ -610,6 +611,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                           }
                         },
                         inputOnChanged: (inputValuee) {
+                          redoCtrl.accountNumberAutoValidate.value = true;
                          //  redoCtrl.accountFormKey.currentState!.save();
                          //  redoCtrl.accountFormKey.currentState.validate();
                          //
@@ -675,6 +677,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                       // IFSC CODE -----------------------------------------------------------------------
 
                       CommonTextField(
+                        isUpperCase : true,
                         formName: 'ifscCode',
                         isfieldEnabled:
                             cashBackManager.selectedIndex.value != (-1)
@@ -685,10 +688,14 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         hintText: 'Enter your IFSC code here',
                         labelText: 'IFSC code',
                         keyboardType: TextInputType.text,
+              inputFormat : [
+              LengthLimitingTextInputFormatter(11),
+              ],
                         inputValidator: (value) => CommonValidations()
-                            .textValidation(value, '*IFSC code is mandatory',
-                                'It only takes alphabets'),
+                            .textValidation(value : value,nullError :   '*IFSC code is mandatory',
+                               invalidInputError : 'Please enter correct data', isIfsc : true),
                         inputOnChanged: (inputValue) {},
+
                         inputOnSubmitted: (value) {},
                       ),
                       sizedbox,

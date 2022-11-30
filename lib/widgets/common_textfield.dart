@@ -9,19 +9,23 @@ class CommonTextField extends StatelessWidget {
   const CommonTextField(
       {this.hintText,
       this.labelText,
+        this.inUperCase,
       this.maxlines = 1,
       this.keyboardType = TextInputType.text,
       this.inputController,
       required this.inputValidator,
       this.inputOnChanged,
+      this.isAutoValidate,
       this.isObscure = false,
       this.inputOnSubmitted,
+      this.isUpperCase,
       this.inputFormat,
       required this.formName,
       this.initialValue,
       this.isfieldEnabled});
   final String? hintText;
   final String? labelText;
+  final bool? inUperCase;
   final int maxlines;
   final TextInputType keyboardType;
   final TextEditingController? inputController;
@@ -33,13 +37,17 @@ class CommonTextField extends StatelessWidget {
   final String formName;
   final String? initialValue;
   final bool? isfieldEnabled;
+  final bool? isAutoValidate;
+  final bool? isUpperCase;
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: formName,
+      textCapitalization: isUpperCase == true ? TextCapitalization.characters : TextCapitalization.none,
       enabled: isfieldEnabled ?? true,
       initialValue: initialValue ?? null,
       controller: inputController,
+      autovalidateMode: isAutoValidate == true ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
       maxLines: maxlines,
       inputFormatters: inputFormat,
       keyboardType: keyboardType,

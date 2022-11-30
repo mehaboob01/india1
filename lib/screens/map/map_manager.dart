@@ -1,10 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -21,17 +20,31 @@ import 'map_model.dart';
 
 class MapManager extends GetxController {
   var mapCoordinateList = <Locations>[].obs;
-  late GoogleMapController? mapController;
+  var mapCoordinateListSend = <Locations>[];
+
+  var mapPlotList = <Locations>[].obs;
+  var mapPlotListSend = <Locations>[];
   var isLoading = false.obs;
   var cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 15).obs;
   var locationText = "Search Location".obs;
+
   @override
   void onReady() {
-    getCurrentLocation();
+    // TODO: implement onReady
     super.onReady();
   }
 
-  late BitmapDescriptor customIcon;
+  @override
+  void onInit() {
+    super.onInit();
+    getCurrentLocation();
+    getCustomIcon();
+  }
+
+  List<Marker> allMarkers = <Marker>[].obs;
+  List<GeoLocation?> markersList = <GeoLocation?>[].obs;
+  GoogleMapController? mapController;
+  List<GeoLocation?> markersListSend = <GeoLocation?>[].obs;
   getCustomIcon() {
     BitmapDescriptor.fromAssetImage(
       ImageConfiguration(size: Size(50, 70)),
@@ -41,31 +54,59 @@ class MapManager extends GetxController {
     });
   }
 
-  List<Marker> allMarkersPlot = <Marker>[].obs;
-  List<GeoLocation?> markersCoordinateList = <GeoLocation?>[].obs;
+  late BitmapDescriptor customIcon;
 
-  addMarker(String markerId, GeoLocation? loc) async {
+  addMarker(
+    String markerId,
+    GeoLocation? loc,
+  ) async {
     var marker = Marker(
         onTap: () {},
+        // icon: customIcon,
         markerId: MarkerId(markerId),
         position: LatLng(loc!.lat!.toDouble(), loc.lon!.toDouble()),
         infoWindow: InfoWindow(title: markerId));
 
-    allMarkersPlot.add(marker);
+    allMarkers.add(marker);
+  }
+
+  var latLongAddress;
+
+  Future<void> getAddressFromLatLong(lat, long) async {
+    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
+    String type = '(regions)';
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=$kPLACES_API_KEY';
+
+    var response = await http.get(Uri.parse(baseURL));
+    if (response.statusCode == 200) {
+      locationText.value =
+          (json.decode(response.body)['results'][0]["formatted_address"]);
+    } else {
+      throw Exception('Failed to load predictions');
+    }
+  }
+
+  Future<void> animateTo(double lat, double lng) async {
+    final p = LatLng(lat, lng);
+    await mapController!.animateCamera(
+        CameraUpdate.newCameraPosition(CameraPosition(target: p, zoom: 13)));
   }
 
   getCurrentLocation() async {
     Position position;
+
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
-    await getAddressFromLatLong(position.latitude, position.longitude);
+    getAddressFromLatLong(position.latitude, position.longitude);
     getLocations(position.latitude, position.longitude);
-    await animateTo(position.latitude, position.longitude);
+    animateTo(position.latitude, position.longitude);
   }
 
   void getLocations(double lat, double long) async {
     mapCoordinateList.clear();
-    markersCoordinateList.clear();
+    mapCoordinateListSend.clear();
+    markersList.clear();
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
@@ -100,17 +141,22 @@ class MapManager extends GetxController {
         } else {
           for (var index in mapCordinatesModel.data!.locations!) {
             mapCoordinateList.add(index);
-
-            markersCoordinateList.add(index.geoLocation);
+            mapCoordinateListSend.add(index);
+            markersList.add(index.geoLocation);
+            markersListSend.add(index.geoLocation);
           }
+          markersList.addAll(markersListSend);
 
+          mapCoordinateList.addAll(mapCoordinateListSend);
           for (var i = 0; i < mapCoordinateList.length; i++) {
             addMarker("$i", mapCoordinateList[i].geoLocation);
           }
           isLoading(false);
         }
+
         if (mapCordinatesModel!.status!.code == 2000) {
           isLoading(false);
+          print("http success in model!!");
         } else {
           Flushbar(
             title: "Error!",
@@ -136,28 +182,7 @@ class MapManager extends GetxController {
     }
   }
 
-  Future<void> getAddressFromLatLong(lat, long) async {
-    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
-    String type = '(regions)';
-    String baseURL =
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=$kPLACES_API_KEY';
-
-    var response = await http.get(Uri.parse(baseURL));
-    if (response.statusCode == 200) {
-      locationText.value =
-          (json.decode(response.body)['results'][0]["formatted_address"]);
-    } else {
-      throw Exception('Failed to load predictions');
-    }
-  }
-
-  Future<void> animateTo(double lat, double lng) async {
-    final p = LatLng(lat, lng);
-    await mapController!.animateCamera(
-        CameraUpdate.newCameraPosition(CameraPosition(target: p, zoom: 13)));
-  }
-
-  Future<void> openDirections(double latitude, double longitude) async {
+  Future<void> openMap(double latitude, double longitude) async {
     String googleUrl =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     if (await canLaunch(googleUrl)) {
@@ -165,5 +190,10 @@ class MapManager extends GetxController {
     } else {
       throw 'Could not open the map.';
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

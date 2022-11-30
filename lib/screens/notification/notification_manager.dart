@@ -44,8 +44,8 @@ class NotificationManager extends GetxController {
       var response = await http.post(Uri.parse(baseUrl + Apis.notifications),
           body: jsonEncode(
               {"customerId": customerId,
-                "nextToken" : " ",
-                "limit" : 1
+                "nextToken" : null,
+                "limit" : 20
               }),
           headers: {
             'Content-type': 'application/json',

@@ -27,6 +27,7 @@ import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
+import '../screens/refer/refer_earn_ui.dart';
 
 class MRouter {
   static const String splashRoute = 'SplashWidget';
@@ -54,6 +55,8 @@ class MRouter {
   static const String bikeInsurance = 'BikeInsurance';
   static const String carInsurance = 'CarInsurance';
   static const String loanPage = 'LoansPage';
+  static const String referEarn = 'ReferEarn';
+
   static const String farmLoan = 'FarmLoan';
   static const String healthInsurance = 'HealthInsurance';
   static const String healthInsuranceFillDetails = 'HealthInsuranceFillDetails';
@@ -66,6 +69,8 @@ class MRouter {
 
       case homeScreen:
         return CupertinoPageRoute(builder: (_) => BottomTabsMainIO());
+      case referEarn:
+        return CupertinoPageRoute(builder: (_) => ReferEarn());
 
       case loanPage:
         return CupertinoPageRoute(builder: (_) => LoansPage());
