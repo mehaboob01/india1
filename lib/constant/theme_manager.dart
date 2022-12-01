@@ -479,6 +479,11 @@ class AppImages {
 
   static const String imgSearch = assetSvg + 'ic_search.svg';
 
+  static const String arrowDownLeftSvg = '${assetSvg}ic_arrow_down_left.svg';
+  static const String arrowDownLeft2Svg = '${assetSvg}ic_arrow_down_left_left_2.svg';
+  static const String arrowDownRightSvg = '${assetSvg}ic_arrow_down_right.svg';
+  static const String arrowUpRightSvg = '${assetSvg}ic_arrow_up.svg';
+  static const String skipWalkThroughSvg = '${assetSvg}ic_skip_walkthrought.svg';
 }
 
 extension PercentSize on double {
