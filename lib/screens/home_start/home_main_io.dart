@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/screens/map/map_manager.dart';
 import 'package:india_one/screens/map/map_ui.dart';
 
@@ -54,7 +55,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     cashbackCtrl.onInit();
     _profileController.getProfileData();
 
-    // showFirstTimePoints();
+     showFirstTimePoints();
 
     //checkLogin();
   }
@@ -130,6 +131,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
+  CashBackManager _cashBackManager = Get.put(CashBackManager());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
   ProfileController _profileController = Get.put(ProfileController());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
@@ -141,7 +143,12 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   String msg = "You are not authorized.";
 
   void showFirstTimePoints() async {
-    if (_homeManager.loyalityPoints.toString() == "0") {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
+
+    bool? showPopUp = prefs.getBool(SPKeys.FIRST_POINTS_SHOW);
+
+    if (points!=0) {
       Future.delayed(
           Duration(milliseconds: 300),
           () => Alert(
@@ -184,7 +191,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
-              ).show());
+              ).show()).then((value) =>   prefs.setBool(SPKeys.FIRST_POINTS_SHOW, true));
     }
   }
 

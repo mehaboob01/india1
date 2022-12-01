@@ -8,6 +8,8 @@ class SPKeys {
   static const String DEVICE_TOKEN = 'deviceToken';
   static const String NOTIFICATION_NEXT_TOKEN = 'nextToken';
 
+  static const String FIRST_POINTS_SHOW = 'first_points_show';
+
 
 
 

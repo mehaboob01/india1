@@ -31,11 +31,32 @@ class ContactCont extends GetxController {
 
     if (!await FlutterContacts.requestPermission(readonly: true)) {
       permissionDenied.value = true;
-    } else {
+
+    }
+
+
+
+
+    else
+
+    {
       final _contacts = await FlutterContacts.getContacts(
           withThumbnail: true, withProperties: true);
       contacts = _contacts.toList();
+
+      print("contact from device ${contacts}");
+      // for( var i = 0 ; i >= contacts.length; i++ ) {
+      //   if(contacts[i].phones != null)
+      //   {
+      //     filteredList.value[i].phones;
+      //   }
+      // }
+      print("contact from forloop ${filteredList.value}");
+
+
     }
+
+
     filteredList.value = contacts;
     isLoading.value = false;
 

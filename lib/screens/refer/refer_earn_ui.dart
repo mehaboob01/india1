@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,6 +26,8 @@ class _ReferEarnState extends State<ReferEarn> {
   ReferManager _referManager = Get.put(ReferManager());
   ContactCont _contactCont = Get.put(ContactCont());
 
+  List<String> invitedList = [];
+
   @override
   void initState() {
     super.initState();
@@ -36,10 +39,13 @@ class _ReferEarnState extends State<ReferEarn> {
     super.dispose();
   }
 
+  var snackBar = SnackBar(
+    content: Text('Already invited!'),
+  );
+
   @override
   Widget build(BuildContext context) {
-    if (contactCont.permissionDenied.value)
-      return Center(child: Text('Permission denied'));
+    if (contactCont.permissionDenied.value) Get.back();
     if (contactCont.contacts == null)
       return Center(child: CircularProgressIndicator());
     return Scaffold(
@@ -140,77 +146,6 @@ class _ReferEarnState extends State<ReferEarn> {
                           SizedBox(
                             height: Get.height * 0.03,
                           ),
-                          // SizedBox(
-                          //   height: Get.height * 0.03,
-                          // ),
-                          // // Text(
-                          // //   "Share & invite",
-                          // //   style: TextStyle(
-                          // //     fontWeight: FontWeight.w500,
-                          // //     fontSize: 20,
-                          // //   ),
-                          // // ),
-                          // // SizedBox(
-                          // //   height: Get.height * 0.02,
-                          // // ),
-                          // // Row(
-                          // //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          // //   children: [
-                          // //     shareInvite("Whatsapp", "assets/svg/refer/whatsApp.svg",
-                          // //         () {
-                          // //       print("whatsapp");
-                          // //     }),
-                          // //     SizedBox(
-                          // //       width: Get.width * 0.01,
-                          // //     ),
-                          // //     shareInvite(
-                          // //         "Facebook", "assets/svg/refer/facebook.svg", () {}),
-                          // //     SizedBox(
-                          // //       width: Get.width * 0.01,
-                          // //     ),
-                          // //     shareInvite(
-                          // //         "Instagram", "assets/svg/refer/instagram.svg", () {}),
-                          // //     SizedBox(
-                          // //       width: Get.width * 0.01,
-                          // //     ),
-                          // //     shareInvite(
-                          // //         "Message", "assets/svg/refer/message.svg", () {}),
-                          // //   ],
-                          // // ),
-                          // SizedBox(
-                          //   height: Get.height * 0.02,
-                          // ),
-                          // Text(
-                          //   "Favorites",
-                          //   style: TextStyle(
-                          //     fontWeight: FontWeight.w500,
-                          //     fontSize: 20,
-                          //   ),
-                          // ),
-                          // Container(
-                          //     height: Get.height * 0.05,
-                          //     child: Obx(
-                          //       () => ListView.builder(
-                          //         scrollDirection: Axis.horizontal,
-                          //         shrinkWrap: true,
-                          //         itemBuilder: (context, index) {
-                          //           return Padding(
-                          //               padding: const EdgeInsets.all(8.0),
-                          //               child: contactCont.favIsEmpty.value
-                          //                   ? null
-                          //                   : favContact(
-                          //                       index,
-                          //                       contactCont
-                          //                           .favList.value[index].displayName,
-                          //                       contactCont
-                          //                           .favList.value[index].thumbnail));
-                          //         },
-                          //         itemCount: contactCont.favList.value.length,
-                          //       ),
-                          //     )),
-                          // Divider(
-                          //   thickness: 2,
-                          // ),
                           Container(
                             height: Get.height * 0.07,
                             width: double.maxFinite,
@@ -221,29 +156,17 @@ class _ReferEarnState extends State<ReferEarn> {
                                 }
                               },
                               decoration: InputDecoration(
-                                hintText: "Search by name",
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 14),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                prefixIcon: ShaderMask(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SvgPicture.asset(
-                                            AppImages.searchIcon),
-                                      ),
-                                    ),
-                                    shaderCallback: (bounds) {
-                                      return linearGradient
-                                          .createShader(bounds);
-                                    }),
-                              ),
+                                  hintText: "Search by name",
+                                  hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  prefixIcon: Icon(Icons.search)),
                             ),
                           ),
                           SizedBox(
-                          height: 4,
+                            height: 4,
                           ),
                           Obx(
                             () => _contactCont.isLoading.value == true
@@ -251,29 +174,34 @@ class _ReferEarnState extends State<ReferEarn> {
                                 : ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: contactCont.filteredList.value.length,
+                                    itemCount:
+                                        contactCont.filteredList.value.length,
                                     itemBuilder: (context, index) {
                                       return Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 2, right: 2,bottom: 4),
+                                            left: 2, right: 2, bottom: 8),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
                                             CircleAvatar(
                                               radius: 25,
-                                              backgroundColor: Colors.amber,
+                                              backgroundColor:
+                                                  AppColors.primary,
                                               child: Container(
                                                 height: double.maxFinite,
                                                 width: double.maxFinite,
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    gradient: contactCont
-                                                        .randomColorGradients()),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Color(0xFF004280),
+                                                        Color(0xFF7EA2C4)
+                                                      ],
+                                                    )),
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       contactCont
@@ -285,8 +213,7 @@ class _ReferEarnState extends State<ReferEarn> {
                                                           ? ""
                                                           : "${contactCont.filteredList.value[index].name.first.substring(0, 1)}",
                                                       style: TextStyle(
-                                                          color:
-                                                              Colors.black),
+                                                          color: Colors.white),
                                                     ),
                                                     Text(
                                                       contactCont
@@ -298,8 +225,7 @@ class _ReferEarnState extends State<ReferEarn> {
                                                           ? ""
                                                           : "${contactCont.filteredList.value[index].name.last.substring(0, 1)}",
                                                       style: TextStyle(
-                                                          color:
-                                                              Colors.black),
+                                                          color: Colors.white),
                                                     ),
                                                   ],
                                                 ),
@@ -321,7 +247,6 @@ class _ReferEarnState extends State<ReferEarn> {
                                                 ],
                                               ),
                                             ),
-
                                             inviteButton(index)
                                           ],
                                         ),
@@ -338,64 +263,38 @@ class _ReferEarnState extends State<ReferEarn> {
     );
   }
 
-  // Widget favContact(index, name, thumbnail) {
-  //   return Container(
-  //     width: Get.width * 0.2,
-  //     height: Get.height * 0.06,
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //       children: [
-  //         CircleAvatar(
-  //           radius: 25,
-  //           child: thumbnail != null
-  //               ? Image.asset(thumbnail)
-  //               : Container(
-  //                   height: double.maxFinite,
-  //                   width: double.maxFinite,
-  //                   decoration: BoxDecoration(
-  //                       shape: BoxShape.circle,
-  //                       gradient: contactCont.randomColorGradients()),
-  //                   child: Row(
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     children: [
-  //                       Text(
-  //                         contactCont.favList.value[index].name.first.isEmpty
-  //                             ? ""
-  //                             : "${contactCont.favList.value[index].name.first.substring(0, 1)}",
-  //                         style: TextStyle(color: Colors.black),
-  //                       ),
-  //                       Text(
-  //                         contactCont.favList.value[index].name.last.isEmpty
-  //                             ? ""
-  //                             : "${contactCont.filteredList.value[index].name.last.substring(0, 1)}",
-  //                         style: TextStyle(color: Colors.black),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //         ),
-  //         Text(name,
-  //             style: TextStyle(
-  //               fontWeight: FontWeight.w400,
-  //               fontSize: 14,
-  //               color: Color(0xFF2D2D2D),
-  //             )),
-  //         inviteButton(),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   inviteButton(int index) {
     return GestureDetector(
       onTap: () {
-        if (contactCont.filteredList.value[index].phones.isNotEmpty) {
-          print("cdonteact number for api hit ");
-          print(contactCont.filteredList.value[index].phones.first.number);
-          _referManager.callReferApi(
-              contactCont.filteredList.value[index].phones.first.number);
+        if (invitedList.contains(contactCont
+            .filteredList.value[index].phones.first.number
+            .toString())) {
+          print("already invited");
+          const snackBar = SnackBar(
+            content: Text('Already invited!'),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else {
+          setState(() {
+            _referManager.callReferApi(contactCont
+                .filteredList.value[index].phones.first.number
+                .toString());
+
+            invitedList.add(contactCont
+                .filteredList.value[index].phones.first.number
+                .toString());
+
+            print("selected list${invitedList.toString()}");
+          });
         }
+
+        // if (contactCont.filteredList.value[index].phones.isNotEmpty) {
+        //   print("cdonteact number for api hit ");
+        //   print(contactCont.filteredList.value[index].phones.first.number);
+        //   _referManager.callReferApi(
+        //       contactCont.filteredList.value[index].phones.first.number);
+        //}
       },
       child: Padding(
         padding: EdgeInsets.only(left: 4, right: 4),
@@ -403,16 +302,47 @@ class _ReferEarnState extends State<ReferEarn> {
           height: Get.height * 0.04,
           width: Get.width * 0.2,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            gradient: LinearGradient(
-              colors: [Color(0xFF004280), Color(0xFF357CBE)],
-            ),
-          ),
+              border: invitedList.contains(
+                      contactCont.filteredList.value[index].phones.isNotEmpty
+                          ? contactCont
+                              .filteredList.value[index].phones.first.number
+                              .toString()
+                          : null)
+                  ? Border.all(width: 1, color: AppColors.primary)
+                  : null,
+              borderRadius: BorderRadius.circular(5),
+              gradient: invitedList.contains(
+                      contactCont.filteredList.value[index].phones.isNotEmpty
+                          ? contactCont
+                              .filteredList.value[index].phones.first.number
+                              .toString()
+                          : null)
+                  ? LinearGradient(
+                      colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
+                    )
+                  : LinearGradient(
+                      colors: [Color(0xFF004280), Color(0xFF357CBE)],
+                    )),
           child: Center(
               child: Text(
-            "Invite",
+            invitedList.contains(contactCont
+                        .filteredList.value[index].phones.isNotEmpty
+                    ? contactCont.filteredList.value[index].phones.first.number
+                        .toString()
+                    : null)
+                ? "Invited"
+                : "Invite",
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: invitedList.contains(
+                        contactCont.filteredList.value[index].phones.isNotEmpty
+                            ? contactCont
+                                .filteredList.value[index].phones.first.number
+                                .toString()
+                            : null)
+                    ? AppColors.primary
+                    : AppColors.white),
           )),
         ),
       ),

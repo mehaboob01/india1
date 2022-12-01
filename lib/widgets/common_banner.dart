@@ -11,7 +11,7 @@ class CommonBanner extends StatelessWidget {
     return GestureDetector(
       onTap: () {
 
-      //  Get.toNamed(MRouter.referEarn);
+       Get.toNamed(MRouter.referEarn);
       },
       child: Container(
         width: double.maxFinite,

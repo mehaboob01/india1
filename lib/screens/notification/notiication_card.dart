@@ -17,10 +17,11 @@ class NotificationCard extends StatelessWidget {
   final String notificationMsg;
   final String dateTime;
 
+
+
   bool isActive(String dateTime) {
     DateTime dateNow = DateTime.now();
-    DateTime startDateTemp =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateTime);
+    DateTime startDateTemp = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(CommonMethods().getDateFormat(dateTime));
     final difference = dateNow.difference(startDateTemp);
     if (difference.inHours > 12) {
       return false;
@@ -38,7 +39,7 @@ class NotificationCard extends StatelessWidget {
         type: MaterialType.transparency,
         child: Container(
             padding: EdgeInsets.symmetric(
-                vertical: height * 0.02, horizontal: width * 0.02),
+                vertical: height * 0.02, horizontal: width * 0.01),
             color: isActive(dateTime) ? Color(0xffFEF7E9) : Colors.white,
             width: width,
             height: height * 0.15,
@@ -65,7 +66,7 @@ class NotificationCard extends StatelessWidget {
                           SizedBox(height: 10),
                           Text(notificationHeading,
                               style: AppStyle.shortHeading.copyWith(
-                                  fontSize: Dimens.font_16sp,
+                                  fontSize: Dimens.font_14sp,
                                   color: isActive(dateTime)
                                       ? AppColors.blackColor
                                       : Color(0xff666666),
@@ -93,4 +94,5 @@ class NotificationCard extends StatelessWidget {
             ? Image.asset(AppImages.notificationActive)
             : Image.asset(AppImages.notificationWithBorderImage));
   }
+
 }

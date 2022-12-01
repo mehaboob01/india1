@@ -25,7 +25,7 @@ class HomeManager extends GetxController {
   RxInt pointsRedeemed = 0.obs;
   RxInt redeemablePoints = 0.obs;
   RxInt atmRewards = 0.obs;
-  var loyalityPoints = '0'.obs;
+  RxInt loyalityPoints = 0.obs;
   var isClicked = false.obs;
   var showAuth = false.obs;
 
@@ -39,10 +39,11 @@ class HomeManager extends GetxController {
   void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-    String? points = prefs.getString(SPKeys.LOYALTY_POINT_GAINED);
+    int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
     print("Customer Id ${customerId}");
+    print("points Id ${points}");
 
-    loyalityPoints.value = "0";
+    loyalityPoints.value = points!;
     try {
       isLoading.value = true;
       var response = await http.get(

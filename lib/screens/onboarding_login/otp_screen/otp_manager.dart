@@ -111,16 +111,11 @@ class OtpManager extends GetxController {
 
         if (verifyOtpModel.status!.code == 2000) {
           prefs = await SharedPreferences.getInstance();
-          prefs!.setString(
-              SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-          prefs!.setString(SPKeys.REFRESH_TOKEN,
-              verifyOtpModel.data!.refreshToken.toString());
-          prefs!.setString(
-              SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-          loyaltyPoints.value =
-              verifyOtpModel.data!.loyaltyPointsGained.toString();
-          prefs!.setString(SPKeys.LOYALTY_POINT_GAINED,
-              verifyOtpModel.data!.loyaltyPointsGained.toString());
+          prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
+          prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
+          prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+          loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
+          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained!);
           prefs!.setBool(SPKeys.LOGGED_IN, true);
           Get.offAllNamed(MRouter.homeScreen);
         } else {
