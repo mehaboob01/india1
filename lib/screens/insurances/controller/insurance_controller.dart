@@ -98,12 +98,12 @@ class InsuranceController extends GetxController {
         }),
       );
       print("$response");
-      if (response != null) {
+      // if (response != null) {
         Get.to(() => InsuranceSubmissionPage());
         Future.delayed(Duration(seconds: 3), () {
           Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
         });
-      }
+      // }
     } catch (exception) {
       print(exception);
     } finally {

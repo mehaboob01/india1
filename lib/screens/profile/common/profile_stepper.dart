@@ -911,16 +911,16 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  pickBox("Yes"),
-                  pickBox("No"),
-                ],
-              ),
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     pickBox("Yes"),
+              //     pickBox("No"),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: Get.height * 0.01,
+              // ),
             ],
           ),
         ),
