@@ -43,19 +43,22 @@ class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
 
   @override
   State<HomeMainIO> createState() => _HomeMainIOState();
+
 }
 
 class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
+  final cashbackManager = Get.put(CashBackManager());
   @override
   void initState() {
     super.initState();
     //  WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
-   // _homeManager.sendTokens();
+    // _homeManager.sendTokens();
     cashbackCtrl.onInit();
+    cashbackManager.callBankListApi();
     _profileController.getProfileData();
 
-     showFirstTimePoints();
+    showFirstTimePoints();
 
     //checkLogin();
   }
@@ -124,7 +127,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     print("state : ${state}");
     if (state == AppLifecycleState.resumed) {
-
       checkLogin();
     }
   }
@@ -146,52 +148,99 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
 
-
-
-    if (points!=0) {
+    if (points != 0) {
       Future.delayed(
-          Duration(milliseconds: 300),
-          () => Alert(
-                buttons: [],
-                context: context,
-                title: "Welcome to India1 Cashback Program",
-                content: Obx(
-                  () => Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Image.asset(
-                        "assets/images/rewards.gif",
-                        width: 224,
-                        height: 184,
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        "You just won",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          color: AppColors.black,
-                          fontSize: Dimens.font_12sp,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        _homeManager.loyalityPoints.toString(),
-                        style: TextStyle(
+              Duration(milliseconds: 300),
+              () =>
+
+         Alert(
+        padding: EdgeInsets.zero,
+        style: AlertStyle(
+            alertPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alertBorder: Border.all(width: 0)),
+        buttons: [],
+        context: context,
+        content: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.55,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(AppImages.homeScreenPopUpBg))),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Welcome to',
+                  style: AppStyle.shortHeading
+                      .copyWith(height: 1.2, fontSize: Dimens.font_24sp),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Cashback',
+                      style: AppStyle.shortHeading.copyWith(
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          letterSpacing: 1.2,
+                          fontSize: Dimens.font_24sp),
+                    ),
+                    Text(
+                      ' by ',
+                      style: AppStyle.shortHeading.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.black,
-                          fontSize: Dimens.font_18sp,
+                          height: 1.2,
+                          fontSize: Dimens.font_20sp),
+                    ),
+                    Text(
+                      'India1',
+                      style: AppStyle.shortHeading.copyWith(
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          letterSpacing: 1.2,
+                          fontSize: Dimens.font_24sp),
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                Text(
+                  'You just won',
+                  style:
+                  AppStyle.shortHeading.copyWith(fontSize: Dimens.font_20sp),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: Dimens.padding_12dp),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(AppImages.goldenHexagonal),
+                      Positioned(
+                        top: 45,
+                        child: Obx(
+                          ()=> Text(
+                            _homeManager.loyalityPoints.toString(),
+                            style: AppStyle.shortHeading.copyWith(
+                                fontWeight: FontWeight.w900, fontSize: 40),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ).show()).then((value) =>    prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
+                Text(
+                  'Points',
+                  style: AppStyle.shortHeading.copyWith(
+                      fontWeight: FontWeight.w700, fontSize: Dimens.font_24sp),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ).show())
+          .then((value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
     }
   }
 
@@ -247,12 +296,13 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   void _onLoading() async {
     // your api here
     _homeManager.callHomeApi();
-  //  _homeManager.sendTokens();
+    //  _homeManager.sendTokens();
     _profileController.getProfileData();
     _refreshController.loadComplete();
     cashbackCtrl.onInit();
@@ -262,7 +312,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
-   // _homeManager.sendTokens();
+    // _homeManager.sendTokens();
     _profileController.getProfileData();
   }
 
@@ -327,8 +377,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                       Expanded(
                                         child: Row(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text('welcome'.tr,
                                                 style: AppStyle.shortHeading
@@ -336,13 +385,16 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600)),
-                                            SizedBox(width: 2,),
-                                            Text( "${_profileController.profileDetailsModel.value.firstName ?? ''}",
+                                            SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(
+                                                "${_profileController.profileDetailsModel.value.firstName ?? ''}",
                                                 style: AppStyle.shortHeading
                                                     .copyWith(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                    FontWeight.w600)),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600)),
                                           ],
                                         ),
                                       ),
