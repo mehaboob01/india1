@@ -10,8 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
-import 'package:india_one/screens/map/map_manager.dart';
-import 'package:india_one/screens/map/map_ui.dart';
 
 import 'package:local_auth/local_auth.dart';
 import 'package:location/location.dart';
@@ -31,6 +29,8 @@ import '../Pages/payments.dart';
 import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
+import '../map/map/map_manager.dart';
+import '../map/map/map_ui.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/controller/profile_controller.dart';
 import '../profile/model/profile_details_model.dart';
@@ -65,49 +65,39 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   }
 
   Future<bool> _handleLocationPermission() async {
-    Location location = new Location();
     bool _serviceEnabled;
+    Location location = new Location();
     PermissionStatus _permissionGranted;
     _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return false;
-      } else {
-        Get.to(Maps());
-        return true;
-      }
-    }
     _permissionGranted = await location.hasPermission();
-
     _permissionGranted = await location.requestPermission();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+    sharedPreferences.getBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION);
     if (_permissionGranted == PermissionStatus.denied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION, true);
+      }
+      return false;
+    } else if (_permissionGranted == PermissionStatus.granted ||
+        _permissionGranted == PermissionStatus.grantedLimited) {
+      if (!_serviceEnabled) {
+        _serviceEnabled = await location.requestService();
+        if (!_serviceEnabled) {
+          return false;
+        } else {
+          Get.to(Maps());
+          return true;
+        }
+      }
+      Get.to(Maps());
       return false;
     } else if (_permissionGranted == PermissionStatus.deniedForever) {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Allow application to access your location?'),
-          content: const Text(
-              'You need to allow location\'s access in parameters to see nearby ATM\'s'),
-          actions: <Widget>[
-            // if user deny again, we do nothing
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Don\'t allow'),
-            ),
-
-            // if user is agree, you can redirect him to the app parameters :)
-            TextButton(
-              onPressed: () {
-                Geolocator.openAppSettings();
-                Navigator.pop(context);
-              },
-              child: const Text('Allow'),
-            ),
-          ],
-        ),
-      );
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION, false);
+        return false;
+      }
+      Geolocator.openAppSettings();
       return false;
     } else {
       Get.to(Maps());
@@ -323,19 +313,37 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     heightIs = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Get.defaultDialog(
-          cancelTextColor: AppColors.white,
-          title: "Exit",
-          middleText: "Do you  want to close the app?",
-          confirm: confirmBtn(),
-          cancel: cancelBtn(),
-          radius: 8,
-          backgroundColor: AppColors.cardBg1,
-          titleStyle:
-              TextStyle(color: Colors.white, fontSize: Dimens.font_14sp),
-          middleTextStyle:
-              TextStyle(color: Colors.white, fontSize: Dimens.font_12sp),
-        );
+        Future.delayed(
+            const Duration(seconds: 0),
+                () async => Get.defaultDialog(
+              cancelTextColor: AppColors.white,
+              title: "Logout",
+              middleText: "Do you want to logout the app?",
+              // textConfirm: "Yes",
+              // textCancel: "No",
+              // confirm: await confirmBtn(),
+              // cancel: await cancelBtn(),
+              actions: [
+                confirmBtn(),
+        ElevatedButton(
+        onPressed: () {
+          Get.back();
+
+        Navigator.of(context, rootNavigator: true).pop();
+
+        },
+        child: Text("No"))
+
+              ],
+                  radius: 8,
+              backgroundColor: AppColors.primary,
+              titleStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: Dimens.font_14sp),
+              middleTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: Dimens.font_12sp),
+            ));
         return false;
       },
       child: Obx(
@@ -968,7 +976,38 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               Flexible(
                 child: GestureDetector(
                   onTap: () async {
+                    Location location = new Location();
+                    PermissionStatus _permissionGranted;
+                    _permissionGranted = await location.hasPermission();
+
+                    if (_permissionGranted == PermissionStatus.deniedForever ||
+                        _permissionGranted == PermissionStatus.denied) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Location Access'),
+                            content:  Text("India1 collects current location data to enable the user to see near by India1 ATM's when the app is in use."),
+                            actions: <Widget>[
+                            // if user deny again, we do nothing
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                        child: const Text('Don\'t allow'),
+                      ),
+
+                    // if user is agree, you can redirect him to the app parameters :)
+                    TextButton(
+                    onPressed: () async {
+                    Navigator.pop(context);
                     await _handleLocationPermission();
+                    },
+                    child: const Text('Allow'),
+                    ),
+                    ],
+                    ),
+                    );
+                    } else {
+                    Get.toNamed(MRouter.map);
+                    }
                   },
                   child: Container(
                     height: 4.0.hp,
@@ -1108,11 +1147,14 @@ Widget nearestAtm({VoidCallback? onPressed}) {
 }
 
 Widget confirmBtn() {
+
   return ElevatedButton(
       onPressed: () {
         if (Platform.isAndroid) {
-          Get.back();
+
           SystemNavigator.pop();
+          Navigator.of(Get.context!, rootNavigator: true ).pop();
+
         } else if (Platform.isIOS) {
           exit(0);
         }
@@ -1123,7 +1165,9 @@ Widget confirmBtn() {
 Widget cancelBtn() {
   return ElevatedButton(
       onPressed: () {
-        Get.back();
+
+        print("Go back");
+    Get.back(closeOverlays: true);
       },
       child: Text("No"));
 }

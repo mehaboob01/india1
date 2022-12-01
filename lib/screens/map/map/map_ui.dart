@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/map/map_manager.dart';
-import 'package:india_one/screens/map/map_model.dart';
 
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'map_manager.dart';
 
 class Maps extends StatefulWidget {
   Maps({key});
@@ -31,7 +31,6 @@ class _MapsState extends State<Maps> {
   var _controller = TextEditingController();
 
   List<dynamic> _placeList = [];
-  Map<dynamic, dynamic> _latLongList = {};
 
   @override
   void initState() {
@@ -42,20 +41,19 @@ class _MapsState extends State<Maps> {
   }
 
   _onChanged() {
-    if (_controller.text != null) {
+    if (_controller.text.isNotEmpty) {
       getSuggestion(_controller.text);
     } else {
       _controller.clear();
+      _placeList.clear();
     }
   }
 
   void getSuggestion(String input) async {
-    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
-    String type = '(regions)';
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$input&components=country:IN&key=$kPLACES_API_KEY';
+        '$baseURL?input=$input&components=country:IN&key=$kPLACESAPIKEY';
 
     var response = await http.get(Uri.parse(request));
     if (response.statusCode == 200) {
@@ -68,21 +66,20 @@ class _MapsState extends State<Maps> {
     }
   }
 
+  var kPLACESAPIKEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
   void getLatLng(String placeId) async {
-    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
     String baseURL =
-        "https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${kPLACES_API_KEY}";
+        "https://maps.googleapis.com/maps/api/geocode/json?place_id=$placeId&key=$kPLACESAPIKEY";
     var response = await http.get(Uri.parse(baseURL));
     var result = json.decode(response.body);
     if (response.statusCode == 200) {
-      _latLongList = result["results"][0]["geometry"]["location"];
       var lat = result["results"][0]["geometry"]["location"]["lat"];
       var lng = result["results"][0]["geometry"]["location"]["lng"];
 
       mapManager
         ..mapController!
             .animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(target: LatLng(lat, lng), zoom: 11)))
+                CameraPosition(target: LatLng(lat, lng), zoom: 14)))
             .then((value) {
           mapManager.getLocations(lat, lng);
         });
@@ -109,7 +106,7 @@ class _MapsState extends State<Maps> {
               () => GoogleMap(
                 buildingsEnabled: false,
                 mapType: MapType.normal,
-                zoomGesturesEnabled: true,
+                zoomGesturesEnabled: false,
                 zoomControlsEnabled: false,
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
@@ -118,7 +115,7 @@ class _MapsState extends State<Maps> {
                   mapManager.mapController = controller;
                   mapManager.getCurrentLocation();
                 },
-                markers: mapManager.allMarkers.toSet(),
+                markers: mapManager.allMarkersPlot.toSet(),
               ),
             ),
             Padding(
@@ -164,16 +161,15 @@ class _MapsState extends State<Maps> {
                                       hintStyle: TextStyle(color: Colors.white),
                                       focusColor: Colors.white,
                                       suffixIcon: IconButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           mapManager.locationText.value = "";
+                                          setState(() {});
                                         },
                                         icon: Icon(Icons.clear),
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
-
-
                                 )),
                           ),
                         ],
@@ -184,9 +180,9 @@ class _MapsState extends State<Maps> {
                     width: Get.width * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       mapManager.locationText.value = "Search Location";
-                      mapManager.getCurrentLocation();
+                      await mapManager.getCurrentLocation();
                     },
                     child: Container(
                       height: Get.height * 0.06,
@@ -213,18 +209,19 @@ class _MapsState extends State<Maps> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Visibility(
-                  visible: _placeList.length > 0,
+                  visible: _placeList.length > 0 ? true : false,
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: 5,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           getLatLng(_placeList[index]["place_id"]);
                           mapManager.locationText.value =
                               _placeList[index]["description"];
                           _placeList.clear();
+                          setState(() {});
                         },
                         child: Container(
                           decoration: BoxDecoration(color: Colors.white),
@@ -257,7 +254,7 @@ class _MapsState extends State<Maps> {
                                         mapManager.mapCoordinateList.length,
                                     shrinkWrap: true,
                                     itemBuilder: ((context, index) {
-                                      if (mapManager.markersList.isEmpty) {}
+                                      // if (mapManager.markersList.isEmpty) {}
 
                                       return Container(
                                           decoration: BoxDecoration(
@@ -376,7 +373,7 @@ class AtmDetailsCard extends StatelessWidget {
                     width: Get.width * 0.25,
                     child: GestureDetector(
                       onTap: () {
-                        mapManager.openMap(
+                        mapManager.openDirections(
                           mapManager.mapCoordinateList[index].geoLocation!.lat!
                               .toDouble(),
                           mapManager.mapCoordinateList[index].geoLocation!.lon!

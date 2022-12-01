@@ -9,6 +9,7 @@ class SPKeys {
   static const String NOTIFICATION_NEXT_TOKEN = 'nextToken';
 
   static const String FIRST_POINTS_SHOW = 'first_points_show';
+  static const String FIRST_INIT_LOCATION_PERMISSION = 'location_permission';
 
 
 

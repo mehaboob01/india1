@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
-import 'package:india_one/screens/map/map_ui.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
 import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/loans/car_loan/car_loan.dart';
@@ -110,8 +109,8 @@ class MRouter {
 
       case loyaltyPoints:
         return CupertinoPageRoute(builder: (_) => LoyaltyScreen());
-      case map:
-        return CupertinoPageRoute(builder: (_) => Maps());
+      // case map:
+      //   return CupertinoPageRoute(builder: (_) => Maps());
       case generalHistory:
         return CupertinoPageRoute(builder: (_) => GeneralHistory());
 
