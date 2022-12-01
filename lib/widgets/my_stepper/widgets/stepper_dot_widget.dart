@@ -38,30 +38,46 @@ class StepperDot extends StatelessWidget {
         ),
       ),
       child: (index <= activeIndex)
-          ? Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: activeBarColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(30),
-                ),
-              ),
-              child: Text(
-                "${index + 1}",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
-              ),
-            )
+          ? index == activeIndex
+              ? Container(
+                  height: 20,
+                  width: 20,
+                  margin: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: color,
+                    border: Border.all(
+                      color: color,
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                )
+              : Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: activeBarColor,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  child: Text(
+                    "${index + 1}",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
           : Container(
               height: 20,
               width: 20,
               margin: const EdgeInsets.all(3),
               decoration: BoxDecoration(
-                color: color,
+                color: Colors.transparent,
                 border: Border.all(
-                  color: color,
+                  color: Colors.transparent,
                   width: 1,
                 ),
                 borderRadius: const BorderRadius.all(

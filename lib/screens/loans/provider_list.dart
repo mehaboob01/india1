@@ -102,13 +102,17 @@ class _ProvidersListState extends State<ProvidersList> {
                                                 ),
                                                 height: 50,
                                                 width: 50,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: lenders?.logoURL ?? '',
-                                                  errorWidget: (context, _, error) {
-                                                    return Icon(
-                                                      Icons.warning_amber_outlined,
-                                                    );
-                                                  },
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: lenders?.logoURL ?? '',
+                                                    errorWidget: (context, _, error) {
+                                                      return Icon(
+                                                        Icons.warning_amber_outlined,
+                                                      );
+                                                    },
+                                                    fit: BoxFit.fill,
+                                                  ),
                                                 ),
                                               ),
                                               Expanded(

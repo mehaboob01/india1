@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/profile/controller/profile_controller.dart';
 
 import '../constant/theme_manager.dart';
 import 'custom_slider_thumb.dart';
@@ -57,14 +58,14 @@ class CustomSlider extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${minValue.toInt()}',
+                  '${minValue.toInt().priceString()}',
                   style: AppStyle.shortHeading.copyWith(
                       color: AppColors.black,
                       fontSize: 11.0.sp,
                       fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  '${maxValue.toInt()}',
+                  '${maxValue.toInt().priceString()}',
                   style: AppStyle.shortHeading.copyWith(
                       color: AppColors.black,
                       fontSize: 11.0.sp,
