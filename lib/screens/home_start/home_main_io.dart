@@ -146,7 +146,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
 
-    bool? showPopUp = prefs.getBool(SPKeys.FIRST_POINTS_SHOW);
+
 
     if (points!=0) {
       Future.delayed(
@@ -191,7 +191,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
-              ).show()).then((value) =>   prefs.setBool(SPKeys.FIRST_POINTS_SHOW, true));
+              ).show()).then((value) =>    prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
     }
   }
 
