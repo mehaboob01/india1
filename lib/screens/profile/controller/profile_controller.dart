@@ -731,6 +731,7 @@ class ProfileController extends GetxController {
         //   );
         // }
         getProfileData();
+        callBack();
       } else {
         Fluttertoast.showToast(
           msg: "something went wrong, try again!",
