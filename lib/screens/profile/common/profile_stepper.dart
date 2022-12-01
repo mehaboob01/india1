@@ -763,7 +763,7 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Brother', 'Sister']
+                item: <String>['Father', 'Mother','Spouse','Son','Daughter']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
