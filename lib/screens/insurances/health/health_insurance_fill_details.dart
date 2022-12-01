@@ -55,6 +55,7 @@ class _HealthInsuranceFillDetailsState
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox(
         width: widthIs,
         height: heightIs,
@@ -62,7 +63,7 @@ class _HealthInsuranceFillDetailsState
           child: Column(
             children: [
               CustomAppBar(
-                heading: 'Accident Insurance',
+                heading: 'Critical illness Insurance',
                 customActionIconsList: [
                   CustomActionIcons(
                     image: AppImages.bottomNavHome,

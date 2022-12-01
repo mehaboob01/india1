@@ -41,17 +41,19 @@ class _HealthInsuranceState extends State<HealthInsurance> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: body(),
     );
   }
 
   Widget body() {
     return SafeArea(
+
       child: Column(
         children: [
           CustomAppBar(
             heading: widget.isAccidentInsurance
-                ? 'Accident Insurance'
+                ? 'Critical Illness'
                 : "Critical Illness",
             customActionIconsList: [
               CustomActionIcons(

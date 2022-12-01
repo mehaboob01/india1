@@ -102,19 +102,19 @@ class InsuranceCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightRed2,
           ),
         ),
-        InkWell(
-          onTap: () {
-            // Get.toNamed(MRouter.healthInsurance, arguments: [
-            //   {"isAccidentInsurance": true}
-            // ]);
-            Get.to(()=>HealthInsurance(isAccidentInsurance: false,));
-          },
-          child: ItemCard(
-            image: AppImages.accidentSvg,
-            label: 'Accident',
-            itembgColor: ItemCardbgColor.lightRed2,
-          ),
-        ),
+        // InkWell(
+        //   onTap: () {
+        //     // Get.toNamed(MRouter.healthInsurance, arguments: [
+        //     //   {"isAccidentInsurance": true}
+        //     // ]);
+        //     Get.to(()=>HealthInsurance(isAccidentInsurance: false,));
+        //   },
+        //   child: ItemCard(
+        //     image: AppImages.accidentSvg,
+        //     label: 'Accident',
+        //     itembgColor: ItemCardbgColor.lightRed2,
+        //   ),
+        // ),
       ],
     );
   }
