@@ -343,15 +343,14 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                               print("$termConditionChecked");
                               InsuranceCommon().bottomSheet(context,
                                   callBack: () {
-                                    Get.back();
+                                Get.back();
 
-                                    insuranceController.applyForInsurance();
-                                  });
+                                insuranceController.applyForInsurance();
+                              });
                             } else {
                               setState(() {
                                 alertTextShow = true;
                               });
-
                             }
                           },
                           child: Container(

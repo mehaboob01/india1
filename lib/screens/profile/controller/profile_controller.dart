@@ -718,6 +718,7 @@ class ProfileController extends GetxController {
           },
         ),
       );
+      print("$response");
       if (response != null) {
         // if (isFromLoan == true || loanApplicationId != null) {
         //   callBack!();
