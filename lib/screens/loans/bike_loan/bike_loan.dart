@@ -63,7 +63,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                 Column(
                   children: [
                     CustomAppBar(
-                      heading: 'Bike loan',
+                      heading: '2 Wheeler loan',
                       customActionIconsList: [
                         // CustomActionIcons(
                         //   image: AppImages.bottomNavHome, onHeaderIconPressed: () {  },

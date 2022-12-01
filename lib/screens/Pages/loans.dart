@@ -87,7 +87,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.bikeSvg,
-            label: 'Bike',
+            label: '2 Wheeler',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
