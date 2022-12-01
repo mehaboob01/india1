@@ -69,7 +69,8 @@ class CustomActionIcons extends StatelessWidget {
       this.beginsAt = Alignment.topLeft,
       this.endsAt = Alignment.bottomRight,
       this.stops = const [0.5, 1.0],
-      this.imageColor, required Future Function() onHeaderIconPressed})
+      this.imageColor,
+      required this.onHeaderIconPressed})
       : super(key: key);
 
   final List<Color>? customGradientColors;
@@ -79,6 +80,7 @@ class CustomActionIcons extends StatelessWidget {
   final List<double>? stops;
   final Alignment? beginsAt;
   final Alignment? endsAt;
+  final Future Function() onHeaderIconPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -86,20 +88,29 @@ class CustomActionIcons extends StatelessWidget {
       width: 6.0.wp,
       height: 6.0.wp,
       child: customGradientColors != null
-          ? ShaderMask(
-              shaderCallback: (bounds) {
-                return LinearGradient(
-                        begin: beginsAt!,
-                        end: endsAt!,
-                        stops: stops,
-                        colors: List.generate(customGradientColors!.length,
-                            (index) => customGradientColors![index]))
-                    .createShader(bounds);
+          ? GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                onHeaderIconPressed();
               },
-              child: SvgPicture.asset(image, fit: BoxFit.fill))
+              child: ShaderMask(
+                  shaderCallback: (bounds) {
+                    return LinearGradient(
+                            begin: beginsAt!,
+                            end: endsAt!,
+                            stops: stops,
+                            colors: List.generate(customGradientColors!.length,
+                                (index) => customGradientColors![index]))
+                        .createShader(bounds);
+                  },
+                  child: SvgPicture.asset(image, fit: BoxFit.fill)),
+            )
           : isSvg!
               ? GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    onHeaderIconPressed();
+                  },
+                  behavior: HitTestBehavior.translucent,
                   child: SvgPicture.asset(
                     image,
                     color: imageColor,
@@ -114,6 +125,7 @@ class CustomActionIcons extends StatelessWidget {
 // Loyalty common heading screen
 class HeadingContainer extends StatelessWidget {
   LoyaltyManager _loyaltyManager = Get.find();
+
   HeadingContainer({
     Key? key,
   }) : super(key: key);
@@ -176,16 +188,18 @@ class HeadingContainer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 14,),
+                  SizedBox(
+                    height: 14,
+                  ),
                   Obx(
-                    ()=>Visibility(
-                      visible: _loyaltyManager.redeemablePoints <= 14?true:false,
+                    () => Visibility(
+                      visible:
+                          _loyaltyManager.redeemablePoints <= 14 ? true : false,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 4.0),
                         child: Text(
                           'Note : You can redeem only if you have 15 points',
-                          style: AppStyle.shortHeading
-                              .copyWith(
+                          style: AppStyle.shortHeading.copyWith(
                             fontSize: Dimens.font_12sp,
                             color: Colors.white,
                           ),
@@ -193,13 +207,9 @@ class HeadingContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
                 ],
               ),
             ),
-
-
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -271,17 +281,21 @@ class HeadingContainer extends StatelessWidget {
                   ),
                 )),
             Obx(
-              ()=> Positioned(
+              () => Positioned(
                 top: 32,
                 right: 18,
                 child: ButtonWithFlower(
                   buttonColor: Colors.white,
                   onPressed: () {
-                   _loyaltyManager.redeemablePoints >= 14? Get.to(() => RedeemPointsPage()):   Get.toNamed(MRouter.map);
+                    _loyaltyManager.redeemablePoints >= 14
+                        ? Get.to(() => RedeemPointsPage())
+                        : Get.toNamed(MRouter.map);
                   },
                   buttonHeight: 10.0.wp,
                   buttonWidth: 44.0.wp,
-                  label: _loyaltyManager.redeemablePoints >= 14?'Redeem Now':'Earn more points',
+                  label: _loyaltyManager.redeemablePoints >= 14
+                      ? 'Redeem Now'
+                      : 'Earn more points',
                   labelSize: Dimens.font_12sp,
                   labelWeight: FontWeight.w600,
                   labelColor: AppColors.butngradient1,

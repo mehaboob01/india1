@@ -631,9 +631,9 @@ class ProfileStepper {
                       child: Text(value.toString()),
                     );
                   }).toList(),
-                  // value: profileController.employmentType.value == ''
-                  //     ? null
-                  //     : profileController.employmentType.value,
+                  value: profileController.employmentType.value == ''
+                      ? null
+                      : profileController.employmentType.value,
                   onChanged: (value) {
                     profileController.employmentType.value = value;
                   },
@@ -659,29 +659,33 @@ class ProfileStepper {
               //     return null;
               //   },
               // ),
-              ButtonTheme(
-                alignedDropdown: true,
-                child: commonDropDown(
-                  item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value.toString()),
-                    );
-                  }).toList(),
-                  // value: profileController.accountType == ''
-                  //     ? null
-                  //     : profileController.accountType.value,
-                  onChanged: (value) {
-                    temp = value;
-                  },
-                  label: 'Salary Mode',
-                  hint: 'Salary Mode',
+
+              if (!isFromInsurance!) ...[
+                ButtonTheme(
+                  alignedDropdown: true,
+                  child: commonDropDown(
+                    item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    // value: profileController.accountType == ''
+                    //     ? null
+                    //     : profileController.accountType.value,
+                    onChanged: (value) {
+                      temp = value;
+                    },
+                    label: 'Salary Mode',
+                    hint: 'Salary Mode',
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+
               textField(
                 controller: profileController.monthlyIncomeController.value,
                 label: 'Monthly income',
@@ -691,7 +695,7 @@ class ProfileStepper {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
-                    profileController.nullCheckValidation(
+                    return profileController.nullCheckValidation(
                       value,
                       'Enter valid amount',
                     );
@@ -763,17 +767,11 @@ class ProfileStepper {
                 label: 'Nominee name',
                 hint: 'Mention nominee name',
                 vaidation: (value) {
-                  if (value.toString().trim().isNotEmpty) {
-                    if (profileController.nullCheckValidation(
-                          value,
-                          'Enter name',
-                        ) ??
-                        false) {
-                      profileController.nameValidation(
-                        value,
-                        'Enter name of min 3 char',
-                      );
-                    }
+                  if (isFromInsurance ==true|| value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(
+                      value,
+                      'Enter name of min 3 char',
+                    );
                   }
                   return null;
                 },
