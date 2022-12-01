@@ -44,6 +44,7 @@ class _HealthInsuranceFillDetailsState
   @override
   void initState() {
     super.initState();
+    profileController.autoValidation.value = true;
     insuranceController.currentScreen.value = InsuranceStep.PERSONAL.index;
   }
 
@@ -167,7 +168,7 @@ class _HealthInsuranceFillDetailsState
   }
 
   Widget healthInfoUi() {
-    return ProfileStepper().healthStepper(nomineeForm);
+    return ProfileStepper().healthStepper(healthForm);
   }
 
   Widget bottomBtnWidget() {
@@ -235,6 +236,8 @@ class _HealthInsuranceFillDetailsState
   }
 
   bool isValidData() {
+    profileController.autoValidation.value = true;
+
     if (insuranceController.currentScreen.value ==
         InsuranceStep.PERSONAL.index) {
       personalForm.currentState!.save();
@@ -250,7 +253,6 @@ class _HealthInsuranceFillDetailsState
       }
     } else if (insuranceController.currentScreen.value ==
         InsuranceStep.RESIDENTIAL.index) {
-      profileController.autoValidation.value = true;
       if (!residentialForm.currentState!.validate()) {
         Flushbar(
           title: "Alert!",
@@ -299,6 +301,12 @@ class _HealthInsuranceFillDetailsState
           message: "missing some values",
           duration: Duration(seconds: 3),
         )..show(context);
+      } else if (profileController.nomineeRelationship.value.trim().isEmpty) {
+        Flushbar(
+          title: "Alert!",
+          message: "select relationship",
+          duration: Duration(seconds: 3),
+        )..show(context);
       } else {
         return true;
       }
@@ -322,7 +330,7 @@ class _HealthInsuranceFillDetailsState
         InsuranceStep.PERSONAL.index) {
       profileController.addPersonalDetails(
           isFromLoan: true,
-          loanApplicationId:
+          insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
             if (insuranceController.insuranceCompletedIndex.value <
@@ -337,7 +345,7 @@ class _HealthInsuranceFillDetailsState
         InsuranceStep.RESIDENTIAL.index) {
       profileController.addResidentialDetails(
           isFromLoan: true,
-          loanApplicationId:
+          insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
             insuranceController
@@ -362,7 +370,7 @@ class _HealthInsuranceFillDetailsState
         InsuranceStep.OCCUPATION.index) {
       profileController.addOccupationDetails(
           isFromLoan: true,
-          loanApplicationId:
+          insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
             insuranceController
@@ -372,9 +380,8 @@ class _HealthInsuranceFillDetailsState
     } else if (insuranceController.currentScreen.value ==
         InsuranceStep.NOMINEE.index) {
       profileController.addNomineeDetails(
-
-          applicationId:
-          insuranceController.insuranceApplicationModel.value.id,
+          insuranceApplicationId:
+              insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
             insuranceController
                 .updateScreen(insuranceController.currentScreen.value + 1);

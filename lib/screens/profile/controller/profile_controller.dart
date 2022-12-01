@@ -489,7 +489,8 @@ class ProfileController extends GetxController {
   Future addPersonalDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,
+      String? insuranceApplicationId}) async {
     addPersonalLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -500,6 +501,9 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
+            },
+            if (insuranceApplicationId != null) ...{
+              "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
               "firstName": firstNameController.value.text,
@@ -561,7 +565,7 @@ class ProfileController extends GetxController {
   Future addResidentialDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,String? insuranceApplicationId,}) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -572,6 +576,8 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null || loanApplicationId != '') ...{
               "loanApplicationId": loanApplicationId,
+            },if (insuranceApplicationId != null || insuranceApplicationId != '') ...{
+              "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
               "address": {
@@ -621,7 +627,8 @@ class ProfileController extends GetxController {
   Future addOccupationDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,
+      String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
     print("empployment type ${employmentType.value}");
@@ -635,6 +642,9 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
+            },
+            if (insuranceApplicationId != null) ...{
+              "insuranceApplicationId": insuranceApplicationId
             },
             "customerDetails": {
               "panNumber": "${panNumberController.value.text}",
@@ -682,11 +692,12 @@ class ProfileController extends GetxController {
   }
 
   void addNomineeDetails(
-      {String? applicationId, required Null Function() callBack}) async {
+      {String? insuranceApplicationId,
+      required Null Function() callBack}) async {
     addNomineeLoading.value = true;
 
-    print("empployment type ${employmentType.value}");
-    print(employmentType.value);
+    // print("empployment type ${employmentType.value}");
+    // print(employmentType.value);
     try {
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.updateNomineeDetail,
@@ -694,8 +705,8 @@ class ProfileController extends GetxController {
         data: json.encode(
           {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-            if (applicationId != null) ...{
-              "applicatonId": applicationId,
+            if (insuranceApplicationId != null) ...{
+              "applicatonId": insuranceApplicationId,
             },
             "nominee": {
               "name": "${nomineeNameController.value.text}",
