@@ -26,7 +26,7 @@ class PolicyItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 16),
         child: Column(
           children: [
             Row(
@@ -183,7 +183,7 @@ class PolicyItemWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 6,
+                  width: 20,
                 ),
                 Expanded(
                   child: InkWell(

@@ -113,7 +113,7 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                       insuranceController.insuranceFilter.value = value;
                     },
                     // label: 'Two wheeler required',
-                    hint: 'Select filter',
+                    hint: 'Select insurance amount',
                     value: insuranceController.insuranceFilter.value == ''
                         ? null
                         : insuranceController.insuranceFilter.value,

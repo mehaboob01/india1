@@ -188,66 +188,134 @@ class _HealthInsuranceFillDetailsState
   }
 
   Widget bottomBtnWidget() {
-    return GestureDetector(
-      onTap: () {
-        if (isValidData()) {
-          nextAction();
-        }
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+      width: widthIs,
+      child: Obx(() {
+        return Row(
           children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
+            if (insuranceController.currentScreen > 0) ...[
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                   insuranceController.updateScreen(insuranceController.currentScreen-1);
+                  },
+                  child: Container(
+                    // width: MediaQuery.of(context).size.height * 0.9,
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'BACK',
+                              style: AppTextThemes.button,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: new LinearGradient(
+                        end: Alignment.topRight,
+                        colors: [Colors.orange, Colors.redAccent],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.8),
+                          offset: Offset(
+                            -6.0,
+                            -6.0,
+                          ),
+                          blurRadius: 16.0,
+                        ),
+                        BoxShadow(
+                          color: AppColors.darkerGrey.withOpacity(0.4),
+                          offset: Offset(6.0, 6.0),
+                          blurRadius: 16.0,
+                        ),
+                      ],
+                      // color: termConditionChecked == true
+                      //     ? AppColors.btnColor
+                      //     : AppColors.btnDisableColor,
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  width: 6,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+            ],
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  if (isValidData()) {
+                    nextAction();
+                  }
+                },
+                child: Container(
+                  // width: MediaQuery.of(context).size.height * 0.9,
+                  height: 48,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Row(
+                        children: [
+                          Text(
+                            'NEXT',
+                            style: AppTextThemes.button,
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      SizedBox(
+                        height: 48,
+                        child: Image.asset(
+                          "assets/images/btn_img.png",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: new LinearGradient(
+                      end: Alignment.topRight,
+                      colors: [Colors.orange, Colors.redAccent],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.8),
+                        offset: Offset(
+                          -6.0,
+                          -6.0,
+                        ),
+                        blurRadius: 16.0,
+                      ),
+                      BoxShadow(
+                        color: AppColors.darkerGrey.withOpacity(0.4),
+                        offset: Offset(6.0, 6.0),
+                        blurRadius: 16.0,
+                      ),
+                    ],
+                    // color: termConditionChecked == true
+                    //     ? AppColors.btnColor
+                    //     : AppColors.btnDisableColor,
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
                 ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
               ),
             ),
           ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -364,6 +432,8 @@ class _HealthInsuranceFillDetailsState
           insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
+            insuranceController.insuranceCompletedIndex.value =
+                InsuranceStep.OCCUPATION.index;
             insuranceController
                 .updateScreen(insuranceController.currentScreen.value + 1);
             // LoanCommon().bottomSheet(
@@ -389,22 +459,29 @@ class _HealthInsuranceFillDetailsState
           insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
+            insuranceController.insuranceCompletedIndex.value =
+                InsuranceStep.NOMINEE.index;
             insuranceController
                 .updateScreen(insuranceController.currentScreen.value + 1);
           });
       return;
     } else if (insuranceController.currentScreen.value ==
         InsuranceStep.NOMINEE.index) {
+
       profileController.addNomineeDetails(
           insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
           callBack: () {
+            insuranceController.insuranceCompletedIndex.value =
+                InsuranceStep.HEALTH.index;
             insuranceController
                 .updateScreen(insuranceController.currentScreen.value + 1);
           });
       return;
     } else if (insuranceController.currentScreen.value ==
         InsuranceStep.HEALTH.index) {
+      insuranceController.insuranceCompletedIndex.value =
+          InsuranceStep.RESIDENTIAL.index;
       Get.toNamed(MRouter.insuranceSummary);
       return;
     }

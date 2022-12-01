@@ -596,19 +596,20 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                 Row(
                   children: [
                     Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${insuranceController.insuranceSummaryModel.value.profile?.firstName} ${insuranceController.insuranceSummaryModel.value.profile?.lastName}",
-                          style: _stats,
-                        ),
-                        Text(
-                          "${insuranceController.insuranceSummaryModel.value.profile?.maritalStatus}",
-                          style: _statsTitle,
-                        ),
-                      ],
-                    )),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${insuranceController.insuranceSummaryModel.value.profile?.firstName} ${insuranceController.insuranceSummaryModel.value.profile?.lastName}",
+                            style: _stats,
+                          ),
+                          Text(
+                            "Name",
+                            style: _statsTitle,
+                          ),
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -618,7 +619,43 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                             style: _stats,
                           ),
                           Text(
+                            "Birth date",
+                            style: _statsTitle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${insuranceController.insuranceSummaryModel.value.profile?.maritalStatus}",
+                          style: _stats,
+                        ),
+                        Text(
+                          "marital status",
+                          style: _statsTitle,
+                        ),
+                      ],
+                    )),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.gender}",
+                            style: _stats,
+                          ),
+                          Text(
+                            "Gender",
                             style: _statsTitle,
                           ),
                         ],
@@ -776,7 +813,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
       padding: const EdgeInsets.all(10.0),
       child: Container(
           width: double.maxFinite,
-          height: Get.height * 0.1,
+          // height: Get.height * 0.1,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8), color: Color(0xFFF6F6F6)),
           child: Padding(
@@ -788,26 +825,65 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${insuranceController.insuranceSummaryModel.value.nominee?.name}",
-                      style: _stats,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${insuranceController.insuranceSummaryModel.value.nominee?.name}",
+                          style: _stats,
+                        ),
+                        Text(
+                          "Name",
+                          style: _statsTitle,
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${insuranceController.insuranceSummaryModel.value.nominee?.dateOfBirth}",
-                      style: _stats,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${insuranceController.insuranceSummaryModel.value.nominee?.dateOfBirth}",
+                          style: _stats,
+                        ),
+                        Text(
+                          "Birth date",
+                          style: _statsTitle,
+                        ),
+                      ],
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${insuranceController.insuranceSummaryModel.value.nominee?.relationship}",
-                      style: _statsTitle,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${insuranceController.insuranceSummaryModel.value.nominee?.relationship}",
+                          style: _stats,
+                        ),
+                        Text(
+                          "Relation",
+                          style: _statsTitle,
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${insuranceController.insuranceSummaryModel.value.nominee?.gender}",
-                      style: _statsTitle,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${insuranceController.insuranceSummaryModel.value.nominee?.gender}",
+                          style: _stats,
+                        ),
+                        Text(
+                          "Gender",
+                          style: _statsTitle,
+                        ),
+                      ],
                     ),
                   ],
                 ),
