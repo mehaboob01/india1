@@ -414,3 +414,16 @@ class LoanCommon {
     );
   }
 }
+
+extension on int {
+  String get priceString {
+    final numberString = toString();
+    final numberDigits = List.from(numberString.split(''));
+    int index = numberDigits.length - 3;
+    while (index > 0) {
+      numberDigits.insert(index, ',');
+      index -= 3;
+    }
+    return numberDigits.join();
+  }
+}

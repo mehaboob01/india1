@@ -91,4 +91,6 @@ class Apis {
   //insurance
   static String insuranceDashboard = "dashboards/insurances";
 
+  //logout
+  static String logoutUrl = "auth/log-out";
 }

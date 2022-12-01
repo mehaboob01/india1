@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as d;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_constant.dart';
 
@@ -11,7 +13,15 @@ enum Type { GET, POST, PUT, DELETE }
 class DioApiCall {
   Dio dio = Dio();
 
-  Future commonApiCall({required String endpoint, data, required Type method, Map<String, dynamic>? headers, Map<String, dynamic>? getParam}) async {
+  Future commonApiCall({
+    required String endpoint,
+    data,
+    required Type method,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? getParam,
+    bool? isLogout,
+  }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     dio.options = BaseOptions(
       baseUrl: baseUrl,
       headers: {
@@ -48,7 +58,13 @@ class DioApiCall {
           if (response.data['data'] != null) {
             return response.data['data'];
           }
-        }else {
+          if(isLogout == true){
+            if (response.data['status']['code'] == 2000) {
+              prefs.clear();
+              Get.offAll(() => UserLogin());
+            }
+          }
+        } else {
           Flushbar(
             title: "Error!",
             message: "Something went wrong ...",

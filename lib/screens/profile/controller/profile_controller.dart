@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
@@ -32,7 +33,8 @@ class ProfileController extends GetxController {
       getBankAccountLoading = false.obs,
       getUpiIdLoading = false.obs,
       autoValidation = false.obs,
-      uploadProfileLoading = false.obs;
+      uploadProfileLoading = false.obs,
+      logoutLoading = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
   List<String> titleList = [
@@ -116,7 +118,7 @@ class ProfileController extends GetxController {
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
     occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
+    monthlyIncomeController.value.text = "${profileDetailsModel.value.income ?? 0}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
 
@@ -284,21 +286,15 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future cropImage() async{
+  Future cropImage() async {
     croppedFile = await ImageCropper().cropImage(
       sourcePath: image.value,
       cropStyle: CropStyle.circle,
-      aspectRatio: CropAspectRatio(ratioX: 0.1 , ratioY: 0.1),
+      aspectRatio: CropAspectRatio(ratioX: 0.1, ratioY: 0.1),
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Profile',
-            toolbarWidgetColor: Colors.black,
-            showCropGrid: false,
-            hideBottomControls: true,
-            cropFrameColor: Colors.transparent
-        ),
+        AndroidUiSettings(toolbarTitle: 'Profile', toolbarWidgetColor: Colors.black, showCropGrid: false, hideBottomControls: true, cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -464,17 +460,17 @@ class ProfileController extends GetxController {
               "loanApplicationId": loanApplicationId,
             },
             "customerDetails": {
-              "firstName": firstNameController.value.text,
-              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text : null,
-              "mobileNumber": mobileNumberController.value.text,
-              "alternateNumber": alternateNumberController.value.text,
+              "firstName": firstNameController.value.text.trim(),
+              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text.trim() : null,
+              "mobileNumber": mobileNumberController.value.text.trim(),
+              "alternateNumber": alternateNumberController.value.text.trim().isNotEmpty?alternateNumberController.value.text.trim():null,
               "dateOfBirth": dobController.value.text.trim().isNotEmpty ? dobController.value.text : null,
               "preferredLanguage": "EN",
-              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text : null,
+              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text.trim() : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
               "maritalStatus": maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
               if (loanApplicationId != null) ...{
-                "panNumber": panNumberController.value.text,
+                "panNumber": panNumberController.value.text.trim(),
               }
             }
           },
@@ -527,9 +523,9 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "address": {
-                "addressLine1": "${addressLine1Controller.value.text}",
-                "addressLine2": "${addressLine2Controller.value.text}",
-                "postCode": "${pincodeController.value.text}",
+                "addressLine1": "${addressLine1Controller.value.text.trim()}",
+                "addressLine2": "${addressLine2Controller.value.text.trim()}",
+                "postCode": "${pincodeController.value.text.trim()}",
                 "city": "${city.value}",
                 "state": "${state.value}"
               }
@@ -584,9 +580,9 @@ class ProfileController extends GetxController {
               "loanApplicationId": loanApplicationId,
             },
             "customerDetails": {
-              "panNumber": "${panNumberController.value.text}",
-              "occupation": "${occupationController.value.text}",
-              "income": "${monthlyIncomeController.value.text}",
+              "panNumber": "${panNumberController.value.text.trim()}",
+              "occupation": "${occupationController.value.text.trim()}",
+              "income": "${monthlyIncomeController.value.text.trim()}",
               "preferredLanguage": "EN",
               "employmentType": "${employmentType.value}",
             }
@@ -771,6 +767,27 @@ class ProfileController extends GetxController {
       print(exception);
     } finally {
       getBankAccountLoading.value = false;
+    }
+  }
+
+  Future logout() async {
+    try {
+      logoutLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.logoutUrl,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
+            "deviceId": '${prefs.getString(SPKeys.DEVICE_ID)}',
+          },
+        ),
+        isLogout: true,
+      );
+    } catch (exception) {
+      print(exception);
+    } finally {
+      logoutLoading.value = false;
     }
   }
 }
