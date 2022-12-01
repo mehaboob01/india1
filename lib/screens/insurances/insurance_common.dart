@@ -1,14 +1,19 @@
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../constant/theme_manager.dart';
+import '../loans/loan_common.dart';
+
 enum InsuranceType {
   CriticalIllness,
   Accidental,
 
 }
-/*
+class InsuranceCommon{
 
 bottomSheet(context,
-    {required String lenderId,
-      required String providerId,
+    {
       required Function callBack}) {
   showModalBottomSheet(
     context: context,
@@ -78,7 +83,7 @@ bottomSheet(context,
                 onTap: () {
                   callBack();
                 },
-                child: LoanCommon().customButton(title: 'Apply for loan')),
+                child: LoanCommon().customButton(title: 'Proceed to pay')),
             SizedBox(
               height: 16,
             ),
@@ -87,4 +92,4 @@ bottomSheet(context,
       );
     },
   );
-}*/
+}}

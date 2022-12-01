@@ -74,6 +74,7 @@ class Apis {
 
   ///insurance
   static String createInsurance = "insurances/application";
+  static String applyForInsurance = "/insurances/apply";
 
   //uploadProfile
   static String generateImageUploadUrl = "images/generate-pre-signed-url";
