@@ -695,7 +695,7 @@ class ProfileStepper {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
-                   return  profileController.nullCheckValidation(
+                    return profileController.nullCheckValidation(
                       value,
                       'Enter valid amount',
                     );
@@ -767,17 +767,11 @@ class ProfileStepper {
                 label: 'Nominee name',
                 hint: 'Mention nominee name',
                 vaidation: (value) {
-                  if (value.toString().trim().isNotEmpty) {
-                    if (profileController.nullCheckValidation(
-                          value,
-                          'Enter name',
-                        ) ??
-                        false) {
-                      return profileController.nameValidation(
-                        value,
-                        'Enter name of min 3 char',
-                      );
-                    }
+                  if (isFromInsurance ==true|| value.toString().trim().isNotEmpty) {
+                    return profileController.nameValidation(
+                      value,
+                      'Enter name of min 3 char',
+                    );
                   }
                   return null;
                 },
