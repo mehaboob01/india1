@@ -149,6 +149,8 @@ class ProfileController extends GetxController {
         profileDetailsModel.value.occupation ?? '';
     monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+
+
   }
 
   RxInt loanRequirement = (-1).obs;

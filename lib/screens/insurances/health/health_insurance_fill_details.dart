@@ -44,6 +44,8 @@ class _HealthInsuranceFillDetailsState
   @override
   void initState() {
     super.initState();
+    profileController.setData();
+
     profileController.autoValidation.value = true;
     insuranceController.currentScreen.value = InsuranceStep.PERSONAL.index;
   }
@@ -96,7 +98,11 @@ class _HealthInsuranceFillDetailsState
                                     insuranceController.currentScreen.value,
                                 callBack: (i) {
                                   print("find me");
-                                  insuranceController.currentScreen.value = i;
+                                  if (i <=
+                                      insuranceController
+                                          .insuranceCompletedIndex.value) {
+                                    insuranceController.currentScreen.value = i;
+                                  }
                                 },
                               ),
                             ),
@@ -156,19 +162,29 @@ class _HealthInsuranceFillDetailsState
   Widget residentialInfoUi() {
     return ProfileStepper().residentialDetails(
       residentialForm,
+      isFromInsurance: true,
     );
   }
 
   Widget occupationInfoUi() {
-    return ProfileStepper().occupationDetails(occupationForm);
+    return ProfileStepper().occupationDetails(
+      occupationForm,
+      isFromInsurance: true,
+    );
   }
 
   Widget nomineeInfoUi() {
-    return ProfileStepper().nomineeDetails(context, nomineeForm);
+    return ProfileStepper().nomineeDetails(
+      context,
+      nomineeForm,
+      isFromInsurance: true,
+    );
   }
 
   Widget healthInfoUi() {
-    return ProfileStepper().healthStepper(healthForm);
+    return ProfileStepper().healthStepper(
+      healthForm,
+    );
   }
 
   Widget bottomBtnWidget() {

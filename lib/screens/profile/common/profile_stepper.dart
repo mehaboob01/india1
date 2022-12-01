@@ -157,7 +157,9 @@ class ProfileStepper {
 
   Widget personalDetails(
       BuildContext context, GlobalKey<FormState> personalForm,
-      {bool? isFromLoan = false, LoanType? loanType}) {
+      {bool? isFromLoan = false,
+      bool? isFromInsurance = false,
+      LoanType? loanType}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -186,6 +188,7 @@ class ProfileStepper {
                 hint: 'Enter your first name',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.nameValidation(
                         value, '*First Name is Mandatory');
@@ -204,6 +207,7 @@ class ProfileStepper {
                 hint: 'Enter your last name',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.nameValidation(
                         value, '*Last Name is Mandatory');
@@ -257,6 +261,7 @@ class ProfileStepper {
                 hint: 'Enter email ID here',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.emailValidation(value);
                   } else {
@@ -289,6 +294,7 @@ class ProfileStepper {
                   isDisable: true,
                   vaidation: (value) {
                     if (isFromLoan == true ||
+                        isFromInsurance == true ||
                         value.toString().trim().isNotEmpty) {
                       return profileController.nullCheckValidation(
                         value,
@@ -381,6 +387,7 @@ class ProfileStepper {
                   hint: 'Enter your PAN number here',
                   vaidation: (value) {
                     if (isFromLoan == true ||
+                        isFromInsurance == true ||
                         value.toString().trim().isNotEmpty) {
                       return profileController.panValidation(
                         value,
@@ -434,7 +441,9 @@ class ProfileStepper {
   }
 
   Widget residentialDetails(GlobalKey<FormState> residentialForm,
-      {bool? isFromLoan = false, LoanType? loanType}) {
+      {bool? isFromLoan = false,
+      bool? isFromInsurance = false,
+      LoanType? loanType}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -466,6 +475,7 @@ class ProfileStepper {
                 hint: 'Enter Door # , Building name, Flat #',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.nullCheckValidation(
                       value,
@@ -500,6 +510,7 @@ class ProfileStepper {
                 hint: 'Enter pincode here',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     profileController.pinCodeValidation(
                       value,
@@ -579,7 +590,7 @@ class ProfileStepper {
   }
 
   Widget occupationDetails(GlobalKey<FormState> occupationForm,
-      {bool? isFromLoan = false}) {
+      {bool? isFromLoan = false, bool? isFromInsurance = false}) {
     var temp;
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
@@ -678,6 +689,7 @@ class ProfileStepper {
                 prefix: '₹',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     profileController.nullCheckValidation(
                       value,
@@ -700,6 +712,7 @@ class ProfileStepper {
                 hint: 'Enter your PAN number here',
                 vaidation: (value) {
                   if (isFromLoan == true ||
+                      isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
                     return profileController.panValidation(
                       value,
@@ -719,7 +732,7 @@ class ProfileStepper {
   }
 
   Widget nomineeDetails(BuildContext context, GlobalKey<FormState> nomineeForm,
-      {bool? isFromLoan = false}) {
+      {bool? isFromLoan = false, bool? isFromInsurance = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -751,10 +764,16 @@ class ProfileStepper {
                 hint: 'Mention nominee name',
                 vaidation: (value) {
                   if (value.toString().trim().isNotEmpty) {
-                    profileController.nameValidation(
-                      value,
-                      'Enter name of min 3 char',
-                    );
+                    if (profileController.nullCheckValidation(
+                          value,
+                          'Enter name',
+                        ) ??
+                        false) {
+                      profileController.nameValidation(
+                        value,
+                        'Enter name of min 3 char',
+                      );
+                    }
                   }
                   return null;
                 },
@@ -763,7 +782,7 @@ class ProfileStepper {
                 height: 20,
               ),
               commonDropDown(
-                item: <String>['Father', 'Mother','Spouse','Son','Daughter']
+                item: <String>['Father', 'Mother', 'Spouse', 'Son', 'Daughter']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
