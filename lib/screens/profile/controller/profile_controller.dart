@@ -16,10 +16,12 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/core/data/model/common_model.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
+import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
+import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +29,18 @@ import 'package:http/http.dart' as http;
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
+
+extension priceChange on int {
+  String priceString() {
+    final numberDigits = List.from(this.toString().split(''));
+    int index = numberDigits.length - 3;
+    while (index > 0) {
+      numberDigits.insert(index, ',');
+      index -= 3;
+    }
+    return numberDigits.join();
+  }
+}
 
 class ProfileController extends GetxController {
   HomeManager _homeManager = Get.put(HomeManager());
@@ -131,7 +145,7 @@ class ProfileController extends GetxController {
     alternateNumberController.value.text =
         profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
+    dobController.value.text = DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.value.dateOfBirth!)) ?? '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -145,9 +159,8 @@ class ProfileController extends GetxController {
     state.value = profileDetailsModel.value.address?.state ?? '';
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
-    occupationController.value.text =
-        profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${profileDetailsModel.value.income??""}";
+    occupationController.value.text = profileDetailsModel.value.occupation ?? '';
+    monthlyIncomeController.value.text = "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
 
@@ -329,12 +342,7 @@ class ProfileController extends GetxController {
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Profile',
-            toolbarWidgetColor: Colors.black,
-            showCropGrid: false,
-            hideBottomControls: true,
-            cropFrameColor: Colors.transparent),
+        AndroidUiSettings(toolbarTitle: 'Profile', toolbarWidgetColor: Colors.black, showCropGrid: false, hideBottomControls: true, cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -508,24 +516,18 @@ class ProfileController extends GetxController {
               "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
-              "firstName": firstNameController.value.text,
-              "lastName": lastNameController.value.text.trim().isNotEmpty
-                  ? lastNameController.value.text
-                  : null,
-              "mobileNumber": mobileNumberController.value.text,
-              "alternateNumber": alternateNumberController.value.text,
-              "dateOfBirth": dobController.value.text.trim().isNotEmpty
-                  ? dobController.value.text
-                  : null,
+              "firstName": firstNameController.value.text.trim(),
+              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text.trim() : null,
+              "mobileNumber": mobileNumberController.value.text.trim(),
+              "alternateNumber": alternateNumberController.value.text.trim().isNotEmpty?alternateNumberController.value.text.trim():null,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(dobController.value.text)): null,
               "preferredLanguage": "EN",
-              "email": emailController.value.text.trim().isNotEmpty
-                  ? emailController.value.text
-                  : null,
+              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text.trim() : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
               "maritalStatus":
                   maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
               if (loanApplicationId != null) ...{
-                "panNumber": panNumberController.value.text,
+                "panNumber": panNumberController.value.text.trim(),
               }
             }
           },
@@ -583,9 +585,9 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "address": {
-                "addressLine1": "${addressLine1Controller.value.text}",
-                "addressLine2": "${addressLine2Controller.value.text}",
-                "postCode": "${pincodeController.value.text}",
+                "addressLine1": "${addressLine1Controller.value.text.trim()}",
+                "addressLine2": "${addressLine2Controller.value.text.trim()}",
+                "postCode": "${pincodeController.value.text.trim()}",
                 "city": "${city.value}",
                 "state": "${state.value}"
               }
@@ -649,9 +651,9 @@ class ProfileController extends GetxController {
               "insuranceApplicationId": insuranceApplicationId
             },
             "customerDetails": {
-              "panNumber": "${panNumberController.value.text}",
-              "occupation": "${occupationController.value.text}",
-              "income": "${monthlyIncomeController.value.text}",
+              "panNumber": "${panNumberController.value.text.trim()}",
+              "occupation": "${occupationController.value.text.trim()}",
+              "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
               "preferredLanguage": "EN",
               "employmentType":
                   "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
@@ -903,60 +905,22 @@ class ProfileController extends GetxController {
     }
   }
 
-  logoutApi(BuildContext context) async {
+  Future logout() async {
     try {
       logoutLoading.value = true;
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
-      String? customerID = prefs.getString(SPKeys.CUSTOMER_ID);
-      var response = await http.post(Uri.parse(baseUrl + Apis.log_out),
-          body: jsonEncode({"customerId": customerID, "deviceId": deviceId}),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-          });
-
-      print("response of send otp${response.body}");
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
-
-        if (commonApiResponseModel.status!.code == 2000) {
-          logoutLoading.value = false;
-          if (Platform.isAndroid) {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.clear();
-
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                MRouter.splashRoute, (Route<dynamic> route) => false);
-          } else if (Platform.isIOS) {
-            exit(0);
-          }
-        } else {
-          Flushbar(
-            title: "Server Error!",
-            message: commonApiResponseModel.status!.message.toString(),
-            duration: Duration(seconds: 1),
-          )..show(Get.context!);
-        }
-      } else {
-        logoutLoading.value = false;
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
-      }
-    } catch (e) {
-      var snackBar = SnackBar(
-        content: Text("Something went wrong!"),
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.logoutUrl,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
+            "deviceId": '${prefs.getString(SPKeys.DEVICE_ID)}',
+          },
+        ),
+        isLogout: true,
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } catch (exception) {
+      print(exception);
     } finally {
       logoutLoading.value = false;
     }

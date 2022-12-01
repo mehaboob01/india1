@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,11 +27,7 @@ class ProfileScreen extends StatelessWidget {
   CashBackManager cashBackManager = Get.put(CashBackManager());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
-  RxBool isPersonalDetailsVisible = false.obs,
-      isResidentialDetailsVisible = false.obs,
-      isOccupationDetailsVisible = false.obs,
-      isBankAccountVisible = false.obs,
-      isUpiIdVisible = false.obs;
+  RxBool isPersonalDetailsVisible = false.obs, isResidentialDetailsVisible = false.obs, isOccupationDetailsVisible = false.obs, isBankAccountVisible = false.obs, isUpiIdVisible = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +51,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: Obx(() => Stack(
                           children: [
-                            if (profileController.getProfileLoading.value ==
-                                true) ...[
+                            if (profileController.getProfileLoading.value == true) ...[
                               Center(
                                 child: LoadingAnimationWidget.inkDrop(
                                   size: 34,
@@ -101,10 +94,8 @@ class ProfileScreen extends StatelessWidget {
                                             ),
                                           ),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "Mobile number",
@@ -140,45 +131,30 @@ class ProfileScreen extends StatelessWidget {
                                               child: Obx(
                                                 () => InkWell(
                                                   onTap: () {
-                                                    profileController
-                                                        .pickImage(context);
+                                                    profileController.pickImage(context);
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.orangeColor,
+                                                      color: AppColors.orangeColor,
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: profileController
-                                                                .uploadProfileLoading
-                                                                .value ==
-                                                            true
-                                                        ? LoadingAnimationWidget
-                                                            .inkDrop(
+                                                    child: profileController.uploadProfileLoading.value == true
+                                                        ? LoadingAnimationWidget.inkDrop(
                                                             size: 34,
-                                                            color: AppColors
-                                                                .primary,
+                                                            color: AppColors.primary,
                                                           )
                                                         : ClipOval(
-
                                                             child: CachedNetworkImage(
                                                               fit: BoxFit.fill,
-                                                                    imageUrl:
-                                                                    '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
-                                                                    errorWidget:
-                                                                        (context,
-                                                                            _,
-                                                                            error) {
-                                                                      return Icon(
-                                                                        Icons
-                                                                            .person,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        size:
-                                                                            100,
-                                                                      );
-                                                                    },
-                                                                  ),
+                                                              imageUrl: '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                              errorWidget: (context, _, error) {
+                                                                return Icon(
+                                                                  Icons.person,
+                                                                  color: Colors.white,
+                                                                  size: 100,
+                                                                );
+                                                              },
+                                                            ),
                                                           ),
                                                   ),
                                                 ),
@@ -186,9 +162,7 @@ class ProfileScreen extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                  color: AppColors
-                                                      .lightOrangeColor
-                                                      .withOpacity(0.4),
+                                                  color: AppColors.lightOrangeColor.withOpacity(0.4),
                                                   width: 10,
                                                   style: BorderStyle.solid,
                                                 ),
@@ -197,23 +171,18 @@ class ProfileScreen extends StatelessWidget {
                                             Container(
                                               height: 45,
                                               width: 45,
-                                              margin: EdgeInsets.only(
-                                                  left: 20,
-                                                  right: 25,
-                                                  bottom: 0),
+                                              margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                  color: AppColors
-                                                      .lightOrangeColor,
+                                                  color: AppColors.lightOrangeColor,
                                                 ),
                                               ),
                                               child: Icon(
                                                 Icons.camera_alt_outlined,
                                                 size: 28,
-                                                color:
-                                                    AppColors.lightOrangeColor,
+                                                color: AppColors.lightOrangeColor,
                                               ),
                                             ),
                                           ],
@@ -231,104 +200,85 @@ class ProfileScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 30,
                                     ),
-                                    InkWell(
-                                      onTap: () async{
-
-
-                                         profileController.logoutApi(context);
-                                      },
-                                      child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          height: 48,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Spacer(),
-                                              Text(
+                                    Obx(
+                                      () => profileController.logoutLoading.value == true
+                                          ? Center(
+                                              child: LoadingAnimationWidget.inkDrop(
+                                                size: 34,
+                                                color: AppColors.primary,
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                profileController.logout();
+                                              },
+                                              child: Container(
+                                                  width: MediaQuery.of(context).size.width * 0.9,
+                                                  height: 48,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Spacer(),
+                                                      Text(
                                                 'Logout'.tr,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.white),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Spacer(),
-                                              SizedBox(
-                                                height: 48,
-                                                child: Image.asset(
-                                                  "assets/images/btn_img.png",
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          decoration: 1 == 1
-                                              ? BoxDecoration(
-                                                  gradient: new LinearGradient(
-                                                    end: Alignment.topRight,
-                                                    colors: [
-                                                      Colors.orange,
-                                                      Colors.redAccent
+                                                        maxLines: 2,
+                                                        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      Spacer(),
+                                                      SizedBox(
+                                                        height: 48,
+                                                        child: Image.asset(
+                                                          "assets/images/btn_img.png",
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white70
-                                                          .withOpacity(0.8),
-                                                      offset: Offset(
-                                                        -6.0,
-                                                        -6.0,
-                                                      ),
-                                                      blurRadius: 16.0,
-                                                    ),
-                                                    BoxShadow(
-                                                      color: AppColors
-                                                          .darkerGrey
-                                                          .withOpacity(0.4),
-                                                      offset: Offset(6.0, 6.0),
-                                                      blurRadius: 16.0,
-                                                    ),
-                                                  ],
-                                                  color: 1 == 1
-                                                      ? AppColors.btnColor
-                                                      : AppColors
-                                                          .btnDisableColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          6.0),
-                                                )
-                                              : BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white70
-                                                          .withOpacity(0.8),
-                                                      offset: Offset(
-                                                        -6.0,
-                                                        -6.0,
-                                                      ),
-                                                      blurRadius: 16.0,
-                                                    ),
-                                                    BoxShadow(
-                                                      color: AppColors
-                                                          .darkerGrey
-                                                          .withOpacity(0.4),
-                                                      offset: Offset(6.0, 6.0),
-                                                      blurRadius: 16.0,
-                                                    ),
-                                                  ],
-                                                  color: 1 == 1
-                                                      ? AppColors.btnColor
-                                                      : AppColors
-                                                          .btnDisableColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          6.0),
-                                                )),
+                                                  decoration: 1 == 1
+                                                      ? BoxDecoration(
+                                                          gradient: new LinearGradient(
+                                                            end: Alignment.topRight,
+                                                            colors: [Colors.orange, Colors.redAccent],
+                                                          ),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors.white70.withOpacity(0.8),
+                                                              offset: Offset(
+                                                                -6.0,
+                                                                -6.0,
+                                                              ),
+                                                              blurRadius: 16.0,
+                                                            ),
+                                                            BoxShadow(
+                                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                                              offset: Offset(6.0, 6.0),
+                                                              blurRadius: 16.0,
+                                                            ),
+                                                          ],
+                                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                                          borderRadius: BorderRadius.circular(6.0),
+                                                        )
+                                                      : BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors.white70.withOpacity(0.8),
+                                                              offset: Offset(
+                                                                -6.0,
+                                                                -6.0,
+                                                              ),
+                                                              blurRadius: 16.0,
+                                                            ),
+                                                            BoxShadow(
+                                                              color: AppColors.darkerGrey.withOpacity(0.4),
+                                                              offset: Offset(6.0, 6.0),
+                                                              blurRadius: 16.0,
+                                                            ),
+                                                          ],
+                                                          color: 1 == 1 ? AppColors.btnColor : AppColors.btnDisableColor,
+                                                          borderRadius: BorderRadius.circular(6.0),
+                                                        )),
+                                            ),
                                     ),
                                     SizedBox(
                                       height: 30,
@@ -416,8 +366,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   getBankAccountDetailsButton() {
-    if (profileController.bankDetailsModel.value.preferredAccount == null ||
-        profileController.bankDetailsModel.value.accounts == []) {
+    if (profileController.bankDetailsModel.value.preferredAccount == null || profileController.bankDetailsModel.value.accounts == []) {
       isBankAccountVisible.value = false;
     }
     isBankAccountVisible.value = true;
@@ -431,10 +380,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   getOccupationDetailButton() {
-    if (profileDetailsModel.employmentType == null &&
-        profileDetailsModel.occupation == null &&
-        profileDetailsModel.income == null &&
-        profileDetailsModel.panNumber == null) {
+    if (profileDetailsModel.employmentType == null && profileDetailsModel.occupation == null && profileDetailsModel.income == null && profileDetailsModel.panNumber == null) {
       isOccupationDetailsVisible.value = false;
     }
     isOccupationDetailsVisible.value = true;
@@ -616,20 +562,14 @@ class ProfileScreen extends StatelessWidget {
                               : false),
                       singleDetails(
                           title: "Date of birth",
-                          value: profileDetailsModel.dateOfBirth != null?
-                          DateFormat('dd-MM-yyyy').format(DateTime.parse(
-                                  profileDetailsModel.dateOfBirth
-                                      .toString())) : "No DOB",
-                          isEmpty: profileDetailsModel.dateOfBirth == null
-                              ? true
-                              : false),
+                        value: profileDetailsModel.dateOfBirth == null || profileDetailsModel.dateOfBirth == ''
+                            ? "No DOB"
+                            : DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.dateOfBirth!)),
+                      ),
                       singleDetails(
                           title: "Marital status",
-                          value: profileDetailsModel.maritalStatus ??
-                              "Not updated",
-                          isEmpty: profileDetailsModel.maritalStatus == null
-                              ? true
-                              : false),
+                        value: profileDetailsModel.maritalStatus ?? "Not updated",
+                      ),
                     ],
                   ),
                 ),
@@ -737,25 +677,14 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: isBankAccountVisible.value == true
                     ? [
-                        accountDetails(
-                            profileController
-                                    .bankDetailsModel.value.preferredAccount ??
-                                PreferredAccount(),
-                            null),
-                        if (profileController.bankDetailsModel.value.accounts !=
-                                null &&
-                            profileController.bankDetailsModel.value.accounts !=
-                                []) ...[
+                        accountDetails(profileController.bankDetailsModel.value.preferredAccount ?? PreferredAccount(), null),
+                        if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.all(0),
-                            itemCount: profileController
-                                .bankDetailsModel.value.accounts!.length,
-                            itemBuilder: (context, index) => accountDetails(
-                                profileController
-                                    .bankDetailsModel.value.accounts![index],
-                                index),
+                            itemCount: profileController.bankDetailsModel.value.accounts!.length,
+                            itemBuilder: (context, index) => accountDetails(profileController.bankDetailsModel.value.accounts![index], index),
                           ),
                         ],
                       ]
@@ -946,8 +875,7 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (profileController.upiIdModel.value.upiIds != null &&
-                  profileController.upiIdModel.value.upiIds != []) ...[
+              if (profileController.upiIdModel.value.upiIds != null && profileController.upiIdModel.value.upiIds != []) ...[
                 ListView.builder(
                   itemCount: profileController.upiIdModel.value.upiIds!.length,
                   itemBuilder: (context, index) {
@@ -962,9 +890,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
               ] else ...[
-                Text(cashBackManager.customerUPIList.isEmpty
-                    ? "Could not find any upi id data!"
-                    : cashBackManager.customerUPIList[0].upiId.toString()),
+                Text(cashBackManager.customerUPIList.isEmpty ? "Could not find any upi id data!" : cashBackManager.customerUPIList[0].upiId.toString()),
               ]
             ],
           ),

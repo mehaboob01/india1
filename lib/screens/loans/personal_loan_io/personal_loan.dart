@@ -49,14 +49,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
               .createLoanModel.value.loanConfiguration!.maxLoanAmount
               .toString());
           if (createLoanModel.loanAmount != null) {
-            if (double.parse(createLoanModel.loanAmount.toString()) >=
-                    loanController.minValue.value &&
-                double.parse(createLoanModel.loanAmount.toString()) <=
-                    loanController.maxValue.value) {
-              loanController.sliderValue.value =
-                  double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text =
-                  createLoanModel.loanAmount.toString();
+            if (double.parse(createLoanModel.loanAmount.toString()) >= loanController.minValue.value && double.parse(createLoanModel.loanAmount.toString()) <= loanController.maxValue.value) {
+              loanController.sliderValue.value = double.parse(createLoanModel.loanAmount.toString());
+              loanAmountEditingController.text = (createLoanModel.loanAmount??0).toInt().priceString();
             }
           }
         });
@@ -200,8 +195,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
               duration: Duration(seconds: 3),
             )..show(context);
           } else {
-            loanController.updateLoanAmount(
-                amount: loanAmountEditingController.text);
+            loanController.updateLoanAmount(amount: loanAmountEditingController.text.replaceAll(",", ""));
           }
         }
       },
@@ -475,6 +469,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanController.sliderValue.value =
                         loanController.minValue.value;
                   }
+                  // loanAmountEditingController.text = (int.parse((value)!.replaceAll(",", "").replaceAll(".", "")).priceString()).toString();
+                  // loanAmountEditingController.selection = TextSelection.collapsed(offset: loanAmountEditingController.text.length);
                 },
                 name: 'loan_amount',
               ),
