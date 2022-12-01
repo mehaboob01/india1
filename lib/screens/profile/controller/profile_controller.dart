@@ -24,7 +24,6 @@ import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
@@ -34,6 +33,7 @@ class ProfileController extends GetxController {
   RxBool addPersonalLoading = false.obs,
       addResidentialLoading = false.obs,
       addOccupationLoading = false.obs,
+      addNomineeLoading = false.obs,
       getProfileLoading = true.obs,
       getPinCodeLoading = false.obs,
       getBankAccountLoading = false.obs,
@@ -68,6 +68,9 @@ class ProfileController extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> panNumberController = TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
+  Rx<TextEditingController> nomineeNameController = TextEditingController().obs;
+  Rx<TextEditingController> nomineeDobController = TextEditingController().obs;
+
   RxString maritalStatus = ''.obs,
       employmentType = ''.obs,
       city = ''.obs,
@@ -75,7 +78,8 @@ class ProfileController extends GetxController {
       gender = ''.obs,
       customerId = ''.obs,
       accountType = ''.obs,
-      vehicleType = ''.obs;
+      vehicleType = ''.obs,
+      nomineeRelationship = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController =
@@ -145,6 +149,8 @@ class ProfileController extends GetxController {
         profileDetailsModel.value.occupation ?? '';
     monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+
+
   }
 
   RxInt loanRequirement = (-1).obs;
@@ -315,11 +321,11 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future cropImage() async{
+  Future cropImage() async {
     croppedFile = await ImageCropper().cropImage(
       sourcePath: image.value,
       cropStyle: CropStyle.circle,
-      aspectRatio: CropAspectRatio(ratioX: 0.1 , ratioY: 0.1),
+      aspectRatio: CropAspectRatio(ratioX: 0.1, ratioY: 0.1),
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
@@ -328,8 +334,7 @@ class ProfileController extends GetxController {
             toolbarWidgetColor: Colors.black,
             showCropGrid: false,
             hideBottomControls: true,
-            cropFrameColor: Colors.transparent
-        ),
+            cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -458,7 +463,8 @@ class ProfileController extends GetxController {
             gravity: ToastGravity.BOTTOM,
             fontSize: 16.0,
           );
-          profileDetailsModel.value.imageName = "${response['imageURL'].toString().split("/").last}";
+          profileDetailsModel.value.imageName =
+              "${response['imageURL'].toString().split("/").last}";
           profileDetailsModel.refresh();
         }
       } else {
@@ -485,7 +491,8 @@ class ProfileController extends GetxController {
   Future addPersonalDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,
+      String? insuranceApplicationId}) async {
     addPersonalLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -496,6 +503,9 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
+            },
+            if (insuranceApplicationId != null) ...{
+              "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
               "firstName": firstNameController.value.text,
@@ -557,7 +567,7 @@ class ProfileController extends GetxController {
   Future addResidentialDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,String? insuranceApplicationId,}) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -568,6 +578,8 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null || loanApplicationId != '') ...{
               "loanApplicationId": loanApplicationId,
+            },if (insuranceApplicationId != null || insuranceApplicationId != '') ...{
+              "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
               "address": {
@@ -617,7 +629,8 @@ class ProfileController extends GetxController {
   Future addOccupationDetails(
       {bool? isFromLoan = false,
       Function? callBack,
-      String? loanApplicationId}) async {
+      String? loanApplicationId,
+      String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
     print("empployment type ${employmentType.value}");
@@ -632,12 +645,16 @@ class ProfileController extends GetxController {
             if (loanApplicationId != null) ...{
               "loanApplicationId": loanApplicationId,
             },
+            if (insuranceApplicationId != null) ...{
+              "insuranceApplicationId": insuranceApplicationId
+            },
             "customerDetails": {
               "panNumber": "${panNumberController.value.text}",
               "occupation": "${occupationController.value.text}",
               "income": "${monthlyIncomeController.value.text}",
               "preferredLanguage": "EN",
-              "employmentType": "${employmentType.value.toString() == "Self Employed"?"SelfEmployed":employmentType.value.toString() == "Business Owner"?"BusinessOwner":employmentType.value}",
+              "employmentType":
+                  "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
             }
           },
         ),
@@ -673,6 +690,69 @@ class ProfileController extends GetxController {
       );
     } finally {
       addOccupationLoading.value = false;
+    }
+  }
+
+  void addNomineeDetails(
+      {String? insuranceApplicationId,
+      required Null Function() callBack}) async {
+    addNomineeLoading.value = true;
+
+    // print("empployment type ${employmentType.value}");
+    // print(employmentType.value);
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.updateNomineeDetail,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (insuranceApplicationId != null) ...{
+              "applicatonId": insuranceApplicationId,
+            },
+            "nominee": {
+              "name": "${nomineeNameController.value.text}",
+              "dateOfBirth": nomineeDobController.value.text.trim().isNotEmpty
+                  ? nomineeDobController.value.text
+                  : null,
+              "relationShip": "${nomineeRelationship.value}",
+            }
+          },
+        ),
+      );
+      print("$response");
+      if (response != null) {
+        // if (isFromLoan == true || loanApplicationId != null) {
+        //   callBack!();
+        // } else {
+        //   Get.back();
+        //   Fluttertoast.showToast(
+        //     msg: "Update Successfully!",
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.BOTTOM,
+        //     fontSize: 16.0,
+        //   );
+        // }
+        getProfileData();
+        callBack();
+      } else {
+        Fluttertoast.showToast(
+          msg: "something went wrong, try again!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      addNomineeLoading.value = false;
     }
   }
 
@@ -831,11 +911,7 @@ class ProfileController extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? customerID = prefs.getString(SPKeys.CUSTOMER_ID);
       var response = await http.post(Uri.parse(baseUrl + Apis.log_out),
-          body: jsonEncode({
-            "customerId":customerID,
-            "deviceId" : deviceId
-
-          }),
+          body: jsonEncode({"customerId": customerID, "deviceId": deviceId}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -846,23 +922,21 @@ class ProfileController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel commonApiResponseModel =
+            CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           logoutLoading.value = false;
           if (Platform.isAndroid) {
-            SharedPreferences preferences = await SharedPreferences.getInstance();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
             await preferences.clear();
 
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(MRouter.splashRoute, (Route<dynamic> route) => false);
-
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                MRouter.splashRoute, (Route<dynamic> route) => false);
           } else if (Platform.isIOS) {
             exit(0);
           }
-
-
-
         } else {
           Flushbar(
             title: "Server Error!",
