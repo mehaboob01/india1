@@ -55,8 +55,10 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                 : "Critical Illness",
             customActionIconsList: [
               CustomActionIcons(
-                image: AppImages.bottomNavHome,
-                onHeaderIconPressed: () async {},
+                image: AppImages.bottomNavHomeSvg,
+                onHeaderIconPressed: () async {
+                  Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
+                },
               ),
             ],
           ),

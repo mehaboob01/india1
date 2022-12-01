@@ -386,6 +386,7 @@ class AppImages {
   static const String referEarnSVG = 'assets/images/gift_box.png';
   static const String assetPng = 'assets/png/';
   static const String bottomNavHome = '${assetPng}home.png';
+  static const String bottomNavHomeSvg = '${assetSvg}homeSvg.svg';
   static const String celebrationBg = '${assetPng}celebrationbg.png';
   static const String bottomNavLoan = '${assetPng}hand.png';
   static const String bottomNavPayment = '${assetPng}wallet.png';
@@ -507,5 +508,4 @@ class AppFonts {
 }
 
 double bottomMargin = 84;
-double bottomNavigationCircleRadius = 81;
-String kPLACESAPIKEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
+double bottomNavigationCircleRadius=81;

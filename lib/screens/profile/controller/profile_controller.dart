@@ -147,7 +147,7 @@ class ProfileController extends GetxController {
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
     occupationController.value.text =
         profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${profileDetailsModel.value.income}";
+    monthlyIncomeController.value.text = "${profileDetailsModel.value.income??""}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
 

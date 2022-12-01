@@ -62,11 +62,15 @@ class _HealthInsuranceFillDetailsState
           child: Column(
             children: [
               CustomAppBar(
-                heading: 'Accident Insurance',
+                heading: widget.isAccidentInsurance
+                    ? 'Accident Insurance'
+                    : "Critical Illness",
                 customActionIconsList: [
                   CustomActionIcons(
-                    image: AppImages.bottomNavHome,
-                    onHeaderIconPressed: () async {},
+                    image: AppImages.bottomNavHomeSvg,
+                    onHeaderIconPressed: () async {
+                      Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
+                    },
                   ),
                 ],
               ),
@@ -197,7 +201,8 @@ class _HealthInsuranceFillDetailsState
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                   insuranceController.updateScreen(insuranceController.currentScreen-1);
+                    insuranceController
+                        .updateScreen(insuranceController.currentScreen - 1);
                   },
                   child: Container(
                     // width: MediaQuery.of(context).size.height * 0.9,
@@ -374,6 +379,22 @@ class _HealthInsuranceFillDetailsState
           message: "Select employment type",
           duration: Duration(seconds: 3),
         )..show(context);
+      } else if (profileController.monthlyIncomeController.value.text
+          .trim()
+          .isEmpty) {
+        Flushbar(
+          title: "Alert!",
+          message: "enter your income",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else if (profileController.panNumberController.value.text
+          .trim()
+          .isEmpty) {
+        Flushbar(
+          title: "Alert!",
+          message: "enter your pan number",
+          duration: Duration(seconds: 3),
+        )..show(context);
       } else {
         return true;
       }
@@ -467,7 +488,6 @@ class _HealthInsuranceFillDetailsState
       return;
     } else if (insuranceController.currentScreen.value ==
         InsuranceStep.NOMINEE.index) {
-
       profileController.addNomineeDetails(
           insuranceApplicationId:
               insuranceController.insuranceApplicationModel.value.id,
