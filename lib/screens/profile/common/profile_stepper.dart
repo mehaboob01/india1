@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
-import 'package:india_one/screens/profile/numeric_text_formatter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constant/theme_manager.dart';
@@ -24,7 +23,7 @@ class ProfileStepper {
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
-      initialDate: selectedDate ?? DateTime.now(),
+      initialDate: profileController.dobController.value.text.isNotEmpty?DateTime.parse(DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(profileController.dobController.value.text))) : DateTime.now(),
       firstDate: DateTime(DateTime.now().year - 100),
       lastDate: DateTime.now(),
     );
@@ -636,11 +635,11 @@ class ProfileStepper {
                   }
                   return null;
                 },
+                onChanged: (val) {
+                  profileController.monthlyIncomeController.value.text = (int.parse((val).replaceAll(",", "").replaceAll(".", "")).priceString()).toString();
+                  profileController.monthlyIncomeController.value.selection = TextSelection.collapsed(offset: profileController.monthlyIncomeController.value.text.length);
+                },
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  NumericTextFormatter(),
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                ],
               ),
               SizedBox(
                 height: 20,

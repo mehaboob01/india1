@@ -144,13 +144,19 @@ class LoanCommon {
                       ),
                       height: 50,
                       width: 50,
-                      child: CachedNetworkImage(
-                        imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
-                        errorWidget: (context, _, error) {
-                          return Icon(
-                            Icons.warning_amber_outlined,
-                          );
-                        },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CachedNetworkImage(
+                          height: 50,
+                          width: 50,
+                          imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
+                          errorWidget: (context, _, error) {
+                            return Icon(
+                              Icons.warning_amber_outlined,
+                            );
+                          },
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Padding(

@@ -16,12 +16,25 @@ import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
+import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
+
+extension priceChange on int {
+  String priceString() {
+    final numberDigits = List.from(this.toString().split(''));
+    int index = numberDigits.length - 3;
+    while (index > 0) {
+      numberDigits.insert(index, ',');
+      index -= 3;
+    }
+    return numberDigits.join();
+  }
+}
 
 class ProfileController extends GetxController {
   HomeManager _homeManager = Get.put(HomeManager());
@@ -106,7 +119,7 @@ class ProfileController extends GetxController {
     mobileNumberController.value.text = profileDetailsModel.value.mobileNumber ?? '';
     alternateNumberController.value.text = profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = profileDetailsModel.value.dateOfBirth ?? '';
+    dobController.value.text = DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.value.dateOfBirth!)) ?? '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -118,7 +131,7 @@ class ProfileController extends GetxController {
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
     occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${profileDetailsModel.value.income ?? 0}";
+    monthlyIncomeController.value.text = "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
   }
 
@@ -464,7 +477,7 @@ class ProfileController extends GetxController {
               "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text.trim() : null,
               "mobileNumber": mobileNumberController.value.text.trim(),
               "alternateNumber": alternateNumberController.value.text.trim().isNotEmpty?alternateNumberController.value.text.trim():null,
-              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? dobController.value.text : null,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(dobController.value.text)): null,
               "preferredLanguage": "EN",
               "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text.trim() : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
@@ -582,7 +595,7 @@ class ProfileController extends GetxController {
             "customerDetails": {
               "panNumber": "${panNumberController.value.text.trim()}",
               "occupation": "${occupationController.value.text.trim()}",
-              "income": "${monthlyIncomeController.value.text.trim()}",
+              "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
               "preferredLanguage": "EN",
               "employmentType": "${employmentType.value}",
             }

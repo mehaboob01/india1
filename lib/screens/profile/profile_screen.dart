@@ -7,6 +7,7 @@ import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../constant/theme_manager.dart';
@@ -199,11 +200,11 @@ class ProfileScreen extends StatelessWidget {
                                     Obx(
                                       () => profileController.logoutLoading.value == true
                                           ? Center(
-                                            child: LoadingAnimationWidget.inkDrop(
+                                              child: LoadingAnimationWidget.inkDrop(
                                                 size: 34,
                                                 color: AppColors.primary,
                                               ),
-                                          )
+                                            )
                                           : InkWell(
                                               onTap: () {
                                                 profileController.logout();
@@ -509,7 +510,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       singleDetails(
                         title: "Date of birth",
-                        value: profileDetailsModel.dateOfBirth ?? "No DOB",
+                        value: profileDetailsModel.dateOfBirth == null || profileDetailsModel.dateOfBirth == ''
+                            ? "No DOB"
+                            : DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.dateOfBirth!)),
                       ),
                       singleDetails(
                         title: "Marital status",
@@ -692,7 +695,7 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                               title: "Monthly income",
-                              value: "${profileDetailsModel.income ?? 0}",
+                              value: "${(profileDetailsModel.income ?? 0).toInt().priceString()}",
                             ),
                           ),
                           SizedBox(
