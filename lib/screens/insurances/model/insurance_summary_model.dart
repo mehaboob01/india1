@@ -3,11 +3,11 @@ class InsuranceSummaryModel {
   String? logoUrl;
   String? name;
   String? type;
-  double? premiumAmount;
-  int? sumInsured;
-  int? tenureInYears;
-  double? gstAmount;
-  double? totalAmount;
+  num? premiumAmount;
+  num? sumInsured;
+  num? tenureInYears;
+  num? gstAmount;
+  num? totalAmount;
   Nominee? nominee;
   String? tocUrl;
   String? tocVersion;
@@ -101,7 +101,7 @@ class Profile {
   String? mobileNumber;
   String? panNumber;
   String? occupation;
-  int? income;
+  num? income;
   Null? preferredLanguage;
   String? dateOfBirth;
   String? email;
