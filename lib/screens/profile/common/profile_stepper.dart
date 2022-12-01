@@ -628,28 +628,29 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
-              textField(
-                controller: profileController.occupationController.value,
-                label: 'Occupation',
-                hint: 'Enter what you do here',
-                vaidation: (value) {
-                  if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                    profileController.nameValidation(
-                      value,
-                      'Enter Occupation of min 3 char',
-                    );
-                  }
-                  return null;
-                },
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
+
 
               if (!isFromInsurance!) ...[
+                textField(
+                  controller: profileController.occupationController.value,
+                  label: 'Occupation',
+                  hint: 'Enter what you do here',
+                  vaidation: (value) {
+                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
+                      profileController.nameValidation(
+                        value,
+                        'Enter Occupation of min 3 char',
+                      );
+                    }
+                    return null;
+                  },
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 ButtonTheme(
                   alignedDropdown: true,
                   child: commonDropDown(
