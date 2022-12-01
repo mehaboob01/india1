@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/insurances/model/insurance_application_model.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/provider_details.dart';
 
+import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
+import '../health/health_insurance_fill_details.dart';
 
 class PolicyItemWidget extends StatelessWidget {
-  const PolicyItemWidget({Key? key}) : super(key: key);
+  final Plans plan;
+  final bool isAccidentInsurance;
+
+  const PolicyItemWidget({
+    Key? key,
+    required this.plan,
+    required this.isAccidentInsurance,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +37,10 @@ class PolicyItemWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(10)),
+                  child: Image.network(
+                    plan.imageUrl ?? "",
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
@@ -36,7 +50,7 @@ class PolicyItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Aditya Birla Insurance",
+                        plan.name ?? "Unknown",
                         style: AppTextThemes.button
                             .apply(color: AppColors.lightBlack),
                       ),
@@ -44,7 +58,7 @@ class PolicyItemWidget extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        "Health Insurance",
+                        plan.type ?? "Unknown",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: AppColors.black,
@@ -58,9 +72,9 @@ class PolicyItemWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 12,
+              height: 16,
             ),
-            Row(
+            /* Row(
               children: [
                 Expanded(
                   child: Container(
@@ -133,44 +147,38 @@ class PolicyItemWidget extends StatelessWidget {
             ),
             SizedBox(
               height: 12,
-            ),
+            ),*/
             Row(
               children: [
                 Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      // Get.to(
-                      //   ProviderDetail(
-                      //       title: "", lenders: Lenders(), personalLoan: false),
-                      // );
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.height * 0.9,
-                      height: 40,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'View Plan',
-                            style: AppTextThemes.button.apply(
-                              color: AppColors.backGroundgradient1,
-                            ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.height * 0.9,
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'View Plan',
+                          style: AppTextThemes.button.apply(
+                            // color: AppColors.backGroundgradient1,
+                            color: AppColors.greyTextColor,
                           ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        // gradient: new LinearGradient(
-                        //   end: Alignment.topRight,
-                        //   colors: [Colors.orange, Colors.redAccent],
-                        // ),
-                        border: Border.all(
-                          color: AppColors.backGroundgradient1,
                         ),
-                        // color: termConditionChecked == true
-                        //     ? AppColors.btnColor
-                        //     : AppColors.btnDisableColor,
-                        borderRadius: BorderRadius.circular(6.0),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      // gradient: new LinearGradient(
+                      //   end: Alignment.topRight,
+                      //   colors: [Colors.orange, Colors.redAccent],
+                      // ),
+                      border: Border.all(
+                        // color: AppColors.backGroundgradient1,
+                        color: AppColors.greyTextColor,
                       ),
+                      // color: termConditionChecked == true
+                      //     ? AppColors.btnColor
+                      //     : AppColors.btnDisableColor,
+                      borderRadius: BorderRadius.circular(6.0),
                     ),
                   ),
                 ),
@@ -179,7 +187,12 @@ class PolicyItemWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      // Get.toNamed(MRouter.healthInsuranceFillDetails);
+                      Get.to(() => HealthInsuranceFillDetails(
+                            isAccidentInsurance: isAccidentInsurance,
+                          ));
+                    },
                     child: Container(
                       width: MediaQuery.of(context).size.height * 0.9,
                       height: 40,
@@ -187,7 +200,7 @@ class PolicyItemWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Buy for ₹1234',
+                            'Buy for ₹${plan.amount}',
                             style: AppTextThemes.button,
                           ),
                         ],

@@ -24,7 +24,6 @@ import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
 import '../model/upi_id_model.dart';
@@ -34,6 +33,7 @@ class ProfileController extends GetxController {
   RxBool addPersonalLoading = false.obs,
       addResidentialLoading = false.obs,
       addOccupationLoading = false.obs,
+      addNomineeLoading = false.obs,
       getProfileLoading = true.obs,
       getPinCodeLoading = false.obs,
       getBankAccountLoading = false.obs,
@@ -78,8 +78,8 @@ class ProfileController extends GetxController {
       gender = ''.obs,
       customerId = ''.obs,
       accountType = ''.obs,
-      vehicleType = ''.obs,nomineeRelationship =''.obs;
-
+      vehicleType = ''.obs,
+      nomineeRelationship = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController =
@@ -319,11 +319,11 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future cropImage() async{
+  Future cropImage() async {
     croppedFile = await ImageCropper().cropImage(
       sourcePath: image.value,
       cropStyle: CropStyle.circle,
-      aspectRatio: CropAspectRatio(ratioX: 0.1 , ratioY: 0.1),
+      aspectRatio: CropAspectRatio(ratioX: 0.1, ratioY: 0.1),
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
@@ -332,8 +332,7 @@ class ProfileController extends GetxController {
             toolbarWidgetColor: Colors.black,
             showCropGrid: false,
             hideBottomControls: true,
-            cropFrameColor: Colors.transparent
-        ),
+            cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -462,7 +461,8 @@ class ProfileController extends GetxController {
             gravity: ToastGravity.BOTTOM,
             fontSize: 16.0,
           );
-          profileDetailsModel.value.imageName = "${response['imageURL'].toString().split("/").last}";
+          profileDetailsModel.value.imageName =
+              "${response['imageURL'].toString().split("/").last}";
           profileDetailsModel.refresh();
         }
       } else {
@@ -641,7 +641,8 @@ class ProfileController extends GetxController {
               "occupation": "${occupationController.value.text}",
               "income": "${monthlyIncomeController.value.text}",
               "preferredLanguage": "EN",
-              "employmentType": "${employmentType.value.toString() == "Self Employed"?"SelfEmployed":employmentType.value.toString() == "Business Owner"?"BusinessOwner":employmentType.value}",
+              "employmentType":
+                  "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
             }
           },
         ),
@@ -677,6 +678,66 @@ class ProfileController extends GetxController {
       );
     } finally {
       addOccupationLoading.value = false;
+    }
+  }
+
+  void addNomineeDetails(
+      {String? applicationId, required Null Function() callBack}) async {
+    addNomineeLoading.value = true;
+
+    print("empployment type ${employmentType.value}");
+    print(employmentType.value);
+    try {
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.updateNomineeDetail,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (applicationId != null) ...{
+              "applicatonId": applicationId,
+            },
+            "nominee": {
+              "name": "${nomineeNameController.value.text}",
+              "dateOfBirth": nomineeDobController.value.text.trim().isNotEmpty
+                  ? nomineeDobController.value.text
+                  : null,
+              "relationShip": "${nomineeRelationship.value}",
+            }
+          },
+        ),
+      );
+      if (response != null) {
+        // if (isFromLoan == true || loanApplicationId != null) {
+        //   callBack!();
+        // } else {
+        //   Get.back();
+        //   Fluttertoast.showToast(
+        //     msg: "Update Successfully!",
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.BOTTOM,
+        //     fontSize: 16.0,
+        //   );
+        // }
+        getProfileData();
+      } else {
+        Fluttertoast.showToast(
+          msg: "something went wrong, try again!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      addNomineeLoading.value = false;
     }
   }
 
@@ -835,11 +896,7 @@ class ProfileController extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? customerID = prefs.getString(SPKeys.CUSTOMER_ID);
       var response = await http.post(Uri.parse(baseUrl + Apis.log_out),
-          body: jsonEncode({
-            "customerId":customerID,
-            "deviceId" : deviceId
-
-          }),
+          body: jsonEncode({"customerId": customerID, "deviceId": deviceId}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -850,23 +907,21 @@ class ProfileController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel commonApiResponseModel =
+            CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           logoutLoading.value = false;
           if (Platform.isAndroid) {
-            SharedPreferences preferences = await SharedPreferences.getInstance();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
             await preferences.clear();
 
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(MRouter.splashRoute, (Route<dynamic> route) => false);
-
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                MRouter.splashRoute, (Route<dynamic> route) => false);
           } else if (Platform.isIOS) {
             exit(0);
           }
-
-
-
         } else {
           Flushbar(
             title: "Server Error!",

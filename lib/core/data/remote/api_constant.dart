@@ -52,6 +52,7 @@ class Apis {
   static String addBankAccount = "loyalty/customer/bank/account";
   static String getBankAccount = "loyalty/customer/bank/accounts";
   static String getUpiIds = "loyalty/customer/upi/id";
+  static String updateNomineeDetail = "insurances/application/update-nominee";
 
   // //Loans
   // static String recentTransactionLoan = "dashboards/loans";
@@ -70,6 +71,9 @@ class Apis {
   static String applyLoan = "loans/apply";
   static String fetchFarmProducts = "loans/fetch-farm-products";
   static String updateFarmLoanDetails = "loans/application/update-basic-details";
+
+  ///insurance
+  static String createInsurance = "insurances/application";
 
   //uploadProfile
   static String generateImageUploadUrl = "images/generate-pre-signed-url";

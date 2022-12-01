@@ -7,14 +7,17 @@ import 'package:india_one/screens/insurances/widgets/custom_drop_down.dart';
 import 'package:india_one/screens/insurances/widgets/policy_item_widget.dart';
 
 import '../../../constant/theme_manager.dart';
+import '../../../widgets/circular_progressbar.dart';
 import '../../../widgets/loyalty_common_header.dart';
+import '../insurance_common.dart';
+import '../model/insurance_application_model.dart';
 
 class HealthInsurance extends StatefulWidget {
   final bool isAccidentInsurance;
 
   const HealthInsurance({
     Key? key,
-   required this.isAccidentInsurance,
+    required this.isAccidentInsurance,
   }) : super(key: key);
 
   @override
@@ -28,6 +31,9 @@ class _HealthInsuranceState extends State<HealthInsurance> {
   @override
   void initState() {
     super.initState();
+
+    insuranceController.createInsuranceApplication(
+        insuranceType: InsuranceType.CriticalIllness);
   }
 
   @override
@@ -93,8 +99,9 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                     color: AppColors.backGroundgradient2,
                   ),
                   child: CustomDropDown(
-                    item: <String>['2 wheeler - Scooty', '2 wheeler - Bike']
-                        .map<DropdownMenuItem<String>>((String value) {
+                    item: <String>[
+                      'Sum insured for 1 lakh',
+                    ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -106,13 +113,13 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                       insuranceController.insuranceFilter.value = value;
                     },
                     // label: 'Two wheeler required',
-                    hint: 'Apply filter',
+                    hint: 'Select filter',
                     value: insuranceController.insuranceFilter.value == ''
                         ? null
                         : insuranceController.insuranceFilter.value,
                   ),
                 ),
-                SizedBox(
+                /* SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -137,28 +144,46 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                       ),
                     ],
                   ),
-                ),
+                ),*/
               ],
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              itemCount: 3,
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: 10,
-                );
-              },
-              itemBuilder: (context, index) {
-                return InkWell(
-                    onTap: () {
-                      Get.toNamed(MRouter.healthInsuranceFillDetails);
-                    },
-                    child: PolicyItemWidget());
-              },
-            ),
+            child: Obx(() {
+              return insuranceController.createInsuranceApplicationLoading.value
+                  ? CircularProgressbar()
+                  : (insuranceController.insuranceApplicationModel.value.plans
+                                  ?.length ??
+                              0) ==
+                          0
+                      ? Text("No data available")
+                      : ListView.separated(
+                          itemCount: insuranceController
+                                  .insuranceApplicationModel
+                                  .value
+                                  .plans
+                                  ?.length ??
+                              0,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: 10,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return PolicyItemWidget(
+                              plan: insuranceController
+                                      .insuranceApplicationModel
+                                      .value
+                                      .plans?[index] ??
+                                  Plans(),
+                              isAccidentInsurance: widget.isAccidentInsurance,
+                            );
+                          },
+                        );
+            }),
           ),
         ],
       ),

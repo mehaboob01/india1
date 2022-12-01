@@ -609,11 +609,12 @@ class ProfileStepper {
               ButtonTheme(
                 alignedDropdown: true,
                 child: commonDropDown(
-                  item: <String>['Self Employed',
+                  item: <String>[
+                    'Self Employed',
                     'Salaried',
                     'Business Owner',
-                    'Other']
-                      .map<DropdownMenuItem<String>>((String value) {
+                    'Other'
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value.toString()),
@@ -650,10 +651,7 @@ class ProfileStepper {
               ButtonTheme(
                 alignedDropdown: true,
                 child: commonDropDown(
-                  item: ['Cash',
-                    'Cheque',
-                    'BankTransfer',
-                    'PayCards']
+                  item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -820,8 +818,11 @@ class ProfileStepper {
     );
   }
 
-  Widget healthStepper(GlobalKey<FormState> nomineeForm/* GlobalKey<FormState> nomineeForm,
-      {bool? isFromLoan = false}*/) {
+  Widget healthStepper(
+      GlobalKey<FormState>
+          nomineeForm /* GlobalKey<FormState> nomineeForm,
+      {bool? isFromLoan = false}*/
+      ) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
       child: SingleChildScrollView(
@@ -855,7 +856,7 @@ class ProfileStepper {
               ),
               Container(
                 decoration: BoxDecoration(
-                  // color:
+                    // color:
                     color: Colors.grey.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(8)),
                 width: double.maxFinite,
@@ -873,7 +874,7 @@ data""",
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              Row(
+              /* Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   pickBox("Yes"),
@@ -882,7 +883,7 @@ data""",
               ),
               SizedBox(
                 height: Get.height * 0.01,
-              ),
+              ),*/
               Text(
                 "Do any of the proposed members to be insured suffer from any  pre-existing diseases?",
                 style: TextStyle(
@@ -920,13 +921,13 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               SizedBox(
                 height: Get.height * 0.01,
               ),
-
             ],
           ),
         ),
       ),
     );
   }
+
   pickBox(String? text) {
     return GestureDetector(
       onTap: () {},

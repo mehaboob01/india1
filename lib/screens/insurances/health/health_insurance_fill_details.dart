@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -10,9 +11,15 @@ import 'package:india_one/widgets/my_stepper/widgets/another_stepper.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/divider_io.dart';
 import '../../../widgets/loyalty_common_header.dart';
+import '../../profile/controller/profile_controller.dart';
 
 class HealthInsuranceFillDetails extends StatefulWidget {
-  const HealthInsuranceFillDetails({Key? key}) : super(key: key);
+  final bool isAccidentInsurance;
+
+  const HealthInsuranceFillDetails({
+    Key? key,
+    required this.isAccidentInsurance,
+  }) : super(key: key);
 
   @override
   State<HealthInsuranceFillDetails> createState() =>
@@ -30,6 +37,7 @@ class _HealthInsuranceFillDetailsState
 
   final GlobalKey<FormBuilderState> _loanAmountKey =
       GlobalKey<FormBuilderState>();
+  ProfileController profileController = Get.put(ProfileController());
 
   double widthIs = 0, heightIs = 0;
 
@@ -54,7 +62,8 @@ class _HealthInsuranceFillDetailsState
                 heading: 'Accident Insurance',
                 customActionIconsList: [
                   CustomActionIcons(
-                    image: AppImages.bottomNavHome, onHeaderIconPressed: () async{  },
+                    image: AppImages.bottomNavHome,
+                    onHeaderIconPressed: () async {},
                   ),
                 ],
               ),
@@ -164,12 +173,8 @@ class _HealthInsuranceFillDetailsState
   Widget bottomBtnWidget() {
     return GestureDetector(
       onTap: () {
-        if (insuranceController.currentScreen.value ==
-            InsuranceStep.HEALTH.index) {
-          Get.toNamed(MRouter.insuranceSummary);
-        } else {
-          insuranceController
-              .updateScreen(insuranceController.currentScreen.value + 1);
+        if (isValidData()) {
+          nextAction();
         }
       },
       child: Container(
@@ -227,5 +232,161 @@ class _HealthInsuranceFillDetailsState
         ),
       ),
     );
+  }
+
+  bool isValidData() {
+    if (insuranceController.currentScreen.value ==
+        InsuranceStep.PERSONAL.index) {
+      personalForm.currentState!.save();
+      profileController.autoValidation.value = true;
+      if (!personalForm.currentState!.validate()) {
+        Flushbar(
+          title: "Alert!",
+          message: "missing some values",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else {
+        return true;
+      }
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.RESIDENTIAL.index) {
+      profileController.autoValidation.value = true;
+      if (!residentialForm.currentState!.validate()) {
+        Flushbar(
+          title: "Alert!",
+          message: "missing some values",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else if (profileController.city.value == '') {
+        Flushbar(
+          title: "Alert!",
+          message: "Enter valid pincode for city",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else if (profileController.state.value == '') {
+        Flushbar(
+          title: "Alert!",
+          message: "Enter valid pincode for state",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else {
+        return true;
+      }
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.OCCUPATION.index) {
+      profileController.autoValidation.value = true;
+      if (!occupationForm.currentState!.validate()) {
+        print("Not validate");
+        Flushbar(
+          title: "Alert!",
+          message: "missing some values",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else if (profileController.employmentType.value == '') {
+        Flushbar(
+          title: "Alert!",
+          message: "Select employment type",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else {
+        return true;
+      }
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.NOMINEE.index) {
+      if (!nomineeForm.currentState!.validate()) {
+        Flushbar(
+          title: "Alert!",
+          message: "missing some values",
+          duration: Duration(seconds: 3),
+        )..show(context);
+      } else {
+        return true;
+      }
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.HEALTH.index) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void nextAction() {
+    // if (insuranceController.currentScreen.value ==
+    //     InsuranceStep.HEALTH.index) {
+    //   Get.toNamed(MRouter.insuranceSummary);
+    // } else {
+    //   insuranceController
+    //       .updateScreen(insuranceController.currentScreen.value + 1);
+    // }
+    if (insuranceController.currentScreen.value ==
+        InsuranceStep.PERSONAL.index) {
+      profileController.addPersonalDetails(
+          isFromLoan: true,
+          loanApplicationId:
+              insuranceController.insuranceApplicationModel.value.id,
+          callBack: () {
+            if (insuranceController.insuranceCompletedIndex.value <
+                InsuranceStep.RESIDENTIAL.index) {
+              insuranceController.insuranceCompletedIndex.value =
+                  InsuranceStep.RESIDENTIAL.index;
+            }
+            insuranceController.updateScreen(InsuranceStep.RESIDENTIAL.index);
+          });
+      return;
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.RESIDENTIAL.index) {
+      profileController.addResidentialDetails(
+          isFromLoan: true,
+          loanApplicationId:
+              insuranceController.insuranceApplicationModel.value.id,
+          callBack: () {
+            insuranceController
+                .updateScreen(insuranceController.currentScreen.value + 1);
+            // LoanCommon().bottomSheet(
+            //   context,
+            //   lenderId: "lenders.id ?? ''",
+            //   callBack: () {
+            //     // Get.off(() => LendersList(
+            //     //           title: 'Farm loan',
+            //     //         ));
+            //     loanController.applyLoan(
+            //       providerId: '',
+            //       lenderId: '',
+            //     );
+            //   },
+            //   providerId: '',
+            // );
+          });
+      return;
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.OCCUPATION.index) {
+      profileController.addOccupationDetails(
+          isFromLoan: true,
+          loanApplicationId:
+              insuranceController.insuranceApplicationModel.value.id,
+          callBack: () {
+            insuranceController
+                .updateScreen(insuranceController.currentScreen.value + 1);
+          });
+      return;
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.NOMINEE.index) {
+      profileController.addNomineeDetails(
+
+          applicationId:
+          insuranceController.insuranceApplicationModel.value.id,
+          callBack: () {
+            insuranceController
+                .updateScreen(insuranceController.currentScreen.value + 1);
+          });
+      return;
+    } else if (insuranceController.currentScreen.value ==
+        InsuranceStep.HEALTH.index) {
+      Get.toNamed(MRouter.insuranceSummary);
+      return;
+    }
+
+    // insuranceController
+    //     .updateScreen(insuranceController.currentScreen.value + 1);
   }
 }

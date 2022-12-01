@@ -138,8 +138,8 @@ class MRouter {
       // case healthInsurance:
       //   return CupertinoPageRoute(builder: (_) => HealthInsurance());
 
-      case healthInsuranceFillDetails:
-        return CupertinoPageRoute(builder: (_) => HealthInsuranceFillDetails());
+      // case healthInsuranceFillDetails:
+      //   return CupertinoPageRoute(builder: (_) => HealthInsuranceFillDetails());
 
       case insuranceSummary:
         return CupertinoPageRoute(builder: (_) => InsuranceSummary());
