@@ -625,7 +625,6 @@ class ProfileStepper {
                   label: 'Choose your employment type',
                   hint: 'Choose your employment type',
                 ),
-              ),
               SizedBox(
                 height: 20,
               ),
@@ -649,6 +648,33 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
+
+              if (!isFromInsurance!) ...[
+                ButtonTheme(
+                  alignedDropdown: true,
+                  child: commonDropDown(
+                    item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    // value: profileController.accountType == ''
+                    //     ? null
+                    //     : profileController.accountType.value,
+                    onChanged: (value) {
+                      temp = value;
+                    },
+                    label: 'Salary Mode',
+                    hint: 'Salary Mode',
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+
               textField(
                 controller: profileController.monthlyIncomeController.value,
                 label: 'Monthly income',
