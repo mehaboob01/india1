@@ -5,9 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/theme_manager.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../widgets/common_drop_down.dart';
 import '../../../widgets/common_radio_card.dart';
 import '../../home_start/home_manager.dart';
@@ -93,35 +96,82 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
     super.initState();
   }
 
-  fetchContacts() async {
-    if (!await FlutterContacts.requestPermission(readonly: true)) {
-      setState(() => _permissionDenied = true);
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Allow application to access your Contacts?'),
-          content: const Text(
-              'You need to allow permissions to allow access to contacts in settings'),
-          actions: <Widget>[
-            // if user deny again, we do nothing
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Don\'t allow'),
-            ),
+  // fetchContacts() async {
+  //   if (!await FlutterContacts.requestPermission(readonly: true)) {
+  //     setState(() => _permissionDenied = true);
+  //     showDialog<String>(
+  //       context: context,
+  //       builder: (BuildContext context) => AlertDialog(
+  //         title: const Text('Allow application to access your Contacts?'),
+  //         content: const Text(
+  //             'You need to allow permissions to allow access to contacts in settings'),
+  //         actions: <Widget>[
+  //           // if user deny again, we do nothing
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context),
+  //             child: const Text('Don\'t allow'),
+  //           ),
 
-            // if user is agree, you can redirect him to the app parameters :)
-            TextButton(
-              onPressed: () {
-                Geolocator.openAppSettings();
-                Navigator.pop(context);
-              },
-              child: const Text('Allow'),
-            ),
-          ],
-        ),
-      );
-    } else if (!await FlutterContacts.requestPermission(readonly: false)) {
-      setState(() => _permissionDenied = false);
+  //           // if user is agree, you can redirect him to the app parameters :)
+  //           TextButton(
+  //             onPressed: () {
+  //               Geolocator.openAppSettings();
+  //               Navigator.pop(context);
+  //             },
+  //             child: const Text('Allow'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else if (!await FlutterContacts.requestPermission(readonly: false)) {
+  //     setState(() => _permissionDenied = false);
+  //   }
+  // }
+
+  Future _handleLocationPermission() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
+    var status = Permission.contacts.request();
+    if (await status.isGranted || await status.isLimited) {
+      _mrManager.contact.value = (await FlutterContacts.openExternalPick())!;
+      var data = _mrManager.contact.value.phones.first.number
+          .replaceAll(' ', '')
+          .replaceAll('-', '')
+          .replaceAll('(', '')
+          .replaceAll(')', '');
+      String? mobileno = '';
+      var buffer = new StringBuffer();
+      if (data.isNotEmpty) {
+        if (data.length == 13) {
+          mobileno = data.substring(3);
+        } else {
+          mobileno = data;
+        }
+
+        for (int i = 0; i < mobileno!.length; i++) {
+          buffer.write(mobileno![i]);
+          var nonZeroIndex = i + 1;
+          if (nonZeroIndex % 4 == 0 && nonZeroIndex != mobileno!.length) {
+            buffer.write(' ');
+          }
+        }
+        var autoSelectNumber = buffer.toString();
+        mobileno = autoSelectNumber;
+        mobileno = mobileno.toString() + ' ';
+        mobileNumberController.text = mobileno.trim();
+        print("Size==> ${mobileNumberController.text.length}");
+      }
+    } else if (await status.isDenied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, true);
+      }
+    } else if (await status.isPermanentlyDenied) {
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, false);
+        return false;
+      }
+      Geolocator.openAppSettings();
     }
   }
 
@@ -354,109 +404,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       suffixIcon:
                                                           GestureDetector(
                                                               onTap: () async {
-                                                                await fetchContacts();
-                                                                if (!_permissionDenied) {
-                                                                  _mrManager
-                                                                          .contact
-                                                                          .value =
-                                                                      (await FlutterContacts
-                                                                          .openExternalPick())!;
-
-                                                                  var data = _mrManager
-                                                                      .contact
-                                                                      .value
-                                                                      .phones
-                                                                      .first
-                                                                      .number
-                                                                      .replaceAll(
-                                                                          ' ', '')
-                                                                      .replaceAll(
-                                                                          '-',
-                                                                          '')
-                                                                      .replaceAll(
-                                                                          '(',
-                                                                          '')
-                                                                      .replaceAll(
-                                                                          ')',
-                                                                          '');
-                                                                  String?
-                                                                      mobileno =
-                                                                      '';
-                                                                  var buffer =
-                                                                      new StringBuffer();
-                                                                  if (data
-                                                                      .isNotEmpty) {
-                                                                    print(
-                                                                        "phone number length${data.length}");
-                                                                    if (data.length ==
-                                                                        13) {
-                                                                      mobileno =
-                                                                          data.substring(
-                                                                              3);
-                                                                    } else {
-                                                                      mobileno =
-                                                                          data;
-                                                                    }
-
-                                                                    for (int i =
-                                                                            0;
-                                                                        i < mobileno!.length;
-                                                                        i++) {
-                                                                      buffer.write(
-                                                                          mobileno![
-                                                                              i]);
-                                                                      var nonZeroIndex =
-                                                                          i + 1;
-                                                                      if (nonZeroIndex % 4 ==
-                                                                              0 &&
-                                                                          nonZeroIndex !=
-                                                                              mobileno!.length) {
-                                                                        buffer.write(
-                                                                            ' ');
-                                                                      }
-                                                                    }
-                                                                    var autoSelectNumber =
-                                                                        buffer
-                                                                            .toString();
-                                                                    mobileno =
-                                                                        autoSelectNumber;
-                                                                    mobileno =
-                                                                        mobileno.toString() +
-                                                                            ' ';
-                                                                    mobileNumberController
-                                                                            .text =
-                                                                        mobileno
-                                                                            .trim();
-                                                                    print(
-                                                                        "Size==> ${mobileNumberController.text.length}");
-                                                                  }
-
-                                                                  // fetchContacts();
-                                                                } else {
-                                                                  setState(() {
-                                                                    _permissionDenied =
-                                                                        false;
-                                                                  });
-                                                                  // fetchContacts();
-
-                                                                  // Flushbar(
-                                                                  //  onTap: fetchContacts(),
-                                                                  //   mainButton: ButtonBar(
-                                                                  //
-                                                                  //     children: [
-                                                                  //       Text(
-                                                                  //         "Retry",
-                                                                  //         style: TextStyle(color: Colors.white),
-                                                                  //       )
-                                                                  //     ],
-                                                                  //   ),
-                                                                  //   backgroundColor: Colors.black,
-                                                                  //   title: "Alert!",
-                                                                  //   message: "Contact permssion required..",
-                                                                  //   messageSize: 17,
-                                                                  //   //duration: Duration(seconds: 4),
-                                                                  // )..show(context);
-                                                                }
+                                                                _handleLocationPermission();
                                                               },
                                                               child: Padding(
                                                                 padding:

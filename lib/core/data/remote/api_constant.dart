@@ -109,6 +109,8 @@ class Apis {
 
   static String referApp = "referrals/refer";
 
+  //Google Maps Key
+  static String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
   // update language
 
  static String updateLan = "customers/profile/language";

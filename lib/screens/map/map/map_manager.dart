@@ -25,6 +25,7 @@ class MapManager extends GetxController {
   var isLoading = false.obs;
   var cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 15).obs;
   var locationText = "Search Location".obs;
+
   @override
   void onReady() {
     getCurrentLocation();
@@ -61,6 +62,9 @@ class MapManager extends GetxController {
     await getAddressFromLatLong(position.latitude, position.longitude);
     getLocations(position.latitude, position.longitude);
     await animateTo(position.latitude, position.longitude);
+    // cameraPosition.value = CameraPosition(
+    //     target: LatLng(position.latitude, position.longitude), zoom: 13);
+    // print(cameraPosition.value);
   }
 
   void getLocations(double lat, double long) async {
@@ -137,10 +141,9 @@ class MapManager extends GetxController {
   }
 
   Future<void> getAddressFromLatLong(lat, long) async {
-    String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
     String type = '(regions)';
     String baseURL =
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=$kPLACES_API_KEY';
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=${Apis.kPLACES_API_KEY}';
 
     var response = await http.get(Uri.parse(baseURL));
     if (response.statusCode == 200) {

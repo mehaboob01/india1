@@ -4,6 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/model/common_model.dart';
+import 'package:india_one/screens/refer/contacts_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
@@ -11,20 +12,20 @@ import '../../core/data/remote/api_constant.dart';
 
 class ReferManager extends GetxController {
   var isLoading = false.obs;
-
+  ContactCont cont = Get.put(ContactCont());
   callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-    
-   
 
-    print("mobile number ${number.substring(number.length-10)}");
+    print("mobile number ${number.substring(number.length - 10)}");
     try {
       isLoading.value = true;
 
       var response = await http.post(Uri.parse(baseUrl + Apis.referApp),
-          body: jsonEncode(
-              {"customerId": customerId, "numberForReferral":number.substring(number.length-10)}),
+          body: jsonEncode({
+            "customerId": customerId,
+            "numberForReferral": number.substring(number.length - 10)
+          }),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -39,7 +40,8 @@ class ReferManager extends GetxController {
             CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-
+          cont.filteredList.value.clear();
+          cont.filteredList.value = cont.contacts;
           Flushbar(
             title: "Success:)",
             message: "Invitation sent successfully!",

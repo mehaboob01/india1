@@ -1,17 +1,44 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/refer/contacts_manager.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/theme_manager.dart';
+import '../core/data/local/shared_preference_keys.dart';
 
 class CommonBanner extends StatelessWidget {
- // const CommonBanner({super.key});
+  Future _handleLocationPermission() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
+    var status = Permission.contacts.request();
+    if (await status.isGranted || await status.isLimited) {
+      Get.toNamed(MRouter.referEarn);
+    } else if (await status.isDenied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, true);
+      }
+    } else if (await status.isPermanentlyDenied) {
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, false);
+        return false;
+      }
+      Geolocator.openAppSettings();
+    }
+  }
+
+  CommonBanner({super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-
-       Get.toNamed(MRouter.referEarn);
+      onTap: () async {
+        await _handleLocationPermission();
       },
       child: Container(
         width: double.maxFinite,
@@ -19,7 +46,7 @@ class CommonBanner extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 2.0.hp),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
-            gradient:  LinearGradient(
+            gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
@@ -36,7 +63,7 @@ class CommonBanner extends StatelessWidget {
               flex: 4,
               child: Padding(
                 padding:
-                EdgeInsets.only(top: 6.0.wp, bottom: 6.0.wp, left: 4.0.wp),
+                    EdgeInsets.only(top: 6.0.wp, bottom: 6.0.wp, left: 4.0.wp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,15 +75,15 @@ class CommonBanner extends StatelessWidget {
                                 fontSize: 8.0.sp,
                                 height: 1.5),
                             text:
-                            'Refer a friend or a family member & get\na chance to',
+                                'Refer a friend or a family member & get\na chance to',
                             children: [
-                              TextSpan(
-                                  text: ' Earn upto 100 points',
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w600)),
-                            ])),
+                          TextSpan(
+                              text: ' Earn upto 100 points',
+                              style: AppStyle.shortHeading.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 12.0.sp,
+                                  fontWeight: FontWeight.w600)),
+                        ])),
                     // SizedBox(height: 1.0.wp),
                     SizedBox(height: 5.0.wp),
                     Row(
@@ -84,9 +111,9 @@ class CommonBanner extends StatelessWidget {
                   //color: Colors.red,
                   child: Center(
                       child: Image.asset(
-                        AppImages.referEarnSVG,
-                        fit: BoxFit.fill,
-                      )),
+                    AppImages.referEarnSVG,
+                    fit: BoxFit.fill,
+                  )),
                 ))
           ],
         ),

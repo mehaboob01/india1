@@ -31,7 +31,6 @@ class _ReferEarnState extends State<ReferEarn> {
   @override
   void initState() {
     super.initState();
-    contactCont.fetchFavs();
   }
 
   @override
@@ -45,7 +44,6 @@ class _ReferEarnState extends State<ReferEarn> {
 
   @override
   Widget build(BuildContext context) {
-    if (contactCont.permissionDenied.value) Get.back();
     if (contactCont.contacts == null)
       return Center(child: CircularProgressIndicator());
     return Scaffold(
@@ -292,13 +290,6 @@ class _ReferEarnState extends State<ReferEarn> {
             print("selected list${invitedList.toString()}");
           });
         }
-
-        // if (contactCont.filteredList.value[index].phones.isNotEmpty) {
-        //   print("cdonteact number for api hit ");
-        //   print(contactCont.filteredList.value[index].phones.first.number);
-        //   _referManager.callReferApi(
-        //       contactCont.filteredList.value[index].phones.first.number);
-        //}
       },
       child: Padding(
         padding: EdgeInsets.only(left: 4, right: 4),
