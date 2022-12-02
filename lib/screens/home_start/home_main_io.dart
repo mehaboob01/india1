@@ -49,12 +49,15 @@ class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
 
 class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
+
   @override
   void initState() {
     super.initState();
       WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
+
     // _homeManager.sendTokens();
+    _loyaltyManager.callLoyaltyDashboardApi();
     cashbackCtrl.onInit();
     cashbackManager.callBankListApi();
     _profileController.getProfileData();
@@ -298,6 +301,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     //  _homeManager.sendTokens();
     _profileController.getProfileData();
     _refreshController.loadComplete();
+    _loyaltyManager.callLoyaltyDashboardApi();
+
     cashbackCtrl.onInit();
   }
 
@@ -305,6 +310,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
+    _loyaltyManager.callLoyaltyDashboardApi();
+
     // _homeManager.sendTokens();
     _profileController.getProfileData();
   }

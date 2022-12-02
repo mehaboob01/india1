@@ -8,11 +8,13 @@ import '../../widgets/loyalty_common_header.dart';
 import '../loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import '../loyality_points/cashback_redeem/cb_manager.dart';
 import '../loyality_points/cashback_redeem/your_accounts_page.dart';
+import 'controller/update_bank_account_manager.dart';
 import 'delete_bottom_sheet.dart';
 import 'edit_accounts_screen.dart';
 import 'edit_upi_screen.dart';
 
 class ManageAccountsCard extends StatelessWidget {
+  UpdateBankAccount updateBankAccount = Get.put(UpdateBankAccount());
   ManageAccountsCard({super.key});
   CashBackManager cashBackManager = Get.put(CashBackManager());
 
@@ -25,7 +27,11 @@ class ManageAccountsCard extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: SafeArea(
+        body:
+            updateBankAccount.isLoading.value == true ? CircularProgressbar():
+
+
+        SafeArea(
             child: Column(children: [
           const Align(
             alignment: Alignment.topCenter,
@@ -161,13 +167,18 @@ class ManageAccountsCard extends StatelessWidget {
                                             isEditable: true,
                                             isSelected: false,
                                             onEditPressed: () => Get.to(
-                                                () => EditUpi(
-                                                    cashBackManager
-                                                        .customerUPIList[index]
-                                                        .upiId,
-                                                    cashBackManager
-                                                        .customerUPIList[index]
-                                                        .id),
+                                                () {
+                                                  EditUpi(
+                                                      cashBackManager
+                                                          .customerUPIList[index]
+                                                          .upiId,
+                                                      cashBackManager
+                                                          .customerUPIList[index]
+                                                          .id);
+
+
+                                                } ,
+
                                                 fullscreenDialog: true,
                                                 arguments: [
                                                   //  JsonModel().upiModel[index],
