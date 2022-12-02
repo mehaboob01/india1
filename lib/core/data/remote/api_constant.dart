@@ -1,6 +1,7 @@
 // DEV URL
 final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
+final String bucketBaseUrl =
+    "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
 //final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/v1/";
@@ -31,8 +32,10 @@ class Apis {
   static String cashBackToBank = "loyalty/cashback/bank";
   static String updateBank = "customer/bank/account";
   static String fetchCustomerBankAccounts = "customer/bank/accounts";
-  static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
-  static String deleteCustomerBankAccount = "customer/bank/account"; // delete method
+  static String addCustomerBankAccount =
+      "loyalty/customer/bank/account"; //post method
+  static String deleteCustomerBankAccount =
+      "customer/bank/account"; // delete method
 
   // upi api
 
@@ -70,7 +73,8 @@ class Apis {
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";
   static String fetchFarmProducts = "loans/fetch-farm-products";
-  static String updateFarmLoanDetails = "loans/application/update-basic-details";
+  static String updateFarmLoanDetails =
+      "loans/application/update-basic-details";
 
   ///insurance
   static String createInsurance = "insurances/application";
@@ -82,12 +86,17 @@ class Apis {
 
   //miscellaneous
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
-  static String creditCard = "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
-  static String emiCard = "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
+  static String creditCard =
+      "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
+  static String emiCard =
+      "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
   static String msme = "https://flutter.dev/";
-  static String creditScore = "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
-  static String fdLink = "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
-  static String digiGold = "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
+  static String creditScore =
+      "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
+  static String fdLink =
+      "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
+  static String digiGold =
+      "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
 
   // token related api's
 
@@ -98,9 +107,9 @@ class Apis {
 
   // notifications
 
-   static String notifications = "notifications/list";
+  static String notifications = "notifications/list";
 
-   //insurance
+  //insurance
   static String insuranceDashboard = "dashboards/insurances";
 
   //logout
@@ -109,6 +118,6 @@ class Apis {
 
   static String referApp = "referrals/refer";
 
-
-
+  //Google Maps Key
+  static String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
 }

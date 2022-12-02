@@ -9,6 +9,7 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../core/data/remote/api_constant.dart';
 import 'map_manager.dart';
 
 class Maps extends StatefulWidget {
@@ -53,7 +54,7 @@ class _MapsState extends State<Maps> {
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$input&components=country:IN&key=$kPLACESAPIKEY';
+        '$baseURL?input=$input&components=country:IN&key=${Apis.kPLACES_API_KEY}';
 
     var response = await http.get(Uri.parse(request));
     if (response.statusCode == 200) {
@@ -66,10 +67,9 @@ class _MapsState extends State<Maps> {
     }
   }
 
-  var kPLACESAPIKEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
   void getLatLng(String placeId) async {
     String baseURL =
-        "https://maps.googleapis.com/maps/api/geocode/json?place_id=$placeId&key=$kPLACESAPIKEY";
+        "https://maps.googleapis.com/maps/api/geocode/json?place_id=$placeId&key=${Apis.kPLACES_API_KEY}";
     var response = await http.get(Uri.parse(baseURL));
     var result = json.decode(response.body);
     if (response.statusCode == 200) {
