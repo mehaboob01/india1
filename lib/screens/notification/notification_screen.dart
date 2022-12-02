@@ -48,12 +48,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                  baseColor: AppColors.greySecond.withOpacity(0.5),
                  highlightColor: AppColors.darkGrey!,
                  child: ListView.builder(
-                   itemCount: _notificationManager.notificationList.length,
+                   itemCount: 5,
                    itemBuilder: (context, index) {
                      return Card(
                        elevation: 1.0,
                        shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(16),
+                         borderRadius: BorderRadius.circular(8),
                        ),
                        child: SizedBox(height: 80),
                      );

@@ -23,6 +23,10 @@ class LoginManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
+      String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
+
+
+      print("SELECTED_LANGUAGE==> ${selectedLan}");
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
             "mobileNumber": phoneNumber,
@@ -31,7 +35,7 @@ class LoginManager extends GetxController {
             "deviceId": deviceId,
             "deviceToken": deviceToken,
             "platform": "Android",
-            "preferredLanguage": "kn"
+            "preferredLanguage": selectedLan
           }),
           headers: {
             'Content-type': 'application/json',

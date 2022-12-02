@@ -279,17 +279,11 @@ class _ReferEarnState extends State<ReferEarn> {
           setState(() {
             _referManager.callReferApi(contactCont
                 .filteredList.value[index].phones.first.number
-                .toString().replaceAll(
-                ' ', '')
-                .replaceAll(
-                '-',
-                '')
-                .replaceAll(
-                '(',
-                '')
-                .replaceAll(
-                ')',
-                ''));
+                .toString()
+                .replaceAll(' ', '')
+                .replaceAll('-', '')
+                .replaceAll('(', '')
+                .replaceAll(')', ''));
 
             invitedList.add(contactCont
                 .filteredList.value[index].phones.first.number

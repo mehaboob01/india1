@@ -15,14 +15,16 @@ class ReferManager extends GetxController {
   callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    
+   
 
-    print("mobile number ${number}");
+    print("mobile number ${number.substring(number.length-10)}");
     try {
       isLoading.value = true;
 
       var response = await http.post(Uri.parse(baseUrl + Apis.referApp),
           body: jsonEncode(
-              {"customerId": customerId, "numberForReferral": number}),
+              {"customerId": customerId, "numberForReferral":number.substring(number.length-10)}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',

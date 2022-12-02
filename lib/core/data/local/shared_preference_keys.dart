@@ -20,6 +20,7 @@ class SPKeys {
 
   static const String FIRST_TIME_LOGIN_POINTS = 'first_time_login_points';
   static const String SELECTED_LANGUAGE = 'selected_lan';
+  static const String SELECTED_LANGUAGE_CODE = 'selected_lan_code';
 
   static const String LOGGED_IN = 'logged_in';
   static const String SHOW_AUTH = 'show_auth';
