@@ -239,7 +239,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
     String? finger = prefs.getString(SPKeys.finger);
-    print("check auth status${_homeManager.showAuth.value}");
+    print("check auth fggfgfgf status${_homeManager.showAuth.value}");
 
     if (showAuth == true || _homeManager.showAuth.value == true) {
       {
