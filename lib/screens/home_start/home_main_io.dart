@@ -52,7 +52,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    //  WidgetsBinding.instance.addObserver(this); // observer
+      WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
     // _homeManager.sendTokens();
     cashbackCtrl.onInit();
@@ -61,7 +61,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
     showFirstTimePoints();
 
-    //checkLogin();
+    checkLogin();
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -258,6 +258,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
+                  WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
                 SystemNavigator.pop();
@@ -271,6 +272,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
+                    WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
                   SystemNavigator.pop();

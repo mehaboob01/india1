@@ -109,6 +109,10 @@ class Apis {
 
   static String referApp = "referrals/refer";
 
+  // update language
+
+ static String updateLan = "customers/profile/language";
+
 
 
 }

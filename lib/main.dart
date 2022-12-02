@@ -10,7 +10,7 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/screens/no_internet_ui/no_internet_ui.dart';
+import 'package:india_one/screens/helpers/no_internet.dart';
 
 import 'localization/locale_string.dart';
 
