@@ -230,7 +230,7 @@ class CommonPageHeader extends StatelessWidget {
                 GestureDetector(
                   onTap: ()=> Get.toNamed(MRouter.notificationScreen),
                   child: headingBox(
-                      image: AppImages.notify_icon),
+                      image: AppImages.notify_icon_alert),
                 ),
                 SizedBox(
                   width: 2.0.wp,

@@ -203,7 +203,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
                 child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs!.setBool(SPKeys.SHOW_AUTH, false);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           MRouter.homeScreen, (Route route) => false);
                     },

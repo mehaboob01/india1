@@ -3,7 +3,7 @@ final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 // dummy
 // UAT URL
-//final String baseUrl  = "http://india1digitalpack1-env.eba-bd5dres9.ap-south-1.elasticbeanstalk.com/v1/";
+//final String baseUrl  = "https://digitaluatbackend.india1.co.in/v1/";
 
 class Apis {
   // OnBoarding & login Api

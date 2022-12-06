@@ -190,7 +190,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               LoanCommon().rowText(
-                                                value: 'Max amount',
+                                                value: 'Loan amount',
                                                 title: '₹ ${lenders?.loanMaxAmount ?? 0}',
                                               ),
                                               LoanCommon().rowText(
@@ -198,7 +198,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                 title: '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
                                               ),
                                               LoanCommon().rowText(
-                                                value: 'Interest/m',
+                                                value: 'Loan Interest',
                                                 title: '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
                                               ),
                                             ],

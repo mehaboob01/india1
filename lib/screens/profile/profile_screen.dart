@@ -561,12 +561,19 @@ class ProfileScreen extends StatelessWidget {
                               ? true
                               : false),
                       singleDetails(
+                        isEmpty: profileDetailsModel.dateOfBirth == null
+                            ? true
+                            : false,
                           title: "Date of birth",
                         value: profileDetailsModel.dateOfBirth == null || profileDetailsModel.dateOfBirth == ''
                             ? "No DOB"
                             : DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.dateOfBirth!)),
                       ),
                       singleDetails(
+                          isEmpty: profileDetailsModel.maritalStatus == null
+                              ? true
+                              : false,
+
                           title: "Marital status",
                         value: profileDetailsModel.maritalStatus ?? "Not updated",
                       ),
@@ -576,7 +583,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          if (!isPersonalDetailsVisible.value)
+
             addDetailButton(
               title: 'Add Personal Details',
               callBack: () {
@@ -643,7 +650,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
             ),
           ),
-          if (isResidentialDetailsVisible.value == false)
+          // if (isResidentialDetailsVisible.value == false)
             addDetailButton(
               title: 'Add Residential Details',
               callBack: () {
@@ -693,7 +700,7 @@ class ProfileScreen extends StatelessWidget {
                       ],
               ),
             ),
-            if (isBankAccountVisible.value == false)
+            // if (isBankAccountVisible.value == false)
               addDetailButton(
                 title: 'Add Bank Account',
                 callBack: () {

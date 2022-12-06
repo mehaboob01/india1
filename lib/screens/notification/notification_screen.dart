@@ -20,11 +20,18 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
 
+
+  int _page = 0;
+  final int _limit = 2;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _notificationManager.callNotificationsApi();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _notificationManager.callNotificationsApi();
+    });
+
   }
   NotificationManager _notificationManager = Get.put(NotificationManager());
 
@@ -68,16 +75,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
 
 
-                   ListView.separated(
-                    itemBuilder: (context, index) => NotificationCard(notificationHeading: _notificationManager.notificationList[index].title!, notificationMsg: _notificationManager.notificationList[index].body!, dateTime: _notificationManager.notificationList[index].date!,
+                   Obx(
+                    ()=> ListView.separated(
+                      itemBuilder: (context, index) => NotificationCard(notificationHeading: _notificationManager.notificationList[index].title!, notificationMsg: _notificationManager.notificationList[index].body!, dateTime: _notificationManager.notificationList[index].date!,
 
-                    ),
-                    separatorBuilder: (context, index) => Divider(
-                          height: 0,
-                          thickness: 2,
-                          color: Color(0xffe4e4e4),
-                        ),
-                    itemCount: _notificationManager.notificationList.length),
+                      ),
+                      separatorBuilder: (context, index) => Divider(
+                            height: 0,
+                            thickness: 2,
+                            color: Color(0xffe4e4e4),
+                          ),
+                      itemCount: _notificationManager.notificationList.length),
+                   ),
               ),
             )
           ],

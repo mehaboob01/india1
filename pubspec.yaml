@@ -59,6 +59,7 @@ dependencies:
   rename: ^2.0.1
   change_app_package_name: ^1.1.0
   loading_animation_widget: ^1.2.0+3
+  flutter_spinkit: ^5.1.0
   syncfusion_flutter_sliders: ^20.3.52
   flutter_contacts: ^1.1.5+1
   google_maps_flutter: ^2.2.1
@@ -67,6 +68,7 @@ dependencies:
   firebase_core: ^2.2.0
   pull_to_refresh: ^2.0.0
   new_version: ^0.3.1
+  badges: ^2.0.3
   device_info_plus: ^8.0.0
 
 

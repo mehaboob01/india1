@@ -936,6 +936,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                   .toString());
                               cashbackCtrl.upiAddEnable.value = false;
                               cashbackCtrl.upiFormKey.currentState!.reset();
+                              cashBackManager.fetchCustomerUpiAccounts();
                             }
                           }),
                     ))

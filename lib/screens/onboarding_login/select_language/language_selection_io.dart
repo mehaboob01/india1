@@ -50,7 +50,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(child: buildSelectLanScreen()),
+      body: SafeArea(child: SingleChildScrollView(child: buildSelectLanScreen())),
     );
   }
 

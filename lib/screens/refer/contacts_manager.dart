@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
-import 'package:flutter_contacts/contact.dart';
 
 class ContactCont extends GetxController {
   var isLoading = false.obs;
@@ -23,6 +20,10 @@ class ContactCont extends GetxController {
   final Rx<List<Contact>> filteredList = Rx<List<Contact>>([]);
   Rx<List<Contact>> favList = Rx<List<Contact>>([]);
 
+  var contactsLenght = 0.obs;
+
+  RxBool isPermissionAllowed = false.obs;
+
   fetchContacts() async {
     isLoading.value = true;
     final _contacts = await FlutterContacts.getContacts(
@@ -30,12 +31,12 @@ class ContactCont extends GetxController {
     contacts = _contacts.toList();
     filteredList.value = contacts;
     isLoading.value = false;
+    contactsLenght.value = filteredList.value.length;
   }
 
   @override
   void onInit() async {
     super.onInit();
-    await fetchContacts();
   }
 
   filterList(value) async {
@@ -51,5 +52,6 @@ class ContactCont extends GetxController {
           .toList();
     }
     filteredList.value = results;
+    contactsLenght.value = filteredList.value.length;
   }
 }

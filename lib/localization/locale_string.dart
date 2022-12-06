@@ -14,7 +14,7 @@ class LocaleString extends Translations {
           'sending_otp' : 'Sending OTP',
           'proceed_btn' : 'Proceed',
           'enter_otp': 'Enter OTP',
-          'otp_message': 'We have sent a OTP to',
+          'otp_message': 'We have sent an OTP to',
           'edit_number':'Edit number',
           'resend_otp':'Resend OTP',
           'invalid_otp' : 'Invalid OTP entered. Please enter valid OTP',

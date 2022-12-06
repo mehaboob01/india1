@@ -11,16 +11,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/theme_manager.dart';
 import '../core/data/local/shared_preference_keys.dart';
+import '../screens/refer/refer_earn_ui.dart';
 
 class CommonBanner extends StatelessWidget {
+  ContactCont _cont = Get.put(ContactCont());
   Future _handleLocationPermission() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? firstInit =
-        sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
+    sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
     var status = Permission.contacts.request();
     if (await status.isGranted || await status.isLimited) {
-      Get.toNamed(MRouter.referEarn);
+      _cont.isPermissionAllowed.value = true;
+      Get.to(ReferEarn());
     } else if (await status.isDenied) {
+      _cont.isPermissionAllowed.value = false;
+      Get.to(ReferEarn());
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, true);
       }
@@ -28,8 +33,10 @@ class CommonBanner extends StatelessWidget {
       if (firstInit == null || firstInit) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, false);
         return false;
+      } else {
+        _cont.isPermissionAllowed.value = false;
+        Get.to(ReferEarn());
       }
-      Geolocator.openAppSettings();
     }
   }
 

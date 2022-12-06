@@ -28,7 +28,6 @@ class CashBackManager extends GetxController {
   var bankListId = <Bank>[].obs;
   var bankListIdSend = <Bank>[];
 
-
   var addAccountDetails = false.obs;
   RxMap<String, dynamic> addBankData = <String, dynamic>{}.obs;
   RxMap<String, dynamic> addUpiData = <String, dynamic>{}.obs;
@@ -141,22 +140,16 @@ class CashBackManager extends GetxController {
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
 
-
-
         for (var index in fetchCustomerBanksModel.data!.accounts!) {
           customerBankListSend.add(index);
 
           localSelectedList.add(false);
         }
 
-
         customerBankList.addAll(customerBankListSend);
 
         selectedplanList.addAll(localSelectedList);
         isLoading(false);
-
-
-
       } else {
         Flushbar(
           title: "Error!",
@@ -237,7 +230,6 @@ class CashBackManager extends GetxController {
     String pointsToReedem,
     BuildContext context,
   ) async {
-
     print("cashbank to bank");
     print("points to redeemed ${double.parse(pointsToReedem)}");
     try {
@@ -335,7 +327,8 @@ class CashBackManager extends GetxController {
       isLoading.value = true;
 
       var response = await http.post(Uri.parse(baseUrl + Apis.upiAdd),
-          body: jsonEncode({"upiId": upiId, "customerId": customerId}),
+          body: jsonEncode(
+              {"upiId": upiId, "customerId": customerId}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -355,7 +348,7 @@ class CashBackManager extends GetxController {
             message: "upi added successfully ...",
             duration: Duration(seconds: 3),
           )..show(Get.context!);
-          fetchCustomerUpiAccounts();
+        await  fetchCustomerUpiAccounts();
         } else {
           Flushbar(
             title: "Something went wrong ..",
