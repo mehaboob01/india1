@@ -63,9 +63,18 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     CustomAppBar(
                       heading: 'Car loan',
                       customActionIconsList: [
-                        // CustomActionIcons(
-                        //   image: AppImages.bottomNavHome,
-                        // ),
+                        CustomActionIcons(
+                          image: AppImages.askIconSvg,
+                          onHeaderIconPressed: () async {
+                            // what to ask function goes here
+                          },
+                        ),
+                        CustomActionIcons(
+                          image: AppImages.bottomNavHomeSvg,
+                          onHeaderIconPressed: () async {
+                            // Get.to(() => HomeScreen.IO(false));
+                          },
+                        ),
                       ],
                     ),
                     Expanded(
@@ -83,17 +92,19 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                   () => Container(
                                     child: IgnorePointer(
                                       child: AnotherStepper(
-                                        stepperList: _plManager.bikeLoanTitleList
-                                            .map((e) => StepperData(
-                                                  title: "$e",
-                                                ))
-                                            .toList(),
+                                        stepperList:
+                                            _plManager.bikeLoanTitleList
+                                                .map((e) => StepperData(
+                                                      title: "$e",
+                                                    ))
+                                                .toList(),
                                         stepperDirection: Axis.horizontal,
                                         iconWidth: 25,
                                         iconHeight: 25,
                                         inverted: true,
                                         activeBarColor: AppColors.pointsColor,
-                                        activeIndex: _plManager.currentScreen.value,
+                                        activeIndex:
+                                            _plManager.currentScreen.value,
                                         callBack: (i) {
                                           _plManager.currentScreen.value = i;
                                         },
@@ -101,9 +112,11 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                     ),
                                   ),
                                 ),
-                                _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                                _plManager.currentScreen.value ==
+                                        Steps.LOAN_AMOUNT.index
                                     ? loanAmountUi()
-                                    : _plManager.currentScreen.value == Steps.PERSONAL.index
+                                    : _plManager.currentScreen.value ==
+                                            Steps.PERSONAL.index
                                         ? personalInfoUi()
                                         : residentialInfoUi()
                               ],
@@ -114,9 +127,11 @@ class _CarLoanIOState extends State<CarLoanIO> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: _plManager.currentScreen.value == Steps.LOAN_AMOUNT.index
+                      child: _plManager.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
                           ? loanAmountButton()
-                          : _plManager.currentScreen.value == Steps.PERSONAL.index
+                          : _plManager.currentScreen.value ==
+                                  Steps.PERSONAL.index
                               ? personalInfoButton()
                               : residentialInfoButton(),
                     ),
@@ -150,7 +165,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
             duration: Duration(seconds: 3),
           )..show(context);
         } else {
-          loanController.updateLoanAmount(amount: loanAmountEditingController.text, type: LoanType.CarLoan);
+          loanController.updateLoanAmount(
+              amount: loanAmountEditingController.text, type: LoanType.CarLoan);
         }
       },
       child: LoanCommon().nextButton(),
@@ -196,7 +212,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
               } else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       _plManager.updateScreen(Steps.RESIDENTIAL.index);
                     });
@@ -248,7 +265,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
               } else {
                 profileController.addResidentialDetails(
                     isFromLoan: true,
-                    loanApplicationId: loanController.createLoanModel.value.loanApplicationId,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       Get.to(() => LendersList(
                             title: 'Car loan',
@@ -288,7 +306,9 @@ class _CarLoanIOState extends State<CarLoanIO> {
           },
           label: '4 wheeler required',
           hint: 'Select the car you are willing to buy',
-          value: profileController.vehicleType.value == '' ? null : profileController.vehicleType.value,
+          value: profileController.vehicleType.value == ''
+              ? null
+              : profileController.vehicleType.value,
         ),
         SizedBox(
           height: 54,

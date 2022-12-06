@@ -4,6 +4,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/home_start/home_main_io.dart';
+import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -196,43 +198,41 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
       () => Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.white,
-        appBar: AppBar(
-            elevation: 2,
-            backgroundColor: Colors.white,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                child: GestureDetector(
-                    onTap: () async {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs!.setBool(SPKeys.SHOW_AUTH, false);
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          MRouter.homeScreen, (Route route) => false);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        "assets/images/homeInactive.svg",
-                        color: AppColors.primary,
-                      ),
-                    )),
-              ),
-            ],
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: Icon(
-                  Icons.chevron_left,
-                  color: AppColors.black,
-                )),
-            title: Text(
-              "Redeem points ",
-              style: AppStyle.shortHeading.copyWith(
-                fontSize: Dimens.font_16sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            )),
+        // appBar: AppBar(
+        //     elevation: 2,
+        //     backgroundColor: Colors.white,
+        //     actions: [
+        //       Padding(
+        //         padding: const EdgeInsets.fromLTRB(0, 0, 40, 0),
+        //         child: GestureDetector(
+        //             onTap: () {
+        //               Navigator.of(context).pushNamedAndRemoveUntil(
+        //                   MRouter.homeScreen, (Route route) => false);
+        //             },
+        //             child: Container(
+        //               child: SvgPicture.asset(
+        //                 "assets/images/homeInactive.svg",
+        //                 color: AppColors.primary,
+        //               ),
+        //             )),
+        //       ),
+        //     ],
+        //     leading: IconButton(
+        //         onPressed: () {
+        //           Get.back();
+        //         },
+        //         icon: Icon(
+        //           Icons.chevron_left,
+        //           color: AppColors.black,
+        //         )),
+        //     title: Text(
+        //       "Redeem points ",
+        //       style: AppStyle.shortHeading.copyWith(
+        //         fontSize: Dimens.font_16sp,
+        //         fontWeight: FontWeight.w600,
+        //         color: Colors.black,
+        //       ),
+        //     )),
         body: _mrManager.isMobileRechargeLoading == true ||
                 _mrManager.isLoading == true
             ? Column(
@@ -260,6 +260,16 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          CustomAppBar(
+                            heading: 'Redeem points',
+                            customActionIconsList: [
+                              CustomActionIcons(
+                                  image: AppImages.bottomNavHomeSvg,
+                                  onHeaderIconPressed: () async {
+                                    // Get.to(() => HomeMainIO(false));
+                                  })
+                            ],
+                          ),
                           // user inputs
                           FormBuilder(
                             key: _mobileRechargeKey,
@@ -824,13 +834,18 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
               ],
             ),
             Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
+            mobileNumberEnabled == true &&
+                    circleEnabled == true &&
+                    operatorEnabled == true &&
+                    planSelected == true
+                ? SizedBox(
+                    height: 48,
+                    child: Image.asset(
+                      "assets/images/btn_img.png",
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                : SizedBox.shrink()
           ],
         ),
         decoration: BoxDecoration(

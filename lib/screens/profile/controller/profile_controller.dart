@@ -140,12 +140,16 @@ class ProfileController extends GetxController {
   setData() {
     firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
     lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
+
     mobileNumberController.value.text =
         profileDetailsModel.value.mobileNumber ?? '';
     alternateNumberController.value.text =
         profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = profileDetailsModel.value.dateOfBirth == null?'':DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.value.dateOfBirth!));
+    dobController.value.text = DateFormat('dd-MM-yyyy').format(
+            DateFormat("yyyy-MM-dd")
+                .parse(profileDetailsModel.value.dateOfBirth!)) ??
+        '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -159,11 +163,11 @@ class ProfileController extends GetxController {
     state.value = profileDetailsModel.value.address?.state ?? '';
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
-    occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
+    occupationController.value.text =
+        profileDetailsModel.value.occupation ?? '';
+    monthlyIncomeController.value.text =
+        "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
-
-
   }
 
   RxInt loanRequirement = (-1).obs;
@@ -517,12 +521,22 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "firstName": firstNameController.value.text.trim(),
-              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text.trim() : null,
+              "lastName": lastNameController.value.text.trim().isNotEmpty
+                  ? lastNameController.value.text.trim()
+                  : null,
               "mobileNumber": mobileNumberController.value.text.trim(),
-              "alternateNumber": alternateNumberController.value.text.trim().isNotEmpty?alternateNumberController.value.text.trim():null,
-              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(dobController.value.text)): null,
+              "alternateNumber":
+                  alternateNumberController.value.text.trim().isNotEmpty
+                      ? alternateNumberController.value.text.trim()
+                      : null,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty
+                  ? DateFormat('yyyy-MM-dd').format(
+                      DateFormat("dd-MM-yyyy").parse(dobController.value.text))
+                  : null,
               "preferredLanguage": "EN",
-              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text.trim() : null,
+              "email": emailController.value.text.trim().isNotEmpty
+                  ? emailController.value.text.trim()
+                  : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
               "maritalStatus":
                   maritalStatus.value.isNotEmpty ? maritalStatus.value : null,

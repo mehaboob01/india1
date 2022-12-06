@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:india_one/widgets/common_banner.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
@@ -12,27 +13,25 @@ import '../../utils/common_methods.dart';
 import 'loyality_manager.dart';
 
 class LoyaltyScreen extends StatefulWidget {
-
   @override
   State<LoyaltyScreen> createState() => _LoyaltyScreenState();
 }
 
 class _LoyaltyScreenState extends State<LoyaltyScreen> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   void _onLoading() async {
     // your api here
-   // _loyaltyManager.callLoyaltyDashboardApi();
+    // _loyaltyManager.callLoyaltyDashboardApi();
     _refreshController.loadComplete();
-
   }
 
   void _onRefresh() async {
-  //  _loyaltyManager.callLoyaltyDashboardApi();
+    //  _loyaltyManager.callLoyaltyDashboardApi();
     _refreshController.refreshCompleted();
 
     // your api here
-
   }
 
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
@@ -55,6 +54,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
+                    // padding
                     padding: EdgeInsets.all(4.0.wp),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,22 +87,25 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                           SizedBox(height: 4.0.wp),
                           Obx(
                             () => _loyaltyManager.isLoading.value == true
-                                ?  Shimmer.fromColors(
-                              baseColor: AppColors.greySecond.withOpacity(0.5),
-                              highlightColor: AppColors.darkGrey!,
-                              child: ListView.builder(
-                                itemCount: _loyaltyManager.recentRewardTransactionsList.length,
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    elevation: 1.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
+                                ? Shimmer.fromColors(
+                                    baseColor:
+                                        AppColors.greySecond.withOpacity(0.5),
+                                    highlightColor: AppColors.darkGrey!,
+                                    child: ListView.builder(
+                                      itemCount: _loyaltyManager
+                                          .recentRewardTransactionsList.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          elevation: 1.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: SizedBox(height: 80),
+                                        );
+                                      },
                                     ),
-                                    child: SizedBox(height: 80),
-                                  );
-                                },
-                              ),
-                            )
+                                  )
                                 : _loyaltyManager.recentRewardTransactionsList
                                             .length ==
                                         0
@@ -140,27 +143,41 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                             //         .expiryDate!)
                                             //     ? RewardState.expired
                                             //     ? :RewardState.used,
-                                            rewardtype: _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "referralBonnus" ? Rewardtype.referralBonus : _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "cacheTransaction" ? Rewardtype.cashTransaction
-                                                    :
-                                            _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() == "Recharge" ? Rewardtype.recharge:
-
-
-
-
-
-                                            _loyaltyManager
+                                            rewardtype: _loyaltyManager
+                                                        .recentRewardTransactionsList[
+                                                            index]
+                                                        .typeId
+                                                        .toString() ==
+                                                    "referralBonnus"
+                                                ? Rewardtype.referralBonus
+                                                : _loyaltyManager
+                                                            .recentRewardTransactionsList[
+                                                                index]
+                                                            .typeId
+                                                            .toString() ==
+                                                        "cacheTransaction"
+                                                    ? Rewardtype.cashTransaction
+                                                    : _loyaltyManager
                                                                 .recentRewardTransactionsList[
                                                                     index]
                                                                 .typeId
                                                                 .toString() ==
-                                                            "nonCacheTransaction"
+                                                            "Recharge"
                                                         ? Rewardtype.recharge
-                                                        : Rewardtype
-                                                            .cashTransaction,
+                                                        : _loyaltyManager
+                                                                    .recentRewardTransactionsList[
+                                                                        index]
+                                                                    .typeId
+                                                                    .toString() ==
+                                                                "nonCacheTransaction"
+                                                            ? Rewardtype
+                                                                .recharge
+                                                            : Rewardtype
+                                                                .cashTransaction,
                                             date: CommonMethods().getOnlyDate(
                                                 date: _loyaltyManager
                                                     .recentRewardTransactionsList[
-                                                index]
+                                                        index]
                                                     .expiryDate!),
                                             points: _loyaltyManager
                                                 .recentRewardTransactionsList[
@@ -171,6 +188,11 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                         ),
                                       ),
                           ),
+                          const SizedBox(height: 10),
+                          CommonBanner(
+                            margin: EdgeInsets.zero,
+                          ),
+                          const SizedBox(height: 10),
                         ]),
                   ),
                 ),

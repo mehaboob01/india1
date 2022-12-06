@@ -14,6 +14,9 @@ import '../core/data/local/shared_preference_keys.dart';
 import '../screens/refer/refer_earn_ui.dart';
 
 class CommonBanner extends StatelessWidget {
+  final bool? isTapable;
+  final EdgeInsetsGeometry? margin;
+
   ContactCont _cont = Get.put(ContactCont());
   Future _handleLocationPermission() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -37,20 +40,23 @@ class CommonBanner extends StatelessWidget {
         _cont.isPermissionAllowed.value = false;
         Get.to(ReferEarn());
       }
+
     }
   }
 
-  CommonBanner({super.key});
+  CommonBanner({super.key, this.isTapable = true, this.margin});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        await _handleLocationPermission();
-      },
+      onTap: isTapable == true
+          ? () async {
+              await _handleLocationPermission();
+            }
+          : null,
       child: Container(
         width: double.maxFinite,
         height: 32.0.wp,
-        margin: EdgeInsets.symmetric(horizontal: 2.0.hp),
+        margin: margin ?? EdgeInsets.symmetric(horizontal: 4.0.wp),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
             gradient: LinearGradient(
@@ -73,6 +79,7 @@ class CommonBanner extends StatelessWidget {
                     EdgeInsets.only(top: 6.0.wp, bottom: 6.0.wp, left: 4.0.wp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RichText(
                         text: TextSpan(
@@ -92,19 +99,23 @@ class CommonBanner extends StatelessWidget {
                                   fontWeight: FontWeight.w600)),
                         ])),
                     // SizedBox(height: 1.0.wp),
-                    SizedBox(height: 5.0.wp),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Refer Now',
-                            style: AppStyle.shortHeading.copyWith(
-                                color: AppColors.yellowgradient1,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10.0.sp)),
-                        SizedBox(width: 2.0.wp),
-                        Image.asset(AppImages.rightArrow)
-                      ],
-                    ),
+                    isTapable == true
+                        ? SizedBox(height: 5.0.wp)
+                        : SizedBox.shrink(),
+                    isTapable == true
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Refer Now',
+                                  style: AppStyle.shortHeading.copyWith(
+                                      color: AppColors.yellowgradient1,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10.0.sp)),
+                              SizedBox(width: 2.0.wp),
+                              Image.asset(AppImages.rightArrow)
+                            ],
+                          )
+                        : SizedBox.shrink()
                   ],
                 ),
               ),

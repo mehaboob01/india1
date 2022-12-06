@@ -30,24 +30,24 @@ class CustomAppBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () => Get.back(),
-                  child: Icon(
-                    Icons.chevron_left_rounded,
-                    size: 10.0.wp,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
+            GestureDetector(
+              onTap: () => Get.back(),
+              child: Icon(
+                Icons.chevron_left_rounded,
+                size: 10.0.wp,
+                color: Colors.black,
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
                   heading,
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
                       fontWeight: FontWeight.w600),
                 ),
-              ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(4.0.wp),
@@ -84,40 +84,44 @@ class CustomActionIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 6.0.wp,
-      height: 6.0.wp,
-      child: customGradientColors != null
-          ? GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                onHeaderIconPressed();
-              },
-              child: ShaderMask(
-                  shaderCallback: (bounds) {
-                    return LinearGradient(
-                            begin: beginsAt!,
-                            end: endsAt!,
-                            stops: stops,
-                            colors: List.generate(customGradientColors!.length,
-                                (index) => customGradientColors![index]))
-                        .createShader(bounds);
-                  },
-                  child: SvgPicture.asset(image, fit: BoxFit.fill)),
-            )
-          : isSvg!
-              ? GestureDetector(
-                  onTap: () {
-                    onHeaderIconPressed();
-                  },
-                  behavior: HitTestBehavior.translucent,
-                  child: SvgPicture.asset(
-                    image,
-                    color: imageColor,
-                    fit: BoxFit.fill,
-                  ),
-                )
-              : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+    return Padding(
+      padding: EdgeInsets.all(6.0),
+      child: SizedBox(
+        width: 6.0.wp,
+        height: 6.0.wp,
+        child: customGradientColors != null
+            ? GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  onHeaderIconPressed();
+                },
+                child: ShaderMask(
+                    shaderCallback: (bounds) {
+                      return LinearGradient(
+                              begin: beginsAt!,
+                              end: endsAt!,
+                              stops: stops,
+                              colors: List.generate(
+                                  customGradientColors!.length,
+                                  (index) => customGradientColors![index]))
+                          .createShader(bounds);
+                    },
+                    child: SvgPicture.asset(image, fit: BoxFit.fill)),
+              )
+            : isSvg!
+                ? GestureDetector(
+                    onTap: () {
+                      onHeaderIconPressed();
+                    },
+                    behavior: HitTestBehavior.translucent,
+                    child: SvgPicture.asset(
+                      image,
+                      color: imageColor,
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                : Image.asset(image, color: imageColor, fit: BoxFit.fill),
+      ),
     );
   }
 }
