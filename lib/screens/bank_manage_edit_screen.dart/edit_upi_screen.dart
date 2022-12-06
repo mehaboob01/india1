@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/loyalty_common_header.dart';
 import '../loyality_points/cashback_redeem/cb_manager.dart';
-import 'controller/update_bank_account_manager.dart';
+
 import 'controller/update_upi_manager.dart';
 import 'delete_bottom_sheet.dart';
 
@@ -20,12 +19,12 @@ class EditUpi extends StatelessWidget {
 
   String? upiId;
   String? id;
+  int? index;
 
-  EditUpi(this.upiId, this.id);
+  EditUpi({this.upiId, this.id, this.index});
 
   @override
   Widget build(BuildContext context) {
-    print("pi id ======> ${id}");
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -41,13 +40,17 @@ class EditUpi extends StatelessWidget {
                 customActionIconsList: [
                   CustomActionIcons(
                     onHeaderIconPressed: () => CommonDeleteBottomSheet()
-                        .deleteBottomSheet2(onDelete: () {}),
+                        .deleteBottomSheetUpi(onDelete: () {
+                      print(
+                          'Deleted ${cashBackManager.customerUPIList[index!].upiId}');
+
+                      cashBackManager.delUpiAccount(
+                          cashBackManager.customerUPIList[index!].id);
+
+                      Get.back();
+                      Get.back();
+                    }),
                     image: AppImages.deleteIconSvg,
-                    isSvg: true,
-                    customGradientColors: const [
-                      Color(0xff95DFFF),
-                      Color(0xff014280)
-                    ],
                   )
                 ],
               ),

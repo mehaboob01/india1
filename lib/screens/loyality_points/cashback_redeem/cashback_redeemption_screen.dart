@@ -48,19 +48,15 @@ class CashBackRedeemPage extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: CustomAppBar(
-                  heading: 'Redeem Points',
-                  customActionIconsList: [
-                    // CustomActionIcons(
-                    //   onHeaderIconPressed: () =>
-                    //       Get.to(() => HomeMainIO(false)),
-                    //   image: AppImages.home_icon_svg,
-                    //   isSvg: false,
-                    //   customGradientColors: [
-                    //     Color(0xff95DFFF),
-                    //     Color(0xff014280)
-                    //   ],
-                    // ),
-                  ]),
+                heading: 'Redeem Points',
+                customActionIconsList: [
+                  CustomActionIcons(
+                      image: AppImages.bottomNavHomeSvg,
+                      onHeaderIconPressed: () async {
+                        // Get.to(() => HomeMainIO(false));
+                      })
+                ],
+              ),
             ),
             Expanded(
               child: Obx(() {
@@ -249,19 +245,16 @@ class CashBackRedeemPage extends StatelessWidget {
                                     ? true.obs
                                     : false.obs,
                             onPressed: () {
-
-
-
                               // todo api call for banktoapi
 
-
-                              print("upi data${cashbackManager.addUpiData.value['upiId']}");
+                              print(
+                                  "upi data${cashbackManager.addUpiData.value['upiId']}");
                               cashbackManager.cashBackToUpiApi(
                                   cashbackManager.addUpiData.value['upiId'],
-
-                                redoCtrl.redeemPointsSliderValue.value.round().toString(),context
-
-                                 );
+                                  redoCtrl.redeemPointsSliderValue.value
+                                      .round()
+                                      .toString(),
+                                  context);
                               debugPrint('Upi Vpa Clicked');
                             }));
               }),
@@ -304,13 +297,9 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
 
   @override
   void initState() {
-
-
-
     super.initState();
     cashBackManager.fetchCustomerBankAccounts();
-   // cashBackManager.fetchCustomerUpiAccounts();
-
+    // cashBackManager.fetchCustomerUpiAccounts();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       redoCtrl.accountButtonEnabled.value = false;
@@ -373,7 +362,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-     ()=> Column(
+      () => Column(
         children: [
           cashBackManager.customerBankList.isNotEmpty
               ? Padding(
@@ -444,8 +433,9 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                                         }
                                                     },
                                                     child: CommonRadioCard(
-                                                      radioCardType: RadioCardType
-                                                          .bankAccount,
+                                                      radioCardType:
+                                                          RadioCardType
+                                                              .bankAccount,
                                                       bankAccountIFSC:
                                                           cashBackManager
                                                               .customerBankList[
@@ -466,7 +456,8 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                                               .customerBankList[
                                                                   index]
                                                               .accountType,
-                                                      cardWidth: double.maxFinite,
+                                                      cardWidth:
+                                                          double.maxFinite,
                                                       isSelected: index ==
                                                           cashBackManager
                                                               .selectedIndex
@@ -484,7 +475,8 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: AppColors.cardScreenBg),
-                                      borderRadius: BorderRadius.circular(2.0.wp),
+                                      borderRadius:
+                                          BorderRadius.circular(2.0.wp),
                                     )),
                       ),
                       Container(
@@ -575,7 +567,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                   ? false
                                   : true,
                           labelName: bankAccontDropDownHint!,
-                          hintText: "Bank Name",
+                          hintText: "Select your bank here",
                           data: cashBackManager.bankList.toList(),
                           validationText: '*Bank name is compulsory',
                         ),
@@ -585,60 +577,53 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                       // enter your account number ------------------------------------------------------------
                       CommonTextField(
                         formName: 'accountNumber',
-                        isAutoValidate : redoCtrl.accountNumberAutoValidate.value,
+                        isAutoValidate:
+                            redoCtrl.accountNumberAutoValidate.value,
                         isfieldEnabled:
                             cashBackManager.selectedIndex.value != (-1)
                                 ? false
                                 : true,
-                        inputController:
-                            cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value,
+                        inputController: cashbackCtrl
+                            .loyaltyBankAccountTextEditingCtrl.value,
                         hintText: 'Enter your account number here',
                         labelText: 'Account number',
                         keyboardType: TextInputType.number,
-                        inputFormat : [
+                        inputFormat: [
                           LengthLimitingTextInputFormatter(18),
                         ],
                         inputValidator: (value) {
                           if (value != null) {
                             return CommonValidations().numberValidation(
-                                value : value,
-                                nullError : '*Account number is mandatory',
-                                invalidInputError :  'It only takes numbers',
-                                minValue : 8
-                            );
+                                value: value,
+                                nullError: '*Account number is mandatory',
+                                invalidInputError: 'It only takes numbers',
+                                minValue: 8);
                           } else {
                             return '';
                           }
                         },
                         inputOnChanged: (inputValuee) {
                           redoCtrl.accountNumberAutoValidate.value = true;
-                         //  redoCtrl.accountFormKey.currentState!.save();
-                         //  redoCtrl.accountFormKey.currentState.validate();
-                         //
-                         // print( redoCtrl.accountFormKey.currentState!.value['accountNumber']) ;
-                         //
-                         //
-                         //
-                         //  if(inputValue!.length<7)
-                         //    {
-                         //
-                         //
-                         //
-                         //
-                         //
-                         //
-                         //
-                         //      return "error";
-                         //
-                         //    }
-                         //
-
-
-
-
-
-
-
+                          //  redoCtrl.accountFormKey.currentState!.save();
+                          //  redoCtrl.accountFormKey.currentState.validate();
+                          //
+                          // print( redoCtrl.accountFormKey.currentState!.value['accountNumber']) ;
+                          //
+                          //
+                          //
+                          //  if(inputValue!.length<7)
+                          //    {
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //      return "error";
+                          //
+                          //    }
+                          //
                         },
                         inputOnSubmitted: (value) {},
                       ),
@@ -662,8 +647,8 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                   .loyaltyBankAccountreEnteredTextEditingCtrl
                                   .value
                                   .text !=
-                              cashbackCtrl
-                                  .loyaltyBankAccountTextEditingCtrl.value.text) {
+                              cashbackCtrl.loyaltyBankAccountTextEditingCtrl
+                                  .value.text) {
                             return 'Accont number mismatch!! please check';
                           } else {
                             return null;
@@ -677,7 +662,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                       // IFSC CODE -----------------------------------------------------------------------
 
                       CommonTextField(
-                        isUpperCase : true,
+                        isUpperCase: true,
                         formName: 'ifscCode',
                         isfieldEnabled:
                             cashBackManager.selectedIndex.value != (-1)
@@ -688,14 +673,16 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         hintText: 'Enter your IFSC code here',
                         labelText: 'IFSC code',
                         keyboardType: TextInputType.text,
-              inputFormat : [
-              LengthLimitingTextInputFormatter(11),
-              ],
+                        inputFormat: [
+                          LengthLimitingTextInputFormatter(11),
+                        ],
                         inputValidator: (value) => CommonValidations()
-                            .textValidation(value : value,nullError :   '*IFSC code is mandatory',
-                               invalidInputError : 'Please enter correct data', isIfsc : true),
+                            .textValidation(
+                                value: value,
+                                nullError: '*IFSC code is mandatory',
+                                invalidInputError: 'Please enter correct data',
+                                isIfsc: true),
                         inputOnChanged: (inputValue) {},
-
                         inputOnSubmitted: (value) {},
                       ),
                       sizedbox,

@@ -24,7 +24,11 @@ class ProfileStepper {
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
-      initialDate: profileController.dobController.value.text.isNotEmpty?DateTime.parse(DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(profileController.dobController.value.text))) : DateTime.now(),
+      initialDate: profileController.dobController.value.text.isNotEmpty
+          ? DateTime.parse(DateFormat('yyyy-MM-dd').format(
+              DateFormat("dd-MM-yyyy")
+                  .parse(profileController.dobController.value.text)))
+          : DateTime.now(),
       firstDate: DateTime(DateTime.now().year - 100),
       lastDate: DateTime.now(),
     );
@@ -168,7 +172,9 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: personalForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -237,7 +243,10 @@ class ProfileStepper {
                   FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
               ),
-              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan &&
+                  loanType != LoanType.BikeLoan &&
+                  loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -278,21 +287,25 @@ class ProfileStepper {
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
-              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan &&
+                  loanType != LoanType.BikeLoan &&
+                  loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
                 textField(
                   controller: profileController.dobController.value,
                   label: 'Date of birth (DD-MM-YYYY)',
-                  hint: 'yyyy-MM-dd',
+                  hint: 'DD-MM-YYYY',
                   suffix: Icon(
                     Icons.calendar_today_outlined,
                     color: AppColors.greyText,
                   ),
                   onTap: () async {
                     selectedDate = await datePicker(context);
-                    String date = DateFormat('dd-MM-yyyy').format(selectedDate ?? DateTime.now());
+                    String date =
+                        DateFormat('dd-MM-yyyy').format(selectedDate!);
                     profileController.dobController.value.text = date;
                   },
                   isDisable: true,
@@ -325,6 +338,7 @@ class ProfileStepper {
                   height: 5,
                 ),
                 SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   child: Obx(
                     () => Row(
@@ -355,12 +369,16 @@ class ProfileStepper {
                   ),
                 ),
               ],
-              if (loanType != LoanType.FarmLoan && loanType != LoanType.GoldLoan && loanType != LoanType.BikeLoan && loanType != LoanType.CarLoan) ...[
+              if (loanType != LoanType.FarmLoan &&
+                  loanType != LoanType.GoldLoan &&
+                  loanType != LoanType.BikeLoan &&
+                  loanType != LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
                 commonDropDown(
-                  item: <String>['Single', 'Married', 'Widowed', 'Divorced'].map<DropdownMenuItem<String>>((String value) {
+                  item: <String>['Single', 'Married', 'Widowed', 'Divorced']
+                      .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value.toString()),
@@ -371,10 +389,13 @@ class ProfileStepper {
                   },
                   label: 'Marital status',
                   hint: 'Select your marital status',
-                  value: profileController.maritalStatus.value == '' ? null : profileController.maritalStatus.value,
+                  value: profileController.maritalStatus.value == ''
+                      ? null
+                      : profileController.maritalStatus.value,
                 ),
               ],
-              if (loanType == LoanType.BikeLoan || loanType == LoanType.CarLoan) ...[
+              if (loanType == LoanType.BikeLoan ||
+                  loanType == LoanType.CarLoan) ...[
                 SizedBox(
                   height: 20,
                 ),
@@ -413,7 +434,9 @@ class ProfileStepper {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: (value.toLowerCase() == profileController.gender.value) ? AppColors.homeGradient1Color : AppColors.greySecond,
+          color: (value.toLowerCase() == profileController.gender.value)
+              ? AppColors.homeGradient1Color
+              : AppColors.greySecond,
           width: 2,
         ),
       ),
@@ -428,7 +451,7 @@ class ProfileStepper {
           ),
           Text(value),
           SizedBox(
-            width: 16,
+            width: 12,
           )
         ],
       ),
@@ -444,7 +467,9 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: residentialForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -465,7 +490,7 @@ class ProfileStepper {
               textField(
                 controller: profileController.addressLine1Controller.value,
                 label: 'Address Line 1',
-                hint: 'Enter Door # , Building name, Flat #',
+                hint: 'Enter door no, cross, etc',
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -484,7 +509,7 @@ class ProfileStepper {
               textField(
                   controller: profileController.addressLine2Controller.value,
                   label: 'Address Line 2',
-                  hint: 'Enter area, landmark etc',
+                  hint: 'Enter area, road, landmark, etc',
                   vaidation: (value) {
                     if (value.toString().trim().isNotEmpty) {
                       profileController.nullCheckValidation(
@@ -524,6 +549,7 @@ class ProfileStepper {
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(6)
                 ],
               ),
               SizedBox(
@@ -569,7 +595,9 @@ class ProfileStepper {
         value == null || value == '' ? title : value,
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: value == null || value == '' ? AppColors.hintColor : AppColors.lightBlack,
+          color: value == null || value == ''
+              ? AppColors.hintColor
+              : AppColors.lightBlack,
           fontSize: Dimens.font_18sp,
         ),
       ),
@@ -588,7 +616,9 @@ class ProfileStepper {
       child: SingleChildScrollView(
         child: Form(
           key: occupationForm,
-          autovalidateMode: profileController.autoValidation.value == true ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: profileController.autoValidation.value == true
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -616,28 +646,29 @@ class ProfileStepper {
                   return DropdownMenuItem(
                     value: value['value'],
                     child: Text(value['name'].toString()),
-                    );
-                  }).toList(),
-                value: profileController.employmentType.value == '' ? null : profileController.employmentType.value,
-                  onChanged: (value) {
-                    profileController.employmentType.value = value;
-                  },
-                  label: 'Choose your employment type',
-                  hint: 'Choose your employment type',
-                ),
+                  );
+                }).toList(),
+                value: profileController.employmentType.value == ''
+                    ? null
+                    : profileController.employmentType.value,
+                onChanged: (value) {
+                  profileController.employmentType.value = value;
+                },
+                label: 'Employment type',
+                hint: 'Choose your employment type',
+              ),
               SizedBox(
                 height: 20,
               ),
-
-
               if (!isFromInsurance!) ...[
                 textField(
                   controller: profileController.occupationController.value,
                   label: 'Occupation',
                   hint: 'Enter what you do here',
                   vaidation: (value) {
-                    if (isFromLoan == true || value.toString().trim().isNotEmpty) {
-                      profileController.nameValidation(
+                    if (isFromLoan == true ||
+                        value.toString().trim().isNotEmpty) {
+                      return profileController.nameValidation(
                         value,
                         'Enter Occupation of min 3 char',
                       );
@@ -661,10 +692,13 @@ class ProfileStepper {
                         child: Text(value.toString()),
                       );
                     }).toList(),
-                    // value: profileController.accountType == ''
-                    //     ? null
-                    //     : profileController.accountType.value,
+                    value: profileController.accountType == ''
+                        ? null
+                        : profileController.accountType.value,
                     onChanged: (value) {
+                      if (isFromLoan == true) {
+                        profileController.salaryMode.value = value;
+                      }
                       temp = value;
                     },
                     label: 'Salary Mode',
@@ -675,7 +709,6 @@ class ProfileStepper {
                   height: 20,
                 ),
               ],
-
               textField(
                 controller: profileController.monthlyIncomeController.value,
                 label: 'Monthly income',
@@ -693,8 +726,14 @@ class ProfileStepper {
                   return null;
                 },
                 onChanged: (val) {
-                  profileController.monthlyIncomeController.value.text = (int.parse((val).replaceAll(",", "").replaceAll(".", "")).priceString()).toString();
-                  profileController.monthlyIncomeController.value.selection = TextSelection.collapsed(offset: profileController.monthlyIncomeController.value.text.length);
+                  profileController.monthlyIncomeController.value.text =
+                      (int.parse((val).replaceAll(",", "").replaceAll(".", ""))
+                              .priceString())
+                          .toString();
+                  profileController.monthlyIncomeController.value.selection =
+                      TextSelection.collapsed(
+                          offset: profileController
+                              .monthlyIncomeController.value.text.length);
                 },
                 keyboardType: TextInputType.number,
               ),
@@ -758,7 +797,8 @@ class ProfileStepper {
                 label: 'Nominee name',
                 hint: 'Mention nominee name',
                 vaidation: (value) {
-                  if (isFromInsurance ==true|| value.toString().trim().isNotEmpty) {
+                  if (isFromInsurance == true ||
+                      value.toString().trim().isNotEmpty) {
                     return profileController.nameValidation(
                       value,
                       'Enter name of min 3 char',

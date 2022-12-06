@@ -49,9 +49,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
               .createLoanModel.value.loanConfiguration!.maxLoanAmount
               .toString());
           if (createLoanModel.loanAmount != null) {
-            if (double.parse(createLoanModel.loanAmount.toString()) >= loanController.minValue.value && double.parse(createLoanModel.loanAmount.toString()) <= loanController.maxValue.value) {
-              loanController.sliderValue.value = double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text = (createLoanModel.loanAmount??0).toInt().priceString();
+            if (double.parse(createLoanModel.loanAmount.toString()) >=
+                    loanController.minValue.value &&
+                double.parse(createLoanModel.loanAmount.toString()) <=
+                    loanController.maxValue.value) {
+              loanController.sliderValue.value =
+                  double.parse(createLoanModel.loanAmount.toString());
+              loanAmountEditingController.text =
+                  (createLoanModel.loanAmount ?? 0).toInt().priceString();
             }
           }
         });
@@ -87,9 +92,18 @@ class _PersonalLoanState extends State<PersonalLoan> {
                             CustomAppBar(
                               heading: 'Personal loan',
                               customActionIconsList: [
-                                // CustomActionIcons(
-                                //   image: AppImages.bottomNavHome,
-                                // ),
+                                CustomActionIcons(
+                                  image: AppImages.askIconSvg,
+                                  onHeaderIconPressed: () async {
+                                    // what to ask function goes here
+                                  },
+                                ),
+                                CustomActionIcons(
+                                  image: AppImages.bottomNavHomeSvg,
+                                  onHeaderIconPressed: () async {
+                                    // Get.to(() => HomeScreen.IO(false));
+                                  },
+                                ),
                               ],
                             ),
                             Expanded(
@@ -195,7 +209,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
               duration: Duration(seconds: 3),
             )..show(context);
           } else {
-            loanController.updateLoanAmount(amount: loanAmountEditingController.text.replaceAll(",", ""));
+            loanController.updateLoanAmount(
+                amount: loanAmountEditingController.text.replaceAll(",", ""));
           }
         }
       },

@@ -57,6 +57,7 @@ class ProfileController extends GetxController {
       logoutLoading = false.obs;
   RxInt currentStep = 1.obs;
   RxBool complete = false.obs;
+  final salaryMode = ''.obs;
   List<String> titleList = [
     "Personal",
     "Residential",
@@ -140,12 +141,16 @@ class ProfileController extends GetxController {
   setData() {
     firstNameController.value.text = profileDetailsModel.value.firstName ?? '';
     lastNameController.value.text = profileDetailsModel.value.lastName ?? '';
+
     mobileNumberController.value.text =
         profileDetailsModel.value.mobileNumber ?? '';
     alternateNumberController.value.text =
         profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd").parse(profileDetailsModel.value.dateOfBirth!)) ?? '';
+    dobController.value.text = DateFormat('dd-MM-yyyy').format(
+            DateFormat("yyyy-MM-dd")
+                .parse(profileDetailsModel.value.dateOfBirth!)) ??
+        '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -159,11 +164,11 @@ class ProfileController extends GetxController {
     state.value = profileDetailsModel.value.address?.state ?? '';
 
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
-    occupationController.value.text = profileDetailsModel.value.occupation ?? '';
-    monthlyIncomeController.value.text = "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
+    occupationController.value.text =
+        profileDetailsModel.value.occupation ?? '';
+    monthlyIncomeController.value.text =
+        "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
-
-
   }
 
   RxInt loanRequirement = (-1).obs;
@@ -342,7 +347,12 @@ class ProfileController extends GetxController {
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
-        AndroidUiSettings(toolbarTitle: 'Profile', toolbarWidgetColor: Colors.black, showCropGrid: false, hideBottomControls: true, cropFrameColor: Colors.transparent),
+        AndroidUiSettings(
+            toolbarTitle: 'Profile',
+            toolbarWidgetColor: Colors.black,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -517,12 +527,22 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "firstName": firstNameController.value.text.trim(),
-              "lastName": lastNameController.value.text.trim().isNotEmpty ? lastNameController.value.text.trim() : null,
+              "lastName": lastNameController.value.text.trim().isNotEmpty
+                  ? lastNameController.value.text.trim()
+                  : null,
               "mobileNumber": mobileNumberController.value.text.trim(),
-              "alternateNumber": alternateNumberController.value.text.trim().isNotEmpty?alternateNumberController.value.text.trim():null,
-              "dateOfBirth": dobController.value.text.trim().isNotEmpty ? DateFormat('yyyy-MM-dd').format(DateFormat("dd-MM-yyyy").parse(dobController.value.text)): null,
+              "alternateNumber":
+                  alternateNumberController.value.text.trim().isNotEmpty
+                      ? alternateNumberController.value.text.trim()
+                      : null,
+              "dateOfBirth": dobController.value.text.trim().isNotEmpty
+                  ? DateFormat('yyyy-MM-dd').format(
+                      DateFormat("dd-MM-yyyy").parse(dobController.value.text))
+                  : null,
               "preferredLanguage": "EN",
-              "email": emailController.value.text.trim().isNotEmpty ? emailController.value.text.trim() : null,
+              "email": emailController.value.text.trim().isNotEmpty
+                  ? emailController.value.text.trim()
+                  : null,
               "gender": gender.value.isNotEmpty ? gender.value : null,
               "maritalStatus":
                   maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
@@ -566,10 +586,12 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addResidentialDetails(
-      {bool? isFromLoan = false,
-      Function? callBack,
-      String? loanApplicationId,String? insuranceApplicationId,}) async {
+  Future addResidentialDetails({
+    bool? isFromLoan = false,
+    Function? callBack,
+    String? loanApplicationId,
+    String? insuranceApplicationId,
+  }) async {
     addResidentialLoading.value = true;
     try {
       var response = await DioApiCall().commonApiCall(
@@ -580,7 +602,9 @@ class ProfileController extends GetxController {
             "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
             if (loanApplicationId != null || loanApplicationId != '') ...{
               "loanApplicationId": loanApplicationId,
-            },if (insuranceApplicationId != null || insuranceApplicationId != '') ...{
+            },
+            if (insuranceApplicationId != null ||
+                insuranceApplicationId != '') ...{
               "insuranceApplicationId": insuranceApplicationId,
             },
             "customerDetails": {
@@ -653,7 +677,11 @@ class ProfileController extends GetxController {
             "customerDetails": {
               "panNumber": "${panNumberController.value.text.trim()}",
               "occupation": "${occupationController.value.text.trim()}",
-              "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+              "salaryMode": salaryMode.value.isNotEmpty
+                  ? "${salaryMode.value.trim()}"
+                  : '',
+              "income":
+                  "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
               "preferredLanguage": "EN",
               "employmentType":
                   "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
@@ -771,6 +799,8 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
+        print('hello racer');
+        print(response);
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
 
         setData();

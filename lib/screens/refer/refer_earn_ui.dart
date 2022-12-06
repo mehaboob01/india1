@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/extensions.dart';
 import 'package:india_one/screens/refer/contacts_manager.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:india_one/widgets/common_banner.dart';
 import 'package:india_one/widgets/common_textfield.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -63,84 +64,88 @@ class _ReferEarnState extends State<ReferEarn> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: double.maxFinite,
-                            height: 25.0.wp,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0.wp),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  AppColors.referEarnGradient1,
-                                  AppColors.referEarnGradient2
-                                ],
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 3,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 6.0.wp,
-                                        bottom: 6.0.wp,
-                                        left: 4.0.wp),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                            text: TextSpan(
-                                                style: AppStyle.shortHeading
-                                                    .copyWith(
-                                                        color:
-                                                            Color(0xFFEBEBEB),
-                                                        //fontWeight: FontWeight.w600,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.5),
-                                                text:
-                                                    'Refer a friend or a family member & get\na chance to',
-                                                children: [
-                                              TextSpan(
-                                                  text: ' Earn upto 100 points',
-                                                  style: AppStyle.shortHeading
-                                                      .copyWith(
-                                                          color: Colors.white,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w600)),
-                                            ])),
-                                        // SizedBox(height: 1.0.wp),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                    flex: 1,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(60),
-                                        color:
-                                            Color(0xFFD9D9D9).withOpacity(0.1),
-                                      ),
-                                      padding: EdgeInsets.only(
-                                          top: 2.0.wp,
-                                          bottom: 2.0.wp,
-                                          left: 2.0.wp,
-                                          right: 2.0.wp),
-                                      child: Center(
-                                          child: Image.asset(
-                                        AppImages.referEarnSVG,
-                                        fit: BoxFit.fill,
-                                      )),
-                                    ))
-                              ],
-                            ),
+                          CommonBanner(
+                            isTapable: false,
+                            margin: EdgeInsets.zero,
                           ),
+                          // Container(
+                          //   width: double.maxFinite,
+                          //   height: 25.0.wp,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(4.0.wp),
+                          //     gradient: LinearGradient(
+                          //       begin: Alignment.topLeft,
+                          //       end: Alignment.bottomRight,
+                          //       colors: [
+                          //         AppColors.referEarnGradient1,
+                          //         AppColors.referEarnGradient2
+                          //       ],
+                          //     ),
+                          //   ),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Flexible(
+                          //         flex: 3,
+                          //         child: Padding(
+                          //           padding: EdgeInsets.only(
+                          //               top: 6.0.wp,
+                          //               bottom: 6.0.wp,
+                          //               left: 4.0.wp),
+                          //           child: Column(
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.start,
+                          //             children: [
+                          //               RichText(
+                          //                   text: TextSpan(
+                          //                       style: AppStyle.shortHeading
+                          //                           .copyWith(
+                          //                               color:
+                          //                                   Color(0xFFEBEBEB),
+                          //                               //fontWeight: FontWeight.w600,
+                          //                               fontSize: 12,
+                          //                               fontWeight:
+                          //                                   FontWeight.w400,
+                          //                               height: 1.5),
+                          //                       text:
+                          //                           'Refer a friend or a family member & get\na chance to',
+                          //                       children: [
+                          //                     TextSpan(
+                          //                         text: ' Earn upto 100 points',
+                          //                         style: AppStyle.shortHeading
+                          //                             .copyWith(
+                          //                                 color: Colors.white,
+                          //                                 fontSize: 18,
+                          //                                 fontWeight:
+                          //                                     FontWeight.w600)),
+                          //                   ])),
+                          //               // SizedBox(height: 1.0.wp),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       Flexible(
+                          //           flex: 1,
+                          //           child: Container(
+                          //             decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(60),
+                          //               color:
+                          //                   Color(0xFFD9D9D9).withOpacity(0.1),
+                          //             ),
+                          //             padding: EdgeInsets.only(
+                          //                 top: 2.0.wp,
+                          //                 bottom: 2.0.wp,
+                          //                 left: 2.0.wp,
+                          //                 right: 2.0.wp),
+                          //             child: Center(
+                          //                 child: Image.asset(
+                          //               AppImages.referEarnSVG,
+                          //               fit: BoxFit.fill,
+                          //             )),
+                          //           ))
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(
                             height: Get.height * 0.03,
                           ),

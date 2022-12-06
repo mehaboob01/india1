@@ -476,15 +476,18 @@ class AppImages {
   static const String insurancePageSvg =
       '${assetSvg}payments/insurancePageSVG.svg';
   static const String savingsPageSvg = '${assetSvg}payments/savingsPageSVG.svg';
-  static const String deleteIconSvg = '${assetSvg}payments/deleteSVG.svg';
+  static const String deleteIconSvg = '${assetSvg}payments/deleteSvg.svg';
+  static const String askIconSvg = '${assetSvg}payments/askSVG.svg';
 
   static const String imgSearch = assetSvg + 'ic_search.svg';
 
   static const String arrowDownLeftSvg = '${assetSvg}ic_arrow_down_left.svg';
-  static const String arrowDownLeft2Svg = '${assetSvg}ic_arrow_down_left_left_2.svg';
+  static const String arrowDownLeft2Svg =
+      '${assetSvg}ic_arrow_down_left_left_2.svg';
   static const String arrowDownRightSvg = '${assetSvg}ic_arrow_down_right.svg';
   static const String arrowUpRightSvg = '${assetSvg}ic_arrow_up.svg';
-  static const String skipWalkThroughSvg = '${assetSvg}ic_skip_walkthrought.svg';
+  static const String skipWalkThroughSvg =
+      '${assetSvg}ic_skip_walkthrought.svg';
 }
 
 extension PercentSize on double {
@@ -508,4 +511,4 @@ class AppFonts {
 }
 
 double bottomMargin = 84;
-double bottomNavigationCircleRadius=81;
+double bottomNavigationCircleRadius = 81;

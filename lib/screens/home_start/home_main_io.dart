@@ -40,11 +40,10 @@ import 'home_manager.dart';
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
   List<FocusNode> focusNodes;
-  HomeMainIO(this.showPonitsPopup,this.focusNodes);
+  HomeMainIO(this.showPonitsPopup, this.focusNodes);
 
   @override
   State<HomeMainIO> createState() => _HomeMainIOState();
-
 }
 
 class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
@@ -53,7 +52,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-      WidgetsBinding.instance.addObserver(this); // observer
+    WidgetsBinding.instance.addObserver(this); // observer
     _homeManager.callHomeApi();
 
     // _homeManager.sendTokens();
@@ -62,9 +61,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     cashbackManager.callBankListApi();
     _profileController.getProfileData();
 
-    showFirstTimePoints();
+    // showFirstTimePoints();
 
-    checkLogin();
+    // checkLogin();
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -76,7 +75,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _permissionGranted = await location.requestPermission();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? firstInit =
-    sharedPreferences.getBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION);
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION);
     if (_permissionGranted == PermissionStatus.denied) {
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION, true);
@@ -144,97 +143,99 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
     if (points != 0) {
       Future.delayed(
-              Duration(milliseconds: 300),
-              () =>
-
-         Alert(
-        padding: EdgeInsets.zero,
-        style: AlertStyle(
-            alertPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            alertBorder: Border.all(width: 0)),
-        buttons: [],
-        context: context,
-        content: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.55,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(AppImages.homeScreenPopUpBg))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome to',
-                  style: AppStyle.shortHeading
-                      .copyWith(height: 1.2, fontSize: Dimens.font_24sp),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Cashback',
-                      style: AppStyle.shortHeading.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          letterSpacing: 1.2,
-                          fontSize: Dimens.font_24sp),
-                    ),
-                    Text(
-                      ' by ',
-                      style: AppStyle.shortHeading.copyWith(
-                          fontWeight: FontWeight.w600,
-                          height: 1.2,
-                          fontSize: Dimens.font_20sp),
-                    ),
-                    Text(
-                      'India1',
-                      style: AppStyle.shortHeading.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          letterSpacing: 1.2,
-                          fontSize: Dimens.font_24sp),
-                    ),
-                  ],
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                Text(
-                  'You just won',
-                  style:
-                  AppStyle.shortHeading.copyWith(fontSize: Dimens.font_20sp),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimens.padding_12dp),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset(AppImages.goldenHexagonal),
-                      Positioned(
-                        top: 45,
-                        child: Obx(
-                          ()=> Text(
-                            _homeManager.loyalityPoints.toString(),
-                            style: AppStyle.shortHeading.copyWith(
-                                fontWeight: FontWeight.w900, fontSize: 40),
+          Duration(milliseconds: 300),
+          () => Alert(
+                padding: EdgeInsets.zero,
+                style: AlertStyle(
+                    alertPadding: EdgeInsets.zero,
+                    backgroundColor: Colors.transparent,
+                    alertBorder: Border.all(width: 0)),
+                buttons: [],
+                context: context,
+                content: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.55,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(AppImages.homeScreenPopUpBg))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Welcome to',
+                          style: AppStyle.shortHeading.copyWith(
+                              height: 1.2, fontSize: Dimens.font_24sp),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Cashback',
+                              style: AppStyle.shortHeading.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.2,
+                                  letterSpacing: 1.2,
+                                  fontSize: Dimens.font_24sp),
+                            ),
+                            Text(
+                              ' by ',
+                              style: AppStyle.shortHeading.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.2,
+                                  fontSize: Dimens.font_20sp),
+                            ),
+                            Text(
+                              'India1',
+                              style: AppStyle.shortHeading.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.2,
+                                  letterSpacing: 1.2,
+                                  fontSize: Dimens.font_24sp),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05),
+                        Text(
+                          'You just won',
+                          style: AppStyle.shortHeading
+                              .copyWith(fontSize: Dimens.font_20sp),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: Dimens.padding_12dp),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(AppImages.goldenHexagonal),
+                              Positioned(
+                                top: 45,
+                                child: Obx(
+                                  () => Text(
+                                    _homeManager.loyalityPoints.toString(),
+                                    style: AppStyle.shortHeading.copyWith(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 40),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        Text(
+                          'Points',
+                          style: AppStyle.shortHeading.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: Dimens.font_24sp),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Text(
-                  'Points',
-                  style: AppStyle.shortHeading.copyWith(
-                      fontWeight: FontWeight.w700, fontSize: Dimens.font_24sp),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ).show())
-          .then((value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
+              ).show()).then(
+          (value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
     }
   }
 
@@ -324,35 +325,31 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       onWillPop: () async {
         Future.delayed(
             const Duration(seconds: 0),
-                () async => Get.defaultDialog(
-              cancelTextColor: AppColors.white,
-              title: "Logout",
-              middleText: "Do you want to logout the app?",
-              // textConfirm: "Yes",
-              // textCancel: "No",
-              // confirm: await confirmBtn(),
-              // cancel: await cancelBtn(),
-              actions: [
-                confirmBtn(),
-        ElevatedButton(
-        onPressed: () {
-          Get.back();
+            () async => Get.defaultDialog(
+                  cancelTextColor: AppColors.white,
+                  title: "Logout",
+                  middleText: "Do you want to logout the app?",
+                  // textConfirm: "Yes",
+                  // textCancel: "No",
+                  // confirm: await confirmBtn(),
+                  // cancel: await cancelBtn(),
+                  actions: [
+                    confirmBtn(),
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.back();
 
-        Navigator.of(context, rootNavigator: true).pop();
-
-        },
-        child: Text("No"))
-
-              ],
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        child: Text("No"))
+                  ],
                   radius: 8,
-              backgroundColor: AppColors.primary,
-              titleStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: Dimens.font_14sp),
-              middleTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: Dimens.font_12sp),
-            ));
+                  backgroundColor: AppColors.primary,
+                  titleStyle: TextStyle(
+                      color: Colors.white, fontSize: Dimens.font_14sp),
+                  middleTextStyle: TextStyle(
+                      color: Colors.white, fontSize: Dimens.font_12sp),
+                ));
         return false;
       },
       child: Obx(
@@ -422,7 +419,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Focus(
-                                            focusNode: widget.focusNodes[5],
+                                            focusNode: widget.focusNodes![5],
                                             child: headingBox(
                                                 text: 'Aa',
                                                 ontap: () {
@@ -440,7 +437,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                           ),
                                           Focus(
                                             focusNode: widget.focusNodes[6],
-
                                             child: GestureDetector(
                                               onTap: () => Get.toNamed(
                                                   MRouter.notificationScreen),
@@ -460,19 +456,24 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 showMenu<String>(
                                                   context: context,
                                                   shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius
-                                                          .only(
-                                                              bottomLeft:
-                                                                  Radius.circular(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              bottomLeft: Radius
+                                                                  .circular(
                                                                       13.0),
                                                               bottomRight:
-                                                                  Radius.circular(
-                                                                      13.0),
-                                                              topLeft:
-                                                                  Radius.circular(
+                                                                  Radius
+                                                                      .circular(
+                                                                          13.0),
+                                                              topLeft: Radius
+                                                                  .circular(
                                                                       13.0))),
-                                                  position: RelativeRect.fromLTRB(
-                                                      25.0, 118.0, 16.0, 0.0),
+                                                  position:
+                                                      RelativeRect.fromLTRB(
+                                                          25.0,
+                                                          118.0,
+                                                          16.0,
+                                                          0.0),
                                                   items: [
                                                     PopupMenuItem(
                                                       height: Get.height * 0.02,
@@ -489,7 +490,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         child: Container(
                                                           height:
                                                               Get.height * 0.03,
-                                                          width: double.infinity,
+                                                          width:
+                                                              double.infinity,
                                                           child: Text(
                                                             "My Profile",
                                                             style: AppStyle
@@ -528,24 +530,22 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                 ),
                                                               },
                                                           child: Container(
-                                                            height:
-                                                                Get.height * 0.03,
+                                                            height: Get.height *
+                                                                0.03,
                                                             width:
                                                                 double.infinity,
                                                             child: Text(
                                                               "My Rewards",
-                                                              style: AppStyle
-                                                                  .shortHeading
-                                                                  .copyWith(
-                                                                      fontSize: Dimens
-                                                                          .font_14sp,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      letterSpacing:
-                                                                          1),
+                                                              style: AppStyle.shortHeading.copyWith(
+                                                                  fontSize: Dimens
+                                                                      .font_14sp,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  letterSpacing:
+                                                                      1),
                                                             ),
                                                           )),
                                                     ),
@@ -554,8 +554,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 ).then<void>(
                                                     (String? itemSelected) {
                                                   if (itemSelected == null) {
-                                                    _homeManager.isClicked.value =
-                                                        false;
+                                                    _homeManager.isClicked
+                                                        .value = false;
                                                     return;
                                                   }
 
@@ -574,11 +574,12 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 });
                                               },
                                               child: headingBox(
-                                                  color:
-                                                      _homeManager.isClicked.value
-                                                          ? Colors.orange
-                                                          : Colors.white,
-                                                  image: AppImages.user_profile),
+                                                  color: _homeManager
+                                                          .isClicked.value
+                                                      ? Colors.orange
+                                                      : Colors.white,
+                                                  image:
+                                                      AppImages.user_profile),
                                             ),
                                           ),
                                         ],
@@ -994,28 +995,29 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Location Access'),
-                            content:  Text("India1 collects current location data to enable the user to see near by India1 ATM's when the app is in use."),
-                            actions: <Widget>[
+                          title: const Text('Location Access'),
+                          content: Text(
+                              "India1 collects current location data to enable the user to see near by India1 ATM's when the app is in use."),
+                          actions: <Widget>[
                             // if user deny again, we do nothing
                             TextButton(
-                                onPressed: () => Navigator.pop(context),
-                        child: const Text('Don\'t allow'),
-                      ),
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Don\'t allow'),
+                            ),
 
-                    // if user is agree, you can redirect him to the app parameters :)
-                    TextButton(
-                    onPressed: () async {
-                    Navigator.pop(context);
-                    await _handleLocationPermission();
-                    },
-                    child: const Text('Allow'),
-                    ),
-                    ],
-                    ),
-                    );
+                            // if user is agree, you can redirect him to the app parameters :)
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                await _handleLocationPermission();
+                              },
+                              child: const Text('Allow'),
+                            ),
+                          ],
+                        ),
+                      );
                     } else {
-                    Get.toNamed(MRouter.map);
+                      Get.toNamed(MRouter.map);
                     }
                   },
                   child: Container(
@@ -1156,14 +1158,11 @@ Widget nearestAtm({VoidCallback? onPressed}) {
 }
 
 Widget confirmBtn() {
-
   return ElevatedButton(
       onPressed: () {
         if (Platform.isAndroid) {
-
           SystemNavigator.pop();
-          Navigator.of(Get.context!, rootNavigator: true ).pop();
-
+          Navigator.of(Get.context!, rootNavigator: true).pop();
         } else if (Platform.isIOS) {
           exit(0);
         }
@@ -1174,9 +1173,8 @@ Widget confirmBtn() {
 Widget cancelBtn() {
   return ElevatedButton(
       onPressed: () {
-
         print("Go back");
-    Get.back(closeOverlays: true);
+        Get.back(closeOverlays: true);
       },
       child: Text("No"));
 }
