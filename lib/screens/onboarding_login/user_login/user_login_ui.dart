@@ -373,7 +373,7 @@ class _UserLoginState extends State<UserLogin> {
                   child: Obx(() => _loginManager.isLoading == false
                       ? Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          height: 48,
+                          height: 44,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -450,7 +450,7 @@ class _UserLoginState extends State<UserLogin> {
                                 ))
                       : Container(
                           width: MediaQuery.of(context).size.height * 0.9,
-                          height: 48,
+                          height: 44,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -511,7 +511,7 @@ class _UserLoginState extends State<UserLogin> {
                         )),
                 ),
                 SizedBox(
-                  height: 28,
+                  height: 16,
                 )
               ],
             ),

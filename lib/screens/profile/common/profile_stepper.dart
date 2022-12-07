@@ -696,9 +696,9 @@ class ProfileStepper {
                         ? null
                         : profileController.accountType.value,
                     onChanged: (value) {
-                      if (isFromLoan == true) {
-                        profileController.salaryMode.value = value;
-                      }
+
+
+
                       temp = value;
                     },
                     label: 'Salary Mode',

@@ -55,19 +55,21 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // observer
-    _homeManager.callHomeApi();
-    notificationManager.callNotificationsApi();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addObserver(this); // observer
+      _homeManager.callHomeApi();
+      notificationManager.callNotificationsApi();
 
-    // _homeManager.sendTokens();
-    _loyaltyManager.callLoyaltyDashboardApi();
-    cashbackCtrl.onInit();
-    cashbackManager.callBankListApi();
-    _profileController.getProfileData();
+      // _homeManager.sendTokens();
+      _loyaltyManager.callLoyaltyDashboardApi();
+      cashbackCtrl.onInit();
+      cashbackManager.callBankListApi();
+      _profileController.getProfileData();
 
-    showFirstTimePoints();
+      showFirstTimePoints();
 
-    checkLogin();
+      checkLogin();
+    });
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -246,32 +248,59 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
-    String? finger = prefs.getString(SPKeys.finger);
-    print("check auth fggfgfgf status${_homeManager.showAuth.value}");
 
     if (showAuth == true || _homeManager.showAuth.value == true) {
       {
         try {
-          bool hasbiometrics =
-              await auth.canCheckBiometrics; //check if there is authencations,
+          bool hasbiometrics = await auth.canCheckBiometrics; //check if there is authencations,
 
           if (hasbiometrics) {
             List<BiometricType> availableBiometrics =
                 await auth.getAvailableBiometrics();
             print("available bio==>${availableBiometrics}");
+
+
             if (Platform.isAndroid) {
-              bool pass = await auth.authenticate(
-                  localizedReason: 'Authenticate with pattern/pin/passcode',
-                  biometricOnly: false);
-              if (pass) {
-                msg = "You are Authenticated.";
-                setState(() {
-                  _homeManager.showAuth.value = true;
-                  WidgetsBinding.instance.removeObserver(this);
-                });
-              } else {
-                SystemNavigator.pop();
+              if (availableBiometrics.contains(BiometricType.fingerprint)) {
+
+                print("inside bio==>${availableBiometrics}");
+
+
+
+
+
+                bool pass = await auth.authenticate(
+                    localizedReason: 'Authenticate with fingerprint/face',
+                    biometricOnly: true);
+                if (pass) {
+                  msg = "You are Authenicated.";
+                  setState(() {
+                    _homeManager.showAuth.value = true;
+                    WidgetsBinding.instance.removeObserver(this);
+                  });
+                } else {
+                  SystemNavigator.pop();
+                }
               }
+
+              // print("available bio in side android==>${availableBiometrics}");
+              //
+              //
+              //
+              // bool pass = await auth.authenticate(
+              //     localizedReason: 'Authenticate with pattern/pin/passcode',
+              //     biometricOnly: false);
+              // print("asaff==>${availableBiometrics}");
+              //
+              // if (pass) {
+              //   msg = "You are Authenticated.";
+              //   setState(() {
+              //     _homeManager.showAuth.value = true;
+              //     WidgetsBinding.instance.removeObserver(this);
+              //   });
+              // } else {
+              //   SystemNavigator.pop();
+              // }
             } else {
               if (availableBiometrics.contains(BiometricType.fingerprint)) {
                 bool pass = await auth.authenticate(
@@ -969,11 +998,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         label: _homeManager.redeemablePoints >= 14
             ? 'Redeem Points Now'
             : 'Earn more points',
-        onPressed: () => {
-              _homeManager.redeemablePoints >= 14
-                  ? Get.toNamed(MRouter.redeemPointsPage)
-                  : Get.toNamed(MRouter.map)
-            },
+        onPressed: () async {
+          _homeManager.redeemablePoints >= 14
+              ? Get.toNamed(MRouter.redeemPointsPage)
+              : await _handleLocationPermission();
+        },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,
@@ -982,7 +1011,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-  MapManager mapManager = Get.put(MapManager());
+ // MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {
