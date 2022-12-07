@@ -304,9 +304,11 @@ class ProfileStepper {
                   ),
                   onTap: () async {
                     selectedDate = await datePicker(context);
-                    String date =
-                        DateFormat('dd-MM-yyyy').format(selectedDate!);
-                    profileController.dobController.value.text = date;
+                    if (selectedDate != null) {
+                      String date =
+                          DateFormat('dd-MM-yyyy').format(selectedDate!);
+                      profileController.dobController.value.text = date;
+                    }
                   },
                   isDisable: true,
                   vaidation: (value) {
@@ -696,9 +698,9 @@ class ProfileStepper {
                         ? null
                         : profileController.accountType.value,
                     onChanged: (value) {
-
-
-
+                      if (isFromLoan == true) {
+                        profileController.salaryMode.value = value;
+                      }
                       temp = value;
                     },
                     label: 'Salary Mode',

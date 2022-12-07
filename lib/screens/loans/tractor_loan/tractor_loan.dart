@@ -8,6 +8,7 @@ import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -55,12 +56,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               children: [
                 CustomAppBar(
                   heading: 'Tractor loan',
-                  customActionIconsList: [
-                    // CustomActionIcons(
-                    //   image: AppImages.bottomNavHome,
-                    //
-                    // ),
-                  ],
+                  customActionIconsList: commonAppIcons,
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -438,8 +434,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                     ],
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.blue, width: 1.0),
+                    borderSide: BorderSide(color: Colors.blue, width: 1.0),
                   ),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border

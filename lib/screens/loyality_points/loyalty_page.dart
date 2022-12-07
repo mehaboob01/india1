@@ -40,12 +40,12 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SmartRefresher(
-        enablePullDown: true,
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: SafeArea(
+      body: SafeArea(
+        child: SmartRefresher(
+          enablePullDown: true,
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
           child: Column(
             children: [
               CustomAppBar(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_methods.dart';
+import 'package:intl/intl.dart';
 
 import '../constant/theme_manager.dart';
 import 'custom_slider_thumb.dart';
-
 
 class CustomSlider extends StatelessWidget {
   const CustomSlider({
@@ -12,6 +13,7 @@ class CustomSlider extends StatelessWidget {
     required this.sliderValue,
     required this.minValue,
     required this.maxValue,
+    this.isAmount = false,
     this.textEditingController,
   }) : super(key: key);
 
@@ -19,6 +21,7 @@ class CustomSlider extends StatelessWidget {
   final Rx<double> minValue;
   final Rx<double> maxValue;
   //final CashBackController getController;
+  final bool isAmount;
   final TextEditingController? textEditingController;
 
   @override
@@ -35,7 +38,7 @@ class CustomSlider extends StatelessWidget {
                   color: AppColors.backGroundgradient1,
                   fontSize: 11.0.sp,
                   fontWeight: FontWeight.w600),
-              thumbShape:  SliderThumbShape(enabledThumbRadius: 12.0),
+              thumbShape: SliderThumbShape(enabledThumbRadius: 12.0),
               overlayShape: const RoundSliderOverlayShape(overlayRadius: 10.0),
               trackHeight: 8.0.wp,
             ),
@@ -49,7 +52,9 @@ class CustomSlider extends StatelessWidget {
                 inactiveColor: const Color(0xffE0F0FF),
                 onChanged: (value) {
                   sliderValue.value = value;
-                  textEditingController!.text = value.round().toString();
+                  textEditingController!.text = isAmount == true
+                      ? CommonMethods().indianRupeeValue(value)
+                      : value.round().toString();
                 }),
           ),
           Padding(
@@ -58,14 +63,22 @@ class CustomSlider extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${minValue.toInt().priceString()}',
+                  isAmount == true
+                      ? CommonMethods().indianRupeeValue(minValue.value)
+                      : minValue.value
+                          .toInt()
+                          .toString(), // '${minValue.toInt().priceString()}',
                   style: AppStyle.shortHeading.copyWith(
                       color: AppColors.black,
                       fontSize: 11.0.sp,
                       fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  '${maxValue.toInt().priceString()}',
+                  isAmount == true
+                      ? CommonMethods().indianRupeeValue(maxValue.value)
+                      : maxValue.value
+                          .toInt()
+                          .toString(), //'${maxValue.toInt().priceString()}',
                   style: AppStyle.shortHeading.copyWith(
                       color: AppColors.black,
                       fontSize: 11.0.sp,

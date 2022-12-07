@@ -28,7 +28,6 @@ class _CommonWebViewState extends State<CommonWebView> {
           children: [
             CustomAppBar(
               heading: '${widget.title}',
-              customActionIconsList: [],
             ),
             Expanded(
               child: InAppWebView(

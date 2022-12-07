@@ -266,7 +266,8 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                               CustomActionIcons(
                                   image: AppImages.bottomNavHomeSvg,
                                   onHeaderIconPressed: () async {
-                                    // Get.to(() => HomeMainIO(false));
+                                    Get.offNamedUntil(MRouter.homeScreen,
+                                        (route) => route.isFirst);
                                   })
                             ],
                           ),

@@ -10,6 +10,7 @@ import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -86,20 +87,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
               children: [
                 CustomAppBar(
                   heading: 'Gold loan',
-                  customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.askIconSvg,
-                      onHeaderIconPressed: () async {
-                        // what to ask function goes here
-                      },
-                    ),
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHomeSvg,
-                      onHeaderIconPressed: () async {
-                        // Get.to(() => HomeScreen.IO(false));
-                      },
-                    ),
-                  ],
+                  customActionIconsList: commonAppIcons,
                 ),
                 Expanded(
                   child: SingleChildScrollView(

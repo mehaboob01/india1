@@ -5,6 +5,7 @@ import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/provider_details.dart';
 import 'package:india_one/screens/loans/provider_list.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/utils/common_webview.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -42,22 +43,8 @@ class _LendersListState extends State<LendersList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomAppBar(
-                  heading: '${widget.title}',
-                  customActionIconsList: [
-                    CustomActionIcons(
-                      image: AppImages.askIconSvg,
-                      onHeaderIconPressed: () async {
-                        // what to ask function goes here
-                      },
-                    ),
-                    CustomActionIcons(
-                      image: AppImages.bottomNavHomeSvg,
-                      onHeaderIconPressed: () async {
-                        // Get.to(() => HomeScreen.IO(false));
-                      },
-                    ),
-                  ],
-                ),
+                    heading: '${widget.title}',
+                    customActionIconsList: commonAppIcons),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,

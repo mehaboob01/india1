@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import 'package:india_one/screens/loyality_points/loyality_manager.dart';
+import 'package:india_one/screens/loyality_points/redeem_points/rp_ui.dart';
 
 import '../constant/theme_manager.dart';
 
@@ -145,9 +147,12 @@ class _YourRewardCardState extends State<YourRewardCard>
                           GestureDetector(
                             onTap: () {
                               if (loyaltyManager.redeemablePoints.value >= 15) {
-                                Get.snackbar('Hurray!!', 'Going to redeem page',
-                                    snackPosition: SnackPosition.BOTTOM);
+                                _closeOverlay();
+                                Get.to(() => RedeemPointsPage());
+                                // Get.snackbar('Hurray!!', 'Going to redeem page',
+                                //     snackPosition: SnackPosition.BOTTOM);
                               } else {
+                                _closeOverlay();
                                 Get.snackbar('Oops!!',
                                     'You can redeem only if you have 15+ points',
                                     snackPosition: SnackPosition.BOTTOM);

@@ -97,7 +97,6 @@ class _MapsState extends State<Maps> {
         SafeArea(
           child: CustomAppBar(
             heading: "Maps",
-            customActionIconsList: [],
           ),
         ),
         Expanded(

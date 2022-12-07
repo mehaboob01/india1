@@ -8,6 +8,7 @@ import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -61,22 +62,8 @@ class _CarLoanIOState extends State<CarLoanIO> {
                 Column(
                   children: [
                     CustomAppBar(
-                      heading: 'Car loan',
-                      customActionIconsList: [
-                        CustomActionIcons(
-                          image: AppImages.askIconSvg,
-                          onHeaderIconPressed: () async {
-                            // what to ask function goes here
-                          },
-                        ),
-                        CustomActionIcons(
-                          image: AppImages.bottomNavHomeSvg,
-                          onHeaderIconPressed: () async {
-                            // Get.to(() => HomeScreen.IO(false));
-                          },
-                        ),
-                      ],
-                    ),
+                        heading: 'Car loan',
+                        customActionIconsList: commonAppIcons),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Padding(

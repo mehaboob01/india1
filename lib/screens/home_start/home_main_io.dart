@@ -248,6 +248,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   Future<void> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
+    String? finger = prefs.getString(SPKeys.finger);
+    print("check auth fggfgfgf status${_homeManager.showAuth.value}");
 
     if (showAuth == true || _homeManager.showAuth.value == true) {
       {
@@ -258,48 +260,32 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
           if (hasbiometrics) {
             List<BiometricType> availableBiometrics =
                 await auth.getAvailableBiometrics();
-            if (availableBiometrics.contains(BiometricType.fingerprint)) {
+            if (Platform.isAndroid) {
               bool pass = await auth.authenticate(
-                  localizedReason: 'Authenticate with fingerprint/face',
-                  biometricOnly: true);
+                  localizedReason: 'Authenticate with pattern/pin/passcode',
+                  biometricOnly: false);
               if (pass) {
-                msg = "You are Authenicated.";
+                msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
                   WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
-                //    SystemNavigator.pop();
+                SystemNavigator.pop();
               }
             } else {
-              print("available bio==>${availableBiometrics}");
-              if (Platform.isAndroid) {
+              if (availableBiometrics.contains(BiometricType.fingerprint)) {
                 bool pass = await auth.authenticate(
-                    localizedReason: 'Authenticate with pattern/pin/passcode',
-                    biometricOnly: false);
+                    localizedReason: 'Authenticate with fingerprint/face',
+                    biometricOnly: true);
                 if (pass) {
-                  msg = "You are Authenticated.";
+                  msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
                     WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
                   SystemNavigator.pop();
-                }
-              } else {
-                if (availableBiometrics.contains(BiometricType.fingerprint)) {
-                  bool pass = await auth.authenticate(
-                      localizedReason: 'Authenticate with fingerprint/face',
-                      biometricOnly: true);
-                  if (pass) {
-                    msg = "You are Authenicated.";
-                    setState(() {
-                      _homeManager.showAuth.value = true;
-                      WidgetsBinding.instance.removeObserver(this);
-                    });
-                  } else {
-                    //    SystemNavigator.pop();
-                  }
                 }
               }
             }
@@ -658,26 +644,26 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                   ),
                                   // ways to Reedem ---------------------------------
                                   SizedBox(height: 1.0.hp),
-                                  Obx(
-                                    () => Visibility(
-                                      visible:
-                                          _homeManager.redeemablePoints <= 14
-                                              ? true
-                                              : false,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: Text(
-                                          'Note : You can redeem only if you have 15 or more points',
-                                          style: AppStyle.shortHeading.copyWith(
-                                            fontSize: Dimens.font_12sp,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.0.hp),
+                                  // Obx(
+                                  //   () => Visibility(
+                                  //     visible:
+                                  //         _homeManager.redeemablePoints <= 14
+                                  //             ? true
+                                  //             : false,
+                                  //     child: Padding(
+                                  //       padding:
+                                  //           const EdgeInsets.only(left: 4.0),
+                                  //       child: Text(
+                                  //         'Note : You can redeem only if you have 15 or more points',
+                                  //         style: AppStyle.shortHeading.copyWith(
+                                  //           fontSize: Dimens.font_12sp,
+                                  //           color: Colors.white,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(height: 1.0.hp),
                                   Flexible(child: redeemWay()),
                                   // Redeem points now -------------------------------
                                   SizedBox(height: 2.0.hp),
@@ -981,14 +967,15 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
-        label: _homeManager.redeemablePoints >= 14
-            ? 'Redeem Points Now'
-            : 'Earn more points',
-        onPressed: () async {
-          _homeManager.redeemablePoints >= 14
-              ? Get.toNamed(MRouter.redeemPointsPage)
-              : await _handleLocationPermission();
-        },
+        label: 'Redeem Points Now',
+        onPressed: () => _homeManager.redeemablePoints >= 15
+            ? {Get.toNamed(MRouter.redeemPointsPage)}
+            : {
+                // Get.toNamed(MRouter.map)
+                Get.snackbar(
+                    'Oops!!', 'You can redeem only if you have 15+ points',
+                    snackPosition: SnackPosition.BOTTOM)
+              },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,
@@ -997,7 +984,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-  // MapManager mapManager = Get.put(MapManager());
+  MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {

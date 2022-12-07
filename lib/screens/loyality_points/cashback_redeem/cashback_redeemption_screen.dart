@@ -12,6 +12,7 @@ import 'package:india_one/widgets/common_redeem_card.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../../constant/routes.dart';
 import '../../../utils/comman_validaters.dart';
 import '../../../widgets/common_divider.dart';
 import '../../../widgets/common_drop_down.dart';
@@ -53,7 +54,8 @@ class CashBackRedeemPage extends StatelessWidget {
                   CustomActionIcons(
                       image: AppImages.bottomNavHomeSvg,
                       onHeaderIconPressed: () async {
-                        // Get.to(() => HomeMainIO(false));
+                        Get.offNamedUntil(
+                            MRouter.homeScreen, (route) => route.isFirst);
                       })
                 ],
               ),
@@ -926,7 +928,6 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                   .toString());
                               cashbackCtrl.upiAddEnable.value = false;
                               cashbackCtrl.upiFormKey.currentState!.reset();
-                              cashBackManager.fetchCustomerUpiAccounts();
                             }
                           }),
                     ))
