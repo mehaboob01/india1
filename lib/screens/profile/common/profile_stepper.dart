@@ -304,9 +304,11 @@ class ProfileStepper {
                   ),
                   onTap: () async {
                     selectedDate = await datePicker(context);
-                    String date =
-                        DateFormat('dd-MM-yyyy').format(selectedDate!);
-                    profileController.dobController.value.text = date;
+                    if (selectedDate != null) {
+                      String date =
+                          DateFormat('dd-MM-yyyy').format(selectedDate!);
+                      profileController.dobController.value.text = date;
+                    }
                   },
                   isDisable: true,
                   vaidation: (value) {
@@ -612,157 +614,160 @@ class ProfileStepper {
       {bool? isFromLoan = false, bool? isFromInsurance = false}) {
     var temp;
     return Padding(
-      padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
-      child: SingleChildScrollView(
-        child: Form(
+        padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
+        child: SingleChildScrollView(
+            child: Form(
           key: occupationForm,
           autovalidateMode: profileController.autoValidation.value == true
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Occupation",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.lightBlack,
-                  fontSize: Dimens.font_18sp,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              commonDropDown(
-                item: [
-                  {"name": "Self Employed", "value": "SelfEmployed"},
-                  {"name": "Salaried", "value": "Salaried"},
-                  {"name": "Business Owner", "value": "BusinessOwner"},
-                  {"name": "Other", "value": "Other"},
-                ].map((value) {
-                  return DropdownMenuItem(
-                    value: value['value'],
-                    child: Text(value['name'].toString()),
-                  );
-                }).toList(),
-                value: profileController.employmentType.value == ''
-                    ? null
-                    : profileController.employmentType.value,
-                onChanged: (value) {
-                  profileController.employmentType.value = value;
-                },
-                label: 'Employment type',
-                hint: 'Choose your employment type',
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              if (!isFromInsurance!) ...[
-                textField(
-                  controller: profileController.occupationController.value,
-                  label: 'Occupation',
-                  hint: 'Enter what you do here',
-                  vaidation: (value) {
-                    if (isFromLoan == true ||
-                        value.toString().trim().isNotEmpty) {
-                      return profileController.nameValidation(
-                        value,
-                        'Enter Occupation of min 3 char',
-                      );
-                    }
-                    return null;
-                  },
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ButtonTheme(
-                  alignedDropdown: true,
-                  child: commonDropDown(
-                    item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    value: profileController.accountType == ''
-                        ? null
-                        : profileController.accountType.value,
-                    onChanged: (value) {
-                      if (isFromLoan == true) {
-                        profileController.salaryMode.value = value;
-                      }
-                      temp = value;
-                    },
-                    label: 'Salary Mode',
-                    hint: 'Salary Mode',
+          child: Obx(() {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Occupation",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.lightBlack,
+                    fontSize: Dimens.font_18sp,
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                commonDropDown(
+                  item: [
+                    {"name": "Self Employed", "value": "SelfEmployed"},
+                    {"name": "Salaried", "value": "Salaried"},
+                    {"name": "Business Owner", "value": "BusinessOwner"},
+                    {"name": "Other", "value": "Other"},
+                  ].map((value) {
+                    return DropdownMenuItem(
+                      value: value['value'],
+                      child: Text(value['name'].toString()),
+                    );
+                  }).toList(),
+                  value: profileController.employmentType.value == ''
+                      ? null
+                      : profileController.employmentType.value,
+                  onChanged: (value) {
+                    profileController.employmentType.value = value;
+                  },
+                  label: 'Employment type',
+                  hint: 'Choose your employment type',
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                if (!isFromInsurance!) ...[
+                  textField(
+                    controller: profileController.occupationController.value,
+                    label: 'Occupation',
+                    hint: 'Enter what you do here',
+                    vaidation: (value) {
+                      if (isFromLoan == true ||
+                          value.toString().trim().isNotEmpty) {
+                        return profileController.nameValidation(
+                          value,
+                          'Enter Occupation of min 3 char',
+                        );
+                      }
+                      return null;
+                    },
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ButtonTheme(
+                    alignedDropdown: true,
+                    child: commonDropDown(
+                      item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(),
+                      value: profileController.accountType.value == ''
+                          ? null
+                          : profileController.accountType.value,
+                      // value: profileController.accountType.value == ''
+                      //     ? null
+                      //     : profileController.accountType.value,
+                      onChanged: (value) {
+                        profileController.accountType.value = value;
+
+                        temp = value;
+                      },
+                      label: 'Salary Mode',
+                      hint: 'Salary Mode',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+                textField(
+                  controller: profileController.monthlyIncomeController.value,
+                  label: 'Monthly income',
+                  hint: 'Enter monthly income',
+                  prefix: '₹',
+                  vaidation: (value) {
+                    if (isFromLoan == true ||
+                        isFromInsurance == true ||
+                        value.toString().trim().isNotEmpty) {
+                      return profileController.nullCheckValidation(
+                        value,
+                        'Enter valid amount',
+                      );
+                    }
+                    return null;
+                  },
+                  onChanged: (val) {
+                    profileController
+                        .monthlyIncomeController.value.text = (int.parse(
+                                (val).replaceAll(",", "").replaceAll(".", ""))
+                            .priceString())
+                        .toString();
+                    profileController.monthlyIncomeController.value.selection =
+                        TextSelection.collapsed(
+                            offset: profileController
+                                .monthlyIncomeController.value.text.length);
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                textField(
+                  controller: profileController.panNumberController.value,
+                  label: 'PAN number',
+                  hint: 'Enter your PAN number here',
+                  vaidation: (value) {
+                    if (isFromLoan == true ||
+                        isFromInsurance == true ||
+                        value.toString().trim().isNotEmpty) {
+                      return profileController.panValidation(
+                        value,
+                      );
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
               ],
-              textField(
-                controller: profileController.monthlyIncomeController.value,
-                label: 'Monthly income',
-                hint: 'Enter monthly income',
-                prefix: '₹',
-                vaidation: (value) {
-                  if (isFromLoan == true ||
-                      isFromInsurance == true ||
-                      value.toString().trim().isNotEmpty) {
-                    return profileController.nullCheckValidation(
-                      value,
-                      'Enter valid amount',
-                    );
-                  }
-                  return null;
-                },
-                onChanged: (val) {
-                  profileController.monthlyIncomeController.value.text =
-                      (int.parse((val).replaceAll(",", "").replaceAll(".", ""))
-                              .priceString())
-                          .toString();
-                  profileController.monthlyIncomeController.value.selection =
-                      TextSelection.collapsed(
-                          offset: profileController
-                              .monthlyIncomeController.value.text.length);
-                },
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              textField(
-                controller: profileController.panNumberController.value,
-                label: 'PAN number',
-                hint: 'Enter your PAN number here',
-                vaidation: (value) {
-                  if (isFromLoan == true ||
-                      isFromInsurance == true ||
-                      value.toString().trim().isNotEmpty) {
-                    return profileController.panValidation(
-                      value,
-                    );
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          }),
+        )));
   }
 
   Widget nomineeDetails(BuildContext context, GlobalKey<FormState> nomineeForm,

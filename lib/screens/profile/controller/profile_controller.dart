@@ -42,6 +42,14 @@ extension priceChange on int {
   }
 }
 
+// extension priceChange on int {
+//   String priceString() {
+//     final rupeeFormat = NumberFormat.currency(
+//         locale: 'en_IN', name: '', symbol: '', decimalDigits: 0);
+//     String data = this.rupeeFormat;
+//   }
+// }
+
 class ProfileController extends GetxController {
   HomeManager _homeManager = Get.put(HomeManager());
   RxBool addPersonalLoading = false.obs,
@@ -147,10 +155,14 @@ class ProfileController extends GetxController {
     alternateNumberController.value.text =
         profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = DateFormat('dd-MM-yyyy').format(
-            DateFormat("yyyy-MM-dd")
-                .parse(profileDetailsModel.value.dateOfBirth!)) ??
-        '';
+    dobController.value.text = profileDetailsModel.value.dateOfBirth == null
+        ? ''
+        : DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd")
+            .parse(profileDetailsModel.value.dateOfBirth!));
+    // dobController.value.text = DateFormat('dd-MM-yyyy').format(
+    //         DateFormat("yyyy-MM-dd")
+    //             .parse(profileDetailsModel.value.dateOfBirth!)) ??
+    //     '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -677,8 +689,8 @@ class ProfileController extends GetxController {
             "customerDetails": {
               "panNumber": "${panNumberController.value.text.trim()}",
               "occupation": "${occupationController.value.text.trim()}",
-              "salaryMode": salaryMode.value.isNotEmpty
-                  ? "${salaryMode.value.trim()}"
+              "salaryMode": accountType.value.isNotEmpty
+                  ? "${accountType.value.trim()}"
                   : '',
               "income":
                   "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",

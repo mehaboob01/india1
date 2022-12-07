@@ -6,6 +6,7 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/screens/loyality_points/loyality_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/data/local/shared_preference_keys.dart';
@@ -44,6 +45,7 @@ class MrManager extends GetxController {
   RxInt selectedIndex = (-1).obs;
 
   var selectedplanList = <bool>[].obs;
+  final loyaltyManager = Get.find<LoyaltyManager>();
 
   RxMap<String, dynamic> rechargeData = <String, dynamic>{}.obs;
 
@@ -200,8 +202,10 @@ class MrManager extends GetxController {
           }
 
           plansList.addAll(plansListSend);
+
           isPlansAvailable(true);
           selectedplanList.addAll(localSelectedList);
+
           print("plans List ");
           print(plansList.length);
           isFetchPlanLoading(false);
@@ -262,7 +266,6 @@ class MrManager extends GetxController {
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
           });
-
 
       print("REsponse of mobile recharge ${response.body}");
 

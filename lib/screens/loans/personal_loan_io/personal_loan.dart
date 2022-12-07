@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -8,10 +9,13 @@ import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
+import 'package:india_one/utils/common_methods.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
+
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../widgets/custom_slider.dart';
@@ -37,6 +41,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   @override
   void initState() {
     super.initState();
+
     profileController.setData();
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
     loanController.createLoanApplication(
@@ -55,8 +60,10 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanController.maxValue.value) {
               loanController.sliderValue.value =
                   double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text =
-                  (createLoanModel.loanAmount ?? 0).toInt().priceString();
+              loanAmountEditingController.text = CommonMethods()
+                  .indianRupeeValue(createLoanModel.loanAmount?.toDouble() ??
+                      loanController.minValue.toDouble());
+              // (createLoanModel.loanAmount ?? 0).toInt().priceString();
             }
           }
         });
@@ -91,20 +98,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                           children: [
                             CustomAppBar(
                               heading: 'Personal loan',
-                              customActionIconsList: [
-                                CustomActionIcons(
-                                  image: AppImages.askIconSvg,
-                                  onHeaderIconPressed: () async {
-                                    // what to ask function goes here
-                                  },
-                                ),
-                                CustomActionIcons(
-                                  image: AppImages.bottomNavHomeSvg,
-                                  onHeaderIconPressed: () async {
-                                    // Get.to(() => HomeScreen.IO(false));
-                                  },
-                                ),
-                              ],
+                              customActionIconsList: commonAppIcons,
                             ),
                             Expanded(
                               child: SingleChildScrollView(
@@ -199,8 +193,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
       onTap: () {
         _loanAmountKey.currentState!.save();
         if (_loanAmountKey.currentState!.validate()) {
-          double newVal =
-              double.tryParse(loanAmountEditingController.text.toString()) ?? 0;
+          double newVal = double.tryParse(
+                  loanAmountEditingController.text.replaceAll(',', '')) ??
+              0;
           if (newVal <= loanController.minValue.value &&
               newVal >= loanController.maxValue.value) {
             Flushbar(
@@ -210,7 +205,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
             )..show(context);
           } else {
             loanController.updateLoanAmount(
-                amount: loanAmountEditingController.text.replaceAll(",", ""));
+                amount: loanAmountEditingController.text
+                    .replaceAll(",", "")
+                    .trim());
           }
         }
       },
@@ -354,6 +351,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   message: "Select employment type",
                   duration: Duration(seconds: 3),
                 )..show(context);
+              } else if (profileController.accountType.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select Salary Mode",
+                  duration: Duration(seconds: 3),
+                )..show(context);
               } else {
                 profileController.addOccupationDetails(
                     isFromLoan: true,
@@ -422,6 +425,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
         Container(
           margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
           child: CustomSlider(
+            isAmount: true,
             sliderValue: loanController.sliderValue,
             textEditingController: loanAmountEditingController,
             minValue: loanController.minValue,
@@ -445,6 +449,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                inputFormatters: [CurrencyInputFormatter()],
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: Dimens.font_16sp,
@@ -472,11 +477,26 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   labelText: 'Loan amount',
                   labelStyle: new TextStyle(color: Color(0xFF787878)),
                 ),
+                autocorrect: true,
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(context),
+                  FormBuilderValidators.max(
+                      context,
+                      int.parse(CommonMethods()
+                          .indianRupeeValue(loanController.maxValue.value)
+                          .replaceAll(',', '1')
+                          .trim()),
+                      errorText:
+                          'Value must be lesser than or equal to ${CommonMethods().indianRupeeValue(loanController.maxValue.value)}'),
+                  FormBuilderValidators.min(
+                    context,
+                    loanController.minValue.value.toInt(),
+                  )
                 ]),
                 onChanged: (value) {
-                  double newVal = double.tryParse(value.toString()) ?? 0;
+                  double newVal =
+                      double.tryParse(value.toString().replaceAll(',', '')) ??
+                          0;
                   if (newVal >= loanController.minValue.value &&
                       newVal <= loanController.maxValue.value) {
                     loanController.sliderValue.value = newVal;

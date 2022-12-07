@@ -47,9 +47,6 @@ class _SplashScreenState extends State<SplashScreen> {
       prefs!.setString(SPKeys.DEVICE_TOKEN, deviceToken.toString());
     });
 
-
-
-
     initDynamicLinks();
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
@@ -65,10 +62,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String?> _getDeviceId() async {
     var deviceInfo = DeviceInfoPlugin();
-    if (Platform.isIOS) { // import 'dart:io'
+    if (Platform.isIOS) {
+      // import 'dart:io'
       var iosDeviceInfo = await deviceInfo.iosInfo;
       return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else if(Platform.isAndroid) {
+    } else if (Platform.isAndroid) {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       return androidDeviceInfo.id; // unique ID on Android
     }

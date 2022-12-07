@@ -9,6 +9,7 @@ import 'package:india_one/screens/loans/model/farm_loan_requirment_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -96,13 +97,8 @@ class _FarmLoanState extends State<FarmLoan> {
             () => Column(
               children: [
                 CustomAppBar(
-                  heading: 'Farm loan',
-                  customActionIconsList: [
-                    // CustomActionIcons(
-                    //   image: AppImages.bottomNavHome,
-                    // ),
-                  ],
-                ),
+                    heading: 'Farm loan',
+                    customActionIconsList: commonAppIcons),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
@@ -228,13 +224,13 @@ class _FarmLoanState extends State<FarmLoan> {
               ],
             ),
             Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
+            // SizedBox(
+            //   height: 48,
+            //   child: Image.asset(
+            //     "assets/images/btn_img.png",
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
           ],
         ),
         decoration: BoxDecoration(
@@ -286,9 +282,9 @@ class _FarmLoanState extends State<FarmLoan> {
                 ],
               ),
               decoration: BoxDecoration(
-                gradient: new LinearGradient(
+                gradient: LinearGradient(
                   end: Alignment.topRight,
-                  colors: [Colors.orange, Colors.redAccent],
+                  colors: [Color(0xFF357CBE), Color(0xFF004280)],
                 ),
 
                 // color: termConditionChecked == true
@@ -419,7 +415,7 @@ class _FarmLoanState extends State<FarmLoan> {
               });
         }
       },
-      child:  Container(
+      child: Container(
         width: MediaQuery.of(context).size.height * 0.9,
         height: 48,
         child: Row(
@@ -438,13 +434,13 @@ class _FarmLoanState extends State<FarmLoan> {
               ],
             ),
             Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
+            // SizedBox(
+            //   height: 48,
+            //   child: Image.asset(
+            //     "assets/images/btn_img.png",
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
           ],
         ),
         decoration: BoxDecoration(

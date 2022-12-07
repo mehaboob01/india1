@@ -602,26 +602,26 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                   ),
                                   // ways to Reedem ---------------------------------
                                   SizedBox(height: 1.0.hp),
-                                  Obx(
-                                    () => Visibility(
-                                      visible:
-                                          _homeManager.redeemablePoints <= 14
-                                              ? true
-                                              : false,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: Text(
-                                          'Note : You can redeem only if you have 15 or more points',
-                                          style: AppStyle.shortHeading.copyWith(
-                                            fontSize: Dimens.font_12sp,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.0.hp),
+                                  // Obx(
+                                  //   () => Visibility(
+                                  //     visible:
+                                  //         _homeManager.redeemablePoints <= 14
+                                  //             ? true
+                                  //             : false,
+                                  //     child: Padding(
+                                  //       padding:
+                                  //           const EdgeInsets.only(left: 4.0),
+                                  //       child: Text(
+                                  //         'Note : You can redeem only if you have 15 or more points',
+                                  //         style: AppStyle.shortHeading.copyWith(
+                                  //           fontSize: Dimens.font_12sp,
+                                  //           color: Colors.white,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(height: 1.0.hp),
                                   Flexible(child: redeemWay()),
                                   // Redeem points now -------------------------------
                                   SizedBox(height: 2.0.hp),
@@ -925,14 +925,15 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
-        label: _homeManager.redeemablePoints >= 14
-            ? 'Redeem Points Now'
-            : 'Earn more points',
-        onPressed: () => {
-              _homeManager.redeemablePoints >= 14
-                  ? Get.toNamed(MRouter.redeemPointsPage)
-                  : Get.toNamed(MRouter.map)
-            },
+        label: 'Redeem Points Now',
+        onPressed: () => _homeManager.redeemablePoints >= 15
+            ? {Get.toNamed(MRouter.redeemPointsPage)}
+            : {
+                // Get.toNamed(MRouter.map)
+                Get.snackbar(
+                    'Oops!!', 'You can redeem only if you have 15+ points',
+                    snackPosition: SnackPosition.BOTTOM)
+              },
         buttonWidth: double.maxFinite,
         buttonHeight: 8.0.hp,
         labelSize: 14.0.sp,

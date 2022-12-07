@@ -7,6 +7,8 @@ import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../constant/routes.dart';
+
 class ProviderDetail extends StatelessWidget {
   final String title;
   final Lenders lenders;
@@ -36,9 +38,13 @@ class ProviderDetail extends StatelessWidget {
                 CustomAppBar(
                   heading: '$title',
                   customActionIconsList: [
-                    // CustomActionIcons(
-                    //   image: AppImages.bottomNavHome,
-                    // ),
+                    CustomActionIcons(
+                      onHeaderIconPressed: () async {
+                        Get.offNamedUntil(
+                            MRouter.homeScreen, (route) => route.isFirst);
+                      },
+                      image: AppImages.bottomNavHome,
+                    ),
                   ],
                 ),
                 Container(
