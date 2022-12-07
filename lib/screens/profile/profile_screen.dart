@@ -168,21 +168,26 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                            Container(
-                                              height: 45,
-                                              width: 45,
-                                              margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
+                                            GestureDetector(
+                                              onTap: () {
+                                                profileController.pickImage(context);
+                                              },
+                                              child: Container(
+                                                height: 45,
+                                                width: 45,
+                                                margin: EdgeInsets.only(left: 20, right: 25, bottom: 0),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: AppColors.lightOrangeColor,
+                                                  ),
+                                                ),
+                                                child: Icon(
+                                                  Icons.camera_alt_outlined,
+                                                  size: 28,
                                                   color: AppColors.lightOrangeColor,
                                                 ),
-                                              ),
-                                              child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                size: 28,
-                                                color: AppColors.lightOrangeColor,
                                               ),
                                             ),
                                           ],

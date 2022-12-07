@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:india_one/screens/onboarding_login/select_language/language_sele
 import '../constant/routes.dart';
 import '../constant/theme_manager.dart';
 import '../screens/home_start/home_manager.dart';
+import '../screens/notification/notification_manager.dart';
 import '../screens/notification/notification_screen.dart';
 import '../screens/profile/profile_screen.dart';
 import 'common_heading_icon.dart';
@@ -14,6 +16,10 @@ import 'common_heading_icon.dart';
 class CommonPageHeader extends StatelessWidget {
 
   HomeManager _homeManager = Get.put(HomeManager());
+
+
+  final notificationManager = Get.put(NotificationManager());
+
 
   CommonPageHeader({required this.pageName});
   final PageName pageName;
@@ -227,10 +233,35 @@ class CommonPageHeader extends StatelessWidget {
                 SizedBox(
                   width: 2.0.wp,
                 ),
+
+                notificationManager
+                    .notificationsCount
+                    .length
+                    .toInt() !=
+                    0?
                 GestureDetector(
                   onTap: ()=> Get.toNamed(MRouter.notificationScreen),
+                  child: Badge(
+                    position: BadgePosition
+                        .topEnd(
+                        top: -10,
+                        end: 0),
+                    badgeColor: Colors.red,
+                    badgeContent: Container(
+                      child: Text(
+                        "",
+                        style: TextStyle(
+                            color: Colors
+                                .white),
+                      ),
+                    ),
+                    child: headingBox(
+                        image: AppImages.notify_icon),
+                  ),
+                ): GestureDetector(
+                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
                   child: headingBox(
-                      image: AppImages.notify_icon_alert),
+                      image: AppImages.notify_icon),
                 ),
                 SizedBox(
                   width: 2.0.wp,

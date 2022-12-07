@@ -162,6 +162,7 @@ class MrManager extends GetxController {
     selectedIndex.value = (-1);
 
     plansList.clear();
+    plansListSend.clear();
     isFetchPlanLoading.value = true;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

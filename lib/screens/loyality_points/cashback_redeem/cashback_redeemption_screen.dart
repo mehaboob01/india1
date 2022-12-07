@@ -117,12 +117,15 @@ class CashBackRedeemPage extends StatelessWidget {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      CustomSlider(
-                          sliderValue: redoCtrl.redeemPointsSliderValue,
-                          textEditingController: redoCtrl.sliderTextEditingCtrl,
-                          minValue: redoCtrl.redeemPointsMinValue,
-                          maxValue:
-                              _loyaltyManager.redeemablePoints.toDouble().obs),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0,right: 4.0),
+                        child: CustomSlider(
+                            sliderValue: redoCtrl.redeemPointsSliderValue,
+                            textEditingController: redoCtrl.sliderTextEditingCtrl,
+                            minValue: redoCtrl.redeemPointsMinValue,
+                            maxValue:
+                                _loyaltyManager.redeemablePoints.toDouble().obs),
+                      ),
                       SizedBox(height: 10),
                       CommonTextField(
                         formName: 'pointsToRedeem',

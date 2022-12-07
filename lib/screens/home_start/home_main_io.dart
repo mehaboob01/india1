@@ -252,28 +252,33 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     if (showAuth == true || _homeManager.showAuth.value == true) {
       {
         try {
-          bool hasbiometrics = await auth.canCheckBiometrics; //check if there is authencations,
+          bool hasbiometrics =
+              await auth.canCheckBiometrics; //check if there is authencations,
 
           if (hasbiometrics) {
             List<BiometricType> availableBiometrics =
                 await auth.getAvailableBiometrics();
-            print("available bio==>${availableBiometrics}");
-
-
-            if (Platform.isAndroid) {
-              if (availableBiometrics.contains(BiometricType.fingerprint)) {
-
-                print("inside bio==>${availableBiometrics}");
-
-
-
-
-
+            if (availableBiometrics.contains(BiometricType.fingerprint)) {
+              bool pass = await auth.authenticate(
+                  localizedReason: 'Authenticate with fingerprint/face',
+                  biometricOnly: true);
+              if (pass) {
+                msg = "You are Authenicated.";
+                setState(() {
+                  _homeManager.showAuth.value = true;
+                  WidgetsBinding.instance.removeObserver(this);
+                });
+              } else {
+                //    SystemNavigator.pop();
+              }
+            } else {
+              print("available bio==>${availableBiometrics}");
+              if (Platform.isAndroid) {
                 bool pass = await auth.authenticate(
-                    localizedReason: 'Authenticate with fingerprint/face',
-                    biometricOnly: true);
+                    localizedReason: 'Authenticate with pattern/pin/passcode',
+                    biometricOnly: false);
                 if (pass) {
-                  msg = "You are Authenicated.";
+                  msg = "You are Authenticated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
                     WidgetsBinding.instance.removeObserver(this);
@@ -281,39 +286,20 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 } else {
                   SystemNavigator.pop();
                 }
-              }
-
-              // print("available bio in side android==>${availableBiometrics}");
-              //
-              //
-              //
-              // bool pass = await auth.authenticate(
-              //     localizedReason: 'Authenticate with pattern/pin/passcode',
-              //     biometricOnly: false);
-              // print("asaff==>${availableBiometrics}");
-              //
-              // if (pass) {
-              //   msg = "You are Authenticated.";
-              //   setState(() {
-              //     _homeManager.showAuth.value = true;
-              //     WidgetsBinding.instance.removeObserver(this);
-              //   });
-              // } else {
-              //   SystemNavigator.pop();
-              // }
-            } else {
-              if (availableBiometrics.contains(BiometricType.fingerprint)) {
-                bool pass = await auth.authenticate(
-                    localizedReason: 'Authenticate with fingerprint/face',
-                    biometricOnly: true);
-                if (pass) {
-                  msg = "You are Authenicated.";
-                  setState(() {
-                    _homeManager.showAuth.value = true;
-                    WidgetsBinding.instance.removeObserver(this);
-                  });
-                } else {
-                  SystemNavigator.pop();
+              } else {
+                if (availableBiometrics.contains(BiometricType.fingerprint)) {
+                  bool pass = await auth.authenticate(
+                      localizedReason: 'Authenticate with fingerprint/face',
+                      biometricOnly: true);
+                  if (pass) {
+                    msg = "You are Authenicated.";
+                    setState(() {
+                      _homeManager.showAuth.value = true;
+                      WidgetsBinding.instance.removeObserver(this);
+                    });
+                  } else {
+                    //    SystemNavigator.pop();
+                  }
                 }
               }
             }
@@ -1011,7 +997,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
- // MapManager mapManager = Get.put(MapManager());
+  // MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {
