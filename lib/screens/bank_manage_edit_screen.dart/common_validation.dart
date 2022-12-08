@@ -26,4 +26,26 @@ class CommonValidations {
     }
     return null;
   }
+
+  String? maxAmountLengthValidate(
+      {String? value,
+      String? maxErrorText,
+      String? minErrorText,
+      required int maxValue,
+      required int minValue}) {
+    if (value != '') {
+      double newValue = double.parse(value!.replaceAll(',', ''));
+
+      print(newValue);
+      if (newValue > maxValue) {
+        return maxErrorText ?? 'Value should be lesser than $maxValue';
+      } else if (newValue < minValue) {
+        return minErrorText ?? 'Value should be more than $minValue';
+      } else {
+        return null;
+      }
+    } else {
+      return 'Loan value is mandatory*';
+    }
+  }
 }

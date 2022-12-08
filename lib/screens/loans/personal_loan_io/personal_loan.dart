@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/bank_manage_edit_screen.dart/common_validation.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
@@ -379,6 +380,10 @@ class _PersonalLoanState extends State<PersonalLoan> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
+    print(int.parse(CommonMethods()
+        .indianRupeeValue(loanController.maxValue.value)
+        .replaceAll(',', '')
+        .trim()));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -478,21 +483,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   labelStyle: new TextStyle(color: Color(0xFF787878)),
                 ),
                 autocorrect: true,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context),
-                  FormBuilderValidators.max(
-                      context,
-                      int.parse(CommonMethods()
-                          .indianRupeeValue(loanController.maxValue.value)
-                          .replaceAll(',', '1')
-                          .trim()),
-                      errorText:
-                          'Value must be lesser than or equal to ${CommonMethods().indianRupeeValue(loanController.maxValue.value)}'),
-                  FormBuilderValidators.min(
-                    context,
-                    loanController.minValue.value.toInt(),
-                  )
-                ]),
+                validator: (value) {
+                  // return value!.isNotEmpty ? 'looser' : 'winner';
+                  return CommonValidations().maxAmountLengthValidate(
+                    value: value,
+                    maxValue: loanController.maxValue.value.round(),
+                    minValue: loanController.minValue.value.round(),
+                  );
+                },
                 onChanged: (value) {
                   double newVal =
                       double.tryParse(value.toString().replaceAll(',', '')) ??

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +9,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:india_one/constant/routes.dart';
+
 import 'package:india_one/constant/theme_manager.dart';
-import 'package:india_one/core/data/model/common_model.dart';
+
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';

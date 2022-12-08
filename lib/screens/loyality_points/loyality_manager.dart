@@ -18,6 +18,7 @@ class LoyaltyManager extends GetxController {
   var pointsRedeemed = 0.obs;
   var recentRewardTransactionsList = <RecentRewardTransaction>[].obs;
   var recentRewardTransactionSend = <RecentRewardTransaction>[];
+  var isOverlayOpen = false.obs;
 
   @override
   void onInit() {
