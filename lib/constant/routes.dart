@@ -31,6 +31,7 @@ import '../screens/refer/refer_earn_ui.dart';
 
 class MRouter {
   static const String splashRoute = 'SplashWidget';
+
   static const String homeScreen = 'HomeWidget';
   static const String userLogin = 'UserLogin';
   static const String verifiedScreen = 'VerifiedScreen';

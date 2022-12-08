@@ -57,7 +57,10 @@ class MrManager extends GetxController {
     callOperatorListApi();
     callCircleListApi();
   }
-
+  Future<void> showAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs!.setBool(SPKeys.SHOW_AUTH, false);
+  }
   // operator list
   callOperatorListApi() async {
     try {
@@ -278,8 +281,7 @@ class MrManager extends GetxController {
 
         if (mobileRechargeModel.status!.code == 2000) {
           Future.delayed(const Duration(seconds: 0), () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs!.setBool(SPKeys.SHOW_AUTH, false);
+            showAuth();
 
             isMobileRechargeLoading(false);
             Flushbar(

@@ -56,7 +56,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      WidgetsBinding.instance.addObserver(this); // observer
+     // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
       notificationManager.callNotificationsApi();
 
@@ -113,22 +113,22 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
-    super.didChangeAppLifecycleState(state);
-    print("state : ${state}");
-    if (state == AppLifecycleState.resumed) {
-      checkLogin();
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // TODO: implement didChangeAppLifecycleState
+  //   super.didChangeAppLifecycleState(state);
+  //   print("state : ${state}");
+  //   if (state == AppLifecycleState.resumed) {
+  //     checkLogin();
+  //   }
+  // }
 
   double widthIs = 0, heightIs = 0;
   HomeManager _homeManager = Get.put(HomeManager());
@@ -268,7 +268,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
-                  WidgetsBinding.instance.removeObserver(this);
+                //  WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
                 SystemNavigator.pop();
@@ -282,7 +282,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
-                    WidgetsBinding.instance.removeObserver(this);
+                   // WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
                   SystemNavigator.pop();
