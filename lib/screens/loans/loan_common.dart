@@ -5,6 +5,8 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
+import '../../utils/common_methods.dart';
+
 enum LoanType {
   PersonalLoan,
   GoldLoan,
@@ -159,7 +161,10 @@ class LoanCommon {
                         child: CachedNetworkImage(
                           height: 50,
                           width: 50,
-                          imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
+                          imageUrl: (isPersonalLoan == true
+                                  ? (providers?.logoURL ?? '')
+                                  : lenders?.logoURL) ??
+                              '',
                           errorWidget: (context, _, error) {
                             return Icon(
                               Icons.warning_amber_outlined,
@@ -211,7 +216,8 @@ class LoanCommon {
                   children: [
                     rowText(
                       value: 'Max amount',
-                      title: '₹ ${lenders?.loanMaxAmount ?? 0}',
+                      title:
+                          '₹ ${CommonMethods().indianRupeeValue(lenders?.loanMaxAmount!.toDouble() ?? 0)}',
                     ),
                     rowText(
                       value: 'Tenure',

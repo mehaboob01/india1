@@ -1,8 +1,5 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:india_one/screens/loans/controller/loan_controller.dart';
+
 import 'package:intl/intl.dart';
 
 class CommonMethods {
@@ -92,29 +89,3 @@ class CurrencyInputFormatter extends TextInputFormatter {
         selection: new TextSelection.collapsed(offset: newText.length));
   }
 }
-
-
-
-// class MaxInputFormatter extends FormFieldValidator {
-//   final loancontroller = Get.find<LoanController>();
-//   TextEditingValue formatEditUpdate(
-//       TextEditingValue oldValue, TextEditingValue newValue,) {
-//     if (newValue.selection.baseOffset == 0) {
-//       print(true);
-//       return newValue;
-//     }
-
-//     String value = newValue.text.replaceAll(',', '');
-
-//     print(value);
-
-//     String? newText = value.length < loancontroller.maxValue.value
-//         ? CommonMethods().indianRupeeValue(double.parse(value))
-//         : errorText ??
-//             'Value give should be less than ${loancontroller.minValue.value}';
-
-//     return newValue.copyWith(
-//         text: newText,
-//         selection: new TextSelection.collapsed(offset: newText.length));
-//   }
-//}

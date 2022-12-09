@@ -61,11 +61,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanController.maxValue.value) {
               loanController.sliderValue.value =
                   double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text = CommonMethods()
-                  .indianRupeeValue(createLoanModel.loanAmount?.toDouble() ??
-                      loanController.minValue.toDouble());
-              // (createLoanModel.loanAmount ?? 0).toInt().priceString();
+              loanAmountEditingController.text =
+                  (createLoanModel.loanAmount ?? 0).toInt().priceString();
             }
+          } else {
+            loanAmountEditingController.text =
+                CommonMethods().indianRupeeValue(loanController.minValue.value);
           }
         });
   }
@@ -82,6 +83,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
 
   @override
   Widget build(BuildContext context) {
+    print('Hello world');
+    print(loanController.createLoanModel.value.loanAmount.toString());
+    print(loanAmountEditingController.text);
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Obx(
@@ -380,10 +384,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
-    print(int.parse(CommonMethods()
-        .indianRupeeValue(loanController.maxValue.value)
-        .replaceAll(',', '')
-        .trim()));
+    print(loanAmountEditingController.text.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -448,7 +449,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
             child: FormBuilder(
               key: _loanAmountKey,
               initialValue: {
-                "loan_amount": "",
+                // "loan_amount": "",
               },
               child: FormBuilderTextField(
                 keyboardType: TextInputType.number,
