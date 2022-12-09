@@ -48,7 +48,6 @@ class _HealthInsuranceState extends State<HealthInsurance> {
 
   Widget body() {
     return SafeArea(
-
       child: Column(
         children: [
           CustomAppBar(
@@ -59,7 +58,8 @@ class _HealthInsuranceState extends State<HealthInsurance> {
               CustomActionIcons(
                 image: AppImages.bottomNavHomeSvg,
                 onHeaderIconPressed: () async {
-                  Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
+                  Get.offNamedUntil(
+                      MRouter.homeScreen, (route) => route.isFirst);
                 },
               ),
             ],
@@ -71,10 +71,7 @@ class _HealthInsuranceState extends State<HealthInsurance> {
               gradient: new LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  AppColors.backGroundgradient1,
-                  AppColors.backGroundgradient2
-                ],
+                colors: [AppColors.blueColor, AppColors.backGroundgradient2],
               ),
             ),
             child: Column(

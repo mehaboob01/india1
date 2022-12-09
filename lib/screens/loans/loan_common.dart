@@ -159,7 +159,10 @@ class LoanCommon {
                         child: CachedNetworkImage(
                           height: 50,
                           width: 50,
-                          imageUrl: (isPersonalLoan == true ? (providers?.logoURL ?? '') : lenders?.logoURL) ?? '',
+                          imageUrl: (isPersonalLoan == true
+                                  ? (providers?.logoURL ?? '')
+                                  : lenders?.logoURL) ??
+                              '',
                           errorWidget: (context, _, error) {
                             return Icon(
                               Icons.warning_amber_outlined,
@@ -428,13 +431,13 @@ class LoanCommon {
             fontSize: Dimens.font_16sp,
             fontWeight: FontWeight.w600,
             fontFamily: 'Graphik',
-            color: AppColors.butngradient1,
+            color: AppColors.blueColor,
           ),
           textAlign: TextAlign.center,
         ),
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.butngradient1,
+            color: AppColors.blueColor,
           ),
           borderRadius: BorderRadius.circular(6.0),
         ),

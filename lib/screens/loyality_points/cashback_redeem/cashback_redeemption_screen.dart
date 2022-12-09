@@ -120,13 +120,15 @@ class CashBackRedeemPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0,right: 4.0),
+                        padding: const EdgeInsets.only(left: 8.0, right: 4.0),
                         child: CustomSlider(
                             sliderValue: redoCtrl.redeemPointsSliderValue,
-                            textEditingController: redoCtrl.sliderTextEditingCtrl,
+                            textEditingController:
+                                redoCtrl.sliderTextEditingCtrl,
                             minValue: redoCtrl.redeemPointsMinValue,
-                            maxValue:
-                                _loyaltyManager.redeemablePoints.toDouble().obs),
+                            maxValue: _loyaltyManager.redeemablePoints
+                                .toDouble()
+                                .obs),
                       ),
                       SizedBox(height: 10),
                       CommonTextField(
@@ -905,7 +907,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,
                                   colors: [
-                                      AppColors.backGroundgradient1,
+                                      AppColors.blueColor,
                                       AppColors.backGroundgradient2
                                     ])
                               : null,

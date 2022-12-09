@@ -10,13 +10,19 @@ import 'button_with_flower.dart';
 
 // Appbar section --------------------------------
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    Key? key,
-    required this.heading,
-    this.customActionIconsList,
-  }) : super(key: key);
+  const CustomAppBar(
+      {Key? key,
+      required this.heading,
+      this.customActionIconsList,
+      this.actionIcons,
+      this.hasLogo = false,
+      this.haveHomeIcons = false})
+      : super(key: key);
   final String heading;
   final List<CustomActionIcons>? customActionIconsList;
+  final bool? hasLogo;
+  final List<Widget>? actionIcons;
+  final bool? haveHomeIcons;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +36,23 @@ class CustomAppBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () => Get.back(),
-              child: Icon(
-                Icons.chevron_left_rounded,
-                size: 10.0.wp,
-                color: Colors.black,
-              ),
-            ),
+            hasLogo == true
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Container(
+                      width: 80,
+                      height: double.maxFinite,
+                      // color: Colors.red,
+                      child: SvgPicture.asset(AppImages.newIndiaOneSvg),
+                    ))
+                : GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Icon(
+                      Icons.chevron_left_rounded,
+                      size: 10.0.wp,
+                      color: Colors.black,
+                    ),
+                  ),
             Expanded(
               child: Align(
                 alignment: Alignment.center,
@@ -51,7 +66,11 @@ class CustomAppBar extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(4.0.wp),
-              child: Row(children: customActionIconsList ?? []),
+              child: haveHomeIcons == true
+                  ? Row(
+                      children: actionIcons ?? [],
+                    )
+                  : Row(children: customActionIconsList ?? []),
             )
           ],
         ),
@@ -142,13 +161,21 @@ class HeadingContainer extends StatelessWidget {
         height: 50.0.wp,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.backGroundgradient1,
-                  AppColors.backGroundgradient2
-                ])),
+            image: DecorationImage(
+                image: AssetImage(AppImages.loyaltyCardBg), fit: BoxFit.cover)
+            // gradient: const RadialGradient(
+            //     radius: 1.3, focal: Alignment.center, focalRadius: 0.2,
+            //     // begin: Alignment.centerLeft,
+            //     // end: Alignment.centerRight,
+            //     colors: [AppColors.blueColor, Color(0xffED1C24)])
+            // gradient: const LinearGradient(
+            //     begin: Alignment.centerLeft,
+            //     end: Alignment.centerRight,
+            //     colors: [
+            //       AppColors.backGroundgradient1,
+            //       AppColors.backGroundgradient2
+            //     ])
+            ),
         child: Stack(
           alignment: Alignment.topLeft,
           children: [
@@ -192,25 +219,25 @@ class HeadingContainer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  Obx(
-                    () => Visibility(
-                      visible:
-                          _loyaltyManager.redeemablePoints <= 14 ? true : false,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          'Note : You can redeem only if you have 15 points',
-                          style: AppStyle.shortHeading.copyWith(
-                            fontSize: Dimens.font_12sp,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 14,
+                  // ),
+                  // Obx(
+                  //   () => Visibility(
+                  //     visible:
+                  //         _loyaltyManager.redeemablePoints <= 14 ? true : false,
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: 4.0),
+                  //       child: Text(
+                  //         'Note : You can redeem only if you have 15 points',
+                  //         style: AppStyle.shortHeading.copyWith(
+                  //           fontSize: Dimens.font_12sp,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -302,7 +329,7 @@ class HeadingContainer extends StatelessWidget {
                       : 'Earn more points',
                   labelSize: Dimens.font_12sp,
                   labelWeight: FontWeight.w600,
-                  labelColor: AppColors.butngradient1,
+                  labelColor: AppColors.blueColor,
                 ),
               ),
             )

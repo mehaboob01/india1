@@ -49,7 +49,16 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
           child: Column(
             children: [
               CustomAppBar(
+                hasLogo: true,
                 heading: 'Loyalty program',
+                customActionIconsList: [
+                  CustomActionIcons(
+                      image: AppImages.bottomNavHomeSvg,
+                      onHeaderIconPressed: () async {
+                        Get.offNamedUntil(
+                            MRouter.homeScreen, (route) => route.isFirst);
+                      })
+                ],
               ),
               Expanded(
                 child: SingleChildScrollView(

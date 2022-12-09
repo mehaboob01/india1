@@ -135,6 +135,10 @@ flutter:
     - assets/svg/insurance/
     - assets/svg/savings/
     - assets/png/rewardCard/
+    - assets/png/new_design_pngImages/1x_png/
+    - assets/png/new_design_pngImages/2x_png/
+    - assets/png/new_design_pngImages/3x_png/
+    - assets/svg/new_design_svgImages/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

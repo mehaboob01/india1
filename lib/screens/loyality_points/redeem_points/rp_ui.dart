@@ -15,7 +15,6 @@ import '../cashback_redeem/cb_manager.dart';
 import '../loyality_manager.dart';
 
 class RedeemPointsPage extends StatelessWidget {
-
   final cashbackManager = Get.put(CashBackManager());
   RedeemPointsPage();
   final homeCtrl = Get.put(CashBackController());
@@ -38,7 +37,17 @@ class RedeemPointsPage extends StatelessWidget {
                 ? CircularProgressbar()
                 : SafeArea(
                     child: Column(children: [
-                    CustomAppBar(heading: 'Redeem points'),
+                    CustomAppBar(
+                      heading: 'Redeem points',
+                      customActionIconsList: [
+                        CustomActionIcons(
+                            image: AppImages.bottomNavHomeSvg,
+                            onHeaderIconPressed: () async {
+                              Get.offNamedUntil(
+                                  MRouter.homeScreen, (route) => route.isFirst);
+                            })
+                      ],
+                    ),
                     Expanded(
                         child: SingleChildScrollView(
                             child: Padding(
@@ -56,13 +65,18 @@ class RedeemPointsPage extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(4.0.wp),
-                                            gradient: LinearGradient(
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                                colors: [
-                                                  AppColors.backGroundgradient1,
-                                                  AppColors.backGroundgradient2
-                                                ])),
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    AppImages.loyaltyCardBg),
+                                                fit: BoxFit.fill)
+                                            // gradient: LinearGradient(
+                                            //     begin: Alignment.centerLeft,
+                                            //     end: Alignment.centerRight,
+                                            //     colors: [
+                                            //       AppColors.blueColor,
+                                            //       AppColors.backGroundgradient2
+                                            //     ])),
+                                            ),
                                         child: Stack(
                                           children: [
                                             Padding(
@@ -70,6 +84,8 @@ class RedeemPointsPage extends StatelessWidget {
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     'Redeem your balance',
@@ -147,7 +163,6 @@ class RedeemPointsPage extends StatelessWidget {
                                       SizedBox(height: 4.0.wp),
                                       Obx(() {
                                         return CommonToggleCard(
-
                                           isSelectedlist: isSelectedRedeemType,
                                           redeemCardList: [
                                             RedeemCard(
@@ -174,24 +189,27 @@ class RedeemPointsPage extends StatelessWidget {
                       child: Obx(() {
                         return ButtonWithFlower(
                           onPressed: isSelectedRedeemType
-                              .any((element) => element == true)?() {
-                            bool redeemIndex =
-                                isSelectedRedeemType.any((element) => element);
-                            RedeemType redeemType;
-                            if (redeemIndex == false) {
-                              Get.snackbar(
-                                  'Oops!!', 'Select a way to redeem points');
-                            }
-                            if (isSelectedRedeemType.indexOf(redeemIndex) ==
-                                0) {
-                              redeemType = RedeemType.isMobileRecharge;
-                            } else {
-                              redeemType = RedeemType.isCashback;
-                            }
-                            goToScreen(redeemType: redeemType);
-                            print(
-                                '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
-                          }: ()=> null,
+                                  .any((element) => element == true)
+                              ? () {
+                                  bool redeemIndex = isSelectedRedeemType
+                                      .any((element) => element);
+                                  RedeemType redeemType;
+                                  if (redeemIndex == false) {
+                                    Get.snackbar('Oops!!',
+                                        'Select a way to redeem points');
+                                  }
+                                  if (isSelectedRedeemType
+                                          .indexOf(redeemIndex) ==
+                                      0) {
+                                    redeemType = RedeemType.isMobileRecharge;
+                                  } else {
+                                    redeemType = RedeemType.isCashback;
+                                  }
+                                  goToScreen(redeemType: redeemType);
+                                  print(
+                                      '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
+                                }
+                              : () => null,
                           label: 'Proceed',
                           buttonWidth: double.maxFinite,
                           buttonHeight: 12.0.wp,
@@ -233,13 +251,7 @@ class RedeemPointsPage extends StatelessWidget {
         break;
       case RedeemType.isCashback:
 
-
-
         // todo
-
-
-
-
 
         Navigator.push(
             Get.context!,

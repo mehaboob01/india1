@@ -96,7 +96,8 @@ class _UserLoginState extends State<UserLogin> {
                     color: AppColors.white,
                     child: Stack(
                       children: [
-                        LoginBgScreen('assets/images/login_bg.png'),
+                        LoginBgScreen(AppImages.newOtpBgPng),
+                        // LoginBgScreen('assets/images/login_bg.png'),
                         buildLoginCard()
                       ],
                     ),

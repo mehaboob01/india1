@@ -127,7 +127,7 @@ class _MapsState extends State<Maps> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AppColors.backGroundgradient1,
+                          AppColors.blueColor,
                           AppColors.backGroundgradient2
                         ],
                       ),

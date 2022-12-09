@@ -3,11 +3,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../constant/theme_manager.dart';
 
-
 class RedeemCard extends StatelessWidget {
   const RedeemCard(
-      {
-      required this.isSelected,
+      {required this.isSelected,
       this.imagePng,
       this.imageSvg,
       required this.label});
@@ -29,14 +27,14 @@ class RedeemCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0.wp),
                   gradient: isSelected
-                      ?  LinearGradient(
+                      ? LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
-                              AppColors.backGroundgradient1,
+                              AppColors.blueColor,
                               AppColors.backGroundgradient2
                             ])
-                      :  LinearGradient(
+                      : LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           transform: GradientRotation(4.63),
@@ -58,13 +56,13 @@ class RedeemCard extends StatelessWidget {
                               imageSvg!,
                               color: isSelected
                                   ? Colors.white
-                                  : AppColors.backGroundgradient1,
+                                  : AppColors.blueColor,
                             )
                           : SvgPicture.asset(
                               imagePng!,
                               color: isSelected
                                   ? Colors.white
-                                  : AppColors.backGroundgradient1,
+                                  : AppColors.blueColor,
                             )),
                   SizedBox(
                     width: 15.0.wp,

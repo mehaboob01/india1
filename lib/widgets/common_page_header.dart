@@ -9,17 +9,16 @@ import '../constant/routes.dart';
 import '../constant/theme_manager.dart';
 import '../screens/home_start/home_manager.dart';
 import '../screens/notification/notification_manager.dart';
-import '../screens/notification/notification_screen.dart';
+
 import '../screens/profile/profile_screen.dart';
-import 'common_heading_icon.dart';
+import 'common_heading_action_icons.dart';
+
+import 'loyalty_common_header.dart';
 
 class CommonPageHeader extends StatelessWidget {
-
   HomeManager _homeManager = Get.put(HomeManager());
 
-
   final notificationManager = Get.put(NotificationManager());
-
 
   CommonPageHeader({required this.pageName});
   final PageName pageName;
@@ -160,287 +159,370 @@ class CommonPageHeader extends StatelessWidget {
   }
 
   // heading box -----------------------------------
-  Widget headingBox(
-      {IconData? icon,
-        String? image,
-        String? text,
-        VoidCallback? ontap,
-        Color? color}) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-            color: color ?? Colors.white,
-            borderRadius: BorderRadius.circular(5)),
-        child: text != null
-            ? Center(
-            child: Text(
-              text,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ))
-            : image != null
-            ? Center(
-            child: SvgPicture.asset(
-              image,
-              color: Colors.black,
-            ))
-            : Icon(icon),
-      ),
-    );
-  }
+  // Widget headingBox(
+  //     {IconData? icon,
+  //       String? image,
+  //       String? text,
+  //       VoidCallback? ontap,
+  //       Color? color}) {
+  //   return GestureDetector(
+  //     onTap: ontap,
+  //     child: Container(
+  //       width: 30,
+  //       height: 30,
+  //       decoration: BoxDecoration(
+  //           color: color ?? Colors.white,
+  //           borderRadius: BorderRadius.circular(5)),
+  //       child: text != null
+  //           ? Center(
+  //           child: Text(
+  //             text,
+  //             style: const TextStyle(fontWeight: FontWeight.bold),
+  //           ))
+  //           : image != null
+  //           ? Center(
+  //           child: SvgPicture.asset(
+  //             image,
+  //             color: Colors.black,
+  //           ))
+  //           : Icon(icon),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(4.0.wp, 6.0.hp, 4.0.wp, 4.0.hp),
-      width: double.maxFinite,
-      height: Get.height * 0.35,
-      decoration: BoxDecoration(
-          image: const DecorationImage(
-              image: AssetImage(AppImages.homebg), fit: BoxFit.fill),
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(5.0.wp),
-              bottomRight: Radius.circular(5.0.wp))),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(headerName(pageName),
-                  style: AppStyle.shortHeading.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: Dimens.font_16sp)),
-            ),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                headingBox(
-                    text: 'Aa',
-                    ontap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext
-                              context) =>
-                                  LanguageSelectionIO(
-                                      'home')));
-                    }),
-                SizedBox(
-                  width: 2.0.wp,
-                ),
-
-                notificationManager
-                    .notificationsCount
-                    .length
-                    .toInt() !=
-                    0?
-                GestureDetector(
-                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
-                  child: Badge(
-                    position: BadgePosition
-                        .topEnd(
-                        top: -10,
-                        end: 0),
-                    badgeColor: Colors.red,
-                    badgeContent: Container(
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                            color: Colors
-                                .white),
-                      ),
+    return Column(
+      children: [
+        Obx(() {
+          return CustomAppBar(
+            heading: '',
+            hasLogo: true,
+            haveHomeIcons: true,
+            actionIcons: [
+              HeadingBox(
+                  text: 'Aa',
+                  color: Color(0xff004280),
+                  ontap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                LanguageSelectionIO('home')));
+                  }),
+              Badge(
+                  position: BadgePosition.topEnd(top: -10, end: 0),
+                  badgeColor: Colors.red,
+                  showBadge:
+                      notificationManager.notificationsCount.length.toInt() !=
+                          0,
+                  badgeContent: Container(
+                    child: Text(
+                      "",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    child: headingBox(
-                        image: AppImages.notify_icon),
                   ),
-                ): GestureDetector(
-                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
-                  child: headingBox(
-                      image: AppImages.notify_icon),
-                ),
-                SizedBox(
-                  width: 2.0.wp,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _homeManager.isClicked.value = true;
-                    showMenu<String>(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.only(
-                              bottomLeft:
-                              Radius.circular(
-                                  13.0),
-                              bottomRight:
-                              Radius.circular(
-                                  13.0),
-                              topLeft:
-                              Radius.circular(
-                                  13.0))),
-                      position: RelativeRect.fromLTRB(
-                          25.0, 118.0, 16.0, 0.0),
-                      items: [
-                        PopupMenuItem(
-                          height: Get.height * 0.02,
-                          child: GestureDetector(
-                            onTap: () {
-                              _homeManager.isClicked
-                                  .value = false;
-                              Get.back();
-                              Get.to(() =>
-                                  ProfileScreen());
-                            },
+                  child: HeadingBox(
+                    image: AppImages.notify_icon,
+                    color: AppColors.blueColor,
+                    ontap: () => Get.toNamed(MRouter.notificationScreen),
+                  )),
+              HeadingBox(
+                color: _homeManager.isClicked.value
+                    ? Colors.orange
+                    : AppColors.blueColor,
+                image: AppImages.user_profile,
+                ontap: () {
+                  _homeManager.isClicked.value = true;
+                  showMenu<String>(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(13.0),
+                            bottomRight: Radius.circular(13.0),
+                            topLeft: Radius.circular(13.0))),
+                    position: RelativeRect.fromLTRB(25.0, 100.0, 16.0, 0.0),
+                    items: [
+                      PopupMenuItem(
+                        height: Get.height * 0.02,
+                        child: GestureDetector(
+                          onTap: () {
+                            _homeManager.showAuth.value = false;
+                            _homeManager.isClicked.value = false;
+                            Get.back();
+                            Get.to(() => ProfileScreen());
+                          },
+                          child: Container(
+                            height: Get.height * 0.03,
+                            width: double.infinity,
+                            child: Text(
+                              "My Profile",
+                              style: AppStyle.shortHeading.copyWith(
+                                  fontSize: Dimens.font_14sp,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                      PopupMenuDivider(),
+                      PopupMenuItem(
+                        height: 0.02,
+                        child: GestureDetector(
+                            onTap: () => {
+                                  _homeManager.showAuth.value = false,
+                                  _homeManager.isClicked.value = false,
+                                  Get.back(),
+                                  Get.toNamed(
+                                    MRouter.loyaltyPoints,
+                                  ),
+                                },
                             child: Container(
                               height: Get.height * 0.03,
                               width: double.infinity,
                               child: Text(
-                                "My Profile",
-                                style: AppStyle
-                                    .shortHeading
-                                    .copyWith(
-                                    fontSize: Dimens
-                                        .font_14sp,
-                                    color: Colors
-                                        .black,
-                                    fontWeight:
-                                    FontWeight
-                                        .w400,
-                                    letterSpacing:
-                                    1),
-                              ),
-                            ),
-                          ),
-                        ),
-                        PopupMenuDivider(),
-                        PopupMenuItem(
-                          height: 0.02,
-                          child: GestureDetector(
-                              onTap: () => {
-                                _homeManager
-                                    .isClicked
-                                    .value = false,
-                                Get.back(),
-                                Get.toNamed(
-                                  MRouter
-                                      .loyaltyPoints,
-                                ),
-                              },
-                              child: Container(
-                                height:
-                                Get.height * 0.02,
-                                width: double.infinity,
-                                child: Text(
-                                  "My Rewards",
-                                  style: AppStyle
-                                      .shortHeading
-                                      .copyWith(
-                                      fontSize: Dimens
-                                          .font_14sp,
-                                      color: Colors
-                                          .black,
-                                      fontWeight:
-                                      FontWeight
-                                          .w400,
-                                      letterSpacing:
-                                      1),
-                                ),
-                              )),
-                        ),
-                      ],
-                      elevation: 8.0,
-                    ).then<void>(
-                            (String? itemSelected) {
-                          if (itemSelected == null) {
-                            _homeManager.isClicked.value =
-                            false;
-                            return;
-                          }
-
-                          if (itemSelected == "1") {
-                          } else if (itemSelected == "2") {
-                            Get.toNamed(
-                                MRouter.loyaltyPoints);
-
-                            print("2nd itme ");
-                          } else if (itemSelected == "3") {
-                          } else {
-                            //code here
-                          }
-                        });
-                  },
-                  child: Obx(
-                   ()=> headingBox(
-                        color:
-                        _homeManager.isClicked.value
-                            ? Colors.orange
-                            : Colors.white,
-                        image: AppImages.user_profile),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(height: 2.0.hp),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 4.0.wp, 0, 4.0.wp),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Container(
-                      // color: Colors.red,
-                      child: Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 2.0.hp),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0.wp),
-                            child: Text(headerHeaderName(pageName),
+                                "My Rewards",
                                 style: AppStyle.shortHeading.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 16.0.sp,
-                                    height: 1.5,
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                          SizedBox(height: 2.0.hp),
-                          Text(indiaOneTitle(pageName),
-                              style: AppStyle.shortHeading.copyWith(
-                                  color: const Color(0xffFFEF37),
-                                  fontSize: Dimens.font_16sp,
-                                  fontWeight: FontWeight.w600)),
-                        ],
-                      )),
-                    )),
-                Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      // color: Colors.yellow,
-                      //   child: Center(
-                      child: Container(
-                          padding: const EdgeInsets.all(0),
-                          decoration: BoxDecoration(
-                              // color: Colors.red,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: SvgPicture.asset(
-                            headerImageName(pageName),
-                            fit: BoxFit.contain,
+                                    fontSize: Dimens.font_14sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 1),
+                              ),
+                            )),
+                      ),
+                    ],
+                    elevation: 8.0,
+                  ).then<void>((String? itemSelected) {
+                    if (itemSelected == null) {
+                      _homeManager.isClicked.value = false;
+                      return;
+                    }
+
+                    if (itemSelected == "1") {
+                    } else if (itemSelected == "2") {
+                      Get.toNamed(MRouter.loyaltyPoints);
+
+                      print("2nd itme ");
+                    } else if (itemSelected == "3") {
+                    } else {
+                      //code here
+                    }
+                  });
+                },
+              ),
+            ],
+          );
+        }),
+        // ------------------------------------------- ||| |-------------------------------------
+        Container(
+          padding: EdgeInsets.fromLTRB(4.0.wp, 2.0.hp, 4.0.wp, 2.0.hp),
+          width: double.maxFinite,
+          height: Get.height * 0.3,
+          decoration: BoxDecoration(
+              image: const DecorationImage(
+                  image: AssetImage(AppImages.newHomeBgPng), fit: BoxFit.fill),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5.0.wp),
+                  bottomRight: Radius.circular(5.0.wp))),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Expanded(
+            //       child: Text(headerName(pageName),
+            //           style: AppStyle.shortHeading.copyWith(
+            //               color: Colors.white,
+            //               fontWeight: FontWeight.w600,
+            //               fontSize: Dimens.font_16sp)),
+            //     ),
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       mainAxisSize: MainAxisSize.min,
+            //       children: [
+            //         HeadingBox(
+            //             text: 'Aa',
+            //             ontap: () {
+            //               Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                       builder: (BuildContext context) =>
+            //                           LanguageSelectionIO('home')));
+            //             }),
+            //         SizedBox(
+            //           width: 2.0.wp,
+            //         ),
+            //         notificationManager.notificationsCount.length.toInt() != 0
+            //             ? GestureDetector(
+            //                 onTap: () =>
+            //                     Get.toNamed(MRouter.notificationScreen),
+            //                 child: Badge(
+            //                   position: BadgePosition.topEnd(top: -10, end: 0),
+            //                   badgeColor: Colors.red,
+            //                   badgeContent: Container(
+            //                     child: Text(
+            //                       "",
+            //                       style: TextStyle(color: Colors.white),
+            //                     ),
+            //                   ),
+            //                   child: HeadingBox(image: AppImages.notify_icon),
+            //                 ),
+            //               )
+            //             : GestureDetector(
+            //                 onTap: () =>
+            //                     Get.toNamed(MRouter.notificationScreen),
+            //                 child: HeadingBox(image: AppImages.notify_icon),
+            //               ),
+            //         SizedBox(
+            //           width: 2.0.wp,
+            //         ),
+            //         GestureDetector(
+            //           onTap: () {
+            //             _homeManager.isClicked.value = true;
+            //             showMenu<String>(
+            //               context: context,
+            //               shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.only(
+            //                       bottomLeft: Radius.circular(13.0),
+            //                       bottomRight: Radius.circular(13.0),
+            //                       topLeft: Radius.circular(13.0))),
+            //               position:
+            //                   RelativeRect.fromLTRB(25.0, 118.0, 16.0, 0.0),
+            //               items: [
+            //                 PopupMenuItem(
+            //                   height: Get.height * 0.02,
+            //                   child: GestureDetector(
+            //                     onTap: () {
+            //                       _homeManager.isClicked.value = false;
+            //                       Get.back();
+            //                       Get.to(() => ProfileScreen());
+            //                     },
+            //                     child: Container(
+            //                       height: Get.height * 0.03,
+            //                       width: double.infinity,
+            //                       child: Text(
+            //                         "My Profile",
+            //                         style: AppStyle.shortHeading.copyWith(
+            //                             fontSize: Dimens.font_14sp,
+            //                             color: Colors.black,
+            //                             fontWeight: FontWeight.w400,
+            //                             letterSpacing: 1),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 PopupMenuDivider(),
+            //                 PopupMenuItem(
+            //                   height: 0.02,
+            //                   child: GestureDetector(
+            //                       onTap: () => {
+            //                             _homeManager.isClicked.value = false,
+            //                             Get.back(),
+            //                             Get.toNamed(
+            //                               MRouter.loyaltyPoints,
+            //                             ),
+            //                           },
+            //                       child: Container(
+            //                         height: Get.height * 0.02,
+            //                         width: double.infinity,
+            //                         child: Text(
+            //                           "My Rewards",
+            //                           style: AppStyle.shortHeading.copyWith(
+            //                               fontSize: Dimens.font_14sp,
+            //                               color: Colors.black,
+            //                               fontWeight: FontWeight.w400,
+            //                               letterSpacing: 1),
+            //                         ),
+            //                       )),
+            //                 ),
+            //               ],
+            //               elevation: 8.0,
+            //             ).then<void>((String? itemSelected) {
+            //               if (itemSelected == null) {
+            //                 _homeManager.isClicked.value = false;
+            //                 return;
+            //               }
+
+            //               if (itemSelected == "1") {
+            //               } else if (itemSelected == "2") {
+            //                 Get.toNamed(MRouter.loyaltyPoints);
+
+            //                 print("2nd itme ");
+            //               } else if (itemSelected == "3") {
+            //               } else {
+            //                 //code here
+            //               }
+            //             });
+            //           },
+            //           child: Obx(
+            //             () => HeadingBox(
+            //                 color: _homeManager.isClicked.value
+            //                     ? Colors.orange
+            //                     : Colors.white,
+            //                 image: AppImages.user_profile),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 4.0.wp, 0, 0.0.wp),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 3,
+                        child: Container(
+                          // color: Colors.red,
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 2.0.hp),
+                              Padding(
+                                padding: EdgeInsets.only(right: 2.0.wp),
+                                child: Text(headerHeaderName(pageName),
+                                    style: AppStyle.shortHeading.copyWith(
+                                        color: Colors.white,
+                                        fontSize: 16.0.sp,
+                                        height: 1.5,
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                              SizedBox(height: 2.0.hp),
+                              Text(indiaOneTitle(pageName),
+                                  style: AppStyle.shortHeading.copyWith(
+                                      color: const Color(0xffFFEF37),
+                                      fontSize: Dimens.font_16sp,
+                                      fontWeight: FontWeight.w600)),
+                            ],
                           )),
-                    ))
-              ],
+                        )),
+                    Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          // color: Colors.yellow,
+                          //   child: Center(
+                          child: Container(
+                              padding: const EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                  // color: Colors.red,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: SvgPicture.asset(
+                                headerImageName(pageName),
+                                fit: BoxFit.contain,
+                              )),
+                        ))
+                  ],
+                ),
+              ),
             ),
-          ),
+          ]),
         ),
-      ]),
+      ],
     );
   }
 }
@@ -493,8 +575,6 @@ class CommonPageCategoriesHeading extends StatelessWidget {
               fontWeight: FontWeight.w600)),
     );
   }
-
-
 }
 
 enum PageName { loans, insurance, payments, savings }

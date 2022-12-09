@@ -35,7 +35,7 @@ class CustomSlider extends StatelessWidget {
               valueIndicatorShape: const RectangularSliderValueIndicatorShape(),
               valueIndicatorColor: Colors.white,
               valueIndicatorTextStyle: AppStyle.shortHeading.copyWith(
-                  color: AppColors.backGroundgradient1,
+                  color: AppColors.blueColor,
                   fontSize: 11.0.sp,
                   fontWeight: FontWeight.w600),
               thumbShape: SliderThumbShape(enabledThumbRadius: 12.0),
@@ -48,7 +48,7 @@ class CustomSlider extends StatelessWidget {
                 min: minValue.value,
                 max: maxValue.value,
                 thumbColor: Colors.white,
-                activeColor: AppColors.backGroundgradient1,
+                activeColor: AppColors.blueColor,
                 inactiveColor: const Color(0xffE0F0FF),
                 onChanged: (value) {
                   sliderValue.value = value;
