@@ -11,11 +11,13 @@ class NotificationCard extends StatelessWidget {
   const NotificationCard(
       {super.key,
       required this.notificationHeading,
+      required this.readStatus,
       required this.notificationMsg,
       required this.dateTime});
   final String notificationHeading;
   final String notificationMsg;
   final String dateTime;
+  final String readStatus;
 
 
 
@@ -23,7 +25,7 @@ class NotificationCard extends StatelessWidget {
     DateTime dateNow = DateTime.now();
     DateTime startDateTemp = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(CommonMethods().getDateFormat(dateTime));
     final difference = dateNow.difference(startDateTemp);
-    if (difference.inHours > 12) {
+    if (readStatus != "Unread") {
       return false;
     } else {
       return true;
@@ -42,7 +44,7 @@ class NotificationCard extends StatelessWidget {
                 vertical: height * 0.02, horizontal: width * 0.01),
             color: isActive(dateTime) ? Color(0xffFEF7E9) : Colors.white,
             width: width,
-            height: height * 0.15,
+            height: height * 0.16,
             child: Row(children: [
               Align(
                 alignment: Alignment.topCenter,

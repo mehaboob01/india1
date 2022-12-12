@@ -655,8 +655,32 @@ class ProfileController extends GetxController {
       String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
-    print("empployment type ${employmentType.value}");
-    print(employmentType.value);
+
+
+    Map<String, dynamic> DATA =    {
+      "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+      if (loanApplicationId != null) ...{
+        "loanApplicationId": loanApplicationId,
+      },
+      if (insuranceApplicationId != null) ...{
+        "insuranceApplicationId": insuranceApplicationId
+      },
+      "customerDetails": {
+        "panNumber": "${panNumberController.value.text.trim()}",
+        "occupation": "${occupationController.value.text.trim()}",
+        "salaryMode": accountType.value,
+        "income":
+        "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+        "preferredLanguage": "EN",
+        "employmentType":
+        "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+      }
+    };
+    print("SENDIG DATA=>${DATA}");
+   print("loanApplicationId : ${loanApplicationId}");
+    print("insuranceApplicationId : ${insuranceApplicationId}");
+
+    print(accountType.value);
     try {
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.additionalDetails,
@@ -673,9 +697,7 @@ class ProfileController extends GetxController {
             "customerDetails": {
               "panNumber": "${panNumberController.value.text.trim()}",
               "occupation": "${occupationController.value.text.trim()}",
-              "salaryMode": accountType.value.isNotEmpty
-                  ? "${accountType.value.trim()}"
-                  : '',
+              "salaryMode": accountType.value,
               "income":
                   "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
               "preferredLanguage": "EN",
@@ -683,7 +705,7 @@ class ProfileController extends GetxController {
                   "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
             }
           },
-        ),
+        )
       );
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
@@ -901,9 +923,11 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future addBankAccountData() async {
+  Future addBankAccountData(String? bankId) async {
     try {
       getBankAccountLoading.value = true;
+
+
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.addBankAccount,
         method: Type.POST,
@@ -911,6 +935,7 @@ class ProfileController extends GetxController {
           {
             "customerId": customerId.value,
             "bankAccount": {
+              "bankId": bankId,
               "accountNumber": "${accountNumberController.value.text}",
               "ifscCode": "${ifscController.value.text}",
               "accountType": "${accountType.value}",
@@ -918,10 +943,18 @@ class ProfileController extends GetxController {
           },
         ),
       );
+
+
       if (response != null) {
         if (response['account'] != null) {
-          getBankDetails();
-          Get.back();
+          const snackBar = SnackBar(
+            content: Text('Bank account added!'),
+          );
+          ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+           Get.back();
+
+
+
         }
       }
     } catch (exception) {

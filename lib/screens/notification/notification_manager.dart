@@ -10,13 +10,14 @@ import 'notification_model.dart';
 
 class NotificationManager extends GetxController {
   var isLoading = false.obs;
+  var isPaginationLoading = false.obs;
   var isFirstLoading = false.obs; // for lazy loading
   var notificationList = <Notification>[].obs;
   var notificationListSend = <Notification>[].obs;
 
   List notificationsCount = [].obs;
   List notificationsCountSend = [].obs;
-  final int limit = 2;
+  final int limit = 6;
 
   SharedPreferences? prefs;
 
@@ -24,39 +25,42 @@ class NotificationManager extends GetxController {
   void onInit() {
     super.onInit();
     print("Notifications api call");
-    callNotificationsApi();
+    callNotificationsApi(false);
   }
 
 // api call for verify otp
 
-  callNotificationsApi() async {
-    notificationList.clear();
-    notificationListSend.clear();
+  callNotificationsApi(bool addOldData) async {
+    if (addOldData == false)
+     {
+       notificationList.clear();
+       notificationListSend.clear();
+     }
     notificationsCount.clear();
     notificationsCountSend.clear();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     try {
-      isLoading.value = true;
+      if (addOldData)
+      {
+        isPaginationLoading.value = true;
+      } else
+      {
+        isLoading.value = true;
+      }
+
       var response = await http.post(Uri.parse(baseUrl + Apis.notifications),
-          body: jsonEncode(
-              {"customerId": customerId, "nextToken": null, "limit": limit}),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-          });
-      print("response of notifications${response.body}");
+                     body: jsonEncode({"customerId": customerId, "nextToken": null, "limit": limit}),
+                     headers: {'Content-type': 'application/json', 'Accept': 'application/json', "x-digital-api-key": "1234"});
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        NotificationModel notificationModel =
-            NotificationModel.fromJson(jsonData);
+        NotificationModel notificationModel = NotificationModel.fromJson(jsonData);
 
         if (notificationModel.status!.code == 2000) {
           prefs = await SharedPreferences.getInstance();
-          prefs!.setString(SPKeys.NOTIFICATION_NEXT_TOKEN,
-              notificationModel.data!.nextToken.toString());
+          prefs!.setString(SPKeys.NOTIFICATION_NEXT_TOKEN,notificationModel.data!.nextToken.toString());
 
           for (var index in notificationModel.data!.notifications!) {
             notificationListSend.add(index);
@@ -70,7 +74,11 @@ class NotificationManager extends GetxController {
           print("notifications list==> ${notificationsCount.length}");
           print("notifications list==> ${notificationList.length}");
         } else {
-          isLoading.value = false;
+          if (addOldData) {
+            isPaginationLoading.value = false;
+          } else {
+            isLoading.value = false;
+          }
           Flushbar(
             title: "Error!",
             message: notificationModel.status!.message,
@@ -79,14 +87,22 @@ class NotificationManager extends GetxController {
         }
       }
     } catch (e) {
-      isLoading.value = false;
+      if (addOldData) {
+        isPaginationLoading.value = false;
+      } else {
+        isLoading.value = false;
+      }
       Flushbar(
         title: "Error!",
         message: "Something went wrong",
         duration: Duration(seconds: 3),
       )..show(Get.context!);
     } finally {
-      isLoading.value = false;
+      if (addOldData) {
+        isPaginationLoading.value = false;
+      } else {
+        isLoading.value = false;
+      }
     }
   }
 
@@ -98,11 +114,10 @@ class NotificationManager extends GetxController {
     try {
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.markAsRead),
-          body: jsonEncode(
-              {
-                "customerId": customerId,
-                "notificationIds" : [notificationIds]
-              }),
+          body: jsonEncode({
+            "customerId": customerId,
+            "notificationIds": [notificationIds]
+          }),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -112,20 +127,12 @@ class NotificationManager extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel = CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel commonApiResponseModel =
+            CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           isLoading.value = false;
-          Flushbar(
-            title: "Mark as read:)",
-            message: commonApiResponseModel.status!.message,
-            duration: Duration(seconds: 3),
-          )..show(Get.context!);
-
-
-
-
-
+          callNotificationsApi(false);
         } else {
           isLoading.value = false;
           Flushbar(

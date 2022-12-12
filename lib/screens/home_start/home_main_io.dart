@@ -58,7 +58,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((_) {
      // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
-      notificationManager.callNotificationsApi();
+      notificationManager.callNotificationsApi(false);
 
       // _homeManager.sendTokens();
       _loyaltyManager.callLoyaltyDashboardApi();

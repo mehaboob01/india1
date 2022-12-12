@@ -347,8 +347,8 @@ class CashBackManager extends GetxController {
             title: "Upi Added!",
             message: "upi added successfully ...",
             duration: Duration(seconds: 3),
-          )..show(Get.context!);
-        await  fetchCustomerUpiAccounts();
+          )..show(Get.context!).then((value) => fetchCustomerUpiAccounts());
+
         } else {
           Flushbar(
             title: "Something went wrong ..",
@@ -401,6 +401,8 @@ class CashBackManager extends GetxController {
             .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
                 MRouter.homeScreen, (Route<dynamic> route) => false))
             .then((value) => selectedUpiIndex.value == -1);
+
+
 
         // customerBankList.clear();
 

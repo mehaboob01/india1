@@ -602,8 +602,11 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                 value: value,
                                 nullError: '*Account number is mandatory',
                                 invalidInputError: 'It only takes numbers',
-                                minValue: 8);
-                          } else {
+                                minValue: 9);
+                          }
+
+
+                          else {
                             return '';
                           }
                         },
@@ -788,7 +791,9 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                             itemBuilder: (context, index) {
                               return Padding(
                                   padding: EdgeInsets.all(4.0),
-                                  child: Obx(() {
+                                  child: Obx(()
+
+                                  {
                                     return Container(
                                       child: GestureDetector(
                                         onTap: () => {
@@ -807,7 +812,8 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                         ),
                                       ),
                                     );
-                                  }));
+                                  })
+                              );
                             }),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -861,7 +867,8 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                 //  VERIFY UPI ID
                 Flexible(
                   flex: 4,
-                  child: FormBuilder(
+                  child:
+                  FormBuilder(
                     initialValue: {
                       "upiId": "",
                     },

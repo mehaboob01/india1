@@ -9,6 +9,7 @@ import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
 import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import '../screens/Pages/loans.dart';
+import '../screens/bank_manage_edit_screen.dart/add_upi_screen.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
 
 import '../screens/insurances/bike_insurance/bike_insurance_web_view.dart';
@@ -62,6 +63,7 @@ class MRouter {
   static const String healthInsurance = 'HealthInsurance';
   static const String healthInsuranceFillDetails = 'HealthInsuranceFillDetails';
   static const String insuranceSummary = 'InsuranceSummary';
+  static const String addUpi = 'AddUpiScreen';
   static const String login = '/login';
   static const String web = '/web';
   static const String no_routes = '';
@@ -76,6 +78,8 @@ class MRouter {
         return CupertinoPageRoute(builder: (_) => SplashScreen());
       case login:
         return CupertinoPageRoute(builder: (_) => SplashScreen());
+      case addUpi:
+        return CupertinoPageRoute(builder: (_) => AddUpiScreen());
 
       case homeScreen:
         return CupertinoPageRoute(builder: (_) => BottomTabsMainIO());

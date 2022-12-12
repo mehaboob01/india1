@@ -179,6 +179,17 @@ class LoanController extends GetxController {
 
   Future getProviders(
       {required bool isPersonalLoan, String? providerId}) async {
+
+
+    Map<String, dynamic> lendersData =  {
+      "customerId": customerId.value,
+      "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+      if (providerId != null || providerId != '') ...{
+        "loanProviderId": "$providerId",
+      }
+    };
+
+    print("lenders data==>${lendersData}");
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -195,6 +206,7 @@ class LoanController extends GetxController {
           },
         ),
       );
+
       if (response != null) {
         if (isPersonalLoan == true) {
           loanProvidersModel.value = LoanProvidersModel.fromJson(response);

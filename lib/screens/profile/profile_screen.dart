@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/profile/add_bank_account_screen.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -792,7 +793,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
             ),
           ),
-          if (isOccupationDetailsVisible.value == false)
+
             addDetailButton(
               title: 'Add Occupation Details',
               callBack: () {
@@ -907,10 +908,14 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-        if (isUpiIdVisible.value == false)
+     //   if (isUpiIdVisible.value == false)
           addDetailButton(
             title: 'Add UPI / VPA Details',
-            callBack: () {},
+            callBack: () {
+
+              Get.toNamed(MRouter.addUpi);
+
+            },
           ),
       ],
     );

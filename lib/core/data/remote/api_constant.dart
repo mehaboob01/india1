@@ -1,9 +1,9 @@
 // DEV URL
-//final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 // dummy
 // UAT URL
-final String baseUrl  = "https://digitaluatbackend.india1.co.in/v1/";
+//final String baseUrl  = "https://digitaluatbackend.india1.co.in/v1/";
 
 class Apis {
   // OnBoarding & login Api
@@ -49,8 +49,8 @@ class Apis {
   static String additionalDetails = "customers/profile/additional-details";
   static String residentialAddress = "customers/profile/residential-address";
   static String getCityState = "city-state";
-  static String addBankAccount = "loyalty/customer/bank/account";
-  static String getBankAccount = "loyalty/customer/bank/accounts";
+  static String addBankAccount = "customer/bank/account";
+  static String getBankAccount = "customer/bank/accounts";
   static String getUpiIds = "loyalty/customer/upi/id";
   static String updateNomineeDetail = "insurances/application/update-nominee";
 
