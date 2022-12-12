@@ -54,9 +54,10 @@ class _YourRewardCardState extends State<YourRewardCard>
                   top: Get.height * 0.05,
                   right: Get.width * 0.01,
                   child: IconButton(
-                      onPressed: () => animationController!
-                          .reverse()
-                          .then((_) => _closeOverlay()),
+                      onPressed: () => animationController!.reverse().then((_) {
+                            _closeOverlay();
+                            loyaltyManager.isOverlayOpen.value = false;
+                          }),
                       icon: Icon(
                         Icons.close,
                         color: Colors.white,
@@ -148,11 +149,13 @@ class _YourRewardCardState extends State<YourRewardCard>
                             onTap: () {
                               if (loyaltyManager.redeemablePoints.value >= 15) {
                                 _closeOverlay();
+                                loyaltyManager.isOverlayOpen.value = false;
                                 Get.to(() => RedeemPointsPage());
                                 // Get.snackbar('Hurray!!', 'Going to redeem page',
                                 //     snackPosition: SnackPosition.BOTTOM);
                               } else {
                                 _closeOverlay();
+                                loyaltyManager.isOverlayOpen.value = false;
                                 Get.snackbar('Oops!!',
                                     'You can redeem only if you have 15+ points',
                                     snackPosition: SnackPosition.BOTTOM);
@@ -236,6 +239,7 @@ class _YourRewardCardState extends State<YourRewardCard>
             ? GestureDetector(
                 onTap: () {
                   _showOverlay();
+                  loyaltyManager.isOverlayOpen.value = true;
                 },
                 child: wonCard(false))
             :
@@ -243,6 +247,7 @@ class _YourRewardCardState extends State<YourRewardCard>
             GestureDetector(
                 onTap: () {
                   _showOverlay();
+                  loyaltyManager.isOverlayOpen.value = true;
                 },
                 child: usedBgCard(context, widget.rewardState,
                     widget.rewardtype, widget.date, widget.points, false))

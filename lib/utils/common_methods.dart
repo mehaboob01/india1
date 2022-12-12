@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:india_one/screens/loans/controller/loan_controller.dart';
+
 import 'package:intl/intl.dart';
 
 class CommonMethods {
@@ -65,13 +64,13 @@ class CommonMethods {
     int toInt = value.round();
     final rupeeFormat = NumberFormat.currency(
         locale: 'en_IN', name: '', symbol: '', decimalDigits: 0);
-    String data = rupeeFormat.format(toInt);
+    String data = rupeeFormat.format(toInt).trim();
+
     return data;
   }
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
-  final loancontroller = Get.find<LoanController>();
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.selection.baseOffset == 0) {
@@ -80,8 +79,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
     }
 
     String value = newValue.text.replaceAll(',', '');
-
-    print(value);
 
     String? newText = value.length < 2
         ? value
