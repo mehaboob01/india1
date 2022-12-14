@@ -114,7 +114,7 @@ class AddBankAccountScreen extends StatelessWidget {
                           height: 20,
                         ),
                         ProfileStepper().commonDropDown(
-                          item: <String>['savings']
+                          item: <String>['savings','current']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,

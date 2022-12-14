@@ -77,10 +77,15 @@ class EditAccountsCard extends StatelessWidget {
                                           cashBackManager
                                               .customerBankList[index!].id);
 
-                                      Get.back();
-
-                                      cashBackManager.onInit();
-                                      Get.back();
+                                      Future.delayed(
+                                          const Duration(milliseconds: 500),
+                                              () async {
+// Here you can write your code
+                                            await cashBackManager
+                                                .fetchCustomerBankAccounts();
+                                            await cashBackManager
+                                                .fetchCustomerUpiAccounts();
+                                          });
                                       //  cashBackManager.fetchCustomerBankAccounts();
                                     });
                               })

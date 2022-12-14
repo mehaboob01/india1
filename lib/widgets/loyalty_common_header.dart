@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/theme_manager.dart';
+import '../core/data/local/shared_preference_keys.dart';
 import '../screens/loyality_points/loyality_manager.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import 'button_with_flower.dart';
@@ -92,8 +94,12 @@ class CustomActionIcons extends StatelessWidget {
         child: customGradientColors != null
             ? GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
+                onTap: () async {
+
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs!.setBool(SPKeys.SHOW_AUTH, false);
                   onHeaderIconPressed();
+
                 },
                 child: ShaderMask(
                     shaderCallback: (bounds) {
@@ -110,7 +116,9 @@ class CustomActionIcons extends StatelessWidget {
               )
             : isSvg!
                 ? GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs!.setBool(SPKeys.SHOW_AUTH, false);
                       onHeaderIconPressed();
                     },
                     behavior: HitTestBehavior.translucent,

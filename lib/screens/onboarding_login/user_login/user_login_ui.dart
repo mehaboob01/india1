@@ -448,7 +448,8 @@ class _UserLoginState extends State<UserLogin> {
                                       : AppColors.btnDisableColor,
                                   borderRadius: BorderRadius.circular(6.0),
                                 ))
-                      : Container(
+                      :
+                  Container(
                           width: MediaQuery.of(context).size.height * 0.9,
                           height: 44,
                           child: Row(
@@ -508,7 +509,8 @@ class _UserLoginState extends State<UserLogin> {
                             //     : AppColors.btnDisableColor,
                             borderRadius: BorderRadius.circular(6.0),
                           ),
-                        )),
+                        )
+                  ),
                 ),
                 SizedBox(
                   height: 16,

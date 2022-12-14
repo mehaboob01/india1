@@ -37,7 +37,7 @@ class LoanDashboardHistory extends StatelessWidget {
         children: [
           SafeArea(
             child: CustomAppBar(
-              heading: 'Recent transactions',
+              heading: 'Recent Transactions',
             ),
           ),
           Expanded(
@@ -61,7 +61,7 @@ class LoanDashboardHistory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recent transation",
+                  "Recent Transactions",
                   style: AppStyle.shortHeading.copyWith(
                     color:  Color(0xff2d2d2d),
                     fontSize: 14.0.sp,

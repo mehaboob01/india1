@@ -74,6 +74,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
   GlobalKey<FormState> occupationForm = GlobalKey<FormState>();
+  GlobalKey<FormState> additionalForm = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -152,7 +153,13 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                                             .value ==
                                                         Steps.RESIDENTIAL.index
                                                     ? residentialInfoUi()
-                                                    : occupationInfoUi()
+                                                    : loanController
+                                                                .currentScreen
+                                                                .value ==
+                                                            Steps.ADDITIONAL
+                                                                .index
+                                                        ? additionalInfoUI()
+                                                        : occupationInfoUi()
                                       ],
                                     ),
                                   ),
@@ -170,7 +177,11 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                       : loanController.currentScreen.value ==
                                               Steps.RESIDENTIAL.index
                                           ? residentialInfoButton()
-                                          : occupationButton(),
+                                          : loanController
+                                                      .currentScreen.value ==
+                                                  Steps.ADDITIONAL.index
+                                              ? additionalInfoButton()
+                                              : occupationButton(),
                             ),
                           ],
                         ),
@@ -368,6 +379,93 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanApplicationId:
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
+                      loanController.updateScreen(Steps.ADDITIONAL.index);
+                      // Get.to(() => LendersList(
+                      //       title: 'Personal loan',
+                      //     ));
+                    });
+              }
+            },
+            child: LoanCommon().nextButton(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // LOAN AMOUNT BUTTON
+  Widget additionalInfoButton() {
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => loanController.updateScreen(Steps.OCCUPATION.index),
+            child: LoanCommon().backButton(context: context),
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              // profileController.autoValidation.value = true;
+              // if (!occupationForm.currentState!.validate()) {
+              //   print("Not validate");
+              //   Flushbar(
+              //     title: "Alert!",
+              //     message: "missing some values",
+              //     duration: Duration(seconds: 3),
+              //   )..show(context);
+              // } else if (profileController.employmentType.value == '') {
+              //   Flushbar(
+              //     title: "Alert!",
+              //     message: "Select employment type",
+              //     duration: Duration(seconds: 3),
+              //   )..show(context);
+              // } else {
+              //   profileController.addOccupationDetails(
+              //       isFromLoan: true,
+              //       loanApplicationId:
+              //           loanController.createLoanModel.value.loanApplicationId,
+              //       callBack: () {
+              //         Get.to(() => LendersList(
+              //               title: 'Personal loan',
+              //             ));
+              //         // loanController.updateScreen(Steps.ADDITIONAL.index);
+              //       });
+              // }
+              // profileController.autoValidation.value = true;
+              if (!additionalForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.netbanking.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select if you use netbanking",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.existingLoan.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select if you have existing loans",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+
+                // log("Validation error");
+              } else {
+                // navigate to next screen
+
+                print(
+                    "print value of additional details==>${profileController.noOfMonthsResiding.value.text.toString()}");
+                profileController.addAdditionalDetails(
+                    isFromLoan: true,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
+                    callBack: () {
                       Get.to(() => LendersList(
                             title: 'Personal loan',
                           ));
@@ -543,6 +641,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
       isFromLoan: true,
     );
   }
+
+  Widget additionalInfoUI() {
+    return ProfileStepper().additionalDetails(
+      additionalForm,
+    );
+  }
 }
 
-enum Steps { LOAN_AMOUNT, PERSONAL, RESIDENTIAL, OCCUPATION }
+enum Steps { LOAN_AMOUNT, PERSONAL, RESIDENTIAL, OCCUPATION, ADDITIONAL }

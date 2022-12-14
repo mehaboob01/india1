@@ -255,12 +255,15 @@ class LoanCommon {
   Widget rowText({required String title, required String value}) {
     return Column(
       children: [
-        Text(
-          "$title",
-          style: TextStyle(
-            color: AppColors.iconColorDark,
-            fontSize: Dimens.font_16sp,
-            fontWeight: FontWeight.w600,
+        Container(
+          width: 98,
+          child: Text(
+            "$title",
+            style: TextStyle(
+              color: AppColors.iconColorDark,
+              fontSize: Dimens.font_16sp,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         Text(

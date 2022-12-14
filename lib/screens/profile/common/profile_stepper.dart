@@ -990,4 +990,250 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               callBack: () {})),
     );
   }
+
+  Widget additionalDetails(GlobalKey<FormState> additionalForm,
+      {bool? isFromLoan}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 8, left: 16, right: 16),
+      child: SingleChildScrollView(
+        child: Form(
+          key: additionalForm,
+          // autovalidateMode: profileController.autoValidation.value == true
+          //     ? AutovalidateMode.always
+          //     : AutovalidateMode.disabled,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Additional Information",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.lightBlack,
+                  fontSize: Dimens.font_18sp,
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.05,
+              ),
+              textField(
+                controller: profileController.noOfMonthsResiding.value,
+                label: 'No. of months residing at',
+                hint: 'Enter the no. of months residing at',
+                vaidation: (value) {
+                  if (value.toString().trim().isEmpty) {
+                    return "Number of months is mandatory";
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              commonDropDown(
+                item: [
+                  {"name": "Engineer", "value": "Engineer"},
+                  {"name": "Graduate", "value": "Graduate"},
+                  {"name": "Masters", "value": "Masters"},
+                  {"name": "NonGraduate", "value": "NonGraduate"},
+                  {"name": "MBA", "value": "MBA"},
+
+                ].map((value) {
+                  return DropdownMenuItem(
+                    value: value['value'],
+                    child: Text(value['name'].toString()),
+                  );
+                }).toList(),
+                // value: profileController.highestQualification.value == ''
+                //     ? null
+                //     : profileController.highestQualification.value,
+                onChanged: (highestQualification) {
+
+                  profileController.highestQualification.value.text = highestQualification;
+                  print("highest qualification ${profileController.highestQualification.value.text.toString()}");
+
+                },
+                label: 'Highest Qualification',
+                hint: 'Choose your Highest qualification',
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              textField(
+                controller: profileController.companyName.value,
+                label: 'Company name',
+                hint: 'Enter the company name',
+                vaidation: (value) {
+                  if (value.toString().trim().isEmpty) {
+                    return "Company name is mandatory";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              textField(
+                controller: profileController.designation.value,
+                label: 'Designation',
+                hint: 'Enter the Designation',
+                vaidation: (value) {
+                  if (value.toString().trim().isEmpty) {
+                    return "Designation is mandatory";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              textField(
+                controller: profileController.workExp.value,
+                label: 'Work Experience in months',
+                hint: 'Enter the Work experience',
+                vaidation: (value) {
+                  if (value.toString().trim().isEmpty) {
+                    return "Work experience is mandatory";
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              textField(
+                controller:
+                profileController.officeAddressLine1Controller.value,
+                label: 'Office address line 1',
+                hint: 'Enter the Office address line 1',
+                vaidation: (value) {
+                  if (value.toString().trim().isEmpty) {
+                    return "Office address is mandatory";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              textField(
+                controller:
+                profileController.officeAddressLine2Controller.value,
+                label: 'Office address line 2',
+                hint: 'Enter the Office address line 2',
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.1,
+                  ),
+                  Text(
+                    "Do you use Netbanking?",
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: Dimens.font_14sp,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                      () => Row(
+                    children: [
+                      radioButton(
+                        value: 'Yes  ',
+                        callBack: (value) {
+                          profileController.netbanking.value = value.toString();
+                        },
+                        groupValue: profileController.netbanking.value,
+                      ),
+                      radioButton(
+                        value: 'No   ',
+                        callBack: (value) {
+                          profileController.netbanking.value = value.toString();
+                        },
+                        groupValue: profileController.netbanking.value,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.1,
+                  ),
+                  Text(
+                    "Do you have any existing loan?",
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: Dimens.font_14sp,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                      () => Row(
+                    children: [
+                      radioButton(
+                        value: 'Yes  ',
+                        callBack: (value) {
+                          profileController.existingLoan.value =
+                              value.toString();
+                        },
+                        groupValue: profileController.existingLoan.value,
+                      ),
+                      radioButton(
+                        value: 'No   ',
+                        callBack: (value) {
+                          profileController.existingLoan.value =
+                              value.toString();
+                        },
+                        groupValue: profileController.existingLoan.value,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              if (profileController.existingLoan
+                  .toLowerCase()
+                  .replaceAll(' ', '') ==
+                  'yes')
+                textField(
+                  controller: profileController.activeOrExistingLoans.value,
+                  label: 'No. of active / existing loans',
+                  hint: 'Enter the no. of active / existing loans',
+                  vaidation: (value) {
+                    if (value.toString().trim().isNotEmpty) {}
+                    return null;
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }

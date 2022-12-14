@@ -211,6 +211,8 @@ class CashBackManager extends GetxController {
           duration: Duration(seconds: 2),
         )..show(Get.context!);
       }
+
+
     } catch (e) {
       Flushbar(
         title: "Error!",
@@ -346,8 +348,19 @@ class CashBackManager extends GetxController {
           Flushbar(
             title: "Upi Added!",
             message: "upi added successfully ...",
-            duration: Duration(seconds: 3),
-          )..show(Get.context!).then((value) => fetchCustomerUpiAccounts());
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+
+          fetchCustomerUpiAccounts();
+
+
+//           Future.delayed(
+//               const Duration(milliseconds: 500),
+//                   () async {
+// // Here you can write your code
+//                 await fetchCustomerBankAccounts();
+//                 await fetchCustomerUpiAccounts();
+//               });
 
         } else {
           Flushbar(

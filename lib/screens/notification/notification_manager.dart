@@ -41,6 +41,8 @@ class NotificationManager extends GetxController {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? nextToken = prefs.getString(SPKeys.NOTIFICATION_NEXT_TOKEN);
+
     try {
       if (addOldData)
       {

@@ -251,7 +251,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     String? finger = prefs.getString(SPKeys.finger);
     print("check auth fggfgfgf status${_homeManager.showAuth.value}");
 
-    if (showAuth == true || _homeManager.showAuth.value == true) {
+    if (showAuth == true) {
       {
         try {
           bool hasbiometrics =

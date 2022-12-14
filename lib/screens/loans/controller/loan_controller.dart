@@ -18,6 +18,7 @@ import 'package:india_one/screens/loans/submission_page.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/NewLoanLenderModel.dart';
 import '../personal_loan_io/personal_loan.dart';
 
 class LoanController extends GetxController {
@@ -28,12 +29,20 @@ class LoanController extends GetxController {
   Rx<double> maxValue = 0.0.obs;
   RxString customerId = ''.obs;
 
+  // lenders list new model
+  var lendersList = <Details>[].obs;
+  var lendersListSend = <Details>[];
+
   var currentScreen = Steps.LOAN_AMOUNT.index.obs;
 
   ProfileController profileController = Get.put(ProfileController());
 
   Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
+
+  Rx<NewLendersModel> newLoanLendersModel =
+      NewLendersModel().obs; // new lenders model
+
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
   Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
   RxInt farmCompletedIndex = 0.obs;
@@ -55,6 +64,7 @@ class LoanController extends GetxController {
     "Personal",
     "Residential",
     "Occupation",
+    "Additional",
   ];
   List<String> bikeLoanTitleList = [
     "Loan amount",
@@ -179,9 +189,7 @@ class LoanController extends GetxController {
 
   Future getProviders(
       {required bool isPersonalLoan, String? providerId}) async {
-
-
-    Map<String, dynamic> lendersData =  {
+    Map<String, dynamic> lendersData = {
       "customerId": customerId.value,
       "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
       if (providerId != null || providerId != '') ...{
@@ -189,7 +197,7 @@ class LoanController extends GetxController {
       }
     };
 
-    print("lenders data==>${lendersData}");
+    print("providers data==>${lendersData}");
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -208,10 +216,22 @@ class LoanController extends GetxController {
       );
 
       if (response != null) {
+
+         print("RESPONSE  ${response}");
         if (isPersonalLoan == true) {
+          print("in if condition");
           loanProvidersModel.value = LoanProvidersModel.fromJson(response);
         } else {
-          loanLendersModel.value = LoanLendersModel.fromJson(response);
+          print("in else condition");
+
+
+          NewLendersModel newLendersModel = NewLendersModel.fromJson(response);
+          print("new lenders model data${newLendersModel.lenders![0].details!.loanInterest}");
+          newLoanLendersModel.value = NewLendersModel.fromJson(response);
+          print(" aa gya");
+
+           loanLendersModel.value = LoanLendersModel.fromJson(response);
+
         }
       }
     } catch (exception) {
@@ -320,12 +340,13 @@ class LoanController extends GetxController {
       customerId.value = await profileController.getId();
 
       print("customer id===> ${customerId.value}");
-      var response = await http.post(Uri.parse(baseUrl + Apis.recentTransactionLoan),
-          body: json.encode({
-            "customerId": customerId.value,
-            // "loanType": "${getLoanType(loanType)}",
-          }),
-          headers: {
+      var response =
+          await http.post(Uri.parse(baseUrl + Apis.recentTransactionLoan),
+              body: json.encode({
+                "customerId": customerId.value,
+                // "loanType": "${getLoanType(loanType)}",
+              }),
+              headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
@@ -343,16 +364,14 @@ class LoanController extends GetxController {
       print("Json data ==> ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         print("Json data ==> ${response.body}");
         var jsonData = jsonDecode(response.body);
 
         print("sending json data${jsonData}");
         print("data json data${jsonData['data']}");
 
-
-
-        recentTransactionModel.value = RecentTransactionModel.fromJson(jsonData['data']);
+        recentTransactionModel.value =
+            RecentTransactionModel.fromJson(jsonData['data']);
       } else {
         Flushbar(
           title: "Error!",
@@ -373,11 +392,12 @@ class LoanController extends GetxController {
       customerId.value = await profileController.getId();
 
       print("customer id===> ${customerId.value}");
-      var response = await http.post(Uri.parse(baseUrl + Apis.insuranceDashboard),
-          body: json.encode({
-            "customerId": customerId.value,
-          }),
-          headers: {
+      var response =
+          await http.post(Uri.parse(baseUrl + Apis.insuranceDashboard),
+              body: json.encode({
+                "customerId": customerId.value,
+              }),
+              headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
@@ -386,16 +406,14 @@ class LoanController extends GetxController {
       print("Json data ==> ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         print("Json data ==> ${response.body}");
         var jsonData = jsonDecode(response.body);
 
         print("sending json data${jsonData}");
         print("data json data${jsonData['data']}");
 
-
-
-        insuranceRecentTransactionModel.value = InsuranceRecentTransactionModel.fromJson(jsonData['data']);
+        insuranceRecentTransactionModel.value =
+            InsuranceRecentTransactionModel.fromJson(jsonData['data']);
       } else {
         Flushbar(
           title: "Error!",

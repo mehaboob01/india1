@@ -10,6 +10,10 @@ import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../core/data/remote/api_constant.dart';
+import '../../utils/common_webview.dart';
+import 'model/NewLoanLenderModel.dart';
+
 class ProvidersList extends StatefulWidget {
   final String title;
   final String providerId;
@@ -63,275 +67,267 @@ class _ProvidersListState extends State<ProvidersList> {
                   ),
                 ),
                 Expanded(
-                  child: Obx(
-                    () => (loanController.loanLendersModel.value.lenders ==
-                                null ||
-                            loanController.loanLendersModel.value.lenders == [])
-                        ? Center(child: Text("No providers found"))
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: loanController
-                                .loanLendersModel.value.lenders!.length,
-                            itemBuilder: (context, index) {
-                              Lenders? lenders = loanController
-                                  .loanLendersModel.value.lenders?[index];
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 8.0),
-                                child: Card(
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 16,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                height: 50,
-                                                width: 50,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        lenders?.logoURL ?? '',
-                                                    errorWidget:
-                                                        (context, _, error) {
-                                                      return Icon(
-                                                        Icons
-                                                            .warning_amber_outlined,
-                                                      );
-                                                    },
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 16.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        lenders?.loanTitle ??
-                                                            "Bajaj Finance",
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .lightBlack,
-                                                          fontSize:
-                                                              Dimens.font_16sp,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        lenders?.keywords?[0] ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .borderColor,
-                                                          fontSize:
-                                                              Dimens.font_14sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                  child:
+                       ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                 Details? details = loanController.newLoanLendersModel.value.lenders?[index].details;
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 8.0),
+                                  child: Card(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 16,
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 16,
-                                        ),
-                                        if (lenders?.keywords != null ||
-                                            lenders?.keywords != []) ...[
-                                          SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
+                                          Padding(
+                                            padding:  EdgeInsets.symmetric(
+                                                horizontal: 16.0),
                                             child: Row(
                                               children: [
-                                                ...lenders!.keywords!.map((e) =>
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4,
-                                                      ),
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: 4,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: AppColors
-                                                            .lightSkyBlue,
-                                                      ),
-                                                      child: Text(
-                                                        e ?? '',
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .borderColor,
-                                                          fontSize:
-                                                              Dimens.font_14sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: Colors.grey,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(12),
+                                                  ),
+                                                  height: 50,
+                                                  width: 50,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(12),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: details?.url == null? "":
+                                                      details!.url.toString(),
+
+                                                      errorWidget:
+                                                          (context, _, error) {
+                                                        return Icon(
+                                                          Icons
+                                                              .warning_amber_outlined,
+                                                        );
+                                                      },
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:  EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 16.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                         details?.lender??
+                                                              "Bajaj Finance",
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .lightBlack,
+                                                            fontSize:
+                                                                Dimens.font_16sp,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ))
+                                                        Text(
+                                                          details!.keywords.toString(),
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .borderColor,
+                                                            fontSize:
+                                                                Dimens.font_14sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
                                               ],
                                             ),
-                                          )
-                                        ],
-                                        SizedBox(
-                                          height: 16,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(16.0),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.lightGreyColors,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                          SizedBox(
+                                            height: 16,
+                                          ),
+                                          if ("lenders?.keywords" != null ||
+                                              "lenders?.keywords" != []) ...[
+                                            SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              // child: Row(
+                                              //   children: [
+                                              //     ..."lenders"!.keywords!.map((e) =>
+                                              //         Container(
+                                              //           padding:
+                                              //               EdgeInsets.symmetric(
+                                              //             horizontal: 8,
+                                              //             vertical: 4,
+                                              //           ),
+                                              //           margin:
+                                              //               EdgeInsets.symmetric(
+                                              //             horizontal: 4,
+                                              //           ),
+                                              //           decoration: BoxDecoration(
+                                              //             borderRadius:
+                                              //                 BorderRadius
+                                              //                     .circular(10),
+                                              //             color: AppColors
+                                              //                 .lightSkyBlue,
+                                              //           ),
+                                              //           child: Text(
+                                              //             e ?? '',
+                                              //             style: TextStyle(
+                                              //               color: AppColors
+                                              //                   .borderColor,
+                                              //               fontSize:
+                                              //                   Dimens.font_14sp,
+                                              //               fontWeight:
+                                              //                   FontWeight.w500,
+                                              //             ),
+                                              //           ),
+                                              //         ))
+                                              //   ],
+                                              // ),
+                                            )
+                                          ],
+                                          SizedBox(
+                                            height: 16,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(16.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.lightGreyColors,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                LoanCommon().rowText(
+                                                  value: 'Max amount',
+                                                  title:
+                                                      '₹ ${details?.loanAmount == null ? "0" :details!.loanAmount.toString()}',
+                                                ),
+                                                LoanCommon().rowText(
+                                                  value: 'Tenure',
+                                                  title:
+                                                  '${details?.tenure == null ? "0" :details!.tenure.toString()}'
+                                                ),
+                                                LoanCommon().rowText(
+                                                  value: 'Interest/m',
+                                                  title:
+                                                  ' ${details?.loanInterest == null ? "0" :details!.loanInterest.toString()}'
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 16.0,
+                                          ),
+                                          Row(
                                             children: [
-                                              LoanCommon().rowText(
-                                                value: 'Max amount',
-                                                title:
-                                                    '₹ ${lenders?.loanMaxAmount ?? 0}',
+                                              Expanded(
+                                                child: LoanCommon().borderButton(
+                                                  title: 'View details',
+                                                  callBack: () {
+                                                    Get.to(() => CommonWebView(
+                                                      title: 'Loan details',
+                                                      url: details.url.toString(),
+                                                    ));
+
+                                                  },
+                                                ),
                                               ),
-                                              LoanCommon().rowText(
-                                                value: 'Tenure',
-                                                title:
-                                                    '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
+                                              SizedBox(
+                                                width: 16,
                                               ),
-                                              LoanCommon().rowText(
-                                                value: 'Interest/m',
-                                                title:
-                                                    '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: LoanCommon().borderButton(
-                                                title: 'View details',
-                                                callBack: () {
-                                                  Get.to(
-                                                    () => ProviderDetail(
-                                                      title: '${widget.title}',
-                                                      lenders: loanController
+                                              Expanded(
+                                                child: LoanCommon().filledButton(
+                                                  title: 'Apply',
+                                                  callBack: () {
+                                                    LoanCommon().bottomSheet(
+                                                      context,
+                                                      lenderId: loanController
+                                                              .loanLendersModel
+                                                              .value
+                                                              .lenders?[index]
+                                                              .id == null? "":loanController
                                                           .loanLendersModel
                                                           .value
-                                                          .lenders![index],
-                                                      personalLoan: false,
-                                                      providerId: loanController
-                                                              .loanProvidersModel
-                                                              .value
-                                                              .providers?[index]
-                                                              .id ??
+                                                          .lenders![index]
+                                                          .id ??
                                                           '',
-                                                    ),
-                                                  );
-                                                },
+                                                      callBack: () {
+                                                        Get.back();
+                                                        loanController.applyLoan(
+                                                          providerId: loanController
+                                                                  .loanProvidersModel
+                                                                  .value
+                                                                  .providers?[
+                                                                      index]
+                                                                  .id ??
+                                                              '',
+                                                          lenderId: loanController
+                                                                  .loanLendersModel
+                                                                  .value
+                                                                  .lenders?[index]
+                                                                  .id == null ?"":loanController
+                                                              .loanLendersModel
+                                                              .value
+                                                              .lenders?[index]
+                                                              .id ??
+                                                              '',
+                                                        );
+                                                      },
+                                                      providerId: '',
+                                                    );
+                                                  },
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 16,
-                                            ),
-                                            Expanded(
-                                              child: LoanCommon().filledButton(
-                                                title: 'Apply',
-                                                callBack: () {
-                                                  LoanCommon().bottomSheet(
-                                                    context,
-                                                    lenderId: loanController
-                                                            .loanLendersModel
-                                                            .value
-                                                            .lenders![index]
-                                                            .id ??
-                                                        '',
-                                                    callBack: () {
-                                                      Get.back();
-                                                      loanController.applyLoan(
-                                                        providerId: loanController
-                                                                .loanProvidersModel
-                                                                .value
-                                                                .providers?[
-                                                                    index]
-                                                                .id ??
-                                                            '',
-                                                        lenderId: loanController
-                                                                .loanLendersModel
-                                                                .value
-                                                                .lenders![index]
-                                                                .id ??
-                                                            '',
-                                                      );
-                                                    },
-                                                    providerId: '',
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                  ),
-                ),
+                                );
+                              },
+                            ),
+                        ),
+
+
               ],
             ),
-            Obx(() {
-              if (loanController.createLoanLoading.value == true) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: LoadingAnimationWidget.inkDrop(
-                    size: 34,
-                    color: AppColors.primary,
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            })
+            // Obx(() {
+            //   if (loanController.createLoanLoading.value == true) {
+            //     return Container(
+            //       alignment: Alignment.center,
+            //       color: Colors.white,
+            //       child: LoadingAnimationWidget.inkDrop(
+            //         size: 34,
+            //         color: AppColors.primary,
+            //       ),
+            //     );
+            //   } else {
+            //     return Container();
+            //   }
+            // })
           ],
         ),
       ),

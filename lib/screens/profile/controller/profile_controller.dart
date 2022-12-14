@@ -84,6 +84,19 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> nomineeNameController = TextEditingController().obs;
   Rx<TextEditingController> nomineeDobController = TextEditingController().obs;
 
+  // additonal info screen in personal loan
+
+  Rx<TextEditingController> noOfMonthsResiding = TextEditingController().obs;
+  Rx<TextEditingController> highestQualification = TextEditingController().obs;
+  Rx<TextEditingController> companyName = TextEditingController().obs;
+  Rx<TextEditingController> designation = TextEditingController().obs;
+  Rx<TextEditingController> workExp = TextEditingController().obs;
+  Rx<TextEditingController> officeAddressLine1Controller =
+      TextEditingController().obs;
+  Rx<TextEditingController> officeAddressLine2Controller =
+      TextEditingController().obs;
+  Rx<TextEditingController> activeOrExistingLoans = TextEditingController().obs;
+
   RxString maritalStatus = ''.obs,
       employmentType = ''.obs,
       city = ''.obs,
@@ -92,7 +105,9 @@ class ProfileController extends GetxController {
       customerId = ''.obs,
       accountType = ''.obs,
       vehicleType = ''.obs,
-      nomineeRelationship = ''.obs;
+      nomineeRelationship = ''.obs,
+      netbanking = ''.obs,
+      existingLoan = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController =
@@ -145,11 +160,11 @@ class ProfileController extends GetxController {
     alternateNumberController.value.text =
         profileDetailsModel.value.alternateNumber ?? '';
     emailController.value.text = profileDetailsModel.value.email ?? '';
-    dobController.value.text = profileDetailsModel.value.dateOfBirth == null?"":
-        DateFormat('dd-MM-yyyy').format(
-            DateFormat("yyyy-MM-dd")
+    dobController.value.text = profileDetailsModel.value.dateOfBirth == null
+        ? ""
+        : DateFormat('dd-MM-yyyy').format(DateFormat("yyyy-MM-dd")
                 .parse(profileDetailsModel.value.dateOfBirth!)) ??
-        '';
+            '';
     gender.value = profileDetailsModel.value.gender ?? '';
     maritalStatus.value = profileDetailsModel.value.maritalStatus ?? '';
 
@@ -346,7 +361,12 @@ class ProfileController extends GetxController {
       maxHeight: 140,
       maxWidth: 140,
       uiSettings: [
-        AndroidUiSettings(toolbarTitle: 'Profile', toolbarWidgetColor: Colors.black, showCropGrid: false, hideBottomControls: true, cropFrameColor: Colors.transparent),
+        AndroidUiSettings(
+            toolbarTitle: 'Profile',
+            toolbarWidgetColor: Colors.black,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent),
         IOSUiSettings(
           title: 'Profile',
         ),
@@ -653,9 +673,7 @@ class ProfileController extends GetxController {
       String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
-
-
-    Map<String, dynamic> DATA =    {
+    Map<String, dynamic> DATA = {
       "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
       if (loanApplicationId != null) ...{
         "loanApplicationId": loanApplicationId,
@@ -668,43 +686,42 @@ class ProfileController extends GetxController {
         "occupation": "${occupationController.value.text.trim()}",
         "salaryMode": accountType.value,
         "income":
-        "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+            "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
         "preferredLanguage": "EN",
         "employmentType":
-        "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+            "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
       }
     };
     print("SENDIG DATA=>${DATA}");
-   print("loanApplicationId : ${loanApplicationId}");
+    print("loanApplicationId : ${loanApplicationId}");
     print("insuranceApplicationId : ${insuranceApplicationId}");
 
     print(accountType.value);
     try {
       var response = await DioApiCall().commonApiCall(
-        endpoint: Apis.additionalDetails,
-        method: Type.PUT,
-        data: json.encode(
-          {
-            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-            if (loanApplicationId != null) ...{
-              "loanApplicationId": loanApplicationId,
+          endpoint: Apis.additionalDetails,
+          method: Type.PUT,
+          data: json.encode(
+            {
+              "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+              if (loanApplicationId != null) ...{
+                "loanApplicationId": loanApplicationId,
+              },
+              if (insuranceApplicationId != null) ...{
+                "insuranceApplicationId": insuranceApplicationId
+              },
+              "customerDetails": {
+                "panNumber": "${panNumberController.value.text.trim()}",
+                "occupation": "${occupationController.value.text.trim()}",
+                "salaryMode": accountType.value,
+                "income":
+                    "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+                "preferredLanguage": "EN",
+                "employmentType":
+                    "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+              }
             },
-            if (insuranceApplicationId != null) ...{
-              "insuranceApplicationId": insuranceApplicationId
-            },
-            "customerDetails": {
-              "panNumber": "${panNumberController.value.text.trim()}",
-              "occupation": "${occupationController.value.text.trim()}",
-              "salaryMode": accountType.value,
-              "income":
-                  "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-              "preferredLanguage": "EN",
-              "employmentType":
-                  "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
-            }
-          },
-        )
-      );
+          ));
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -738,6 +755,146 @@ class ProfileController extends GetxController {
       addOccupationLoading.value = false;
     }
   }
+
+
+
+
+
+
+
+  Future addAdditionalDetails(
+      {bool? isFromLoan = false,
+        Function? callBack,
+        String? loanApplicationId,
+        String? insuranceApplicationId}) async {
+    addOccupationLoading.value = true;
+
+    // Map<String, dynamic> DATA =
+    //
+    // {
+    //   "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+    //   if (loanApplicationId != null) ...{
+    //     "loanApplicationId": loanApplicationId,
+    //   },
+    //   if (insuranceApplicationId != null) ...{
+    //     "insuranceApplicationId": insuranceApplicationId
+    //   },
+    //   "customerDetails": {
+    //
+    //
+    //     "panNumber": "${panNumberController.value.text.trim()}",
+    //     "occupation": "${occupationController.value.text.trim()}",
+    //     "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+    //     "preferredLanguage": "EN",
+    //     "employmentType": "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+    //     "residingTenure": "${noOfMonthsResiding.value.text.trim()}",
+    //     "companyName": "${companyName.value.text.trim()}",
+    //     "designation": "${designation.value.text.trim()}",
+    //     "workExperience": "${workExp.value.text.trim()}",
+    //     "officeAddressLine1": "${officeAddressLine1Controller.value.text.trim()}",
+    //     "officeAddressLine2": "${officeAddressLine2Controller.value.text.trim()}",
+    //     "activeNetBanking": "${netbanking.value.trim()}",
+    //      "activeEmi": "${existingLoan.value.trim()}",
+    //     "noOfActiveEmi": "${activeOrExistingLoans.value.text.trim() == null?"":activeOrExistingLoans.value.text.trim()}",
+    //     "highestQualification": "${highestQualification.value.text.trim()}",
+    //     "salaryMode": accountType.value
+    //     // "panNumber": "${panNumberController.value.text.trim()}",
+    //     // "occupation": "${occupationController.value.text.trim()}",
+    //     // "salaryMode": accountType.value,
+    //     // "income":
+    //     // "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+    //     // "preferredLanguage": "EN",
+    //     // "employmentType":
+    //     // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+    //   }
+    // };
+    // print("SENDIG add addition data=>${DATA}");
+    // print("loanApplicationId : ${loanApplicationId}");
+    // print("insuranceApplicationId : ${insuranceApplicationId}");
+
+    print(accountType.value);
+    try {
+      var response = await DioApiCall().commonApiCall(
+          endpoint: Apis.additionalDetails,
+          method: Type.PUT,
+          data: json.encode(
+              {
+                "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+                if (loanApplicationId != null) ...{
+                  "loanApplicationId": loanApplicationId,
+                },
+                if (insuranceApplicationId != null) ...{
+                  "insuranceApplicationId": insuranceApplicationId
+                },
+                "customerDetails": {
+
+
+                  "panNumber": "${panNumberController.value.text.trim()}",
+                  "occupation": "${occupationController.value.text.trim()}",
+                  "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+                  "preferredLanguage": "EN",
+                  "employmentType": "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+                  "residingTenure": "${noOfMonthsResiding.value.text.trim()}",
+                  "companyName": "${companyName.value.text.trim()}",
+                  "designation": "${designation.value.text.trim()}",
+                  "workExperience": "${workExp.value.text.trim()}",
+                  "officeAddressLine1": "${officeAddressLine1Controller.value.text.trim()}",
+                  "officeAddressLine2": "${officeAddressLine2Controller.value.text.trim()}",
+                  "activeNetBanking": "${netbanking.value.trim()}",
+                  "activeEmi": "${existingLoan.value.trim()}",
+                  "noOfActiveEmi": "${activeOrExistingLoans.value.text.trim() == null?"":activeOrExistingLoans.value.text.trim()}",
+                  "highestQualification": "${highestQualification.value.text.trim()}",
+                  "salaryMode": accountType.value
+                  // "panNumber": "${panNumberController.value.text.trim()}",
+                  // "occupation": "${occupationController.value.text.trim()}",
+                  // "salaryMode": accountType.value,
+                  // "income":
+                  // "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+                  // "preferredLanguage": "EN",
+                  // "employmentType":
+                  // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+                }
+              }
+          ));
+      if (response != null) {
+        if (isFromLoan == true || loanApplicationId != null) {
+          callBack!();
+        } else {
+          Get.back();
+          Fluttertoast.showToast(
+            msg: "Update Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        }
+        getProfileData();
+      } else {
+        Fluttertoast.showToast(
+          msg: "something went wrong, try again!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
+    } finally {
+      addOccupationLoading.value = false;
+    }
+  }
+
+
+
+
+
+
 
   void addNomineeDetails(
       {String? insuranceApplicationId,
@@ -925,7 +1082,6 @@ class ProfileController extends GetxController {
     try {
       getBankAccountLoading.value = true;
 
-
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.addBankAccount,
         method: Type.POST,
@@ -942,17 +1098,13 @@ class ProfileController extends GetxController {
         ),
       );
 
-
       if (response != null) {
         if (response['account'] != null) {
           const snackBar = SnackBar(
             content: Text('Bank account added!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-           Get.back();
-
-
-
+          Get.back();
         }
       }
     } catch (exception) {

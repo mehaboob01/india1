@@ -692,6 +692,7 @@ class ProfileScreen extends StatelessWidget {
                     ? [
                         accountDetails(profileController.bankDetailsModel.value.preferredAccount ?? PreferredAccount(), null),
                         if (profileController.bankDetailsModel.value.accounts != null && profileController.bankDetailsModel.value.accounts != []) ...[
+                          accountDetails(profileController.bankDetailsModel.value.preferredAccount ?? PreferredAccount(), null),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
