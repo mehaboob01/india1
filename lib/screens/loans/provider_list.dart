@@ -18,6 +18,8 @@ class ProvidersList extends StatefulWidget {
   final String title;
   final String providerId;
 
+  // test
+
   const ProvidersList({
     Key? key,
     required this.title,
@@ -145,7 +147,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          details!.keywords.toString(),
+                                                          details?.keywords.toString() == null?"":details!.keywords.toString(),
                                                           style: TextStyle(
                                                             color: AppColors
                                                                 .borderColor,
@@ -248,7 +250,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                   callBack: () {
                                                     Get.to(() => CommonWebView(
                                                       title: 'Loan details',
-                                                      url: details.url.toString(),
+                                                      url: details?.url.toString() == null ?"":details!.url.toString(),
                                                     ));
 
                                                   },
