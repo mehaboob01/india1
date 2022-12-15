@@ -1,13 +1,17 @@
+// To parse this JSON data, do
+//
+//     final usedPointsHistory = usedPointsHistoryFromJson(jsonString);
+
 import 'dart:convert';
 
-LoyaltyDashboardModel loyaltyDashboardModelFromJson(String str) =>
-    LoyaltyDashboardModel.fromJson(json.decode(str));
+UsedPointsHistoryModel usedPointsHistoryFromJson(String str) =>
+    UsedPointsHistoryModel.fromJson(json.decode(str));
 
-String loyaltyDashboardModelToJson(LoyaltyDashboardModel data) =>
+String usedPointsHistoryToJson(UsedPointsHistoryModel data) =>
     json.encode(data.toJson());
 
-class LoyaltyDashboardModel {
-  LoyaltyDashboardModel({
+class UsedPointsHistoryModel {
+  UsedPointsHistoryModel({
     this.data,
     this.status,
   });
@@ -15,8 +19,8 @@ class LoyaltyDashboardModel {
   Data? data;
   Status? status;
 
-  factory LoyaltyDashboardModel.fromJson(Map<String, dynamic> json) =>
-      LoyaltyDashboardModel(
+  factory UsedPointsHistoryModel.fromJson(Map<String, dynamic> json) =>
+      UsedPointsHistoryModel(
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
         status: json["status"] == null ? null : Status.fromJson(json["status"]),
       );
@@ -169,7 +173,7 @@ class RecentRewardTransaction {
         points: json["points"] == null ? null : json["points"],
         date: json["date"] == null ? null : json["date"],
         typeId: json["typeId"] == null ? null : json["typeId"],
-        expiryDate: json["expiryDate"] == null ? null : (json["expiryDate"]),
+        expiryDate: json["expiryDate"] == null ? null : json["expiryDate"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -177,7 +181,7 @@ class RecentRewardTransaction {
         "points": points == null ? null : points,
         "date": date == null ? null : date,
         "typeId": typeId == null ? null : typeId,
-        "expiryDate": expiryDate == null ? null : expiryDate!,
+        "expiryDate": expiryDate == null ? null : expiryDate,
       };
 }
 

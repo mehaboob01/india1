@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+
+import 'package:india_one/screens/loyality_points/used_reward_history/used_reward_page.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/common_banner.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -64,29 +66,34 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             HeadingContainer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Your rewards',
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: const Color(0xff2d2d2d),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(MRouter.generalHistory);
-                                  },
-                                  // history text will be there
-                                  child: Text(
-                                    '',
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15.0, bottom: 6.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Your rewards',
                                     style: AppStyle.shortHeading.copyWith(
-                                        fontSize: 11.0.sp,
-                                        color: const Color(0xff2364A1),
+                                        color: const Color(0xff2d2d2d),
                                         fontWeight: FontWeight.w600),
                                   ),
-                                ),
-                              ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(MRouter.usedRewardHistory);
+                                    },
+                                    // history text will be there
+                                    child: Text(
+                                      'View used points',
+                                      style: AppStyle.shortHeading.copyWith(
+                                          fontSize: 10.0.sp,
+                                          color: const Color(0xff2364A1),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 4.0.wp),
                             Obx(
@@ -94,7 +101,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                   ? Shimmer.fromColors(
                                       baseColor:
                                           AppColors.greySecond.withOpacity(0.5),
-                                      highlightColor: AppColors.darkGrey!,
+                                      highlightColor: AppColors.darkGrey,
                                       child: ListView.builder(
                                         itemCount: _loyaltyManager
                                             .recentRewardTransactionsList

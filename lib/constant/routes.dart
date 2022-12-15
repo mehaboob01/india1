@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
+import 'package:india_one/screens/loyality_points/used_reward_history/used_reward_page.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
 import 'package:india_one/screens/loans/bike_loan/bike_loan.dart';
 import 'package:india_one/screens/loans/car_loan/car_loan.dart';
@@ -58,7 +59,7 @@ class MRouter {
   static const String carInsurance = 'CarInsurance';
   static const String loanPage = 'LoansPage';
   static const String referEarn = 'ReferEarn';
-
+  static const String usedRewardHistory = 'UsedRewardHistory';
   static const String farmLoan = 'FarmLoan';
   static const String healthInsurance = 'HealthInsurance';
   static const String healthInsuranceFillDetails = 'HealthInsuranceFillDetails';
@@ -149,6 +150,8 @@ class MRouter {
       case farmLoan:
         return CupertinoPageRoute(builder: (_) => FarmLoan());
 
+      case usedRewardHistory:
+        return CupertinoPageRoute(builder: (_) => UsedRewardHistory());
       // case healthInsurance:
       //   return CupertinoPageRoute(builder: (_) => HealthInsurance());
 

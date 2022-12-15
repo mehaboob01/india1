@@ -1,9 +1,10 @@
 // DEV URL
 final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
+final String bucketBaseUrl =
+    "https://india1-digital.s3.ap-south-1.amazonaws.com";
 // dummy
 // UAT URL
-//final String baseUrl  = "https://digitaluatbackend.india1.co.in/v1/";
+//final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
 
 class Apis {
   // OnBoarding & login Api
@@ -18,6 +19,7 @@ class Apis {
 
   static String loyaltyDashBoard = "dashboards/loyalty-program";
   static String loyaltyHistory = "loyalty/loyalty-history";
+  static String usedPointsHistory = "dashboards/loyalty-program";
 
   // Mobile Recharge Api
   static String operatorList = "loyalty/recharge/operator/list?isPrepaid=1";
@@ -31,8 +33,10 @@ class Apis {
   static String cashBackToBank = "loyalty/cashback/bank";
   static String updateBank = "customer/bank/account";
   static String fetchCustomerBankAccounts = "customer/bank/accounts";
-  static String addCustomerBankAccount = "loyalty/customer/bank/account"; //post method
-  static String deleteCustomerBankAccount = "customer/bank/account"; // delete method
+  static String addCustomerBankAccount =
+      "loyalty/customer/bank/account"; //post method
+  static String deleteCustomerBankAccount =
+      "customer/bank/account"; // delete method
 
   // upi api
 
@@ -70,7 +74,8 @@ class Apis {
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";
   static String fetchFarmProducts = "loans/fetch-farm-products";
-  static String updateFarmLoanDetails = "loans/application/update-basic-details";
+  static String updateFarmLoanDetails =
+      "loans/application/update-basic-details";
 
   ///insurance
   static String createInsurance = "insurances/application";
@@ -82,12 +87,17 @@ class Apis {
 
   //miscellaneous
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
-  static String creditCard = "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
-  static String emiCard = "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
+  static String creditCard =
+      "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
+  static String emiCard =
+      "https://www.bajajfinserv.in/insta-emi-network-card-apply-online?utm_source=RPMGA&utm_medium=Ind108&utm_campaign=A";
   static String msme = "https://flutter.dev/";
-  static String creditScore = "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
-  static String fdLink = "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
-  static String digiGold = "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
+  static String creditScore =
+      "https://www.creditmantri.com/alliance/?utm_content=alliance-lp&alliance_lender=india1&utm_campaign=alliances&utm_source=india1_PWA_EN&utm_term=alliance_india1&utm_medium=alliance";
+  static String fdLink =
+      "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
+  static String digiGold =
+      "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
   static String Faq = "https://digitaluat.india1.co.in/Faq";
 
   // token related api's
@@ -99,10 +109,10 @@ class Apis {
 
   // notifications
 
-   static String notifications = "notifications/list";
-   static String markAsRead = "notifications/read";
+  static String notifications = "notifications/list";
+  static String markAsRead = "notifications/read";
 
-   //insurance
+  //insurance
   static String insuranceDashboard = "dashboards/insurances";
 
   //logout
@@ -115,8 +125,5 @@ class Apis {
   static String kPLACES_API_KEY = "AIzaSyDrS8UbvTITLC-jYhVQGLwLozz-CgKhw7k";
   // update language
 
- static String updateLan = "customers/profile/language";
-
-
-
+  static String updateLan = "customers/profile/language";
 }
