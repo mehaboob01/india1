@@ -29,6 +29,7 @@ class ReferEarn extends StatefulWidget {
 class _ReferEarnState extends State<ReferEarn> {
   ReferManager _referManager = Get.put(ReferManager());
   ContactCont _contactCont = Get.put(ContactCont());
+  TextEditingController _controller = TextEditingController();
 
   List<String> invitedList = [];
 
@@ -164,6 +165,8 @@ class _ReferEarnState extends State<ReferEarn> {
                                   children: [
                                     Expanded(
                                       child: TextFormField(
+                                        keyboardType: TextInputType.number,
+
                                         controller: _editingController,
                                         decoration: InputDecoration(
                                           hintText: "Enter a number to refer",
@@ -326,6 +329,7 @@ class _ReferEarnState extends State<ReferEarn> {
           height: Get.height * 0.07,
           width: double.maxFinite,
           child: TextFormField(
+            controller: _controller,
             onChanged: (value) {
               if (value != "" || value != " ") {
                 contactCont.filterList(value);
@@ -420,15 +424,21 @@ class _ReferEarnState extends State<ReferEarn> {
   inviteButton(int index) {
     return GestureDetector(
       onTap: () {
+
+
         if (invitedList.contains(contactCont
             .filteredList.value[index].phones.first.number
             .toString())) {
+
           print("already invited");
           const snackBar = SnackBar(
             content: Text('Already invited!'),
           );
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          contactCont.contactsLenght.value =
+              contactCont.contacts.length;
+          _controller.clear();
         } else {
           setState(() {
             _referManager.callReferApi(contactCont
@@ -445,6 +455,9 @@ class _ReferEarnState extends State<ReferEarn> {
 
             print("selected list${invitedList.toString()}");
           });
+          contactCont.contactsLenght.value =
+              contactCont.contacts.length;
+          _controller.clear();
         }
       },
       child: Padding(

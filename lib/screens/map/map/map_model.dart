@@ -71,17 +71,18 @@ class Data {
 }
 
 class Locations {
-  Locations({
-    this.name,
-    this.address,
-    this.rewardsMultiplier,
-    this.geoLocation,
-  });
+  Locations(
+      {this.name,
+      this.address,
+      this.rewardsMultiplier,
+      this.geoLocation,
+      this.distance});
 
   String? name;
   String? address;
   int? rewardsMultiplier;
   GeoLocation? geoLocation;
+  int? distance;
 
   factory Locations.fromJson(Map<String, dynamic> json) => Locations(
         name: json["name"] == null ? null : json["name"],
@@ -92,14 +93,15 @@ class Locations {
         geoLocation: json["geoLocation"] == null
             ? null
             : GeoLocation.fromJson(json["geoLocation"]),
+        distance: json["distance"] == null ? null : json["distance"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name == null ? null : name,
         "address": address == null ? null : address,
-        "rewardsMultiplier":
-            rewardsMultiplier == null ? null : rewardsMultiplier,
+        "rewardsMultiplier": rewardsMultiplier == null ? null : rewardsMultiplier,
         "geoLocation": geoLocation == null ? null : geoLocation!.toJson(),
+        "distance": distance == null ? null : distance,
       };
 }
 

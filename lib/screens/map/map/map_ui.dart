@@ -269,6 +269,10 @@ class _MapsState extends State<Maps> {
                                             atmName: mapManager
                                                 .mapCoordinateList[index].name
                                                 .toString(),
+                                            distance: mapManager
+                                                .mapCoordinateList[index]
+                                                .distance
+                                            ,
                                           ));
                                     }),
                                   )
@@ -293,7 +297,7 @@ class AtmDetailsCard extends StatelessWidget {
     required this.atmName,
     required this.index,
   }) : super(key: key);
-  double? distance;
+  int? distance;
   String address;
   String? status;
   String atmName;
@@ -347,7 +351,7 @@ class AtmDetailsCard extends StatelessWidget {
                             height: Get.height * 0.08,
                             width: Get.width * 0.45,
                             child: Text(
-                              address.toString(),
+                              (int.parse(distance.toString()) / 1000).toString() + " Kms",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 4,
                               style: TextStyle(

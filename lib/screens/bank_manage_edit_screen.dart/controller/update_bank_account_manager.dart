@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_constant.dart';
+import '../../loyality_points/cashback_redeem/cb_manager.dart';
 
 class UpdateBankAccount extends GetxController {
   var isLoading = false.obs;
+  //CashBackManager cashBackManager = Get.put(CashBackManager());
 
   callUpdateBankAccount(Map<String, dynamic> data, String? bankId, String? id) async {
     try {
@@ -58,7 +60,9 @@ class UpdateBankAccount extends GetxController {
             title: "Success!",
             message: "Bank details updated ...",
             duration: Duration(seconds: 2),
-          )..show(Get.context!).then((value) => Get.back());
+          )..show(Get.context!).then((value) {
+
+            Get.back();});
 
           isLoading(false);
         } else {

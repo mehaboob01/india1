@@ -72,7 +72,7 @@ class _ProvidersListState extends State<ProvidersList> {
                   child:
                        ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 1,
+                              itemCount: loanController.newLoanLendersModel.value.lenders?.length,
                               itemBuilder: (context, index) {
                                  Details? details = loanController.newLoanLendersModel.value.lenders?[index].details;
                                 return Padding(

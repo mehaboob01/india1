@@ -251,12 +251,13 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       Get.to(() => LendersList(
-                            title: 'Bike loan',
+                            title: '2 Wheeler Loan',
                           ));
                     });
               }
             },
             child: LoanCommon().nextButton(),
+
           ),
         ),
       ],

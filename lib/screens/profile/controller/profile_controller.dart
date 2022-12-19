@@ -26,6 +26,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../home_start/home_manager.dart';
+import '../../loyality_points/cashback_redeem/cb_manager.dart';
 import '../model/upi_id_model.dart';
 
 extension priceChange on int {
@@ -42,6 +43,8 @@ extension priceChange on int {
 
 class ProfileController extends GetxController {
   HomeManager _homeManager = Get.put(HomeManager());
+  CashBackManager cashBackManager = Get.put(CashBackManager());
+
   RxBool addPersonalLoading = false.obs,
       addResidentialLoading = false.obs,
       addOccupationLoading = false.obs,
@@ -1100,11 +1103,14 @@ class ProfileController extends GetxController {
 
       if (response != null) {
         if (response['account'] != null) {
+          cashBackManager.fetchCustomerBankAccounts();
+          Get.back();
+
           const snackBar = SnackBar(
             content: Text('Bank account added!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-          Get.back();
+
         }
       }
     } catch (exception) {

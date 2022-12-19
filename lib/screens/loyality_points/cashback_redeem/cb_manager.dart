@@ -135,7 +135,7 @@ class CashBackManager extends GetxController {
       var jsonData = jsonDecode(response.body);
 
       FetchCustomerBanksModel fetchCustomerBanksModel =
-          FetchCustomerBanksModel.fromJson(jsonData);
+      FetchCustomerBanksModel.fromJson(jsonData);
 
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
@@ -188,7 +188,7 @@ class CashBackManager extends GetxController {
       var jsonData = jsonDecode(response.body);
 
       FetchCustomerUpiModel fetchCustomerUpiModel =
-          FetchCustomerUpiModel.fromJson(jsonData);
+      FetchCustomerUpiModel.fromJson(jsonData);
 
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
@@ -226,12 +226,12 @@ class CashBackManager extends GetxController {
 
   // cashbackToBank Api
   cashBackToBankApi(
-    bool? fromAccountList,
-    String? bankIdOrBankAccountId,
-    Map<String, dynamic> data,
-    String pointsToReedem,
-    BuildContext context,
-  ) async {
+      bool? fromAccountList,
+      String? bankIdOrBankAccountId,
+      Map<String, dynamic> data,
+      String pointsToReedem,
+      BuildContext context,
+      ) async {
     print("cashbank to bank");
     print("points to redeemed ${double.parse(pointsToReedem)}");
     try {
@@ -286,7 +286,7 @@ class CashBackManager extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel.fromJson(jsonData);
         if (commonApiResponseModel.status!.code == 2000) {
           Flushbar(
             title: "successful!",
@@ -294,7 +294,7 @@ class CashBackManager extends GetxController {
             duration: Duration(seconds: 2),
           )..show(Get.context!)
               .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                  MRouter.homeScreen, (Route<dynamic> route) => false))
+              MRouter.homeScreen, (Route<dynamic> route) => false))
               .then((value) => selectedIndex.value == -1);
         } else {
           Flushbar(
@@ -342,7 +342,7 @@ class CashBackManager extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           Flushbar(
@@ -351,7 +351,7 @@ class CashBackManager extends GetxController {
             duration: Duration(seconds: 2),
           )..show(Get.context!);
 
-          fetchCustomerUpiAccounts();
+          await  fetchCustomerUpiAccounts();
 
 
 //           Future.delayed(
@@ -412,7 +412,7 @@ class CashBackManager extends GetxController {
           duration: Duration(seconds: 2),
         )..show(Get.context!)
             .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                MRouter.homeScreen, (Route<dynamic> route) => false))
+            MRouter.homeScreen, (Route<dynamic> route) => false))
             .then((value) => selectedUpiIndex.value == -1);
 
 
@@ -462,10 +462,14 @@ class CashBackManager extends GetxController {
         var jsonData = jsonDecode(response.body);
 
         CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           isLoading(false);
+
+
+          await fetchCustomerBankAccounts();
+          Get.back();
           Flushbar(
             title: "Success!!",
             message: "bank del Successfully ..",
@@ -486,9 +490,9 @@ class CashBackManager extends GetxController {
           message: "Server Error ...",
           duration: Duration(seconds: 2),
         )..show(Get.context!).then((value) => () {
-              customerBankList.clear();
-              fetchCustomerBankAccounts();
-            });
+          customerBankList.clear();
+          fetchCustomerBankAccounts();
+        });
       }
     } catch (e) {
       Flushbar(
@@ -526,7 +530,7 @@ class CashBackManager extends GetxController {
         var jsonData = jsonDecode(response.body);
 
         CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
+        CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
           isLoading(false);
@@ -550,9 +554,9 @@ class CashBackManager extends GetxController {
           message: "Server Error ...",
           duration: Duration(seconds: 2),
         )..show(Get.context!).then((value) => () {
-              customerBankList.clear();
-              fetchCustomerBankAccounts();
-            });
+          customerBankList.clear();
+          fetchCustomerBankAccounts();
+        });
       }
     } catch (e) {
       Flushbar(
