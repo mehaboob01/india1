@@ -7,12 +7,19 @@ class SubmissionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Expanded(
             flex: 6,
-            child: Container(),
+            child: Center(
+              child: Container(child: Image.asset(
+                AppImages.completeGif,
+                height: 184.0,
+                width: 184.0,
+              ),),
+            ),
           ),
           Expanded(
             flex: 4,

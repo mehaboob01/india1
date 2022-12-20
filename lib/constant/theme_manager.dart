@@ -384,6 +384,7 @@ Widget rupeeIcon(
 
 class AppImages {
   static const String referEarnSVG = 'assets/images/gift_box.png';
+  static const String completeGif = 'assets/images/complete_1.gif';
   static const String alertNotification = 'assets/alert_notification_icon.svg';
   static const String assetPng = 'assets/png/';
   static const String bottomNavHome = '${assetPng}home.png';
@@ -456,6 +457,8 @@ class AppImages {
 
   static const String assetSvg = 'assets/svg/';
    static const String imagesAssetSvg = 'assets/';
+
+
 
   static const String user_profile = '${assetSvg}user_profile.svg';
   static const String notify_icon = '${assetSvg}notify_icon.svg';

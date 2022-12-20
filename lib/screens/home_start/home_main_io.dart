@@ -39,6 +39,7 @@ import '../profile/controller/profile_controller.dart';
 import '../profile/model/profile_details_model.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
+import 'dart:io' show Platform;
 
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
@@ -73,6 +74,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
       checkLogin();
     });
+
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -362,224 +364,187 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         return false;
       },
       child: Obx(
-        () => GestureDetector(
-          onTap: () => {Get.back(), _homeManager.isClicked.value = false},
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
-            body: SmartRefresher(
-              enablePullDown: true,
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              child: _homeManager.isLoading.value
-                  ? CircularProgressbar()
-                  : SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          // top container ---------------------
-                          Container(
-                            padding: EdgeInsets.fromLTRB(
-                                4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
-                            height: 54.0.hp,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(5.0.wp),
-                                  bottomRight: Radius.circular(5.0.wp)),
-                              image: const DecorationImage(
-                                  image: AssetImage(AppImages.homebg),
-                                  fit: BoxFit.fill),
-                            ),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text('welcome'.tr,
-                                                style: AppStyle.shortHeading
-                                                    .copyWith(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w600)),
-                                            SizedBox(
-                                              width: 2,
-                                            ),
-                                            Text(
-                                                "${_profileController.profileDetailsModel.value.firstName ?? ''}",
-                                                style: AppStyle.shortHeading
-                                                    .copyWith(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w600)),
-                                          ],
+        () => IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: GestureDetector(
+            onTap: () => {Get.back(), _homeManager.isClicked.value = false},
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.white,
+              body: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: _homeManager.isLoading.value
+                    ? CircularProgressbar()
+                    : SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // top container ---------------------
+                            Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  4.0.wp, 20.0.wp, 4.0.wp, 4.0.wp),
+                              height: 54.0.hp,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(5.0.wp),
+                                    bottomRight: Radius.circular(5.0.wp)),
+                                image: const DecorationImage(
+                                    image: AssetImage(AppImages.homebg),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('welcome'.tr,
+                                                  style: AppStyle.shortHeading
+                                                      .copyWith(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text(
+                                                  "${_profileController.profileDetailsModel.value.firstName ?? ''}",
+                                                  style: AppStyle.shortHeading
+                                                      .copyWith(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Obx(
-                                        () => Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Focus(
-                                              focusNode: widget.focusNodes[5],
-                                              child: headingBox(
-                                                  text: 'Aa',
-                                                  ontap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                LanguageSelectionIO(
-                                                                    'home')));
-                                                  }),
-                                            ),
-                                            SizedBox(
-                                              width: 2.0.wp,
-                                            ),
-                                            notificationManager
-                                                        .notificationsCount
-                                                        .length
-                                                        .toInt() !=
-                                                    0
-                                                ? Focus(
-                                                    focusNode:
-                                                        widget.focusNodes[6],
-                                                    child: GestureDetector(
-                                                      onTap: () => Get.toNamed(
-                                                          MRouter
-                                                              .notificationScreen),
-                                                      child: Badge(
-                                                        position: BadgePosition
-                                                            .topEnd(
-                                                                top: -10,
-                                                                end: 0),
-                                                        badgeColor: Colors.red,
-                                                        badgeContent: Container(
-                                                          child: Text(
-                                                            "",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
+                                        Obx(
+                                          () => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Focus(
+                                                focusNode: widget.focusNodes[5],
+                                                child: headingBox(
+                                                    text: 'Aa',
+                                                    ontap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  LanguageSelectionIO(
+                                                                      'home')));
+                                                    }),
+                                              ),
+                                              SizedBox(
+                                                width: 2.0.wp,
+                                              ),
+                                              notificationManager
+                                                          .notificationsCount
+                                                          .length
+                                                          .toInt() !=
+                                                      0
+                                                  ? Focus(
+                                                      focusNode:
+                                                          widget.focusNodes[6],
+                                                      child: GestureDetector(
+                                                        onTap: () => Get.toNamed(
+                                                            MRouter
+                                                                .notificationScreen),
+                                                        child: Badge(
+                                                          position: BadgePosition
+                                                              .topEnd(
+                                                                  top: -10,
+                                                                  end: 0),
+                                                          badgeColor: Colors.red,
+                                                          badgeContent: Container(
+                                                            child: Text(
+                                                              "",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
                                                           ),
+                                                          child: headingBox(
+                                                              image: AppImages
+                                                                  .notify_icon),
                                                         ),
+                                                      ),
+                                                    )
+                                                  : Focus(
+                                                      focusNode:
+                                                          widget.focusNodes[6],
+                                                      child: GestureDetector(
+                                                        onTap: () => Get.toNamed(
+                                                            MRouter
+                                                                .notificationScreen),
                                                         child: headingBox(
                                                             image: AppImages
                                                                 .notify_icon),
                                                       ),
                                                     ),
-                                                  )
-                                                : Focus(
-                                                    focusNode:
-                                                        widget.focusNodes[6],
-                                                    child: GestureDetector(
-                                                      onTap: () => Get.toNamed(
-                                                          MRouter
-                                                              .notificationScreen),
-                                                      child: headingBox(
-                                                          image: AppImages
-                                                              .notify_icon),
-                                                    ),
-                                                  ),
-                                            SizedBox(
-                                              width: 2.0.wp,
-                                            ),
-                                            Focus(
-                                              focusNode: widget.focusNodes[7],
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  _homeManager.isClicked.value =
-                                                      true;
-                                                  showMenu<String>(
-                                                    context: context,
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        13.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        13.0),
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        13.0))),
-                                                    position:
-                                                        RelativeRect.fromLTRB(
-                                                            25.0,
-                                                            118.0,
-                                                            16.0,
-                                                            0.0),
-                                                    items: [
-                                                      PopupMenuItem(
-                                                        height:
-                                                            Get.height * 0.02,
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            _homeManager
-                                                                .showAuth
-                                                                .value = false;
-                                                            _homeManager
-                                                                .isClicked
-                                                                .value = false;
-                                                            Get.back();
-                                                            Get.to(() =>
-                                                                ProfileScreen());
-                                                          },
-                                                          child: Container(
-                                                            height: Get.height *
-                                                                0.03,
-                                                            width:
-                                                                double.infinity,
-                                                            child: Text(
-                                                              "My Profile",
-                                                              style: AppStyle.shortHeading.copyWith(
-                                                                  fontSize: Dimens
-                                                                      .font_14sp,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      1),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      PopupMenuDivider(),
-                                                      PopupMenuItem(
-                                                        height: 0.02,
-                                                        child: GestureDetector(
-                                                            onTap: () => {
-                                                                  _homeManager
-                                                                      .showAuth
-                                                                      .value = false,
-                                                                  _homeManager
-                                                                      .isClicked
-                                                                      .value = false,
-                                                                  Get.back(),
-                                                                  Get.toNamed(
-                                                                    MRouter
-                                                                        .loyaltyPoints,
-                                                                  ),
-                                                                },
+                                              SizedBox(
+                                                width: 2.0.wp,
+                                              ),
+                                              Focus(
+                                                focusNode: widget.focusNodes[7],
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _homeManager.isClicked.value =
+                                                        true;
+                                                    showMenu<String>(
+                                                      context: context,
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          13.0),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          13.0),
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          13.0))),
+                                                      position:
+                                                          RelativeRect.fromLTRB(
+                                                              25.0,
+                                                              118.0,
+                                                              16.0,
+                                                              0.0),
+                                                      items: [
+                                                        PopupMenuItem(
+                                                          height:
+                                                              Get.height * 0.02,
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              _homeManager
+                                                                  .showAuth
+                                                                  .value = false;
+                                                              _homeManager
+                                                                  .isClicked
+                                                                  .value = false;
+                                                              Get.back();
+                                                              Get.to(() =>
+                                                                  ProfileScreen());
+                                                            },
                                                             child: Container(
-                                                              height:
-                                                                  Get.height *
-                                                                      0.03,
-                                                              width: double
-                                                                  .infinity,
+                                                              height: Get.height *
+                                                                  0.03,
+                                                              width:
+                                                                  double.infinity,
                                                               child: Text(
-                                                                "My Rewards",
+                                                                "My Profile",
                                                                 style: AppStyle.shortHeading.copyWith(
                                                                     fontSize: Dimens
                                                                         .font_14sp,
@@ -591,170 +556,210 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                     letterSpacing:
                                                                         1),
                                                               ),
-                                                            )),
-                                                      ),
-                                                    ],
-                                                    elevation: 8.0,
-                                                  ).then<void>(
-                                                      (String? itemSelected) {
-                                                    if (itemSelected == null) {
-                                                      _homeManager.isClicked
-                                                          .value = false;
-                                                      return;
-                                                    }
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        PopupMenuDivider(),
+                                                        PopupMenuItem(
+                                                          height: 0.02,
+                                                          child: GestureDetector(
+                                                              onTap: () => {
+                                                                    _homeManager
+                                                                        .showAuth
+                                                                        .value = false,
+                                                                    _homeManager
+                                                                        .isClicked
+                                                                        .value = false,
+                                                                    Get.back(),
+                                                                    Get.toNamed(
+                                                                      MRouter
+                                                                          .loyaltyPoints,
+                                                                    ),
+                                                                  },
+                                                              child: Container(
+                                                                height:
+                                                                    Get.height *
+                                                                        0.03,
+                                                                width: double
+                                                                    .infinity,
+                                                                child: Text(
+                                                                  "My Rewards",
+                                                                  style: AppStyle.shortHeading.copyWith(
+                                                                      fontSize: Dimens
+                                                                          .font_14sp,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      letterSpacing:
+                                                                          1),
+                                                                ),
+                                                              )),
+                                                        ),
+                                                      ],
+                                                      elevation: 8.0,
+                                                    ).then<void>(
+                                                        (String? itemSelected) {
+                                                      if (itemSelected == null) {
+                                                        _homeManager.isClicked
+                                                            .value = false;
+                                                        return;
+                                                      }
 
-                                                    if (itemSelected == "1") {
-                                                    } else if (itemSelected ==
-                                                        "2") {
-                                                      Get.toNamed(MRouter
-                                                          .loyaltyPoints);
+                                                      if (itemSelected == "1") {
+                                                      } else if (itemSelected ==
+                                                          "2") {
+                                                        Get.toNamed(MRouter
+                                                            .loyaltyPoints);
 
-                                                      print("2nd itme ");
-                                                    } else if (itemSelected ==
-                                                        "3") {
-                                                    } else {
-                                                      //code here
-                                                    }
-                                                  });
-                                                },
-                                                child: headingBox(
-                                                    color: _homeManager
-                                                            .isClicked.value
-                                                        ? Colors.orange
-                                                        : Colors.white,
-                                                    image:
-                                                        AppImages.user_profile),
+                                                        print("2nd itme ");
+                                                      } else if (itemSelected ==
+                                                          "3") {
+                                                      } else {
+                                                        //code here
+                                                      }
+                                                    });
+                                                  },
+                                                  child: headingBox(
+                                                      color: _homeManager
+                                                              .isClicked.value
+                                                          ? Colors.orange
+                                                          : Colors.white,
+                                                      image:
+                                                          AppImages.user_profile),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 2.0.hp),
-                                  Text('cashback_india1_summary'.tr,
-                                      style: AppStyle.shortHeading.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600)),
-                                  SizedBox(height: 2.0.hp),
-                                  // balance card --------------------------
-                                  Row(
-                                    children: [
-                                      Expanded(child: balanceCard(first: true)),
-                                      SizedBox(width: 2.0.wp),
-                                      Expanded(child: balanceCard(first: false))
-                                    ],
-                                  ),
-                                  // ways to Reedem ---------------------------------
-                                  SizedBox(height: 1.0.hp),
-                                  // Obx(
-                                  //   () => Visibility(
-                                  //     visible:
-                                  //         _homeManager.redeemablePoints <= 14
-                                  //             ? true
-                                  //             : false,
-                                  //     child: Padding(
-                                  //       padding:
-                                  //           const EdgeInsets.only(left: 4.0),
-                                  //       child: Text(
-                                  //         'Note : You can redeem only if you have 15 or more points',
-                                  //         style: AppStyle.shortHeading.copyWith(
-                                  //           fontSize: Dimens.font_12sp,
-                                  //           color: Colors.white,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(height: 1.0.hp),
-                                  Flexible(child: redeemWay()),
-                                  // Redeem points now -------------------------------
-                                  SizedBox(height: 2.0.hp),
-                                  Flexible(child: redeemPoints()),
-                                ]),
-                          ),
-                          nearestAtm(),
-                          // carosuel Images --------------------
-                          CarasoulImages(),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 6.0.wp,
-                                top: 12.0.wp,
-                                bottom: 2.0.wp,
-                                right: 6.0.wp),
-                            child: Text(
-                              'Loans',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 16.0.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
+                                      ],
+                                    ),
+                                    SizedBox(height: 2.0.hp),
+                                    Text('cashback_india1_summary'.tr,
+                                        style: AppStyle.shortHeading.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600)),
+                                    SizedBox(height: 2.0.hp),
+                                    // balance card --------------------------
+                                    Row(
+                                      children: [
+                                        Expanded(child: balanceCard(first: true)),
+                                        SizedBox(width: 2.0.wp),
+                                        Expanded(child: balanceCard(first: false))
+                                      ],
+                                    ),
+                                    // ways to Reedem ---------------------------------
+                                    SizedBox(height: 1.0.hp),
+                                    // Obx(
+                                    //   () => Visibility(
+                                    //     visible:
+                                    //         _homeManager.redeemablePoints <= 14
+                                    //             ? true
+                                    //             : false,
+                                    //     child: Padding(
+                                    //       padding:
+                                    //           const EdgeInsets.only(left: 4.0),
+                                    //       child: Text(
+                                    //         'Note : You can redeem only if you have 15 or more points',
+                                    //         style: AppStyle.shortHeading.copyWith(
+                                    //           fontSize: Dimens.font_12sp,
+                                    //           color: Colors.white,
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(height: 1.0.hp),
+                                    Flexible(child: redeemWay()),
+                                    // Redeem points now -------------------------------
+                                    SizedBox(height: 2.0.hp),
+                                    Flexible(child: redeemPoints()),
+                                  ]),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                            child: LoansCard(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 6.0.wp,
-                                top: 12.0.wp,
-                                bottom: 2.0.wp,
-                                right: 6.0.wp),
-                            child: Text(
-                              'Payments',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 16.0.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
+                            nearestAtm(),
+                            // carosuel Images --------------------
+                            CarasoulImages(),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 6.0.wp,
+                                  top: 12.0.wp,
+                                  bottom: 2.0.wp,
+                                  right: 6.0.wp),
+                              child: Text(
+                                'Loans',
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: 16.0.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                            child: PaymentCards(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 6.0.wp,
-                                top: 12.0.wp,
-                                bottom: 2.0.wp,
-                                right: 6.0.wp),
-                            child: Text(
-                              'Insurance',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 16.0.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                              child: LoansCard(),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                            child: InsuranceCard(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 6.0.wp,
-                                top: 12.0.wp,
-                                bottom: 2.0.wp,
-                                right: 6.0.wp),
-                            child: Text(
-                              'Savings',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 16.0.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 6.0.wp,
+                                  top: 12.0.wp,
+                                  bottom: 2.0.wp,
+                                  right: 6.0.wp),
+                              child: Text(
+                                'Payments',
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: 16.0.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                            child: SavingsCard(),
-                          )
-                        ],
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                              child: PaymentCards(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 6.0.wp,
+                                  top: 12.0.wp,
+                                  bottom: 2.0.wp,
+                                  right: 6.0.wp),
+                              child: Text(
+                                'Insurance',
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: 16.0.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                              child: InsuranceCard(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 6.0.wp,
+                                  top: 12.0.wp,
+                                  bottom: 2.0.wp,
+                                  right: 6.0.wp),
+                              child: Text(
+                                'Savings',
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: 16.0.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                              child: SavingsCard(),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+              ),
             ),
           ),
         ),
