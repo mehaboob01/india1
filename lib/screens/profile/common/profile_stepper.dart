@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constant/theme_manager.dart';
+import '../../../utils/common_methods.dart';
 
 class ProfileStepper {
   ProfileController profileController = Get.put(ProfileController());
@@ -89,22 +91,24 @@ class ProfileStepper {
     );
   }
 
-  Widget textField({
-    required String label,
-    String? prefix,
-    required String hint,
-    bool isDisable = false,
-    Function? onTap,
-    required TextEditingController controller,
-    Widget? suffix,
-    FormFieldValidator? vaidation,
-    Function? onChanged,
-    TextInputType? keyboardType,
-    List<TextInputFormatter>? inputFormatters,
-    int? maxLength,
-  }) {
+  Widget textField(
+      {required String label,
+      String? prefix,
+      required String hint,
+      bool isDisable = false,
+      Function? onTap,
+      required TextEditingController controller,
+      Widget? suffix,
+      FormFieldValidator? vaidation,
+      Function? onChanged,
+      TextInputType? keyboardType,
+      List<TextInputFormatter>? inputFormatters,
+      int? maxLength,
+      bool textCap = false}) {
     return TextFormField(
       controller: controller,
+      textCapitalization:
+          textCap ? TextCapitalization.characters : TextCapitalization.none,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters ?? [],
       maxLength: maxLength,
@@ -153,7 +157,11 @@ class ProfileStepper {
       onChanged: onChanged,
       value: value,
       hint: Text(hint),
-      icon: Icon(Icons.keyboard_arrow_down),
+      icon: Icon(
+        Icons.keyboard_arrow_down_rounded,
+        color: AppColors.greyInlineText,
+        size: 34,
+      ),
       isExpanded: true,
       decoration: inputDecoration(
         label: label,
@@ -514,7 +522,7 @@ class ProfileStepper {
                   hint: 'Enter area, road, landmark, etc',
                   vaidation: (value) {
                     if (value.toString().trim().isNotEmpty) {
-                      profileController.nullCheckValidation(
+                      return profileController.nullCheckValidation(
                         value,
                         'Enter address line 2',
                       );
@@ -681,55 +689,34 @@ class ProfileStepper {
                     FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                commonDropDown(
-                  item: [
-                    {"name": "Cash", "value": "Cash"},
-                    {"name": "Cheque", "value": "Cheque"},
-                    {"name": "BankTransfer", "value": "BankTransfer"},
-                    {"name": "PayCards", "value": "PayCards"},
-                  ].map((value) {
-                    return DropdownMenuItem(
-                      value: value['value'],
-                      child: Text(value['name'].toString()),
-                    );
-                  }).toList(),
-                  value: profileController.accountType.value == ''
-                      ? null
-                      : profileController.accountType.value,
-                  onChanged: (value) {
-
-                      profileController.accountType.value = value;
-
-                  },
-                  label: 'Salary mode',
-                  hint: 'Choose your salary mode',
-                ),
-                // ButtonTheme(
-                //   alignedDropdown: true,
-                //   child: commonDropDown(
-                //     item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                //         .map<DropdownMenuItem<String>>((String value) {
-                //       return DropdownMenuItem<String>(
-                //         value: value,
-                //         child: Text(value.toString()),
-                //       );
-                //     }).toList(),
-                //     value: profileController.accountType.value == ''
-                //         ? null
-                //         : profileController.accountType.value,
-                //     onChanged: (value) {
-                //       if (isFromLoan == true) {
-                //         profileController.accountType.value = value;
-                //       }
-                //       temp = value;
-                //     },
-                //     label: 'Salary Mode',
-                //     hint: 'Salary Mode',
-                //   ),
-                // ),
+                if (isFromLoan == true || isFromInsurance == true) ...[
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ButtonTheme(
+                    alignedDropdown: true,
+                    child: commonDropDown(
+                      item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(),
+                      value: profileController.accountType!.value.isEmpty
+                          ? null
+                          : profileController.accountType!.value,
+                      onChanged: (value) {
+                        if (isFromLoan == true) {
+                          profileController.accountType!.value = value;
+                        }
+                        temp = value;
+                      },
+                      label: 'Salary Mode',
+                      hint: 'Salary Mode',
+                    ),
+                  ),
+                ],
                 SizedBox(
                   height: 20,
                 ),
@@ -769,6 +756,9 @@ class ProfileStepper {
                 controller: profileController.panNumberController.value,
                 label: 'PAN number',
                 hint: 'Enter your PAN number here',
+                textCap: true,
+                inputFormatters: [UpperCaseTextFormatter()],
+                onChanged: (value) {},
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||

@@ -3,26 +3,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/loyality_points/cashback_redeem/cashback_redo_controller.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 
 import '../../constant/theme_manager.dart';
 import '../../widgets/common_drop_down.dart';
+import '../../widgets/common_search_dropdown.dart';
 import '../loyality_points/cashback_redeem/cb_manager.dart';
 import 'common/profile_stepper.dart';
 import 'controller/add_account_manager.dart';
 import 'controller/profile_controller.dart';
 
-class AddBankAccountScreen extends StatelessWidget {
+class AddBankAccountScreen extends StatefulWidget {
   AddBankAccountScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AddBankAccountScreen> createState() => _AddBankAccountScreenState();
+}
+
+class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
   ProfileController profileController = Get.put(ProfileController());
+
   AddAccountManager accountManager = Get.put(AddAccountManager());
+
   CashBackManager cashBackManager = Get.put(CashBackManager());
 
+  final redoCtrl = Get.put(CashBackRedoController());
+
   GlobalKey<FormState> bankAccountKey = GlobalKey<FormState>();
- // GlobalKey<FormState> bankAccountKeyForBankId = GlobalKey<FormState>();
+
+  // GlobalKey<FormState> bankAccountKeyForBankId = GlobalKey<FormState>();
   final bankAccountKeyForBankId = GlobalKey<FormBuilderState>();
+
   bool bankAccountDropDownTapped = false;
+  @override
+  void initState() {
+    super.initState();
+    redoCtrl.bankname.value = '';
+    profileController.accountNumberController.value.text = '';
+  }
+
   String? checkBankId(bankName) {
     for (var index in cashBackManager.bankListId) {
       if (index.name == bankName) {
@@ -54,34 +74,62 @@ class AddBankAccountScreen extends StatelessWidget {
                           : AutovalidateMode.disabled,
                   child: FormBuilder(
                     key: bankAccountKeyForBankId,
-                    initialValue: {
-                      "bankDropDown": null,
-
-                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    initialValue: {},
                     child: Column(
                       children: [
                         SizedBox(
                           height: 20,
                         ),
                         Obx(
-                              () => DropDown(
-                            onTapped: () {
-                              bankAccountDropDownTapped = true;
-                            },
+                          () => SearchDropDown(
+                            isforProfileScreen: true,
+                            formkey: cashBackManager.bankNameFormKey,
+                            searchIconColor: AppColors.primary,
+                            selectedValue:
+                                cashBackManager.dropDownBankName.value,
                             onChanged: (value) {
-                              // return cashBackManager.bankAccontSelected!.value = value!;
+                              redoCtrl.bankname.value = value!;
+                              print(redoCtrl.bankname.value);
                             },
-                            formName: 'bankDropDown',
-                            isDropDownEnabled:
-                            accountManager.selectedIndex.value != -1
-                                ? false
-                                : true,
+                            // onChanged: (value) {
+                            //   // return cashBackManager.bankAccontSelected!.value = value!;
+                            // },
+                            // onTapped: () {
+                            // //  return bankAccountDropDownTapped = true;
+
+                            // },
+                            // isDropDownEnabled:
+                            //     cashBackManager.selectedIndex.value != -1
+                            //         ? false
+                            //         : true,
+                            searchHintText: 'Find your bank here',
                             labelName: "Select your bank here",
                             hintText: "Select your bank here",
-                            data: cashBackManager.bankList.toList(),
+                            itemList: cashBackManager.bankList.toList(),
                             validationText: '*Bank name is compulsory',
                           ),
                         ),
+
+                        // Obx(
+                        //   () => DropDown(
+                        //     onTapped: () {
+                        //       bankAccountDropDownTapped = true;
+                        //     },
+                        //     onChanged: (value) {
+                        //       // return cashBackManager.bankAccontSelected!.value = value!;
+                        //     },
+                        //     formName: 'bankDropDown',
+                        //     isDropDownEnabled:
+                        //         accountManager.selectedIndex.value != -1
+                        //             ? false
+                        //             : true,
+                        //     labelName: "Select your bank here",
+                        //     hintText: "Select your bank here",
+                        //     data: cashBackManager.bankList.toList(),
+                        //     validationText: '*Bank name is compulsory',
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -96,7 +144,8 @@ class AddBankAccountScreen extends StatelessWidget {
                           ),
                           keyboardType: TextInputType.number,
                           inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(18),
                           ],
                         ),
                         SizedBox(
@@ -106,7 +155,8 @@ class AddBankAccountScreen extends StatelessWidget {
                           controller: profileController.ifscController.value,
                           label: 'IFSC code',
                           hint: 'Enter IFSC code',
-                          vaidation: (value) => profileController.ifscValidation(
+                          vaidation: (value) =>
+                              profileController.ifscValidation(
                             value,
                           ),
                         ),
@@ -114,7 +164,7 @@ class AddBankAccountScreen extends StatelessWidget {
                           height: 20,
                         ),
                         ProfileStepper().commonDropDown(
-                          item: <String>['savings','current']
+                          item: <String>['savings', 'current']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -126,7 +176,7 @@ class AddBankAccountScreen extends StatelessWidget {
                           },
                           label: 'Account type',
                           hint: 'Select account type',
-                          value: profileController.accountType.value == ''
+                          value: profileController.accountType.value.isEmpty
                               ? null
                               : profileController.accountType.value,
                         ),
@@ -138,7 +188,8 @@ class AddBankAccountScreen extends StatelessWidget {
                               ? CircularProgressIndicator()
                               : InkWell(
                                   onTap: () {
-                                    profileController.autoValidation.value = true;
+                                    profileController.autoValidation.value =
+                                        true;
 
                                     if (!bankAccountKey.currentState!
                                         .validate()) {
@@ -157,26 +208,29 @@ class AddBankAccountScreen extends StatelessWidget {
                                         duration: Duration(seconds: 3),
                                       )..show(context);
                                     } else {
-                                      bankAccountKeyForBankId.currentState!.save();
+                                      bankAccountKeyForBankId.currentState!
+                                          .save();
 
-                                     //  print(
-                                     //      "bank name===> ${bankAccountKeyForBankId.currentState!.value['bankDropDown']}");
-                                     //
-                                      String? bankId = checkBankId(bankAccountKeyForBankId.currentState!.value['bankDropDown']);
-                                     print("bank id${bankId}");
-                                       profileController.addBankAccountData(bankId);
-                                       bankAccountKeyForBankId.currentState!.value.clear();
-
-
-
-
+                                      //  print(
+                                      //      "bank name===> ${bankAccountKeyForBankId.currentState!.value['bankDropDown']}");
+                                      print(
+                                          'before call ${redoCtrl.bankname.value}');
+                                      String? bankId =
+                                          checkBankId(redoCtrl.bankname.value);
+                                      print("bank id ${bankId}");
+                                      profileController
+                                          .addBankAccountData(bankId);
+                                      bankAccountKeyForBankId
+                                          .currentState!.value
+                                          .clear();
                                     }
                                   },
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 48,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Spacer(),
                                         Text(
@@ -214,7 +268,8 @@ class AddBankAccountScreen extends StatelessWidget {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.white70.withOpacity(0.8),
+                                          color:
+                                              Colors.white70.withOpacity(0.8),
                                           offset: Offset(
                                             -6.0,
                                             -6.0,

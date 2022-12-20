@@ -14,12 +14,9 @@ import '../screens/profile/profile_screen.dart';
 import 'common_heading_icon.dart';
 
 class CommonPageHeader extends StatelessWidget {
-
   HomeManager _homeManager = Get.put(HomeManager());
 
-
   final notificationManager = Get.put(NotificationManager());
-
 
   CommonPageHeader({required this.pageName});
   final PageName pageName;
@@ -162,10 +159,10 @@ class CommonPageHeader extends StatelessWidget {
   // heading box -----------------------------------
   Widget headingBox(
       {IconData? icon,
-        String? image,
-        String? text,
-        VoidCallback? ontap,
-        Color? color}) {
+      String? image,
+      String? text,
+      VoidCallback? ontap,
+      Color? color}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
@@ -176,17 +173,19 @@ class CommonPageHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(5)),
         child: text != null
             ? Center(
-            child: Text(
-              text,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ))
+                child: Text(
+                text,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ))
             : image != null
-            ? Center(
-            child: SvgPicture.asset(
-              image,
-              color: Colors.black,
-            ))
-            : Icon(icon),
+                ? Center(
+                    child: SvgPicture.asset(
+                    image,
+                    color: _homeManager.isClicked.value
+                        ? Colors.white
+                        : Colors.black,
+                  ))
+                : Icon(icon),
       ),
     );
   }
@@ -215,8 +214,7 @@ class CommonPageHeader extends StatelessWidget {
                       fontSize: Dimens.font_16sp)),
             ),
             Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
                 headingBox(
@@ -225,44 +223,31 @@ class CommonPageHeader extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext
-                              context) =>
-                                  LanguageSelectionIO(
-                                      'home')));
+                              builder: (BuildContext context) =>
+                                  LanguageSelectionIO('home')));
                     }),
                 SizedBox(
                   width: 2.0.wp,
                 ),
-
-                notificationManager
-                    .notificationsCount
-                    .length
-                    .toInt() !=
-                    0?
-                GestureDetector(
-                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
-                  child: Badge(
-                    position: BadgePosition
-                        .topEnd(
-                        top: -10,
-                        end: 0),
-                    badgeColor: Colors.red,
-                    badgeContent: Container(
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                            color: Colors
-                                .white),
+                notificationManager.notificationsCount.length.toInt() != 0
+                    ? GestureDetector(
+                        onTap: () => Get.toNamed(MRouter.notificationScreen),
+                        child: Badge(
+                          position: BadgePosition.topEnd(top: -10, end: 0),
+                          badgeColor: Colors.red,
+                          badgeContent: Container(
+                            child: Text(
+                              "",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          child: headingBox(image: AppImages.notify_icon),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () => Get.toNamed(MRouter.notificationScreen),
+                        child: headingBox(image: AppImages.notify_icon),
                       ),
-                    ),
-                    child: headingBox(
-                        image: AppImages.notify_icon),
-                  ),
-                ): GestureDetector(
-                  onTap: ()=> Get.toNamed(MRouter.notificationScreen),
-                  child: headingBox(
-                      image: AppImages.notify_icon),
-                ),
                 SizedBox(
                   width: 2.0.wp,
                 ),
@@ -272,47 +257,30 @@ class CommonPageHeader extends StatelessWidget {
                     showMenu<String>(
                       context: context,
                       shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.only(
-                              bottomLeft:
-                              Radius.circular(
-                                  13.0),
-                              bottomRight:
-                              Radius.circular(
-                                  13.0),
-                              topLeft:
-                              Radius.circular(
-                                  13.0))),
-                      position: RelativeRect.fromLTRB(
-                          25.0, 118.0, 16.0, 0.0),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(13.0),
+                              bottomRight: Radius.circular(13.0),
+                              topLeft: Radius.circular(13.0))),
+                      position: RelativeRect.fromLTRB(25.0, 118.0, 16.0, 0.0),
                       items: [
                         PopupMenuItem(
                           height: Get.height * 0.02,
                           child: GestureDetector(
                             onTap: () {
-                              _homeManager.isClicked
-                                  .value = false;
+                              _homeManager.isClicked.value = false;
                               Get.back();
-                              Get.to(() =>
-                                  ProfileScreen());
+                              Get.to(() => ProfileScreen());
                             },
                             child: Container(
                               height: Get.height * 0.03,
                               width: double.infinity,
                               child: Text(
                                 "My Profile",
-                                style: AppStyle
-                                    .shortHeading
-                                    .copyWith(
-                                    fontSize: Dimens
-                                        .font_14sp,
-                                    color: Colors
-                                        .black,
-                                    fontWeight:
-                                    FontWeight
-                                        .w400,
-                                    letterSpacing:
-                                    1),
+                                style: AppStyle.shortHeading.copyWith(
+                                    fontSize: Dimens.font_14sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 1),
                               ),
                             ),
                           ),
@@ -322,62 +290,47 @@ class CommonPageHeader extends StatelessWidget {
                           height: 0.02,
                           child: GestureDetector(
                               onTap: () => {
-                                _homeManager
-                                    .isClicked
-                                    .value = false,
-                                Get.back(),
-                                Get.toNamed(
-                                  MRouter
-                                      .loyaltyPoints,
-                                ),
-                              },
+                                    _homeManager.isClicked.value = false,
+                                    Get.back(),
+                                    Get.toNamed(
+                                      MRouter.loyaltyPoints,
+                                    ),
+                                  },
                               child: Container(
-                                height:
-                                Get.height * 0.02,
+                                height: Get.height * 0.02,
                                 width: double.infinity,
                                 child: Text(
                                   "My Rewards",
-                                  style: AppStyle
-                                      .shortHeading
-                                      .copyWith(
-                                      fontSize: Dimens
-                                          .font_14sp,
-                                      color: Colors
-                                          .black,
-                                      fontWeight:
-                                      FontWeight
-                                          .w400,
-                                      letterSpacing:
-                                      1),
+                                  style: AppStyle.shortHeading.copyWith(
+                                      fontSize: Dimens.font_14sp,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: 1),
                                 ),
                               )),
                         ),
                       ],
                       elevation: 8.0,
-                    ).then<void>(
-                            (String? itemSelected) {
-                          if (itemSelected == null) {
-                            _homeManager.isClicked.value =
-                            false;
-                            return;
-                          }
+                    ).then<void>((String? itemSelected) {
+                      if (itemSelected == null) {
+                        _homeManager.isClicked.value = false;
+                        return;
+                      }
 
-                          if (itemSelected == "1") {
-                          } else if (itemSelected == "2") {
-                            Get.toNamed(
-                                MRouter.loyaltyPoints);
+                      if (itemSelected == "1") {
+                      } else if (itemSelected == "2") {
+                        Get.toNamed(MRouter.loyaltyPoints);
 
-                            print("2nd itme ");
-                          } else if (itemSelected == "3") {
-                          } else {
-                            //code here
-                          }
-                        });
+                        print("2nd itme ");
+                      } else if (itemSelected == "3") {
+                      } else {
+                        //code here
+                      }
+                    });
                   },
                   child: Obx(
-                   ()=> headingBox(
-                        color:
-                        _homeManager.isClicked.value
+                    () => headingBox(
+                        color: _homeManager.isClicked.value
                             ? Colors.orange
                             : Colors.white,
                         image: AppImages.user_profile),
@@ -493,8 +446,6 @@ class CommonPageCategoriesHeading extends StatelessWidget {
               fontWeight: FontWeight.w600)),
     );
   }
-
-
 }
 
 enum PageName { loans, insurance, payments, savings }

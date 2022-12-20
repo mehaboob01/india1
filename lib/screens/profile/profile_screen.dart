@@ -493,20 +493,26 @@ class ProfileScreen extends StatelessWidget {
   }
 
   nextStep(title) {
+    print('Hello dabba');
+    print(title);
     int stepNumber = 1;
     switch (title) {
       case 'Personal details':
         stepNumber = 1;
+
         break;
 
-      case 'Residential address':
+      case 'Residential Address':
         stepNumber = 2;
+
         break;
 
       case 'Occupation Details':
         stepNumber = 3;
+
         break;
     }
+    print(stepNumber);
     profileController.currentStep.value = stepNumber;
     Get.to(() => StepperScreen(
           stepNumber: stepNumber,
@@ -772,31 +778,33 @@ class ProfileScreen extends StatelessWidget {
 
   Widget bankAccount() {
     return Obx(
-      () =>  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (profileController.getBankAccountLoading.value != false) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: LoadingAnimationWidget.inkDrop(
-                      size: 34,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ] else ...[
-                  cashBackManager.customerBankList.length == 0
-                      ? Row(crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Container(height: 34,
-                            child: Text("Could not find any bank account data!")),
-                          ),
-                        ],
-                      )
-                      :
-                  Container(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (profileController.getBankAccountLoading.value != false) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: LoadingAnimationWidget.inkDrop(
+                size: 34,
+                color: AppColors.primary,
+              ),
+            ),
+          ] else ...[
+            cashBackManager.customerBankList.length == 0
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                            height: 34,
+                            child:
+                                Text("Could not find any bank account data!")),
+                      ),
+                    ],
+                  )
+                : Container(
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -838,16 +846,16 @@ class ProfileScreen extends StatelessWidget {
                             ],
                     ),
                   ),
-                  // if (isBankAccountVisible.value == false)
-                  addDetailButton(
-                    title: 'Add Bank Account',
-                    callBack: () {
-                      Get.to(() => AddBankAccountScreen());
-                    },
-                  ),
-                ]
-              ],
+            // if (isBankAccountVisible.value == false)
+            addDetailButton(
+              title: 'Add Bank Account',
+              callBack: () {
+                Get.to(() => AddBankAccountScreen());
+              },
             ),
+          ]
+        ],
+      ),
     );
   }
 

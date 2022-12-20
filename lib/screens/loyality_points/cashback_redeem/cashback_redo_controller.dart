@@ -16,5 +16,11 @@ class CashBackRedoController extends GetxController {
   final redeemPointsSliderValue = 0.0.obs; // slider value
   final redeemPointsMinValue = 0.0.obs; // slider minimum value
   final accountNumberAutoValidate = false.obs; // account number auto validate
+  final bankname = ''.obs; // drop down bank name
 
+  @override
+  void onClose() {
+    sliderTextEditingCtrl.clear();
+    super.onClose();
+  }
 }

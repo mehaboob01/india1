@@ -46,10 +46,12 @@ class _StepperScreenState extends State<StepperScreen> {
             child: CustomAppBar(
               heading: 'Profile',
               customActionIconsList: [
-                 CustomActionIcons(image: "assets/svg/homeSvg.svg", isSvg: true,onHeaderIconPressed: () async{
-                    Get.toNamed(MRouter.homeScreen);
-                  })
-
+                CustomActionIcons(
+                    image: "assets/svg/homeSvg.svg",
+                    isSvg: true,
+                    onHeaderIconPressed: () async {
+                      Get.toNamed(MRouter.homeScreen);
+                    })
               ],
             ),
           ),
@@ -121,17 +123,16 @@ class _StepperScreenState extends State<StepperScreen> {
                               } else if (profileController.currentStep.value ==
                                   2) {
                                 if (residentialForm.currentState!.validate()) {
-                                  if (profileController.city.value.isEmpty ||
-                                      profileController.state.value.isEmpty) {
-                                    Fluttertoast.showToast(
-                                      msg: "Enter valid pin code",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      fontSize: 16.0,
-                                    );
-                                  } else {
-                                    profileController.addResidentialDetails();
-                                  }
+                                  // if (profileController.city.value.isEmpty ||
+                                  //     profileController.state.value.isEmpty) {
+                                  //   Fluttertoast.showToast(
+                                  //     msg: "Enter valid pin code",
+                                  //     toastLength: Toast.LENGTH_SHORT,
+                                  //     gravity: ToastGravity.BOTTOM,
+                                  //     fontSize: 16.0,
+                                  //   );
+                                  // } else {
+                                  profileController.addResidentialDetails();
                                 }
                               } else if (profileController.currentStep.value ==
                                   3) {

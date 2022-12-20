@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:india_one/constant/extensions.dart';
 
 import '../constant/theme_manager.dart';
 
@@ -9,7 +8,7 @@ class CommonTextField extends StatelessWidget {
   const CommonTextField(
       {this.hintText,
       this.labelText,
-        this.inUperCase,
+      this.inUperCase,
       this.maxlines = 1,
       this.keyboardType = TextInputType.text,
       this.inputController,
@@ -20,6 +19,7 @@ class CommonTextField extends StatelessWidget {
       this.inputOnSubmitted,
       this.isUpperCase,
       this.inputFormat,
+      this.suffixIcon,
       required this.formName,
       this.initialValue,
       this.isfieldEnabled});
@@ -39,15 +39,20 @@ class CommonTextField extends StatelessWidget {
   final bool? isfieldEnabled;
   final bool? isAutoValidate;
   final bool? isUpperCase;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: formName,
-      textCapitalization: isUpperCase == true ? TextCapitalization.characters : TextCapitalization.none,
+      textCapitalization: isUpperCase == true
+          ? TextCapitalization.characters
+          : TextCapitalization.none,
       enabled: isfieldEnabled ?? true,
       initialValue: initialValue ?? null,
       controller: inputController,
-      autovalidateMode: isAutoValidate == true ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+      autovalidateMode: isAutoValidate == true
+          ? AutovalidateMode.onUserInteraction
+          : AutovalidateMode.disabled,
       maxLines: maxlines,
       inputFormatters: inputFormat,
       keyboardType: keyboardType,
@@ -60,6 +65,7 @@ class CommonTextField extends StatelessWidget {
           fontSize: 11.0.sp),
       decoration: InputDecoration(
           isDense: true,
+          suffixIcon: suffixIcon ?? null,
           contentPadding:
               EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           hintText: hintText, //'Slide the amount above or enter', // dynamic
