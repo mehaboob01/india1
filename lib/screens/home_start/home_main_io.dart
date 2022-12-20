@@ -18,6 +18,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/button_with_flower.dart';
@@ -51,6 +52,8 @@ class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
 class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
   final notificationManager = Get.put(NotificationManager());
+  final ConnectionManagerController _controller =
+  Get.find<ConnectionManagerController>();
 
   @override
   void initState() {

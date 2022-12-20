@@ -72,9 +72,9 @@ class _ProvidersListState extends State<ProvidersList> {
                   child:
                        ListView.builder(
                               shrinkWrap: true,
-                              itemCount: loanController.newLoanLendersModel.value.lenders?.length,
+                              itemCount: loanController.loanLendersModel.value.lenders?.length,
                               itemBuilder: (context, index) {
-                                 Details? details = loanController.newLoanLendersModel.value.lenders?[index].details;
+                                List<Lenders>? lenders = loanController.loanLendersModel.value.lenders;
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0, vertical: 8.0),
@@ -110,8 +110,8 @@ class _ProvidersListState extends State<ProvidersList> {
                                                     borderRadius:
                                                         BorderRadius.circular(12),
                                                     child: CachedNetworkImage(
-                                                      imageUrl: details?.url == null? "":
-                                                      details!.url.toString(),
+                                                      imageUrl: lenders?[index].details?.url == null? "":
+                                                      lenders![index].details!.url.toString(),
 
                                                       errorWidget:
                                                           (context, _, error) {
@@ -135,7 +135,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                         details?.lender??
+                                                         lenders?[index].details?.lender??
                                                               "Bajaj Finance",
                                                           style: TextStyle(
                                                             color: AppColors
@@ -147,7 +147,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          details?.keywords.toString() == null?"":details!.keywords.toString(),
+                                                         lenders?[index].details?.keywords == null?"": lenders![index].details!.keywords.toString(),
                                                           style: TextStyle(
                                                             color: AppColors
                                                                 .borderColor,
@@ -224,17 +224,17 @@ class _ProvidersListState extends State<ProvidersList> {
                                                 LoanCommon().rowText(
                                                   value: 'Max amount',
                                                   title:
-                                                      '₹ ${details?.loanAmount == null ? "0" :details!.loanAmount.toString()}',
+                                                      '₹ ${lenders?[index].details?.loanAmount == null ? "0" :lenders![index].details?.loanAmount}',
                                                 ),
                                                 LoanCommon().rowText(
                                                   value: 'Tenure',
                                                   title:
-                                                  '${details?.tenure == null ? "0" :details!.tenure.toString()}'
+                                                  '${lenders?[index].details?.tenure == null ? "0" :lenders![index].details?.tenure}'
                                                 ),
                                                 LoanCommon().rowText(
                                                   value: 'Interest/m',
                                                   title:
-                                                  ' ${details?.loanInterest == null ? "0" :details!.loanInterest.toString()}'
+                                                  ' ${lenders?[index].details?.loanInterest == null ? "0" :lenders![index].details?.loanInterest}'
                                                 ),
                                               ],
                                             ),
@@ -250,7 +250,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                   callBack: () {
                                                     Get.to(() => CommonWebView(
                                                       title: 'Loan details',
-                                                      url: details?.url.toString() == null ?"":details!.url.toString(),
+                                                      url: lenders?[index].details?.url == null ?"":lenders![index].details!.url.toString(),
                                                     ));
 
                                                   },

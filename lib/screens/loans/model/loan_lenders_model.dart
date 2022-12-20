@@ -1,5 +1,5 @@
 class LoanLendersModel {
-  String? nextToken;
+  Null? nextToken;
   List<Lenders>? lenders;
 
   LoanLendersModel({this.nextToken, this.lenders});
@@ -26,61 +26,66 @@ class LoanLendersModel {
 
 class Lenders {
   String? id;
-  String? logoURL;
-  String? loanTitle;
-  String? loanType;
-  List<String>? keywords;
-  num? loanMaxAmount;
-  num? minTenureInMonths;
-  num? maxTenureInMonths;
-  double? minInterestRate;
-  double? maxInterestRate;
-  String? loanApplyType;
-  String? redirectUrl;
+  String? logoUrl;
+  Details? details;
 
-  Lenders(
-      {this.id,
-      this.logoURL,
-      this.loanTitle,
-      this.loanType,
-      this.keywords,
-      this.loanMaxAmount,
-      this.minTenureInMonths,
-      this.maxTenureInMonths,
-      this.minInterestRate,
-      this.maxInterestRate,
-      this.loanApplyType,
-      this.redirectUrl});
+  Lenders({this.id, this.logoUrl, this.details});
 
   Lenders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    logoURL = json['logoUrl'];
-    loanTitle = json['loanTitle'];
-    loanType = json['loanType'];
-    keywords = json['keywords'].cast<String>();
-    loanMaxAmount = json['loanMaxAmount'];
-    minTenureInMonths = json['minTenureInMonths'];
-    maxTenureInMonths = json['maxTenureInMonths'];
-    minInterestRate = json['minInterestRate'];
-    maxInterestRate = json['maxInterestRate'];
-    loanApplyType = json['loanApplyType'];
-    redirectUrl = json['redirectUrl'];
+    logoUrl = json['logoUrl'];
+    details =
+    json['details'] != null ? new Details.fromJson(json['details']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['logoUrl'] = this.logoURL;
-    data['loanTitle'] = this.loanTitle;
-    data['loanType'] = this.loanType;
-    data['keywords'] = this.keywords;
-    data['loanMaxAmount'] = this.loanMaxAmount;
-    data['minTenureInMonths'] = this.minTenureInMonths;
-    data['maxTenureInMonths'] = this.maxTenureInMonths;
-    data['minInterestRate'] = this.minInterestRate;
-    data['maxInterestRate'] = this.maxInterestRate;
-    data['loanApplyType'] = this.loanApplyType;
-    data['redirectUrl'] = this.redirectUrl;
+    data['logoUrl'] = this.logoUrl;
+    if (this.details != null) {
+      data['details'] = this.details!.toJson();
+    }
+    return data;
+  }
+}
+
+class Details {
+  String? loanInterest;
+  String? tenure;
+  String? lender;
+  String? keywords;
+  String? loanAmount;
+  String? processTime;
+  String? url;
+
+  Details(
+      {this.loanInterest,
+        this.tenure,
+        this.lender,
+        this.keywords,
+        this.loanAmount,
+        this.processTime,
+        this.url});
+
+  Details.fromJson(Map<String, dynamic> json) {
+    loanInterest = json['Loan Interest'];
+    tenure = json['Tenure'];
+    lender = json['lender'];
+    keywords = json['Keywords'];
+    loanAmount = json['Loan Amount'];
+    processTime = json['Process Time'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Loan Interest'] = this.loanInterest;
+    data['Tenure'] = this.tenure;
+    data['lender'] = this.lender;
+    data['Keywords'] = this.keywords;
+    data['Loan Amount'] = this.loanAmount;
+    data['Process Time'] = this.processTime;
+    data['url'] = this.url;
     return data;
   }
 }

@@ -684,29 +684,52 @@ class ProfileStepper {
                 SizedBox(
                   height: 20,
                 ),
-                ButtonTheme(
-                  alignedDropdown: true,
-                  child: commonDropDown(
-                    item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    value: profileController.accountType == ''
-                        ? null
-                        : profileController.accountType.value,
-                    onChanged: (value) {
-                      if (isFromLoan == true) {
-                        profileController.accountType.value = value;
-                      }
-                      temp = value;
-                    },
-                    label: 'Salary Mode',
-                    hint: 'Salary Mode',
-                  ),
+                commonDropDown(
+                  item: [
+                    {"name": "Cash", "value": "Cash"},
+                    {"name": "Cheque", "value": "Cheque"},
+                    {"name": "BankTransfer", "value": "BankTransfer"},
+                    {"name": "PayCards", "value": "PayCards"},
+                  ].map((value) {
+                    return DropdownMenuItem(
+                      value: value['value'],
+                      child: Text(value['name'].toString()),
+                    );
+                  }).toList(),
+                  value: profileController.accountType.value == ''
+                      ? null
+                      : profileController.accountType.value,
+                  onChanged: (value) {
+
+                      profileController.accountType.value = value;
+
+                  },
+                  label: 'Salary mode',
+                  hint: 'Choose your salary mode',
                 ),
+                // ButtonTheme(
+                //   alignedDropdown: true,
+                //   child: commonDropDown(
+                //     item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                //         .map<DropdownMenuItem<String>>((String value) {
+                //       return DropdownMenuItem<String>(
+                //         value: value,
+                //         child: Text(value.toString()),
+                //       );
+                //     }).toList(),
+                //     value: profileController.accountType.value == ''
+                //         ? null
+                //         : profileController.accountType.value,
+                //     onChanged: (value) {
+                //       if (isFromLoan == true) {
+                //         profileController.accountType.value = value;
+                //       }
+                //       temp = value;
+                //     },
+                //     label: 'Salary Mode',
+                //     hint: 'Salary Mode',
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),

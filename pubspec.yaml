@@ -70,6 +70,7 @@ dependencies:
   new_version: ^0.3.1
   badges: ^2.0.3
   device_info_plus: ^8.0.0
+  connectivity_plus: ^2.2.1
 
 
 

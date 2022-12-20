@@ -29,9 +29,9 @@ class LoanController extends GetxController {
   Rx<double> maxValue = 0.0.obs;
   RxString customerId = ''.obs;
 
-  // lenders list new model
-  var lendersList = <Details>[].obs;
-  var lendersListSend = <Details>[];
+  // // lenders list new model
+  // var lendersList = <Lende>[].obs;
+  // var lendersListSend = <Details>[];
 
   var currentScreen = Steps.LOAN_AMOUNT.index.obs;
 
@@ -222,13 +222,7 @@ class LoanController extends GetxController {
           print("in if condition");
           loanProvidersModel.value = LoanProvidersModel.fromJson(response);
         } else {
-          print("in else condition");
 
-
-          NewLendersModel newLendersModel = NewLendersModel.fromJson(response);
-          print("new lenders model data${newLendersModel.lenders![0].details!.loanInterest}");
-          newLoanLendersModel.value = NewLendersModel.fromJson(response);
-          print(" aa gya");
 
            loanLendersModel.value = LoanLendersModel.fromJson(response);
 
@@ -245,6 +239,21 @@ class LoanController extends GetxController {
     required String providerId,
     required String lenderId,
   }) async {
+
+    Map<String,dynamic> sendData = {
+      "customerId": customerId.value,
+      "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
+      if (providerId != '') ...{
+        "loanProviderId": "$providerId",
+      },
+      if (lenderId != '') ...{
+        "loanLenderId": "$lenderId",
+      }
+    };
+    print("data form loan$sendData");
+
+
+
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();

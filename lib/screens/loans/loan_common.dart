@@ -163,7 +163,7 @@ class LoanCommon {
                           width: 50,
                           imageUrl: (isPersonalLoan == true
                                   ? (providers?.logoURL ?? '')
-                                  : lenders?.logoURL) ??
+                                  : lenders?.logoUrl) ??
                               '',
                           errorWidget: (context, _, error) {
                             return Icon(
@@ -182,7 +182,7 @@ class LoanCommon {
                           Text(
                             (isPersonalLoan == true
                                     ? (providers?.name ?? '')
-                                    : lenders?.loanTitle) ??
+                                    : lenders?.details?.lender.toString()) ??
                                 "Bajaj Finance",
                             style: TextStyle(
                               color: AppColors.lightBlack,
@@ -193,7 +193,7 @@ class LoanCommon {
                           Text(
                             (isPersonalLoan == true
                                     ? providers?.subTitle
-                                    : (lenders?.keywords?[0] ?? '')) ??
+                                    : (lenders?.details?.keywords![0] ?? '')) ??
                                 "Easy loan processing",
                             style: TextStyle(
                               color: AppColors.borderColor,
@@ -217,17 +217,15 @@ class LoanCommon {
                     rowText(
                       value: 'Max amount',
                       title:
-                          '₹ ${CommonMethods().indianRupeeValue(lenders?.loanMaxAmount!.toDouble() ?? 0)}',
-                    ),
+                          '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.details!.loanAmount!.toString()) ?? 0)}'),
                     rowText(
                       value: 'Tenure',
-                      title:
-                          '${lenders?.minTenureInMonths ?? 0}-${lenders?.maxTenureInMonths ?? 0} months',
+                      title: '${lenders.details!.tenure} months',
                     ),
                     rowText(
                       value: 'Interest/m',
                       title:
-                          '${lenders?.minInterestRate ?? 0}-${lenders?.maxInterestRate ?? 0}%',
+                          '${lenders.details?.loanInterest}%',
                     ),
                   ],
                 ),

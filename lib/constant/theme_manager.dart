@@ -508,6 +508,33 @@ class Strings {
   static const API_ERROR = "Something went wrong. please try after sometime";
 }
 
+showSnackBar({
+  required title,
+  required message,
+}) {
+  return Get.snackbar(
+    
+    
+    title,
+    message,
+    backgroundColor: Colors.black.withOpacity(0.9),
+    colorText: Colors.white,
+    icon: Icon(
+      Icons.signal_wifi_connected_no_internet_4,
+      color: Colors.white,
+    ),
+    showProgressIndicator: true,
+    snackStyle: SnackStyle.FLOATING,
+    duration: Duration(
+      days: 365,
+    ),
+    mainButton: TextButton(onPressed: () {
+     Get.back();
+    }, child: Text("ok"),)
+    
+  );
+}
+
 class AppFonts {
   static const appFont = 'Graphik';
 }

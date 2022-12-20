@@ -13,6 +13,7 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/helpers/no_internet.dart';
 import 'package:india_one/services/local_notifications_service.dart';
 
+import 'connection_manager/connection_binding.dart';
 import 'localization/locale_string.dart';
 
 //
@@ -89,17 +90,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return InternetWidget(
-      online: GetMaterialApp(
+    return  GetMaterialApp(
+      initialBinding: ControllerBinding(),
         title: 'India One',
         debugShowCheckedModeBanner: false,
         locale: Locale('en', 'US'),
         translations: LocaleString(),
         onGenerateRoute: MRouter.generateRoute,
-        initialRoute: MRouter.splashRoute,
-      ),
-      offline: NoInternet(),
-    );
+        initialRoute: MRouter.splashRoute);
+
   }
 }
 
