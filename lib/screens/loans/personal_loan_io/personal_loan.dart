@@ -84,13 +84,15 @@ class _PersonalLoanState extends State<PersonalLoan> {
 
   @override
   Widget build(BuildContext context) {
-    print('Hello world');
-    print(loanController.createLoanModel.value.loanAmount.toString());
-    print(loanAmountEditingController.text);
+    print('account formatted');
+    print(CommonMethods().accountFormattedText('23456789'));
+    // print('Hello world');
+    // print(loanController.createLoanModel.value.loanAmount.toString());
+    // print(loanAmountEditingController.text);
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Obx(
-      () => loanController.createLoanLoading == true
+      () => loanController.createLoanLoading.value == true
           ? CircularProgressbar()
           : Scaffold(
               resizeToAvoidBottomInset: false,
@@ -367,7 +369,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   message: "Select employment type",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } else if (profileController.accountType.value == '') {
+              } else if (profileController.accountType!.value == '') {
                 Flushbar(
                   title: "Alert!",
                   message: "Select Salary Mode",

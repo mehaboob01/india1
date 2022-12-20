@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../utils/comman_validaters.dart';
 import '../../home_start/home_manager.dart';
 import '../../loyality_points/cashback_redeem/cb_manager.dart';
 import '../model/upi_id_model.dart';
@@ -106,10 +107,10 @@ class ProfileController extends GetxController {
       state = ''.obs,
       gender = ''.obs,
       customerId = ''.obs,
-      accountType = ''.obs,
       vehicleType = ''.obs,
       nomineeRelationship = ''.obs,
       netbanking = ''.obs,
+      accountType = ''.obs,
       existingLoan = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
@@ -150,7 +151,7 @@ class ProfileController extends GetxController {
     state.value = '';
     gender.value = '';
     customerId.value = '';
-    accountType.value = '';
+    accountType!.value = '';
     vehicleType.value = '';
   }
 
@@ -239,14 +240,24 @@ class ProfileController extends GetxController {
   }
 
   accountNumberValidation(value) {
-    String pattern = r'(^[0-9]{9,18}$)';
-    RegExp regExp = new RegExp(pattern);
-    if (value.length < 9) {
-      return 'Please enter valid account number of 9 digit';
-    } else if (!regExp.hasMatch(value)) {
-      return 'Please enter valid account number';
+    // String pattern = r'(^[0-9]{9,18}$)';
+    // RegExp regExp = new RegExp(pattern);
+    // if (value.length < 9) {
+    //   return 'Please enter valid account number of 9 digit';
+    // } else if (!regExp.hasMatch(value)) {
+    //   return 'Please enter valid account number';
+    // }
+    // return null;
+
+    if (value != null) {
+      return CommonValidations().numberValidation(
+          value: value,
+          nullError: '*Account number is mandatory',
+          invalidInputError: 'It only takes numbers',
+          minValue: 9);
+    } else {
+      return '';
     }
-    return null;
   }
 
   ifscValidation(value) {
@@ -289,8 +300,10 @@ class ProfileController extends GetxController {
   }
 
   pinCodeValidation(value) {
-    if (value.toString().trim().length < 6) {
-      return 'Enter valid pin code';
+    if (value == '' || value == null) {
+      return 'Enter your pin code';
+    } else if (value.length < 6) {
+      return 'Pin code length should not be less than 6';
     }
     return null;
   }
@@ -687,7 +700,7 @@ class ProfileController extends GetxController {
       "customerDetails": {
         "panNumber": "${panNumberController.value.text.trim()}",
         "occupation": "${occupationController.value.text.trim()}",
-        "salaryMode": accountType.value,
+        "salaryMode": accountType.value == '' ? null : accountType!.value,
         "income":
             "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
         "preferredLanguage": "EN",
@@ -695,11 +708,12 @@ class ProfileController extends GetxController {
             "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
       }
     };
-    print("SENDIG DATA=>${DATA}");
-    print("loanApplicationId : ${loanApplicationId}");
-    print("insuranceApplicationId : ${insuranceApplicationId}");
+    print(accountType!.value);
+    print("SENDIG DATA=>$DATA");
+    print("loanApplicationId : $loanApplicationId");
+    print("insuranceApplicationId : $insuranceApplicationId");
 
-    print(accountType.value);
+    print(accountType!.value);
     try {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.additionalDetails,
@@ -716,7 +730,8 @@ class ProfileController extends GetxController {
               "customerDetails": {
                 "panNumber": "${panNumberController.value.text.trim()}",
                 "occupation": "${occupationController.value.text.trim()}",
-                "salaryMode": accountType.value,
+                "salaryMode":
+                    accountType!.value == '' ? null : accountType!.value,
                 "income":
                     "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
                 "preferredLanguage": "EN",
@@ -759,17 +774,11 @@ class ProfileController extends GetxController {
     }
   }
 
-
-
-
-
-
-
   Future addAdditionalDetails(
       {bool? isFromLoan = false,
-        Function? callBack,
-        String? loanApplicationId,
-        String? insuranceApplicationId}) async {
+      Function? callBack,
+      String? loanApplicationId,
+      String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
     // Map<String, dynamic> DATA =
@@ -815,50 +824,52 @@ class ProfileController extends GetxController {
     // print("loanApplicationId : ${loanApplicationId}");
     // print("insuranceApplicationId : ${insuranceApplicationId}");
 
-    print(accountType.value);
+    print(accountType!.value);
     try {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.additionalDetails,
           method: Type.PUT,
-          data: json.encode(
-              {
-                "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-                if (loanApplicationId != null) ...{
-                  "loanApplicationId": loanApplicationId,
-                },
-                if (insuranceApplicationId != null) ...{
-                  "insuranceApplicationId": insuranceApplicationId
-                },
-                "customerDetails": {
-
-
-                  "panNumber": "${panNumberController.value.text.trim()}",
-                  "occupation": "${occupationController.value.text.trim()}",
-                  "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-                  "preferredLanguage": "EN",
-                  "employmentType": "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
-                  "residingTenure": "${noOfMonthsResiding.value.text.trim()}",
-                  "companyName": "${companyName.value.text.trim()}",
-                  "designation": "${designation.value.text.trim()}",
-                  "workExperience": "${workExp.value.text.trim()}",
-                  "officeAddressLine1": "${officeAddressLine1Controller.value.text.trim()}",
-                  "officeAddressLine2": "${officeAddressLine2Controller.value.text.trim()}",
-                  "activeNetBanking": "${netbanking.value.trim()}",
-                  "activeEmi": "${existingLoan.value.trim()}",
-                  "noOfActiveEmi": "${activeOrExistingLoans.value.text.trim() == null?"":activeOrExistingLoans.value.text.trim()}",
-                  "highestQualification": "${highestQualification.value.text.trim()}",
-                  "salaryMode": accountType.value
-                  // "panNumber": "${panNumberController.value.text.trim()}",
-                  // "occupation": "${occupationController.value.text.trim()}",
-                  // "salaryMode": accountType.value,
-                  // "income":
-                  // "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-                  // "preferredLanguage": "EN",
-                  // "employmentType":
-                  // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
-                }
-              }
-          ));
+          data: json.encode({
+            "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+            if (loanApplicationId != null) ...{
+              "loanApplicationId": loanApplicationId,
+            },
+            if (insuranceApplicationId != null) ...{
+              "insuranceApplicationId": insuranceApplicationId
+            },
+            "customerDetails": {
+              "panNumber": "${panNumberController.value.text.trim()}",
+              "occupation": "${occupationController.value.text.trim()}",
+              "income":
+                  "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+              "preferredLanguage": "EN",
+              "employmentType":
+                  "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+              "residingTenure": "${noOfMonthsResiding.value.text.trim()}",
+              "companyName": "${companyName.value.text.trim()}",
+              "designation": "${designation.value.text.trim()}",
+              "workExperience": "${workExp.value.text.trim()}",
+              "officeAddressLine1":
+                  "${officeAddressLine1Controller.value.text.trim()}",
+              "officeAddressLine2":
+                  "${officeAddressLine2Controller.value.text.trim()}",
+              "activeNetBanking": "${netbanking.value.trim()}",
+              "activeEmi": "${existingLoan.value.trim()}",
+              "noOfActiveEmi":
+                  "${activeOrExistingLoans.value.text.trim() == null ? "" : activeOrExistingLoans.value.text.trim()}",
+              "highestQualification":
+                  "${highestQualification.value.text.trim()}",
+              "salaryMode": accountType!.value == '' ? null : accountType!.value
+              // "panNumber": "${panNumberController.value.text.trim()}",
+              // "occupation": "${occupationController.value.text.trim()}",
+              // "salaryMode": accountType.value,
+              // "income":
+              // "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+              // "preferredLanguage": "EN",
+              // "employmentType":
+              // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+            }
+          }));
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -892,12 +903,6 @@ class ProfileController extends GetxController {
       addOccupationLoading.value = false;
     }
   }
-
-
-
-
-
-
 
   void addNomineeDetails(
       {String? insuranceApplicationId,
@@ -1095,7 +1100,8 @@ class ProfileController extends GetxController {
               "bankId": bankId,
               "accountNumber": "${accountNumberController.value.text}",
               "ifscCode": "${ifscController.value.text}",
-              "accountType": "${accountType.value}",
+              "accountType":
+                  accountType!.value.isEmpty ? null : accountType!.value,
             }
           },
         ),
@@ -1110,7 +1116,6 @@ class ProfileController extends GetxController {
             content: Text('Bank account added!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-
         }
       }
     } catch (exception) {

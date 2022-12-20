@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constant/theme_manager.dart';
+import '../../../utils/common_methods.dart';
 
 class ProfileStepper {
   ProfileController profileController = Get.put(ProfileController());
@@ -89,22 +91,24 @@ class ProfileStepper {
     );
   }
 
-  Widget textField({
-    required String label,
-    String? prefix,
-    required String hint,
-    bool isDisable = false,
-    Function? onTap,
-    required TextEditingController controller,
-    Widget? suffix,
-    FormFieldValidator? vaidation,
-    Function? onChanged,
-    TextInputType? keyboardType,
-    List<TextInputFormatter>? inputFormatters,
-    int? maxLength,
-  }) {
+  Widget textField(
+      {required String label,
+      String? prefix,
+      required String hint,
+      bool isDisable = false,
+      Function? onTap,
+      required TextEditingController controller,
+      Widget? suffix,
+      FormFieldValidator? vaidation,
+      Function? onChanged,
+      TextInputType? keyboardType,
+      List<TextInputFormatter>? inputFormatters,
+      int? maxLength,
+      bool textCap = false}) {
     return TextFormField(
       controller: controller,
+      textCapitalization:
+          textCap ? TextCapitalization.characters : TextCapitalization.none,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters ?? [],
       maxLength: maxLength,
@@ -153,7 +157,11 @@ class ProfileStepper {
       onChanged: onChanged,
       value: value,
       hint: Text(hint),
-      icon: Icon(Icons.keyboard_arrow_down),
+      icon: Icon(
+        Icons.keyboard_arrow_down_rounded,
+        color: AppColors.greyInlineText,
+        size: 34,
+      ),
       isExpanded: true,
       decoration: inputDecoration(
         label: label,
@@ -514,7 +522,7 @@ class ProfileStepper {
                   hint: 'Enter area, road, landmark, etc',
                   vaidation: (value) {
                     if (value.toString().trim().isNotEmpty) {
-                      profileController.nullCheckValidation(
+                      return profileController.nullCheckValidation(
                         value,
                         'Enter address line 2',
                       );
@@ -529,10 +537,9 @@ class ProfileStepper {
                 label: 'Pincode',
                 hint: 'Enter pincode here',
                 vaidation: (value) {
-                  if (isFromLoan == true ||
-                      isFromInsurance == true ||
-                      value.toString().trim().isNotEmpty) {
-                    profileController.pinCodeValidation(
+                  if (isFromLoan == true || isFromInsurance == true) {
+                    print('Residential Validation');
+                    return profileController.pinCodeValidation(
                       value,
                     );
                   }
@@ -681,32 +688,34 @@ class ProfileStepper {
                     FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                ButtonTheme(
-                  alignedDropdown: true,
-                  child: commonDropDown(
-                    item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    value: profileController.accountType == ''
-                        ? null
-                        : profileController.accountType.value,
-                    onChanged: (value) {
-                      if (isFromLoan == true) {
-                        profileController.accountType.value = value;
-                      }
-                      temp = value;
-                    },
-                    label: 'Salary Mode',
-                    hint: 'Salary Mode',
+                if (isFromLoan == true || isFromInsurance == true) ...[
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
+                  ButtonTheme(
+                    alignedDropdown: true,
+                    child: commonDropDown(
+                      item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(),
+                      value: profileController.accountType!.value.isEmpty
+                          ? null
+                          : profileController.accountType!.value,
+                      onChanged: (value) {
+                        if (isFromLoan == true) {
+                          profileController.accountType!.value = value;
+                        }
+                        temp = value;
+                      },
+                      label: 'Salary Mode',
+                      hint: 'Salary Mode',
+                    ),
+                  ),
+                ],
                 SizedBox(
                   height: 20,
                 ),
@@ -746,6 +755,9 @@ class ProfileStepper {
                 controller: profileController.panNumberController.value,
                 label: 'PAN number',
                 hint: 'Enter your PAN number here',
+                textCap: true,
+                inputFormatters: [UpperCaseTextFormatter()],
+                onChanged: (value) {},
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -1037,7 +1049,6 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   {"name": "Masters", "value": "Masters"},
                   {"name": "NonGraduate", "value": "NonGraduate"},
                   {"name": "MBA", "value": "MBA"},
-
                 ].map((value) {
                   return DropdownMenuItem(
                     value: value['value'],
@@ -1048,10 +1059,10 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 //     ? null
                 //     : profileController.highestQualification.value,
                 onChanged: (highestQualification) {
-
-                  profileController.highestQualification.value.text = highestQualification;
-                  print("highest qualification ${profileController.highestQualification.value.text.toString()}");
-
+                  profileController.highestQualification.value.text =
+                      highestQualification;
+                  print(
+                      "highest qualification ${profileController.highestQualification.value.text.toString()}");
                 },
                 label: 'Highest Qualification',
                 hint: 'Choose your Highest qualification',
@@ -1104,7 +1115,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine1Controller.value,
+                    profileController.officeAddressLine1Controller.value,
                 label: 'Office address line 1',
                 hint: 'Enter the Office address line 1',
                 vaidation: (value) {
@@ -1119,7 +1130,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine2Controller.value,
+                    profileController.officeAddressLine2Controller.value,
                 label: 'Office address line 2',
                 hint: 'Enter the Office address line 2',
               ),
@@ -1147,7 +1158,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1191,7 +1202,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1217,8 +1228,8 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 height: Get.height * 0.02,
               ),
               if (profileController.existingLoan
-                  .toLowerCase()
-                  .replaceAll(' ', '') ==
+                      .toLowerCase()
+                      .replaceAll(' ', '') ==
                   'yes')
                 textField(
                   controller: profileController.activeOrExistingLoans.value,
@@ -1235,5 +1246,4 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
       ),
     );
   }
-
 }

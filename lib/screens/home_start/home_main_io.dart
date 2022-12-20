@@ -56,7 +56,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-     // WidgetsBinding.instance.addObserver(this); // observer
+      // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
       notificationManager.callNotificationsApi(false);
 
@@ -268,7 +268,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
-                //  WidgetsBinding.instance.removeObserver(this);
+                  //  WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
                 SystemNavigator.pop();
@@ -282,7 +282,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   msg = "You are Authenicated.";
                   setState(() {
                     _homeManager.showAuth.value = true;
-                   // WidgetsBinding.instance.removeObserver(this);
+                    // WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
                   SystemNavigator.pop();
@@ -784,7 +784,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 ? Center(
                     child: SvgPicture.asset(
                     image,
-                    color: Colors.black,
+                    color: _homeManager.isClicked.value
+                        ? Colors.white
+                        : Colors.black,
                   ))
                 : Icon(icon),
       ),
@@ -967,7 +969,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
-        label: 'Redeem Points Now',
+        label: _homeManager.redeemablePoints >= 15
+            ? 'Redeem Points Now'
+            : 'Earn More Points',
         onPressed: () => _homeManager.redeemablePoints >= 15
             ? {Get.toNamed(MRouter.redeemPointsPage)}
             : {

@@ -316,7 +316,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               isFromLoan: true,
               callBack: () {
                 Get.to(() => LendersList(
-                      title: 'Bike loan',
+                      title: '2 Wheeler loan',
                     ));
               });
         }

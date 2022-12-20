@@ -12,7 +12,8 @@ import '../../widgets/loyalty_common_header.dart';
 class InsuranceDashboardHistory extends StatelessWidget {
   final bool isFromInsurance;
 
-  InsuranceDashboardHistory({Key? key, required this.isFromInsurance}) : super(key: key);
+  InsuranceDashboardHistory({Key? key, required this.isFromInsurance})
+      : super(key: key);
 
   LoanController loanController = Get.put(LoanController());
 
@@ -61,7 +62,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Recent transation",
+                      "Recent transactions",
                       style: AppStyle.shortHeading.copyWith(
                         color: Color(0xff2d2d2d),
                         fontSize: 14.0.sp,
@@ -70,7 +71,8 @@ class InsuranceDashboardHistory extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(() => InsuranceDashboardHistory(isFromInsurance: false));
+                        Get.to(() =>
+                            InsuranceDashboardHistory(isFromInsurance: false));
                       },
                       child: Text(
                         "History",
@@ -93,22 +95,37 @@ class InsuranceDashboardHistory extends StatelessWidget {
                 ),
               )
             ] else ...[
-              if (loanController.insuranceRecentTransactionModel.value.recentTransactions!.isEmpty) ...[
+              if (loanController.insuranceRecentTransactionModel.value
+                  .recentTransactions!.isEmpty) ...[
                 Text("No recent transaction found")
               ] else ...[
                 ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: isFromInsurance ? 0 : 16),
-                  itemCount: isFromInsurance && loanController.insuranceRecentTransactionModel.value.recentTransactions!.length > 5 ? 5 : loanController.insuranceRecentTransactionModel.value.recentTransactions!.length,
+                  padding:
+                      EdgeInsets.symmetric(vertical: isFromInsurance ? 0 : 16),
+                  itemCount: isFromInsurance &&
+                          loanController.insuranceRecentTransactionModel.value
+                                  .recentTransactions!.length >
+                              5
+                      ? 5
+                      : loanController.insuranceRecentTransactionModel.value
+                          .recentTransactions!.length,
                   primary: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    RecentTransactions e = loanController.insuranceRecentTransactionModel.value.recentTransactions![index];
+                    RecentTransactions e = loanController
+                        .insuranceRecentTransactionModel
+                        .value
+                        .recentTransactions![index];
                     return Container(
                       padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10), bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
@@ -152,11 +169,17 @@ class InsuranceDashboardHistory extends StatelessWidget {
                                   Text(
                                     e.title ?? '',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(color: Color(0xFF2D2D2D), fontWeight: FontWeight.w600, fontSize: 16),
+                                    style: TextStyle(
+                                        color: Color(0xFF2D2D2D),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     e.type ?? '',
-                                    style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF999999), fontSize: 14),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF999999),
+                                        fontSize: 14),
                                   )
                                 ],
                               )

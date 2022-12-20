@@ -68,13 +68,24 @@ class CommonMethods {
 
     return data;
   }
+
+  String accountFormattedText(String value) {
+    if (value == '') {
+      return '';
+    }
+    String val = value.trim();
+    final maskedRegex = RegExp(r'^(?:\D*\d){1,3}$');
+
+    String data = maskedRegex.stringMatch(val).toString();
+    return data;
+  }
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
+  @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.selection.baseOffset == 0) {
-      print(true);
       return newValue;
     }
 
@@ -86,6 +97,34 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
     return newValue.copyWith(
         text: newText,
-        selection: new TextSelection.collapsed(offset: newText.length));
+        selection: TextSelection.collapsed(offset: newText.length));
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
+    );
+  }
+}
+
+class MaskedInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+    String newVal = newValue.text;
+    String? newText = newValue.text.length < 4
+        ? newValue.text
+        : CommonMethods().accountFormattedText(newVal);
+    return newValue.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(offset: newText.length));
   }
 }

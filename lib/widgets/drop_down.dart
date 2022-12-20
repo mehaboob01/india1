@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -18,6 +19,7 @@ class DropDown extends StatefulWidget {
   @override
   _DropDownState createState() => _DropDownState();
 }
+
 class _DropDownState extends State<DropDown> {
   String? _chosenValue1;
   @override
@@ -32,7 +34,7 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
-          EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
+              EdgeInsets.symmetric(vertical: 4.0.wp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
               borderSide: const BorderSide(
