@@ -12,39 +12,57 @@ class ProfileDetailsModel {
   String? membershipId;
   String? uniqueId;
   String? alternateNumber;
+  String? imageName;
   String? gender;
   String? employmentType;
   String? maritalStatus;
   String? salaryMode;
-  GeoLocation? geoLocation;
+  String? geoLocation;
   Address? address;
-  String? imageName;
   String? imageUrl;
+  int? residingTenure;
+  String? companyName;
+  String? designation;
+  int? workExperience;
+  String? officeAddressLine1;
+  String? officeAddressLine2;
+  String? activeNetBanking;
+  String? activeEmi;
+  String? noOfActiveEmi;
+  String? highestQualification;
 
-
-  ProfileDetailsModel({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.mobileNumber,
-    this.panNumber,
-    this.occupation,
-    this.income,
-    this.preferredLanguage,
-    this.dateOfBirth,
-    this.email,
-    this.membershipId,
-    this.uniqueId,
-    this.alternateNumber,
-    this.gender,
-    this.employmentType,
-    this.maritalStatus,
-    this.salaryMode,
-    this.geoLocation,
-    this.address,
-    this.imageName,
-    this.imageUrl
-  });
+  ProfileDetailsModel(
+      {this.id,
+        this.firstName,
+        this.lastName,
+        this.mobileNumber,
+        this.panNumber,
+        this.occupation,
+        this.income,
+        this.preferredLanguage,
+        this.dateOfBirth,
+        this.email,
+        this.membershipId,
+        this.uniqueId,
+        this.alternateNumber,
+        this.imageName,
+        this.gender,
+        this.employmentType,
+        this.maritalStatus,
+        this.salaryMode,
+        this.geoLocation,
+        this.address,
+        this.imageUrl,
+        this.residingTenure,
+        this.companyName,
+        this.designation,
+        this.workExperience,
+        this.officeAddressLine1,
+        this.officeAddressLine2,
+        this.activeNetBanking,
+        this.activeEmi,
+        this.noOfActiveEmi,
+        this.highestQualification});
 
   ProfileDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,14 +78,25 @@ class ProfileDetailsModel {
     membershipId = json['membershipId'];
     uniqueId = json['uniqueId'];
     alternateNumber = json['alternateNumber'];
+    imageName = json['imageName'];
     gender = json['gender'];
     employmentType = json['employmentType'];
     maritalStatus = json['maritalStatus'];
     salaryMode = json['salaryMode'];
-    geoLocation = json['geoLocation'] != null ? new GeoLocation.fromJson(json['geoLocation']) : null;
-    address = json['address'] != null ? new Address.fromJson(json['address']) : null;
-    imageName = json['imageName'];
+    geoLocation = json['geoLocation'];
+    address =
+    json['address'] != null ? new Address.fromJson(json['address']) : null;
     imageUrl = json['imageUrl'];
+    residingTenure = json['residingTenure'];
+    companyName = json['companyName'];
+    designation = json['designation'];
+    workExperience = json['workExperience'];
+    officeAddressLine1 = json['officeAddressLine1'];
+    officeAddressLine2 = json['officeAddressLine2'];
+    activeNetBanking = json['activeNetBanking'];
+    activeEmi = json['activeEmi'];
+    noOfActiveEmi = json['noOfActiveEmi'];
+    highestQualification = json['highestQualification'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,37 +114,26 @@ class ProfileDetailsModel {
     data['membershipId'] = this.membershipId;
     data['uniqueId'] = this.uniqueId;
     data['alternateNumber'] = this.alternateNumber;
+    data['imageName'] = this.imageName;
     data['gender'] = this.gender;
     data['employmentType'] = this.employmentType;
     data['maritalStatus'] = this.maritalStatus;
     data['salaryMode'] = this.salaryMode;
-    data['imageUrl'] = this.imageUrl;
-    if (this.geoLocation != null) {
-      data['geoLocation'] = this.geoLocation!.toJson();
-    }
+    data['geoLocation'] = this.geoLocation;
     if (this.address != null) {
       data['address'] = this.address!.toJson();
     }
-    data['imageName'] = this.imageName;
-    return data;
-  }
-}
-
-class GeoLocation {
-  double? lat;
-  double? lon;
-
-  GeoLocation({this.lat, this.lon});
-
-  GeoLocation.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lon = json['lon'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
+    data['imageUrl'] = this.imageUrl;
+    data['residingTenure'] = this.residingTenure;
+    data['companyName'] = this.companyName;
+    data['designation'] = this.designation;
+    data['workExperience'] = this.workExperience;
+    data['officeAddressLine1'] = this.officeAddressLine1;
+    data['officeAddressLine2'] = this.officeAddressLine2;
+    data['activeNetBanking'] = this.activeNetBanking;
+    data['activeEmi'] = this.activeEmi;
+    data['noOfActiveEmi'] = this.noOfActiveEmi;
+    data['highestQualification'] = this.highestQualification;
     return data;
   }
 }
@@ -127,7 +145,12 @@ class Address {
   String? city;
   String? state;
 
-  Address({this.addressLine1, this.addressLine2, this.postCode, this.city, this.state});
+  Address(
+      {this.addressLine1,
+        this.addressLine2,
+        this.postCode,
+        this.city,
+        this.state});
 
   Address.fromJson(Map<String, dynamic> json) {
     addressLine1 = json['addressLine1'];

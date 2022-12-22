@@ -381,6 +381,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanApplicationId:
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
+                     // profileController.setData();
                       loanController.updateScreen(Steps.ADDITIONAL.index);
                       // Get.to(() => LendersList(
                       //       title: 'Personal loan',

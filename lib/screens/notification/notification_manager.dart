@@ -31,11 +31,11 @@ class NotificationManager extends GetxController {
 // api call for verify otp
 
   callNotificationsApi(bool addOldData) async {
-    if (addOldData == false)
-     {
-       notificationList.clear();
-       notificationListSend.clear();
-     }
+    // if (addOldData == false)
+    //  {
+    //    notificationList.clear();
+    //    notificationListSend.clear();
+    //  }
     notificationsCount.clear();
     notificationsCountSend.clear();
 
@@ -53,7 +53,7 @@ class NotificationManager extends GetxController {
       }
 
       var response = await http.post(Uri.parse(baseUrl + Apis.notifications),
-                     body: jsonEncode({"customerId": customerId, "nextToken": null, "limit": limit}),
+                     body: jsonEncode({"customerId": customerId, "nextToken": nextToken, "limit": limit}),
                      headers: {'Content-type': 'application/json', 'Accept': 'application/json', "x-digital-api-key": "1234"});
 
       if (response.statusCode == 200 || response.statusCode == 201) {

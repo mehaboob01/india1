@@ -23,6 +23,7 @@ import '../personal_loan_io/personal_loan.dart';
 
 class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
+  RxBool lenderLoanLoading = false.obs;
   RxBool farmLoanProductLoading = false.obs;
   Rx<double> sliderValue = 0.0.obs;
   Rx<double> minValue = 0.0.obs;
@@ -200,6 +201,7 @@ class LoanController extends GetxController {
     print("providers data==>${lendersData}");
     try {
       createLoanLoading.value = true;
+      lenderLoanLoading.value = true;
       customerId.value = await profileController.getId();
       var response = await DioApiCall().commonApiCall(
         endpoint: isPersonalLoan == true ? Apis.getProviders : Apis.getLenders,
@@ -232,6 +234,7 @@ class LoanController extends GetxController {
       print(exception);
     } finally {
       createLoanLoading.value = false;
+      lenderLoanLoading.value = false;
     }
   }
 

@@ -153,6 +153,10 @@ class ProfileController extends GetxController {
     customerId.value = '';
     accountType!.value = '';
     vehicleType.value = '';
+    noOfMonthsResiding.value.text = '';
+    highestQualification.value.text = '';
+    companyName.value.text = '';
+    designation.value.text = '';
   }
 
   setData() {
@@ -187,6 +191,17 @@ class ProfileController extends GetxController {
     monthlyIncomeController.value.text =
         "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
+
+    // new changes
+    accountType.value = profileDetailsModel.value.salaryMode.toString() ?? '';
+
+
+    noOfMonthsResiding.value.text = profileDetailsModel.value.residingTenure == null?"":profileDetailsModel.value.residingTenure.toString();
+    companyName.value.text = profileDetailsModel.value.companyName == null?'':profileDetailsModel.value.companyName.toString();
+    designation.value.text = profileDetailsModel.value.designation == null? '':profileDetailsModel.value.designation.toString();
+    workExp.value.text = profileDetailsModel.value.workExperience == null?'':profileDetailsModel.value.workExperience.toString();
+    officeAddressLine1Controller.value.text = profileDetailsModel.value.officeAddressLine1 == null?'':profileDetailsModel.value.officeAddressLine1.toString();
+    officeAddressLine2Controller.value.text = profileDetailsModel.value.officeAddressLine2 == null?'':profileDetailsModel.value.officeAddressLine2.toString();
   }
 
   RxInt loanRequirement = (-1).obs;
