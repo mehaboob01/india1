@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
+import 'package:india_one/screens/loans/lenders_list_others.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
@@ -250,7 +251,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                     loanApplicationId:
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
-                      Get.to(() => LendersList(
+                      Get.to(() => LendersListOthers(
                             title: '2 Wheeler Loan',
                           ));
                     });

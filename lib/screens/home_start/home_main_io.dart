@@ -793,7 +793,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     child: SvgPicture.asset(
                     image,
                     color: _homeManager.isClicked.value
-                        ? Colors.white
+                        ? Colors.black
                         : Colors.black,
                   ))
                 : Icon(icon),

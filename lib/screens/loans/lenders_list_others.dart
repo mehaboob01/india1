@@ -10,16 +10,16 @@ import 'package:india_one/utils/common_webview.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class LendersList extends StatefulWidget {
+class LendersListOthers extends StatefulWidget {
   final String title;
 
-  const LendersList({Key? key, required this.title}) : super(key: key);
+  const LendersListOthers({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<LendersList> createState() => _LendersListState();
+  State<LendersListOthers> createState() => _LendersListState();
 }
 
-class _LendersListState extends State<LendersList> {
+class _LendersListState extends State<LendersListOthers> {
   LoanController loanController = Get.put(LoanController());
   bool isPersonalLoan = false;
 
@@ -27,10 +27,9 @@ class _LendersListState extends State<LendersList> {
   void initState() {
     super.initState();
     isPersonalLoan = (widget.title == 'Personal loan') ? true : false;
-    print("isPersonlLoan : ,${isPersonalLoan}");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
-      loanController.getProviders(isPersonalLoan: isPersonalLoan,providerId:"",fromScreen:"Gold");
+      loanController.getProviders(
+          isPersonalLoan: isPersonalLoan, providerId: "", fromScreen: "Gold");
     });
   }
 
@@ -63,60 +62,66 @@ class _LendersListState extends State<LendersList> {
                 ),
                 Expanded(
                   child: Obx(
-                    () => (isPersonalLoan
-                            ? (loanController
-                                        .loanProvidersModel.value.providers ==
-                                    null ||
-                                loanController
-                                        .loanProvidersModel.value.providers ==
-                                    [])
-                            : (loanController.loanLendersModel.value.lenders ==
-                                    null ||
-                                loanController.loanLendersModel.value.lenders ==
-                                    []))
-                        ? Center(child: Text("No providers found"))
+                    () => (loanController.loanLenderOthersModel.value.lenders ==
+                                null ||
+                            loanController
+                                    .loanLenderOthersModel.value.lenders ==
+                                [])
+                        ? Center(child: Text("No lenders found"))
                         : ListView.builder(
                             shrinkWrap: true,
                             itemCount: isPersonalLoan
                                 ? loanController
-                                    .loanProvidersModel.value.providers!.length
-                                : loanController
-                                    .loanProvidersModel.value.providers!.length,
+                                    .loanLenderOthersModel.value.lenders!.length
+                                : loanController.loanLenderOthersModel.value
+                                    .lenders!.length,
                             itemBuilder: (context, index) {
                               return LoanCommon().loanCard(
-                                providers: loanController
-                                    .loanProvidersModel.value.providers?[index],
-                                //lenders: loanController.loanLendersModel.value.lenders?[index] == null?"0":loanController.loanLendersModel.value.lenders[index],
+                                lenders: loanController.loanLenderOthersModel
+                                    .value.lenders?[index],
                                 applyButtonClick: () {
-                                  if (isPersonalLoan == true) {
 
-                                    print("clecked on personal loan explore");
+
+
+
+                                  if (loanController.loanLenderOthersModel.value
+                                          .lenders![index].loanApplyType !=
+                                      "Redirect") {
                                     Get.to(
-                                      () => ProvidersList(
-                                        title: '${widget.title}',
-                                        providerId: loanController
-                                                .loanProvidersModel
+                                          () => ProviderDetail(
+                                        title: '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
+                                        lenders: loanController.loanLenderOthersModel.value.lenders![index],
+                                        personalLoan: isPersonalLoan,
+                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
+                                      ),
+                                    );
+
+
+                                    // print("going to detail screen");
+                                    // Get.to(
+                                    //   () => ProviderDetail(
+                                    //     title: '',
+                                    //     personalLoan: '',
+                                    //     lenders: '',
+                                    //     providerId: '',
+                                    //   ),
+                                    // );
+                                  } else {
+                                    print("going to web screen");
+
+                                    Get.to(
+                                      () => CommonWebView(
+                                        title: 'Gold Loan',
+                                        url: loanController
+                                                .loanLenderOthersModel
                                                 .value
-                                                .providers?[index]
-                                                .id ??
+                                                .lenders![index]
+                                                ?.redirectUrl
+                                                .toString() ??
                                             '',
                                       ),
                                     );
-                                  } else {
-
-                                      Get.to(
-                                        () => CommonWebView(
-                                          title: 'Gold Loan',
-                                          url: loanController
-                                                  .loanLendersModel
-                                                  .value
-                                                  .lenders![index]
-                                                  .details?.url.toString() ??
-                                              '',
-                                        ),
-                                      );
-                                    }
-
+                                  }
                                 },
                                 isPersonalLoan: isPersonalLoan,
                               );

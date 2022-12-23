@@ -6,6 +6,7 @@ import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 
 import '../../utils/common_methods.dart';
+import 'model/loan_lender_others_model.dart';
 
 enum LoanType {
   PersonalLoan,
@@ -126,7 +127,8 @@ class LoanCommon {
     Function? applyButtonClick,
     bool? isPersonalLoan,
     Providers? providers,
-    Lenders? lenders,
+    // Lenders? lenders,
+    Lenderss? lenders
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
@@ -163,7 +165,7 @@ class LoanCommon {
                           width: 50,
                           imageUrl: (isPersonalLoan == true
                                   ? (providers?.logoURL ?? '')
-                                  : lenders?.logoUrl) ??
+                                  : lenders?.logoURL) ??
                               '',
                           errorWidget: (context, _, error) {
                             return Icon(
@@ -182,7 +184,7 @@ class LoanCommon {
                           Text(
                             (isPersonalLoan == true
                                     ? (providers?.name ?? '')
-                                    : lenders?.details?.lender.toString()) ??
+                                    : lenders?.loanTitle.toString()) ??
                                 "Bajaj Finance",
                             style: TextStyle(
                               color: AppColors.lightBlack,
@@ -193,7 +195,7 @@ class LoanCommon {
                           Text(
                             (isPersonalLoan == true
                                     ? providers?.subTitle
-                                    : (lenders?.details?.keywords![0] ?? '')) ??
+                                    : (lenders?.loanType ?? '')) ??
                                 "Easy loan processing",
                             style: TextStyle(
                               color: AppColors.borderColor,
@@ -217,15 +219,15 @@ class LoanCommon {
                     rowText(
                       value: 'Max amount',
                       title:
-                          '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.details!.loanAmount!.toString()) ?? 0)}'),
+                          '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
                     rowText(
                       value: 'Tenure',
-                      title: '${lenders.details!.tenure} months',
+                      title: '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
                     ),
                     rowText(
                       value: 'Interest/m',
                       title:
-                          '${lenders.details?.loanInterest}%',
+                          '${lenders.minInterestRate} - ${lenders.maxInterestRate}%',
                     ),
                   ],
                 ),
