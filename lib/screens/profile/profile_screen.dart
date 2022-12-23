@@ -246,8 +246,9 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                             )
                                           : InkWell(
-                                              onTap: () {
-                                                profileController.logout();
+                                              onTap: () async {
+
+                                                profileController.logoutUser();
                                               },
                                               child: Container(
                                                   width: MediaQuery.of(context)

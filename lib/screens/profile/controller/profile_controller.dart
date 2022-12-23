@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:india_one/constant/routes.dart';
 
 import 'package:india_one/constant/theme_manager.dart';
 
@@ -25,6 +27,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/model/common_model.dart';
 import '../../../utils/comman_validaters.dart';
 import '../../home_start/home_manager.dart';
 import '../../loyality_points/cashback_redeem/cb_manager.dart';
@@ -157,6 +160,8 @@ class ProfileController extends GetxController {
     highestQualification.value.text = '';
     companyName.value.text = '';
     designation.value.text = '';
+    noOfMonthsResiding.value.text = '';
+
   }
 
   setData() {
@@ -194,6 +199,10 @@ class ProfileController extends GetxController {
 
     // new changes
     accountType.value = profileDetailsModel.value.salaryMode.toString() ?? '';
+    highestQualification.value.text = profileDetailsModel.value.highestQualification.toString() ?? '';
+
+
+    print("seting data to residing${profileDetailsModel.value.residingTenure.toString()}");
 
 
     noOfMonthsResiding.value.text = profileDetailsModel.value.residingTenure == null?"":profileDetailsModel.value.residingTenure.toString();
@@ -704,29 +713,29 @@ class ProfileController extends GetxController {
       String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
 
-    Map<String, dynamic> DATA = {
-      "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-      if (loanApplicationId != null) ...{
-        "loanApplicationId": loanApplicationId,
-      },
-      if (insuranceApplicationId != null) ...{
-        "insuranceApplicationId": insuranceApplicationId
-      },
-      "customerDetails": {
-        "panNumber": "${panNumberController.value.text.trim()}",
-        "occupation": "${occupationController.value.text.trim()}",
-        "salaryMode": accountType.value == '' ? null : accountType!.value,
-        "income":
-            "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-        "preferredLanguage": "EN",
-        "employmentType":
-            "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
-      }
-    };
-    print(accountType!.value);
-    print("SENDIG DATA=>$DATA");
-    print("loanApplicationId : $loanApplicationId");
-    print("insuranceApplicationId : $insuranceApplicationId");
+    // Map<String, dynamic> DATA = {
+    //   "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+    //   if (loanApplicationId != null) ...{
+    //     "loanApplicationId": loanApplicationId,
+    //   },
+    //   if (insuranceApplicationId != null) ...{
+    //     "insuranceApplicationId": insuranceApplicationId
+    //   },
+    //   "customerDetails": {
+    //     "panNumber": "${panNumberController.value.text.trim()}",
+    //     "occupation": "${occupationController.value.text.trim()}",
+    //     "salaryMode": accountType.value == '' ? null : accountType!.value,
+    //     "income":
+    //         "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+    //     "preferredLanguage": "EN",
+    //     "employmentType":
+    //         "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+    //   }
+    // };
+    // print(accountType!.value);
+    // print("SENDIG DATA=>$DATA");
+    // print("loanApplicationId : $loanApplicationId");
+    // print("insuranceApplicationId : $insuranceApplicationId");
 
     print(accountType!.value);
     try {
@@ -801,30 +810,34 @@ class ProfileController extends GetxController {
     // {
     //   "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
     //   if (loanApplicationId != null) ...{
-    //     "loanApplicationId": loanApplicationId,
+    //     "loanApplicationId": "334bfc8e-2cc7-42fa-9ee0-7b79d9c9be2d",
     //   },
     //   if (insuranceApplicationId != null) ...{
     //     "insuranceApplicationId": insuranceApplicationId
     //   },
     //   "customerDetails": {
-    //
-    //
     //     "panNumber": "${panNumberController.value.text.trim()}",
     //     "occupation": "${occupationController.value.text.trim()}",
-    //     "income": "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+    //     "income":
+    //     "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
     //     "preferredLanguage": "EN",
-    //     "employmentType": "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+    //     "employmentType":
+    //     "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
     //     "residingTenure": "${noOfMonthsResiding.value.text.trim()}",
     //     "companyName": "${companyName.value.text.trim()}",
     //     "designation": "${designation.value.text.trim()}",
     //     "workExperience": "${workExp.value.text.trim()}",
-    //     "officeAddressLine1": "${officeAddressLine1Controller.value.text.trim()}",
-    //     "officeAddressLine2": "${officeAddressLine2Controller.value.text.trim()}",
+    //     "officeAddressLine1":
+    //     "${officeAddressLine1Controller.value.text.trim()}",
+    //     "officeAddressLine2":
+    //     "${officeAddressLine2Controller.value.text.trim()}",
     //     "activeNetBanking": "${netbanking.value.trim()}",
-    //      "activeEmi": "${existingLoan.value.trim()}",
-    //     "noOfActiveEmi": "${activeOrExistingLoans.value.text.trim() == null?"":activeOrExistingLoans.value.text.trim()}",
-    //     "highestQualification": "${highestQualification.value.text.trim()}",
-    //     "salaryMode": accountType.value
+    //     "activeEmi": "${existingLoan.value.trim()}",
+    //     "noOfActiveEmi":
+    //     "${activeOrExistingLoans.value.text.trim() == null ? "" : activeOrExistingLoans.value.text.trim()}",
+    //     "highestQualification":
+    //     "${highestQualification.value.text.trim()}",
+    //     "salaryMode": accountType!.value == '' ? null : accountType!.value
     //     // "panNumber": "${panNumberController.value.text.trim()}",
     //     // "occupation": "${occupationController.value.text.trim()}",
     //     // "salaryMode": accountType.value,
@@ -838,8 +851,8 @@ class ProfileController extends GetxController {
     // print("SENDIG add addition data=>${DATA}");
     // print("loanApplicationId : ${loanApplicationId}");
     // print("insuranceApplicationId : ${insuranceApplicationId}");
-
-    print(accountType!.value);
+    //
+    // print(accountType!.value);
     try {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.additionalDetails,
@@ -885,6 +898,7 @@ class ProfileController extends GetxController {
               // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
             }
           }));
+    //  print("Additional response : ${response.data}");
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -1140,22 +1154,103 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future logout() async {
+  // Future logout() async {
+  //   try {
+  //
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
+  //     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+  //
+  //     Map<String,dynamic> dataforlogout =  {
+  //       "customerId": '${customerId}',
+  //       "deviceId": '${deviceId}',
+  //     };
+  //
+  //     print("logout body${dataforlogout}");
+  //     logoutLoading.value = true;
+  //     var response = await DioApiCall().commonApiCall(
+  //       endpoint: Apis.logoutUrl,
+  //       method: Type.POST,
+  //       data: json.encode(
+  //         {
+  //           "customerId": '${customerId}',
+  //           "deviceId": '${deviceId}',
+  //         },
+  //       ),
+  //
+  //     );
+  //
+  //
+  //
+  //
+  //
+  //
+  //   } catch (exception) {
+  //     print(exception);
+  //   } finally {
+  //     logoutLoading.value = false;
+  //   }
+  // }
+
+  void logoutUser() async {
     try {
       logoutLoading.value = true;
-      var response = await DioApiCall().commonApiCall(
-        endpoint: Apis.logoutUrl,
-        method: Type.POST,
-        data: json.encode(
-          {
-            "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
-            "deviceId": '${prefs.getString(SPKeys.DEVICE_ID)}',
-          },
-        ),
-        isLogout: true,
-      );
-    } catch (exception) {
-      print(exception);
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
+      String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+
+
+
+
+
+      var response = await http.post(Uri.parse(baseUrl + Apis.logoutUrl),
+          body: jsonEncode({
+            "customerId": customerId,
+            "deviceId": deviceId,
+
+          }),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+          });
+
+      print("logout response${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        CommonApiResponseModel commonApiResponseModel =
+        CommonApiResponseModel.fromJson(jsonData);
+
+        if (commonApiResponseModel.status!.code == 2000) {
+
+          SharedPreferences preferences =
+          await SharedPreferences.getInstance();
+          await preferences.clear();
+          Get.toNamed(MRouter.login);
+
+
+        } else {
+          Flushbar(
+            title: "Server Error!",
+            message: commonApiResponseModel.status!.message.toString(),
+            duration: Duration(seconds: 1),
+          )..show(Get.context!);
+        }
+      } else {
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Server Error!",
+        message: "Please try after sometime ...",
+        duration: Duration(seconds: 1),
+      )..show(Get.context!);
     } finally {
       logoutLoading.value = false;
     }

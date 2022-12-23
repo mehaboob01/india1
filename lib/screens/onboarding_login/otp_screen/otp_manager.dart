@@ -46,7 +46,15 @@ class OtpManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-          }).then((value) {
+          }).then((value)
+
+
+
+
+      {
+
+
+
         if (value.statusCode == 200) {
           var snackBar = SnackBar(
             content: Text("OTP Resend Successfully!"),

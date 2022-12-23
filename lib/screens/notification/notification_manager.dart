@@ -53,7 +53,7 @@ class NotificationManager extends GetxController {
       }
 
       var response = await http.post(Uri.parse(baseUrl + Apis.notifications),
-                     body: jsonEncode({"customerId": customerId, "nextToken": nextToken, "limit": limit}),
+                     body: jsonEncode({"customerId": customerId, "nextToken": null, "limit": limit}),
                      headers: {'Content-type': 'application/json', 'Accept': 'application/json', "x-digital-api-key": "1234"});
 
       if (response.statusCode == 200 || response.statusCode == 201) {

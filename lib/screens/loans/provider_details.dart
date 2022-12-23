@@ -7,11 +7,11 @@ import 'package:india_one/screens/loans/model/loan_lenders_model.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../constant/routes.dart';
+import 'model/loan_lender_others_model.dart';
 
 class ProviderDetail extends StatelessWidget {
   final String title;
-  final Lenders lenders;
+  final Lenderss lenders;
   final bool personalLoan;
   final String providerId;
 
@@ -38,13 +38,9 @@ class ProviderDetail extends StatelessWidget {
                 CustomAppBar(
                   heading: '$title',
                   customActionIconsList: [
-                    CustomActionIcons(
-                      onHeaderIconPressed: () async {
-                        Get.offNamedUntil(
-                            MRouter.homeScreen, (route) => route.isFirst);
-                      },
-                      image: AppImages.bottomNavHome,
-                    ),
+                    // CustomActionIcons(
+                    //   image: AppImages.bottomNavHome,
+                    // ),
                   ],
                 ),
                 Container(
@@ -64,85 +60,85 @@ class ProviderDetail extends StatelessWidget {
                     isPersonalLoan: personalLoan,
                   ),
                 ),
-                // Expanded(
-                //   child: SingleChildScrollView(
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(
-                //           left: 16.0, right: 16.0, top: 16.0),
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             "Top Features",
-                //             style: TextStyle(
-                //               color: AppColors.lightBlack,
-                //               fontSize: Dimens.font_20sp,
-                //               fontWeight: FontWeight.w500,
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             height: 12,
-                //           ),
-                //           if (lenders.keywords != null ||
-                //               lenders.keywords != [])
-                //             ListView.builder(
-                //               itemCount: lenders.keywords!.length,
-                //               shrinkWrap: true,
-                //               physics: NeverScrollableScrollPhysics(),
-                //               itemBuilder: (context, index) {
-                //                 return LoanCommon().bulletPoint(
-                //                   title: "${lenders.keywords?[index] ?? ''}",
-                //                 );
-                //               },
-                //             ),
-                //           SizedBox(
-                //             height: 20,
-                //           ),
-                //           Text(
-                //             "Other details",
-                //             style: TextStyle(
-                //               color: AppColors.lightBlack,
-                //               fontSize: Dimens.font_20sp,
-                //               fontWeight: FontWeight.w500,
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             height: 10,
-                //           ),
-                //           ListView.builder(
-                //             itemCount: loanController.otherDetails.length,
-                //             shrinkWrap: true,
-                //             physics: NeverScrollableScrollPhysics(),
-                //             itemBuilder: (context, index) {
-                //               return ExpansionTile(
-                //                 tilePadding: EdgeInsets.all(0),
-                //                 title: Text(
-                //                   '${loanController.otherDetails[index]['title']}',
-                //                 ),
-                //                 children: [
-                //                   Text(
-                //                     '${loanController.otherDetails[index]['value']}',
-                //                   ),
-                //                   SizedBox(
-                //                     height: 10,
-                //                   ),
-                //                 ],
-                //               );
-                //             },
-                //           ),
-                //           SizedBox(
-                //             height: 70,
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16.0, top: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Top Features",
+                            style: TextStyle(
+                              color: AppColors.lightBlack,
+                              fontSize: Dimens.font_20sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          if (lenders.keywords != null ||
+                              lenders.keywords != [])
+                            ListView.builder(
+                              itemCount: lenders.keywords!.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return LoanCommon().bulletPoint(
+                                  title: "${lenders.keywords?[index] ?? ''}",
+                                );
+                              },
+                            ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Other details",
+                            style: TextStyle(
+                              color: AppColors.lightBlack,
+                              fontSize: Dimens.font_20sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ListView.builder(
+                            itemCount: loanController.otherDetails.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ExpansionTile(
+                                tilePadding: EdgeInsets.all(0),
+                                title: Text(
+                                  '${loanController.otherDetails[index]['title']}',
+                                ),
+                                children: [
+                                  Text(
+                                    '${loanController.otherDetails[index]['value']}',
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 70,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               child: InkWell(
                 onTap: () {
                   LoanCommon().bottomSheet(

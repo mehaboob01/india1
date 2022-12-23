@@ -60,7 +60,7 @@ class DioApiCall {
           }
           if(isLogout == true){
             if (response.data['status']['code'] == 2000) {
-              prefs.clear();
+            await  prefs.clear();
               Get.offAll(() => UserLogin());
             }
           }

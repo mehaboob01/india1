@@ -20,7 +20,8 @@ class _CreditCardWebViewState extends State<CreditCardWebView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar('Credit Card'),
-      body: SafeArea(
+      body:
+      SafeArea(
           child: Column(
         children: [
           LinearProgressIndicator(

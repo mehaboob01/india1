@@ -18,12 +18,13 @@ import 'package:india_one/screens/loans/submission_page.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:http/http.dart' as http;
 
-import '../model/NewLoanLenderModel.dart';
+import '../model/loan_lender_others_model.dart';
 import '../personal_loan_io/personal_loan.dart';
 
 class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
   RxBool lenderLoanLoading = false.obs;
+  RxBool personLoanLoading = false.obs;
   RxBool farmLoanProductLoading = false.obs;
   Rx<double> sliderValue = 0.0.obs;
   Rx<double> minValue = 0.0.obs;
@@ -40,9 +41,10 @@ class LoanController extends GetxController {
 
   Rx<CreateLoanModel> createLoanModel = CreateLoanModel().obs;
   Rx<LoanLendersModel> loanLendersModel = LoanLendersModel().obs;
+  Rx<LoanLenderOthersModel> loanLenderOthersModel = LoanLenderOthersModel().obs;
 
-  Rx<NewLendersModel> newLoanLendersModel =
-      NewLendersModel().obs; // new lenders model
+  // Rx<NewLendersModel> newLoanLendersModel =
+  //     NewLendersModel().obs; // new lenders model
 
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
   Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
@@ -135,6 +137,8 @@ class LoanController extends GetxController {
         }),
       );
       if (response != null) {
+        print("response loan create applicaiton : ${response}");
+
         createLoanModel.value = CreateLoanModel.fromJson(response);
         minValue.value = double.tryParse(
                 (createLoanModel.value.loanConfiguration?.minLoanAmount ?? 0)
@@ -189,7 +193,9 @@ class LoanController extends GetxController {
   }
 
   Future getProviders(
-      {required bool isPersonalLoan, String? providerId}) async {
+      {required bool isPersonalLoan,
+      String? providerId,
+      String? fromScreen}) async {
     Map<String, dynamic> lendersData = {
       "customerId": customerId.value,
       "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
@@ -218,15 +224,21 @@ class LoanController extends GetxController {
       );
 
       if (response != null) {
-
-         print("RESPONSE  ${response}");
+        print("RESPONSE of loan :  ${response}");
         if (isPersonalLoan == true) {
           print("in if condition");
           loanProvidersModel.value = LoanProvidersModel.fromJson(response);
         } else {
+          print("in side else of personal loan ${fromScreen}");
+          if (fromScreen == 'Personal') {
+            loanLendersModel.value = LoanLendersModel.fromJson(response);
+          } else {
+            // other than personal loan will come here
+            loanLenderOthersModel.value =
+                LoanLenderOthersModel.fromJson(response);
+          }
 
-
-           loanLendersModel.value = LoanLendersModel.fromJson(response);
+// NewNewLoanLendersModel
 
         }
       }
@@ -242,8 +254,7 @@ class LoanController extends GetxController {
     required String providerId,
     required String lenderId,
   }) async {
-
-    Map<String,dynamic> sendData = {
+    Map<String, dynamic> sendData = {
       "customerId": customerId.value,
       "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
       if (providerId != '') ...{
@@ -255,10 +266,9 @@ class LoanController extends GetxController {
     };
     print("data form loan$sendData");
 
-
-
     try {
       createLoanLoading.value = true;
+      personLoanLoading.value  = true;
       customerId.value = await profileController.getId();
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.applyLoan,
@@ -285,6 +295,7 @@ class LoanController extends GetxController {
       print(exception);
     } finally {
       createLoanLoading.value = false;
+      personLoanLoading.value = false;
     }
   }
 

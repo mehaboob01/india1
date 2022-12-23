@@ -53,6 +53,8 @@ class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
 class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
   final notificationManager = Get.put(NotificationManager());
+  ProfileController _profileController = Get.put(ProfileController());
+
   final ConnectionManagerController _controller =
   Get.find<ConnectionManagerController>();
 
@@ -62,6 +64,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
+      _homeManager.callAdsBannerApi();
       notificationManager.callNotificationsApi(false);
 
       // _homeManager.sendTokens();
@@ -139,8 +142,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   HomeManager _homeManager = Get.put(HomeManager());
   CashBackManager _cashBackManager = Get.put(CashBackManager());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
-  ProfileController _profileController = Get.put(ProfileController());
-  ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
 
   final cashbackCtrl = Get.put(CashBackController());
 
@@ -310,6 +311,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void _onLoading() async {
     // your api here
     _homeManager.callHomeApi();
+    _homeManager.callAdsBannerApi();
     //  _homeManager.sendTokens();
     _profileController.getProfileData();
     _refreshController.loadComplete();
@@ -322,6 +324,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // your api here
     _refreshController.refreshCompleted();
     _homeManager.callHomeApi();
+    _homeManager.callAdsBannerApi();
     _loyaltyManager.callLoyaltyDashboardApi();
 
     // _homeManager.sendTokens();
@@ -793,7 +796,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     child: SvgPicture.asset(
                     image,
                     color: _homeManager.isClicked.value
-                        ? Colors.white
+                        ? Colors.black
                         : Colors.black,
                   ))
                 : Icon(icon),

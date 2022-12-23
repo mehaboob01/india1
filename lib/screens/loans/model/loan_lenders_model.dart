@@ -58,6 +58,7 @@ class Details {
   String? processTime;
   String? url;
 
+
   Details(
       {this.loanInterest,
         this.tenure,

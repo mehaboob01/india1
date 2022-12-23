@@ -95,7 +95,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
       () => loanController.createLoanLoading.value == true
           ? CircularProgressbar()
           : Scaffold(
-              resizeToAvoidBottomInset: false,
+              resizeToAvoidBottomInset: true,
               body: SafeArea(
                 child: SizedBox(
                   width: widthIs,
@@ -463,12 +463,16 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 // navigate to next screen
 
                 print(
+                    "loans id====> ${ loanController.createLoanModel.value.loanApplicationId}");
+
+                print(
                     "print value of additional details==>${profileController.noOfMonthsResiding.value.text.toString()}");
                 profileController.addAdditionalDetails(
                     isFromLoan: true,
                     loanApplicationId:
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
+                      profileController.setData();
                       Get.to(() => LendersList(
                             title: 'Personal loan',
                           ));

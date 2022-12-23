@@ -1057,13 +1057,13 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                // value: profileController.highestQualification.value == ''
+                // value: profileController.highestQualification.value.text == null
                 //     ? null
-                //     : profileController.highestQualification.value,
+                //     : profileController.highestQualification.value.text,
                 onChanged: (highestQualification) {
 
                   profileController.highestQualification.value.text = highestQualification;
-                  print("highest qualification ${profileController.highestQualification.value.text.toString()}");
+               //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
 
                 },
                 label: 'Highest Qualification',
@@ -1234,6 +1234,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   .replaceAll(' ', '') ==
                   'yes')
                 textField(
+                  keyboardType: TextInputType.number,
                   controller: profileController.activeOrExistingLoans.value,
                   label: 'No. of active / existing loans',
                   hint: 'Enter the no. of active / existing loans',
