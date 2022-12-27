@@ -47,6 +47,8 @@ class Apis {
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
   static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method
 
+
+  // for commit only
   // profile section api's
   static String profile = "customers/profile";
   static String addPersonalDetails = "customers/profile/personal-details";
