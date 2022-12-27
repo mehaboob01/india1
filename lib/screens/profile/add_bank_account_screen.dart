@@ -41,6 +41,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
     super.initState();
     redoCtrl.bankname.value = '';
     profileController.accountNumberController.value.text = '';
+    profileController.ifscController.value.text = '';
   }
 
   String? checkBankId(bankName) {
@@ -76,7 +77,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                     key: bankAccountKeyForBankId,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     initialValue: {},
-                    child: Column(
+                    child:
+
+                    Column(
                       children: [
                         SizedBox(
                           height: 20,
@@ -176,9 +179,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                           },
                           label: 'Account type',
                           hint: 'Select account type',
-                          value: profileController.accountType.value.isEmpty
-                              ? null
-                              : profileController.accountType.value,
+                          // value: profileController.accountType.value.isEmpty
+                          //     ? null
+                          //     : profileController.accountType.value,
                         ),
                         SizedBox(
                           height: 20,
@@ -223,6 +226,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                       bankAccountKeyForBankId
                                           .currentState!.value
                                           .clear();
+                                      profileController.ifscController.value.clear();
+
                                     }
                                   },
                                   child: Container(

@@ -30,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   void _onLoading() async {
     // your api here
-    _notificationManager.callNotificationsApi(false);
+  //  _notificationManager.callNotificationsApi(false);
 
     _refreshController.loadComplete();
 
@@ -39,7 +39,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void _onRefresh() async {
     // your api here
     _refreshController.refreshCompleted();
-    _notificationManager.callNotificationsApi(false);
+  //  _notificationManager.callNotificationsApi(false);
   }
 
 

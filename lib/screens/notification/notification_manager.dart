@@ -31,11 +31,12 @@ class NotificationManager extends GetxController {
 // api call for verify otp
 
   callNotificationsApi(bool addOldData) async {
-    // if (addOldData == false)
-    //  {
-    //    notificationList.clear();
-    //    notificationListSend.clear();
-    //  }
+    if (addOldData == false)
+     {
+       notificationList.clear();
+       notificationListSend.clear();
+     }
+
     notificationsCount.clear();
     notificationsCountSend.clear();
 

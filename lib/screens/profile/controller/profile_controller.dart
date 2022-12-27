@@ -193,8 +193,10 @@ class ProfileController extends GetxController {
     employmentType.value = profileDetailsModel.value.employmentType ?? '';
     occupationController.value.text =
         profileDetailsModel.value.occupation ?? '';
+    // monthlyIncomeController.value.text =
+    //     "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     monthlyIncomeController.value.text =
-        "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
+    "${(profileDetailsModel.value.income ?? '').toString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
     // new changes
@@ -737,7 +739,7 @@ class ProfileController extends GetxController {
     // print("loanApplicationId : $loanApplicationId");
     // print("insuranceApplicationId : $insuranceApplicationId");
 
-    print(accountType!.value);
+   // print(accountType!.value);
     try {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.additionalDetails,
@@ -765,6 +767,8 @@ class ProfileController extends GetxController {
             },
           ));
       if (response != null) {
+
+        print("response of occuaption${response}");
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
         } else {
@@ -778,6 +782,7 @@ class ProfileController extends GetxController {
         }
         getProfileData();
       } else {
+        print("response of occuaption${response}");
         Fluttertoast.showToast(
           msg: "something went wrong, try again!",
           toastLength: Toast.LENGTH_SHORT,
@@ -998,6 +1003,13 @@ class ProfileController extends GetxController {
 
   Future getProfileData() async {
     try {
+
+
+      Map<String,dynamic> data =  {
+        "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
+      };
+
+      print("data of user${data}");
       getProfileLoading.value = true;
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.profile,
@@ -1009,9 +1021,10 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        print('hello racer');
-        print(response);
+        print("Resposen of user data==>${response}");
+
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
+
 
         setData();
       }
@@ -1119,6 +1132,20 @@ class ProfileController extends GetxController {
     try {
       getBankAccountLoading.value = true;
 
+
+      Map<String,dynamic> data  =  {
+        "customerId": customerId.value,
+        "bankAccount": {
+          "bankId": bankId,
+          "accountNumber": "${accountNumberController.value.text}",
+          "ifscCode": "${ifscController.value.text}",
+          "accountType":
+          accountType!.value.isEmpty ? null : accountType!.value,
+        }
+      };
+
+      print("data for add bank${data}");
+
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.addBankAccount,
         method: Type.POST,
@@ -1216,7 +1243,7 @@ class ProfileController extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-      print("logout response${response.body}");
+
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);

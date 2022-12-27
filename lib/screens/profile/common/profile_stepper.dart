@@ -540,6 +540,7 @@ class ProfileStepper {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
+
                     profileController.pinCodeValidation(
                       value,
                     );
@@ -693,29 +694,52 @@ class ProfileStepper {
                   SizedBox(
                     height: 20,
                   ),
-                  ButtonTheme(
-                    alignedDropdown: true,
-                    child: commonDropDown(
-                      item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value.toString()),
-                        );
-                      }).toList(),
-                      value: profileController.accountType!.value.isEmpty
-                          ? null
-                          : profileController.accountType!.value,
-                      onChanged: (value) {
-                        if (isFromLoan == true) {
-                          profileController.accountType!.value = value;
-                        }
-                        temp = value;
-                      },
-                      label: 'Salary Mode',
-                      hint: 'Salary Mode',
-                    ),
+
+                  commonDropDown(
+                    item: [
+                      {"name": "Cash", "value": "Cash"},
+                      {"name": "Cheque", "value": "Cheque"},
+                      {"name": "BankTransfer", "value": "BankTransfer"},
+                      {"name": "PayCards", "value": "PayCards"},
+                    ].map((value) {
+                      return DropdownMenuItem(
+                        value: value['value'],
+                        child: Text(value['name'].toString()),
+                      );
+                    }).toList(),
+                    value: profileController.accountType.value == ''
+                        ? null
+                        : profileController.accountType.value,
+                    onChanged: (value) {
+                      profileController.salaryMode.value = value;
+                    },
+                    label: 'Salary Mode',
+                    hint: 'Salary Mode',
                   ),
+
+                  // ButtonTheme(
+                  //   alignedDropdown: true,
+                  //   child: commonDropDown(
+                  //     item: ['Cash', 'Cheque', 'BankTransfer', 'PayCards']
+                  //         .map<DropdownMenuItem<String>>((String value) {
+                  //       return DropdownMenuItem<String>(
+                  //         value: value,
+                  //         child: Text(value.toString()),
+                  //       );
+                  //     }).toList(),
+                  //     value: profileController.accountType.value.isEmpty
+                  //         ? null
+                  //         : profileController.accountType.value,
+                  //     onChanged: (value) {
+                  //       if (isFromLoan == true) {
+                  //         profileController.accountType!.value = value;
+                  //       }
+                  //       temp = value;
+                  //     },
+                  //     label: 'Salary Mode',
+                  //     hint: 'Salary Mode',
+                  //   ),
+                  // ),
                 ],
                 SizedBox(
                   height: 20,
@@ -1057,12 +1081,12 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                // value: profileController.highestQualification.value.text == null
-                //     ? null
-                //     : profileController.highestQualification.value.text,
+                value: profileController.highestQualification.value.text == null
+                    ? null
+                    : profileController.highestQualification.value.text,
                 onChanged: (highestQualification) {
 
-                  profileController.highestQualification.value.text = highestQualification;
+                  profileController.highestQualification.value = highestQualification;
                //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
 
                 },

@@ -35,7 +35,9 @@ class HomeManager extends GetxController {
 
   @override
   void onInit() {
+
     super.onInit();
+
     callHomeApi();
     callAdsBannerApi();
     sendTokens();
@@ -120,6 +122,7 @@ class HomeManager extends GetxController {
       print("response ads===>${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+
         var jsonData = jsonDecode(response.body);
         BanerAdsMOdel banerAdsMOdel = BanerAdsMOdel.fromJson(jsonData);
         print("data response");
@@ -136,6 +139,7 @@ class HomeManager extends GetxController {
 
           }
           bannerList.addAll(bannerListSend);
+          print("banerr lenth ${bannerList.length}");
           isLoading(false);
         } else {
           Flushbar(

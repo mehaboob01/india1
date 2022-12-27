@@ -28,7 +28,11 @@ class ManageAccountsCard extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: updateBankAccount.isLoading.value == true
-            ? CircularProgressbar()
+            ? Column(
+              children: [
+                CircularProgressbar(),
+              ],
+            )
             : SafeArea(
             child: Column(children: [
               const Align(

@@ -5,8 +5,10 @@ import 'package:india_one/screens/insurances/insurance_common.dart';
 import 'package:india_one/screens/insurances/model/insurance_application_model.dart';
 import 'package:india_one/screens/insurances/model/insurance_summary_model.dart';
 import 'package:india_one/screens/insurances/widgets/insurance_submission_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
+import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_constant.dart';
 import '../../../core/data/remote/dio_api_call.dart';
 import '../../profile/controller/profile_controller.dart';
@@ -100,7 +102,9 @@ class InsuranceController extends GetxController {
       print("$response");
       // if (response != null) {
         Get.to(() => InsuranceSubmissionPage());
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 3), () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs!.setBool(SPKeys.SHOW_AUTH, false);
           Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
         });
       // }

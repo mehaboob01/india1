@@ -5,10 +5,14 @@ class CircularProgressbar extends StatelessWidget {
   const CircularProgressbar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
+    Size size = MediaQuery.of(context).size;
     return Material(
       type: MaterialType.transparency,
       child: Scaffold(
         body: Container(
+          height: size.height,
+          width: size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
