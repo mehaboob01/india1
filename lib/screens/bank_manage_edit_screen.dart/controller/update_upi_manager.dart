@@ -16,13 +16,10 @@ class UpdateUpiAccount extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
 
-      print(data['upiId']);
-      print(id);
-
-
-      print("data json for upi  $data");
+  print("test");
 
       isLoading(true);
       var response = await http.put(Uri.parse(baseUrl + Apis.upiUpdate),
@@ -31,12 +28,11 @@ class UpdateUpiAccount extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+            //"Authorization": accessToken.toString()
           });
 
-      print("Response ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("http response");
         var jsonData = jsonDecode(response.body);
 
         CommonApiResponseModel commonApiResponseModel =

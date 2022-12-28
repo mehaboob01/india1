@@ -35,6 +35,8 @@ class _ReferEarnState extends State<ReferEarn> {
 
   @override
   void initState() {
+
+
     super.initState();
     if (_contactCont.isPermissionAllowed.isTrue) {
       _contactCont.fetchContacts();
@@ -430,15 +432,14 @@ class _ReferEarnState extends State<ReferEarn> {
             .filteredList.value[index].phones.first.number
             .toString())) {
 
-          print("already invited");
           const snackBar = SnackBar(
             content: Text('Already invited!'),
           );
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          contactCont.contactsLenght.value =
-              contactCont.contacts.length;
-          _controller.clear();
+
+         // _controller.clear();
+
         } else {
           setState(() {
             _referManager.callReferApi(contactCont
@@ -455,9 +456,9 @@ class _ReferEarnState extends State<ReferEarn> {
 
             print("selected list${invitedList.toString()}");
           });
-          contactCont.contactsLenght.value =
-              contactCont.contacts.length;
-          _controller.clear();
+          // contactCont.contactsLenght.value =
+          //     contactCont.contacts.length;
+        //  _controller.clear();
         }
       },
       child: Padding(
@@ -493,7 +494,7 @@ class _ReferEarnState extends State<ReferEarn> {
                         .filteredList.value[index].phones.isNotEmpty
                     ? contactCont.filteredList.value[index].phones.first.number
                         .toString()
-                    : null)
+                    : null )
                 ? "Invited"
                 : "Invite",
             textAlign: TextAlign.center,

@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                               Obx(
                                                 () => Text(
-                                                  profileDetailsModel.mobileNumber == null?"No contact":"+91 ${profileDetailsModel.mobileNumber}",
+                                                  "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: Dimens.font_18sp,
@@ -568,6 +568,8 @@ class ProfileScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (title == 'Bank account(s)') {
+                        cashBackManager.fetchCustomerBankAccounts();
+                        cashBackManager.fetchCustomerUpiAccounts();
                         Get.to(() => ManageAccountsCard());
                       } else if (title == 'UPI ID(s) / VPA Number(s)') {
                         Get.to(() => ManageAccountsCard());

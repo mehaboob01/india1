@@ -21,13 +21,10 @@ class AddAccountManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-
-
-      print(data['upiId']);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
 
 
-      print("data json for upi  $data");
 
       isLoading(true);
       var response = await http.post(Uri.parse(baseUrl + Apis.upiAdd),
@@ -44,6 +41,8 @@ class AddAccountManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+            //"Authorization": accessToken.toString()
+
           });
 
       print("Response ${response.body}");

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../local/shared_preference_keys.dart';
 import 'api_constant.dart';
 
 enum Type { GET, POST, PUT, DELETE }
@@ -22,12 +23,14 @@ class DioApiCall {
     bool? isLogout,
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     dio.options = BaseOptions(
       baseUrl: baseUrl,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        "x-digital-api-key": "1234",
+        "x-digital-api-key": "1234"
+        //"Authorization": accessToken.toString()
       },
     );
     if (headers != null) {

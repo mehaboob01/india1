@@ -32,6 +32,7 @@ import '../../../utils/comman_validaters.dart';
 import '../../home_start/home_manager.dart';
 import '../../loyality_points/cashback_redeem/cb_manager.dart';
 import '../model/upi_id_model.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 extension priceChange on int {
   String priceString() {
@@ -200,8 +201,8 @@ class ProfileController extends GetxController {
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
     // new changes
-    accountType.value = profileDetailsModel.value.salaryMode.toString() ?? '';
-    highestQualification.value.text = profileDetailsModel.value.highestQualification.toString() ?? '';
+    accountType.value = profileDetailsModel.value.salaryMode ?? '';
+    highestQualification.value.text = profileDetailsModel.value.highestQualification ?? '';
 
 
     print("seting data to residing${profileDetailsModel.value.residingTenure.toString()}");
@@ -374,7 +375,10 @@ class ProfileController extends GetxController {
                 image.value =
                     (await _picker.pickImage(source: ImageSource.camera))!.path;
                 Get.back();
-                await cropImage();
+                // await cropImage();
+                compress().then((value) async {
+                  await cropImage();
+                });
               },
             ),
             Divider(),
@@ -386,7 +390,10 @@ class ProfileController extends GetxController {
                     (await _picker.pickImage(source: ImageSource.gallery))!
                         .path;
                 Get.back();
-                await cropImage();
+                // await cropImage();
+                compress().then((value) async {
+                  await cropImage();
+                });
               },
             ),
           ],
@@ -1021,7 +1028,6 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-        print("Resposen of user data==>${response}");
 
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
 
@@ -1172,6 +1178,11 @@ class ProfileController extends GetxController {
             content: Text('Bank account added!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+        }else{
+          const snackBar = SnackBar(
+            content: Text('Server Error!'),
+          );
+          ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
         }
       }
     } catch (exception) {
@@ -1179,6 +1190,16 @@ class ProfileController extends GetxController {
     } finally {
       getBankAccountLoading.value = false;
     }
+  }
+
+  Future<void> compress() async {
+    var result = await FlutterImageCompress.compressAndGetFile(
+      image.value,
+      '${image.value}compressed.jpg',
+      keepExif: false,
+      quality: 66,
+    );
+    image.value = result!.path;
   }
 
   // Future logout() async {
@@ -1226,6 +1247,7 @@ class ProfileController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
 
 
@@ -1241,6 +1263,7 @@ class ProfileController extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+            //"Authorization": accessToken.toString()
           });
 
 
@@ -1255,7 +1278,7 @@ class ProfileController extends GetxController {
           SharedPreferences preferences =
           await SharedPreferences.getInstance();
           await preferences.clear();
-          Get.toNamed(MRouter.login);
+          Get.toNamed(MRouter.userLogin);
 
 
         } else {

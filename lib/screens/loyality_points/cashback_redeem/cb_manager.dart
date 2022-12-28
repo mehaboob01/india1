@@ -71,10 +71,13 @@ class CashBackManager extends GetxController {
     bankListId.clear();
     bankListIdSend.clear();
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       var response = await http.get(Uri.parse(baseUrl + Apis.banks), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         "x-digital-api-key": "1234"
+      //  "Authorization": accessToken.toString()
       });
       var jsonData = jsonDecode(response.body);
       print("response of bank lists${response.body}");
@@ -123,6 +126,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
       print("customer id${customerId}");
 
@@ -133,6 +137,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+          //  "Authorization": accessToken.toString()
           });
 
       print("response==> ${response.body.toString()}");
@@ -181,6 +186,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       var response = await http.post(
           Uri.parse(baseUrl + Apis.fetchCustomerUpiAccounts),
           body: jsonEncode({"customerId": customerId}),
@@ -188,6 +194,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+         //   "Authorization": accessToken.toString()
           });
       var jsonData = jsonDecode(response.body);
 
@@ -239,6 +246,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       // print("customer id==> ${customerId}");
       // print("data tab ==>  ${data}");
       // print("from list ==>  ${fromAccountList}");
@@ -271,7 +279,6 @@ class CashBackManager extends GetxController {
         };
       }
 
-      print("map data for bank ${sendData.toString()}");
 
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.cashBackToBank),
@@ -280,6 +287,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+          //  "Authorization": accessToken.toString()
           });
       print("Response of points to bank api");
       print(response.body);
@@ -327,6 +335,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       isLoading.value = true;
 
       var response = await http.post(Uri.parse(baseUrl + Apis.upiAdd),
@@ -335,6 +344,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+           // "Authorization": accessToken.toString()
           });
 
       print("Response of add upi${response.body}");
@@ -391,6 +401,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.cashBackToUpi),
           body: jsonEncode({
@@ -402,6 +413,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+         //   "Authorization": accessToken.toString()
           });
 
       if (response.statusCode == 200) {
@@ -441,6 +453,7 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
       print("customer id${customerId}");
       print("bankAccountId${id}");
 
@@ -451,6 +464,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+          //  "Authorization": accessToken.toString()
           });
 
       print("response delete==> ${response.body}");
@@ -508,8 +522,8 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-      print("customer id${customerId}");
-      print("upi ID${id}");
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
 
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerUpiAccount),
@@ -518,6 +532,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
+         //   "Authorization": accessToken.toString()
           });
 
       print("response delete==> ${response.body}");

@@ -44,13 +44,13 @@ class CarasoulImages extends StatelessWidget {
                         children: [
                           Text(getController.bannerList[i].subTitle.toString(),
                               style: AppStyle.shortHeading.copyWith(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
                           SizedBox(height: 1.0.wp),
                           Text(getController.bannerList[i].title.toString(),
                               style: AppStyle.shortHeading.copyWith(
-                                  color: Colors.black, fontWeight: FontWeight.bold)),
+                                  color: Colors.white, fontWeight: FontWeight.bold)),
                           SizedBox(height: 2.0.wp),
                           Row(
                             mainAxisSize: MainAxisSize.min,
