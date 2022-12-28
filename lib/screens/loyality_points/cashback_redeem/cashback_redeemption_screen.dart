@@ -991,7 +991,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                     colors: [
-                                        AppColors.backGroundgradient1,
+                                        AppColors.blueColor,
                                         AppColors.backGroundgradient2
                                       ])
                                 : null,

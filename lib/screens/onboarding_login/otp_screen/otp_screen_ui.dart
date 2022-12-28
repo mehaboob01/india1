@@ -96,7 +96,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                 color: AppColors.white,
                 child: Stack(
                   children: [
-                    LoginBgScreen('assets/images/login_bg.png'),
+                    LoginBgScreen(AppImages.newOtpBgPng),
                     buildOtpCard()
                   ],
                 ),

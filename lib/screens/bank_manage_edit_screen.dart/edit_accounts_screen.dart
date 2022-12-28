@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 
+import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/common_drop_down.dart';
@@ -65,30 +66,36 @@ class EditAccountsCard extends StatelessWidget {
                         heading: 'Manage accounts',
                         customActionIconsList: [
                           CustomActionIcons(
-                              image: AppImages.deleteIconSvg,
+                              image: AppImages.bottomNavHomeSvg,
                               onHeaderIconPressed: () async {
-                                CommonDeleteBottomSheet().deleteBottomSheet(
-                                    index: index!,
-                                    onDelete: () {
-                                      print(
-                                          'Deleted ${cashBackManager.customerBankList[index!].id} successfully');
-
-                                      cashBackManager.delBankAccount(
-                                          cashBackManager
-                                              .customerBankList[index!].id);
-
-                                      Future.delayed(
-                                          const Duration(milliseconds: 500),
-                                              () async {
-// Here you can write your code
-                                            await cashBackManager
-                                                .fetchCustomerBankAccounts();
-                                            await cashBackManager
-                                                .fetchCustomerUpiAccounts();
-                                          });
-                                      //  cashBackManager.fetchCustomerBankAccounts();
-                                    });
+                                Get.offNamedUntil(MRouter.homeScreen,
+                                    (route) => route.isFirst);
                               })
+//                           CustomActionIcons(
+//                               image: AppImages.deleteIconSvg,
+//                               onHeaderIconPressed: () async {
+//                                 CommonDeleteBottomSheet().deleteBottomSheet(
+//                                     index: index!,
+//                                     onDelete: () {
+//                                       print(
+//                                           'Deleted ${cashBackManager.customerBankList[index!].id} successfully');
+
+//                                       cashBackManager.delBankAccount(
+//                                           cashBackManager
+//                                               .customerBankList[index!].id);
+
+//                                       Future.delayed(
+//                                           const Duration(milliseconds: 500),
+//                                           () async {
+// // Here you can write your code
+//                                         await cashBackManager
+//                                             .fetchCustomerBankAccounts();
+//                                         await cashBackManager
+//                                             .fetchCustomerUpiAccounts();
+//                                       });
+//                                       //  cashBackManager.fetchCustomerBankAccounts();
+//                                     });
+//                               })
                         ],
                       ),
                     ),
@@ -126,14 +133,62 @@ class EditAccountsCard extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "Your accounts",
-                                              style: AppStyle.shortHeading
-                                                  .copyWith(
-                                                fontSize: Dimens.font_16sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black,
-                                              ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Your account",
+                                                  style: AppStyle.shortHeading
+                                                      .copyWith(
+                                                    fontSize: Dimens.font_16sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    CommonDeleteBottomSheet()
+                                                        .deleteBottomSheet(
+                                                            index: index!,
+                                                            onDelete: () {
+                                                              print(
+                                                                  'Deleted ${cashBackManager.customerBankList[index!].id} successfully');
+
+                                                              cashBackManager.delBankAccount(
+                                                                  cashBackManager
+                                                                      .customerBankList[
+                                                                          index!]
+                                                                      .id);
+
+                                                              Future.delayed(
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          500),
+                                                                  () async {
+// Here you can write your code
+                                                                await cashBackManager
+                                                                    .fetchCustomerBankAccounts();
+                                                                await cashBackManager
+                                                                    .fetchCustomerUpiAccounts();
+                                                              });
+                                                              //  cashBackManager.fetchCustomerBankAccounts();
+                                                            });
+                                                  },
+                                                  child: Text(
+                                                    "Delete account",
+                                                    style: AppStyle.shortHeading
+                                                        .copyWith(
+                                                      fontSize:
+                                                          Dimens.font_16sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             SizedBox(
                                               height: 34,

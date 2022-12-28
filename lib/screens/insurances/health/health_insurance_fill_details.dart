@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/insurances/controller/insurance_controller.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/widgets/another_stepper.dart';
 
@@ -63,18 +64,10 @@ class _HealthInsuranceFillDetailsState
           child: Column(
             children: [
               CustomAppBar(
-                heading: widget.isAccidentInsurance
-                    ? 'Accident Insurance'
-                    : "Critical Illness",
-                customActionIconsList: [
-                  CustomActionIcons(
-                    image: AppImages.bottomNavHomeSvg,
-                    onHeaderIconPressed: () async {
-                      Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
-                    },
-                  ),
-                ],
-              ),
+                  heading: widget.isAccidentInsurance
+                      ? 'Accident Insurance'
+                      : "Critical Illness",
+                  customActionIconsList: commonAppIcons),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(

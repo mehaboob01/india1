@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 
 class AppColors {
   static const Color buttonColor = Color(0xff666666);
-  static const Color butngradient1 = Color(0xff004280);
+  static const Color blueColor = Color(0xff004280);
+  static const Color redColor = Color(0xffED1C24);
   static const Color butngradient2 = Color(0xff00C376);
-  static const Color backGroundgradient1 = Color(0xff004280);
+
   static const Color backGroundgradient2 = Color(0xff357CBE);
   static const cardScreenBg = Color(0xFFD1D1D1);
 
@@ -60,7 +61,6 @@ class AppColors {
   static const Color black26Color = Colors.black26;
   static const Color whiteColor = Colors.white;
   static const Color greenColor = Colors.green;
-  static const Color redColor = Colors.red;
 
   static const Color textColor = const Color.fromRGBO(41, 56, 69, 1.0);
 
@@ -456,9 +456,7 @@ class AppImages {
   static const String flower2 = '${assetPng}flower2.png';
 
   static const String assetSvg = 'assets/svg/';
-   static const String imagesAssetSvg = 'assets/';
-
-
+  static const String imagesAssetSvg = 'assets/';
 
   static const String user_profile = '${assetSvg}user_profile.svg';
   static const String notify_icon = '${assetSvg}notify_icon.svg';
@@ -493,6 +491,27 @@ class AppImages {
   static const String arrowUpRightSvg = '${assetSvg}ic_arrow_up.svg';
   static const String skipWalkThroughSvg =
       '${assetSvg}ic_skip_walkthrought.svg';
+
+  // NEW DESIGN IMAGES
+  // png
+
+  static const String newHomeBgPng =
+      '${assetPng}new_design_pngImages/1x_png/home_top_bg_PNG.png'; // home bg image
+  static const String newOtpBgPng =
+      '${assetPng}new_design_pngImages/1x_png/otp_screen_bg_png.png'; // otp screen bg
+  static const String loyaltyCardBg =
+      '${assetPng}new_design_pngImages/1x_png/loyaltycard.png';
+
+  static const String profile_bg =
+      '${assetPng}new_design_pngImages/1x_png/profile_bg_PNG.png';
+  static const String refer_Png =
+      '${assetPng}new_design_pngImages/3x_png/refer_PNG.png';
+  static const String heading_bg_PNG =
+      '${assetPng}new_design_pngImages/1x_png/heading_bg_PNG.png';
+
+  // svg
+  static const String newIndiaOneSvg =
+      '${assetSvg}new_design_svgImages/indiaONESVG.svg';
 }
 
 extension PercentSize on double {
@@ -515,27 +534,24 @@ showSnackBar({
   required title,
   required message,
 }) {
-  return Get.snackbar(
-    
-    
-    title,
-    message,
-    backgroundColor: Colors.black.withOpacity(0.9),
-    colorText: Colors.white,
-    icon: Icon(
-      Icons.signal_wifi_connected_no_internet_4,
-      color: Colors.white,
-    ),
-    showProgressIndicator: true,
-    snackStyle: SnackStyle.FLOATING,
-    duration: Duration(
-      days: 365,
-    ),
-    mainButton: TextButton(onPressed: () {
-     Get.back();
-    }, child: Text("ok"),)
-    
-  );
+  return Get.snackbar(title, message,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      colorText: Colors.white,
+      icon: Icon(
+        Icons.signal_wifi_connected_no_internet_4,
+        color: Colors.white,
+      ),
+      showProgressIndicator: true,
+      snackStyle: SnackStyle.FLOATING,
+      duration: Duration(
+        days: 365,
+      ),
+      mainButton: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Text("ok"),
+      ));
 }
 
 class AppFonts {

@@ -540,7 +540,6 @@ class ProfileStepper {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
-
                     profileController.pinCodeValidation(
                       value,
                     );
@@ -707,11 +706,12 @@ class ProfileStepper {
                         child: Text(value['name'].toString()),
                       );
                     }).toList(),
-                    value: profileController.accountType.value == ''
-                        ? null
-                        : profileController.accountType.value,
+                    // value: null,
+                    // value: profileController.accountType.value.trim().isEmpty
+                    //     ? null
+                    //     : profileController.accountType.value,
                     onChanged: (value) {
-                      profileController.salaryMode.value = value;
+                      profileController.accountType.value = value;
                     },
                     label: 'Salary Mode',
                     hint: 'Salary Mode',
@@ -1074,21 +1074,23 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   {"name": "Masters", "value": "Masters"},
                   {"name": "NonGraduate", "value": "NonGraduate"},
                   {"name": "MBA", "value": "MBA"},
-
                 ].map((value) {
                   return DropdownMenuItem(
                     value: value['value'],
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                value: profileController.highestQualification.value.text == null
+                value: profileController.highestQualification.value.text
+                            .contains('null') ||
+                        profileController
+                            .highestQualification.value.text.isEmpty
                     ? null
                     : profileController.highestQualification.value.text,
                 onChanged: (highestQualification) {
+                  print(profileController.highestQual.value);
 
-                  profileController.highestQualification.value = highestQualification;
-               //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
-
+                  profileController.highestQualification.value.text =
+                      highestQualification;
                 },
                 label: 'Highest Qualification',
                 hint: 'Choose your Highest qualification',
@@ -1141,7 +1143,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine1Controller.value,
+                    profileController.officeAddressLine1Controller.value,
                 label: 'Office address line 1',
                 hint: 'Enter the Office address line 1',
                 vaidation: (value) {
@@ -1156,7 +1158,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine2Controller.value,
+                    profileController.officeAddressLine2Controller.value,
                 label: 'Office address line 2',
                 hint: 'Enter the Office address line 2',
               ),
@@ -1184,7 +1186,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1228,7 +1230,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1254,8 +1256,8 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 height: Get.height * 0.02,
               ),
               if (profileController.existingLoan
-                  .toLowerCase()
-                  .replaceAll(' ', '') ==
+                      .toLowerCase()
+                      .replaceAll(' ', '') ==
                   'yes')
                 textField(
                   keyboardType: TextInputType.number,
@@ -1273,5 +1275,4 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
       ),
     );
   }
-
 }

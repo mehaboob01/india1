@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constant/theme_manager.dart';
 
-
 class SliderThumbShape extends SliderComponentShape {
   /// Create a slider thumb that draws a circle.
 
@@ -93,7 +92,7 @@ class SliderThumbShape extends SliderComponentShape {
       //       0,
       //       math.pi * 2);
 
-      Paint paint = Paint()..color = AppColors.backGroundgradient1;
+      Paint paint = Paint()..color = AppColors.blueColor;
       paint.strokeWidth = 10;
       paint.style = PaintingStyle.stroke;
       canvas.drawCircle(

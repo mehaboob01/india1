@@ -66,7 +66,7 @@ class RowHeadingWithunderLineSubHeading extends StatelessWidget {
           child: Text(
             subHeading,
             style: AppStyle.shortHeading.copyWith(
-                color: AppColors.backGroundgradient1,
+                color: AppColors.blueColor,
                 decoration: TextDecoration.underline,
                 decorationThickness: 2,
                 fontWeight: FontWeight.w600),

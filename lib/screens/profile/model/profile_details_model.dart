@@ -33,36 +33,36 @@ class ProfileDetailsModel {
 
   ProfileDetailsModel(
       {this.id,
-        this.firstName,
-        this.lastName,
-        this.mobileNumber,
-        this.panNumber,
-        this.occupation,
-        this.income,
-        this.preferredLanguage,
-        this.dateOfBirth,
-        this.email,
-        this.membershipId,
-        this.uniqueId,
-        this.alternateNumber,
-        this.imageName,
-        this.gender,
-        this.employmentType,
-        this.maritalStatus,
-        this.salaryMode,
-        this.geoLocation,
-        this.address,
-        this.imageUrl,
-        this.residingTenure,
-        this.companyName,
-        this.designation,
-        this.workExperience,
-        this.officeAddressLine1,
-        this.officeAddressLine2,
-        this.activeNetBanking,
-        this.activeEmi,
-        this.noOfActiveEmi,
-        this.highestQualification});
+      this.firstName,
+      this.lastName,
+      this.mobileNumber,
+      this.panNumber,
+      this.occupation,
+      this.income,
+      this.preferredLanguage,
+      this.dateOfBirth,
+      this.email,
+      this.membershipId,
+      this.uniqueId,
+      this.alternateNumber,
+      this.imageName,
+      this.gender,
+      this.employmentType,
+      this.maritalStatus,
+      this.salaryMode,
+      this.geoLocation,
+      this.address,
+      this.imageUrl,
+      this.residingTenure,
+      this.companyName,
+      this.designation,
+      this.workExperience,
+      this.officeAddressLine1,
+      this.officeAddressLine2,
+      this.activeNetBanking,
+      this.activeEmi,
+      this.noOfActiveEmi,
+      this.highestQualification});
 
   ProfileDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,10 +82,10 @@ class ProfileDetailsModel {
     gender = json['gender'];
     employmentType = json['employmentType'];
     maritalStatus = json['maritalStatus'];
-    salaryMode = json['salaryMode'];
+    salaryMode = json['salaryMode'] == null ? '' : json['salaryMode'];
     geoLocation = json['geoLocation'];
     address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
+        json['address'] != null ? new Address.fromJson(json['address']) : null;
     imageUrl = json['imageUrl'];
     residingTenure = json['residingTenure'];
     companyName = json['companyName'];
@@ -96,7 +96,11 @@ class ProfileDetailsModel {
     activeNetBanking = json['activeNetBanking'];
     activeEmi = json['activeEmi'];
     noOfActiveEmi = json['noOfActiveEmi'];
-    highestQualification = json['highestQualification'];
+    highestQualification = json['highestQualification'] == null
+        ? 'Got it'
+        : json['highestQualification'];
+    print('in model');
+    print(highestQualification);
   }
 
   Map<String, dynamic> toJson() {
@@ -147,10 +151,10 @@ class Address {
 
   Address(
       {this.addressLine1,
-        this.addressLine2,
-        this.postCode,
-        this.city,
-        this.state});
+      this.addressLine2,
+      this.postCode,
+      this.city,
+      this.state});
 
   Address.fromJson(Map<String, dynamic> json) {
     addressLine1 = json['addressLine1'];

@@ -5,6 +5,7 @@ import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/insurances/controller/insurance_controller.dart';
 import 'package:india_one/screens/insurances/widgets/custom_drop_down.dart';
 import 'package:india_one/screens/insurances/widgets/policy_item_widget.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/circular_progressbar.dart';
@@ -48,35 +49,26 @@ class _HealthInsuranceState extends State<HealthInsurance> {
 
   Widget body() {
     return SafeArea(
-
       child: Column(
         children: [
           CustomAppBar(
-            heading: widget.isAccidentInsurance
-                ? 'Critical Illness'
-                : "Critical Illness",
-            customActionIconsList: [
-              CustomActionIcons(
-                image: AppImages.bottomNavHomeSvg,
-                onHeaderIconPressed: () async {
-                  Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
-                },
-              ),
-            ],
-          ),
+              heading: widget.isAccidentInsurance
+                  ? 'Critical Illness'
+                  : "Critical Illness",
+              customActionIconsList: commonAppIcons),
           Container(
             width: widthIs,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
-              gradient: new LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.backGroundgradient1,
-                  AppColors.backGroundgradient2
-                ],
-              ),
-            ),
+                image: DecorationImage(
+                    image: AssetImage(AppImages.loyaltyCardBg),
+                    fit: BoxFit.fill)
+                // gradient: new LinearGradient(
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                //   colors: [AppColors.blueColor, AppColors.backGroundgradient2],
+                // ),
+                ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
