@@ -659,8 +659,8 @@ class ProfileStepper {
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                value: profileController.employmentType.value == ''
-                    ? null
+                value: profileController.employmentType.value.isEmpty
+                 || profileController.employmentType.value.contains("null")   ? null
                     : profileController.employmentType.value,
                 onChanged: (value) {
                   profileController.employmentType.value = value;
@@ -707,11 +707,11 @@ class ProfileStepper {
                         child: Text(value['name'].toString()),
                       );
                     }).toList(),
-                    value: profileController.accountType.value == ''
+                    value: profileController.accountType.value.isEmpty || profileController.accountType.value.contains("null")
                         ? null
                         : profileController.accountType.value,
                     onChanged: (value) {
-                      profileController.salaryMode.value = value;
+                      profileController.accountType.value = value;
                     },
                     label: 'Salary Mode',
                     hint: 'Salary Mode',
@@ -1081,12 +1081,15 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                value: profileController.highestQualification.value.text == null
+                value: profileController
+                    .highestQualification.value.text.isEmpty ||
+                    profileController.highestQualification.value.text
+                        .contains("null")
                     ? null
-                    : profileController.highestQualification.value.text,
+                    : profileController.highestQualification.value.text.trim(),
                 onChanged: (highestQualification) {
 
-                  profileController.highestQualification.value = highestQualification;
+                  profileController.highestQualification.value.text = highestQualification;
                //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
 
                 },

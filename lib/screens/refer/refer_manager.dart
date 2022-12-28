@@ -12,10 +12,12 @@ import '../../core/data/remote/api_constant.dart';
 
 class ReferManager extends GetxController {
   var isLoading = false.obs;
+ // var getSuccess = false.obs;
   ContactCont cont = Get.put(ContactCont());
   callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
     print("mobile number ${number.substring(number.length - 10)}");
     try {
@@ -29,7 +31,8 @@ class ReferManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": accessToken.toString()
           });
 
       print("response of send otp${response.body}");
@@ -40,21 +43,35 @@ class ReferManager extends GetxController {
             CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-          cont.filteredList.value.clear();
-          cont.filteredList.value = cont.contacts;
+        //  getSuccess.value = true;
+
+
           Flushbar(
             title: "Success:)",
             message: "Invitation sent successfully!",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
+
+          // cont.filteredList.value.clear();
+          // cont.filteredList.value = cont.contacts;
+          //
+          //
+          // cont.contactsLenght.value = cont.contacts.length;
+
         } else {
+
+          cont.contactsLenght.value = cont.contacts.length;
+          cont.filteredList.value = cont.contacts;
+
+
           Flushbar(
-            title: "Server Error!",
+            title: "Alert!",
             message: commonApiResponseModel.status!.message.toString(),
-            duration: Duration(seconds: 1),
+            duration: Duration(seconds: 3),
           )..show(Get.context!);
         }
       } else {
+        cont.contactsLenght.value = cont.contacts.length;
         print("Success");
         Flushbar(
           title: "Server Error!",
@@ -69,7 +86,13 @@ class ReferManager extends GetxController {
         duration: Duration(seconds: 1),
       )..show(Get.context!);
     } finally {
+      cont.contactsLenght.value =
+          cont.contacts.length;
+
       isLoading.value = false;
+ //     getSuccess.value = false;
+
+
     }
   }
 }

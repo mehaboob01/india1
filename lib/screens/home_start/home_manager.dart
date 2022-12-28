@@ -33,6 +33,8 @@ class HomeManager extends GetxController {
   var bannerList = <Ad>[].obs;
   var bannerListSend = <Ad>[].obs;
 
+
+
   @override
   void onInit() {
 
@@ -47,9 +49,14 @@ class HomeManager extends GetxController {
   void callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
     print("Customer Id ${customerId}");
     print("points Id ${points}");
+    print("Access token ${accessToken}");
+
+
+
 
     loyalityPoints.value = points!;
     try {
@@ -59,7 +66,8 @@ class HomeManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": accessToken.toString()
           });
 
       print("response home===>${response.body}");

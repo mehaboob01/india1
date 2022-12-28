@@ -222,11 +222,15 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                           checkBankId(redoCtrl.bankname.value);
                                       print("bank id ${bankId}");
                                       profileController
-                                          .addBankAccountData(bankId);
-                                      bankAccountKeyForBankId
-                                          .currentState!.value
-                                          .clear();
-                                      profileController.ifscController.value.clear();
+                                          .addBankAccountData(bankId).then((value) {
+
+                                        bankAccountKeyForBankId
+                                            .currentState!.value
+                                            .clear();
+                                        profileController.ifscController.value.clear();
+                                      }
+                                         );
+
 
                                     }
                                   },

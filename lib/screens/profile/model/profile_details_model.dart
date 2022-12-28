@@ -17,7 +17,7 @@ class ProfileDetailsModel {
   String? employmentType;
   String? maritalStatus;
   String? salaryMode;
-  String? geoLocation;
+  GeoLocation? geoLocation;
   Address? address;
   String? imageUrl;
   int? residingTenure;
@@ -28,7 +28,7 @@ class ProfileDetailsModel {
   String? officeAddressLine2;
   String? activeNetBanking;
   String? activeEmi;
-  String? noOfActiveEmi;
+  int? noOfActiveEmi;
   String? highestQualification;
 
   ProfileDetailsModel(
@@ -83,7 +83,7 @@ class ProfileDetailsModel {
     employmentType = json['employmentType'];
     maritalStatus = json['maritalStatus'];
     salaryMode = json['salaryMode'];
-    geoLocation = json['geoLocation'];
+    geoLocation = json['geoLocation'] != null ? new GeoLocation.fromJson(json['geoLocation']) : null;
     address =
     json['address'] != null ? new Address.fromJson(json['address']) : null;
     imageUrl = json['imageUrl'];
@@ -97,6 +97,9 @@ class ProfileDetailsModel {
     activeEmi = json['activeEmi'];
     noOfActiveEmi = json['noOfActiveEmi'];
     highestQualification = json['highestQualification'];
+
+
+    print("inside model json");
   }
 
   Map<String, dynamic> toJson() {
@@ -119,7 +122,9 @@ class ProfileDetailsModel {
     data['employmentType'] = this.employmentType;
     data['maritalStatus'] = this.maritalStatus;
     data['salaryMode'] = this.salaryMode;
-    data['geoLocation'] = this.geoLocation;
+    if (this.geoLocation != null) {
+      data['geoLocation'] = this.geoLocation!.toJson();
+    }
     if (this.address != null) {
       data['address'] = this.address!.toJson();
     }
@@ -167,6 +172,26 @@ class Address {
     data['postCode'] = this.postCode;
     data['city'] = this.city;
     data['state'] = this.state;
+    return data;
+  }
+
+
+}
+class GeoLocation {
+  double? lat;
+  double? lon;
+
+  GeoLocation({this.lat, this.lon});
+
+  GeoLocation.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lon = json['lon'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lon'] = this.lon;
     return data;
   }
 }

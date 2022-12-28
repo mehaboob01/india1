@@ -61,9 +61,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    _profileController.getProfileData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
+      _profileController.getProfileData();
     //  _homeManager.callAdsBannerApi();
       notificationManager.callNotificationsApi(false);
 
@@ -353,7 +355,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         onPressed: () {
                           Get.back();
 
-                          Navigator.of(context, rootNavigator: true).pop();
+                      //    Navigator.of(context, rootNavigator: true).pop();
                         },
                         child: Text("No"))
                   ],
@@ -1232,7 +1234,7 @@ Widget cancelBtn() {
   return ElevatedButton(
       onPressed: () {
         print("Go back");
-        Get.back(closeOverlays: true);
+        Get.back();
       },
       child: Text("No"));
 }

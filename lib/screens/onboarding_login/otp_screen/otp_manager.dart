@@ -116,9 +116,17 @@ class OtpManager extends GetxController {
       if(response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
+        prefs = await SharedPreferences.getInstance();
+        
+        print("custmer id after logout${prefs.getString(SPKeys.CUSTOMER_ID)} ");
 
         if (verifyOtpModel.status!.code == 2000) {
-          prefs = await SharedPreferences.getInstance();
+          print("inside 2000 ${verifyOtpModel.data!.customerId.toString()} ");
+
+
+
+
+          //  prefs = await SharedPreferences.getInstance();
           prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
           prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
           prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());

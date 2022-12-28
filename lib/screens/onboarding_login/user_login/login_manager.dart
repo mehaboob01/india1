@@ -26,7 +26,7 @@ class LoginManager extends GetxController {
       String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
 
 
-      print("SELECTED_LANGUAGE==> ${selectedLan}");
+
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
             "mobileNumber": phoneNumber,
