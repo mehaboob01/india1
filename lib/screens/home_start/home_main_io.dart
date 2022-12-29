@@ -36,14 +36,15 @@ import '../map/map/map_ui.dart';
 import '../notification/notification_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/controller/profile_controller.dart';
-import '../profile/model/profile_details_model.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
+import 'dart:io' show Platform;
 import 'dart:io' show Platform;
 
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
   List<FocusNode> focusNodes;
+
   HomeMainIO(this.showPonitsPopup, this.focusNodes);
 
   @override
@@ -54,6 +55,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
   final notificationManager = Get.put(NotificationManager());
   ProfileController _profileController = Get.put(ProfileController());
+ // List _list = Platform.operatingSystemVersion.split(' ');
+
+
 
   final ConnectionManagerController _controller =
   Get.find<ConnectionManagerController>();
@@ -62,7 +66,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     _profileController.getProfileData();
+    _profileController.setData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      // print("android version:  ${_list[1]}");
       // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
       _profileController.getProfileData();
@@ -129,7 +136,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   //   WidgetsBinding.instance.removeObserver(this);
   //   super.dispose();
   // }
-
+  //
   // @override
   // void didChangeAppLifecycleState(AppLifecycleState state) {
   //   // TODO: implement didChangeAppLifecycleState
@@ -954,6 +961,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       onTap: () {
         _homeManager.showAuth.value = false;
         _loyaltyManager.callLoyaltyDashboardApi();
+        cashbackManager.callBankListApi();
 
         _homeManager.redeemablePoints >= 14
             ? Get.toNamed(routName)
@@ -1001,7 +1009,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-  MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {

@@ -1137,10 +1137,12 @@ class ProfileController extends GetxController {
   Future addBankAccountData(String? bankId) async {
     try {
       getBankAccountLoading.value = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
 
 
       Map<String,dynamic> data  =  {
-        "customerId": customerId.value,
+        "customerId": customerId,
         "bankAccount": {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
@@ -1157,7 +1159,7 @@ class ProfileController extends GetxController {
         method: Type.POST,
         data: json.encode(
           {
-            "customerId": customerId.value,
+            "customerId": customerId,
             "bankAccount": {
               "bankId": bankId,
               "accountNumber": "${accountNumberController.value.text}",
