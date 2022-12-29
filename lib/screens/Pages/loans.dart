@@ -22,6 +22,7 @@ class _LoansPageState extends State<LoansPage> {
 
   LoanController loanController = Get.put(LoanController());
 
+
   @override
   void initState() {
     super.initState();
@@ -73,6 +74,8 @@ class LoansCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
+
+
             Get.toNamed(MRouter.chooseAmountIO);
           },
           child: ItemCard(

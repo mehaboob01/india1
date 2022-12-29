@@ -210,13 +210,16 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                   message: "Select gender",
                   duration: Duration(seconds: 3),
                 )..show(context);
-              } else if (profileController.maritalStatus.value == '') {
-                Flushbar(
-                  title: "Alert!",
-                  message: "Select marital status",
-                  duration: Duration(seconds: 3),
-                )..show(context);
-              } else {
+              }
+              // else if (profileController.maritalStatus.value == '') {
+              //   Flushbar(
+              //     title: "Alert!",
+              //     message: "Select marital status",
+              //     duration: Duration(seconds: 3),
+              //   )..show(context);
+              // }
+
+              else {
                 profileController.addPersonalDetails(
                     isFromLoan: true,
                     callBack: () {

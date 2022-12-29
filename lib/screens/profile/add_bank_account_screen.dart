@@ -39,6 +39,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
   @override
   void initState() {
     super.initState();
+    cashBackManager.callBankListApi();
     redoCtrl.bankname.value = '';
     profileController.accountNumberController.value.text = '';
     profileController.ifscController.value.text = '';
