@@ -45,15 +45,18 @@ class ProviderDetail extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment(-2, 0),
-                      end: Alignment.centerRight,
-                      colors: [
-                        AppColors.selectedLangColor,
-                        AppColors.backGroundgradient2,
-                      ],
-                    ),
-                  ),
+                      image: DecorationImage(
+                          image: AssetImage(AppImages.loyaltyCardBg),
+                          fit: BoxFit.fill)
+                      // gradient: LinearGradient(
+                      //   begin: Alignment(-2, 0),
+                      //   end: Alignment.centerRight,
+                      //   colors: [
+                      //     AppColors.selectedLangColor,
+                      //     AppColors.backGroundgradient2,
+                      //   ],
+                      // ),
+                      ),
                   padding: EdgeInsets.all(12),
                   child: LoanCommon().loanCard(
                     lenders: lenders,
@@ -138,7 +141,7 @@ class ProviderDetail extends StatelessWidget {
             ),
             Padding(
               padding:
-              const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               child: InkWell(
                 onTap: () {
                   LoanCommon().bottomSheet(
