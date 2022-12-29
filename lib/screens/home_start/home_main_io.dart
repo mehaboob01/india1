@@ -39,12 +39,10 @@ import '../profile/controller/profile_controller.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
 import 'dart:io' show Platform;
-import 'dart:io' show Platform;
 
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
   List<FocusNode> focusNodes;
-
   HomeMainIO(this.showPonitsPopup, this.focusNodes);
 
   @override
@@ -136,7 +134,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   //   WidgetsBinding.instance.removeObserver(this);
   //   super.dispose();
   // }
-  //
+
   // @override
   // void didChangeAppLifecycleState(AppLifecycleState state) {
   //   // TODO: implement didChangeAppLifecycleState
@@ -961,7 +959,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       onTap: () {
         _homeManager.showAuth.value = false;
         _loyaltyManager.callLoyaltyDashboardApi();
-        cashbackManager.callBankListApi();
 
         _homeManager.redeemablePoints >= 14
             ? Get.toNamed(routName)
@@ -1009,6 +1006,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
+  MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {

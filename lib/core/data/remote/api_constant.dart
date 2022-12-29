@@ -1,6 +1,7 @@
 // DEV URL
 //final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
+final String bucketBaseUrl =
+    "https://india1-digital.s3.ap-south-1.amazonaws.com";
 // dummy
 // UAT URL
 final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
@@ -47,7 +48,6 @@ class Apis {
   static String addCustomerUpiAccount = "loyalty/customer/upi/id"; //post method
   static String deleteCustomerUpiAccount = "customer/upi/id"; // delete method
 
-
   // for commit only
   // profile section api's
   static String profile = "customers/profile";
@@ -76,6 +76,7 @@ class Apis {
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";
   static String fetchFarmProducts = "loans/fetch-farm-products";
+  static String fetcTrackBasedLoanProducts = "loans/fetch-track-based-loan-products";
   static String updateFarmLoanDetails =
       "loans/application/update-basic-details";
 

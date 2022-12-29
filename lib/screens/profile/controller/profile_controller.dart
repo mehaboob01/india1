@@ -219,6 +219,10 @@ class ProfileController extends GetxController {
   RxInt loanRequirement = (-1).obs;
   RxInt subProduct = (-1).obs;
   RxInt brand = (-1).obs;
+  RxInt trackBasedloanRequirement = (-1).obs;
+  RxInt trackBasedsubProduct = (-1).obs;
+  RxInt trackBasedbrand = (-1).obs;
+
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -1147,8 +1151,7 @@ class ProfileController extends GetxController {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
           "ifscCode": "${ifscController.value.text}",
-          "accountType":
-          accountType!.value.isEmpty ? null : accountType!.value,
+          "accountType": accountType!.value.isEmpty ? null : accountType!.value,
         }
       };
 
