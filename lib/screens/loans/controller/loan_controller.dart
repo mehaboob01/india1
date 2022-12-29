@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,12 @@ class LoanController extends GetxController {
 
   Rx<LoanProvidersModel> loanProvidersModel = LoanProvidersModel().obs;
   Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
+  Rx<TrackBasedLoanProductModel> trackLoanProductModel =
+      TrackBasedLoanProductModel().obs;
+
   RxInt farmCompletedIndex = 0.obs;
+
+  RxInt trackCompletedIndex = 0.obs;
   Rx<RecentTransactionModel> recentTransactionModel =
       RecentTransactionModel().obs;
   Rx<InsuranceRecentTransactionModel> insuranceRecentTransactionModel =
@@ -83,9 +89,17 @@ class LoanController extends GetxController {
   List<FarmLoanRequirementModel> loanRequirements = [
     FarmLoanRequirementModel(
         key: "LoanAgainstTractor", name: "Loan against tractor"),
-    FarmLoanRequirementModel(
-        key: "TrackBasedPersonalLoan", name: "Track based personal loan"),
+    // FarmLoanRequirementModel(
+    //     key: "TrackBasedPersonalLoan", name: "Track based personal loan"),
     FarmLoanRequirementModel(key: "ImplementFinance", name: "Implement finance")
+  ];
+
+  List<TrackBasedLoanRequirementModel> trackBasedRequirements = [
+    // TrackBasedLoanRequirementModel(
+    //     key: "LoanAgainstTractor", name: "Loan against tractor"),
+    TrackBasedLoanRequirementModel(
+        key: "TrackBasedPersonalLoan", name: "Track based personal loan"),
+    // FarmLoanRequirementModel(key: "ImplementFinance", name: "Implement finance")
   ];
 
   statusTextColor(String status) {
@@ -268,7 +282,7 @@ class LoanController extends GetxController {
 
     try {
       createLoanLoading.value = true;
-      personLoanLoading.value  = true;
+      personLoanLoading.value = true;
       customerId.value = await profileController.getId();
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.applyLoan,
@@ -323,6 +337,29 @@ class LoanController extends GetxController {
     }
   }
 
+  Future fetchTrackBasedLoanProducts({
+    required String requirementId,
+  }) async {
+    try {
+      farmLoanProductLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.fetcTrackBasedLoanProducts,
+        method: Type.GET,
+      );
+      if (response != null) {
+        log("OK");
+        profileController.trackBasedsubProduct.value = (-1);
+        profileController.trackBasedbrand.value = (-1);
+        trackLoanProductModel.value =
+            TrackBasedLoanProductModel.fromJson(response);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      farmLoanProductLoading.value = false;
+    }
+  }
+
   Future<bool> updateFarmLoanDetails() async {
     try {
       farmLoanProductLoading.value = true;
@@ -343,6 +380,41 @@ class LoanController extends GetxController {
             "farmBrand": farmLoanProductModel
                 .value.brands![profileController.brand.value]
         }),
+      );
+      if (response != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (exception) {
+      print(exception);
+      return false;
+    } finally {
+      farmLoanProductLoading.value = false;
+    }
+  }
+
+  Future<bool> updateTrackBasedLoanDetails() async {
+    try {
+      farmLoanProductLoading.value = true;
+      customerId.value = await profileController.getId();
+
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.updateFarmLoanDetails,
+        method: Type.POST,
+        data: json.encode(
+          {
+            "customerId": customerId.value,
+            "loanApplicationId": createLoanModel.value.loanApplicationId,
+            "farmLoanRequirement": "TrackBasedPersonalLoan",
+            if (trackLoanProductModel.value.subProducts != null)
+              "farmSubProduct": trackLoanProductModel.value
+                  .subProducts![profileController.trackBasedsubProduct.value],
+            // if (trackLoanProductModel.value.brands != null)
+            //   "farmBrand": trackLoanProductModel
+            //       .value.brands![profileController.trackBasedbrand.value]
+          },
+        ),
       );
       if (response != null) {
         return true;

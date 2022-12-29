@@ -10,6 +10,7 @@ import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
 import '../home_start/home_manager.dart';
+import '../loans/track_based_loan/track_based_loan.dart';
 import 'loan_dashboard_history.dart';
 
 class LoansPage extends StatefulWidget {
@@ -48,7 +49,7 @@ class _LoansPageState extends State<LoansPage> {
               ),
               CommonBanner(),
 
-            //  loans history
+              //  loans history
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: LoanDashboardHistory(isFromLoans: true),
@@ -118,6 +119,16 @@ class LoansCard extends StatelessWidget {
           child: ItemCard(
             image: AppImages.tractorSvg,
             label: 'Farm EQP',
+            itembgColor: ItemCardbgColor.lightBlue,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.to(() => TrackBasedLoan());
+          },
+          child: ItemCard(
+            image: AppImages.tractorSvg,
+            label: 'Track Based Loan',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),

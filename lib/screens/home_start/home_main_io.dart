@@ -54,19 +54,20 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
   final notificationManager = Get.put(NotificationManager());
   ProfileController _profileController = Get.put(ProfileController());
-
+  String _list = Platform.operatingSystemVersion.removeAllWhitespace;
   final ConnectionManagerController _controller =
-  Get.find<ConnectionManagerController>();
+      Get.find<ConnectionManagerController>();
 
   @override
   void initState() {
     super.initState();
+    print(_list);
     _profileController.getProfileData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
       _profileController.getProfileData();
-    //  _homeManager.callAdsBannerApi();
+      //  _homeManager.callAdsBannerApi();
       notificationManager.callNotificationsApi(false);
 
       // _homeManager.sendTokens();
@@ -79,7 +80,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
       checkLogin();
     });
-
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -355,7 +355,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         onPressed: () {
                           Get.back();
 
-                      //    Navigator.of(context, rootNavigator: true).pop();
+                          //    Navigator.of(context, rootNavigator: true).pop();
                         },
                         child: Text("No"))
                   ],
@@ -463,16 +463,19 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                       focusNode:
                                                           widget.focusNodes[6],
                                                       child: GestureDetector(
-                                                        onTap: () => Get.toNamed(
-                                                            MRouter
+                                                        onTap: () =>
+                                                            Get.toNamed(MRouter
                                                                 .notificationScreen),
                                                         child: Badge(
-                                                          position: BadgePosition
-                                                              .topEnd(
-                                                                  top: -10,
-                                                                  end: 0),
-                                                          badgeColor: Colors.red,
-                                                          badgeContent: Container(
+                                                          position:
+                                                              BadgePosition
+                                                                  .topEnd(
+                                                                      top: -10,
+                                                                      end: 0),
+                                                          badgeColor:
+                                                              Colors.red,
+                                                          badgeContent:
+                                                              Container(
                                                             child: Text(
                                                               "",
                                                               style: TextStyle(
@@ -490,8 +493,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                       focusNode:
                                                           widget.focusNodes[6],
                                                       child: GestureDetector(
-                                                        onTap: () => Get.toNamed(
-                                                            MRouter
+                                                        onTap: () =>
+                                                            Get.toNamed(MRouter
                                                                 .notificationScreen),
                                                         child: headingBox(
                                                             image: AppImages
@@ -505,22 +508,22 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 focusNode: widget.focusNodes[7],
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    _homeManager.isClicked.value =
-                                                        true;
+                                                    _homeManager
+                                                        .isClicked.value = true;
                                                     showMenu<String>(
                                                       context: context,
                                                       shape: RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  bottomLeft: Radius
+                                                          borderRadius: BorderRadius.only(
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      13.0),
+                                                              bottomRight:
+                                                                  Radius
                                                                       .circular(
                                                                           13.0),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          13.0),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          13.0))),
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      13.0))),
                                                       position:
                                                           RelativeRect.fromLTRB(
                                                               25.0,
@@ -531,23 +534,27 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         PopupMenuItem(
                                                           height:
                                                               Get.height * 0.02,
-                                                          child: GestureDetector(
+                                                          child:
+                                                              GestureDetector(
                                                             onTap: () {
                                                               _homeManager
-                                                                  .showAuth
-                                                                  .value = false;
+                                                                      .showAuth
+                                                                      .value =
+                                                                  false;
                                                               _homeManager
-                                                                  .isClicked
-                                                                  .value = false;
+                                                                      .isClicked
+                                                                      .value =
+                                                                  false;
                                                               Get.back();
                                                               Get.to(() =>
                                                                   ProfileScreen());
                                                             },
                                                             child: Container(
-                                                              height: Get.height *
-                                                                  0.03,
-                                                              width:
-                                                                  double.infinity,
+                                                              height:
+                                                                  Get.height *
+                                                                      0.03,
+                                                              width: double
+                                                                  .infinity,
                                                               child: Text(
                                                                 "My Profile",
                                                                 style: AppStyle.shortHeading.copyWith(
@@ -567,46 +574,48 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         PopupMenuDivider(),
                                                         PopupMenuItem(
                                                           height: 0.02,
-                                                          child: GestureDetector(
-                                                              onTap: () => {
-                                                                    _homeManager
-                                                                        .showAuth
-                                                                        .value = false,
-                                                                    _homeManager
-                                                                        .isClicked
-                                                                        .value = false,
-                                                                    Get.back(),
-                                                                    Get.toNamed(
-                                                                      MRouter
-                                                                          .loyaltyPoints,
-                                                                    ),
-                                                                  },
-                                                              child: Container(
-                                                                height:
-                                                                    Get.height *
-                                                                        0.03,
-                                                                width: double
-                                                                    .infinity,
-                                                                child: Text(
-                                                                  "My Rewards",
-                                                                  style: AppStyle.shortHeading.copyWith(
-                                                                      fontSize: Dimens
-                                                                          .font_14sp,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
+                                                          child:
+                                                              GestureDetector(
+                                                                  onTap: () => {
+                                                                        _homeManager
+                                                                            .showAuth
+                                                                            .value = false,
+                                                                        _homeManager
+                                                                            .isClicked
+                                                                            .value = false,
+                                                                        Get.back(),
+                                                                        Get.toNamed(
+                                                                          MRouter
+                                                                              .loyaltyPoints,
+                                                                        ),
+                                                                      },
+                                                                  child:
+                                                                      Container(
+                                                                    height:
+                                                                        Get.height *
+                                                                            0.03,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    child: Text(
+                                                                      "My Rewards",
+                                                                      style: AppStyle.shortHeading.copyWith(
+                                                                          fontSize: Dimens
+                                                                              .font_14sp,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontWeight: FontWeight
                                                                               .w400,
-                                                                      letterSpacing:
-                                                                          1),
-                                                                ),
-                                                              )),
+                                                                          letterSpacing:
+                                                                              1),
+                                                                    ),
+                                                                  )),
                                                         ),
                                                       ],
                                                       elevation: 8.0,
                                                     ).then<void>(
                                                         (String? itemSelected) {
-                                                      if (itemSelected == null) {
+                                                      if (itemSelected ==
+                                                          null) {
                                                         _homeManager.isClicked
                                                             .value = false;
                                                         return;
@@ -631,8 +640,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                               .isClicked.value
                                                           ? Colors.orange
                                                           : Colors.white,
-                                                      image:
-                                                          AppImages.user_profile),
+                                                      image: AppImages
+                                                          .user_profile),
                                                 ),
                                               ),
                                             ],
@@ -649,9 +658,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     // balance card --------------------------
                                     Row(
                                       children: [
-                                        Expanded(child: balanceCard(first: true)),
+                                        Expanded(
+                                            child: balanceCard(first: true)),
                                         SizedBox(width: 2.0.wp),
-                                        Expanded(child: balanceCard(first: false))
+                                        Expanded(
+                                            child: balanceCard(first: false))
                                       ],
                                     ),
                                     // ways to Reedem ---------------------------------

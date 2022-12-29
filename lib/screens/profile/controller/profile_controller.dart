@@ -162,7 +162,6 @@ class ProfileController extends GetxController {
     companyName.value.text = '';
     designation.value.text = '';
     noOfMonthsResiding.value.text = '';
-
   }
 
   setData() {
@@ -197,28 +196,47 @@ class ProfileController extends GetxController {
     // monthlyIncomeController.value.text =
     //     "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     monthlyIncomeController.value.text =
-    "${(profileDetailsModel.value.income ?? '').toString()}";
+        "${(profileDetailsModel.value.income ?? '').toString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
     // new changes
     accountType.value = profileDetailsModel.value.salaryMode ?? '';
-    highestQualification.value.text = profileDetailsModel.value.highestQualification ?? '';
+    highestQualification.value.text =
+        profileDetailsModel.value.highestQualification ?? '';
 
+    print(
+        "seting data to residing${profileDetailsModel.value.residingTenure.toString()}");
 
-    print("seting data to residing${profileDetailsModel.value.residingTenure.toString()}");
-
-
-    noOfMonthsResiding.value.text = profileDetailsModel.value.residingTenure == null?"":profileDetailsModel.value.residingTenure.toString();
-    companyName.value.text = profileDetailsModel.value.companyName == null?'':profileDetailsModel.value.companyName.toString();
-    designation.value.text = profileDetailsModel.value.designation == null? '':profileDetailsModel.value.designation.toString();
-    workExp.value.text = profileDetailsModel.value.workExperience == null?'':profileDetailsModel.value.workExperience.toString();
-    officeAddressLine1Controller.value.text = profileDetailsModel.value.officeAddressLine1 == null?'':profileDetailsModel.value.officeAddressLine1.toString();
-    officeAddressLine2Controller.value.text = profileDetailsModel.value.officeAddressLine2 == null?'':profileDetailsModel.value.officeAddressLine2.toString();
+    noOfMonthsResiding.value.text =
+        profileDetailsModel.value.residingTenure == null
+            ? ""
+            : profileDetailsModel.value.residingTenure.toString();
+    companyName.value.text = profileDetailsModel.value.companyName == null
+        ? ''
+        : profileDetailsModel.value.companyName.toString();
+    designation.value.text = profileDetailsModel.value.designation == null
+        ? ''
+        : profileDetailsModel.value.designation.toString();
+    workExp.value.text = profileDetailsModel.value.workExperience == null
+        ? ''
+        : profileDetailsModel.value.workExperience.toString();
+    officeAddressLine1Controller.value.text =
+        profileDetailsModel.value.officeAddressLine1 == null
+            ? ''
+            : profileDetailsModel.value.officeAddressLine1.toString();
+    officeAddressLine2Controller.value.text =
+        profileDetailsModel.value.officeAddressLine2 == null
+            ? ''
+            : profileDetailsModel.value.officeAddressLine2.toString();
   }
 
   RxInt loanRequirement = (-1).obs;
   RxInt subProduct = (-1).obs;
   RxInt brand = (-1).obs;
+  RxInt trackBasedloanRequirement = (-1).obs;
+  RxInt trackBasedsubProduct = (-1).obs;
+  RxInt trackBasedbrand = (-1).obs;
+
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -746,7 +764,7 @@ class ProfileController extends GetxController {
     // print("loanApplicationId : $loanApplicationId");
     // print("insuranceApplicationId : $insuranceApplicationId");
 
-   // print(accountType!.value);
+    // print(accountType!.value);
     try {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.additionalDetails,
@@ -774,7 +792,6 @@ class ProfileController extends GetxController {
             },
           ));
       if (response != null) {
-
         print("response of occuaption${response}");
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -910,7 +927,7 @@ class ProfileController extends GetxController {
               // "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
             }
           }));
-    //  print("Additional response : ${response.data}");
+      //  print("Additional response : ${response.data}");
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -1010,9 +1027,7 @@ class ProfileController extends GetxController {
 
   Future getProfileData() async {
     try {
-
-
-      Map<String,dynamic> data =  {
+      Map<String, dynamic> data = {
         "customerId": '${prefs.getString(SPKeys.CUSTOMER_ID)}',
       };
 
@@ -1028,9 +1043,7 @@ class ProfileController extends GetxController {
         ),
       );
       if (response != null) {
-
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
-
 
         setData();
       }
@@ -1138,15 +1151,13 @@ class ProfileController extends GetxController {
     try {
       getBankAccountLoading.value = true;
 
-
-      Map<String,dynamic> data  =  {
+      Map<String, dynamic> data = {
         "customerId": customerId.value,
         "bankAccount": {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
           "ifscCode": "${ifscController.value.text}",
-          "accountType":
-          accountType!.value.isEmpty ? null : accountType!.value,
+          "accountType": accountType!.value.isEmpty ? null : accountType!.value,
         }
       };
 
@@ -1178,7 +1189,7 @@ class ProfileController extends GetxController {
             content: Text('Bank account added!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-        }else{
+        } else {
           const snackBar = SnackBar(
             content: Text('Server Error!'),
           );
@@ -1249,15 +1260,10 @@ class ProfileController extends GetxController {
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
       String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
-
-
-
-
       var response = await http.post(Uri.parse(baseUrl + Apis.logoutUrl),
           body: jsonEncode({
             "customerId": customerId,
             "deviceId": deviceId,
-
           }),
           headers: {
             'Content-type': 'application/json',
@@ -1266,21 +1272,15 @@ class ProfileController extends GetxController {
             //"Authorization": accessToken.toString()
           });
 
-
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         CommonApiResponseModel commonApiResponseModel =
-        CommonApiResponseModel.fromJson(jsonData);
+            CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-
-          SharedPreferences preferences =
-          await SharedPreferences.getInstance();
+          SharedPreferences preferences = await SharedPreferences.getInstance();
           await preferences.clear();
           Get.toNamed(MRouter.userLogin);
-
-
         } else {
           Flushbar(
             title: "Server Error!",
