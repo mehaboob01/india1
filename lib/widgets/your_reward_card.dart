@@ -264,7 +264,7 @@ class _YourRewardCardState extends State<YourRewardCard>
           height: double.maxFinite,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(AppImages.rewardWon), fit: BoxFit.fill),
+                  image: AssetImage(AppImages.newWonCard_bg), fit: BoxFit.fill),
               borderRadius: BorderRadius.circular(4.0.wp)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

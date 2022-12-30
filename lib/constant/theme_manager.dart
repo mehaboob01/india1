@@ -502,6 +502,8 @@ class AppImages {
   static const String loyaltyCardBg =
       '${assetPng}new_design_pngImages/1x_png/loyaltycard.png';
 
+  static const String newWonCard_bg =
+      '${assetPng}new_design_pngImages/1x_png/won_card_bg_PNG.png';
   static const String profile_bg =
       '${assetPng}new_design_pngImages/1x_png/profile_bg_PNG.png';
   static const String refer_Png =
