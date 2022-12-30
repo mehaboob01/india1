@@ -47,8 +47,8 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               scale: 1,
-                              image: AssetImage(AppImages.homebg),
-                              fit: BoxFit.fill,
+                              image: AssetImage(AppImages.heading_bg_PNG),
+                              fit: BoxFit.cover,
                             ),
                           ),
                           height: Get.height * 0.28,

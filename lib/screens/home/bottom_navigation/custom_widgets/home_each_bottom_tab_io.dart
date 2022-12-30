@@ -57,6 +57,12 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
                     SizedBox(
                       height: 2,
                     ),
+                    // widget.selected == true
+                    //     ? SizedBox(
+                    //         width: 5,
+                    //         height: 5,
+                    //         child: Image.asset(AppImages.profile_bg))
+                    //     : SizedBox.shrink(),
                     SvgPicture.asset(
                       'assets/images/dot_img.svg',
                       color: widget.selected == true ? AppColors.primary : null,
@@ -73,14 +79,32 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
                       color: widget.selected
                           ? AppColors.primary
                           : AppColors.passiveTabColor,
-                      size: widget.selected == true?Dimens.font_14sp :Dimens.font_12sp,
-                      fontWeight: widget.selected == true ?FontWeight.w400 :FontWeight.w500,
+                      size: widget.selected == true
+                          ? Dimens.font_14sp
+                          : Dimens.font_12sp,
+                      fontWeight: widget.selected == true
+                          ? FontWeight.w400
+                          : FontWeight.w500,
                     ),
+                    // widget.selected == true
+                    //     ? Container(
+                    //         height: 2,
+                    //         decoration: BoxDecoration(
+                    //           gradient: LinearGradient(
+                    //               begin: Alignment(-0.6, -0.6),
+                    //               // end: Alignment(0.8, 0.4),
+                    //               colors: [
+                    //                 AppColors.blueColor,
+                    //                 AppColors.redColor
+                    //               ]),
+                    //         ),
+                    //       )
+                    //     : SizedBox.shrink()
                     SvgPicture.asset(
                       widget.dotImagePath,
                       color: widget.selected == true ? AppColors.primary : null,
                     ),
-                    // SvgPicture.asset('assets/images/underline.svg'),
+                    SvgPicture.asset('assets/images/underline.svg'),
                   ],
                 ),
               ),

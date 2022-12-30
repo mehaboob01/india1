@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import '../constant/theme_manager.dart';
 import 'common_divider.dart';
 
-
-
 class CommonRadioCard extends StatefulWidget {
   CommonRadioCard(
-      {
-      required this.isSelected,
+      {required this.isSelected,
       this.isEditable = false,
       required this.cardWidth,
       required this.radioCardType,
@@ -43,7 +40,7 @@ class CommonRadioCard extends StatefulWidget {
       bankAccountName,
       bankAccountIFSC,
       bankAccountType,
-       rechargePlanValidity,
+      rechargePlanValidity,
       rechargePlantalkTime,
       rechargeDonePhoneNumber,
       bankAccountNumber;
@@ -67,11 +64,11 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6.0.wp),
                   gradient: widget.isSelected
-                      ?  LinearGradient(
+                      ? LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
-                              AppColors.backGroundgradient1,
+                              AppColors.blueColor,
                               AppColors.backGroundgradient2
                             ])
                       : null,
@@ -101,8 +98,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               SizedBox(height: 1.0.hp),
                               widget.isEditable == true
                                   ? Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 16.0),
+                                      padding: const EdgeInsets.only(top: 16.0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -114,8 +110,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                               isdelete: true),
                                           CommonButton(
                                               onpressed:
-                                                  widget.onEditPressed ??
-                                                      () {},
+                                                  widget.onEditPressed ?? () {},
                                               isdelete: false)
                                         ],
                                       ),
@@ -128,7 +123,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                   if (widget.radioCardType == RadioCardType.rechargePlan)
                     CardModel().rechargePlanModel.isNotEmpty
                         ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 4.0.wp),
@@ -169,15 +164,18 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                             : Colors.black,
                                       ),
                                     ),
-                                   Divider(thickness: 1,),
-                                    SizedBox(height: 2,),
-                                    CardModel().rechargePlanModel[0]
-                                                ['data'] !=
+                                    Divider(
+                                      thickness: 1,
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    CardModel().rechargePlanModel[0]['data'] !=
                                             null
                                         ? Text(
                                             'Enjoy ${widget.rechargePlanData} data', //${CardModel().rechargePlanModel[0]['data']}
-                                            style: AppStyle.shortHeading
-                                                .copyWith(
+                                            style:
+                                                AppStyle.shortHeading.copyWith(
                                               fontSize: 12.0.sp,
                                               color: widget.isSelected
                                                   ? Colors.white
@@ -336,10 +334,8 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                   SizedBox(width: 2.0.wp),
                                   Expanded(
                                     child: Text(
-
                                       '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
                                       style: AppStyle.shortHeading.copyWith(
-
                                         fontSize: 12.0.sp,
                                         fontWeight: FontWeight.w600,
                                         color: widget.isSelected
@@ -405,8 +401,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
 
                               widget.isEditable == true
                                   ? Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 16.0),
+                                      padding: const EdgeInsets.only(top: 16.0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -418,8 +413,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                               isdelete: true),
                                           CommonButton(
                                               onpressed:
-                                                  widget.onEditPressed ??
-                                                      () {},
+                                                  widget.onEditPressed ?? () {},
                                               isdelete: false)
                                         ],
                                       ),
@@ -492,8 +486,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                         height: 18,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                                color: AppColors.backGroundgradient1)),
+                            border: Border.all(color: AppColors.blueColor)),
                       ))
         ],
       ),
@@ -502,8 +495,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
 }
 
 class CommonButton extends StatelessWidget {
-  const CommonButton(
-      { required this.onpressed, required this.isdelete});
+  const CommonButton({required this.onpressed, required this.isdelete});
   final VoidCallback onpressed;
   final bool isdelete;
 
@@ -528,7 +520,7 @@ class CommonButton extends StatelessWidget {
                       ]),
             color: isdelete ? Colors.white : null,
             border: isdelete
-                ? Border.all(width: 1, color: AppColors.backGroundgradient1)
+                ? Border.all(width: 1, color: AppColors.blueColor)
                 : null,
             borderRadius: BorderRadius.circular(2.0.wp)),
         child: Center(
@@ -536,7 +528,7 @@ class CommonButton extends StatelessWidget {
             isdelete ? 'Delete' : 'Edit',
             style: AppStyle.shortHeading.copyWith(
               fontSize: 12.0.sp,
-              color: isdelete ? AppColors.backGroundgradient1 : Colors.white,
+              color: isdelete ? AppColors.blueColor : Colors.white,
             ),
           ),
         ),

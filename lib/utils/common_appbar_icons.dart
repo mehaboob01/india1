@@ -14,9 +14,9 @@ List<CustomActionIcons> commonAppIcons = [
     onHeaderIconPressed: () async {
       // what to ask function goes here
       Get.to(() => CommonWebView(
-        title: "FAQ'"+"S",
-        url: Apis.Faq,
-      ));
+            title: "FAQs",
+            url: Apis.Faq,
+          ));
     },
   ),
   CustomActionIcons(

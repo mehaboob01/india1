@@ -54,6 +54,15 @@ class ProfileScreen extends StatelessWidget {
                   SafeArea(
                     child: CustomAppBar(
                       heading: 'Profile',
+                      hasLogo: true,
+                      customActionIconsList: [
+                        CustomActionIcons(
+                            image: AppImages.bottomNavHomeSvg,
+                            onHeaderIconPressed: () async {
+                              Get.offNamedUntil(
+                                  MRouter.homeScreen, (route) => route.isFirst);
+                            })
+                      ],
                     ),
                   ),
                   Expanded(
@@ -118,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                               Obx(
                                                 () => Text(
-                                                  "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                                  profileDetailsModel.mobileNumber == null?"No contact":"+91 ${profileDetailsModel.mobileNumber}",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: Dimens.font_18sp,
@@ -133,52 +142,110 @@ class ProfileScreen extends StatelessWidget {
                                           alignment: Alignment.bottomRight,
                                           children: [
                                             Container(
-                                              height: 130,
-                                              width: 130,
+                                              height: 120,
+                                              width: 120,
                                               margin: EdgeInsets.only(
                                                 left: 20,
                                                 right: 20,
                                               ),
-                                              child: Obx(
-                                                () => InkWell(
-                                                  onTap: () {
-                                                    _handlePermissions();
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.orangeColor,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: profileController
-                                                                .uploadProfileLoading
-                                                                .value ==
-                                                            true
-                                                        ? LoadingAnimationWidget
-                                                            .inkDrop(
-                                                            size: 34,
-                                                            color: AppColors
-                                                                .primary,
-                                                          )
-                                                        : ClipOval(
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              fit: BoxFit.fill,
-                                                              imageUrl:
-                                                                  '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
-                                                              errorWidget:
-                                                                  (context, _,
-                                                                      error) {
-                                                                return Icon(
-                                                                  Icons.person,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 100,
-                                                                );
-                                                              },
-                                                            ),
-                                                          ),
-                                                  ),
+                                              child: Center(
+                                                child: Obx(
+                                                  () => InkWell(
+                                                      onTap: () {
+                                                        _handlePermissions();
+                                                      },
+                                                      child: CircleAvatar(
+                                                        maxRadius: 50,
+                                                        backgroundImage:
+                                                            AssetImage(AppImages
+                                                                .profile_bg),
+                                                        child: profileController
+                                                                    .uploadProfileLoading
+                                                                    .value ==
+                                                                true
+                                                            ? LoadingAnimationWidget
+                                                                .inkDrop(
+                                                                size: 34,
+                                                                color: AppColors
+                                                                    .primary,
+                                                              )
+                                                            : ClipOval(
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  imageUrl:
+                                                                      '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                                  errorWidget:
+                                                                      (context,
+                                                                          _,
+                                                                          error) {
+                                                                    return Icon(
+                                                                      Icons
+                                                                          .person,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      size: 100,
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ),
+                                                      )
+                                                      // Container(
+                                                      //   width: 110,
+                                                      //   height: 110,
+                                                      //   alignment: Alignment
+                                                      //       .bottomCenter,
+                                                      //   decoration: BoxDecoration(
+                                                      //     gradient:
+                                                      //         LinearGradient(
+                                                      //             begin:
+                                                      //                 Alignment(
+                                                      //                     -0.1,
+                                                      //                     -0.1),
+                                                      //             end: Alignment(
+                                                      //                 0.4, 0.4),
+                                                      //             colors: [
+                                                      //           AppColors
+                                                      //               .blueColor,
+                                                      //           AppColors.redColor
+                                                      //               .withOpacity(
+                                                      //                   0.6)
+                                                      //         ]),
+                                                      //     shape: BoxShape.circle,
+                                                      //   ),
+                                                      //   child: profileController
+                                                      //               .uploadProfileLoading
+                                                      //               .value ==
+                                                      //           true
+                                                      //       ? LoadingAnimationWidget
+                                                      //           .inkDrop(
+                                                      //           size: 34,
+                                                      //           color: AppColors
+                                                      //               .primary,
+                                                      //         )
+                                                      //       : ClipOval(
+                                                      //           child:
+                                                      //               CachedNetworkImage(
+                                                      //             fit:
+                                                      //                 BoxFit.fill,
+                                                      //             imageUrl:
+                                                      //                 '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                      //             errorWidget:
+                                                      //                 (context, _,
+                                                      //                     error) {
+                                                      //               return Icon(
+                                                      //                 Icons
+                                                      //                     .person,
+                                                      //                 color: Colors
+                                                      //                     .white,
+                                                      //                 size: 100,
+                                                      //               );
+                                                      //             },
+                                                      //           ),
+                                                      //         ),
+                                                      // ),
+                                                      ),
                                                 ),
                                               ),
                                               decoration: BoxDecoration(
@@ -207,16 +274,12 @@ class ProfileScreen extends StatelessWidget {
                                                   color: Colors.white,
                                                   shape: BoxShape.circle,
                                                   border: Border.all(
-                                                    color: AppColors
-                                                        .lightOrangeColor,
-                                                  ),
+                                                      color: Color(0xff9F2942)),
                                                 ),
                                                 child: Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  size: 28,
-                                                  color: AppColors
-                                                      .lightOrangeColor,
-                                                ),
+                                                    Icons.camera_alt_outlined,
+                                                    size: 28,
+                                                    color: Color(0xff9F2942)),
                                               ),
                                             ),
                                           ],
@@ -1075,7 +1138,7 @@ class ProfileScreen extends StatelessWidget {
             10,
           ),
           border: Border.all(
-            color: AppColors.butngradient1,
+            color: AppColors.blueColor,
             width: 1,
           ),
         ),
@@ -1084,7 +1147,7 @@ class ProfileScreen extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            color: AppColors.butngradient1,
+            color: AppColors.blueColor,
             fontWeight: FontWeight.w500,
             fontSize: Dimens.font_16sp,
           ),

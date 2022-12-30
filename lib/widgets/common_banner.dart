@@ -21,7 +21,7 @@ class CommonBanner extends StatelessWidget {
   Future _handleLocationPermission() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? firstInit =
-    sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION);
     var status = Permission.contacts.request();
     if (await status.isGranted || await status.isLimited) {
       _cont.isPermissionAllowed.value = true;
@@ -40,7 +40,6 @@ class CommonBanner extends StatelessWidget {
         _cont.isPermissionAllowed.value = false;
         Get.to(ReferEarn());
       }
-
     }
   }
 
@@ -59,15 +58,16 @@ class CommonBanner extends StatelessWidget {
         margin: margin ?? EdgeInsets.symmetric(horizontal: 4.0.wp),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.referEarnGradient1,
-                  AppColors.referEarnGradient2
-                ])),
-        // image: const DecorationImage(
-        //     image: AssetImage(AppImages.atmBg2), fit: BoxFit.fill)),
+            image: const DecorationImage(
+                image: AssetImage(AppImages.loyaltyCardBg), fit: BoxFit.fill)),
+        // gradient: LinearGradient(
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //     colors: [
+        //       AppColors.referEarnGradient1,
+        //       AppColors.referEarnGradient2
+        //     ])
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -124,14 +124,16 @@ class CommonBanner extends StatelessWidget {
             Flexible(
                 flex: 2,
                 child: Container(
+                  // color: Colors.green,
                   padding: EdgeInsets.only(
                       top: 2.0.wp, bottom: 2.0.wp, left: 2.0.wp, right: 2.0.wp),
                   //color: Colors.red,
-                  child: Center(
-                      child: Image.asset(
-                    AppImages.referEarnSVG,
+                  child: Image.asset(
+                    AppImages.refer_Png,
+                    scale: 0.5,
+                    //AppImages.referEarnSVG,
                     fit: BoxFit.fill,
-                  )),
+                  ),
                 ))
           ],
         ),

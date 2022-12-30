@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/refer/contacts_manager.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:india_one/widgets/common_banner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,8 +36,6 @@ class _ReferEarnState extends State<ReferEarn> {
 
   @override
   void initState() {
-
-
     super.initState();
     if (_contactCont.isPermissionAllowed.isTrue) {
       _contactCont.fetchContacts();
@@ -66,97 +65,111 @@ class _ReferEarnState extends State<ReferEarn> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        CustomAppBar(heading: "Refer & Earn"),
+                        CustomAppBar(
+                          heading: "Refer & Earn",
+                          customActionIconsList: [
+                            CustomActionIcons(
+                                image: AppImages.bottomNavHomeSvg,
+                                onHeaderIconPressed: () async {
+                                  Get.offNamedUntil(MRouter.homeScreen,
+                                      (route) => route.isFirst);
+                                })
+                          ],
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: double.maxFinite,
-                                height: 25.0.wp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.0.wp),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      AppColors.referEarnGradient1,
-                                      AppColors.referEarnGradient2
-                                    ],
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 6.0.wp,
-                                            bottom: 6.0.wp,
-                                            left: 4.0.wp),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            RichText(
-                                              text: TextSpan(
-                                                style: AppStyle.shortHeading
-                                                    .copyWith(
-                                                  color: Color(0xFFEBEBEB),
-                                                  //fontWeight: FontWeight.w600,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.5,
-                                                ),
-                                                text:
-                                                    'Refer a friend or a family member & get\na chance to',
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        ' Earn upto 100 points',
-                                                    style: AppStyle.shortHeading
-                                                        .copyWith(
-                                                            color: Colors.white,
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            // SizedBox(height: 1.0.wp),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                        flex: 1,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(60),
-                                            color: Color(0xFFD9D9D9)
-                                                .withOpacity(0.1),
-                                          ),
-                                          padding: EdgeInsets.only(
-                                              top: 2.0.wp,
-                                              bottom: 2.0.wp,
-                                              left: 2.0.wp,
-                                              right: 2.0.wp),
-                                          child: Center(
-                                              child: Image.asset(
-                                            AppImages.referEarnSVG,
-                                            fit: BoxFit.fill,
-                                          )),
-                                        ))
-                                  ],
-                                ),
+                              CommonBanner(
+                                isTapable: false,
+                                margin: EdgeInsets.zero,
                               ),
+                              // Container(
+                              //   width: double.maxFinite,
+                              //   height: 25.0.wp,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(4.0.wp),
+                              //     gradient: LinearGradient(
+                              //       begin: Alignment.topLeft,
+                              //       end: Alignment.bottomRight,
+                              //       colors: [
+                              //         AppColors.referEarnGradient1,
+                              //         AppColors.referEarnGradient2
+                              //       ],
+                              //     ),
+                              //   ),
+                              //   child: Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.spaceBetween,
+                              //     children: [
+                              //       Flexible(
+                              //         flex: 3,
+                              //         child: Padding(
+                              //           padding: EdgeInsets.only(
+                              //               top: 6.0.wp,
+                              //               bottom: 6.0.wp,
+                              //               left: 4.0.wp),
+                              //           child: Column(
+                              //             crossAxisAlignment:
+                              //                 CrossAxisAlignment.start,
+                              //             children: [
+                              //               RichText(
+                              //                 text: TextSpan(
+                              //                   style: AppStyle.shortHeading
+                              //                       .copyWith(
+                              //                     color: Color(0xFFEBEBEB),
+                              //                     //fontWeight: FontWeight.w600,
+                              //                     fontSize: 12,
+                              //                     fontWeight: FontWeight.w400,
+                              //                     height: 1.5,
+                              //                   ),
+                              //                   text:
+                              //                       'Refer a friend or a family member & get\na chance to',
+                              //                   children: [
+                              //                     TextSpan(
+                              //                       text:
+                              //                           ' Earn upto 100 points',
+                              //                       style: AppStyle.shortHeading
+                              //                           .copyWith(
+                              //                               color: Colors.white,
+                              //                               fontSize: 18,
+                              //                               fontWeight:
+                              //                                   FontWeight
+                              //                                       .w600),
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //               // SizedBox(height: 1.0.wp),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Flexible(
+                              //           flex: 1,
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //               borderRadius:
+                              //                   BorderRadius.circular(60),
+                              //               color: Color(0xFFD9D9D9)
+                              //                   .withOpacity(0.1),
+                              //             ),
+                              //             padding: EdgeInsets.only(
+                              //                 top: 2.0.wp,
+                              //                 bottom: 2.0.wp,
+                              //                 left: 2.0.wp,
+                              //                 right: 2.0.wp),
+                              //             child: Center(
+                              //                 child: Image.asset(
+                              //               AppImages.referEarnSVG,
+                              //               fit: BoxFit.fill,
+                              //             )),
+                              //           ))
+                              //     ],
+                              //   ),
+                              // ),
                               SizedBox(
                                 height: Get.height * 0.03,
                               ),
@@ -168,7 +181,6 @@ class _ReferEarnState extends State<ReferEarn> {
                                     Expanded(
                                       child: TextFormField(
                                         keyboardType: TextInputType.number,
-
                                         controller: _editingController,
                                         decoration: InputDecoration(
                                           hintText: "Enter a number to refer",
@@ -259,7 +271,8 @@ class _ReferEarnState extends State<ReferEarn> {
               await _handleLocationPermission();
             },
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +293,7 @@ class _ReferEarnState extends State<ReferEarn> {
                             TextStyle(color: Colors.amberAccent, fontSize: 18),
                       ),
                       SizedBox(
-                        width: Get.width * 0.02,
+                        width: Get.width * 0.01,
                       ),
                       ImageIcon(
                         AssetImage(
@@ -426,8 +439,6 @@ class _ReferEarnState extends State<ReferEarn> {
   inviteButton(int index) {
     return GestureDetector(
       onTap: () {
-
-
         if (invitedList.contains(contactCont
             .filteredList.value[index].phones.first.number
             .toString())) {

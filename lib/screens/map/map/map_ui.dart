@@ -9,6 +9,7 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../constant/routes.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'map_manager.dart';
 
@@ -97,6 +98,15 @@ class _MapsState extends State<Maps> {
         SafeArea(
           child: CustomAppBar(
             heading: "Maps",
+            hasLogo: true,
+            customActionIconsList: [
+              CustomActionIcons(
+                  image: AppImages.bottomNavHomeSvg,
+                  onHeaderIconPressed: () async {
+                    Get.offNamedUntil(
+                        MRouter.homeScreen, (route) => route.isFirst);
+                  })
+            ],
           ),
         ),
         Expanded(
@@ -127,7 +137,7 @@ class _MapsState extends State<Maps> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AppColors.backGroundgradient1,
+                          AppColors.blueColor,
                           AppColors.backGroundgradient2
                         ],
                       ),
@@ -271,8 +281,7 @@ class _MapsState extends State<Maps> {
                                                 .toString(),
                                             distance: mapManager
                                                 .mapCoordinateList[index]
-                                                .distance
-                                            ,
+                                                .distance,
                                           ));
                                     }),
                                   )
@@ -351,7 +360,9 @@ class AtmDetailsCard extends StatelessWidget {
                             height: Get.height * 0.08,
                             width: Get.width * 0.45,
                             child: Text(
-                              (int.parse(distance.toString()) / 1000).toString() + " Kms",
+                              (int.parse(distance.toString()) / 1000)
+                                      .toString() +
+                                  " Kms",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 4,
                               style: TextStyle(
