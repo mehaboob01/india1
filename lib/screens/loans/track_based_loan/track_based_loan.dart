@@ -99,7 +99,9 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         child: SizedBox(
           width: widthIs,
           child: Obx(
-            () => Column(
+            () => loanController.trackLoading.value == true ? CircularProgressbar():
+
+                Column(
               children: [
                 CustomAppBar(
                   heading: 'Track based Loan',
@@ -121,7 +123,9 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                               height: 21,
                             ),
                             Obx(
-                              () => Container(
+                              () =>
+
+                                  Container(
                                 child: AnotherStepper(
                                   stepperList: loanController.farmLoanTitleList
                                       .map((e) => StepperData(

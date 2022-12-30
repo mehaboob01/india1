@@ -580,6 +580,47 @@ class ProfileController extends GetxController {
       String? insuranceApplicationId}) async {
     addPersonalLoading.value = true;
     try {
+      Map<String,dynamic> personalDetailData = {
+        "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+        if (loanApplicationId != null) ...{
+          "loanApplicationId": loanApplicationId,
+        },
+        if (insuranceApplicationId != null) ...{
+          "insuranceApplicationId": insuranceApplicationId,
+        },
+        "customerDetails": {
+          "firstName": firstNameController.value.text.trim(),
+          "lastName": lastNameController.value.text.trim().isNotEmpty
+              ? lastNameController.value.text.trim()
+              : null,
+          "mobileNumber": mobileNumberController.value.text.trim(),
+          "alternateNumber":
+          alternateNumberController.value.text.trim().isNotEmpty
+              ? alternateNumberController.value.text.trim()
+              : null,
+          "dateOfBirth": dobController.value.text.trim().isNotEmpty
+              ? DateFormat('yyyy-MM-dd').format(
+              DateFormat("dd-MM-yyyy").parse(dobController.value.text))
+              : null,
+          "preferredLanguage": "EN",
+          "email": emailController.value.text.trim().isNotEmpty
+              ? emailController.value.text.trim()
+              : null,
+          "gender": gender.value.isNotEmpty ? gender.value : null,
+          "maritalStatus":
+          maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
+          if (loanApplicationId != null) ...{
+            "panNumber": panNumberController.value.text.trim(),
+          }
+        }
+      };
+
+      print("personal details==> ${personalDetailData}");
+
+
+
+
+
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.addPersonalDetails,
         method: Type.PUT,
@@ -620,6 +661,8 @@ class ProfileController extends GetxController {
           },
         ),
       );
+
+      print("response of personal deetails==>$response");
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -1031,6 +1074,8 @@ class ProfileController extends GetxController {
           },
         ),
       );
+
+      print("resposne==>${response}");
       if (response != null) {
 
         profileDetailsModel.value = ProfileDetailsModel.fromJson(response);
