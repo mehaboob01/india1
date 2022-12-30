@@ -106,6 +106,9 @@ class ProfileStepper {
       int? maxLength,
       bool textCap = false}) {
     return TextFormField(
+
+      textInputAction: TextInputAction.next,
+      autofocus: true,
       controller: controller,
       textCapitalization:
           textCap ? TextCapitalization.characters : TextCapitalization.none,
@@ -198,6 +201,9 @@ class ProfileStepper {
                 height: 20,
               ),
               textField(
+
+
+
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
                 hint: 'Enter your first name',
@@ -212,7 +218,10 @@ class ProfileStepper {
                   }
                 },
                 keyboardType: TextInputType.name,
+
+
                 inputFormatters: <TextInputFormatter>[
+
                   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                 ],
               ),
@@ -220,6 +229,7 @@ class ProfileStepper {
                 height: 20,
               ),
               textField(
+
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
                 hint: 'Enter your last name',

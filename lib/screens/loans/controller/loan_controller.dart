@@ -26,6 +26,7 @@ class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
   RxBool lenderLoanLoading = false.obs;
   RxBool personLoanLoading = false.obs;
+  RxBool trackLoading = false.obs;
   RxBool farmLoanProductLoading = false.obs;
   Rx<double> sliderValue = 0.0.obs;
   Rx<double> minValue = 0.0.obs;
@@ -131,6 +132,8 @@ class LoanController extends GetxController {
       return 'Farm';
     } else if (loanType == LoanType.FarmLoan) {
       return 'FarmEquipment';
+    }else if (loanType == LoanType.TrackBasedPersonalLoan) {
+      return 'TrackBasedPersonalLoan';
     }
     return '';
   }
@@ -318,6 +321,7 @@ class LoanController extends GetxController {
   }) async {
     try {
       farmLoanProductLoading.value = true;
+
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.fetchFarmProducts,
         method: Type.POST,
@@ -341,7 +345,8 @@ class LoanController extends GetxController {
     required String requirementId,
   }) async {
     try {
-      farmLoanProductLoading.value = true;
+    //  farmLoanProductLoading.value = true;
+      trackLoading.value = true;
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.fetcTrackBasedLoanProducts,
         method: Type.GET,
@@ -350,13 +355,12 @@ class LoanController extends GetxController {
         log("OK");
         profileController.trackBasedsubProduct.value = (-1);
         profileController.trackBasedbrand.value = (-1);
-        trackLoanProductModel.value =
-            TrackBasedLoanProductModel.fromJson(response);
+        trackLoanProductModel.value = TrackBasedLoanProductModel.fromJson(response);
       }
     } catch (exception) {
       print(exception);
     } finally {
-      farmLoanProductLoading.value = false;
+      trackLoading.value = false;
     }
   }
 

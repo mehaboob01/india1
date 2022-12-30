@@ -558,6 +558,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
               },
               child: FormBuilderTextField(
                 keyboardType: TextInputType.number,
+
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 inputFormatters: [CurrencyInputFormatter()],

@@ -14,7 +14,8 @@ enum LoanType {
   BikeLoan,
   CarLoan,
   TractorLoan,
-  FarmLoan
+  FarmLoan,
+  TrackBasedPersonalLoan
 }
 
 class LoanCommon {

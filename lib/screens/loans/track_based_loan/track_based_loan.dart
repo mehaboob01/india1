@@ -11,6 +11,7 @@ import 'package:india_one/screens/loans/model/farm_loan_requirment_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -67,12 +68,15 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
   void initState() {
     loanAmountEditingController = TextEditingController();
     super.initState();
+    loanController
+        .fetchTrackBasedLoanProducts(
+        requirementId: 'TrackBasedPersonalLoan');
 
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
     loanController.sliderValue.value = loanController.minValue.value;
     resetValues();
     profileController.setData();
-    loanController.createLoanApplication(loanType: LoanType.FarmLoan);
+    loanController.createLoanApplication(loanType: LoanType.TrackBasedPersonalLoan);
   }
 
   void resetValues() {
@@ -119,7 +123,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                             Obx(
                               () => Container(
                                 child: AnotherStepper(
-                                  stepperList: loanController.bikeLoanTitleList
+                                  stepperList: loanController.farmLoanTitleList
                                       .map((e) => StepperData(
                                             title: "$e",
                                           ))
@@ -178,18 +182,12 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
     return GestureDetector(
       onTap: () async {
         String? msg;
-        if (profileController.trackBasedloanRequirement.value == -1) {
-          msg = "Select loan requirement";
-        } else if (profileController.trackBasedsubProduct.value == -1 &&
-            loanController.trackLoanProductModel.value.subProducts != null) {
+        if (loanController.trackLoanProductModel.value.subProducts == null) {
           msg = "Select sub product";
-        } else if (profileController.trackBasedbrand.value == -1 &&
-            loanController.trackLoanProductModel.value.brands != null) {
-          msg = "Select brand";
         }
         if (msg != null) {
           Flushbar(
-            title: "Alert!",
+            title: "",
             message: msg,
             duration: Duration(seconds: 3),
           )..show(context);
@@ -203,7 +201,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
             loanController.updateScreen(Steps.PERSONAL.index);
           } else {
             Flushbar(
-              title: "Alert!",
+              title: "",
               message: "Something went wrong!",
               duration: Duration(seconds: 3),
             )..show(context);
@@ -492,7 +490,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Loan Amount',
+                'Loan details',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
                     color: loanController.currentScreen.value ==
@@ -508,7 +506,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                 height: 24,
               ),
               Text(
-                'Choose the product against which you want the loan',
+                'Choose the sub-product for which you want the loan',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color: loanController.currentScreen.value ==
@@ -592,35 +590,36 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         DividerIO(
           height: 28,
         ),
-        ProfileStepper().commonDropDown(
-          item: loanController.trackBasedRequirements
-              .map<DropdownMenuItem<TrackBasedLoanRequirementModel>>(
-                  (TrackBasedLoanRequirementModel value) {
-            return DropdownMenuItem<TrackBasedLoanRequirementModel>(
-              value: value,
-              child: Text(value.name.toString()),
-            );
-          }).toList(),
-          onChanged: (value) {
-            profileController.trackBasedloanRequirement.value =
-                loanController.trackBasedRequirements.indexOf(value!);
-            loanController
-                .fetchTrackBasedLoanProducts(
-                    requirementId: 'TrackBasedPersonalLoan')
-                .then((value) => log(value.toString()));
-          },
-          label: 'Loan requirement',
-          hint: 'Choose the option for loan',
-          value: profileController.trackBasedloanRequirement.value == -1
-              ? null
-              : loanController.trackBasedRequirements[
-                  profileController.trackBasedloanRequirement.value],
-        ),
-        DividerIO(
-          height: 28,
-        ),
-        Obx(() {
-          if (profileController.trackBasedloanRequirement.value != -1 &&
+        // ProfileStepper().commonDropDown(
+        //   item: loanController.trackBasedRequirements
+        //       .map<DropdownMenuItem<TrackBasedLoanRequirementModel>>(
+        //           (TrackBasedLoanRequirementModel value) {
+        //     return DropdownMenuItem<TrackBasedLoanRequirementModel>(
+        //       value: value,
+        //       child: Text(value.name.toString()),
+        //     );
+        //   }).toList(),
+        //   onChanged: (value) {
+        //     profileController.trackBasedloanRequirement.value =
+        //         loanController.trackBasedRequirements.indexOf(value!);
+        //     loanController
+        //         .fetchTrackBasedLoanProducts(
+        //             requirementId: 'TrackBasedPersonalLoan')
+        //         .then((value) => log(value.toString()));
+        //   },
+        //   label: 'Loan requirement',
+        //   hint: 'Choose the option for loan',
+        //   value: profileController.trackBasedloanRequirement.value == -1
+        //       ? null
+        //       : loanController.trackBasedRequirements[
+        //           profileController.trackBasedloanRequirement.value],
+        // ),
+        // DividerIO(
+        //   height: 28,
+        // ),
+        Obx(()
+        {
+          if (
               loanController.trackLoanProductModel.value.subProducts != null) {
             return ProfileStepper().commonDropDown(
               item: loanController.trackLoanProductModel.value.subProducts!
@@ -645,7 +644,9 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
           } else {
             return SizedBox();
           }
-        }),
+        }
+
+        ),
         DividerIO(
           height: 28,
         ),
@@ -689,7 +690,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
       context,
       personalForm,
       isFromLoan: true,
-      loanType: LoanType.FarmLoan,
+      loanType: LoanType.TrackBasedPersonalLoan,
     );
   }
 
@@ -699,7 +700,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
     return ProfileStepper().residentialDetails(
       residentialForm,
       isFromLoan: true,
-      loanType: LoanType.FarmLoan,
+      loanType: LoanType.TrackBasedPersonalLoan,
     );
   }
 }
