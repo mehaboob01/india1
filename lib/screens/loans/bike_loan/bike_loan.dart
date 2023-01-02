@@ -287,15 +287,34 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           onChanged: (value) {
             profileController.vehicleType.value = value;
           },
-          label: 'Two wheeler required',
-          hint: 'Select the 2 wheeler you are buying',
+          label: 'Product',
+          hint: 'Select product',
           value: profileController.vehicleType.value == ''
               ? null
               : profileController.vehicleType.value,
         ),
         SizedBox(
-          height: 54,
-        )
+          height: 24,
+        ),
+        ProfileStepper().commonDropDown(
+          item: [
+            {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
+            {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
+          ].map((value) {
+            return DropdownMenuItem(
+              value: value['value'],
+              child: Text(value['name'].toString()),
+            );
+          }).toList(),
+          onChanged: (value) {
+            profileController.vehicleType.value = value;
+          },
+          label: 'Model',
+          hint: 'Select model',
+          value: profileController.vehicleType.value == ''
+              ? null
+              : profileController.vehicleType.value,
+        ),
       ],
     );
   }

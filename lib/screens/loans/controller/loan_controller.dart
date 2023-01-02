@@ -26,6 +26,9 @@ class LoanController extends GetxController {
   RxBool createLoanLoading = false.obs;
   RxBool lenderLoanLoading = false.obs;
   RxBool personLoanLoading = false.obs;
+
+  var productLoading = false.obs;
+  var modelLoading = false.obs;
   RxBool trackLoading = false.obs;
   RxBool farmLoanProductLoading = false.obs;
   Rx<double> sliderValue = 0.0.obs;
@@ -526,4 +529,104 @@ class LoanController extends GetxController {
       createLoanLoading.value = false;
     }
   }
+
+  // // operator list
+  // callOperatorListApi() async {
+  //   try {
+  //     isLoading(true);
+  //     var response =
+  //     await http.get(Uri.parse(baseUrl + Apis.operatorList), headers: {
+  //       'Content-type': 'application/json',
+  //       'Accept': 'application/json',
+  //       "x-digital-api-key": "1234"
+  //     });
+  //
+  //     print("Operator response");
+  //     print(response.body.toString());
+  //
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       var jsonData = jsonDecode(response.body);
+  //       RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
+  //       if (rcOperatorModel.status!.code == 2000) {
+  //         print(rcOperatorModel.data!.operators!);
+  //         operatorList.clear();
+  //         operatorListString.clear();
+  //         for (var index in rcOperatorModel.data!.operators!) {
+  //           operatorListSend.add(index);
+  //           operatorListStringSend.add(index.name.toString());
+  //         }
+  //         operatorList.addAll(operatorListSend);
+  //         operatorListString.addAll(operatorListStringSend);
+  //         isLoading(false);
+  //       } else {
+  //         Flushbar(
+  //           title: "Alert!",
+  //           message: rcOperatorModel.status!.message,
+  //           duration: Duration(seconds: 2),
+  //         )..show(Get.context!);
+  //       }
+  //     } else {
+  //       Flushbar(
+  //         title: "Error!",
+  //         message: "Something went wrong",
+  //         duration: Duration(seconds: 2),
+  //       )..show(Get.context!);
+  //     }
+  //   } catch (e) {
+  //     Flushbar(
+  //       title: "Error!",
+  //       message: "Something went wrong",
+  //       duration: Duration(seconds: 2),
+  //     )..show(Get.context!);
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+  //
+  // //circle list
+  //
+  // callCircleListApi() async {
+  //   try {
+  //     isLoading(true);
+  //     var response =
+  //     await http.get(Uri.parse(baseUrl + Apis.circleList), headers: {
+  //       'Content-type': 'application/json',
+  //       'Accept': 'application/json',
+  //       "x-digital-api-key": "1234"
+  //     });
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       var jsonData = jsonDecode(response.body);
+  //
+  //       RcCircleModel circleModel = RcCircleModel.fromJson(jsonData);
+  //
+  //       if (circleModel.status!.code == 2000) {
+  //         circleList.clear();
+  //         circleListString.clear();
+  //         for (var index in circleModel.data!.circles!) {
+  //           circleListSend.add(index);
+  //           circleListStringSend.add(index.name.toString());
+  //         }
+  //
+  //         circleList.addAll(circleListSend);
+  //         circleListString.addAll(circleListStringSend);
+  //
+  //         isLoading(false);
+  //       } else {
+  //         Flushbar(
+  //           title: "Alert!",
+  //           message: circleModel.status!.message,
+  //           duration: Duration(seconds: 2),
+  //         )..show(Get.context!);
+  //       }
+  //     } else {}
+  //   } catch (e) {
+  //     Flushbar(
+  //       title: "Error!",
+  //       message: "Something went wrong",
+  //       duration: Duration(seconds: 2),
+  //     )..show(Get.context!);
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 }

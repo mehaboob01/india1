@@ -89,6 +89,13 @@ class Apis {
   static String generateImageUploadUrl = "images/generate-pre-signed-url";
   static String uploadProfilePic = "customers/profile/image";
 
+  // 2 wheeler loan
+  static String twoWheelerProduct = "loans/fetch-two-wheeler-makes";
+  static String twoWheelerModel = "loans/fetch-two-wheeler-models";
+
+
+
+
   //miscellaneous
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
   static String creditCard =
