@@ -545,11 +545,13 @@ class CashBackManager extends GetxController {
 
         if (commonApiResponseModel.status!.code == 2000) {
           isLoading(false);
+
           Flushbar(
             title: "Success!!",
             message: "Upi del Successfully ..",
             duration: Duration(seconds: 2),
-          )..show(Get.context!);
+          )..show(Get.context!).then((value) => Get.back());
+
         } else {
           isLoading(false);
           Flushbar(

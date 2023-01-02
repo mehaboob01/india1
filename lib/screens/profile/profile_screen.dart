@@ -126,8 +126,8 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               Obx(
-                                                () => Text(
-                                                  profileDetailsModel.mobileNumber == null?"No contact":"+91 ${profileDetailsModel.mobileNumber}",
+                                                    () => Text(
+                                                  "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: Dimens.font_18sp,
@@ -135,6 +135,8 @@ class ProfileScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+
+
                                             ],
                                           ),
                                         ),

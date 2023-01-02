@@ -167,6 +167,7 @@ class EditAccountsCard extends StatelessWidget {
                                                                       milliseconds:
                                                                           500),
                                                                   () async {
+                                                                    Get.back();
 // Here you can write your code
                                                                 await cashBackManager
                                                                     .fetchCustomerBankAccounts();
