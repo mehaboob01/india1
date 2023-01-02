@@ -36,6 +36,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
     loanAmountEditingController = TextEditingController();
     profileController.setData();
     super.initState();
+    loanController.fetch2WheelerProducts();
     loanController.createLoanApplication(loanType: LoanType.BikeLoan);
     _plManager.currentScreen.value = Steps.LOAN_AMOUNT.index;
     _plManager.sliderValue.value = _plManager.minValue.value;
@@ -146,17 +147,17 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        if (profileController.vehicleType.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Select vehicle type",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else {
-          loanController.updateLoanAmount(
-              amount: loanAmountEditingController.text,
-              type: LoanType.BikeLoan);
-        }
+        // if (profileController.vehicleType.value == '') {
+        //   Flushbar(
+        //     title: "Alert!",
+        //     message: "Select vehicle type",
+        //     duration: Duration(seconds: 3),
+        //   )..show(context);
+        // } else {
+
+        // }
+        loanController.updateLoanAmount(
+            amount: loanAmountEditingController.text, type: LoanType.BikeLoan);
       },
       child: LoanCommon().nextButton(),
     );
@@ -258,7 +259,6 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
               }
             },
             child: LoanCommon().nextButton(),
-
           ),
         ),
       ],
@@ -275,46 +275,68 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           height: 28,
         ),
         ProfileStepper().commonDropDown(
-          item: [
-            {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
-            {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
-          ].map((value) {
+          item: loanController.twoWheelerMakes.map((value) {
             return DropdownMenuItem(
-              value: value['value'],
-              child: Text(value['name'].toString()),
+              value: value,
+              child: Text(value.toString()),
             );
           }).toList(),
-          onChanged: (value) {
-            profileController.vehicleType.value = value;
+          onChanged: (value) async {
+            profileController.twoWheelermakes.value = value;
+            await loanController.fetch2WheelerModels();
           },
           label: 'Product',
           hint: 'Select product',
-          value: profileController.vehicleType.value == ''
+          value: profileController.twoWheelermakes.value == ''
               ? null
-              : profileController.vehicleType.value,
+              : profileController.twoWheelermakes.value,
         ),
         SizedBox(
           height: 24,
         ),
-        ProfileStepper().commonDropDown(
-          item: [
-            {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
-            {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
-          ].map((value) {
-            return DropdownMenuItem(
-              value: value['value'],
-              child: Text(value['name'].toString()),
+        Obx(() {
+          if (loanController.twoWheelerModelsmodel.value.models != null) {
+            return ProfileStepper().commonDropDown(
+              item: loanController.twoWheelerModelsmodel.value.models!
+                  .map((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value.toString()),
+                );
+              }).toList(),
+              onChanged: (value) async {
+                profileController.twoWheelerModel.value = value;
+              },
+              label: 'Model',
+              hint: 'Select Models',
+              value: profileController.twoWheelerModel.value == ''
+                  ? null
+                  : profileController.twoWheelerModel.value,
             );
-          }).toList(),
-          onChanged: (value) {
-            profileController.vehicleType.value = value;
-          },
-          label: 'Model',
-          hint: 'Select model',
-          value: profileController.vehicleType.value == ''
-              ? null
-              : profileController.vehicleType.value,
-        ),
+          } else {
+            return SizedBox();
+          }
+        })
+
+        // ProfileStepper().commonDropDown(
+        //   item: [
+        //     {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
+        //     {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
+        //   ].map((value) {
+        //     return DropdownMenuItem(
+        //       value: value['value'],
+        //       child: Text(value['name'].toString()),
+        //     );
+        //   }).toList(),
+        //   onChanged: (value) {
+        //     profileController.vehicleType.value = value;
+        //   },
+        //   label: 'Model',
+        //   hint: 'Select model',
+        //   value: profileController.vehicleType.value == ''
+        //       ? null
+        //       : profileController.vehicleType.value,
+        // ),
       ],
     );
   }

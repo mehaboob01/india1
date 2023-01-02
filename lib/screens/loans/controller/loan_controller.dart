@@ -9,6 +9,7 @@ import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/Pages/recent_transaction_model.dart';
 import 'package:india_one/screens/insurances/model/insurance_recent_transaction_model.dart';
+import 'package:india_one/screens/loans/bike_loan/models_model.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/model/farm_loan_product_model.dart';
@@ -55,6 +56,9 @@ class LoanController extends GetxController {
   Rx<FarmLoanProductModel> farmLoanProductModel = FarmLoanProductModel().obs;
   Rx<TrackBasedLoanProductModel> trackLoanProductModel =
       TrackBasedLoanProductModel().obs;
+
+  var twoWheelerMakes = [].obs;
+  var twoWheelerModels = [].obs;
 
   RxInt farmCompletedIndex = 0.obs;
 
@@ -135,7 +139,7 @@ class LoanController extends GetxController {
       return 'Farm';
     } else if (loanType == LoanType.FarmLoan) {
       return 'FarmEquipment';
-    }else if (loanType == LoanType.TrackBasedPersonalLoan) {
+    } else if (loanType == LoanType.TrackBasedPersonalLoan) {
       return 'TrackBasedPersonalLoan';
     }
     return '';
@@ -193,7 +197,8 @@ class LoanController extends GetxController {
           "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanAmount": "$amount",
           if (type == LoanType.BikeLoan) ...{
-            "twoWheelerType": profileController.vehicleType.value,
+            "twoWheelerMake": profileController.twoWheelermakes.value,
+            "twoWheelerModel": profileController.twoWheelerModel.value,
           },
           if (type == LoanType.CarLoan) ...{
             "fourWheelerType": profileController.vehicleType.value,
@@ -348,7 +353,7 @@ class LoanController extends GetxController {
     required String requirementId,
   }) async {
     try {
-    //  farmLoanProductLoading.value = true;
+      //  farmLoanProductLoading.value = true;
       trackLoading.value = true;
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.fetcTrackBasedLoanProducts,
@@ -356,9 +361,51 @@ class LoanController extends GetxController {
       );
       if (response != null) {
         log("OK");
+        print(response);
         profileController.trackBasedsubProduct.value = (-1);
         profileController.trackBasedbrand.value = (-1);
-        trackLoanProductModel.value = TrackBasedLoanProductModel.fromJson(response);
+        trackLoanProductModel.value =
+            TrackBasedLoanProductModel.fromJson(response);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      trackLoading.value = false;
+    }
+  }
+
+  Future fetch2WheelerProducts() async {
+    try {
+      //  farmLoanProductLoading.value = true;
+      trackLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.fetchTwoWheelerMakes,
+        method: Type.GET,
+      );
+      if (response != null) {
+        print(response);
+        twoWheelerMakes.value = response;
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      trackLoading.value = false;
+    }
+  }
+
+  Rx<TwoWheelerModels> twoWheelerModelsmodel = TwoWheelerModels().obs;
+  Future fetch2WheelerModels() async {
+    try {
+      //  farmLoanProductLoading.value = true;
+      trackLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+          endpoint: Apis.fetchTwoWheelerModels,
+          method: Type.POST,
+          data: json.encode({"make": profileController.twoWheelermakes.value}));
+      if (response != null) {
+        print(response);
+        twoWheelerModelsmodel.value = TwoWheelerModels.fromJson(response);
+        print(twoWheelerModelsmodel.value);
       }
     } catch (exception) {
       print(exception);

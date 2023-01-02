@@ -1,7 +1,7 @@
 // DEV URL
 final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
-
+final String bucketBaseUrl =
+    "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
 //final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
@@ -77,9 +77,12 @@ class Apis {
   static String getLenders = "loans/lenders";
   static String applyLoan = "loans/apply";
   static String fetchFarmProducts = "loans/fetch-farm-products";
-  static String fetcTrackBasedLoanProducts = "loans/fetch-track-based-loan-products";
+  static String fetcTrackBasedLoanProducts =
+      "loans/fetch-track-based-loan-products";
   static String updateFarmLoanDetails =
       "loans/application/update-basic-details";
+  static String fetchTwoWheelerMakes = "loans/fetch-two-wheeler-makes";
+  static String fetchTwoWheelerModels = "loans/fetch-two-wheeler-models";
 
   ///insurance
   static String createInsurance = "insurances/application";
@@ -92,9 +95,6 @@ class Apis {
   // 2 wheeler loan
   static String twoWheelerProduct = "loans/fetch-two-wheeler-makes";
   static String twoWheelerModel = "loans/fetch-two-wheeler-models";
-
-
-
 
   //miscellaneous
   static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";

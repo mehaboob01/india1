@@ -534,7 +534,7 @@ class _FarmLoanState extends State<FarmLoan> {
                 profileController.addResidentialDetails(
                     isFromLoan: true,
                     loanApplicationId:
-                    loanController.createLoanModel.value.loanApplicationId,
+                        loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       // Get.to(() => LendersList(
                       //       title: 'Farm loan',
@@ -760,33 +760,35 @@ class _FarmLoanState extends State<FarmLoan> {
         DividerIO(
           height: 28,
         ),
-        Obx(() {
-          if (profileController.loanRequirement.value != -1 &&
-              loanController.farmLoanProductModel.value.subProducts != null) {
-            return ProfileStepper().commonDropDown(
-              item: loanController.farmLoanProductModel.value.subProducts!
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value.toString()),
-                );
-              }).toList(),
-              onChanged: (value) {
-                profileController.subProduct.value = loanController
-                    .farmLoanProductModel.value.subProducts!
-                    .indexOf(value!);
-              },
-              label: 'Sub product',
-              hint: 'Select sub product',
-              value: profileController.subProduct.value == -1
-                  ? null
-                  : loanController.farmLoanProductModel.value
-                      .subProducts![profileController.subProduct.value],
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
+        Obx(
+          () {
+            if (profileController.loanRequirement.value != -1 &&
+                loanController.farmLoanProductModel.value.subProducts != null) {
+              return ProfileStepper().commonDropDown(
+                item: loanController.farmLoanProductModel.value.subProducts!
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  profileController.subProduct.value = loanController
+                      .farmLoanProductModel.value.subProducts!
+                      .indexOf(value!);
+                },
+                label: 'Sub product',
+                hint: 'Select sub product',
+                value: profileController.subProduct.value == -1
+                    ? null
+                    : loanController.farmLoanProductModel.value
+                        .subProducts![profileController.subProduct.value],
+              );
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
         DividerIO(
           height: 28,
         ),
