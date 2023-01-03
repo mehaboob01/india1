@@ -30,6 +30,7 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings': 'Savings',
+          //jhjh
 
 
           // loan section text
