@@ -1,4 +1,3 @@
-
 extension DateTimeExtension on DateTime {
   String timeAgo({required bool numericDates}) {
     final date2 = DateTime.now();

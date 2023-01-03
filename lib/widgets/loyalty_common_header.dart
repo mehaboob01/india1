@@ -343,7 +343,7 @@ class HeadingContainer extends StatelessWidget {
                   buttonWidth: 44.0.wp,
                   label: _loyaltyManager.redeemablePoints >= 14
                       ? 'Redeem Now'
-                      : 'Earn more points',
+                      : 'Earn points',
                   labelSize: 12.0.sp,
                   labelWeight: FontWeight.w600,
                   labelColor: AppColors.blueColor,

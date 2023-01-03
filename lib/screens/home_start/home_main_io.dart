@@ -917,6 +917,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     EdgeInsets.symmetric(horizontal: 4.0.wp),
                                 child: PaymentCards(),
                               ),
+
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 6.0.wp,
@@ -1098,7 +1099,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
           redeemWaySub(
-              image: AppImages.mobilRechargeSvg,
+              image: AppImages.mobilRecharge2Svg,
               text: 'Recharge',
               routName: MRouter.mobileRechargeIO),
           redeemWaySub(

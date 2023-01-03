@@ -42,7 +42,7 @@ class HeadingBox extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        margin: EdgeInsets.all(4.0),
+        margin: EdgeInsets.all(1.0),
         width: 30,
         height: 30,
         decoration: BoxDecoration(

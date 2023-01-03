@@ -419,13 +419,15 @@ class AppImages {
   static const String handRupeeSvg = '${assetSvg}loans/personal.svg';
   static const String carSvg = '${assetSvg}loans/car.svg';
   static const String bikeSvg = '${assetSvg}loans/bike.svg';
-  static const String tractorSvg = '${assetSvg}loans/tractor.svg';
+  static const String tract_based_Svg = '${assetSvg}loans/track_based_Svg.svg';
+  static const String tractorSvg = '${assetSvg}loans/tractor_svg.svg';
   static const String handSackSvg = '${assetSvg}loans/MSME.svg';
   static const String goldSvg = '${assetSvg}loans/gold.svg';
   static const String creditCardSvg = '${assetSvg}loans/credit_card.svg';
   static const String creditScoreSvg = '${assetSvg}loans/speedMeter.svg';
 
   // payments
+  static const String mobilRecharge2Svg = '${assetSvg}payments/Recharge2.svg';
   static const String mobilRechargeSvg = '${assetSvg}payments/Recharge.svg';
   static const String contactPickerSvg = '${assetSvg}payments/contactPick.svg';
   static const String fastagSvg = '${assetSvg}payments/fasTag.svg';

@@ -23,7 +23,6 @@ class _LoansPageState extends State<LoansPage> {
 
   LoanController loanController = Get.put(LoanController());
 
-
   @override
   void initState() {
     super.initState();
@@ -75,8 +74,6 @@ class LoansCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-
-
             Get.toNamed(MRouter.chooseAmountIO);
           },
           child: ItemCard(
@@ -121,7 +118,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.tractorSvg,
-            label: 'Farm EQP',
+            label: 'Farm EP',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -130,8 +127,8 @@ class LoansCard extends StatelessWidget {
             Get.to(() => TrackBasedLoan());
           },
           child: ItemCard(
-            image: AppImages.tractorSvg,
-            label: 'Track Based Loan',
+            image: AppImages.tract_based_Svg,
+            label: 'Track Based',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),

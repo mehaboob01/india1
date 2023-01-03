@@ -40,18 +40,19 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: Get.height * 0.47,
+                    // color: Colors.red,
+                    height: Get.height * 0.52,
                     child: Stack(
+                      // alignment: Alignment.bottomCenter,
                       children: [
                         Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              scale: 1,
                               image: AssetImage(AppImages.heading_bg_PNG),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ),
                           ),
-                          height: Get.height * 0.28,
+                          height: Get.height * 0.4,
                           width: double.infinity,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +93,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                           color: Color(0xFFFFFFFF),
                                           fontSize: 16),
                                     )),
-                                  ))
+                                  )),
                             ],
                           ),
                         ),
@@ -369,15 +370,15 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                   ],
                                 ),
                                 Spacer(),
-                                termConditionChecked!
-                                    ? SizedBox(
-                                        height: 48,
-                                        child: Image.asset(
-                                          "assets/images/btn_img.png",
-                                          fit: BoxFit.fill,
-                                        ),
-                                      )
-                                    : SizedBox(),
+                                // termConditionChecked!
+                                //     ? SizedBox(
+                                //         height: 48,
+                                //         child: Image.asset(
+                                //           "assets/images/btn_img.png",
+                                //           fit: BoxFit.fill,
+                                //         ),
+                                //       )
+                                //     : SizedBox(),
                               ],
                             ),
                             decoration: BoxDecoration(
