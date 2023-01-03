@@ -30,6 +30,35 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings': 'Savings',
+
+
+          // loan section text
+
+          'loan_categories' : 'Loan categories',
+          'payment_categories' : 'Payment categories',
+          'insurance_categories' : 'Insurance categories',
+
+          'personal' : 'Personal',
+          '2_wheeler' : '2 Wheeler',
+          'farm_eqp' : 'Farm EQP',
+          'track_based_loan' : 'Track Based Loan',
+          'gold' : 'Gold',
+          'emi_card' : 'Emi Card',
+          'credit_card' : 'Credit Card',
+          'credit_score' : 'Credit Score',
+
+          // drop down
+
+
+          'my_profile': 'My Profile',
+          'my_rewards': 'My Rewards',
+
+
+
+
+
+
+
         },
         'hi_IN': {
           'hello': 'नमस्ते दुनिया',
@@ -57,7 +86,28 @@ class LocaleString extends Translations {
           'payments': 'भुगतान',
           'loans': 'ऋण',
           'insurance': 'बीमा',
-          'savings': 'बचत'
+          'savings': 'बचत',
+
+          // loan section
+
+          'loan_categories' : 'ऋण',
+          'payment_categories' : 'भुगतान categories',
+          'insurance_categories' : 'बीमा categories',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
+
         },
         'ka_IN': {
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
@@ -85,7 +135,29 @@ class LocaleString extends Translations {
           'payments': 'ಪಾವತಿಗಳು',
           'loans': 'ಸಾಲಗಳು',
           'insurance': 'ವಿಮೆ',
-          'savings': 'ಉಳಿತಾಯ'
+          'savings': 'ಉಳಿತಾಯ',
+
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
+
+          // loan section
+          'loan_categories' : 'ಮಾನ್ಯ',
+          'payment_categories' : 'ಸಾಲಗಳು',
+          'insurance_categories' : 'ಸಾಲಗಳು ',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+
+
         },
         'ma_IN': {
           'hello': 'हॅलो वर्ल्ड',
@@ -113,7 +185,25 @@ class LocaleString extends Translations {
           'payments': 'देयके',
           'loans': 'कर्ज',
           'insurance': 'विमा',
-          'savings': 'बचत'
+          'savings': 'बचत',
+          // loan section
+          'loan_categories' : 'कर्ज देयके',
+          'payment_categories' : 'देयके',
+          'insurance_categories' : 'विमा ',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -137,12 +227,31 @@ class LocaleString extends Translations {
           'cashback_india1_summary': 'ఇండియా1  ద్వారా క్యాష్‌బ్యాక్',
           'in': 'లో',
           'redeem_points_now': 'రీడీమ్ చేయండి',
-          'home': 'Home',
-          'payments': 'Payments',
-          'loans': 'Loans',
-          'insurance': 'Insurance',
-          'savings': 'Savings',
-          'logout': 'Logout'
+          'home': 'చేయండి',
+          'payments': 'చేయండి',
+          'loans': 'చేయండ',
+          'insurance': 'చేయండి',
+          'savings': 'చేయండి',
+          'logout': 'చేయండ',
+
+          // loan section
+          'loan_categories' : 'ఎంచుకోండి',
+          'payment_categories' : 'ఇండియా1',
+          'insurance_categories' : 'ఇండి',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
         },
         'ta_IN': {
           'hello': 'வணக்கம் உலகம்',
@@ -166,11 +275,30 @@ class LocaleString extends Translations {
           'cashback_india1_summary': 'இந்தியா 1 சுருக்கம்  கேஷ்பேக்',
           'in': '்ளே',
           'redeem_points_now': 'மீட்டுக்கொள்ளு',
-          'home': 'Home',
-          'payments': 'Payments',
-          'loans': 'Loans',
-          'insurance': 'Insurance',
-          'savings': 'Savings'
+          'home': 'சுருக்ம்',
+          'payments': 'சுருக்க',
+          'loans': 'சுருக்',
+          'insurance': 'சுருக்கம்',
+          'savings': 'சுருக்',
+
+          // loan section
+          'loan_categories' : 'மீட்டுக்கொள்ளு',
+          'payment_categories' : 'டுக்கொள்ளு',
+          'insurance_categories' : '்கொள்ளு',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
         },
         'mal_IN': {
           'hello': 'ഹലോ വേൾഡ്',
@@ -198,7 +326,27 @@ class LocaleString extends Translations {
           'payments': 'Payments',
           'loans': 'Loans',
           'insurance': 'Insurance',
-          'savings': 'Savings'
+          'savings': 'Savings',
+
+          // loan section
+          'loan_categories' : 'തിരഞ്ഞെടുക്കുക',
+          'payment_categories' : 'ബൈ',
+          'insurance_categories' : 'ബൈ',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
+
         },
         'ban_IN': {
           'hello': 'হ্যালো',
@@ -226,7 +374,26 @@ class LocaleString extends Translations {
           'payments': 'Payments',
           'loans': 'Loans',
           'insurance': 'Insurance',
-          'savings': 'Savings'
+          'savings': 'Savings',
+
+          // loan section
+          'loan_categories' : 'পছন্দের ভাষা',
+          'payment_categories' : 'ভাষা',
+          'insurance_categories' : 'পছন্দের',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+          // drop down
+
+
+          'my_profile': 'प्रोफाइल',
+          'my_rewards': 'पुरस्कार',
         },
         'or_IN': {
           'hello': ' ନମ୍ବର',
@@ -254,7 +421,27 @@ class LocaleString extends Translations {
           'payments': 'Payments',
           'loans': 'Loans',
           'insurance': 'Insurance',
-          'savings': 'Savings'
+          'savings': 'Savings',
+
+          // loan section
+          'loan_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
+          'payment_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
+          'insurance_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
+
+          'personal' : 'निजी',
+          '2_wheeler' : '2 व्हीलर',
+          'farm_eqp' : 'फार्म ईक्यूपी',
+          'track_based_loan' : 'ट्रैक  ऋण',
+          'gold' : 'सोना',
+          'emi_card' : 'ईएमआई कार्ड',
+          'credit_card' : 'क्रेडिट कार्ड',
+          'credit_score' : 'क्रेडिट अंक',
+
+          // drop down
+
+
+          'my_profile': 'ପଏଣ୍ଟଗୁଡିକ',
+          'my_rewards': 'ମୁକ୍ତ',
         },
       };
 }

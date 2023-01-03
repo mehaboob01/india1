@@ -533,10 +533,10 @@ class CommonPageCategoriesHeading extends StatelessWidget {
   CommonPageCategoriesHeading({required this.pageName});
   final PageName pageName;
   final List<String> categoreisHeading = <String>[
-    'Loan categories',
-    'Payment categories',
-    'Insurance categories',
-    'Savings'
+    'loan_categories',
+    'payment_categories',
+    'insurance_categories',
+    'savings'
   ];
   String categoreisTitle(PageName pageName) {
     String value = '';
@@ -570,7 +570,7 @@ class CommonPageCategoriesHeading extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
           top: 4.0.hp, bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-      child: Text(categoreisTitle(pageName),
+      child: Text(categoreisTitle(pageName).tr,
           style: AppStyle.shortHeading.copyWith(
               color: AppColors.blackColor,
               fontSize: Dimens.font_20sp,

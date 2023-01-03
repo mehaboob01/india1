@@ -712,7 +712,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                   width: double
                                                                       .infinity,
                                                                   child: Text(
-                                                                    "My Profile",
+                                                                    "my_profile".tr,
                                                                     style: AppStyle.shortHeading.copyWith(
                                                                         fontSize:
                                                                             Dimens
@@ -751,7 +751,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                             .infinity,
                                                                         child:
                                                                             Text(
-                                                                          "My Rewards",
+                                                                          "my_rewards".tr,
                                                                           style: AppStyle.shortHeading.copyWith(
                                                                               fontSize: Dimens.font_14sp,
                                                                               color: Colors.black,
@@ -884,7 +884,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
                                 child: Text(
-                                  'Loans',
+                                  'loans'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
                                       color: Colors.black,
@@ -904,7 +904,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
                                 child: Text(
-                                  'Payments',
+                                  'payments'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
                                       color: Colors.black,
@@ -924,7 +924,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
                                 child: Text(
-                                  'Insurance',
+                                  'insurance'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
                                       color: Colors.black,
@@ -941,7 +941,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                 padding: EdgeInsets.only(
                                     left: 6.0.wp, top: 12.0.wp, right: 6.0.wp),
                                 child: Text(
-                                  'Savings',
+                                  'savings'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
                                       color: Colors.black,
@@ -1145,7 +1145,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   Widget redeemPoints({VoidCallback? onPressed}) {
     return ButtonWithFlower(
         label: _homeManager.redeemablePoints >= 15
-            ? 'Redeem Points Now'
+            ? 'redeem_points_now'.tr
             : 'Earn More Points',
         onPressed: () => _homeManager.redeemablePoints >= 15
             ? {Get.toNamed(MRouter.redeemPointsPage)}

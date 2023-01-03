@@ -474,13 +474,13 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                   ),
                 ),
                 // ------ chirag edits -------------
-                TextField(
-                  onChanged: (value) {
-                    if (value.length == 4) {
-                      //  OtpManager.callVerifyOtpApi;
-                    }
-                  },
-                ),
+                // TextField(
+                //   onChanged: (value) {
+                //     if (value.length == 4) {
+                //       //  OtpManager.callVerifyOtpApi;
+                //     }
+                //   },
+                // ),
                 // ----- chirag edits ends here ---------------
                 Spacer(),
               ],

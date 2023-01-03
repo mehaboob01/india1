@@ -1,14 +1,12 @@
 // To parse this JSON data, do
 //
-//     final usedPointsHistory = usedPointsHistoryFromJson(jsonString);
+//     final usedPointsHistoryModel = usedPointsHistoryModelFromJson(jsonString);
 
 import 'dart:convert';
 
-UsedPointsHistoryModel usedPointsHistoryFromJson(String str) =>
-    UsedPointsHistoryModel.fromJson(json.decode(str));
+UsedPointsHistoryModel usedPointsHistoryModelFromJson(String str) => UsedPointsHistoryModel.fromJson(json.decode(str));
 
-String usedPointsHistoryToJson(UsedPointsHistoryModel data) =>
-    json.encode(data.toJson());
+String usedPointsHistoryModelToJson(UsedPointsHistoryModel data) => json.encode(data.toJson());
 
 class UsedPointsHistoryModel {
   UsedPointsHistoryModel({
@@ -19,170 +17,79 @@ class UsedPointsHistoryModel {
   Data? data;
   Status? status;
 
-  factory UsedPointsHistoryModel.fromJson(Map<String, dynamic> json) =>
-      UsedPointsHistoryModel(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        status: json["status"] == null ? null : Status.fromJson(json["status"]),
-      );
+  factory UsedPointsHistoryModel.fromJson(Map<String, dynamic> json) => UsedPointsHistoryModel(
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    status: json["status"] == null ? null : Status.fromJson(json["status"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "data": data == null ? null : data!.toJson(),
-        "status": status == null ? null : status!.toJson(),
-      };
+    "data": data == null ? null : data!.toJson(),
+    "status": status == null ? null : status!.toJson(),
+  };
 }
 
 class Data {
   Data({
-    this.pointsSummary,
-    this.atmRewards,
-    this.pointsConfiguration,
-    this.recentRewardTransactions,
+    this.nextToken,
+    this.previousToken,
+    this.transactions,
   });
 
-  PointsSummary? pointsSummary;
-  AtmRewards? atmRewards;
-  PointsConfiguration? pointsConfiguration;
-  List<RecentRewardTransaction>? recentRewardTransactions;
+  String? nextToken;
+  String? previousToken;
+  List<Transaction>? transactions;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        pointsSummary: json["pointsSummary"] == null
-            ? null
-            : PointsSummary.fromJson(json["pointsSummary"]),
-        atmRewards: json["atmRewards"] == null
-            ? null
-            : AtmRewards.fromJson(json["atmRewards"]),
-        pointsConfiguration: json["pointsConfiguration"] == null
-            ? null
-            : PointsConfiguration.fromJson(json["pointsConfiguration"]),
-        recentRewardTransactions: json["recentRewardTransactions"] == null
-            ? null
-            : List<RecentRewardTransaction>.from(
-                json["recentRewardTransactions"]
-                    .map((x) => RecentRewardTransaction.fromJson(x))),
-      );
+    nextToken: json["nextToken"] == null ? null : json["nextToken"],
+    previousToken: json["previousToken"] == null ? null : json["previousToken"],
+    transactions: json["transactions"] == null ? null : List<Transaction>.from(json["transactions"].map((x) => Transaction.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "pointsSummary": pointsSummary == null ? null : pointsSummary!.toJson(),
-        "atmRewards": atmRewards == null ? null : atmRewards!.toJson(),
-        "pointsConfiguration":
-            pointsConfiguration == null ? null : pointsConfiguration!.toJson(),
-        "recentRewardTransactions": recentRewardTransactions == null
-            ? null
-            : List<dynamic>.from(
-                recentRewardTransactions!.map((x) => x.toJson())),
-      };
+    "nextToken": nextToken == null ? null : nextToken,
+    "previousToken": previousToken == null ? null : previousToken,
+    "transactions": transactions == null ? null : List<dynamic>.from(transactions!.map((x) => x.toJson())),
+  };
 }
 
-class AtmRewards {
-  AtmRewards({
-    this.rewardsMultipliers,
-  });
-
-  List<int>? rewardsMultipliers;
-
-  factory AtmRewards.fromJson(Map<String, dynamic> json) => AtmRewards(
-        rewardsMultipliers: json["rewardsMultipliers"] == null
-            ? null
-            : List<int>.from(json["rewardsMultipliers"].map((x) => x)),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "rewardsMultipliers": rewardsMultipliers == null
-            ? null
-            : List<dynamic>.from(rewardsMultipliers!.map((x) => x)),
-      };
-}
-
-class PointsConfiguration {
-  PointsConfiguration({
-    this.redeemThreshold,
-    this.referFriendRewardPoints,
-    this.atmWithdrawRewardPoints,
-  });
-
-  int? redeemThreshold;
-  int? referFriendRewardPoints;
-  int? atmWithdrawRewardPoints;
-
-  factory PointsConfiguration.fromJson(Map<String, dynamic> json) =>
-      PointsConfiguration(
-        redeemThreshold:
-            json["redeemThreshold"] == null ? null : json["redeemThreshold"],
-        referFriendRewardPoints: json["referFriendRewardPoints"] == null
-            ? null
-            : json["referFriendRewardPoints"],
-        atmWithdrawRewardPoints: json["atmWithdrawRewardPoints"] == null
-            ? null
-            : json["atmWithdrawRewardPoints"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "redeemThreshold": redeemThreshold == null ? null : redeemThreshold,
-        "referFriendRewardPoints":
-            referFriendRewardPoints == null ? null : referFriendRewardPoints,
-        "atmWithdrawRewardPoints":
-            atmWithdrawRewardPoints == null ? null : atmWithdrawRewardPoints,
-      };
-}
-
-class PointsSummary {
-  PointsSummary({
-    this.redeemablePoints,
-    this.pointsEarned,
-    this.pointsRedeemed,
-  });
-
-  int? redeemablePoints;
-  int? pointsEarned;
-  int? pointsRedeemed;
-
-  factory PointsSummary.fromJson(Map<String, dynamic> json) => PointsSummary(
-        redeemablePoints:
-            json["redeemablePoints"] == null ? null : json["redeemablePoints"],
-        pointsEarned:
-            json["pointsEarned"] == null ? null : json["pointsEarned"],
-        pointsRedeemed:
-            json["pointsRedeemed"] == null ? null : json["pointsRedeemed"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "redeemablePoints": redeemablePoints == null ? null : redeemablePoints,
-        "pointsEarned": pointsEarned == null ? null : pointsEarned,
-        "pointsRedeemed": pointsRedeemed == null ? null : pointsRedeemed,
-      };
-}
-
-class RecentRewardTransaction {
-  RecentRewardTransaction({
+class Transaction {
+  Transaction({
     this.id,
     this.points,
     this.date,
     this.typeId,
-    this.expiryDate,
+    this.amount,
+    this.accountOrMobileNumber,
+    this.pointsMultiplier,
   });
 
   String? id;
   int? points;
   String? date;
   String? typeId;
-  String? expiryDate;
+  int? amount;
+  String? accountOrMobileNumber;
+  int? pointsMultiplier;
 
-  factory RecentRewardTransaction.fromJson(Map<String, dynamic> json) =>
-      RecentRewardTransaction(
-        id: json["id"] == null ? null : json["id"],
-        points: json["points"] == null ? null : json["points"],
-        date: json["date"] == null ? null : json["date"],
-        typeId: json["typeId"] == null ? null : json["typeId"],
-        expiryDate: json["expiryDate"] == null ? null : json["expiryDate"],
-      );
+  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+    id: json["id"] == null ? null : json["id"],
+    points: json["points"] == null ? null : json["points"],
+    date: json["date"] == null ? null : json["date"],
+    typeId: json["typeId"] == null ? null : json["typeId"],
+    amount: json["amount"] == null ? null : json["amount"],
+    accountOrMobileNumber: json["accountOrMobileNumber"] == null ? null : json["accountOrMobileNumber"],
+    pointsMultiplier: json["pointsMultiplier"] == null ? null : json["pointsMultiplier"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "points": points == null ? null : points,
-        "date": date == null ? null : date,
-        "typeId": typeId == null ? null : typeId,
-        "expiryDate": expiryDate == null ? null : expiryDate,
-      };
+    "id": id == null ? null : id,
+    "points": points == null ? null : points,
+    "date": date == null ? null : date,
+    "typeId": typeId == null ? null : typeId,
+    "amount": amount == null ? null : amount,
+    "accountOrMobileNumber": accountOrMobileNumber == null ? null : accountOrMobileNumber,
+    "pointsMultiplier": pointsMultiplier == null ? null : pointsMultiplier,
+  };
 }
 
 class Status {
@@ -195,12 +102,12 @@ class Status {
   String? message;
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
-        code: json["code"] == null ? null : json["code"],
-        message: json["message"] == null ? null : json["message"],
-      );
+    code: json["code"] == null ? null : json["code"],
+    message: json["message"] == null ? null : json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "code": code == null ? null : code,
-        "message": message == null ? null : message,
-      };
+    "code": code == null ? null : code,
+    "message": message == null ? null : message,
+  };
 }

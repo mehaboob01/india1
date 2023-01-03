@@ -81,7 +81,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.handRupeeSvg,
-            label: 'Personal',
+            label: 'personal',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -91,7 +91,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.bikeSvg,
-            label: '2 Wheeler',
+            label: '2_wheeler',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -121,7 +121,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.tractorSvg,
-            label: 'Farm EQP',
+            label: 'farm_eqp',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -131,7 +131,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.tractorSvg,
-            label: 'Track Based Loan',
+            label: 'track_based_loan',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -154,7 +154,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.goldSvg,
-            label: 'Gold',
+            label: 'gold',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -164,7 +164,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,
-            label: 'Emi Card',
+            label: 'emi_card',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -174,7 +174,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.creditCardSvg,
-            label: 'Credit Card',
+            label: 'credit_card',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
@@ -184,7 +184,7 @@ class LoansCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.creditScoreSvg,
-            label: 'Credit Score',
+            label: 'credit_score',
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 
 class ItemCard extends StatelessWidget {
@@ -48,7 +49,7 @@ class ItemCard extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                label,
+                label.tr,
                 style: AppStyle.shortHeading.copyWith(
                     color: AppColors.black,
                     fontSize: 10.0.sp,

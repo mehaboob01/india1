@@ -10,24 +10,24 @@ import '../../../core/data/local/shared_preference_keys.dart';
 
 class UsedRewardController extends GetxController {
   final loadingData = false.obs;
-  List<RecentRewardTransaction> usedpointsList =
-      <RecentRewardTransaction>[].obs;
+  List<Transaction> usedpointsList =
+      <Transaction>[].obs;
 
   void onInit() {
     super.onInit();
     getUsedRewardHistory();
   }
 
-  Future<List<RecentRewardTransaction>> getUsedRewardHistory() async {
+  Future<List<Transaction>> getUsedRewardHistory() async {
     final preference = await SharedPreferences.getInstance();
     String? customerId = preference.getString(SPKeys.CUSTOMER_ID);
     loadingData.value = true;
     try {
-      List<RecentRewardTransaction> getList = [];
+      List<Transaction> getList = [];
       var response = await http.post(
-          Uri.parse(baseUrl + Apis.usedPointsHistory),
+          Uri.parse(baseUrl + Apis.loyaltyHistory),
           body: json
-              .encode({"customerId": customerId, "rewardTransactionCount": 10}),
+              .encode({"customerId": customerId, "limit": 10}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -39,7 +39,7 @@ class UsedRewardController extends GetxController {
       print(jsonData);
       UsedPointsHistoryModel usedPointsHistoryModel =
           UsedPointsHistoryModel.fromJson(jsonData);
-      getList = usedPointsHistoryModel.data!.recentRewardTransactions!
+      getList = usedPointsHistoryModel.data!.transactions!
           .map((e) => e)
           .toList();
       usedpointsList.addAll(getList);

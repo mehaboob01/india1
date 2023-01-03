@@ -163,7 +163,7 @@ class UsedRewardHistory extends StatelessWidget {
                                             rewardtype:
                                                 Rewardtype.cashTransaction,
                                             date: CommonMethods().getOnlyDate(
-                                                date: rewardHistoryCard.date),
+                                                date: _usedPointsController.usedpointsList[index].date),
                                             points: rewardHistoryCard.points!);
                                       })),
                                 )
