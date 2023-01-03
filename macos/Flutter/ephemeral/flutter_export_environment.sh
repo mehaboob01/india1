@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\Users\91889\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\91889\Desktop\delete it\web_refresh\ui_page\india_one_ui"
+export "FLUTTER_ROOT=/home/huzaif/snap/flutter/common/flutter"
+export "FLUTTER_APPLICATION_PATH=/home/huzaif/Desktop/Codewave/Projects/India1/india1"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.8"

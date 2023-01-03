@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\Users\91889\flutter
-FLUTTER_APPLICATION_PATH=C:\Users\91889\Desktop\delete it\web_refresh\ui_page\india_one_ui
+FLUTTER_ROOT=/home/huzaif/snap/flutter/common/flutter
+FLUTTER_APPLICATION_PATH=/home/huzaif/Desktop/Codewave/Projects/India1/india1
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.8

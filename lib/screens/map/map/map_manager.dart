@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,12 +25,63 @@ class MapManager extends GetxController {
   late GoogleMapController? mapController;
   var isLoading = false.obs;
   var cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 15).obs;
-  var locationText = "Search Location".obs;
+  RxBool areSuggestionsVisible = false.obs;
+  var scrollableController = DraggableScrollableController().obs;
 
   @override
   void onReady() {
     getCurrentLocation();
     super.onReady();
+  }
+
+  RxList placeList = [].obs;
+
+  void getLatLng(String placeId) async {
+    String baseURL =
+        "https://maps.googleapis.com/maps/api/geocode/json?place_id=$placeId&key=${Apis.kPLACES_API_KEY}";
+    var response = await http.get(Uri.parse(baseURL));
+    var result = json.decode(response.body);
+    if (response.statusCode == 200) {
+      var lat = result["results"][0]["geometry"]["location"]["lat"];
+      var lng = result["results"][0]["geometry"]["location"]["lng"];
+
+      mapController!
+          .animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(target: LatLng(lat, lng), zoom: 14)))
+          .then((value) {
+        getLocations(lat, lng);
+      });
+    } else {
+      throw Exception('Failed to load predictions');
+    }
+  }
+
+  void getSuggestion(String input) async {
+    areSuggestionsVisible.value = false;
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+    String request =
+        '$baseURL?input=$input&components=country:IN& &types=establishment&key=${Apis.kPLACES_API_KEY}';
+
+    var response = await http.get(Uri.parse(request));
+    if (response.statusCode == 200) {
+      print(response.body);
+      placeList.value = json.decode(response.body)['predictions'];
+      if (placeList.value.isNotEmpty) {
+        areSuggestionsVisible.value = true;
+      }
+    } else {
+      areSuggestionsVisible.value = true;
+      throw Exception('Failed to load predictions');
+    }
+  }
+
+  int itemCount(int count) {
+    if (count < 5) {
+      return count;
+    } else {
+      return 5;
+    }
   }
 
   late BitmapDescriptor customIcon;
@@ -140,6 +192,8 @@ class MapManager extends GetxController {
     }
   }
 
+  var controller = TextEditingController().obs;
+
   Future<void> getAddressFromLatLong(lat, long) async {
     String type = '(regions)';
     String baseURL =
@@ -147,7 +201,7 @@ class MapManager extends GetxController {
 
     var response = await http.get(Uri.parse(baseURL));
     if (response.statusCode == 200) {
-      locationText.value =
+      controller.value.text =
           (json.decode(response.body)['results'][0]["formatted_address"]);
     } else {
       throw Exception('Failed to load predictions');
@@ -167,6 +221,22 @@ class MapManager extends GetxController {
       await launch((googleUrl));
     } else {
       throw 'Could not open the map.';
+    }
+  }
+
+  bringSelectedTileToFirst(int index) {
+    var temp;
+    temp = mapCoordinateList[index];
+    mapCoordinateList[index] = mapCoordinateList[0];
+    mapCoordinateList[0] = temp;
+    mapCoordinateList[0].isHighlighted = true;
+  }
+
+  removeHighlights() {
+    for (var element in mapCoordinateList) {
+      if (element.isHighlighted == true) {
+        element.isHighlighted = false;
+      }
     }
   }
 }
