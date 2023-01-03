@@ -53,6 +53,16 @@ class LocaleString extends Translations {
           'my_profile': 'My Profile',
           'my_rewards': 'My Rewards',
 
+          // insurance section text
+          '4_wheeler' : '4 Wheeler',
+          'critical_illness' : 'Critical illness',
+
+
+
+
+
+
+
 
 
 
@@ -93,7 +103,6 @@ class LocaleString extends Translations {
           'loan_categories' : 'ऋण',
           'payment_categories' : 'भुगतान categories',
           'insurance_categories' : 'बीमा categories',
-
           'personal' : 'निजी',
           '2_wheeler' : '2 व्हीलर',
           'farm_eqp' : 'फार्म ईक्यूपी',
@@ -102,11 +111,17 @@ class LocaleString extends Translations {
           'emi_card' : 'ईएमआई कार्ड',
           'credit_card' : 'क्रेडिट कार्ड',
           'credit_score' : 'क्रेडिट अंक',
+
+          //
           // drop down
 
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
 
         },
         'ka_IN': {
@@ -157,6 +172,10 @@ class LocaleString extends Translations {
           'credit_card' : 'क्रेडिट कार्ड',
           'credit_score' : 'क्रेडिट अंक',
 
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
+
 
         },
         'ma_IN': {
@@ -204,6 +223,10 @@ class LocaleString extends Translations {
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -252,6 +275,10 @@ class LocaleString extends Translations {
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
         },
         'ta_IN': {
           'hello': 'வணக்கம் உலகம்',
@@ -299,6 +326,10 @@ class LocaleString extends Translations {
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
         },
         'mal_IN': {
           'hello': 'ഹലോ വേൾഡ്',
@@ -347,6 +378,10 @@ class LocaleString extends Translations {
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
+
         },
         'ban_IN': {
           'hello': 'হ্যালো',
@@ -394,6 +429,10 @@ class LocaleString extends Translations {
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
         },
         'or_IN': {
           'hello': ' ନମ୍ବର',
@@ -442,6 +481,10 @@ class LocaleString extends Translations {
 
           'my_profile': 'ପଏଣ୍ଟଗୁଡିକ',
           'my_rewards': 'ମୁକ୍ତ',
+
+          // insurance section text
+          '4_wheeler' : '4 व्हीलर',
+          'critical_illness' : 'गंभीर बीमारी',
         },
       };
 }

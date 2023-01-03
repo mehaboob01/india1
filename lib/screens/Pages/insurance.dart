@@ -75,7 +75,7 @@ class InsuranceCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.bikeSvg,
-            label: '2 Wheeler',
+            label: '2_wheeler',
             itembgColor: ItemCardbgColor.lightRed2,
           ),
         ),
@@ -85,7 +85,7 @@ class InsuranceCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.carSvg,
-            label: '4 Wheeler',
+            label: '4_wheeler',
             itembgColor: ItemCardbgColor.lightRed2,
           ),
         ),
@@ -98,7 +98,7 @@ class InsuranceCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.criticalIllnessSvg,
-            label: 'Critical Illness',
+            label: 'critical_illness',
             itembgColor: ItemCardbgColor.lightRed2,
           ),
         ),
