@@ -76,6 +76,7 @@ class Locations {
       this.address,
       this.rewardsMultiplier,
       this.geoLocation,
+      this.isHighlighted,
       this.distance});
 
   String? name;
@@ -83,6 +84,7 @@ class Locations {
   int? rewardsMultiplier;
   GeoLocation? geoLocation;
   int? distance;
+  bool? isHighlighted;
 
   factory Locations.fromJson(Map<String, dynamic> json) => Locations(
         name: json["name"] == null ? null : json["name"],
@@ -99,7 +101,8 @@ class Locations {
   Map<String, dynamic> toJson() => {
         "name": name == null ? null : name,
         "address": address == null ? null : address,
-        "rewardsMultiplier": rewardsMultiplier == null ? null : rewardsMultiplier,
+        "rewardsMultiplier":
+            rewardsMultiplier == null ? null : rewardsMultiplier,
         "geoLocation": geoLocation == null ? null : geoLocation!.toJson(),
         "distance": distance == null ? null : distance,
       };

@@ -12,7 +12,7 @@ import '../../core/data/remote/api_constant.dart';
 
 class ReferManager extends GetxController {
   var isLoading = false.obs;
- // var getSuccess = false.obs;
+  // var getSuccess = false.obs;
   ContactCont cont = Get.put(ContactCont());
   callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,14 +43,15 @@ class ReferManager extends GetxController {
             CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-        //  getSuccess.value = true;
-
+          //  getSuccess.value = true;
 
           Flushbar(
             title: "Success:)",
             message: "Invitation sent successfully!",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
+          cont.contactsLenght.value = cont.contacts.length;
+          cont.filteredList.value = cont.contacts;
 
           // cont.filteredList.value.clear();
           // cont.filteredList.value = cont.contacts;
@@ -59,11 +60,8 @@ class ReferManager extends GetxController {
           // cont.contactsLenght.value = cont.contacts.length;
 
         } else {
-
           cont.contactsLenght.value = cont.contacts.length;
           cont.filteredList.value = cont.contacts;
-
-
           Flushbar(
             title: "Alert!",
             message: commonApiResponseModel.status!.message.toString(),
@@ -86,12 +84,10 @@ class ReferManager extends GetxController {
         duration: Duration(seconds: 1),
       )..show(Get.context!);
     } finally {
-      cont.contactsLenght.value =
-          cont.contacts.length;
+      cont.contactsLenght.value = cont.contacts.length;
 
       isLoading.value = false;
- //     getSuccess.value = false;
-
+      //     getSuccess.value = false;
 
     }
   }
