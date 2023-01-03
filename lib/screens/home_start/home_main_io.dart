@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 
@@ -154,101 +155,104 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
 
-    if (points != 0) {
-      Future.delayed(
-          Duration(milliseconds: 300),
-          () => Alert(
-                padding: EdgeInsets.zero,
-                style: AlertStyle(
-                    alertPadding: EdgeInsets.zero,
-                    backgroundColor: Colors.transparent,
-                    alertBorder: Border.all(width: 0)),
-                buttons: [],
-                context: context,
-                content: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.55,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(AppImages.homeScreenPopUpBg))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Welcome to',
-                          style: AppStyle.shortHeading.copyWith(
-                              height: 1.2, fontSize: Dimens.font_24sp),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Cashback',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.2,
-                                  letterSpacing: 1.2,
-                                  fontSize: Dimens.font_24sp),
-                            ),
-                            Text(
-                              ' by ',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.2,
-                                  fontSize: Dimens.font_20sp),
-                            ),
-                            Text(
-                              'India1',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.2,
-                                  letterSpacing: 1.2,
-                                  fontSize: Dimens.font_24sp),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        Text(
-                          'You just won',
-                          style: AppStyle.shortHeading
-                              .copyWith(fontSize: Dimens.font_20sp),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: Dimens.padding_12dp),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset(AppImages.goldenHexagonal),
-                              Positioned(
-                                top: 45,
-                                child: Obx(
-                                  () => Text(
-                                    _homeManager.loyalityPoints.toString(),
-                                    style: AppStyle.shortHeading.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 40),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          'Points',
-                          style: AppStyle.shortHeading.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontSize: Dimens.font_24sp),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ).show()).then(
-          (value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
+    if (points == points) {
+      // return DisplayPopuP()
+      //     .getProfileWelcome(context: context, profilePoints: '80');
+      //return DisplayPopuP().welcomepopup(context: context, welcomePoints: '50');
+      // Future.delayed(
+      //     Duration(milliseconds: 300),
+      //     () => Alert(
+      //           padding: EdgeInsets.zero,
+      //           style: AlertStyle(
+      //               alertPadding: EdgeInsets.zero,
+      //               backgroundColor: Colors.transparent,
+      //               alertBorder: Border.all(width: 0)),
+      //           buttons: [],
+      //           context: context,
+      //           content: ClipRRect(
+      //             borderRadius: BorderRadius.circular(20),
+      //             child: Container(
+      //               width: MediaQuery.of(context).size.width * 0.8,
+      //               height: MediaQuery.of(context).size.height * 0.55,
+      //               decoration: BoxDecoration(
+      //                   image: DecorationImage(
+      //                       image: AssetImage(AppImages.homeScreenPopUpBg))),
+      //               child: Column(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 children: [
+      //                   Text(
+      //                     'Welcome to',
+      //                     style: AppStyle.shortHeading.copyWith(
+      //                         height: 1.2, fontSize: Dimens.font_24sp),
+      //                   ),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.center,
+      //                     children: [
+      //                       Text(
+      //                         'Cashback',
+      //                         style: AppStyle.shortHeading.copyWith(
+      //                             fontWeight: FontWeight.w700,
+      //                             height: 1.2,
+      //                             letterSpacing: 1.2,
+      //                             fontSize: Dimens.font_24sp),
+      //                       ),
+      //                       Text(
+      //                         ' by ',
+      //                         style: AppStyle.shortHeading.copyWith(
+      //                             fontWeight: FontWeight.w600,
+      //                             height: 1.2,
+      //                             fontSize: Dimens.font_20sp),
+      //                       ),
+      //                       Text(
+      //                         'India1',
+      //                         style: AppStyle.shortHeading.copyWith(
+      //                             fontWeight: FontWeight.w700,
+      //                             height: 1.2,
+      //                             letterSpacing: 1.2,
+      //                             fontSize: Dimens.font_24sp),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   SizedBox(
+      //                       height: MediaQuery.of(context).size.height * 0.05),
+      //                   Text(
+      //                     'You just won',
+      //                     style: AppStyle.shortHeading
+      //                         .copyWith(fontSize: Dimens.font_20sp),
+      //                   ),
+      //                   Padding(
+      //                     padding: EdgeInsets.symmetric(
+      //                         vertical: Dimens.padding_12dp),
+      //                     child: Stack(
+      //                       alignment: Alignment.center,
+      //                       children: [
+      //                         Image.asset(AppImages.goldenHexagonal),
+      //                         Positioned(
+      //                           top: 45,
+      //                           child: Obx(
+      //                             () => Text(
+      //                               _homeManager.loyalityPoints.toString(),
+      //                               style: AppStyle.shortHeading.copyWith(
+      //                                   fontWeight: FontWeight.w900,
+      //                                   fontSize: 40),
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                   ),
+      //                   Text(
+      //                     'Points',
+      //                     style: AppStyle.shortHeading.copyWith(
+      //                         fontWeight: FontWeight.w700,
+      //                         fontSize: Dimens.font_24sp),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         ).show()).then(
+      //     (value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
     }
   }
 

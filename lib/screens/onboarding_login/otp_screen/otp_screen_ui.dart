@@ -10,6 +10,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
+import '../user_login/login_manager.dart';
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -27,6 +28,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
 
   final interval = Duration(seconds: 1);
   OtpManager _otpManager = Get.put(OtpManager());
+  LoginManager _loginManager = Get.put(LoginManager());
 
   String? codeValue = '';
   //static const timerMaxSeconds = 28;
@@ -34,8 +36,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   Timer? timer;
   bool isBlue = false;
 
-  void startTimer() {
-    currentSeconds = widget.retryInSeconds!;
+  void startTimer(int? seconds) {
+    currentSeconds = seconds ?? widget.retryInSeconds!;
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (mounted)
         setState(() {
@@ -65,18 +67,18 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   }
 
   @override
+  void initState() {
+    listenOtp();
+    startTimer(null);
+    super.initState();
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     SmsAutoFill().unregisterListener();
     timer!.cancel();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    listenOtp();
-    startTimer();
-    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -345,24 +347,37 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                             Obx(
                               () => _otpManager.resendOtpLoading == false
                                   ? GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         if (currentSeconds == 0) {
                                           FocusScope.of(context).unfocus();
-                                          listenOtp();
+                                          var appSignatureId =
+                                              await SmsAutoFill()
+                                                  .getAppSignature;
 
-                                          _otpManager
-                                              .callResendOtpApi(
-                                                  widget.phoneNumber.toString(),
-                                                  context,
-                                                  true)
-                                              .then((value) {
-                                            print("value ==> $value");
-                                            if (value == true) {
-                                              _otpController.clear();
-                                              currentSeconds = 28;
-                                              startTimer();
-                                            } else {}
-                                          });
+                                          _loginManager.callSentOtpApi(
+                                              widget.phoneNumber.toString(),
+                                              context,
+                                              true,
+                                              appSignatureId,
+                                              true);
+                                          listenOtp();
+                                          startTimer(30);
+
+                                          // _otpManager
+                                          //     .callResendOtpApi(
+                                          //         widget.phoneNumber.toString(),
+                                          //         context,
+                                          //         true)
+                                          //     .then((value) {
+                                          //   print("value ==> $value");
+                                          //   if (value == true) {
+                                          //     _otpController.clear();
+                                          //     currentSeconds = 28;
+                                          //     listenOtp();
+
+                                          //     startTimer();
+                                          //   } else {}
+                                          // });
                                         }
                                       },
                                       child: Row(
@@ -459,6 +474,15 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                     ],
                   ),
                 ),
+                // ------ chirag edits -------------
+                TextField(
+                  onChanged: (value) {
+                    if (value.length == 4) {
+                      //  OtpManager.callVerifyOtpApi;
+                    }
+                  },
+                ),
+                // ----- chirag edits ends here ---------------
                 Spacer(),
               ],
             ),

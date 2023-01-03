@@ -120,6 +120,7 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController =
       TextEditingController().obs;
+  Rx<TextEditingController> comfirmAccountNumber = TextEditingController().obs;
   Rx<TextEditingController> ifscController = TextEditingController().obs;
 
   Rx<ProfileDetailsModel> profileDetailsModel = ProfileDetailsModel().obs;
@@ -286,7 +287,7 @@ class ProfileController extends GetxController {
     return null;
   }
 
-  accountNumberValidation(value) {
+  accountNumberValidation({value, String? onNullError}) {
     // String pattern = r'(^[0-9]{9,18}$)';
     // RegExp regExp = new RegExp(pattern);
     // if (value.length < 9) {
@@ -299,7 +300,7 @@ class ProfileController extends GetxController {
     if (value != null) {
       return CommonValidations().numberValidation(
           value: value,
-          nullError: '*Account number is mandatory',
+          nullError: onNullError ?? '*Account number is mandatory',
           invalidInputError: 'It only takes numbers',
           minValue: 9);
     } else {
@@ -590,6 +591,7 @@ class ProfileController extends GetxController {
       String? insuranceApplicationId}) async {
     addPersonalLoading.value = true;
     try {
+      print('adding personal data');
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.addPersonalDetails,
         method: Type.PUT,
@@ -630,6 +632,46 @@ class ProfileController extends GetxController {
           },
         ),
       );
+
+      var data = json.encode(
+        {
+          "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
+          if (loanApplicationId != null) ...{
+            "loanApplicationId": loanApplicationId,
+          },
+          if (insuranceApplicationId != null) ...{
+            "insuranceApplicationId": insuranceApplicationId,
+          },
+          "customerDetails": {
+            "firstName": firstNameController.value.text.trim(),
+            "lastName": lastNameController.value.text.trim().isNotEmpty
+                ? lastNameController.value.text.trim()
+                : null,
+            "mobileNumber": mobileNumberController.value.text.trim(),
+            "alternateNumber":
+                alternateNumberController.value.text.trim().isNotEmpty
+                    ? alternateNumberController.value.text.trim()
+                    : null,
+            "dateOfBirth": dobController.value.text.trim().isNotEmpty
+                ? DateFormat('yyyy-MM-dd').format(
+                    DateFormat("dd-MM-yyyy").parse(dobController.value.text))
+                : null,
+            "preferredLanguage": "EN",
+            "email": emailController.value.text.trim().isNotEmpty
+                ? emailController.value.text.trim()
+                : null,
+            "gender": gender.value.isNotEmpty ? gender.value : null,
+            "maritalStatus":
+                maritalStatus.value.isNotEmpty ? maritalStatus.value : null,
+            if (loanApplicationId != null) ...{
+              "panNumber": panNumberController.value.text.trim(),
+            }
+          }
+        },
+      );
+      print('this is data');
+      print(data);
+
       if (response != null) {
         if (isFromLoan == true || loanApplicationId != null) {
           callBack!();
@@ -652,6 +694,7 @@ class ProfileController extends GetxController {
         );
       }
     } catch (e) {
+      print(e);
       Fluttertoast.showToast(
         msg: "${e.toString()}",
         toastLength: Toast.LENGTH_SHORT,

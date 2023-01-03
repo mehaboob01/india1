@@ -102,11 +102,13 @@ class ProfileStepper {
       FormFieldValidator? vaidation,
       Function? onChanged,
       TextInputType? keyboardType,
+      bool? isObscure,
       List<TextInputFormatter>? inputFormatters,
       int? maxLength,
       bool textCap = false}) {
     return TextFormField(
       controller: controller,
+      obscureText: isObscure ?? false,
       textCapitalization:
           textCap ? TextCapitalization.characters : TextCapitalization.none,
       keyboardType: keyboardType,
