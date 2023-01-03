@@ -45,6 +45,7 @@ class ButtonWithFlower extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   label,
+                  textAlign: TextAlign.center,
                   style: AppStyle.shortHeading.copyWith(
                       fontSize: labelSize,
                       fontWeight: labelWeight,

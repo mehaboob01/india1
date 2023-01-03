@@ -190,7 +190,7 @@ class HeadingContainer extends StatelessWidget {
           alignment: Alignment.topLeft,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 6.0.wp, left: 4.0.wp),
+              padding: EdgeInsets.only(top: 8.0.wp, left: 4.0.wp),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -270,7 +270,7 @@ class HeadingContainer extends StatelessWidget {
                         Text(
                           'Total earned : ',
                           style: AppStyle.shortHeading.copyWith(
-                            fontSize: 10.0.sp,
+                            fontSize: 12.0.sp,
                             color: Colors.white,
                           ),
                         ),
@@ -291,7 +291,7 @@ class HeadingContainer extends StatelessWidget {
                           Text(
                             'Total redeemed : ',
                             style: AppStyle.shortHeading.copyWith(
-                              fontSize: 10.0.sp,
+                              fontSize: 12.0.sp,
                               color: Colors.white,
                             ),
                           ),
@@ -313,12 +313,16 @@ class HeadingContainer extends StatelessWidget {
             Positioned(
                 width: 200,
                 top: 0,
-                right: 0,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 1.0.wp),
-                  child: Image.asset(
-                    AppImages.celebrationBg,
-                    fit: BoxFit.cover,
+                right: 2,
+                child: Container(
+                  height: 125,
+                  //color: Colors.tealAccent,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 1.0.wp),
+                    child: Image.asset(
+                      AppImages.celebrationBg,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 )),
             Obx(
@@ -330,14 +334,17 @@ class HeadingContainer extends StatelessWidget {
                   onPressed: () {
                     _loyaltyManager.redeemablePoints >= 14
                         ? Get.to(() => RedeemPointsPage())
-                        : Get.toNamed(MRouter.map);
+                        : Get.snackbar('Oops!!',
+                            'You can redeem only if you have 15+ points',
+                            snackPosition: SnackPosition.BOTTOM);
+                    // : Get.toNamed(MRouter.map);
                   },
-                  buttonHeight: 10.0.wp,
+                  buttonHeight: 12.0.wp,
                   buttonWidth: 44.0.wp,
                   label: _loyaltyManager.redeemablePoints >= 14
                       ? 'Redeem Now'
                       : 'Earn more points',
-                  labelSize: Dimens.font_12sp,
+                  labelSize: 12.0.sp,
                   labelWeight: FontWeight.w600,
                   labelColor: AppColors.blueColor,
                 ),

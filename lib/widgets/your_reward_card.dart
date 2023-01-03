@@ -157,7 +157,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                                 _closeOverlay();
                                 loyaltyManager.isOverlayOpen.value = false;
                                 Get.snackbar('Oops!!',
-                                    'You can redeem only if you have 15+ points',
+                                    'You can redeem only if you have 15 or more points',
                                     snackPosition: SnackPosition.BOTTOM);
                               }
 

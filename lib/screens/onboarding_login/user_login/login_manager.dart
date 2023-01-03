@@ -14,9 +14,10 @@ import '../otp_screen/otp_screen_ui.dart';
 class LoginManager extends GetxController {
   var isLoading = false.obs;
   var getOtp = false.obs;
+  var resendOtpLoading = false.obs;
 
   callSentOtpApi(String phoneNumber, BuildContext context,
-      bool? termConditionChecked, String appSignatureId) async {
+      bool? termConditionChecked, String appSignatureId, bool isResend) async {
     try {
       isLoading.value = true;
 
@@ -24,8 +25,6 @@ class LoginManager extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
-
-
 
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
@@ -56,11 +55,24 @@ class LoginManager extends GetxController {
               SPKeys.TOKEN_KEY, userSignInModelDto.data!.token.toString());
           prefs.setInt(SPKeys.RETRY_IN_SECONDS,
               userSignInModelDto.data!.retryInSeconds!.toInt());
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => OtpScreen(
-                      phoneNumber, userSignInModelDto.data!.retryInSeconds)));
+          // Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) => OtpScreen(
+          //             phoneNumber, userSignInModelDto.data!.retryInSeconds)));
+          if (isResend == false) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => OtpScreen(
+                        phoneNumber, userSignInModelDto.data!.retryInSeconds)));
+          }
+          if (isResend == true) {
+            var snackBar = SnackBar(
+              content: Text("OTP Resend Successfully!"),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         } else {
           Flushbar(
             title: "Server Error!",

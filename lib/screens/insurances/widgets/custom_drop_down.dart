@@ -26,7 +26,10 @@ class CustomDropDown extends StatelessWidget {
       onChanged: onChanged,
       value: value,
       hint: Text(hint, style: TextStyle(color: AppColors.white)),
-      icon: Icon(Icons.keyboard_arrow_down),
+      icon: Icon(
+        Icons.keyboard_arrow_down,
+        color: Colors.white,
+      ),
       decoration: inputDecoration(
         // label: label,
         hint: hint,

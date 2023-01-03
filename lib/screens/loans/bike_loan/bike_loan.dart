@@ -268,76 +268,101 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DividerIO(
-          height: 28,
-        ),
-        ProfileStepper().commonDropDown(
-          item: loanController.twoWheelerMakes.map((value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(value.toString()),
-            );
-          }).toList(),
-          onChanged: (value) async {
-            profileController.twoWheelermakes.value = value;
-            await loanController.fetch2WheelerModels();
-          },
-          label: 'Product',
-          hint: 'Select product',
-          value: profileController.twoWheelermakes.value == ''
-              ? null
-              : profileController.twoWheelermakes.value,
-        ),
-        SizedBox(
-          height: 24,
-        ),
-        Obx(() {
-          if (loanController.twoWheelerModelsmodel.value.models != null) {
-            return ProfileStepper().commonDropDown(
-              item: loanController.twoWheelerModelsmodel.value.models!
-                  .map((value) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DividerIO(
+            height: 28,
+          ),
+          Text(
+            'Loan details',
+            style: AppStyle.shortHeading.copyWith(
+                fontSize: Dimens.font_18sp,
+                color: loanController.currentScreen.value ==
+                        Steps.LOAN_AMOUNT.index
+                    ? Colors.black
+                    : AppColors.black26Color,
+                fontWeight: loanController.currentScreen.value ==
+                        Steps.LOAN_AMOUNT.index
+                    ? FontWeight.w600
+                    : FontWeight.w400),
+          ),
+          DividerIO(
+            height: 24,
+          ),
+          ButtonTheme(
+            alignedDropdown: true,
+            child: ProfileStepper().commonDropDown(
+              item: loanController.twoWheelerMakes.map((value) {
                 return DropdownMenuItem(
                   value: value,
                   child: Text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) async {
-                profileController.twoWheelerModel.value = value;
+                profileController.twoWheelermakes.value = value;
+                await loanController.fetch2WheelerModels();
               },
-              label: 'Model',
-              hint: 'Select Models',
-              value: profileController.twoWheelerModel.value == ''
+              label: 'Product',
+              hint: 'Select product',
+              value: profileController.twoWheelermakes.value == ''
                   ? null
-                  : profileController.twoWheelerModel.value,
-            );
-          } else {
-            return SizedBox();
-          }
-        })
+                  : profileController.twoWheelermakes.value,
+            ),
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          Obx(() {
+            if (loanController.twoWheelerModelsmodel.value.models != null) {
+              return ButtonTheme(
+                alignedDropdown: true,
+                child: ProfileStepper().commonDropDown(
+                  item: loanController.twoWheelerModelsmodel.value.models!
+                      .map((value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (value) async {
+                    profileController.twoWheelerModel.value = value;
+                  },
+                  label: 'Model',
+                  hint: 'Select Models',
+                  value: profileController.twoWheelerModel.value == ''
+                      ? null
+                      : profileController.twoWheelerModel.value,
+                ),
+              );
+            } else {
+              return SizedBox();
+            }
+          })
 
-        // ProfileStepper().commonDropDown(
-        //   item: [
-        //     {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
-        //     {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
-        //   ].map((value) {
-        //     return DropdownMenuItem(
-        //       value: value['value'],
-        //       child: Text(value['name'].toString()),
-        //     );
-        //   }).toList(),
-        //   onChanged: (value) {
-        //     profileController.vehicleType.value = value;
-        //   },
-        //   label: 'Model',
-        //   hint: 'Select model',
-        //   value: profileController.vehicleType.value == ''
-        //       ? null
-        //       : profileController.vehicleType.value,
-        // ),
-      ],
+          // ProfileStepper().commonDropDown(
+          //   item: [
+          //     {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
+          //     {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
+          //   ].map((value) {
+          //     return DropdownMenuItem(
+          //       value: value['value'],
+          //       child: Text(value['name'].toString()),
+          //     );
+          //   }).toList(),
+          //   onChanged: (value) {
+          //     profileController.vehicleType.value = value;
+          //   },
+          //   label: 'Model',
+          //   hint: 'Select model',
+          //   value: profileController.vehicleType.value == ''
+          //       ? null
+          //       : profileController.vehicleType.value,
+          // ),
+        ],
+      ),
     );
   }
 

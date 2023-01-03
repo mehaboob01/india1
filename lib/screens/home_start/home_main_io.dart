@@ -64,15 +64,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     print('Running on ${androidInfo.version.release}');
     androidVersion = int.tryParse(androidInfo.version.release)!;
-
   }
 
-
-
   final ConnectionManagerController _controller =
-  Get.find<ConnectionManagerController>();
-
-
+      Get.find<ConnectionManagerController>();
 
   @override
   void initState() {
@@ -82,11 +77,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _profileController.setData();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-       WidgetsBinding.instance.addObserver(this); // observer
+      WidgetsBinding.instance.addObserver(this); // observer
       _homeManager.callHomeApi();
       _profileController.getProfileData();
-    //  _homeManager.callAdsBannerApi();
+      //  _homeManager.callAdsBannerApi();
       notificationManager.callNotificationsApi(false);
 
       // _homeManager.sendTokens();
@@ -99,7 +93,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
       checkLogin();
     });
-
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -155,7 +148,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
     print("state : ${state}");
-    if (state == AppLifecycleState.resumed && androidVersion>8) {
+    if (state == AppLifecycleState.resumed && androidVersion > 8) {
       checkLogin();
     }
   }
@@ -296,7 +289,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 msg = "You are Authenticated.";
                 setState(() {
                   _homeManager.showAuth.value = true;
-                    WidgetsBinding.instance.removeObserver(this);
+                  WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
                 SystemNavigator.pop();
@@ -775,11 +768,12 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                             return;
                                                           }
 
-                                                      if (itemSelected == "1") {
-                                                      } else if (itemSelected ==
-                                                          "2") {
-                                                        Get.toNamed(MRouter
-                                                            .loyaltyPoints);
+                                                          if (itemSelected ==
+                                                              "1") {
+                                                          } else if (itemSelected ==
+                                                              "2") {
+                                                            Get.toNamed(MRouter
+                                                                .loyaltyPoints);
 
                                                             print("2nd itme ");
                                                           } else if (itemSelected ==
@@ -959,7 +953,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                             ],
                           ),
                         ),
-                      ),
+                ),
               ),
             ),
           ),
@@ -973,7 +967,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   // balance card ----------------------------------------------
   Widget balanceCard({required bool first}) {
     return Container(
-        padding: EdgeInsets.all(1.0.wp),
+        padding: EdgeInsets.all(3.0.wp),
         height: 10.0.hp,
         decoration: BoxDecoration(
           color: AppColors.backGrounddarkheader,
@@ -1122,7 +1116,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         _homeManager.redeemablePoints >= 14
             ? Get.toNamed(routName)
             : Get.snackbar(
-                'Oops!!', 'You can redeem only if you have 15+ points',
+                'Oops!!', 'You can redeem only if you have 15 or more points',
                 snackPosition: SnackPosition.BOTTOM);
       },
       child: Container(
@@ -1153,8 +1147,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             ? {Get.toNamed(MRouter.redeemPointsPage)}
             : {
                 // Get.toNamed(MRouter.map)
-                Get.snackbar(
-                    'Oops!!', 'You can redeem only if you have 15+ points',
+                Get.snackbar('Oops!!',
+                    'You can redeem only if you have 15 or more points',
                     snackPosition: SnackPosition.BOTTOM)
               },
         buttonWidth: double.maxFinite,

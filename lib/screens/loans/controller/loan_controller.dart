@@ -84,7 +84,7 @@ class LoanController extends GetxController {
     "Additional",
   ];
   List<String> bikeLoanTitleList = [
-    "Loan amount",
+    "Loan details",
     "Personal",
     "Residential",
   ];

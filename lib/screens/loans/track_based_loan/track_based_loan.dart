@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +5,7 @@ import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/farm_loan_product_model.dart';
-import 'package:india_one/screens/loans/model/farm_loan_requirment_model.dart';
+
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
@@ -68,15 +66,15 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
   void initState() {
     loanAmountEditingController = TextEditingController();
     super.initState();
-    loanController
-        .fetchTrackBasedLoanProducts(
+    loanController.fetchTrackBasedLoanProducts(
         requirementId: 'TrackBasedPersonalLoan');
 
     loanController.currentScreen.value = Steps.LOAN_AMOUNT.index;
     loanController.sliderValue.value = loanController.minValue.value;
     resetValues();
     profileController.setData();
-    loanController.createLoanApplication(loanType: LoanType.TrackBasedPersonalLoan);
+    loanController.createLoanApplication(
+        loanType: LoanType.TrackBasedPersonalLoan);
   }
 
   void resetValues() {
@@ -99,82 +97,82 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         child: SizedBox(
           width: widthIs,
           child: Obx(
-            () => loanController.trackLoading.value == true ? CircularProgressbar():
-
-                Column(
-              children: [
-                CustomAppBar(
-                  heading: 'Track based Loan',
-                  customActionIconsList: [
-                    // CustomActionIcons(
-                    //   image: AppImages.bottomNavHome,
-                    // ),
-                  ],
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Obx(
-                        () => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DividerIO(
-                              height: 21,
-                            ),
-                            Obx(
-                              () =>
-
-                                  Container(
-                                child: AnotherStepper(
-                                  stepperList: loanController.farmLoanTitleList
-                                      .map((e) => StepperData(
-                                            title: "$e",
-                                          ))
-                                      .toList(),
-                                  stepperDirection: Axis.horizontal,
-                                  iconWidth: 25,
-                                  iconHeight: 25,
-                                  inverted: true,
-                                  activeBarColor: AppColors.pointsColor,
-                                  activeIndex:
-                                      loanController.currentScreen.value,
-                                  callBack: (i) {
-                                    print("find me");
-                                    if (i <=
-                                        loanController
-                                            .trackCompletedIndex.value) {
-                                      loanController.currentScreen.value = i;
-                                    }
-                                  },
-                                ),
+            () => loanController.trackLoading.value == true
+                ? CircularProgressbar()
+                : Column(
+                    children: [
+                      CustomAppBar(
+                        heading: 'Track based Loan',
+                        customActionIconsList: [
+                          // CustomActionIcons(
+                          //   image: AppImages.bottomNavHome,
+                          // ),
+                        ],
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Obx(
+                              () => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DividerIO(
+                                    height: 21,
+                                  ),
+                                  Obx(
+                                    () => Container(
+                                      child: AnotherStepper(
+                                        stepperList:
+                                            loanController.farmLoanTitleList
+                                                .map((e) => StepperData(
+                                                      title: "$e",
+                                                    ))
+                                                .toList(),
+                                        stepperDirection: Axis.horizontal,
+                                        iconWidth: 25,
+                                        iconHeight: 25,
+                                        inverted: true,
+                                        activeBarColor: AppColors.pointsColor,
+                                        activeIndex:
+                                            loanController.currentScreen.value,
+                                        callBack: (i) {
+                                          print("find me");
+                                          if (i <=
+                                              loanController
+                                                  .trackCompletedIndex.value) {
+                                            loanController.currentScreen.value =
+                                                i;
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  loanController.currentScreen.value ==
+                                          Steps.LOAN_AMOUNT.index
+                                      ? loanAmountUi()
+                                      : loanController.currentScreen.value ==
+                                              Steps.PERSONAL.index
+                                          ? personalInfoUi()
+                                          : residentialInfoUi()
+                                ],
                               ),
                             ),
-                            loanController.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
-                                ? loanAmountUi()
-                                : loanController.currentScreen.value ==
-                                        Steps.PERSONAL.index
-                                    ? personalInfoUi()
-                                    : residentialInfoUi()
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: loanController.currentScreen.value ==
+                                Steps.LOAN_AMOUNT.index
+                            ? loanAmountButton()
+                            : loanController.currentScreen.value ==
+                                    Steps.PERSONAL.index
+                                ? personalInfoButton()
+                                : residentialInfoButton(),
+                      ),
+                    ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: loanController.currentScreen.value ==
-                          Steps.LOAN_AMOUNT.index
-                      ? loanAmountButton()
-                      : loanController.currentScreen.value ==
-                              Steps.PERSONAL.index
-                          ? personalInfoButton()
-                          : residentialInfoButton(),
-                ),
-              ],
-            ),
           ),
         ),
       ),
@@ -621,10 +619,8 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         // DividerIO(
         //   height: 28,
         // ),
-        Obx(()
-        {
-          if (
-              loanController.trackLoanProductModel.value.subProducts != null) {
+        Obx(() {
+          if (loanController.trackLoanProductModel.value.subProducts != null) {
             return ProfileStepper().commonDropDown(
               item: loanController.trackLoanProductModel.value.subProducts!
                   .map<DropdownMenuItem<String>>((String value) {
@@ -648,9 +644,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
           } else {
             return SizedBox();
           }
-        }
-
-        ),
+        }),
         DividerIO(
           height: 28,
         ),

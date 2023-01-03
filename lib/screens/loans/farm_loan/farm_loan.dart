@@ -113,7 +113,7 @@ class _FarmLoanState extends State<FarmLoan> {
                             Obx(
                               () => Container(
                                 child: AnotherStepper(
-                                  stepperList: loanController.bikeLoanTitleList
+                                  stepperList: loanController.farmLoanTitleList
                                       .map((e) => StepperData(
                                             title: "$e",
                                           ))
@@ -632,7 +632,7 @@ class _FarmLoanState extends State<FarmLoan> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Loan Amount',
+                'Loan details',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
                     color: loanController.currentScreen.value ==

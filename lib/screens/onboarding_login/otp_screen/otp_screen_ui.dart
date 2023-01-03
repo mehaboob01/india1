@@ -10,6 +10,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
+import '../user_login/login_manager.dart';
 import 'otp_manager.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -27,15 +28,16 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
 
   final interval = Duration(seconds: 1);
   OtpManager _otpManager = Get.put(OtpManager());
-
+  LoginManager _loginManager = Get.put(LoginManager());
   String? codeValue = '';
   //static const timerMaxSeconds = 28;
   int currentSeconds = 0;
   Timer? timer;
   bool isBlue = false;
 
-  void startTimer() {
-    currentSeconds = widget.retryInSeconds!;
+  void startTimer(int? seconds) {
+    currentSeconds = seconds ?? widget.retryInSeconds!;
+
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (mounted)
         setState(() {
@@ -75,7 +77,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   @override
   void initState() {
     listenOtp();
-    startTimer();
+    startTimer(null);
     super.initState();
   }
 
@@ -343,27 +345,38 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                             ),
                             Spacer(),
                             Obx(
-                              () => _otpManager.resendOtpLoading == false
+                              () => _otpManager.resendOtpLoading.value == false
                                   ? GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
                                         if (currentSeconds == 0) {
                                           FocusScope.of(context).unfocus();
-                                          listenOtp();
+                                          var appSignatureId =
+                                              await SmsAutoFill()
+                                                  .getAppSignature;
 
-                                          _otpManager
-                                              .callResendOtpApi(
-                                                  widget.phoneNumber.toString(),
-                                                  context,
-                                                  true)
-                                              .then((value) {
-                                            print("value ==> $value");
-                                            if (value == true) {
-                                              _otpController.clear();
-                                              currentSeconds = 28;
-                                              startTimer();
-                                            } else {}
-                                          });
-                                        }
+                                          _loginManager.callSentOtpApi(
+                                              widget.phoneNumber.toString(),
+                                              context,
+                                              true,
+                                              appSignatureId,
+                                              true);
+                                          listenOtp();
+                                          startTimer(30);
+
+                                          // listenOtp();
+
+                                          // _otpManager
+                                          //     .callResendOtpApi(
+                                          //         widget.phoneNumber.toString(),
+                                          //         context,
+                                          //         true)
+                                          //     .then((value) {
+                                          //   print("value ==> $value");
+                                          //   if (value == true) {
+                                          //     _otpController.clear();
+                                          //     currentSeconds = 28;
+                                          //     startTimer();
+                                        } else {}
                                       },
                                       child: Row(
                                         children: [
