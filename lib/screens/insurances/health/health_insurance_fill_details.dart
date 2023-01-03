@@ -95,12 +95,12 @@ class _HealthInsuranceFillDetailsState
                                 activeIndex:
                                     insuranceController.currentScreen.value,
                                 callBack: (i) {
-                                  print("find me");
-                                  if (i <=
-                                      insuranceController
-                                          .insuranceCompletedIndex.value) {
-                                    insuranceController.currentScreen.value = i;
-                                  }
+                                  // print("find me");
+                                  // if (i <=
+                                  //     insuranceController
+                                  //         .insuranceCompletedIndex.value) {
+                                  //   insuranceController.currentScreen.value = i;
+                                  // }
                                 },
                               ),
                             ),
@@ -194,56 +194,76 @@ class _HealthInsuranceFillDetailsState
             if (insuranceController.currentScreen > 0) ...[
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
-                    insuranceController
-                        .updateScreen(insuranceController.currentScreen - 1);
-                  },
-                  child: Container(
-                    // width: MediaQuery.of(context).size.height * 0.9,
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'BACK',
-                              style: AppTextThemes.button,
-                            ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: new LinearGradient(
-                        end: Alignment.topRight,
-                        colors: [Colors.orange, Colors.redAccent],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withOpacity(0.8),
-                          offset: Offset(
-                            -6.0,
-                            -6.0,
+                    onTap: () {
+                      insuranceController
+                          .updateScreen(insuranceController.currentScreen - 1);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.height * 0.9,
+                      height: 48,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Back',
+                            style: AppTextThemes.button,
                           ),
-                          blurRadius: 16.0,
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: new LinearGradient(
+                          end: Alignment.topRight,
+                          colors: [Color(0xFF357CBE), Color(0xFF004280)],
                         ),
-                        BoxShadow(
-                          color: AppColors.darkerGrey.withOpacity(0.4),
-                          offset: Offset(6.0, 6.0),
-                          blurRadius: 16.0,
-                        ),
-                      ],
-                      // color: termConditionChecked == true
-                      //     ? AppColors.btnColor
-                      //     : AppColors.btnDisableColor,
-                      borderRadius: BorderRadius.circular(6.0),
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                    )
+                    //  Container(
+                    //   // width: MediaQuery.of(context).size.height * 0.9,
+                    //   height: 48,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           Text(
+                    //             'BACK',
+                    //             style: AppTextThemes.button,
+                    //           ),
+                    //           SizedBox(
+                    //             width: 6,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     gradient: new LinearGradient(
+                    //       end: Alignment.topRight,
+                    //       colors: [Colors.orange, Colors.redAccent],
+                    //     ),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.white.withOpacity(0.8),
+                    //         offset: Offset(
+                    //           -6.0,
+                    //           -6.0,
+                    //         ),
+                    //         blurRadius: 16.0,
+                    //       ),
+                    //       BoxShadow(
+                    //         color: AppColors.darkerGrey.withOpacity(0.4),
+                    //         offset: Offset(6.0, 6.0),
+                    //         blurRadius: 16.0,
+                    //       ),
+                    //     ],
+                    //     // color: termConditionChecked == true
+                    //     //     ? AppColors.btnColor
+                    //     //     : AppColors.btnDisableColor,
+                    //     borderRadius: BorderRadius.circular(6.0),
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
               ),
               SizedBox(
                 width: 20,
@@ -266,7 +286,10 @@ class _HealthInsuranceFillDetailsState
                       Row(
                         children: [
                           Text(
-                            'NEXT',
+                            insuranceController.currentScreen.value ==
+                                    InsuranceStep.HEALTH.index
+                                ? 'View Summary'
+                                : 'NEXT',
                             style: AppTextThemes.button,
                           ),
                           SizedBox(
@@ -275,13 +298,13 @@ class _HealthInsuranceFillDetailsState
                         ],
                       ),
                       Spacer(),
-                      SizedBox(
-                        height: 48,
-                        child: Image.asset(
-                          "assets/images/btn_img.png",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 48,
+                      //   child: Image.asset(
+                      //     "assets/images/btn_img.png",
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
                     ],
                   ),
                   decoration: BoxDecoration(
