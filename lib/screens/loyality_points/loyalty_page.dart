@@ -94,7 +94,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                     },
                                     // history text will be there
                                     child: Text(
-                                      'View used points',
+                                      'History', //'View used points',
                                       style: AppStyle.shortHeading.copyWith(
                                           fontSize: 10.0.sp,
                                           color: const Color(0xff2364A1),

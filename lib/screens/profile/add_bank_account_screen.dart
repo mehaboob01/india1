@@ -36,12 +36,15 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
   final bankAccountKeyForBankId = GlobalKey<FormBuilderState>();
 
   bool bankAccountDropDownTapped = false;
+  bool showAccountNumber = false;
+  bool showComfirmAccountNumber = false;
   @override
   void initState() {
     super.initState();
     cashBackManager.callBankListApi();
     redoCtrl.bankname.value = '';
     profileController.accountNumberController.value.text = '';
+    profileController.comfirmAccountNumber.value.text = '';
     profileController.ifscController.value.text = '';
   }
 
@@ -78,9 +81,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                     key: bankAccountKeyForBankId,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     initialValue: {},
-                    child:
-
-                    Column(
+                    child: Column(
                       children: [
                         SizedBox(
                           height: 20,
@@ -142,11 +143,73 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                               profileController.accountNumberController.value,
                           label: 'Account number',
                           hint: 'Enter account number',
+                          isObscure: showAccountNumber,
                           vaidation: (value) =>
                               profileController.accountNumberValidation(
-                            value,
+                            value: value,
+                          ),
+                          suffix: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showAccountNumber = !showAccountNumber;
+                              });
+                            },
+                            child: showAccountNumber == false
+                                ? Icon(
+                                    Icons.visibility_off_rounded,
+                                    size: 25,
+                                    color: AppColors.greyInlineText
+                                        .withOpacity(0.6),
+                                  )
+                                : Icon(
+                                    Icons.visibility_rounded,
+                                    size: 25,
+                                    color: AppColors.greyInlineText
+                                        .withOpacity(0.8),
+                                  ),
                           ),
                           keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(18),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileStepper().textField(
+                          controller:
+                              profileController.comfirmAccountNumber.value,
+                          label: 'Confirm account number',
+                          hint: 'Re-enter your account number here',
+                          isObscure: showComfirmAccountNumber,
+                          vaidation: (value) =>
+                              profileController.accountNumberValidation(
+                                  value: value,
+                                  onNullError:
+                                      '*Confirming your account number is mandatory'),
+                          keyboardType: TextInputType.number,
+                          suffix: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showComfirmAccountNumber =
+                                    !showComfirmAccountNumber;
+                              });
+                            },
+                            child: showComfirmAccountNumber == false
+                                ? Icon(
+                                    Icons.visibility_off_rounded,
+                                    size: 25,
+                                    color: AppColors.greyInlineText
+                                        .withOpacity(0.6),
+                                  )
+                                : Icon(
+                                    Icons.visibility_rounded,
+                                    size: 25,
+                                    color: AppColors.greyInlineText
+                                        .withOpacity(0.8),
+                                  ),
+                          ),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(18),
@@ -167,22 +230,25 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        ProfileStepper().commonDropDown(
-                          item: <String>['savings', 'current']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            profileController.accountType.value = value;
-                          },
-                          label: 'Account type',
-                          hint: 'Select account type',
-                          // value: profileController.accountType.value.isEmpty
-                          //     ? null
-                          //     : profileController.accountType.value,
+                        ButtonTheme(
+                          alignedDropdown: true,
+                          child: ProfileStepper().commonDropDown(
+                            item: <String>['savings', 'current']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              profileController.accountType.value = value;
+                            },
+                            label: 'Account type',
+                            hint: 'Select account type',
+                            // value: profileController.accountType.value.isEmpty
+                            //     ? null
+                            //     : profileController.accountType.value,
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -211,6 +277,18 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                         message: "Select account type",
                                         duration: Duration(seconds: 3),
                                       )..show(context);
+                                    } else if (profileController
+                                            .accountNumberController
+                                            .value
+                                            .text !=
+                                        profileController
+                                            .comfirmAccountNumber.value.text) {
+                                      Flushbar(
+                                        title: "Alert!",
+                                        message:
+                                            "Account number mismatch!! please check",
+                                        duration: Duration(seconds: 3),
+                                      )..show(context);
                                     } else {
                                       bankAccountKeyForBankId.currentState!
                                           .save();
@@ -223,16 +301,14 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                           checkBankId(redoCtrl.bankname.value);
                                       print("bank id ${bankId}");
                                       profileController
-                                          .addBankAccountData(bankId).then((value) {
-
+                                          .addBankAccountData(bankId)
+                                          .then((value) {
                                         bankAccountKeyForBankId
                                             .currentState!.value
                                             .clear();
-                                        profileController.ifscController.value.clear();
-                                      }
-                                         );
-
-
+                                        profileController.ifscController.value
+                                            .clear();
+                                      });
                                     }
                                   },
                                   child: Container(

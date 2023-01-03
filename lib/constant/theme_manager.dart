@@ -494,13 +494,16 @@ class AppImages {
 
   // NEW DESIGN IMAGES
   // png
-
+  static const String Welcome_home_popbg =
+      '${assetPng}new_design_pngImages/1x_png/welocome_popUp_home.png';
   static const String newHomeBgPng =
       '${assetPng}new_design_pngImages/1x_png/home_top_bg_PNG.png'; // home bg image
   static const String newOtpBgPng =
       '${assetPng}new_design_pngImages/1x_png/otp_screen_bg_png.png'; // otp screen bg
   static const String loyaltyCardBg =
       '${assetPng}new_design_pngImages/1x_png/loyaltycard.png';
+  static const String wonCardOverlay =
+      '${assetPng}new_design_pngImages/1x_png/won_card_overlay_PNG.png';
 
   static const String newWonCard_bg =
       '${assetPng}new_design_pngImages/1x_png/won_card_bg_PNG.png';

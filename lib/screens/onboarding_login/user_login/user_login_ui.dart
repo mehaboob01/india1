@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:india_one/screens/onboarding_login/otp_screen/otp_manager.dart';
 import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/screen_bg.dart';
+import '../otp_screen/otp_screen_ui.dart';
 import 'login_manager.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 
@@ -27,6 +29,7 @@ class _UserLoginState extends State<UserLogin> {
   final autofill = SmsAutoFill();
   final GlobalKey<FormBuilderState> _loginKey = GlobalKey<FormBuilderState>();
   LoginManager _loginManager = Get.put(LoginManager());
+  OtpManager _otpManager = Get.put(OtpManager());
   var _textController = new TextEditingController();
 
   //fun for show mobile numbers

@@ -67,18 +67,18 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
   }
 
   @override
+  void initState() {
+    listenOtp();
+    startTimer(null);
+    super.initState();
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     SmsAutoFill().unregisterListener();
     timer!.cancel();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    listenOtp();
-    startTimer(null);
-    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -301,8 +301,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                             right: 12.0,
                           ),
                           child: Visibility(
-                            visible:
-                                _otpManager.wrongOtp == true ? true : false,
+                            visible: _otpManager.wrongOtp.value == true
+                                ? true
+                                : false,
                             child: Text(
                               "invalid_otp".tr,
                               overflow: TextOverflow.visible,
@@ -472,6 +473,15 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                     ],
                   ),
                 ),
+                // ------ chirag edits -------------
+                TextField(
+                  onChanged: (value) {
+                    if (value.length == 4) {
+                      //  OtpManager.callVerifyOtpApi;
+                    }
+                  },
+                ),
+                // ----- chirag edits ends here ---------------
                 Spacer(),
               ],
             ),

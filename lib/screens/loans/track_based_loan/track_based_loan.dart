@@ -9,6 +9,7 @@ import 'package:india_one/screens/loans/model/farm_loan_product_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -102,13 +103,8 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                 : Column(
                     children: [
                       CustomAppBar(
-                        heading: 'Track based Loan',
-                        customActionIconsList: [
-                          // CustomActionIcons(
-                          //   image: AppImages.bottomNavHome,
-                          // ),
-                        ],
-                      ),
+                          heading: 'Track based Loan',
+                          customActionIconsList: commonAppIcons),
                       Expanded(
                         child: SingleChildScrollView(
                           child: Padding(

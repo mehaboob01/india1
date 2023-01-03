@@ -335,7 +335,7 @@ class HeadingContainer extends StatelessWidget {
                     _loyaltyManager.redeemablePoints >= 14
                         ? Get.to(() => RedeemPointsPage())
                         : Get.snackbar('Oops!!',
-                            'You can redeem only if you have 15+ points',
+                            'You can redeem only if you have 15 or more points',
                             snackPosition: SnackPosition.BOTTOM);
                     // : Get.toNamed(MRouter.map);
                   },

@@ -37,6 +37,7 @@ class DioApiCall {
       dio.options.headers.addAll(headers);
     }
     d.Response? response;
+
     try {
       if (method == Type.PUT)
         response = await dio.put(
@@ -54,16 +55,22 @@ class DioApiCall {
         );
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
+          print('response data bro');
+          print(response.data);
           if (response.data['status']['code'] != 2000) {
-            Fluttertoast.showToast(msg: "${response.data['status']['message']}", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, fontSize: 16.0);
+            Fluttertoast.showToast(
+                msg: "${response.data['status']['message']}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                fontSize: 16.0);
             return null;
           }
           if (response.data['data'] != null) {
             return response.data['data'];
           }
-          if(isLogout == true){
+          if (isLogout == true) {
             if (response.data['status']['code'] == 2000) {
-            await  prefs.clear();
+              await prefs.clear();
               Get.offAll(() => UserLogin());
             }
           }

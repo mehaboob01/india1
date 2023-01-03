@@ -311,6 +311,7 @@ class AtmDetailsCard extends StatelessWidget {
   String? status;
   String atmName;
   int index;
+  ScrollController? scrollCtrl;
 
   MapManager mapManager = Get.put(MapManager());
   @override

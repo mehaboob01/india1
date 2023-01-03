@@ -114,7 +114,7 @@ class ProfileController extends GetxController {
       customerId = ''.obs,
       vehicleType = ''.obs,
       twoWheelermakes = ''.obs,
-      twoWheelerModel=''.obs,
+      twoWheelerModel = ''.obs,
       nomineeRelationship = ''.obs,
       netbanking = ''.obs,
       accountType = ''.obs,
@@ -123,6 +123,7 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> accountNumberController =
       TextEditingController().obs;
+  Rx<TextEditingController> comfirmAccountNumber = TextEditingController().obs;
   Rx<TextEditingController> ifscController = TextEditingController().obs;
 
   Rx<ProfileDetailsModel> profileDetailsModel = ProfileDetailsModel().obs;
@@ -288,7 +289,7 @@ class ProfileController extends GetxController {
     return null;
   }
 
-  accountNumberValidation(value) {
+  accountNumberValidation({value, String? onNullError}) {
     // String pattern = r'(^[0-9]{9,18}$)';
     // RegExp regExp = new RegExp(pattern);
     // if (value.length < 9) {
@@ -301,7 +302,7 @@ class ProfileController extends GetxController {
     if (value != null) {
       return CommonValidations().numberValidation(
           value: value,
-          nullError: '*Account number is mandatory',
+          nullError: onNullError ?? '*Account number is mandatory',
           invalidInputError: 'It only takes numbers',
           minValue: 9);
     } else {
@@ -699,6 +700,7 @@ class ProfileController extends GetxController {
         );
       }
     } catch (e) {
+      print(e);
       Fluttertoast.showToast(
         msg: "${e.toString()}",
         toastLength: Toast.LENGTH_SHORT,

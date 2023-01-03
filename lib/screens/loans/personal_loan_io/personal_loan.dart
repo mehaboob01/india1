@@ -381,7 +381,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanApplicationId:
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
-                     // profileController.setData();
+                      // profileController.setData();
                       loanController.updateScreen(Steps.ADDITIONAL.index);
                       // Get.to(() => LendersList(
                       //       title: 'Personal loan',
@@ -463,7 +463,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 // navigate to next screen
 
                 print(
-                    "loans id====> ${ loanController.createLoanModel.value.loanApplicationId}");
+                    "loans id====> ${loanController.createLoanModel.value.loanApplicationId}");
 
                 print(
                     "print value of additional details==>${profileController.noOfMonthsResiding.value.text.toString()}");

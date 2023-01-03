@@ -34,103 +34,104 @@ class UsedRewardHistory extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                    vertical: 25,
-                                  ),
-                                  height: 50,
-                                  color: Colors.transparent,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Material(
-                                          type: MaterialType.transparency,
-                                          elevation: 6,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 3),
-                                                      blurRadius: 1),
-                                                ],
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            margin: EdgeInsets.only(right: 10),
-                                            padding: EdgeInsets.all(10.0),
-                                            height: 50,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'All transactions',
-                                                  style: AppStyle.shortHeading
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xff2d2d2d),
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                ),
-                                                InkWell(
-                                                    onTap: () {},
-                                                    child: Icon(Icons
-                                                        .keyboard_arrow_down))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Material(
-                                          type: MaterialType.transparency,
-                                          elevation: 5,
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            padding: EdgeInsets.all(10.0),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0, 3),
-                                                      blurRadius: 1),
-                                                ],
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            height: 50,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'All time',
-                                                  style: AppStyle.shortHeading
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xff2d2d2d),
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                ),
-                                                InkWell(
-                                                    onTap: () {},
-                                                    child: Icon(Icons
-                                                        .keyboard_arrow_down))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                const SizedBox(height: 40),
+                                // Container(
+                                //   margin: EdgeInsets.symmetric(
+                                //     vertical: 25,
+                                //   ),
+                                //   height: 50,
+                                //   color: Colors.transparent,
+                                //   child: Row(
+                                //     children: [
+                                //       Expanded(
+                                //         flex: 2,
+                                //         child: Material(
+                                //           type: MaterialType.transparency,
+                                //           elevation: 6,
+                                //           child: Container(
+                                //             decoration: BoxDecoration(
+                                //                 boxShadow: [
+                                //                   BoxShadow(
+                                //                       color: Colors.black
+                                //                           .withOpacity(0.1),
+                                //                       offset: Offset(0, 3),
+                                //                       blurRadius: 1),
+                                //                 ],
+                                //                 color: Colors.white,
+                                //                 borderRadius: BorderRadius.all(
+                                //                     Radius.circular(10))),
+                                //             margin: EdgeInsets.only(right: 10),
+                                //             padding: EdgeInsets.all(10.0),
+                                //             height: 50,
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment
+                                //                       .spaceBetween,
+                                //               children: [
+                                //                 Text(
+                                //                   'All transactions',
+                                //                   style: AppStyle.shortHeading
+                                //                       .copyWith(
+                                //                           color: const Color(
+                                //                               0xff2d2d2d),
+                                //                           fontWeight:
+                                //                               FontWeight.w600),
+                                //                 ),
+                                //                 InkWell(
+                                //                     onTap: () {},
+                                //                     child: Icon(Icons
+                                //                         .keyboard_arrow_down))
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         flex: 1,
+                                //         child: Material(
+                                //           type: MaterialType.transparency,
+                                //           elevation: 5,
+                                //           child: Container(
+                                //             margin: EdgeInsets.only(left: 10),
+                                //             padding: EdgeInsets.all(10.0),
+                                //             decoration: BoxDecoration(
+                                //                 boxShadow: [
+                                //                   BoxShadow(
+                                //                       color: Colors.black
+                                //                           .withOpacity(0.1),
+                                //                       offset: Offset(0, 3),
+                                //                       blurRadius: 1),
+                                //                 ],
+                                //                 color: Colors.white,
+                                //                 borderRadius: BorderRadius.all(
+                                //                     Radius.circular(10))),
+                                //             height: 50,
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment
+                                //                       .spaceBetween,
+                                //               children: [
+                                //                 Text(
+                                //                   'All time',
+                                //                   style: AppStyle.shortHeading
+                                //                       .copyWith(
+                                //                           color: const Color(
+                                //                               0xff2d2d2d),
+                                //                           fontWeight:
+                                //                               FontWeight.w600),
+                                //                 ),
+                                //                 InkWell(
+                                //                     onTap: () {},
+                                //                     child: Icon(Icons
+                                //                         .keyboard_arrow_down))
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
                                 Text(
                                   'View used points',
                                   style: AppStyle.shortHeading.copyWith(

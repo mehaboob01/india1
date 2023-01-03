@@ -35,6 +35,8 @@ class UsedRewardController extends GetxController {
           });
 
       var jsonData = jsonDecode(response.body);
+      print('History data');
+      print(jsonData);
       UsedPointsHistoryModel usedPointsHistoryModel =
           UsedPointsHistoryModel.fromJson(jsonData);
       getList = usedPointsHistoryModel.data!.recentRewardTransactions!

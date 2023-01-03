@@ -1,4 +1,4 @@
- import 'dart:convert';
+import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +29,13 @@ class OtpManager extends GetxController {
       resendOtpLoading.value = true;
       wrongOtp.value = false;
 
-      Map<String, dynamic> otpData = {};
-      otpData['mobile'] = phoneNumber;
-      otpData['agreedToToc'] = termConditionChecked;
+      // Map<String, dynamic> otpData = {};
+      // otpData['mobile'] = phoneNumber;
+      // otpData['agreedToToc'] = termConditionChecked;
 
-      Map<String, dynamic> headersData = {};
+      // Map<String, dynamic> headersData = {};
 
-      headersData['x-digital-api-key'] = '1234';
+      // headersData['x-digital-api-key'] = '1234';
 
       dynamic response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
@@ -46,15 +46,8 @@ class OtpManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-          }).then((value)
-
-
-
-
-      {
-
-
-
+          }).then((value) {
+        print(value.body);
         if (value.statusCode == 200) {
           var snackBar = SnackBar(
             content: Text("OTP Resend Successfully!"),
@@ -112,26 +105,27 @@ class OtpManager extends GetxController {
             "x-digital-api-key": "1234"
           });
 
-
-      if(response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         VerifyOtpModel verifyOtpModel = VerifyOtpModel.fromJson(jsonData);
         prefs = await SharedPreferences.getInstance();
-        
+
         print("custmer id after logout${prefs.getString(SPKeys.CUSTOMER_ID)} ");
 
         if (verifyOtpModel.status!.code == 2000) {
           print("inside 2000 ${verifyOtpModel.data!.customerId.toString()} ");
 
-
-
-
           //  prefs = await SharedPreferences.getInstance();
-          prefs!.setString(SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
-          prefs!.setString(SPKeys.REFRESH_TOKEN, verifyOtpModel.data!.refreshToken.toString());
-          prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-          loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
-          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained!);
+          prefs!.setString(
+              SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
+          prefs!.setString(SPKeys.REFRESH_TOKEN,
+              verifyOtpModel.data!.refreshToken.toString());
+          prefs!.setString(
+              SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+          loyaltyPoints.value =
+              verifyOtpModel.data!.loyaltyPointsGained.toString();
+          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED,
+              verifyOtpModel.data!.loyaltyPointsGained!);
           prefs!.setBool(SPKeys.LOGGED_IN, true);
           Get.offAllNamed(MRouter.homeScreen);
         } else {
@@ -141,16 +135,9 @@ class OtpManager extends GetxController {
             title: "Error!",
             message: verifyOtpModel.status!.message,
             duration: Duration(seconds: 3),
-          )
-            ..show(context);
+          )..show(context);
         }
       }
-
-
-
-
-
-
     } catch (e) {
       isLoading.value = false;
       Flushbar(

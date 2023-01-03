@@ -10,6 +10,7 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/helpers/no_internet.dart';
 import 'package:india_one/services/local_notifications_service.dart';
 
@@ -75,13 +76,13 @@ class _MyAppState extends State<MyApp> {
         print("for");
         print(messsage.notification!.body);
         print(messsage.notification!.title);
-         LocalNotificationService.display(messsage);
+        LocalNotificationService.display(messsage);
       }
     });
 
     // when app is open but in background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-       LocalNotificationService.display(message);
+      LocalNotificationService.display(message);
       print("background but opend");
       final routeFromMessage = message.data["route"];
       Navigator.of(context).pushNamed(routeFromMessage);
@@ -90,15 +91,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
-      initialBinding: ControllerBinding(),
+    return GetMaterialApp(
+        initialBinding: ControllerBinding(),
         title: 'India One',
         debugShowCheckedModeBanner: false,
         locale: Locale('en', 'US'),
         translations: LocaleString(),
         onGenerateRoute: MRouter.generateRoute,
         initialRoute: MRouter.splashRoute);
-
   }
 }
 

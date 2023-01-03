@@ -38,7 +38,7 @@ class _YourRewardCardState extends State<YourRewardCard>
   }
 
   void _showOverlay() async {
-    OverlayState? _overlayState = Overlay.of(Get.context!);
+    OverlayState? _overlayState = Overlay.of(context);
     _overlayEntry = OverlayEntry(builder: (context) {
       return Material(
         type: MaterialType.transparency,
@@ -217,7 +217,7 @@ class _YourRewardCardState extends State<YourRewardCard>
         ),
       );
     });
-    animationController!.addListener(() {
+    animationController?.addListener(() {
       _overlayState!.setState(() {});
     });
     _overlayState!.insert(_overlayEntry);
@@ -264,7 +264,10 @@ class _YourRewardCardState extends State<YourRewardCard>
           height: double.maxFinite,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(AppImages.newWonCard_bg), fit: BoxFit.fill),
+                  image: isOverlay == true
+                      ? AssetImage(AppImages.wonCardOverlay)
+                      : AssetImage(AppImages.newWonCard_bg),
+                  fit: BoxFit.fill),
               borderRadius: BorderRadius.circular(4.0.wp)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

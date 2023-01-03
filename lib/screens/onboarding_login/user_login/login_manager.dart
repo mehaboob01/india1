@@ -3,8 +3,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
 import 'package:india_one/screens/onboarding_login/user_login/user_login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';

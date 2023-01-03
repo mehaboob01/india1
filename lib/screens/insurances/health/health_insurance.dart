@@ -94,25 +94,28 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                     // border: Border.all(color: Colors.transparent),
                     color: AppColors.backGroundgradient2,
                   ),
-                  child: CustomDropDown(
-                    item: <String>[
-                      'Sum insured for 1 lakh',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value.toString(),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      insuranceController.insuranceFilter.value = value;
-                    },
-                    // label: 'Two wheeler required',
-                    hint: 'Select insurance amount',
-                    value: insuranceController.insuranceFilter.value == ''
-                        ? null
-                        : insuranceController.insuranceFilter.value,
+                  child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: CustomDropDown(
+                      item: <String>[
+                        'Sum insured for 1 lakh',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value.toString(),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        insuranceController.insuranceFilter.value = value;
+                      },
+                      // label: 'Two wheeler required',
+                      hint: 'Select insurance amount',
+                      value: insuranceController.insuranceFilter.value == ''
+                          ? null
+                          : insuranceController.insuranceFilter.value,
+                    ),
                   ),
                 ),
                 /* SizedBox(
