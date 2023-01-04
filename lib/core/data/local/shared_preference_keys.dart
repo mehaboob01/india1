@@ -13,6 +13,8 @@ class SPKeys {
   static const String RETRY_IN_SECONDS = "retry_in_seconds";
   static const String CUSTOMER_ID = 'customer_Id';
   static const String LOYALTY_POINT_GAINED = 'loyaltyPointsGained';
+  static const String LOYALTY_POINT_PROFILE = 'loyaltyPointsForProfile';
+  static const String COMPLETE_PROFILE_COUNT = 'completeProfileCount';
 
   static const String FIRST_TIME_LOGIN_POINTS = 'first_time_login_points';
   static const String SELECTED_LANGUAGE = 'selected_lan';

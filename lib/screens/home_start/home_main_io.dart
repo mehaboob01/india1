@@ -91,7 +91,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       _profileController.getProfileData();
 
       showFirstTimePoints();
-
+      showCompleteProfile();
       checkLogin();
     });
   }
@@ -170,106 +170,26 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
 
     if (points != 0) {
-
-
       return DisplayPopuP()
-          .welcomepopup(context: context, welcomePoints: points.toString()).then((value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
-      //return DisplayPopuP().welcomepopup(context: context, welcomePoints: '50');
-      // Future.delayed(
-      //     Duration(milliseconds: 300),
-      //     () => Alert(
-      //           padding: EdgeInsets.zero,
-      //           style: AlertStyle(
-      //               alertPadding: EdgeInsets.zero,
-      //               backgroundColor: Colors.transparent,
-      //               alertBorder: Border.all(width: 0)),
-      //           buttons: [],
-      //           context: context,
-      //           content: ClipRRect(
-      //             borderRadius: BorderRadius.circular(20),
-      //             child: Container(
-      //               width: MediaQuery.of(context).size.width * 0.8,
-      //               height: MediaQuery.of(context).size.height * 0.55,
-      //               decoration: BoxDecoration(
-      //                   image: DecorationImage(
-      //                       image: AssetImage(AppImages.homeScreenPopUpBg))),
-      //               child: Column(
-      //                 mainAxisAlignment: MainAxisAlignment.center,
-      //                 children: [
-      //                   Text(
-      //                     'Welcome to',
-      //                     style: AppStyle.shortHeading.copyWith(
-      //                         height: 1.2, fontSize: Dimens.font_24sp),
-      //                   ),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.center,
-      //                     children: [
-      //                       Text(
-      //                         'Cashback',
-      //                         style: AppStyle.shortHeading.copyWith(
-      //                             fontWeight: FontWeight.w700,
-      //                             height: 1.2,
-      //                             letterSpacing: 1.2,
-      //                             fontSize: Dimens.font_24sp),
-      //                       ),
-      //                       Text(
-      //                         ' by ',
-      //                         style: AppStyle.shortHeading.copyWith(
-      //                             fontWeight: FontWeight.w600,
-      //                             height: 1.2,
-      //                             fontSize: Dimens.font_20sp),
-      //                       ),
-      //                       Text(
-      //                         'India1',
-      //                         style: AppStyle.shortHeading.copyWith(
-      //                             fontWeight: FontWeight.w700,
-      //                             height: 1.2,
-      //                             letterSpacing: 1.2,
-      //                             fontSize: Dimens.font_24sp),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   SizedBox(
-      //                       height: MediaQuery.of(context).size.height * 0.05),
-      //                   Text(
-      //                     'You just won',
-      //                     style: AppStyle.shortHeading
-      //                         .copyWith(fontSize: Dimens.font_20sp),
-      //                   ),
-      //                   Padding(
-      //                     padding: EdgeInsets.symmetric(
-      //                         vertical: Dimens.padding_12dp),
-      //                     child: Stack(
-      //                       alignment: Alignment.center,
-      //                       children: [
-      //                         Image.asset(AppImages.goldenHexagonal),
-      //                         Positioned(
-      //                           top: 45,
-      //                           child: Obx(
-      //                             () => Text(
-      //                               _homeManager.loyalityPoints.toString(),
-      //                               style: AppStyle.shortHeading.copyWith(
-      //                                   fontWeight: FontWeight.w900,
-      //                                   fontSize: 40),
-      //                             ),
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                   Text(
-      //                     'Points',
-      //                     style: AppStyle.shortHeading.copyWith(
-      //                         fontWeight: FontWeight.w700,
-      //                         fontSize: Dimens.font_24sp),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //         ).show()).then(
-      //     (value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
+          .welcomepopup(context: context, welcomePoints: points.toString())
+          .then((value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
     }
+  }
+
+  void showCompleteProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? points = prefs.getInt(SPKeys.LOYALTY_POINT_PROFILE);
+    int? count = prefs.getInt(SPKeys.COMPLETE_PROFILE_COUNT);
+
+    if(points != null)
+      {
+        if (_profileController.profileDetailsModel.value.firstName.toString() == null && count == 0) {
+          return DisplayPopuP().getProfileWelcome(context: context, profilePoints: points.toString()).then((value) => prefs!.setInt(SPKeys.COMPLETE_PROFILE_COUNT, 1));
+
+        }
+      }
+
+
   }
 
   Future<void> checkLogin() async {
@@ -312,7 +232,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
-                 // SystemNavigator.pop();
+                  // SystemNavigator.pop();
                 }
               }
             }
@@ -326,7 +246,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   void _onLoading() async {
     // your api here
@@ -406,159 +327,6 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              // CustomAppBar(
-                              //   heading: '',
-                              //   hasLogo: true,
-                              //   haveHomeIcons: true,
-                              //   actionIcons: [
-                              //     Focus(
-                              //       focusNode: widget.focusNodes[5],
-                              //       child: HeadingBox(
-                              //           text: 'Aa',
-                              //           color: Color(0xff004280),
-                              //           ontap: () {
-                              //             Navigator.push(
-                              //                 context,
-                              //                 MaterialPageRoute(
-                              //                     builder:
-                              //                         (BuildContext context) =>
-                              //                             LanguageSelectionIO(
-                              //                                 'home')));
-                              //           }),
-                              //     ),
-                              //     Badge(
-                              //         position: BadgePosition.topEnd(
-                              //             top: -10, end: 0),
-                              //         badgeColor: Colors.red,
-                              //         showBadge: notificationManager
-                              //                 .notificationsCount.length
-                              //                 .toInt() !=
-                              //             0,
-                              //         badgeContent: Container(
-                              //           child: Text(
-                              //             "",
-                              //             style: TextStyle(color: Colors.white),
-                              //           ),
-                              //         ),
-                              //         child: Focus(
-                              //           focusNode: widget.focusNodes[6],
-                              //           child: HeadingBox(
-                              //             image: AppImages.notify_icon,
-                              //             color: AppColors.blueColor,
-                              //             ontap: () => Get.toNamed(
-                              //                 MRouter.notificationScreen),
-                              //           ),
-                              //         )),
-                              //     Focus(
-                              //       focusNode: widget.focusNodes[7],
-                              //       child: HeadingBox(
-                              //         color: _homeManager.isClicked.value
-                              //             ? Colors.orange
-                              //             : AppColors.blueColor,
-                              //         image: AppImages.user_profile,
-                              //         ontap: () {
-                              //           _homeManager.isClicked.value = true;
-                              //           showMenu<String>(
-                              //             context: context,
-                              //             shape: RoundedRectangleBorder(
-                              //                 borderRadius: BorderRadius.only(
-                              //                     bottomLeft:
-                              //                         Radius.circular(13.0),
-                              //                     bottomRight:
-                              //                         Radius.circular(13.0),
-                              //                     topLeft:
-                              //                         Radius.circular(13.0))),
-                              //             position: RelativeRect.fromLTRB(
-                              //                 25.0, 100.0, 16.0, 0.0),
-                              //             items: [
-                              //               PopupMenuItem(
-                              //                 height: Get.height * 0.02,
-                              //                 child: GestureDetector(
-                              //                   onTap: () {
-                              //                     _homeManager.showAuth.value =
-                              //                         false;
-                              //                     _homeManager.isClicked.value =
-                              //                         false;
-                              //                     Get.back();
-                              //                     Get.to(() => ProfileScreen());
-                              //                   },
-                              //                   child: Container(
-                              //                     height: Get.height * 0.03,
-                              //                     width: double.infinity,
-                              //                     child: Text(
-                              //                       "My Profile",
-                              //                       style: AppStyle.shortHeading
-                              //                           .copyWith(
-                              //                               fontSize: Dimens
-                              //                                   .font_14sp,
-                              //                               color: Colors.black,
-                              //                               fontWeight:
-                              //                                   FontWeight.w400,
-                              //                               letterSpacing: 1),
-                              //                     ),
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               PopupMenuDivider(),
-                              //               PopupMenuItem(
-                              //                 height: 0.02,
-                              //                 child: GestureDetector(
-                              //                     onTap: () => {
-                              //                           _homeManager.showAuth
-                              //                               .value = false,
-                              //                           _homeManager.isClicked
-                              //                               .value = false,
-                              //                           Get.back(),
-                              //                           Get.toNamed(
-                              //                             MRouter.loyaltyPoints,
-                              //                           ),
-                              //                         },
-                              //                     child: Container(
-                              //                       height: Get.height * 0.03,
-                              //                       width: double.infinity,
-                              //                       child: Text(
-                              //                         "My Rewards",
-                              //                         style: AppStyle
-                              //                             .shortHeading
-                              //                             .copyWith(
-                              //                                 fontSize:
-                              //                                     Dimens
-                              //                                         .font_14sp,
-                              //                                 color:
-                              //                                     Colors.black,
-                              //                                 fontWeight:
-                              //                                     FontWeight
-                              //                                         .w400,
-                              //                                 letterSpacing: 1),
-                              //                       ),
-                              //                     )),
-                              //               ),
-                              //             ],
-                              //             elevation: 8.0,
-                              //           ).then<void>((String? itemSelected) {
-                              //             if (itemSelected == null) {
-                              //               _homeManager.isClicked.value =
-                              //                   false;
-                              //               return;
-                              //             }
-
-                              //             if (itemSelected == "1") {
-                              //             } else if (itemSelected == "2") {
-                              //               Get.toNamed(MRouter.loyaltyPoints);
-
-                              //               print("2nd itme ");
-                              //             } else if (itemSelected == "3") {
-                              //             } else {
-                              //               //code here
-                              //             }
-                              //           });
-                              //         },
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-
-                              // top container ---------------------
                               Container(
                                 padding: EdgeInsets.fromLTRB(
                                     4.0.wp, 4.0.wp, 4.0.wp, 4.0.wp),
@@ -713,7 +481,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                   width: double
                                                                       .infinity,
                                                                   child: Text(
-                                                                    "my_profile".tr,
+                                                                    "my_profile"
+                                                                        .tr,
                                                                     style: AppStyle.shortHeading.copyWith(
                                                                         fontSize:
                                                                             Dimens
@@ -752,7 +521,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                             .infinity,
                                                                         child:
                                                                             Text(
-                                                                          "my_rewards".tr,
+                                                                          "my_rewards"
+                                                                              .tr,
                                                                           style: AppStyle.shortHeading.copyWith(
                                                                               fontSize: Dimens.font_14sp,
                                                                               color: Colors.black,
@@ -1165,7 +935,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         labelWeight: FontWeight.w600);
   }
 
-  MapManager mapManager = Get.put(MapManager());
+  // MapManager mapManager = Get.put(MapManager());
 
 // find nearest Atm -------------------------------
   Widget nearestAtm() {

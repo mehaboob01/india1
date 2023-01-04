@@ -111,7 +111,7 @@ class LoansCard extends StatelessWidget {
             Get.to(() => TrackBasedLoan());
           },
           child: ItemCard(
-            image: AppImages.tractorSvg,
+            image: AppImages.tract_based_Svg,
             label: 'track_based_loan',
             itembgColor: ItemCardbgColor.lightBlue,
           ),

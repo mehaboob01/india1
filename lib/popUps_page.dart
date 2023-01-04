@@ -125,7 +125,9 @@ class DisplayPopuP {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   width: MediaQuery.of(context).size.width * 0.7,
                   height: MediaQuery.of(context).size.height * 0.5,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(AppImages.Welcome_home_popbg))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -139,7 +141,7 @@ class DisplayPopuP {
                       Text(
                         'Complete your profile',
                         style: AppStyle.shortHeading.copyWith(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                             height: 1.4,
                             color: AppColors.orangeColor,
                             letterSpacing: 1.2,
@@ -150,13 +152,13 @@ class DisplayPopuP {
                       Text(
                         'You have a chance to',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: Dimens.font_18sp, color: Colors.black),
+                            fontSize: Dimens.font_18sp, color: Colors.white),
                       ),
                       Text(
                         'earn upto',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: Dimens.font_18sp),
                       ),
                       Padding(
@@ -181,7 +183,7 @@ class DisplayPopuP {
                         'Points',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: Dimens.font_20sp),
                       ),
                       SizedBox(height: height * 0.05),
