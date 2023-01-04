@@ -124,13 +124,12 @@ class LoanCommon {
     );
   }
 
-  Widget loanCard({
-    Function? applyButtonClick,
-    bool? isPersonalLoan,
-    Providers? providers,
-    // Lenders? lenders,
-    Lenderss? lenders
-  }) {
+  Widget loanCard(
+      {Function? applyButtonClick,
+      bool? isPersonalLoan,
+      Providers? providers,
+      // Lenders? lenders,
+      Lenderss? lenders}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Card(
@@ -218,12 +217,13 @@ class LoanCommon {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     rowText(
-                      value: 'Max amount',
-                      title:
-                          '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
+                        value: 'Max amount',
+                        title:
+                            '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
                     rowText(
                       value: 'Tenure',
-                      title: '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
+                      title:
+                          '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
                     ),
                     rowText(
                       value: 'Interest/m',
@@ -254,28 +254,67 @@ class LoanCommon {
   }
 
   Widget rowText({required String title, required String value}) {
-    return Column(
-      children: [
-        Container(
-          width: 98,
-          child: Text(
-            "$title",
-            style: TextStyle(
-              color: AppColors.iconColorDark,
-              fontSize: Dimens.font_12sp,
-              fontWeight: FontWeight.w600,
+    // return Column(
+    //   children: [
+    //     Container(
+    //       width: 98,
+    //       child: Text(
+    //         "$title",
+    //         style: TextStyle(
+    //           color: AppColors.iconColorDark,
+    //           fontSize: Dimens.font_12sp,
+    //           fontWeight: FontWeight.w600,
+    //         ),
+    //       ),
+    //     ),
+    //     Text(
+    //       "$value",
+    //       style: TextStyle(
+    //         color: AppColors.iconColorDark,
+    //         fontSize: Dimens.font_12sp,
+    //         fontWeight: FontWeight.w400,
+    //       ),
+    //     ),
+    //   ],
+    // );
+    return Container(
+      //color: Colors.red,
+      width: 100,
+      height: 60,
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              //color: Colors.blue,
+              // width: 98,
+              child: Center(
+                child: Text(
+                  "$title",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.iconColorDark,
+                    fontSize: Dimens.font_12sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-        Text(
-          "$value",
-          style: TextStyle(
-            color: AppColors.iconColorDark,
-            fontSize: Dimens.font_12sp,
-            fontWeight: FontWeight.w400,
+          Container(
+            //color: Colors.green,
+            child: Center(
+              child: Text(
+                "$value",
+                style: TextStyle(
+                  color: AppColors.iconColorDark,
+                  fontSize: Dimens.font_12sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -308,9 +347,6 @@ class LoanCommon {
       {required String lenderId,
       required String providerId,
       required Function callBack}) {
-
-
-
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -320,9 +356,6 @@ class LoanCommon {
         ),
       ),
       builder: (context) {
-
-
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
@@ -443,7 +476,7 @@ class LoanCommon {
           style: TextStyle(
             fontSize: Dimens.font_16sp,
             fontWeight: FontWeight.w600,
-            fontFamily: 'Graphik',
+            fontFamily: AppFonts.appFont,
             color: AppColors.blueColor,
           ),
           textAlign: TextAlign.center,

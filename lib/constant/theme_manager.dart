@@ -165,13 +165,13 @@ class AppStyle {
       fontWeight: FontWeight.w500,
       color: AppColors.white,
       fontSize: Dimens.font_16sp,
-      fontFamily: 'Graphik');
+      fontFamily: AppFonts.appFont);
 
   static const languageTextStyle = TextStyle(
       fontWeight: FontWeight.w600,
       color: AppColors.black,
       fontSize: Dimens.font_20sp,
-      fontFamily: 'Graphik');
+      fontFamily: AppFonts.appFont);
 }
 
 class Dimens {
@@ -301,7 +301,7 @@ class AppTextThemes {
   static final button = TextStyle(
       fontSize: Dimens.font_16sp,
       fontWeight: FontWeight.w600,
-      fontFamily: 'Graphik',
+      fontFamily: AppFonts.appFont,
       color: Colors.white);
   static final appbar = TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.white);
@@ -553,12 +553,7 @@ showSnackBar({
       duration: Duration(
         days: 365,
       ),
-      mainButton: TextButton(
-        onPressed: () {
-          Get.back();
-        },
-        child: Text("ok"),
-      ));
+      isDismissible: false);
 }
 
 class AppFonts {

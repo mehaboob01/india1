@@ -181,15 +181,16 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_PROFILE);
     int? count = prefs.getInt(SPKeys.COMPLETE_PROFILE_COUNT);
 
-    if(points != null)
-      {
-        if (_profileController.profileDetailsModel.value.firstName.toString() == null && count == 0) {
-          return DisplayPopuP().getProfileWelcome(context: context, profilePoints: points.toString()).then((value) => prefs!.setInt(SPKeys.COMPLETE_PROFILE_COUNT, 1));
-
-        }
+    if (points != null) {
+      if (_profileController.profileDetailsModel.value.firstName.toString() ==
+              null &&
+          count == 0) {
+        return DisplayPopuP()
+            .getProfileWelcome(
+                context: context, profilePoints: points.toString())
+            .then((value) => prefs!.setInt(SPKeys.COMPLETE_PROFILE_COUNT, 1));
       }
-
-
+    }
   }
 
   Future<void> checkLogin() async {
@@ -210,7 +211,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             if (Platform.isAndroid) {
               bool pass = await auth.authenticate(
                   localizedReason: 'Authenticate with pattern/pin/passcode',
-                  biometricOnly: false);
+                  options: AuthenticationOptions(biometricOnly: false));
               if (pass) {
                 msg = "You are Authenticated.";
                 setState(() {
@@ -218,13 +219,13 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
-                //SystemNavigator.pop();
+                // SystemNavigator.pop();
               }
             } else {
               if (availableBiometrics.contains(BiometricType.fingerprint)) {
                 bool pass = await auth.authenticate(
                     localizedReason: 'Authenticate with fingerprint/face',
-                    biometricOnly: true);
+                    options: AuthenticationOptions(biometricOnly: true));
                 if (pass) {
                   msg = "You are Authenicated.";
                   setState(() {
@@ -238,8 +239,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             }
           } else {}
         } on PlatformException catch (e) {
-          //SystemNavigator.pop();
-
+          // SystemNavigator.pop();
           msg = "Error while opening fingerprint/face scanner";
         }
       }
@@ -986,30 +986,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
                     if (_permissionGranted == PermissionStatus.deniedForever ||
                         _permissionGranted == PermissionStatus.denied) {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Location Access'),
-                          content: Text(
-                              "India1 collects current location data to enable the user to see near by India1 ATM's when the app is in use."),
-                          actions: <Widget>[
-                            // if user deny again, we do nothing
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Don\'t allow'),
-                            ),
-
-                            // if user is agree, you can redirect him to the app parameters :)
-                            TextButton(
-                              onPressed: () async {
-                                Navigator.pop(context);
-                                await _handleLocationPermission();
-                              },
-                              child: const Text('Allow'),
-                            ),
-                          ],
-                        ),
-                      );
+                      _handleLocationPermission();
                     } else {
                       Get.toNamed(MRouter.map);
                     }

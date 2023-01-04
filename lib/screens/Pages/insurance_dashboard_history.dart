@@ -6,6 +6,7 @@ import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
 
@@ -28,26 +29,34 @@ class InsuranceDashboardHistory extends StatelessWidget {
     color: Color(0xFF333333),
   );
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     return isFromInsurance
         ? body()
-        : Scaffold(
-            primary: false,
-            body: Column(
-              children: [
-                SafeArea(
-                  child: CustomAppBar(
-                    heading: 'Recent transactions',
-                  ),
+        : Obx(
+            () => IgnorePointer(
+              ignoring: _controller.ignorePointer.value,
+              child: Scaffold(
+                primary: false,
+                body: Column(
+                  children: [
+                    SafeArea(
+                      child: CustomAppBar(
+                        heading: 'Recent transactions',
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.all(0),
+                        child: body(),
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.all(0),
-                    child: body(),
-                  ),
-                ),
-              ],
+              ),
             ),
           );
   }

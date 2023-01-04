@@ -11,6 +11,7 @@ import 'package:india_one/screens/Pages/payments.dart';
 import 'package:india_one/screens/home/bottom_navigation/custom_widgets/home_each_bottom_tab_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../Pages/insurance.dart';
 import '../../Pages/savings.dart';
@@ -62,6 +63,9 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
     });
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     heightIs = MediaQuery.of(context).size.height;
@@ -100,7 +104,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -131,7 +135,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -144,7 +148,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -229,7 +233,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -263,7 +267,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -276,7 +280,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -362,7 +366,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -387,7 +391,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -400,7 +404,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -495,7 +499,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -523,7 +527,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -536,7 +540,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -629,7 +633,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -657,7 +661,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -670,7 +674,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -759,7 +763,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -772,7 +776,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -841,7 +845,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -890,7 +894,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -903,7 +907,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -972,7 +976,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),
@@ -1021,7 +1025,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                               ),
@@ -1034,7 +1038,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
                               ),
@@ -1100,7 +1104,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18,
                               ),

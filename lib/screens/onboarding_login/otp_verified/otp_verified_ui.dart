@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
@@ -25,11 +26,18 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
     Get.offAllNamed(MRouter.mobileRechargeIO);
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: buildSplashForMobile(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: buildSplashForMobile(),
+        ),
+      ),
     );
   }
 

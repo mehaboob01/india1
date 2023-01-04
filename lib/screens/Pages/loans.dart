@@ -5,6 +5,7 @@ import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/utils/common_webview.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
@@ -23,7 +24,6 @@ class _LoansPageState extends State<LoansPage> {
 
   LoanController loanController = Get.put(LoanController());
 
-
   @override
   void initState() {
     super.initState();
@@ -31,31 +31,38 @@ class _LoansPageState extends State<LoansPage> {
     loanController.recentTransactions();
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonPageHeader(pageName: PageName.loans),
-              CommonPageCategoriesHeading(pageName: PageName.loans),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                child: const LoansCard(),
-              ),
-              CommonBanner(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonPageHeader(pageName: PageName.loans),
+                  CommonPageCategoriesHeading(pageName: PageName.loans),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                    child: const LoansCard(),
+                  ),
+                  CommonBanner(),
 
-              //  loans history
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: LoanDashboardHistory(isFromLoans: true),
+                  //  loans history
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: LoanDashboardHistory(isFromLoans: true),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -75,8 +82,6 @@ class LoansCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-
-
             Get.toNamed(MRouter.chooseAmountIO);
           },
           child: ItemCard(
@@ -95,7 +100,6 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.farmLoan);
@@ -116,7 +120,6 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.goldLoanIO);

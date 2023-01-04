@@ -10,6 +10,8 @@ import 'package:india_one/utils/common_webview.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
+
 class LendersListOthers extends StatefulWidget {
   final String title;
 
@@ -33,119 +35,137 @@ class _LendersListState extends State<LendersListOthers> {
     });
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(
+            child: Stack(
               children: [
-                CustomAppBar(
-                    heading: '${widget.title}',
-                    customActionIconsList: commonAppIcons),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 16,
-                  ),
-                  child: Text(
-                    "Select the lender to proceed",
-                    style: TextStyle(
-                      color: AppColors.lightBlack,
-                      fontSize: Dimens.font_16sp,
-                      fontWeight: FontWeight.w600,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomAppBar(
+                        heading: '${widget.title}',
+                        customActionIconsList: commonAppIcons),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 16,
+                      ),
+                      child: Text(
+                        "Select the lender to proceed",
+                        style: TextStyle(
+                          color: AppColors.lightBlack,
+                          fontSize: Dimens.font_16sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Obx(
-                    () => (loanController.loanLenderOthersModel.value.lenders ==
-                                null ||
-                            loanController
-                                    .loanLenderOthersModel.value.lenders ==
-                                [])
-                        ? Center(child: Text("No lenders found"))
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: isPersonalLoan
-                                ? loanController
-                                    .loanLenderOthersModel.value.lenders!.length
-                                : loanController.loanLenderOthersModel.value
-                                    .lenders!.length,
-                            itemBuilder: (context, index) {
-                              return LoanCommon().loanCard(
-                                lenders: loanController.loanLenderOthersModel
-                                    .value.lenders?[index],
-                                applyButtonClick: () {
-
-
-
-
-                                  if (loanController.loanLenderOthersModel.value
-                                          .lenders![index].loanApplyType !=
-                                      "Redirect") {
-                                    Get.to(
+                    Expanded(
+                      child: Obx(
+                        () => (loanController
+                                        .loanLenderOthersModel.value.lenders ==
+                                    null ||
+                                loanController
+                                        .loanLenderOthersModel.value.lenders ==
+                                    [])
+                            ? Center(child: Text("No lenders found"))
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: isPersonalLoan
+                                    ? loanController.loanLenderOthersModel.value
+                                        .lenders!.length
+                                    : loanController.loanLenderOthersModel.value
+                                        .lenders!.length,
+                                itemBuilder: (context, index) {
+                                  return LoanCommon().loanCard(
+                                    lenders: loanController
+                                        .loanLenderOthersModel
+                                        .value
+                                        .lenders?[index],
+                                    applyButtonClick: () {
+                                      if (loanController
+                                              .loanLenderOthersModel
+                                              .value
+                                              .lenders![index]
+                                              .loanApplyType !=
+                                          "Redirect") {
+                                        Get.to(
                                           () => ProviderDetail(
-                                        title: '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
-                                        lenders: loanController.loanLenderOthersModel.value.lenders![index],
-                                        personalLoan: isPersonalLoan,
-                                        providerId: loanController.loanProvidersModel.value.providers?[index].id ?? '',
-                                      ),
-                                    );
-
-
-                                    // print("going to detail screen");
-                                    // Get.to(
-                                    //   () => ProviderDetail(
-                                    //     title: '',
-                                    //     personalLoan: '',
-                                    //     lenders: '',
-                                    //     providerId: '',
-                                    //   ),
-                                    // );
-                                  } else {
-                                    print("going to web screen");
-
-                                    Get.to(
-                                      () => CommonWebView(
-                                        title: 'Gold Loan',
-                                        url: loanController
+                                            title:
+                                                '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
+                                            lenders: loanController
                                                 .loanLenderOthersModel
                                                 .value
-                                                .lenders![index]
-                                                ?.redirectUrl
-                                                .toString() ??
-                                            '',
-                                      ),
-                                    );
-                                  }
+                                                .lenders![index],
+                                            personalLoan: isPersonalLoan,
+                                            providerId: loanController
+                                                    .loanProvidersModel
+                                                    .value
+                                                    .providers?[index]
+                                                    .id ??
+                                                '',
+                                          ),
+                                        );
+
+                                        // print("going to detail screen");
+                                        // Get.to(
+                                        //   () => ProviderDetail(
+                                        //     title: '',
+                                        //     personalLoan: '',
+                                        //     lenders: '',
+                                        //     providerId: '',
+                                        //   ),
+                                        // );
+                                      } else {
+                                        print("going to web screen");
+
+                                        Get.to(
+                                          () => CommonWebView(
+                                            title: 'Gold Loan',
+                                            url: loanController
+                                                    .loanLenderOthersModel
+                                                    .value
+                                                    .lenders![index]
+                                                    ?.redirectUrl
+                                                    .toString() ??
+                                                '',
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    isPersonalLoan: isPersonalLoan,
+                                  );
                                 },
-                                isPersonalLoan: isPersonalLoan,
-                              );
-                            },
-                          ),
-                  ),
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
+                Obx(() {
+                  if (loanController.createLoanLoading.value == true) {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.white,
+                      child: LoadingAnimationWidget.inkDrop(
+                        size: 34,
+                        color: AppColors.primary,
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                })
               ],
             ),
-            Obx(() {
-              if (loanController.createLoanLoading.value == true) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: LoadingAnimationWidget.inkDrop(
-                    size: 34,
-                    color: AppColors.primary,
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            })
-          ],
+          ),
         ),
       ),
     );

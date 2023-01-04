@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
 import 'package:india_one/screens/loyality_points/used_reward_history/used_reward_page.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
@@ -9,6 +11,7 @@ import 'package:india_one/screens/loans/farm_loan/farm_loan.dart';
 import 'package:india_one/screens/loans/gold_loan/gold_loan.dart';
 import 'package:india_one/screens/loans/tractor_loan/tractor_loan.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
+import '../connection_manager/ConnectionManagerController.dart';
 import '../screens/Pages/loans.dart';
 import '../screens/bank_manage_edit_screen.dart/add_upi_screen.dart';
 import '../screens/home/bottom_navigation/bottom_tabs_main_io.dart';
@@ -186,12 +189,18 @@ class NoRouteScreen extends StatelessWidget {
   final String? screenName;
 
   NoRouteScreen(this.screenName);
-
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Center(child: Text('${'no_route_defined'} "$screenName"')),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Center(child: Text('${'no_route_defined'} "$screenName"')),
+        ),
+      ),
     );
   }
 }

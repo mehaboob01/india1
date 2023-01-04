@@ -26,7 +26,7 @@ class PolicyItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
         child: Column(
           children: [
             Row(
@@ -63,7 +63,7 @@ class PolicyItemWidget extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: AppColors.black,
                           fontSize: Dimens.font_14sp,
-                          fontFamily: "Graphik",
+                          fontFamily: AppFonts.appFont,
                         ),
                       ),
                     ],
@@ -92,7 +92,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             color: AppColors.black,
                             fontSize: Dimens.font_14sp,
-                            fontFamily: "Graphik",
+                            fontFamily: "AppFonts.appFont",
                           ),
                         ),
                         Text(
@@ -101,7 +101,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: AppColors.iconColorDark,
                             fontSize: Dimens.font_14sp,
-                            fontFamily: "Graphik",
+                            fontFamily: "AppFonts.appFont",
                           ),
                         ),
                       ],
@@ -127,7 +127,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             color: AppColors.black,
                             fontSize: Dimens.font_14sp,
-                            fontFamily: "Graphik",
+                            fontFamily: "AppFonts.appFont",
                           ),
                         ),
                         Text(
@@ -136,7 +136,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: AppColors.iconColorDark,
                             fontSize: Dimens.font_14sp,
-                            fontFamily: "Graphik",
+                            fontFamily: "AppFonts.appFont",
                           ),
                         ),
                       ],

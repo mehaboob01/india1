@@ -111,8 +111,10 @@ class MapManager extends GetxController {
     Position position;
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
-    await getAddressFromLatLong(position.latitude, position.longitude);
+    print(position.latitude.toString() + " " + position.longitude.toString());
     getLocations(position.latitude, position.longitude);
+    await getAddressFromLatLong(position.latitude, position.longitude);
+
     await animateTo(position.latitude, position.longitude);
     // cameraPosition.value = CameraPosition(
     //     target: LatLng(position.latitude, position.longitude), zoom: 13);

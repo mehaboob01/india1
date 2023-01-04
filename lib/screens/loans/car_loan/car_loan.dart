@@ -14,6 +14,8 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
+
 class CarLoanIO extends StatefulWidget {
   @override
   State<CarLoanIO> createState() => _CarLoanIOState();
@@ -48,92 +50,100 @@ class _CarLoanIOState extends State<CarLoanIO> {
     super.dispose();
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          width: widthIs,
-          child: Obx(
-            () => Stack(
-              children: [
-                Column(
+    return Obx(
+      ()=>IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          body: SafeArea(
+            child: SizedBox(
+              width: widthIs,
+              child: Obx(
+                () => Stack(
                   children: [
-                    CustomAppBar(
-                        heading: 'Car loan',
-                        customActionIconsList: commonAppIcons),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                DividerIO(
-                                  height: 21,
-                                ),
-                                Obx(
-                                  () => Container(
-                                    child: IgnorePointer(
-                                      child: AnotherStepper(
-                                        stepperList:
-                                            _plManager.bikeLoanTitleList
-                                                .map((e) => StepperData(
-                                                      title: "$e",
-                                                    ))
-                                                .toList(),
-                                        stepperDirection: Axis.horizontal,
-                                        iconWidth: 25,
-                                        iconHeight: 25,
-                                        inverted: true,
-                                        activeBarColor: AppColors.pointsColor,
-                                        activeIndex:
-                                            _plManager.currentScreen.value,
-                                        callBack: (i) {
-                                          _plManager.currentScreen.value = i;
-                                        },
+                    Column(
+                      children: [
+                        CustomAppBar(
+                            heading: 'Car loan',
+                            customActionIconsList: commonAppIcons),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(9.0),
+                              child: Obx(
+                                () => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    DividerIO(
+                                      height: 21,
+                                    ),
+                                    Obx(
+                                      () => Container(
+                                        child: IgnorePointer(
+                                          child: AnotherStepper(
+                                            stepperList:
+                                                _plManager.bikeLoanTitleList
+                                                    .map((e) => StepperData(
+                                                          title: "$e",
+                                                        ))
+                                                    .toList(),
+                                            stepperDirection: Axis.horizontal,
+                                            iconWidth: 25,
+                                            iconHeight: 25,
+                                            inverted: true,
+                                            activeBarColor: AppColors.pointsColor,
+                                            activeIndex:
+                                                _plManager.currentScreen.value,
+                                            callBack: (i) {
+                                              _plManager.currentScreen.value = i;
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    _plManager.currentScreen.value ==
+                                            Steps.LOAN_AMOUNT.index
+                                        ? loanAmountUi()
+                                        : _plManager.currentScreen.value ==
+                                                Steps.PERSONAL.index
+                                            ? personalInfoUi()
+                                            : residentialInfoUi()
+                                  ],
                                 ),
-                                _plManager.currentScreen.value ==
-                                        Steps.LOAN_AMOUNT.index
-                                    ? loanAmountUi()
-                                    : _plManager.currentScreen.value ==
-                                            Steps.PERSONAL.index
-                                        ? personalInfoUi()
-                                        : residentialInfoUi()
-                              ],
+                              ),
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: _plManager.currentScreen.value ==
+                                  Steps.LOAN_AMOUNT.index
+                              ? loanAmountButton()
+                              : _plManager.currentScreen.value ==
+                                      Steps.PERSONAL.index
+                                  ? personalInfoButton()
+                                  : residentialInfoButton(),
+                        ),
+                      ],
+                    ),
+                    if (loanController.createLoanLoading.value == true)
+                      Container(
+                        alignment: Alignment.center,
+                        color: Colors.white,
+                        child: LoadingAnimationWidget.inkDrop(
+                          size: 34,
+                          color: AppColors.primary,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: _plManager.currentScreen.value ==
-                              Steps.LOAN_AMOUNT.index
-                          ? loanAmountButton()
-                          : _plManager.currentScreen.value ==
-                                  Steps.PERSONAL.index
-                              ? personalInfoButton()
-                              : residentialInfoButton(),
-                    ),
                   ],
                 ),
-                if (loanController.createLoanLoading.value == true)
-                  Container(
-                    alignment: Alignment.center,
-                    color: Colors.white,
-                    child: LoadingAnimationWidget.inkDrop(
-                      size: 34,
-                      color: AppColors.primary,
-                    ),
-                  ),
-              ],
+              ),
             ),
           ),
         ),

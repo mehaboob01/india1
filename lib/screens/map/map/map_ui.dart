@@ -9,6 +9,7 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
 import '../../../core/data/remote/api_constant.dart';
 import 'map_manager.dart';
@@ -23,13 +24,21 @@ class Maps extends StatefulWidget {
 class _MapsState extends State<Maps> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: _body(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: _body(),
+        ),
+      ),
     );
   }
 
   MapManager mapManager = Get.put(MapManager());
+
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
 
   @override
   void initState() {
@@ -199,7 +208,7 @@ class _MapsState extends State<Maps> {
               child: DraggableScrollableSheet(
                 controller: mapManager.scrollableController.value,
                 initialChildSize: 0.4,
-                maxChildSize: 0.85,
+                maxChildSize: 0.75,
                 minChildSize: 0.4,
                 builder: (context, scrollController) {
                   return Padding(
@@ -269,10 +278,13 @@ class AtmDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        mapManager.removeHighlights();
-        mapManager.mapCoordinateList[index].isHighlighted = false;
-        mapManager.mapController!.animateCamera(
+      onTap: () async {
+        mapManager.scrollableController.value.animateTo(0.4,
+            duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+        scrollCtrl.animateTo(0,
+            duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+        await mapManager.mapController!
+            .animateCamera(
           CameraUpdate.newCameraPosition(CameraPosition(
             target: LatLng(
               mapManager.mapCoordinateList[index].geoLocation!.lat!.toDouble(),
@@ -280,29 +292,32 @@ class AtmDetailsCard extends StatelessWidget {
             ),
             zoom: 14,
           )),
-        );
-        mapManager.bringSelectedTileToFirst(index);
-        mapManager.scrollableController.value.animateTo(0.4,
-            duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
-        scrollCtrl.animateTo(0,
-            duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+        )
+            .then((value) {
+          mapManager.removeHighlights();
+          mapManager.bringSelectedTileToFirst(index);
+          mapManager.mapCoordinateList[index].isHighlighted = false;
+        });
       },
       child: Card(
-        color: mapManager.mapCoordinateList[index].isHighlighted != null
-            ? (mapManager.mapCoordinateList[index].isHighlighted == true
-                ? Colors.white
-                : Colors.white)
-            : null,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 0,
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-            child: Container(
+        child: Container(
+          decoration: BoxDecoration(
+              border: mapManager.mapCoordinateList[index].isHighlighted != null
+                  ? (mapManager.mapCoordinateList[index].isHighlighted == true
+                      ? Border.all(color: AppColors.primary, width: 2)
+                      : null)
+                  : null,
+              borderRadius: BorderRadius.circular(12)),
+          child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
+                    flex: 2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,15 +325,7 @@ class AtmDetailsCard extends StatelessWidget {
                         Text(
                           atmName.toString(),
                           style: TextStyle(
-                              fontWeight: mapManager.mapCoordinateList[index]
-                                          .isHighlighted !=
-                                      null
-                                  ? (mapManager.mapCoordinateList[index]
-                                              .isHighlighted ==
-                                          true
-                                      ? FontWeight.w700
-                                      : FontWeight.w500)
-                                  : null,
+                              fontWeight: FontWeight.w500,
                               color: Color(0xFF000000),
                               fontSize: 16),
                         ),
@@ -342,15 +349,7 @@ class AtmDetailsCard extends StatelessWidget {
                                 style: TextStyle(
                                   overflow: TextOverflow.visible,
                                   fontWeight: FontWeight.w500,
-                                  color: mapManager.mapCoordinateList[index]
-                                              .isHighlighted !=
-                                          null
-                                      ? (mapManager.mapCoordinateList[index]
-                                                  .isHighlighted ==
-                                              true
-                                          ? Colors.green
-                                          : AppColors.primary)
-                                      : AppColors.primary,
+                                  color: AppColors.primary,
                                   fontSize: Dimens.font_16sp,
                                 ),
                               ),
@@ -361,73 +360,60 @@ class AtmDetailsCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                      height: Get.height * 0.05,
-                      decoration: BoxDecoration(
-                          // border: Border.all(color: Color(0xFFF2642C)),
-                          border: Border.all(
-                            color: mapManager.mapCoordinateList[index]
-                                        .isHighlighted !=
-                                    null
-                                ? (mapManager.mapCoordinateList[index]
-                                            .isHighlighted ==
-                                        true
-                                    ? Colors.green
-                                    : Color(0xFFF2642C))
-                                : Color(0xFFF2642C),
-                          ),
-                          borderRadius: BorderRadius.circular(6)),
-                      width: Get.width * 0.25,
-                      child: GestureDetector(
-                        onTap: () {
-                          mapManager.openDirections(
-                            mapManager
-                                .mapCoordinateList[index].geoLocation!.lat!
-                                .toDouble(),
-                            mapManager
-                                .mapCoordinateList[index].geoLocation!.lon!
-                                .toDouble(),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.directions,
-                              color: mapManager.mapCoordinateList[index]
-                                          .isHighlighted !=
-                                      null
-                                  ? (mapManager.mapCoordinateList[index]
-                                              .isHighlighted ==
-                                          true
-                                      ? Colors.green
-                                      : Color(0xFFF2642C))
-                                  : Color(0xFFF2642C),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        height: Get.height * 0.05,
+                        decoration: BoxDecoration(
+                            // border: Border.all(color: Color(0xFFF2642C)),
+                            border: Border.all(
+                              color: Color(0xFFF2642C),
                             ),
-                            SizedBox(
-                              width: Get.width * 0.008,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Directions",
-                                style: TextStyle(
-                                  color: mapManager.mapCoordinateList[index]
-                                              .isHighlighted !=
-                                          null
-                                      ? (mapManager.mapCoordinateList[index]
-                                                  .isHighlighted ==
-                                              true
-                                          ? Colors.green
-                                          : Color(0xFFF2642C))
-                                      : Color(0xFFF2642C),
+                            borderRadius: BorderRadius.circular(6)),
+                        width: Get.width * 0.25,
+                        child: GestureDetector(
+                          onTap: () {
+                            mapManager.openDirections(
+                              mapManager
+                                  .mapCoordinateList[index].geoLocation!.lat!
+                                  .toDouble(),
+                              mapManager
+                                  .mapCoordinateList[index].geoLocation!.lon!
+                                  .toDouble(),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.directions,
+                                color: Color(0xFFF2642C),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.008,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Directions",
+                                  style: TextStyle(
+                                      // color: mapManager.mapCoordinateList[index]
+                                      //             .isHighlighted !=
+                                      //         null
+                                      //     ? (mapManager.mapCoordinateList[index]
+                                      //                 .isHighlighted ==
+                                      //             true
+                                      //         ? Colors.green
+                                      //         : Color(0xFFF2642C))
+                                      //     : Color(0xFFF2642C),
+                                      color: Color(0xFFF2642C)),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )),
+                            ],
+                          ),
+                        )),
+                  ),
                 ],
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }

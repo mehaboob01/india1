@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/widgets/screen_bg.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 
@@ -81,30 +82,38 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
     super.dispose();
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                color: AppColors.white,
-                child: Stack(
-                  children: [
-                    LoginBgScreen(AppImages.newOtpBgPng),
-                    buildOtpCard()
-                  ],
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    color: AppColors.white,
+                    child: Stack(
+                      children: [
+                        LoginBgScreen(AppImages.newOtpBgPng),
+                        buildOtpCard()
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -163,7 +172,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                               "Resending OTP",
                                               maxLines: 2,
                                               style: TextStyle(
-                                                fontFamily: 'Graphik',
+                                                fontFamily: AppFonts.appFont,
                                                 fontWeight: FontWeight.w600,
                                                 color: AppColors.black,
                                                 fontSize: 26,
@@ -176,7 +185,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                       "Verifying..",
                                                       maxLines: 2,
                                                       style: TextStyle(
-                                                        fontFamily: 'Graphik',
+                                                        fontFamily:
+                                                            AppFonts.appFont,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         color: AppColors.black,
@@ -201,7 +211,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                   "enter_otp".tr,
                                                   maxLines: 2,
                                                   style: TextStyle(
-                                                    fontFamily: 'Graphik',
+                                                    fontFamily:
+                                                        AppFonts.appFont,
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.black,
                                                     fontSize: 26,
@@ -217,7 +228,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             Text(
                                               "otp_message".tr,
                                               style: TextStyle(
-                                                fontFamily: 'Graphik',
+                                                fontFamily: AppFonts.appFont,
                                                 fontWeight: FontWeight.w400,
                                                 color: AppColors.black,
                                                 fontSize: Dimens.font_16sp,
@@ -229,7 +240,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             Text(
                                               widget.phoneNumber.toString(),
                                               style: TextStyle(
-                                                fontFamily: 'Graphik',
+                                                fontFamily: AppFonts.appFont,
                                                 fontWeight: FontWeight.w600,
                                                 color: AppColors.black,
                                                 fontSize: Dimens.font_16sp,
@@ -263,7 +274,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                       color: AppColors.dotsColor,
                                       fontSize: Dimens.font_24sp),
                                   textStyle: TextStyle(
-                                      fontFamily: 'Graphik',
+                                      fontFamily: AppFonts.appFont,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.black,
                                       fontSize: Dimens.font_24sp),
@@ -309,7 +320,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                               overflow: TextOverflow.visible,
                               maxLines: 1,
                               style: TextStyle(
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 overflow: TextOverflow.visible,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.googleRed,
@@ -337,7 +348,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                               child: Text(
                                 "edit_number".tr,
                                 style: TextStyle(
-                                  fontFamily: 'Graphik',
+                                  fontFamily: AppFonts.appFont,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.cardBg1,
                                   fontSize: Dimens.font_16sp,
@@ -384,7 +395,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                           Text(
                                             'resend_otp'.tr,
                                             style: TextStyle(
-                                              fontFamily: 'Graphik',
+                                              fontFamily: AppFonts.appFont,
                                               fontWeight: FontWeight.w600,
                                               color: isBlue
                                                   ? AppColors.cardBg1
@@ -402,7 +413,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             child: Text(
                                               'in'.tr,
                                               style: TextStyle(
-                                                fontFamily: 'Graphik',
+                                                fontFamily: AppFonts.appFont,
                                                 fontWeight: FontWeight.w600,
                                                 color: AppColors.greyText,
                                                 fontSize: Dimens.font_16sp,
@@ -428,7 +439,8 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                             .toString(),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      fontFamily: 'Graphik',
+                                                      fontFamily:
+                                                          AppFonts.appFont,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: AppColors.greyText,
@@ -448,7 +460,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                         Text(
                                           'sending_otp'.tr,
                                           style: TextStyle(
-                                            fontFamily: 'Graphik',
+                                            fontFamily: AppFonts.appFont,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.greyText,
                                             fontSize: Dimens.font_16sp,

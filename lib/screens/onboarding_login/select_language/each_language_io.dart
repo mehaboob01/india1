@@ -56,7 +56,7 @@ class _EachLanguageIOState extends State<EachLanguageIO> {
                           fontWeight: FontWeight.w600,
                           color: widget.textColor,
                           fontSize: Dimens.font_18sp,
-                          fontFamily: 'Graphik'
+                          fontFamily:  AppFonts.appFont
                       )
                   ),
                 ),

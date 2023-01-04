@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/screens/onboarding_login/otp_screen/otp_manager.dart';
 import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/screen_bg.dart';
 import '../otp_screen/otp_screen_ui.dart';
@@ -75,6 +76,9 @@ class _UserLoginState extends State<UserLogin> {
     if (!mounted) return;
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     //code for prevent landscape view
@@ -83,30 +87,35 @@ class _UserLoginState extends State<UserLogin> {
       DeviceOrientation.portraitDown,
     ]);
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    color: AppColors.white,
-                    child: Stack(
-                      children: [
-                        LoginBgScreen(AppImages.newOtpBgPng),
-                        // LoginBgScreen('assets/images/login_bg.png'),
-                        buildLoginCard()
-                      ],
+      child: Obx(
+        () => IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: AppColors.white,
+                        child: Stack(
+                          children: [
+                            LoginBgScreen(AppImages.newOtpBgPng),
+                            // LoginBgScreen('assets/images/login_bg.png'),
+                            buildLoginCard()
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -160,7 +169,7 @@ class _UserLoginState extends State<UserLogin> {
                                 'mobile_number'.tr,
                                 maxLines: 2,
                                 style: TextStyle(
-                                  fontFamily: 'Graphik',
+                                  fontFamily: AppFonts.appFont,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.black,
                                   fontSize: 26,
@@ -189,7 +198,7 @@ class _UserLoginState extends State<UserLogin> {
                             ],
                             style: TextStyle(
                                 letterSpacing: 3,
-                                fontFamily: 'Graphik',
+                                fontFamily: AppFonts.appFont,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.black,
                                 fontSize: Dimens.font_24sp),
@@ -207,7 +216,7 @@ class _UserLoginState extends State<UserLogin> {
                                       '+91 ',
                                       style: TextStyle(
                                           letterSpacing: 3,
-                                          fontFamily: 'Graphik',
+                                          fontFamily: AppFonts.appFont,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.black,
                                           fontSize: Dimens.font_24sp),
@@ -271,7 +280,7 @@ class _UserLoginState extends State<UserLogin> {
                                           "i_accept".tr,
                                           maxLines: 2,
                                           style: TextStyle(
-                                            fontFamily: 'Graphik',
+                                            fontFamily: AppFonts.appFont,
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.black,
                                             fontSize: Dimens.font_16sp,
@@ -293,7 +302,7 @@ class _UserLoginState extends State<UserLogin> {
                                             "term_condition".tr,
                                             maxLines: 1,
                                             style: TextStyle(
-                                              fontFamily: 'Graphik',
+                                              fontFamily: AppFonts.appFont,
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.facebookBlue,
                                               fontSize: Dimens.font_16sp,

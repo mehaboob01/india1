@@ -5,6 +5,7 @@ import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
 import 'package:india_one/screens/loyality_points/redeem_points/rp_manager.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/button_with_flower.dart';
 import '../../../widgets/circular_progressbar.dart';
@@ -20,6 +21,9 @@ class RedeemPointsPage extends StatelessWidget {
   final homeCtrl = Get.put(CashBackController());
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   final List<bool> isSelectedRedeemType = [false, false].obs;
 
   @override
@@ -29,93 +33,100 @@ class RedeemPointsPage extends StatelessWidget {
         Get.back();
         return false;
       },
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: Obx(
-            () => _loyaltyManager.isLoading.value == true
-                ? CircularProgressbar()
-                : SafeArea(
-                    child: Column(children: [
-                    CustomAppBar(
-                      heading: 'Redeem points',
-                      customActionIconsList: [
-                        CustomActionIcons(
-                            image: AppImages.bottomNavHomeSvg,
-                            onHeaderIconPressed: () async {
-                              Get.offNamedUntil(
-                                  MRouter.homeScreen, (route) => route.isFirst);
-                            })
-                      ],
-                    ),
-                    Expanded(
-                        child: SingleChildScrollView(
-                            child: Padding(
-                                padding: EdgeInsets.all(4.0.wp),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      // heading card section
-                                      Container(
-                                        width: double.maxFinite,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 4.0.wp),
-                                        height: 26.0.wp,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0.wp),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    AppImages.loyaltyCardBg),
-                                                fit: BoxFit.fill)
-                                            // gradient: LinearGradient(
-                                            //     begin: Alignment.centerLeft,
-                                            //     end: Alignment.centerRight,
-                                            //     colors: [
-                                            //       AppColors.blueColor,
-                                            //       AppColors.backGroundgradient2
-                                            //     ])),
-                                            ),
-                                        child: Stack(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.all(4.0.wp),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Redeem your balance',
-                                                    style: AppStyle.shortHeading
-                                                        .copyWith(
-                                                      fontSize: 12.0.sp,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 2.0.wp),
-                                                  Row(
-                                                    textBaseline:
-                                                        TextBaseline.alphabetic,
+      child: Obx(
+        () => IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.white,
+              body: Obx(
+                () => _loyaltyManager.isLoading.value == true
+                    ? CircularProgressbar()
+                    : SafeArea(
+                        child: Column(children: [
+                        CustomAppBar(
+                          heading: 'Redeem points',
+                          customActionIconsList: [
+                            CustomActionIcons(
+                                image: AppImages.bottomNavHomeSvg,
+                                onHeaderIconPressed: () async {
+                                  Get.offNamedUntil(MRouter.homeScreen,
+                                      (route) => route.isFirst);
+                                })
+                          ],
+                        ),
+                        Expanded(
+                            child: SingleChildScrollView(
+                                child: Padding(
+                                    padding: EdgeInsets.all(4.0.wp),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // heading card section
+                                          Container(
+                                            width: double.maxFinite,
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 4.0.wp),
+                                            height: 26.0.wp,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        4.0.wp),
+                                                image: DecorationImage(
+                                                    image: AssetImage(AppImages
+                                                        .loyaltyCardBg),
+                                                    fit: BoxFit.fill)
+                                                // gradient: LinearGradient(
+                                                //     begin: Alignment.centerLeft,
+                                                //     end: Alignment.centerRight,
+                                                //     colors: [
+                                                //       AppColors.blueColor,
+                                                //       AppColors.backGroundgradient2
+                                                //     ])),
+                                                ),
+                                            child: Stack(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.all(4.0.wp),
+                                                  child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Image.asset(
-                                                          AppImages.coins),
-                                                      SizedBox(
-                                                        width: 4,
+                                                      Text(
+                                                        'Redeem your balance',
+                                                        style: AppStyle
+                                                            .shortHeading
+                                                            .copyWith(
+                                                          fontSize: 12.0.sp,
+                                                          color: Colors.white,
+                                                        ),
                                                       ),
-                                                      Obx(
-                                                        () => Text(
-                                                          _loyaltyManager
-                                                              .redeemablePoints
-                                                              .toString(),
-                                                          style: AppStyle
-                                                              .shortHeading
-                                                              .copyWith(
+                                                      SizedBox(height: 2.0.wp),
+                                                      Row(
+                                                        textBaseline:
+                                                            TextBaseline
+                                                                .alphabetic,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.asset(
+                                                              AppImages.coins),
+                                                          SizedBox(
+                                                            width: 4,
+                                                          ),
+                                                          Obx(
+                                                            () => Text(
+                                                              _loyaltyManager
+                                                                  .redeemablePoints
+                                                                  .toString(),
+                                                              style: AppStyle.shortHeading.copyWith(
                                                                   fontSize:
                                                                       18.0.sp,
                                                                   fontWeight:
@@ -125,121 +136,128 @@ class RedeemPointsPage extends StatelessWidget {
                                                                       .white,
                                                                   letterSpacing:
                                                                       0.5),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        ' Points',
-                                                        style: AppStyle
-                                                            .shortHeading
-                                                            .copyWith(
-                                                          fontSize: 14.0.sp,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            ' Points',
+                                                            style: AppStyle
+                                                                .shortHeading
+                                                                .copyWith(
+                                                              fontSize: 14.0.sp,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
                                                     ],
-                                                  )
-                                                ],
-                                              ),
+                                                  ),
+                                                ),
+                                                Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Image.asset(
+                                                      AppImages.flower2,
+                                                      fit: BoxFit.fill,
+                                                    )),
+                                              ],
                                             ),
-                                            Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Image.asset(
-                                                  AppImages.flower2,
-                                                  fit: BoxFit.fill,
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 2.0.wp),
-                                      Text(
-                                        'You can redeem your points either through recharge or cashback to your bank account or UPI.',
-                                        style: AppStyle.shortHeading.copyWith(
-                                          fontSize: 12.0.sp,
-                                          height: 1.2.sp,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4.0.wp),
-                                      Obx(() {
-                                        return CommonToggleCard(
-                                          isSelectedlist: isSelectedRedeemType,
-                                          redeemCardList: [
-                                            RedeemCard(
-                                              imageSvg:
-                                                  AppImages.mobilRechargeSvg,
-                                              label: 'Mobile recharge',
-                                              isSelected:
-                                                  isSelectedRedeemType[0],
+                                          ),
+                                          SizedBox(height: 2.0.wp),
+                                          Text(
+                                            'You can redeem your points either through recharge or cashback to your bank account or UPI.',
+                                            style:
+                                                AppStyle.shortHeading.copyWith(
+                                              fontSize: 12.0.sp,
+                                              height: 1.2.sp,
+                                              color: Colors.black,
                                             ),
-                                            RedeemCard(
-                                              imagePng: AppImages.walletIcon,
-                                              label: 'Cashback',
-                                              isSelected:
-                                                  isSelectedRedeemType[1],
-                                            )
-                                          ],
-                                        );
-                                      })
-                                    ])))),
-                    // bottom button
+                                          ),
+                                          SizedBox(height: 4.0.wp),
+                                          Obx(() {
+                                            return CommonToggleCard(
+                                              isSelectedlist:
+                                                  isSelectedRedeemType,
+                                              redeemCardList: [
+                                                RedeemCard(
+                                                  imageSvg: AppImages
+                                                      .mobilRechargeSvg,
+                                                  label: 'Mobile recharge',
+                                                  isSelected:
+                                                      isSelectedRedeemType[0],
+                                                ),
+                                                RedeemCard(
+                                                  imagePng:
+                                                      AppImages.walletIcon,
+                                                  label: 'Cashback',
+                                                  isSelected:
+                                                      isSelectedRedeemType[1],
+                                                )
+                                              ],
+                                            );
+                                          })
+                                        ])))),
+                        // bottom button
 
-                    Padding(
-                      padding: EdgeInsets.all(6.0.wp),
-                      child: Obx(() {
-                        return ButtonWithFlower(
-                          onPressed: isSelectedRedeemType
-                                  .any((element) => element == true)
-                              ? () {
-                                  bool redeemIndex = isSelectedRedeemType
-                                      .any((element) => element);
-                                  RedeemType redeemType;
-                                  if (redeemIndex == false) {
-                                    Get.snackbar('Oops!!',
-                                        'Select a way to redeem points');
-                                  }
-                                  if (isSelectedRedeemType
-                                          .indexOf(redeemIndex) ==
-                                      0) {
-                                    redeemType = RedeemType.isMobileRecharge;
-                                  } else {
-                                    redeemType = RedeemType.isCashback;
-                                  }
-                                  goToScreen(redeemType: redeemType);
-                                  print(
-                                      '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
-                                }
-                              : () => null,
-                          label: 'Proceed',
-                          buttonWidth: double.maxFinite,
-                          buttonHeight: 12.0.wp,
-                          labelSize: 14.0.sp,
-                          labelColor: Colors.white,
-                          labelWeight: FontWeight.bold,
-                          iconToRight: isSelectedRedeemType
-                                  .any((element) => element == true)
-                              ? true
-                              : false,
-                          iconColor: Colors.white,
-                          buttonColor: isSelectedRedeemType
-                                  .any((element) => element == true)
-                              ? null
-                              : const Color(0xffc1c1c1),
-                          buttonGradient: isSelectedRedeemType
-                                  .any((element) => element == true)
-                              ? const LinearGradient(
-                                  begin: Alignment(-2, 0),
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                      AppColors.orangeGradient1,
-                                      AppColors.orangeGradient2,
-                                    ])
-                              : null,
-                        );
-                      }),
-                    )
-                  ])),
-          )),
+                        Padding(
+                          padding: EdgeInsets.all(6.0.wp),
+                          child: Obx(() {
+                            return ButtonWithFlower(
+                              onPressed: isSelectedRedeemType
+                                      .any((element) => element == true)
+                                  ? () {
+                                      bool redeemIndex = isSelectedRedeemType
+                                          .any((element) => element);
+                                      RedeemType redeemType;
+                                      if (redeemIndex == false) {
+                                        Get.snackbar('Oops!!',
+                                            'Select a way to redeem points');
+                                      }
+                                      if (isSelectedRedeemType
+                                              .indexOf(redeemIndex) ==
+                                          0) {
+                                        redeemType =
+                                            RedeemType.isMobileRecharge;
+                                      } else {
+                                        redeemType = RedeemType.isCashback;
+                                      }
+                                      goToScreen(redeemType: redeemType);
+                                      print(
+                                          '$redeemType, ${isSelectedRedeemType.indexOf(redeemIndex)}');
+                                    }
+                                  : () => null,
+                              label: 'Proceed',
+                              buttonWidth: double.maxFinite,
+                              buttonHeight: 12.0.wp,
+                              labelSize: 14.0.sp,
+                              labelColor: Colors.white,
+                              labelWeight: FontWeight.bold,
+                              iconToRight: isSelectedRedeemType
+                                      .any((element) => element == true)
+                                  ? true
+                                  : false,
+                              iconColor: Colors.white,
+                              buttonColor: isSelectedRedeemType
+                                      .any((element) => element == true)
+                                  ? null
+                                  : const Color(0xffc1c1c1),
+                              buttonGradient: isSelectedRedeemType
+                                      .any((element) => element == true)
+                                  ? const LinearGradient(
+                                      begin: Alignment(-2, 0),
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                          AppColors.orangeGradient1,
+                                          AppColors.orangeGradient2,
+                                        ])
+                                  : null,
+                            );
+                          }),
+                        )
+                      ])),
+              )),
+        ),
+      ),
     );
   }
 

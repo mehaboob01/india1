@@ -17,6 +17,7 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
 
 import '../../../../widgets/custom_slider.dart';
+import '../../../connection_manager/ConnectionManagerController.dart';
 
 class GoldLoanIO extends StatefulWidget {
   @override
@@ -68,6 +69,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
   GlobalKey<FormState> residentialForm = GlobalKey<FormState>();
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   void dispose() {
     profileController.resetData();
@@ -78,74 +82,80 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
   Widget build(BuildContext context) {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: SizedBox(
-          width: widthIs,
-          child: Obx(
-            () => Column(
-              children: [
-                CustomAppBar(
-                  heading: 'Gold loan',
-                  customActionIconsList: commonAppIcons,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Obx(
-                        () => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DividerIO(
-                              height: 21,
-                            ),
-                            Obx(
-                              () => IgnorePointer(
-                                child: AnotherStepper(
-                                  stepperList: loanController.bikeLoanTitleList
-                                      .map((e) => StepperData(
-                                            title: "$e",
-                                          ))
-                                      .toList(),
-                                  stepperDirection: Axis.horizontal,
-                                  iconWidth: 25,
-                                  iconHeight: 25,
-                                  inverted: true,
-                                  activeBarColor: AppColors.pointsColor,
-                                  activeIndex:
-                                      loanController.currentScreen.value,
-                                  callBack: (i) {
-                                    loanController.currentScreen.value = i;
-                                  },
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(
+            child: SizedBox(
+              width: widthIs,
+              child: Obx(
+                () => Column(
+                  children: [
+                    CustomAppBar(
+                      heading: 'Gold loan',
+                      customActionIconsList: commonAppIcons,
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Obx(
+                            () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DividerIO(
+                                  height: 21,
                                 ),
-                              ),
+                                Obx(
+                                  () => IgnorePointer(
+                                    child: AnotherStepper(
+                                      stepperList:
+                                          loanController.bikeLoanTitleList
+                                              .map((e) => StepperData(
+                                                    title: "$e",
+                                                  ))
+                                              .toList(),
+                                      stepperDirection: Axis.horizontal,
+                                      iconWidth: 25,
+                                      iconHeight: 25,
+                                      inverted: true,
+                                      activeBarColor: AppColors.pointsColor,
+                                      activeIndex:
+                                          loanController.currentScreen.value,
+                                      callBack: (i) {
+                                        loanController.currentScreen.value = i;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                loanController.currentScreen.value ==
+                                        Steps.LOAN_AMOUNT.index
+                                    ? loanAmountUi()
+                                    : loanController.currentScreen.value ==
+                                            Steps.PERSONAL.index
+                                        ? personalInfoUi()
+                                        : residentialInfoUi()
+                              ],
                             ),
-                            loanController.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
-                                ? loanAmountUi()
-                                : loanController.currentScreen.value ==
-                                        Steps.PERSONAL.index
-                                    ? personalInfoUi()
-                                    : residentialInfoUi()
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
+                          ? loanAmountButton()
+                          : loanController.currentScreen.value ==
+                                  Steps.PERSONAL.index
+                              ? personalInfoButton()
+                              : residentialInfoButton(),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: loanController.currentScreen.value ==
-                          Steps.LOAN_AMOUNT.index
-                      ? loanAmountButton()
-                      : loanController.currentScreen.value ==
-                              Steps.PERSONAL.index
-                          ? personalInfoButton()
-                          : residentialInfoButton(),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -305,30 +315,30 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
-                    color:
-                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? Colors.black
-                            : AppColors.black26Color,
-                    fontWeight:
-                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? FontWeight.w600
-                            : FontWeight.w400),
+                    color: loanController.currentScreen.value ==
+                            Steps.LOAN_AMOUNT.index
+                        ? Colors.black
+                        : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen.value ==
+                            Steps.LOAN_AMOUNT.index
+                        ? FontWeight.w600
+                        : FontWeight.w400),
               ),
               DividerIO(
                 height: 24,
               ),
               Text(
-                'Choose the loan amount you want from slider or enter in the text field',
+                'Enter the loan amount required using the slider OR type in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
-                    color:
-                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? Colors.grey
-                            : AppColors.black26Color,
-                    fontWeight:
-                        loanController.currentScreen == Steps.LOAN_AMOUNT.index
-                            ? FontWeight.w600
-                            : FontWeight.w400),
+                    color: loanController.currentScreen.value ==
+                            Steps.LOAN_AMOUNT.index
+                        ? Colors.grey
+                        : AppColors.black26Color,
+                    fontWeight: loanController.currentScreen.value ==
+                            Steps.LOAN_AMOUNT.index
+                        ? FontWeight.w600
+                        : FontWeight.w400),
               ),
             ],
           ),

@@ -7,6 +7,7 @@ import 'package:india_one/screens/insurances/controller/insurance_controller.dar
 import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../insurance_common.dart';
 
 class InsuranceSummary extends StatefulWidget {
@@ -27,399 +28,425 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
     insuranceController.fetchInsuranceSummary();
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child: Obx(() {
-        if (insuranceController.insuranceSummaryLoading.value) {
-          return CircularProgressbar();
-        } else {
-          return SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    // color: Colors.red,
-                    height: Get.height * 0.52,
-                    child: Stack(
-                      // alignment: Alignment.bottomCenter,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(AppImages.heading_bg_PNG),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          height: Get.height * 0.4,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Spacer(),
-                                      ImageIcon(
-                                        AssetImage(AppImages.rupees_icon),
-                                        size: 40,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        "${insuranceController.insuranceSummaryModel.value.totalAmount}",
-                                        style: TextStyle(
-                                            fontSize: 70, color: Colors.white),
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  )),
-                              Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color:
-                                            Color(0xFFD9D9D9).withOpacity(0.3),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    height: Get.height * 0.04,
-                                    width: Get.width * 0.3,
-                                    child: Center(
-                                        child: Text(
-                                      "Total Amount",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xFFFFFFFF),
-                                          fontSize: 16),
-                                    )),
-                                  )),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // boxShadow: <BoxShadow>[
-                              //   BoxShadow(
-                              //       color: Colors.white.,
-                              //       blurRadius: 15.0,
-                              //       blurStyle: BlurStyle.normal,
-                              //       offset: Offset(0.0, 0.3)),
-                              // ],
-                              boxShadow: kElevationToShadow[2],
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8)),
-                              color: Colors.white,
-                            ),
-                            height: Get.height * 0.22,
-                            width: double.maxFinite,
-                            child: Padding(
-                              padding: EdgeInsets.all(20),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          body: SafeArea(child: Obx(() {
+            if (insuranceController.insuranceSummaryLoading.value) {
+              return CircularProgressbar();
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        // color: Colors.red,
+                        height: Get.height * 0.52,
+                        child: Stack(
+                          // alignment: Alignment.bottomCenter,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(AppImages.heading_bg_PNG),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              height: Get.height * 0.4,
+                              width: double.infinity,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 1),
-                                    child: Text(
-                                      "Price Details",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Container(
-                                    height: Get.height * 0.125,
-                                    width: double.maxFinite,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFF7F7F7),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
+                                  Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Premium amount",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              Text(
-                                                "₹ ${insuranceController.insuranceSummaryModel.value.premiumAmount}",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
+                                          Spacer(),
+                                          ImageIcon(
+                                            AssetImage(AppImages.rupees_icon),
+                                            size: 40,
+                                            color: Colors.white,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "GST",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              Text(
-                                                "₹ ${insuranceController.insuranceSummaryModel.value.gstAmount}",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
+                                          Text(
+                                            "${insuranceController.insuranceSummaryModel.value.totalAmount}",
+                                            style: TextStyle(
+                                                fontSize: 70,
+                                                color: Colors.white),
                                           ),
-                                          Divider(
-                                            thickness: 1.5,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Total amount",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Text(
-                                                "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                          Spacer(),
                                         ],
-                                      ),
-                                    ),
-                                  )
+                                      )),
+                                  Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFD9D9D9)
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        height: Get.height * 0.04,
+                                        width: Get.width * 0.3,
+                                        child: Center(
+                                            child: Text(
+                                          "Total Amount",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xFFFFFFFF),
+                                              fontSize: 16),
+                                        )),
+                                      )),
                                 ],
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.01,
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15, right: 15, bottom: 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "View Summary",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
-                        ),
-                        expansionTile("Plan Details"),
-                        expansionTile("Insured Member Details"),
-                        expansionTile("Insured Member Address"),
-                        expansionTile("Nominee Details"),
-                        Row(
-                          children: [
-                            Checkbox(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0))),
-                                // Rounded Checkbox
-                                activeColor: AppColors.facebookBlue,
-                                //only check box
-                                value: termConditionChecked,
-                                //unchecked
-                                onChanged: (bool? value) {
-                                  //value returned when checkbox is clicked
-                                  setState(() {
-                                    termConditionChecked = value;
-                                    alertTextShow = false;
-                                  });
-                                }),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            SingleChildScrollView(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "i_accept".tr,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontFamily: 'Graphik',
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.black,
-                                      fontSize: Dimens.font_16sp,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 6,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Tnc_IO()),
-                                      );
-                                    },
-                                    child: Text(
-                                      "term_condition".tr,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                        fontFamily: 'Graphik',
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.facebookBlue,
-                                        fontSize: Dimens.font_16sp,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  // boxShadow: <BoxShadow>[
+                                  //   BoxShadow(
+                                  //       color: Colors.white.,
+                                  //       blurRadius: 15.0,
+                                  //       blurStyle: BlurStyle.normal,
+                                  //       offset: Offset(0.0, 0.3)),
+                                  // ],
+                                  boxShadow: kElevationToShadow[2],
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      topRight: Radius.circular(8)),
+                                  color: Colors.white,
+                                ),
+                                height: Get.height * 0.22,
+                                width: double.maxFinite,
+                                child: Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 1),
+                                        child: Text(
+                                          "Price Details",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Visibility(
-                              visible: alertTextShow == true ? true : false,
-                              child: Icon(
-                                CupertinoIcons.exclamationmark_circle_fill,
-                                color: AppColors.googleRed,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            Visibility(
-                              visible: alertTextShow == true ? true : false,
-                              child: Expanded(
-                                child: Text(
-                                  'checkbox_select_error'.tr,
-                                  overflow: TextOverflow.visible,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    overflow: TextOverflow.visible,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.googleRed,
-                                    fontSize: Dimens.font_12sp,
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Container(
+                                        height: Get.height * 0.125,
+                                        width: double.maxFinite,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFF7F7F7),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Premium amount",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "₹ ${insuranceController.insuranceSummaryModel.value.premiumAmount}",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "GST",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "₹ ${insuranceController.insuranceSummaryModel.value.gstAmount}",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Divider(
+                                                thickness: 1.5,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Total amount",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
+                            )
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            /*termConditionChecked!
-                                ? {print("Checked")}
-                                : setState(() {
-                                    alertTextShow = true;
-                                  });*/
-
-                            if (termConditionChecked!) {
-                              print("$termConditionChecked");
-                              InsuranceCommon().bottomSheet(context,
-                                  callBack: () {
-                                Get.back();
-
-                                insuranceController.applyForInsurance();
-                              });
-                            } else {
-                              setState(() {
-                                alertTextShow = true;
-                              });
-                            }
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.height * 0.9,
-                            height: 48,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, bottom: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "View Summary",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                            ),
+                            expansionTile("Plan Details"),
+                            expansionTile("Insured Member Details"),
+                            expansionTile("Insured Member Address"),
+                            expansionTile("Nominee Details"),
+                            Row(
                               children: [
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Proceed to Pay",
-                                      style: AppTextThemes.button,
+                                Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0))),
+                                    // Rounded Checkbox
+                                    activeColor: AppColors.facebookBlue,
+                                    //only check box
+                                    value: termConditionChecked,
+                                    //unchecked
+                                    onChanged: (bool? value) {
+                                      //value returned when checkbox is clicked
+                                      setState(() {
+                                        termConditionChecked = value;
+                                        alertTextShow = false;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                SingleChildScrollView(
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "i_accept".tr,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          fontFamily: AppFonts.appFont,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.black,
+                                          fontSize: Dimens.font_16sp,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Tnc_IO()),
+                                          );
+                                        },
+                                        child: Text(
+                                          "term_condition".tr,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: AppFonts.appFont,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.facebookBlue,
+                                            fontSize: Dimens.font_16sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Visibility(
+                                  visible: alertTextShow == true ? true : false,
+                                  child: Icon(
+                                    CupertinoIcons.exclamationmark_circle_fill,
+                                    color: AppColors.googleRed,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Visibility(
+                                  visible: alertTextShow == true ? true : false,
+                                  child: Expanded(
+                                    child: Text(
+                                      'checkbox_select_error'.tr,
+                                      overflow: TextOverflow.visible,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        overflow: TextOverflow.visible,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.googleRed,
+                                        fontSize: Dimens.font_12sp,
+                                      ),
                                     ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                /*termConditionChecked!
+                                    ? {print("Checked")}
+                                    : setState(() {
+                                        alertTextShow = true;
+                                      });*/
+
+                                if (termConditionChecked!) {
+                                  print("$termConditionChecked");
+                                  InsuranceCommon().bottomSheet(context,
+                                      callBack: () {
+                                    Get.back();
+
+                                    insuranceController.applyForInsurance();
+                                  });
+                                } else {
+                                  setState(() {
+                                    alertTextShow = true;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.height * 0.9,
+                                height: 48,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Spacer(),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Proceed to Pay",
+                                          style: AppTextThemes.button,
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    // termConditionChecked!
+                                    //     ? SizedBox(
+                                    //         height: 48,
+                                    //         child: Image.asset(
+                                    //           "assets/images/btn_img.png",
+                                    //           fit: BoxFit.fill,
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox(),
                                   ],
                                 ),
-                                Spacer(),
-                                // termConditionChecked!
-                                //     ? SizedBox(
-                                //         height: 48,
-                                //         child: Image.asset(
-                                //           "assets/images/btn_img.png",
-                                //           fit: BoxFit.fill,
-                                //         ),
-                                //       )
-                                //     : SizedBox(),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              gradient: termConditionChecked!
-                                  ? new LinearGradient(
-                                      end: Alignment.topRight,
-                                      colors: [Colors.orange, Colors.redAccent],
-                                    )
-                                  : LinearGradient(colors: [
-                                      AppColors.btnDisableColor,
-                                      AppColors.btnDisableColor
-                                    ]),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.8),
-                                  offset: Offset(
-                                    -6.0,
-                                    -6.0,
-                                  ),
-                                  blurRadius: 16.0,
+                                decoration: BoxDecoration(
+                                  gradient: termConditionChecked!
+                                      ? new LinearGradient(
+                                          end: Alignment.topRight,
+                                          colors: [
+                                            Colors.orange,
+                                            Colors.redAccent
+                                          ],
+                                        )
+                                      : LinearGradient(colors: [
+                                          AppColors.btnDisableColor,
+                                          AppColors.btnDisableColor
+                                        ]),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.8),
+                                      offset: Offset(
+                                        -6.0,
+                                        -6.0,
+                                      ),
+                                      blurRadius: 16.0,
+                                    ),
+                                    BoxShadow(
+                                      color:
+                                          AppColors.darkerGrey.withOpacity(0.4),
+                                      offset: Offset(6.0, 6.0),
+                                      blurRadius: 16.0,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(6.0),
                                 ),
-                                BoxShadow(
-                                  color: AppColors.darkerGrey.withOpacity(0.4),
-                                  offset: Offset(6.0, 6.0),
-                                  blurRadius: 16.0,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(6.0),
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              height: Get.height * 0.02,
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          height: Get.height * 0.02,
-                        )
-                      ],
-                    ),
-                  ),
-                ]),
-          );
-        }
-      })),
+                      ),
+                    ]),
+              );
+            }
+          })),
+        ),
+      ),
     );
   }
 

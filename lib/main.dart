@@ -97,6 +97,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         locale: Locale('en', 'US'),
         translations: LocaleString(),
+        theme: ThemeData(fontFamily: AppFonts.appFont),
         onGenerateRoute: MRouter.generateRoute,
         initialRoute: MRouter.splashRoute);
   }

@@ -10,6 +10,7 @@ import 'package:india_one/widgets/your_reward_card.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../utils/common_methods.dart';
 import 'loyality_manager.dart';
@@ -38,188 +39,203 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
 
   LoyaltyManager _loyaltyManager = Get.put(LoyaltyManager());
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: WillPopScope(
-        onWillPop: () async {
-          return _loyaltyManager.isOverlayOpen.value ? false : true;
-        },
-        child: SafeArea(
-          child: SmartRefresher(
-            enablePullDown: true,
-            controller: _refreshController,
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            child: Column(
-              children: [
-                CustomAppBar(
-                  heading: 'Loyalty program',
-                  hasLogo: true,
-                  customActionIconsList: [
-                    CustomActionIcons(
-                        image: AppImages.bottomNavHomeSvg,
-                        onHeaderIconPressed: () async {
-                          Get.offNamedUntil(
-                              MRouter.homeScreen, (route) => route.isFirst);
-                        })
-                  ],
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      // padding
-                      padding: EdgeInsets.all(4.0.wp),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HeadingContainer(),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15.0, bottom: 6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Your rewards',
-                                    style: AppStyle.shortHeading.copyWith(
-                                        color: const Color(0xff2d2d2d),
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(MRouter.usedRewardHistory);
-                                    },
-                                    // history text will be there
-                                    child: Text(
-                                      'History', //'View used points',
-                                      style: AppStyle.shortHeading.copyWith(
-                                          fontSize: 10.0.sp,
-                                          color: const Color(0xff2364A1),
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 4.0.wp),
-                            Obx(
-                              () => _loyaltyManager.isLoading.value == true
-                                  ? Shimmer.fromColors(
-                                      baseColor:
-                                          AppColors.greySecond.withOpacity(0.5),
-                                      highlightColor: AppColors.darkGrey,
-                                      child: ListView.builder(
-                                        itemCount: _loyaltyManager
-                                            .recentRewardTransactionsList
-                                            .length,
-                                        itemBuilder: (context, index) {
-                                          return Card(
-                                            elevation: 1.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                            ),
-                                            child: SizedBox(height: 80),
-                                          );
-                                        },
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: WillPopScope(
+            onWillPop: () async {
+              return _loyaltyManager.isOverlayOpen.value ? false : true;
+            },
+            child: SafeArea(
+              child: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: Column(
+                  children: [
+                    CustomAppBar(
+                      heading: 'Loyalty program',
+                      hasLogo: true,
+                      customActionIconsList: [
+                        CustomActionIcons(
+                            image: AppImages.bottomNavHomeSvg,
+                            onHeaderIconPressed: () async {
+                              Get.offNamedUntil(
+                                  MRouter.homeScreen, (route) => route.isFirst);
+                            })
+                      ],
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          // padding
+                          padding: EdgeInsets.all(4.0.wp),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HeadingContainer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 15.0, bottom: 6.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Your rewards',
+                                        style: AppStyle.shortHeading.copyWith(
+                                            color: const Color(0xff2d2d2d),
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                    )
-                                  : _loyaltyManager.recentRewardTransactionsList
-                                              .length ==
-                                          0
-                                      ? Center(
-                                          child: Text(
-                                          "No Rewards!",
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(
+                                              MRouter.usedRewardHistory);
+                                        },
+                                        // history text will be there
+                                        child: Text(
+                                          'History', //'View used points',
                                           style: AppStyle.shortHeading.copyWith(
-                                              color: const Color(0xff2d2d2d),
+                                              fontSize: 10.0.sp,
+                                              color: const Color(0xff2364A1),
                                               fontWeight: FontWeight.w600),
-                                        ))
-                                      : GridView(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          scrollDirection: Axis.vertical,
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 1,
-                                                  crossAxisSpacing: 4.0.wp,
-                                                  mainAxisSpacing: 4.0.wp),
-                                          children: List.generate(
-                                            _loyaltyManager
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4.0.wp),
+                                Obx(
+                                  () => _loyaltyManager.isLoading.value == true
+                                      ? Shimmer.fromColors(
+                                          baseColor: AppColors.greySecond
+                                              .withOpacity(0.5),
+                                          highlightColor: AppColors.darkGrey,
+                                          child: ListView.builder(
+                                            itemCount: _loyaltyManager
                                                 .recentRewardTransactionsList
                                                 .length,
-                                            (index) => YourRewardCard(
-                                              rewardState: isActive(_loyaltyManager
-                                                  .recentRewardTransactionsList[
-                                                      index]
-                                                  .expiryDate!),
-
-                                              // isActive(_loyaltyManager
-                                              //         .recentRewardTransactionsList[
-                                              //             index]
-                                              //         .expiryDate!)
-                                              //     ? RewardState.expired
-                                              //     ? :RewardState.used,
-                                              rewardtype: _loyaltyManager
+                                            itemBuilder: (context, index) {
+                                              return Card(
+                                                elevation: 1.0,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
+                                                child: SizedBox(height: 80),
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : _loyaltyManager
+                                                  .recentRewardTransactionsList
+                                                  .length ==
+                                              0
+                                          ? Center(
+                                              child: Text(
+                                              "No Rewards!",
+                                              style: AppStyle.shortHeading
+                                                  .copyWith(
+                                                      color: const Color(
+                                                          0xff2d2d2d),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                            ))
+                                          : GridView(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              scrollDirection: Axis.vertical,
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 2,
+                                                      childAspectRatio: 1,
+                                                      crossAxisSpacing: 4.0.wp,
+                                                      mainAxisSpacing: 4.0.wp),
+                                              children: List.generate(
+                                                _loyaltyManager
+                                                    .recentRewardTransactionsList
+                                                    .length,
+                                                (index) => YourRewardCard(
+                                                  rewardState: isActive(
+                                                      _loyaltyManager
                                                           .recentRewardTransactionsList[
                                                               index]
-                                                          .typeId
-                                                          .toString() ==
-                                                      "referralBonnus"
-                                                  ? Rewardtype.referralBonus
-                                                  : _loyaltyManager
+                                                          .expiryDate!),
+
+                                                  // isActive(_loyaltyManager
+                                                  //         .recentRewardTransactionsList[
+                                                  //             index]
+                                                  //         .expiryDate!)
+                                                  //     ? RewardState.expired
+                                                  //     ? :RewardState.used,
+                                                  rewardtype: _loyaltyManager
                                                               .recentRewardTransactionsList[
                                                                   index]
                                                               .typeId
                                                               .toString() ==
-                                                          "cacheTransaction"
-                                                      ? Rewardtype
-                                                          .cashTransaction
+                                                          "referralBonnus"
+                                                      ? Rewardtype.referralBonus
                                                       : _loyaltyManager
                                                                   .recentRewardTransactionsList[
                                                                       index]
                                                                   .typeId
                                                                   .toString() ==
-                                                              "Recharge"
-                                                          ? Rewardtype.recharge
+                                                              "cacheTransaction"
+                                                          ? Rewardtype
+                                                              .cashTransaction
                                                           : _loyaltyManager
                                                                       .recentRewardTransactionsList[
                                                                           index]
                                                                       .typeId
                                                                       .toString() ==
-                                                                  "nonCacheTransaction"
+                                                                  "Recharge"
                                                               ? Rewardtype
                                                                   .recharge
-                                                              : Rewardtype
-                                                                  .cashTransaction,
-                                              date: CommonMethods().getOnlyDate(
-                                                  date: _loyaltyManager
+                                                              : _loyaltyManager
+                                                                          .recentRewardTransactionsList[
+                                                                              index]
+                                                                          .typeId
+                                                                          .toString() ==
+                                                                      "nonCacheTransaction"
+                                                                  ? Rewardtype
+                                                                      .recharge
+                                                                  : Rewardtype
+                                                                      .cashTransaction,
+                                                  date: CommonMethods().getOnlyDate(
+                                                      date: _loyaltyManager
+                                                          .recentRewardTransactionsList[
+                                                              index]
+                                                          .expiryDate!),
+                                                  points: _loyaltyManager
                                                       .recentRewardTransactionsList[
                                                           index]
-                                                      .expiryDate!),
-                                              points: _loyaltyManager
-                                                  .recentRewardTransactionsList[
-                                                      index]
-                                                  .points!
-                                                  .toInt(),
+                                                      .points!
+                                                      .toInt(),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                            ),
-                            const SizedBox(height: 10),
-                            CommonBanner(
-                              margin: EdgeInsets.zero,
-                            ),
-                            const SizedBox(height: 10),
-                          ]),
+                                ),
+                                const SizedBox(height: 10),
+                                CommonBanner(
+                                  margin: EdgeInsets.zero,
+                                ),
+                                const SizedBox(height: 10),
+                              ]),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

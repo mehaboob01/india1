@@ -6,6 +6,7 @@ import 'package:india_one/screens/onboarding_login/select_language/each_language
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import 'package:india_one/widgets/screen_bg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import 'select_lan_manager.dart';
 
@@ -46,11 +47,19 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
     {'name': 'ଓଡିଆ', 'locale': Locale('or', 'IN')},
   ];
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(child: buildSelectLanScreen()),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(child: buildSelectLanScreen()),
+        ),
+      ),
     );
   }
 
@@ -96,7 +105,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           fontWeight: FontWeight.w600,
                           color: AppColors.black,
                           fontSize: Dimens.font_22sp,
-                          fontFamily: 'Graphik'),
+                          fontFamily: AppFonts.appFont),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -117,9 +126,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           EachLanguageIO("English", () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.ENGLISH.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "en");
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.ENGLISH.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "en");
                             updateLanguage(
                                 locale[Language.ENGLISH.index]['locale'],
                                 Language.ENGLISH.index);
@@ -140,9 +150,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           EachLanguageIO("ಕನ್ನಡ", () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.KANNADA.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "kn");
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.KANNADA.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "kn");
 
                             updateLanguage(
                                 locale[Language.KANNADA.index]['locale'],
@@ -166,9 +177,11 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                 await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "hi");
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "hi");
 
-                            updateLanguage(locale[Language.HINDI.index]['locale'],
+                            updateLanguage(
+                                locale[Language.HINDI.index]['locale'],
                                 Language.HINDI.index);
                             if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
                               print("api call");
@@ -187,9 +200,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           EachLanguageIO("मराठी", () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.MARATHI.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "mr");
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.MARATHI.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "mr");
 
                             updateLanguage(
                                 locale[Language.MARATHI.index]['locale'],
@@ -211,9 +225,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           EachLanguageIO("తెలుగు", () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.TELUGU.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "te");
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.TELUGU.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "te");
 
                             updateLanguage(
                                 locale[Language.TELUGU.index]['locale'],
@@ -237,9 +252,11 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                 await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.TAMIL.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "ta");
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "ta");
 
-                            updateLanguage(locale[Language.TAMIL.index]['locale'],
+                            updateLanguage(
+                                locale[Language.TAMIL.index]['locale'],
                                 Language.TAMIL.index);
                             if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
                               print("api call");
@@ -260,7 +277,8 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                 await SharedPreferences.getInstance();
                             prefs.setInt(SPKeys.SELECTED_LANGUAGE,
                                 Language.MALAYALAM.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "ml");
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "ml");
 
                             updateLanguage(
                                 locale[Language.MALAYALAM.index]['locale'],
@@ -282,9 +300,10 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                           EachLanguageIO("বাংলো", () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.BENGALI.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "bn");
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.BENGALI.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "bn");
 
                             updateLanguage(
                                 locale[Language.BENGALI.index]['locale'],
@@ -308,9 +327,11 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                 await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.ODIA.index);
-                            prefs.setString(SPKeys.SELECTED_LANGUAGE_CODE, "bn");
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "bn");
 
-                            updateLanguage(locale[Language.ODIA.index]['locale'],
+                            updateLanguage(
+                                locale[Language.ODIA.index]['locale'],
                                 Language.ODIA.index);
                           },
                               selectedLanguage == Language.ODIA.index

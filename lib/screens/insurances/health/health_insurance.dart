@@ -7,6 +7,7 @@ import 'package:india_one/screens/insurances/widgets/custom_drop_down.dart';
 import 'package:india_one/screens/insurances/widgets/policy_item_widget.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/circular_progressbar.dart';
 import '../../../widgets/loyalty_common_header.dart';
@@ -37,13 +38,21 @@ class _HealthInsuranceState extends State<HealthInsurance> {
         insuranceType: InsuranceType.CriticalIllness);
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: body(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: body(),
+        ),
+      ),
     );
   }
 

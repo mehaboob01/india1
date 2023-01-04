@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:india_one/screens/insurances/health/health_insurance.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
@@ -28,30 +29,37 @@ class _InsurancePageState extends State<InsurancePage> {
     loanController.insuranceRecentTransactions();
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
   // const InsurancePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonPageHeader(pageName: PageName.insurance),
-              CommonPageCategoriesHeading(pageName: PageName.insurance),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                child: const InsuranceCard(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonPageHeader(pageName: PageName.insurance),
+                  CommonPageCategoriesHeading(pageName: PageName.insurance),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                    child: const InsuranceCard(),
+                  ),
+                  CommonBanner(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: InsuranceDashboardHistory(isFromInsurance: true),
+                  ),
+                ],
               ),
-              CommonBanner(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: InsuranceDashboardHistory(isFromInsurance: true),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -94,7 +102,9 @@ class InsuranceCard extends StatelessWidget {
             // Get.toNamed(MRouter.healthInsurance, arguments: [
             //   {"isAccidentInsurance": false}
             // ]);
-            Get.to(()=>HealthInsurance(isAccidentInsurance: false,));
+            Get.to(() => HealthInsurance(
+                  isAccidentInsurance: false,
+                ));
           },
           child: ItemCard(
             image: AppImages.criticalIllnessSvg,

@@ -3,6 +3,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 
+import '../connection_manager/ConnectionManagerController.dart';
 import '../constant/routes.dart';
 import '../constant/theme_manager.dart';
 
@@ -22,38 +23,45 @@ class CommonWebView extends StatefulWidget {
 class _CommonWebViewState extends State<CommonWebView> {
   String url = "";
   double progress = 0;
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
 
   @override
   Widget build(BuildContext context) {
     print('hjell ');
     print(widget.title);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(
-              heading: '${widget.title}',
-              hasLogo: true,
-              customActionIconsList: [
-                CustomActionIcons(
-                    image: AppImages.bottomNavHomeSvg,
-                    onHeaderIconPressed: () async {
-                      Get.offNamedUntil(
-                          MRouter.homeScreen, (route) => route.isFirst);
-                    })
-              ],
-            ),
-            Expanded(
-              child: InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.tryParse(
-                    '${widget.url}',
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(
+            child: Column(
+              children: [
+                CustomAppBar(
+                  heading: '${widget.title}',
+                  hasLogo: true,
+                  customActionIconsList: [
+                    CustomActionIcons(
+                        image: AppImages.bottomNavHomeSvg,
+                        onHeaderIconPressed: () async {
+                          Get.offNamedUntil(
+                              MRouter.homeScreen, (route) => route.isFirst);
+                        })
+                  ],
+                ),
+                Expanded(
+                  child: InAppWebView(
+                    initialUrlRequest: URLRequest(
+                      url: Uri.tryParse(
+                        '${widget.url}',
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

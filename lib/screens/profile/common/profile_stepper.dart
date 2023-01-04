@@ -107,7 +107,6 @@ class ProfileStepper {
       int? maxLength,
       bool textCap = false}) {
     return TextFormField(
-
       textInputAction: TextInputAction.next,
       autofocus: true,
       controller: controller,
@@ -136,7 +135,7 @@ class ProfileStepper {
       },
       readOnly: isDisable,
       style: TextStyle(
-        fontFamily: 'Graphik',
+        fontFamily: AppFonts.appFont,
         fontWeight: FontWeight.w600,
         color: AppColors.lightBlack,
         fontSize: Dimens.font_16sp,
@@ -203,9 +202,6 @@ class ProfileStepper {
                 height: 20,
               ),
               textField(
-
-
-
                 controller: profileController.firstNameController.value,
                 label: 'First Name',
                 hint: 'Enter your first name',
@@ -220,10 +216,7 @@ class ProfileStepper {
                   }
                 },
                 keyboardType: TextInputType.name,
-
-
                 inputFormatters: <TextInputFormatter>[
-
                   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                 ],
               ),
@@ -231,7 +224,6 @@ class ProfileStepper {
                 height: 20,
               ),
               textField(
-
                 controller: profileController.lastNameController.value,
                 label: 'Last Name',
                 hint: 'Enter your last name',
@@ -417,13 +409,18 @@ class ProfileStepper {
                 ),
               ],
               if (loanType == LoanType.BikeLoan ||
-                  loanType == LoanType.CarLoan) ...[
+                  loanType == LoanType.CarLoan ||
+                  isFromInsurance == true) ...[
                 SizedBox(
                   height: 20,
                 ),
                 textField(
                   controller: profileController.panNumberController.value,
                   label: 'PAN number',
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                    UpperCaseTextFormatter()
+                  ],
                   hint: 'Enter your PAN number here',
                   vaidation: (value) {
                     if (isFromLoan == true ||
@@ -462,7 +459,7 @@ class ProfileStepper {
           width: 2,
         ),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: [
           Radio(
@@ -552,8 +549,7 @@ class ProfileStepper {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
                       value.toString().trim().isNotEmpty) {
-
-                    profileController.pinCodeValidation(
+                    return profileController.pinCodeValidation(
                       value,
                     );
                   }
@@ -671,14 +667,19 @@ class ProfileStepper {
                     child: Text(value['name'].toString()),
                   );
                 }).toList(),
-                value: profileController.employmentType.value.isEmpty
-                 || profileController.employmentType.value.contains("null")   ? null
+                value: profileController.employmentType.value.isEmpty ||
+                        profileController.employmentType.value.contains("null")
+                    ? null
                     : profileController.employmentType.value,
                 onChanged: (value) {
                   profileController.employmentType.value = value;
                 },
-                label: 'Employment type',
-                hint: 'Choose your employment type',
+                label: isFromInsurance == true
+                    ? 'Occupation type'
+                    : 'Employment type',
+                hint: isFromInsurance == true
+                    ? 'Select an option'
+                    : 'Choose your employment type',
               ),
               SizedBox(
                 height: 20,
@@ -719,7 +720,8 @@ class ProfileStepper {
                         child: Text(value['name'].toString()),
                       );
                     }).toList(),
-                    value: profileController.accountType.value.isEmpty || profileController.accountType.value.contains("null")
+                    value: profileController.accountType.value.isEmpty ||
+                            profileController.accountType.value.contains("null")
                         ? null
                         : profileController.accountType.value,
                     onChanged: (value) {
@@ -788,24 +790,26 @@ class ProfileStepper {
               SizedBox(
                 height: 20,
               ),
-              textField(
-                controller: profileController.panNumberController.value,
-                label: 'PAN number',
-                hint: 'Enter your PAN number here',
-                textCap: true,
-                inputFormatters: [UpperCaseTextFormatter()],
-                onChanged: (value) {},
-                vaidation: (value) {
-                  if (isFromLoan == true ||
-                      isFromInsurance == true ||
-                      value.toString().trim().isNotEmpty) {
-                    return profileController.panValidation(
-                      value,
-                    );
-                  }
-                  return null;
-                },
-              ),
+              isFromInsurance == true
+                  ? SizedBox.shrink()
+                  : textField(
+                      controller: profileController.panNumberController.value,
+                      label: 'PAN number',
+                      hint: 'Enter your PAN number here',
+                      textCap: true,
+                      inputFormatters: [UpperCaseTextFormatter()],
+                      onChanged: (value) {},
+                      vaidation: (value) {
+                        if (isFromLoan == true ||
+                            isFromInsurance == true ||
+                            value.toString().trim().isNotEmpty) {
+                          return profileController.panValidation(
+                            value,
+                          );
+                        }
+                        return null;
+                      },
+                    ),
               SizedBox(
                 height: 20,
               ),
@@ -1086,7 +1090,6 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   {"name": "Masters", "value": "Masters"},
                   {"name": "NonGraduate", "value": "NonGraduate"},
                   {"name": "MBA", "value": "MBA"},
-
                 ].map((value) {
                   return DropdownMenuItem(
                     value: value['value'],
@@ -1094,16 +1097,15 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   );
                 }).toList(),
                 value: profileController
-                    .highestQualification.value.text.isEmpty ||
-                    profileController.highestQualification.value.text
-                        .contains("null")
+                            .highestQualification.value.text.isEmpty ||
+                        profileController.highestQualification.value.text
+                            .contains("null")
                     ? null
                     : profileController.highestQualification.value.text.trim(),
                 onChanged: (highestQualification) {
-
-                  profileController.highestQualification.value.text = highestQualification;
-               //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
-
+                  profileController.highestQualification.value.text =
+                      highestQualification;
+                  //   print("highest qualification ${profileController.highestQualification.value.text.toString()}");
                 },
                 label: 'Highest Qualification',
                 hint: 'Choose your Highest qualification',
@@ -1156,7 +1158,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine1Controller.value,
+                    profileController.officeAddressLine1Controller.value,
                 label: 'Office address line 1',
                 hint: 'Enter the Office address line 1',
                 vaidation: (value) {
@@ -1171,7 +1173,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
               ),
               textField(
                 controller:
-                profileController.officeAddressLine2Controller.value,
+                    profileController.officeAddressLine2Controller.value,
                 label: 'Office address line 2',
                 hint: 'Enter the Office address line 2',
               ),
@@ -1199,7 +1201,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1243,7 +1245,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     children: [
                       radioButton(
                         value: 'Yes  ',
@@ -1269,8 +1271,8 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 height: Get.height * 0.02,
               ),
               if (profileController.existingLoan
-                  .toLowerCase()
-                  .replaceAll(' ', '') ==
+                      .toLowerCase()
+                      .replaceAll(' ', '') ==
                   'yes')
                 textField(
                   keyboardType: TextInputType.number,
@@ -1288,5 +1290,4 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
       ),
     );
   }
-
 }

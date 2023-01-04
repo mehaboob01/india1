@@ -13,6 +13,7 @@ import 'package:india_one/widgets/common_banner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../widgets/loyalty_common_header.dart';
@@ -52,199 +53,209 @@ class _ReferEarnState extends State<ReferEarn> {
   );
   var _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
+
+  final ConnectionManagerController controller =
+      Get.find<ConnectionManagerController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Obx(
-        () => _referManager.isLoading == true
-            ? CircularProgressbar()
-            : SafeArea(
-                child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CustomAppBar(
-                          heading: "Refer & Earn",
-                          customActionIconsList: [
-                            CustomActionIcons(
-                                image: AppImages.bottomNavHomeSvg,
-                                onHeaderIconPressed: () async {
-                                  Get.offNamedUntil(MRouter.homeScreen,
-                                      (route) => route.isFirst);
-                                })
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CommonBanner(
-                                isTapable: false,
-                                margin: EdgeInsets.zero,
-                              ),
-                              // Container(
-                              //   width: double.maxFinite,
-                              //   height: 25.0.wp,
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(4.0.wp),
-                              //     gradient: LinearGradient(
-                              //       begin: Alignment.topLeft,
-                              //       end: Alignment.bottomRight,
-                              //       colors: [
-                              //         AppColors.referEarnGradient1,
-                              //         AppColors.referEarnGradient2
-                              //       ],
-                              //     ),
-                              //   ),
-                              //   child: Row(
-                              //     mainAxisAlignment:
-                              //         MainAxisAlignment.spaceBetween,
-                              //     children: [
-                              //       Flexible(
-                              //         flex: 3,
-                              //         child: Padding(
-                              //           padding: EdgeInsets.only(
-                              //               top: 6.0.wp,
-                              //               bottom: 6.0.wp,
-                              //               left: 4.0.wp),
-                              //           child: Column(
-                              //             crossAxisAlignment:
-                              //                 CrossAxisAlignment.start,
-                              //             children: [
-                              //               RichText(
-                              //                 text: TextSpan(
-                              //                   style: AppStyle.shortHeading
-                              //                       .copyWith(
-                              //                     color: Color(0xFFEBEBEB),
-                              //                     //fontWeight: FontWeight.w600,
-                              //                     fontSize: 12,
-                              //                     fontWeight: FontWeight.w400,
-                              //                     height: 1.5,
-                              //                   ),
-                              //                   text:
-                              //                       'Refer a friend or a family member & get\na chance to',
-                              //                   children: [
-                              //                     TextSpan(
-                              //                       text:
-                              //                           ' Earn upto 100 points',
-                              //                       style: AppStyle.shortHeading
-                              //                           .copyWith(
-                              //                               color: Colors.white,
-                              //                               fontSize: 18,
-                              //                               fontWeight:
-                              //                                   FontWeight
-                              //                                       .w600),
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //               // SizedBox(height: 1.0.wp),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       Flexible(
-                              //           flex: 1,
-                              //           child: Container(
-                              //             decoration: BoxDecoration(
-                              //               borderRadius:
-                              //                   BorderRadius.circular(60),
-                              //               color: Color(0xFFD9D9D9)
-                              //                   .withOpacity(0.1),
-                              //             ),
-                              //             padding: EdgeInsets.only(
-                              //                 top: 2.0.wp,
-                              //                 bottom: 2.0.wp,
-                              //                 left: 2.0.wp,
-                              //                 right: 2.0.wp),
-                              //             child: Center(
-                              //                 child: Image.asset(
-                              //               AppImages.referEarnSVG,
-                              //               fit: BoxFit.fill,
-                              //             )),
-                              //           ))
-                              //     ],
-                              //   ),
-                              // ),
-                              SizedBox(
-                                height: Get.height * 0.03,
-                              ),
-                              Container(
-                                height: Get.height * 0.07,
-                                width: double.maxFinite,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        controller: _editingController,
-                                        decoration: InputDecoration(
-                                          hintText: "Enter a number to refer",
-                                          hintStyle: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Obx(
+            () => _referManager.isLoading == true
+                ? CircularProgressbar()
+                : SafeArea(
+                    child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomAppBar(
+                              heading: "Refer & Earn",
+                              customActionIconsList: [
+                                CustomActionIcons(
+                                    image: AppImages.bottomNavHomeSvg,
+                                    onHeaderIconPressed: () async {
+                                      Get.offNamedUntil(MRouter.homeScreen,
+                                          (route) => route.isFirst);
+                                    })
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CommonBanner(
+                                    isTapable: false,
+                                    margin: EdgeInsets.zero,
+                                  ),
+                                  // Container(
+                                  //   width: double.maxFinite,
+                                  //   height: 25.0.wp,
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(4.0.wp),
+                                  //     gradient: LinearGradient(
+                                  //       begin: Alignment.topLeft,
+                                  //       end: Alignment.bottomRight,
+                                  //       colors: [
+                                  //         AppColors.referEarnGradient1,
+                                  //         AppColors.referEarnGradient2
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   child: Row(
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.spaceBetween,
+                                  //     children: [
+                                  //       Flexible(
+                                  //         flex: 3,
+                                  //         child: Padding(
+                                  //           padding: EdgeInsets.only(
+                                  //               top: 6.0.wp,
+                                  //               bottom: 6.0.wp,
+                                  //               left: 4.0.wp),
+                                  //           child: Column(
+                                  //             crossAxisAlignment:
+                                  //                 CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               RichText(
+                                  //                 text: TextSpan(
+                                  //                   style: AppStyle.shortHeading
+                                  //                       .copyWith(
+                                  //                     color: Color(0xFFEBEBEB),
+                                  //                     //fontWeight: FontWeight.w600,
+                                  //                     fontSize: 12,
+                                  //                     fontWeight: FontWeight.w400,
+                                  //                     height: 1.5,
+                                  //                   ),
+                                  //                   text:
+                                  //                       'Refer a friend or a family member & get\na chance to',
+                                  //                   children: [
+                                  //                     TextSpan(
+                                  //                       text:
+                                  //                           ' Earn upto 100 points',
+                                  //                       style: AppStyle.shortHeading
+                                  //                           .copyWith(
+                                  //                               color: Colors.white,
+                                  //                               fontSize: 18,
+                                  //                               fontWeight:
+                                  //                                   FontWeight
+                                  //                                       .w600),
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //               // SizedBox(height: 1.0.wp),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //       Flexible(
+                                  //           flex: 1,
+                                  //           child: Container(
+                                  //             decoration: BoxDecoration(
+                                  //               borderRadius:
+                                  //                   BorderRadius.circular(60),
+                                  //               color: Color(0xFFD9D9D9)
+                                  //                   .withOpacity(0.1),
+                                  //             ),
+                                  //             padding: EdgeInsets.only(
+                                  //                 top: 2.0.wp,
+                                  //                 bottom: 2.0.wp,
+                                  //                 left: 2.0.wp,
+                                  //                 right: 2.0.wp),
+                                  //             child: Center(
+                                  //                 child: Image.asset(
+                                  //               AppImages.referEarnSVG,
+                                  //               fit: BoxFit.fill,
+                                  //             )),
+                                  //           ))
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  SizedBox(
+                                    height: Get.height * 0.03,
+                                  ),
+                                  Container(
+                                    height: Get.height * 0.07,
+                                    width: double.maxFinite,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            controller: _editingController,
+                                            decoration: InputDecoration(
+                                              hintText:
+                                                  "Enter a number to refer",
+                                              hintStyle: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.02,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        await _referManager.callReferApi(
-                                            _editingController.text);
-                                      },
-                                      child: Container(
-                                        height: Get.height * 0.06,
-                                        width: Get.width * 0.2,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 1,
-                                                color: AppColors.primary),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xFF004280),
-                                                Color(0xFF357CBE)
-                                              ],
+                                        SizedBox(
+                                          width: Get.width * 0.02,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await _referManager.callReferApi(
+                                                _editingController.text);
+                                          },
+                                          child: Container(
+                                            height: Get.height * 0.06,
+                                            width: Get.width * 0.2,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: AppColors.primary),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xFF004280),
+                                                    Color(0xFF357CBE)
+                                                  ],
+                                                )),
+                                            child: Center(
+                                                child: Text(
+                                              "Invite",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white),
                                             )),
-                                        child: Center(
-                                            child: Text(
-                                          "Invite",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        )),
-                                      ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Divider(
+                                    thickness: 2,
+                                  ),
+                                  contactCont.isPermissionAllowed.value
+                                      ? permissionAllowed()
+                                      : permissionNotAllowed(),
+                                  // contactCont.isListLoading.value
+                                  //     ? CircularProgressbar()
+                                  //     : SizedBox.shrink()
+                                ],
                               ),
-                              Divider(
-                                thickness: 2,
-                              ),
-                              contactCont.isPermissionAllowed.value
-                                  ? permissionAllowed()
-                                  : permissionNotAllowed(),
-                              // contactCont.isListLoading.value
-                              //     ? CircularProgressbar()
-                              //     : SizedBox.shrink()
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
+                            ),
+                          ],
+                        )),
+                  ),
+          ),
+        ),
       ),
     );
   }
@@ -442,14 +453,13 @@ class _ReferEarnState extends State<ReferEarn> {
         if (invitedList.contains(contactCont
             .filteredList.value[index].phones.first.number
             .toString())) {
-
           const snackBar = SnackBar(
             content: Text('Already invited!'),
           );
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-         // _controller.clear();
+          // _controller.clear();
 
         } else {
           setState(() {
@@ -469,7 +479,7 @@ class _ReferEarnState extends State<ReferEarn> {
           });
           // contactCont.contactsLenght.value =
           //     contactCont.contacts.length;
-        //  _controller.clear();
+          //  _controller.clear();
         }
       },
       child: Padding(
@@ -505,7 +515,7 @@ class _ReferEarnState extends State<ReferEarn> {
                         .filteredList.value[index].phones.isNotEmpty
                     ? contactCont.filteredList.value[index].phones.first.number
                         .toString()
-                    : null )
+                    : null)
                 ? "Invited"
                 : "Invite",
             textAlign: TextAlign.center,

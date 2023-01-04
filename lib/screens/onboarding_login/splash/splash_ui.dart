@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
@@ -97,15 +98,23 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: buildSplashForMobile(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: buildSplashForMobile(),
+        ),
+      ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
@@ -19,28 +20,35 @@ class _PaymentsPageState extends State<PaymentsPage> {
   void initState() {
     super.initState();
     _homeManager.showAuth.value = false;
-
   }
+
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
   //const PaymentsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonPageHeader(pageName: PageName.payments),
-              CommonPageCategoriesHeading(pageName: PageName.payments),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                child: const PaymentCards(),
+    return Obx(
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonPageHeader(pageName: PageName.payments),
+                  CommonPageCategoriesHeading(pageName: PageName.payments),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                    child: const PaymentCards(),
+                  ),
+                  CommonBanner()
+                ],
               ),
-              CommonBanner()
-            ],
+            ),
           ),
         ),
       ),

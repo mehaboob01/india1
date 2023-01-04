@@ -9,6 +9,7 @@ import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/widgets/another_stepper.dart';
 
+import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/divider_io.dart';
 import '../../../widgets/loyalty_common_header.dart';
@@ -51,76 +52,82 @@ class _HealthInsuranceFillDetailsState
     insuranceController.currentScreen.value = InsuranceStep.PERSONAL.index;
   }
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SizedBox(
-        width: widthIs,
-        height: heightIs,
-        child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                  heading: widget.isAccidentInsurance
-                      ? 'Accident Insurance'
-                      : "Critical Illness",
-                  customActionIconsList: commonAppIcons),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(9.0),
-                    child: Obx(
-                      () => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DividerIO(
-                            height: 21,
-                          ),
-                          Obx(
-                            () => Container(
-                              child: AnotherStepper(
-                                stepperList: insuranceController.titleList
-                                    .map((e) => StepperData(
-                                          title: "$e",
-                                        ))
-                                    .toList(),
-                                stepperDirection: Axis.horizontal,
-                                iconWidth: 25,
-                                iconHeight: 25,
-                                inverted: true,
-                                activeBarColor: AppColors.pointsColor,
-                                activeIndex:
-                                    insuranceController.currentScreen.value,
-                                callBack: (i) {
-                                  // print("find me");
-                                  // if (i <=
-                                  //     insuranceController
-                                  //         .insuranceCompletedIndex.value) {
-                                  //   insuranceController.currentScreen.value = i;
-                                  // }
-                                },
+    return IgnorePointer(
+      ignoring: _controller.ignorePointer.value,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SizedBox(
+          width: widthIs,
+          height: heightIs,
+          child: SafeArea(
+            child: Column(
+              children: [
+                CustomAppBar(
+                    heading: widget.isAccidentInsurance
+                        ? 'Accident Insurance'
+                        : "Critical Illness",
+                    customActionIconsList: commonAppIcons),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(9.0),
+                      child: Obx(
+                        () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DividerIO(
+                              height: 21,
+                            ),
+                            Obx(
+                              () => Container(
+                                child: AnotherStepper(
+                                  stepperList: insuranceController.titleList
+                                      .map((e) => StepperData(
+                                            title: "$e",
+                                          ))
+                                      .toList(),
+                                  stepperDirection: Axis.horizontal,
+                                  iconWidth: 25,
+                                  iconHeight: 25,
+                                  inverted: true,
+                                  activeBarColor: AppColors.pointsColor,
+                                  activeIndex:
+                                      insuranceController.currentScreen.value,
+                                  callBack: (i) {
+                                    // print("find me");
+                                    // if (i <=
+                                    //     insuranceController
+                                    //         .insuranceCompletedIndex.value) {
+                                    //   insuranceController.currentScreen.value = i;
+                                    // }
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                          /*insuranceController.currentScreen.value ==
-                                  Steps.LOAN_AMOUNT.index
-                              ? loanAmountUi()
-                              : loanController.currentScreen.value ==
-                                      Steps.PERSONAL.index
-                                  ? personalInfoUi()
-                                  : residentialInfoUi()*/
-                          getBody(),
-                        ],
+                            /*insuranceController.currentScreen.value ==
+                                    Steps.LOAN_AMOUNT.index
+                                ? loanAmountUi()
+                                : loanController.currentScreen.value ==
+                                        Steps.PERSONAL.index
+                                    ? personalInfoUi()
+                                    : residentialInfoUi()*/
+                            getBody(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(padding: EdgeInsets.all(8.0), child: bottomBtnWidget()),
-            ],
+                Padding(padding: EdgeInsets.all(8.0), child: bottomBtnWidget()),
+              ],
+            ),
           ),
         ),
       ),

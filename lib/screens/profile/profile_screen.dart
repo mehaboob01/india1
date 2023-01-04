@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
 import '../../widgets/loyalty_common_header.dart';
 import '../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
@@ -37,6 +38,9 @@ class ProfileScreen extends StatelessWidget {
       isBankAccountVisible = false.obs,
       isUpiIdVisible = false.obs;
 
+  final ConnectionManagerController _controller =
+      Get.find<ConnectionManagerController>();
+
   @override
   Widget build(BuildContext context) {
     getPersonalDetailButton();
@@ -45,400 +49,413 @@ class ProfileScreen extends StatelessWidget {
     getUpiIdButton();
     getBankAccountDetailsButton();
     return Obx(
-      () => Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: profileController.uploadProfileLoading == true
-            ? CircularProgressbar()
-            : Column(
-                children: [
-                  SafeArea(
-                    child: CustomAppBar(
-                      heading: 'Profile',
-                      hasLogo: true,
-                      customActionIconsList: [
-                        CustomActionIcons(
-                            image: AppImages.bottomNavHomeSvg,
-                            onHeaderIconPressed: () async {
-                              Get.offNamedUntil(
-                                  MRouter.homeScreen, (route) => route.isFirst);
-                            })
-                      ],
+      () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: profileController.uploadProfileLoading == true
+              ? CircularProgressbar()
+              : Column(
+                  children: [
+                    SafeArea(
+                      child: CustomAppBar(
+                        heading: 'Profile',
+                        hasLogo: true,
+                        customActionIconsList: [
+                          CustomActionIcons(
+                              image: AppImages.bottomNavHomeSvg,
+                              onHeaderIconPressed: () async {
+                                Get.offNamedUntil(MRouter.homeScreen,
+                                    (route) => route.isFirst);
+                              })
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Obx(() => Stack(
-                          children: [
-                            if (profileController.getProfileLoading.value ==
-                                true) ...[
-                              Center(
-                                child: LoadingAnimationWidget.inkDrop(
-                                  size: 34,
-                                  color: AppColors.primary,
-                                ),
-                              )
-                            ] else ...[
-                              SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Stack(
-                                      alignment: Alignment.centerLeft,
-                                      children: [
-                                        Container(
-                                          height: 95,
-                                          padding: EdgeInsets.only(
-                                            left: 100,
-                                          ),
-                                          margin: EdgeInsets.only(
-                                            left: 80,
-                                            right: 20,
-                                            top: 20,
-                                            bottom: 20,
-                                          ),
-                                          width: Get.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              30,
+                    Expanded(
+                      child: Obx(() => Stack(
+                            children: [
+                              if (profileController.getProfileLoading.value ==
+                                  true) ...[
+                                Center(
+                                  child: LoadingAnimationWidget.inkDrop(
+                                    size: 34,
+                                    color: AppColors.primary,
+                                  ),
+                                )
+                              ] else ...[
+                                SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Stack(
+                                        alignment: Alignment.centerLeft,
+                                        children: [
+                                          Container(
+                                            height: 95,
+                                            padding: EdgeInsets.only(
+                                              left: 100,
                                             ),
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: <Color>[
-                                                AppColors.cardBg1,
-                                                AppColors.cardBg2,
-                                              ],
+                                            margin: EdgeInsets.only(
+                                              left: 80,
+                                              right: 20,
+                                              top: 20,
+                                              bottom: 20,
                                             ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Mobile number",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: Dimens.font_14sp,
-                                                  color: Colors.white,
-                                                ),
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                30,
                                               ),
-                                              Obx(
-                                                    () => Text(
-                                                  "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: <Color>[
+                                                  AppColors.cardBg1,
+                                                  AppColors.cardBg2,
+                                                ],
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "Mobile number",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: Dimens.font_18sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: Dimens.font_14sp,
                                                     color: Colors.white,
                                                   ),
                                                 ),
-                                              ),
-
-
-                                            ],
-                                          ),
-                                        ),
-                                        Stack(
-                                          alignment: Alignment.bottomRight,
-                                          children: [
-                                            Container(
-                                              height: 120,
-                                              width: 120,
-                                              margin: EdgeInsets.only(
-                                                left: 20,
-                                                right: 20,
-                                              ),
-                                              child: Center(
-                                                child: Obx(
-                                                  () => InkWell(
-                                                      onTap: () {
-                                                        _handlePermissions();
-                                                      },
-                                                      child: CircleAvatar(
-                                                        maxRadius: 50,
-                                                        backgroundImage:
-                                                            AssetImage(AppImages
-                                                                .profile_bg),
-                                                        child: profileController
-                                                                    .uploadProfileLoading
-                                                                    .value ==
-                                                                true
-                                                            ? LoadingAnimationWidget
-                                                                .inkDrop(
-                                                                size: 34,
-                                                                color: AppColors
-                                                                    .primary,
-                                                              )
-                                                            : ClipOval(
-                                                                child:
-                                                                    CachedNetworkImage(
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  imageUrl:
-                                                                      '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
-                                                                  errorWidget:
-                                                                      (context,
-                                                                          _,
-                                                                          error) {
-                                                                    return Icon(
-                                                                      Icons
-                                                                          .person,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      size: 100,
-                                                                    );
-                                                                  },
-                                                                ),
-                                                              ),
-                                                      )
-                                                      // Container(
-                                                      //   width: 110,
-                                                      //   height: 110,
-                                                      //   alignment: Alignment
-                                                      //       .bottomCenter,
-                                                      //   decoration: BoxDecoration(
-                                                      //     gradient:
-                                                      //         LinearGradient(
-                                                      //             begin:
-                                                      //                 Alignment(
-                                                      //                     -0.1,
-                                                      //                     -0.1),
-                                                      //             end: Alignment(
-                                                      //                 0.4, 0.4),
-                                                      //             colors: [
-                                                      //           AppColors
-                                                      //               .blueColor,
-                                                      //           AppColors.redColor
-                                                      //               .withOpacity(
-                                                      //                   0.6)
-                                                      //         ]),
-                                                      //     shape: BoxShape.circle,
-                                                      //   ),
-                                                      //   child: profileController
-                                                      //               .uploadProfileLoading
-                                                      //               .value ==
-                                                      //           true
-                                                      //       ? LoadingAnimationWidget
-                                                      //           .inkDrop(
-                                                      //           size: 34,
-                                                      //           color: AppColors
-                                                      //               .primary,
-                                                      //         )
-                                                      //       : ClipOval(
-                                                      //           child:
-                                                      //               CachedNetworkImage(
-                                                      //             fit:
-                                                      //                 BoxFit.fill,
-                                                      //             imageUrl:
-                                                      //                 '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
-                                                      //             errorWidget:
-                                                      //                 (context, _,
-                                                      //                     error) {
-                                                      //               return Icon(
-                                                      //                 Icons
-                                                      //                     .person,
-                                                      //                 color: Colors
-                                                      //                     .white,
-                                                      //                 size: 100,
-                                                      //               );
-                                                      //             },
-                                                      //           ),
-                                                      //         ),
-                                                      // ),
-                                                      ),
+                                                Obx(
+                                                  () => Text(
+                                                    "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize:
+                                                          Dimens.font_18sp,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: AppColors
-                                                      .lightOrangeColor
-                                                      .withOpacity(0.4),
-                                                  width: 10,
-                                                  style: BorderStyle.solid,
-                                                ),
-                                              ),
+                                              ],
                                             ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _handlePermissions();
-                                              },
-                                              child: Container(
-                                                height: 45,
-                                                width: 45,
+                                          ),
+                                          Stack(
+                                            alignment: Alignment.bottomRight,
+                                            children: [
+                                              Container(
+                                                height: 120,
+                                                width: 120,
                                                 margin: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 25,
-                                                    bottom: 0),
+                                                  left: 20,
+                                                  right: 20,
+                                                ),
+                                                child: Center(
+                                                  child: Obx(
+                                                    () => InkWell(
+                                                        onTap: () {
+                                                          _handlePermissions();
+                                                        },
+                                                        child: CircleAvatar(
+                                                          maxRadius: 50,
+                                                          backgroundImage:
+                                                              AssetImage(AppImages
+                                                                  .profile_bg),
+                                                          child: profileController
+                                                                      .uploadProfileLoading
+                                                                      .value ==
+                                                                  true
+                                                              ? LoadingAnimationWidget
+                                                                  .inkDrop(
+                                                                  size: 34,
+                                                                  color: AppColors
+                                                                      .primary,
+                                                                )
+                                                              : ClipOval(
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    imageUrl:
+                                                                        '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                                    errorWidget:
+                                                                        (context,
+                                                                            _,
+                                                                            error) {
+                                                                      return Icon(
+                                                                        Icons
+                                                                            .person,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        size:
+                                                                            100,
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                        )
+                                                        // Container(
+                                                        //   width: 110,
+                                                        //   height: 110,
+                                                        //   alignment: Alignment
+                                                        //       .bottomCenter,
+                                                        //   decoration: BoxDecoration(
+                                                        //     gradient:
+                                                        //         LinearGradient(
+                                                        //             begin:
+                                                        //                 Alignment(
+                                                        //                     -0.1,
+                                                        //                     -0.1),
+                                                        //             end: Alignment(
+                                                        //                 0.4, 0.4),
+                                                        //             colors: [
+                                                        //           AppColors
+                                                        //               .blueColor,
+                                                        //           AppColors.redColor
+                                                        //               .withOpacity(
+                                                        //                   0.6)
+                                                        //         ]),
+                                                        //     shape: BoxShape.circle,
+                                                        //   ),
+                                                        //   child: profileController
+                                                        //               .uploadProfileLoading
+                                                        //               .value ==
+                                                        //           true
+                                                        //       ? LoadingAnimationWidget
+                                                        //           .inkDrop(
+                                                        //           size: 34,
+                                                        //           color: AppColors
+                                                        //               .primary,
+                                                        //         )
+                                                        //       : ClipOval(
+                                                        //           child:
+                                                        //               CachedNetworkImage(
+                                                        //             fit:
+                                                        //                 BoxFit.fill,
+                                                        //             imageUrl:
+                                                        //                 '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                        //             errorWidget:
+                                                        //                 (context, _,
+                                                        //                     error) {
+                                                        //               return Icon(
+                                                        //                 Icons
+                                                        //                     .person,
+                                                        //                 color: Colors
+                                                        //                     .white,
+                                                        //                 size: 100,
+                                                        //               );
+                                                        //             },
+                                                        //           ),
+                                                        //         ),
+                                                        // ),
+                                                        ),
+                                                  ),
+                                                ),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.white,
                                                   shape: BoxShape.circle,
                                                   border: Border.all(
+                                                    color: AppColors
+                                                        .lightOrangeColor
+                                                        .withOpacity(0.4),
+                                                    width: 10,
+                                                    style: BorderStyle.solid,
+                                                  ),
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  _handlePermissions();
+                                                },
+                                                child: Container(
+                                                  height: 45,
+                                                  width: 45,
+                                                  margin: EdgeInsets.only(
+                                                      left: 20,
+                                                      right: 25,
+                                                      bottom: 0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                        color:
+                                                            Color(0xff9F2942)),
+                                                  ),
+                                                  child: Icon(
+                                                      Icons.camera_alt_outlined,
+                                                      size: 28,
                                                       color: Color(0xff9F2942)),
                                                 ),
-                                                child: Icon(
-                                                    Icons.camera_alt_outlined,
-                                                    size: 28,
-                                                    color: Color(0xff9F2942)),
                                               ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    details(title: 'Personal Details'),
-                                    details(title: 'Residential Address'),
-                                    details(title: 'Occupation Details'),
-                                    details(title: 'Bank account(s)'),
-                                    details(title: 'UPI ID(s) / VPA Number(s)'),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Obx(
-                                      () => profileController
-                                                  .logoutLoading.value ==
-                                              true
-                                          ? Center(
-                                              child: LoadingAnimationWidget
-                                                  .inkDrop(
-                                                size: 34,
-                                                color: AppColors.primary,
-                                              ),
-                                            )
-                                          : InkWell(
-                                              onTap: () async {
-
-                                                profileController.logoutUser();
-                                              },
-                                              child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.9,
-                                                  height: 48,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Spacer(),
-                                                      Text(
-                                                        'Logout'.tr,
-                                                        maxLines: 2,
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color:
-                                                                Colors.white),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      Spacer(),
-                                                      SizedBox(
-                                                        height: 48,
-                                                        child: Image.asset(
-                                                          "assets/images/btn_img.png",
-                                                          fit: BoxFit.fill,
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      details(title: 'Personal Details'),
+                                      details(title: 'Residential Address'),
+                                      details(title: 'Occupation Details'),
+                                      details(title: 'Bank account(s)'),
+                                      details(
+                                          title: 'UPI ID(s) / VPA Number(s)'),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Obx(
+                                        () => profileController
+                                                    .logoutLoading.value ==
+                                                true
+                                            ? Center(
+                                                child: LoadingAnimationWidget
+                                                    .inkDrop(
+                                                  size: 34,
+                                                  color: AppColors.primary,
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () async {
+                                                  profileController
+                                                      .logoutUser();
+                                                },
+                                                child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                    height: 48,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Spacer(),
+                                                        Text(
+                                                          'Logout'.tr,
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 16.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  Colors.white),
+                                                          textAlign:
+                                                              TextAlign.center,
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  decoration: 1 == 1
-                                                      ? BoxDecoration(
-                                                          gradient:
-                                                              new LinearGradient(
-                                                            end: Alignment
-                                                                .topRight,
-                                                            colors: [
-                                                              Colors.orange,
-                                                              Colors.redAccent
-                                                            ],
+                                                        Spacer(),
+                                                        SizedBox(
+                                                          height: 48,
+                                                          child: Image.asset(
+                                                            "assets/images/btn_img.png",
+                                                            fit: BoxFit.fill,
                                                           ),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors
-                                                                  .white70
-                                                                  .withOpacity(
-                                                                      0.8),
-                                                              offset: Offset(
-                                                                -6.0,
-                                                                -6.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    decoration: 1 == 1
+                                                        ? BoxDecoration(
+                                                            gradient:
+                                                                new LinearGradient(
+                                                              end: Alignment
+                                                                  .topRight,
+                                                              colors: [
+                                                                Colors.orange,
+                                                                Colors.redAccent
+                                                              ],
+                                                            ),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .white70
+                                                                    .withOpacity(
+                                                                        0.8),
+                                                                offset: Offset(
+                                                                  -6.0,
+                                                                  -6.0,
+                                                                ),
+                                                                blurRadius:
+                                                                    16.0,
                                                               ),
-                                                              blurRadius: 16.0,
-                                                            ),
-                                                            BoxShadow(
-                                                              color: AppColors
-                                                                  .darkerGrey
-                                                                  .withOpacity(
-                                                                      0.4),
-                                                              offset: Offset(
-                                                                  6.0, 6.0),
-                                                              blurRadius: 16.0,
-                                                            ),
-                                                          ],
-                                                          color: 1 == 1
-                                                              ? AppColors
-                                                                  .btnColor
-                                                              : AppColors
-                                                                  .btnDisableColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                        )
-                                                      : BoxDecoration(
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors
-                                                                  .white70
-                                                                  .withOpacity(
-                                                                      0.8),
-                                                              offset: Offset(
-                                                                -6.0,
-                                                                -6.0,
+                                                              BoxShadow(
+                                                                color: AppColors
+                                                                    .darkerGrey
+                                                                    .withOpacity(
+                                                                        0.4),
+                                                                offset: Offset(
+                                                                    6.0, 6.0),
+                                                                blurRadius:
+                                                                    16.0,
                                                               ),
-                                                              blurRadius: 16.0,
-                                                            ),
-                                                            BoxShadow(
-                                                              color: AppColors
-                                                                  .darkerGrey
-                                                                  .withOpacity(
-                                                                      0.4),
-                                                              offset: Offset(
-                                                                  6.0, 6.0),
-                                                              blurRadius: 16.0,
-                                                            ),
-                                                          ],
-                                                          color: 1 == 1
-                                                              ? AppColors
-                                                                  .btnColor
-                                                              : AppColors
-                                                                  .btnDisableColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                        )),
-                                            ),
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                  ],
+                                                            ],
+                                                            color: 1 == 1
+                                                                ? AppColors
+                                                                    .btnColor
+                                                                : AppColors
+                                                                    .btnDisableColor,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.0),
+                                                          )
+                                                        : BoxDecoration(
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .white70
+                                                                    .withOpacity(
+                                                                        0.8),
+                                                                offset: Offset(
+                                                                  -6.0,
+                                                                  -6.0,
+                                                                ),
+                                                                blurRadius:
+                                                                    16.0,
+                                                              ),
+                                                              BoxShadow(
+                                                                color: AppColors
+                                                                    .darkerGrey
+                                                                    .withOpacity(
+                                                                        0.4),
+                                                                offset: Offset(
+                                                                    6.0, 6.0),
+                                                                blurRadius:
+                                                                    16.0,
+                                                              ),
+                                                            ],
+                                                            color: 1 == 1
+                                                                ? AppColors
+                                                                    .btnColor
+                                                                : AppColors
+                                                                    .btnDisableColor,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.0),
+                                                          )),
+                                              ),
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ]
-                          ],
-                        )),
-                  ),
-                ],
-              ),
+                              ]
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -700,7 +717,9 @@ class ProfileScreen extends StatelessWidget {
                               : false),
                       singleDetails(
                         title: "Mobile number",
-                        value: profileDetailsModel.mobileNumber == null?"No contact":"+91 ${profileDetailsModel.mobileNumber}",
+                        value: profileDetailsModel.mobileNumber == null
+                            ? "No contact"
+                            : "+91 ${profileDetailsModel.mobileNumber}",
                         isEmpty: profileDetailsModel.mobileNumber == null
                             ? true
                             : false,
