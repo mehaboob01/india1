@@ -865,17 +865,17 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Ways to redeem :',
+            'ways_to_redeem'.tr,
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
           redeemWaySub(
               image: AppImages.mobilRecharge2Svg,
-              text: 'Recharge',
+              text: 'recharge',
               routName: MRouter.mobileRechargeIO),
           redeemWaySub(
               image: AppImages.walletIcon,
-              text: 'Cashback',
+              text: 'cashback',
               routName: MRouter.cashBackRedeemPage)
         ],
       ),
@@ -901,7 +901,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             SvgPicture.asset(image),
             SizedBox(width: 1.0.wp),
             Text(
-              text,
+              text.tr,
               style: AppStyle.shortHeading.copyWith(
                   fontSize: 10.0.sp,
                   color: AppColors.textColorshade,
@@ -952,7 +952,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Find the nearest India1 ATM',
+            'find_nearest_atm'.tr,
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 14.0.sp,
                 fontWeight: FontWeight.w600,
@@ -1030,7 +1030,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Locate ATM',
+                            'locate_atm'.tr,
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 10.0.sp,
                                 fontWeight: FontWeight.w600,

@@ -30,6 +30,7 @@ class LocaleString extends Translations {
           'insurance': 'Insurance',
           'savings': 'Savings',
 
+
           // loan section text
 
           'loan_categories': 'Loan categories',
@@ -65,6 +66,18 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'Digi Gold',
           'digi_silver': 'Digi Silver',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem :',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
+          'locate_atm': 'Locate ATM',
+
+
+
+
+
 
 
 
@@ -132,6 +145,15 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'निकटतम India1 एटीएम खोजें',
+          'locate_atm': ' एटीएम खोजें',
+
         },
         'ka_IN': {
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
@@ -195,6 +217,13 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'locate_atm': 'निकटतम खोजें',
         },
         'ma_IN': {
           'hello': 'हॅलो वर्ल्ड',
@@ -256,6 +285,14 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'निकटतम India1 एटीएम खोजें',
+          'locate_atm': 'एटीएम खोजें',
+
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -319,6 +356,15 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'Find the nearest India1 ATM',
+          'locate_atm': 'निक खोजें',
+
         },
         'ta_IN': {
           'hello': 'வணக்கம் உலகம்',
@@ -381,6 +427,14 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'Find the nearest India1 ATM',
+          'locate_atm': 'निकट खोजें',
+
         },
         'mal_IN': {
           'hello': 'ഹലോ വേൾഡ്',
@@ -444,6 +498,15 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'Find the nearest India1 ATM',
+          'locate_atm': 'निक खोजें',
+
         },
         'ban_IN': {
           'hello': 'হ্যালো',
@@ -478,22 +541,22 @@ class LocaleString extends Translations {
           'payment_categories': 'ভাষা',
           'insurance_categories': 'পছন্দের',
 
-          'personal': 'निजी',
-          '2_wheeler': '2 व्हीलर',
-          'farm_eqp': 'फार्म ईक्यूपी',
-          'track_based_loan': 'ट्रैक  ऋण',
+          'personal': 'পছন্দের ভাষা',
+          '2_wheeler': '2 পছন্দের',
+          'farm_eqp': 'পছন্দের ভাষা',
+          'track_based_loan': 'ट्रैकপছন্দের ভাষা',
           'gold': 'सोना',
-          'emi_card': 'ईएमआई कार्ड',
-          'credit_card': 'क्रेडिट कार्ड',
-          'credit_score': 'क्रेडिट अंक',
+          'emi_card': 'ईপছন্দের ভাষা',
+          'credit_card': 'क्रপছন্দের ভাষা',
+          'credit_score': 'क्रेপছন্দের ভাষা',
           // drop down
 
-          'my_profile': 'प्रोफाइल',
-          'my_rewards': 'पुरस्कार',
+          'my_profile': ' ভাষা',
+          'my_rewards': 'পছন্দের ',
 
           // insurance section text
-          '4_wheeler': '4 व्हीलर',
-          'critical_illness': 'गंभीर बीमारी',
+          '4_wheeler': 'পছন্দের ',
+          'critical_illness': 'পছন্দের ভাষা',
 
           //payments section
 
@@ -507,6 +570,16 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          // home screen
+          'ways_to_redeem': 'Ways to redeem',
+          'recharge': 'Recharge',
+          'cashback': 'Cashback',
+
+          'find_nearest_atm': 'পছন্দের ভাষা পছন্দের ভাষা',
+
+          'locate_atm': 'निक खोजें',
+
         },
         'or_IN': {
           'hello': ' ନମ୍ବର',
@@ -571,6 +644,15 @@ class LocaleString extends Translations {
           'fixed_deposit': 'ପଏଣ୍ଟଗୁଡିକ',
           'digi_gold': 'ପଏଣ୍ଟଗୁଡିକ',
           'digi_silver': 'ପଏଣ୍ୁଡିକ',
+
+          // home screen
+          'ways_to_redeem': 'ପଏଣ୍ୁଡିକ',
+          'recharge': 'ପଏଣ୍ୁଡିକ',
+          'cashback': 'ପଏଣ୍ୁଡିକ',
+
+          'find_nearest_atm': 'ପଏଣ୍ୁଡିକ ପଏଣ୍ୁଡିକ',
+          'locate_atm': 'निପଏଣ୍ୁଡିକ',
+
         },
       };
 }
