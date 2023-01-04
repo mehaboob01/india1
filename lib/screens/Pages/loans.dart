@@ -95,26 +95,7 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        // InkWell(
-        //   onTap: () {
-        //     Get.toNamed(MRouter.carLoanIO);
-        //   },
-        //   child: ItemCard(
-        //     image: AppImages.carSvg,
-        //     label: 'Car',
-        //     itembgColor: ItemCardbgColor.lightBlue,
-        //   ),
-        // ),
-        // InkWell(
-        //   onTap: () {
-        //     Get.toNamed(MRouter.tractorLoanIO);
-        //   },
-        //   child: ItemCard(
-        //     image: AppImages.tractorSvg,
-        //     label: 'Tractor',
-        //     itembgColor: ItemCardbgColor.lightBlue,
-        //   ),
-        // ),
+
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.farmLoan);
@@ -135,19 +116,7 @@ class LoansCard extends StatelessWidget {
             itembgColor: ItemCardbgColor.lightBlue,
           ),
         ),
-        // InkWell(
-        //   onTap: () {
-        //     Get.to(() => CommonWebView(
-        //       title: 'MSME',
-        //       url: Apis.msme,
-        //     ));
-        //   },
-        //   child: ItemCard(
-        //     image: AppImages.handSackSvg,
-        //     label: 'MSME',
-        //     itembgColor: ItemCardbgColor.lightBlue,
-        //   ),
-        // ),
+
         InkWell(
           onTap: () {
             Get.toNamed(MRouter.goldLoanIO);

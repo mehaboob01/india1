@@ -169,9 +169,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
 
-    if (points == points) {
-      // return DisplayPopuP()
-      //     .getProfileWelcome(context: context, profilePoints: '80');
+    if (points != 0) {
+
+
+      return DisplayPopuP()
+          .welcomepopup(context: context, welcomePoints: points.toString()).then((value) => prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, 0));
       //return DisplayPopuP().welcomepopup(context: context, welcomePoints: '50');
       // Future.delayed(
       //     Duration(milliseconds: 300),
@@ -296,7 +298,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
-                SystemNavigator.pop();
+                //SystemNavigator.pop();
               }
             } else {
               if (availableBiometrics.contains(BiometricType.fingerprint)) {
@@ -310,13 +312,13 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
-                  SystemNavigator.pop();
+                 // SystemNavigator.pop();
                 }
               }
             }
           } else {}
         } on PlatformException catch (e) {
-          SystemNavigator.pop();
+          //SystemNavigator.pop();
 
           msg = "Error while opening fingerprint/face scanner";
         }
@@ -324,8 +326,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     }
   }
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onLoading() async {
     // your api here

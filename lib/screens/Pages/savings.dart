@@ -69,7 +69,7 @@ class SavingsCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.fdSvg,
-            label: 'FD(Fixed Deposit)',
+            label: 'fixed_deposit',
             itembgColor: ItemCardbgColor.skyBlue,
           ),
         ),
@@ -87,7 +87,7 @@ class SavingsCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.goldSvg,
-            label: 'Digi Gold',
+            label: 'digi_gold',
             itembgColor: ItemCardbgColor.skyBlue,
           ),
         ),
@@ -100,7 +100,7 @@ class SavingsCard extends StatelessWidget {
           },
           child: ItemCard(
             image: AppImages.digiSilverSvg,
-            label: 'Digi Silver',
+            label: 'digi_silver',
             itembgColor: ItemCardbgColor.skyBlue,
           ),
         ),

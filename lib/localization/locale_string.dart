@@ -10,8 +10,7 @@ class LocaleString extends Translations {
           'i_accept': 'I accept',
           'request_otp': 'Request OTP',
           'empty_error_msg': 'Please enter a valid 10 digit mobile number',
-          'checkbox_select_error':
-              'Agree to our Terms & Conditions to proceed further',
+          'checkbox_select_error': 'Agree to our Terms & Conditions to proceed further',
           'sending_otp': 'Sending OTP',
           'proceed_btn': 'Proceed',
           'enter_otp': 'Enter OTP',
@@ -30,43 +29,42 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings': 'Savings',
-          //jhjh
-
 
           // loan section text
 
-          'loan_categories' : 'Loan categories',
-          'payment_categories' : 'Payment categories',
-          'insurance_categories' : 'Insurance categories',
+          'loan_categories': 'Loan categories',
+          'payment_categories': 'Payment categories',
+          'insurance_categories': 'Insurance categories',
 
-          'personal' : 'Personal',
-          '2_wheeler' : '2 Wheeler',
-          'farm_eqp' : 'Farm EQP',
-          'track_based_loan' : 'Track Based Loan',
-          'gold' : 'Gold',
-          'emi_card' : 'Emi Card',
-          'credit_card' : 'Credit Card',
-          'credit_score' : 'Credit Score',
+          'personal': 'Personal',
+          '2_wheeler': '2 Wheeler',
+          'farm_eqp': 'Farm EQP',
+          'track_based_loan': 'Track Based',
+          'gold': 'Gold',
+          'emi_card': 'Emi Card',
+          'credit_card': 'Credit Card',
+          'credit_score': 'Credit Score',
 
           // drop down
-
 
           'my_profile': 'My Profile',
           'my_rewards': 'My Rewards',
 
           // insurance section text
-          '4_wheeler' : '4 Wheeler',
-          'critical_illness' : 'Critical illness',
+          '4_wheeler': '4 Wheeler',
+          'critical_illness': 'Critical illness',
 
+          //payments section
 
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
 
+          // Saving section
 
-
-
-
-
-
-
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'Digi Gold',
+          'digi_silver': 'Digi Silver',
 
 
 
@@ -101,29 +99,39 @@ class LocaleString extends Translations {
 
           // loan section
 
-          'loan_categories' : 'ऋण',
-          'payment_categories' : 'भुगतान categories',
-          'insurance_categories' : 'बीमा categories',
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'loan_categories': 'ऋण',
+          'payment_categories': 'भुगतान categories',
+          'insurance_categories': 'बीमा categories',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
 
           //
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
 
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'ka_IN': {
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
@@ -155,29 +163,38 @@ class LocaleString extends Translations {
 
           // drop down
 
-
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // loan section
-          'loan_categories' : 'ಮಾನ್ಯ',
-          'payment_categories' : 'ಸಾಲಗಳು',
-          'insurance_categories' : 'ಸಾಲಗಳು ',
+          'loan_categories': 'ಮಾನ್ಯ',
+          'payment_categories': 'ಸಾಲಗಳು',
+          'insurance_categories': 'ಸಾಲಗಳು ',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
 
+          //payments section
 
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'ma_IN': {
           'hello': 'हॅलो वर्ल्ड',
@@ -207,27 +224,38 @@ class LocaleString extends Translations {
           'insurance': 'विमा',
           'savings': 'बचत',
           // loan section
-          'loan_categories' : 'कर्ज देयके',
-          'payment_categories' : 'देयके',
-          'insurance_categories' : 'विमा ',
+          'loan_categories': 'कर्ज देयके',
+          'payment_categories': 'देयके',
+          'insurance_categories': 'विमा ',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
+
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'te_IN': {
           'hello': 'హలో వరల్డ్',
@@ -259,27 +287,38 @@ class LocaleString extends Translations {
           'logout': 'చేయండ',
 
           // loan section
-          'loan_categories' : 'ఎంచుకోండి',
-          'payment_categories' : 'ఇండియా1',
-          'insurance_categories' : 'ఇండి',
+          'loan_categories': 'ఎంచుకోండి',
+          'payment_categories': 'ఇండియా1',
+          'insurance_categories': 'ఇండి',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
+
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'ta_IN': {
           'hello': 'வணக்கம் உலகம்',
@@ -310,27 +349,38 @@ class LocaleString extends Translations {
           'savings': 'சுருக்',
 
           // loan section
-          'loan_categories' : 'மீட்டுக்கொள்ளு',
-          'payment_categories' : 'டுக்கொள்ளு',
-          'insurance_categories' : '்கொள்ளு',
+          'loan_categories': 'மீட்டுக்கொள்ளு',
+          'payment_categories': 'டுக்கொள்ளு',
+          'insurance_categories': '்கொள்ளு',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
+
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'mal_IN': {
           'hello': 'ഹലോ വേൾഡ്',
@@ -361,28 +411,39 @@ class LocaleString extends Translations {
           'savings': 'Savings',
 
           // loan section
-          'loan_categories' : 'തിരഞ്ഞെടുക്കുക',
-          'payment_categories' : 'ബൈ',
-          'insurance_categories' : 'ബൈ',
+          'loan_categories': 'തിരഞ്ഞെടുക്കുക',
+          'payment_categories': 'ബൈ',
+          'insurance_categories': 'ബൈ',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
 
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'ban_IN': {
           'hello': 'হ্যালো',
@@ -413,27 +474,39 @@ class LocaleString extends Translations {
           'savings': 'Savings',
 
           // loan section
-          'loan_categories' : 'পছন্দের ভাষা',
-          'payment_categories' : 'ভাষা',
-          'insurance_categories' : 'পছন্দের',
+          'loan_categories': 'পছন্দের ভাষা',
+          'payment_categories': 'ভাষা',
+          'insurance_categories': 'পছন্দের',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
           // drop down
-
 
           'my_profile': 'प्रोफाइल',
           'my_rewards': 'पुरस्कार',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
+
+          //payments section
+
+          'recharge': 'Recharge',
+          'fast_teg': 'FASTag',
+          'dth': 'DTH',
+
+
+          // Saving section
+
+          'fixed_deposit': 'Fixed Deposit',
+          'digi_gold': 'FD(Fixed Deposit)',
+          'digi_silver': 'Digi Gold',
         },
         'or_IN': {
           'hello': ' ନମ୍ବର',
@@ -457,35 +530,47 @@ class LocaleString extends Translations {
           'cashback_india1_summary': 'ଭାରତ 1 ସାରାଂଶ ଦ୍ୱାରା କ୍ୟାସବ୍ୟାକ୍ |',
           'in': 'ଭିତରେ',
           'redeem_points_now': 'ପଏଣ୍ଟଗୁଡିକ ମୁକ୍ତ କରନ୍ତୁ |',
-          'home': 'Home',
-          'payments': 'Payments',
-          'loans': 'Loans',
-          'insurance': 'Insurance',
-          'savings': 'Savings',
+          'home': 'କରନ୍ତୁ',
+          'payments': 'କରନ୍ତୁ',
+          'loans': 'କରନ୍ତୁ',
+          'insurance': 'କରନ୍ତୁ',
+          'savings': 'କରନ୍ତୁ',
 
           // loan section
-          'loan_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
-          'payment_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
-          'insurance_categories' : 'ପଏଣ୍ଟଗୁଡିକ',
+          'loan_categories': 'ପଏଣ୍ଟଗୁଡିକ',
+          'payment_categories': 'ପଏଣ୍ଟଗୁଡିକ',
+          'insurance_categories': 'ପଏଣ୍ଟଗୁଡିକ',
 
-          'personal' : 'निजी',
-          '2_wheeler' : '2 व्हीलर',
-          'farm_eqp' : 'फार्म ईक्यूपी',
-          'track_based_loan' : 'ट्रैक  ऋण',
-          'gold' : 'सोना',
-          'emi_card' : 'ईएमआई कार्ड',
-          'credit_card' : 'क्रेडिट कार्ड',
-          'credit_score' : 'क्रेडिट अंक',
+          'personal': 'निजी',
+          '2_wheeler': '2 व्हीलर',
+          'farm_eqp': 'फार्म ईक्यूपी',
+          'track_based_loan': 'ट्रैक  ऋण',
+          'gold': 'सोना',
+          'emi_card': 'ईएमआई कार्ड',
+          'credit_card': 'क्रेडिट कार्ड',
+          'credit_score': 'क्रेडिट अंक',
 
           // drop down
-
 
           'my_profile': 'ପଏଣ୍ଟଗୁଡିକ',
           'my_rewards': 'ମୁକ୍ତ',
 
           // insurance section text
-          '4_wheeler' : '4 व्हीलर',
-          'critical_illness' : 'गंभीर बीमारी',
+          '4_wheeler': '4 व्हीलर',
+          'critical_illness': 'गंभीर बीमारी',
+
+          //payments section
+
+          'recharge': 'ପଏଣ୍ଟଗୁଡିକ',
+          'fast_teg': 'ପଏଣ୍ଟଗୁଡିକ',
+          'dth': 'ପଏଣ',
+
+
+          // Saving section
+
+          'fixed_deposit': 'ପଏଣ୍ଟଗୁଡିକ',
+          'digi_gold': 'ପଏଣ୍ଟଗୁଡିକ',
+          'digi_silver': 'ପଏଣ୍ୁଡିକ',
         },
       };
 }

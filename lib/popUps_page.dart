@@ -102,7 +102,7 @@ class DisplayPopuP {
                 ),
               ),
             ).show());
-    //     .then(
+
   }
 
   Future getProfileWelcome(

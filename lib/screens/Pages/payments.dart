@@ -60,17 +60,17 @@ class PaymentCards extends StatelessWidget {
       children: const [
         ItemCard(
           image: AppImages.mobilRechargeSvg,
-          label: 'Recharge',
+          label: 'recharge',
           itembgColor: ItemCardbgColor.lightRed,
         ),
         ItemCard(
           image: AppImages.fastagSvg,
-          label: 'FASTag',
+          label: 'fast_teg',
           itembgColor: ItemCardbgColor.lightRed,
         ),
         ItemCard(
             image: AppImages.dthSvg,
-            label: 'DTH',
+            label: 'dth',
             itembgColor: ItemCardbgColor.lightRed),
       ],
     );
