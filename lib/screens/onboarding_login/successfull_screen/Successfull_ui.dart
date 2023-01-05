@@ -19,7 +19,7 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
     Timer(
         Duration(seconds: 2),
         () => Navigator.of(context).pushNamedAndRemoveUntil(
-            MRouter.mobileRechargeIO, (Route<dynamic> route) => false));
+            MRouter.homeScreen, (Route<dynamic> route) => false));
   }
 
   Future<void> launchLoginWidget() async {
@@ -55,23 +55,35 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-            // child: Image.asset(
-            //   "assets/images/complete.gif",
-            //   width: 284,
-            //   height: 284,
-            // ),
+            child: Image.asset(
+              "assets/images/success.gif",
+              width: 320,
+              height: 320,
+            ),
             ),
         Text(
-          "Recharge successful",
+          "Successful!",
           overflow: TextOverflow.visible,
           maxLines: 1,
           style: TextStyle(
             overflow: TextOverflow.visible,
-            fontWeight: FontWeight.w800,
-            color: AppColors.btnColor,
-            fontSize: Dimens.font_18sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.primary,
+            fontSize: Dimens.font_24sp,
           ),
         ),
+        SizedBox(height: 44,),
+        // Text(
+        //   "Mobile Recharge successful!",
+        //   overflow: TextOverflow.visible,
+        //   maxLines: 1,
+        //   style: TextStyle(
+        //     overflow: TextOverflow.visible,
+        //     fontWeight: FontWeight.w500,
+        //     color: AppColors.primary,
+        //     fontSize: Dimens.font_18sp,
+        //   ),
+        // ),
       ],
     );
   }

@@ -209,28 +209,30 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                               Divider(
                                                 thickness: 1.5,
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Total amount",
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Total amount",
+                                                      style: TextStyle(
+                                                        fontSize: Dimens.font_16sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                    Text(
+                                                      "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
+                                                      style: TextStyle(
+                                                        fontSize: Dimens.font_16sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),

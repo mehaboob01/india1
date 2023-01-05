@@ -18,9 +18,12 @@ class InsuranceSubmissionPage extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           body: Column(
             children: [
-              Expanded(
-                flex: 6,
-                child: Container(),
+              Center(
+                child: Image.asset(
+                  "assets/images/success.gif",
+                  width: 320,
+                  height: 320,
+                ),
               ),
               Expanded(
                 flex: 4,

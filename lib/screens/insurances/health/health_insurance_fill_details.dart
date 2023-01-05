@@ -158,7 +158,7 @@ class _HealthInsuranceFillDetailsState
     return ProfileStepper().personalDetails(
       context,
       personalForm,
-      isFromLoan: true,
+      isFromInsurance: true,
     );
   }
 

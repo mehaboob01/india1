@@ -30,8 +30,8 @@ import '../screens/loyality_points/loyalty_page.dart';
 import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 import '../screens/map/map/map_ui.dart';
-import '../screens/onboarding_login/otp_verified/otp_verified_ui.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
+import '../screens/onboarding_login/successfull_screen/Successfull_ui.dart';
 import '../screens/refer/refer_earn_ui.dart';
 
 class MRouter {

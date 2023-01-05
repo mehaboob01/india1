@@ -91,7 +91,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       _profileController.getProfileData();
 
       showFirstTimePoints();
-      showCompleteProfile();
+     // showCompleteProfile();
       checkLogin();
     });
   }
@@ -219,7 +219,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   WidgetsBinding.instance.removeObserver(this);
                 });
               } else {
-                // SystemNavigator.pop();
+                 SystemNavigator.pop();
               }
             } else {
               if (availableBiometrics.contains(BiometricType.fingerprint)) {
@@ -233,7 +233,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     WidgetsBinding.instance.removeObserver(this);
                   });
                 } else {
-                  // SystemNavigator.pop();
+                   SystemNavigator.pop();
                 }
               }
             }
@@ -765,7 +765,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Current balance',
+                    'current_balance'.tr,
                     style: AppStyle.shortHeading.copyWith(
                         fontSize: Dimens.font_14sp,
                         color: Colors.white,

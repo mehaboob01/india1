@@ -107,7 +107,7 @@ class InsuranceCard extends StatelessWidget {
                 ));
           },
           child: ItemCard(
-            image: AppImages.criticalIllnessSvg,
+            image: AppImages.accidentSvg,
             label: 'critical_illness',
             itembgColor: ItemCardbgColor.lightRed2,
           ),

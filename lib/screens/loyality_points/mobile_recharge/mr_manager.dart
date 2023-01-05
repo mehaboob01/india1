@@ -287,10 +287,9 @@ class MrManager extends GetxController {
             Flushbar(
               title: "successful!",
               message: "Recharge successful",
-              duration: Duration(seconds: 2),
+              duration: Duration(seconds: 1),
             )..show(Get.context!)
-                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                    MRouter.homeScreen, (Route<dynamic> route) => false))
+                .then((value) => Get.toNamed(MRouter.verifiedScreen))
                 .then((value) => () {
                       plansList.clear();
                     });

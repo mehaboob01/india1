@@ -300,10 +300,9 @@ class CashBackManager extends GetxController {
           Flushbar(
             title: "successful!",
             message: "Cashback sent in bank account !!",
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 1),
           )..show(Get.context!)
-              .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                  MRouter.homeScreen, (Route<dynamic> route) => false))
+              .then((value) => Get.toNamed(MRouter.verifiedScreen))
               .then((value) => selectedIndex.value == -1);
         } else {
           Flushbar(

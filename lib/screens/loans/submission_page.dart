@@ -18,16 +18,17 @@ class SubmissionPage extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
-          body: Column(
+          body:
+          Column(
             children: [
               Expanded(
                 flex: 6,
-                child: Center(
-                  child: Container(child: Image.asset(
-                    AppImages.completeGif,
-                    height: 184.0,
-                    width: 184.0,
-                  ),),
+                child:  Center(
+                  child: Image.asset(
+                    "assets/images/success.gif",
+                    width: 320,
+                    height: 320,
+                  ),
                 ),
               ),
               Expanded(
@@ -57,7 +58,7 @@ class SubmissionPage extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          )
         ),
       ),
     );

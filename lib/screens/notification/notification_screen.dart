@@ -164,7 +164,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void _addListner() {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      _notificationManager.callNotificationsApi(true);
+     // _notificationManager.callNotificationsApi(true);
 
       print("call ");
       page = page + 1;
