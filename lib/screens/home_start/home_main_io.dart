@@ -47,7 +47,7 @@ import 'dart:io' show Platform;
 
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;
-  List<FocusNode> focusNodes;
+  List<FocusNode>? focusNodes;
   HomeMainIO(this.showPonitsPopup, this.focusNodes);
 
   @override
@@ -218,6 +218,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               options: AuthenticationOptions(
                 biometricOnly: false,
               ));
+
           if (pass) {
             msg = "You are Authenticated.";
             setState(() {
@@ -225,8 +226,12 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               WidgetsBinding.instance.removeObserver(this);
             });
           } else {
-            auth.stopAuthentication();
-            WidgetsBinding.instance.removeObserver(this);
+            if (androidVersion == 10) {
+              auth.stopAuthentication();
+              WidgetsBinding.instance.removeObserver(this);
+              SystemNavigator.pop();
+            }
+            SystemNavigator.pop();
           }
           //----------------
         } else {
@@ -301,7 +306,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _homeManager.callHomeApi();
     _homeManager.callAdsBannerApi();
     _loyaltyManager.callLoyaltyDashboardApi();
-
+    
     // _homeManager.sendTokens();
     _profileController.getProfileData();
   }
@@ -393,7 +398,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 children: [
                                                   Focus(
                                                     focusNode:
-                                                        widget.focusNodes[5],
+                                                        widget.focusNodes![5],
                                                     child: HeadingBox(
                                                         text: 'Aa',
                                                         ontap: () {
@@ -416,7 +421,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                           0
                                                       ? Focus(
                                                           focusNode: widget
-                                                              .focusNodes[6],
+                                                              .focusNodes![6],
                                                           child:
                                                               GestureDetector(
                                                             onTap: () => Get
@@ -449,7 +454,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         )
                                                       : Focus(
                                                           focusNode: widget
-                                                              .focusNodes[6],
+                                                              .focusNodes![6],
                                                           child:
                                                               GestureDetector(
                                                             onTap: () => Get
@@ -465,7 +470,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                   ),
                                                   Focus(
                                                     focusNode:
-                                                        widget.focusNodes[7],
+                                                        widget.focusNodes![7],
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         _homeManager.isClicked
@@ -936,6 +941,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             SizedBox(width: 1.0.wp),
             Text(
               text,
+              textScaleFactor: 1,
               style: AppStyle.shortHeading.copyWith(
                   fontSize: 10.0.sp,
                   color: AppColors.textColorshade,

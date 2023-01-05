@@ -9,6 +9,17 @@ class CommonMethods {
     return shortDateTime;
   }
 
+  String textMask(String value) {
+    if (value.length <= 4) {
+      return value;
+    }
+    String startValue = value.substring(0, (value.length - 4));
+    String endValue = value.substring(value.length - 4, value.length);
+    final regex = RegExp(r'[0-9]');
+    String maskedValue = startValue.replaceAll(regex, 'X');
+    return maskedValue + endValue;
+  }
+
   String getOnlyDate({required String? date}) {
     if (date == '') {
       return '';

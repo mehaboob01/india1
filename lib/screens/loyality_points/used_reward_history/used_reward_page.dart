@@ -21,13 +21,13 @@ class UsedRewardHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-     ()=> IgnorePointer(
+      () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(body: SafeArea(
           child: Obx(() {
             return Column(
               children: [
-                CustomAppBar(heading: 'Used points'),
+                CustomAppBar(heading: 'History'),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -161,7 +161,8 @@ class UsedRewardHistory extends StatelessWidget {
                                                   mainAxisSpacing: 4.0.wp),
                                           children: List.generate(
                                               _usedPointsController
-                                                  .usedpointsList.length, (index) {
+                                                  .usedpointsList
+                                                  .length, (index) {
                                             var rewardHistoryCard =
                                                 _usedPointsController
                                                     .usedpointsList[index];
@@ -169,9 +170,15 @@ class UsedRewardHistory extends StatelessWidget {
                                                 rewardState: RewardState.used,
                                                 rewardtype:
                                                     Rewardtype.cashTransaction,
-                                                date: CommonMethods().getOnlyDate(
-                                                    date: _usedPointsController.usedpointsList[index].date),
-                                                points: rewardHistoryCard.points!);
+                                                date: CommonMethods()
+                                                    .getOnlyDate(
+                                                        date:
+                                                            _usedPointsController
+                                                                .usedpointsList[
+                                                                    index]
+                                                                .date),
+                                                points:
+                                                    rewardHistoryCard.points!);
                                           })),
                                     )
                                   ],

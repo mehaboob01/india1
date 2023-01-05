@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -189,6 +191,7 @@ class _MapsState extends State<Maps> {
                                 mapManager.placeList[index]["description"];
                             mapManager.placeList.value.clear();
                             mapManager.areSuggestionsVisible.value = false;
+                            FocusScope.of(context).unfocus();
                           },
                           child: Container(
                             decoration: BoxDecoration(color: Colors.white),
@@ -296,7 +299,6 @@ class AtmDetailsCard extends StatelessWidget {
             .then((value) {
           mapManager.removeHighlights();
           mapManager.bringSelectedTileToFirst(index);
-          mapManager.mapCoordinateList[index].isHighlighted = false;
         });
       },
       child: Card(
@@ -311,7 +313,7 @@ class AtmDetailsCard extends StatelessWidget {
                   : null,
               borderRadius: BorderRadius.circular(12)),
           child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+              padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,82 +336,87 @@ class AtmDetailsCard extends StatelessWidget {
                           height: Get.height * 0.005,
                         ),
 
-                        Row(children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Container(
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.45,
-                              child: Text(
-                                (int.parse(distance.toString()) / 1000)
-                                        .toString() +
-                                    " Kms",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 4,
-                                style: TextStyle(
-                                  overflow: TextOverflow.visible,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primary,
-                                  fontSize: Dimens.font_16sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]),
                         //   Text(, softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
                       ],
                     ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(
-                        height: Get.height * 0.05,
-                        decoration: BoxDecoration(
-                            // border: Border.all(color: Color(0xFFF2642C)),
-                            border: Border.all(
-                              color: Color(0xFFF2642C),
-                            ),
-                            borderRadius: BorderRadius.circular(6)),
-                        width: Get.width * 0.25,
-                        child: GestureDetector(
-                          onTap: () {
-                            mapManager.openDirections(
-                              mapManager
-                                  .mapCoordinateList[index].geoLocation!.lat!
-                                  .toDouble(),
-                              mapManager
-                                  .mapCoordinateList[index].geoLocation!.lon!
-                                  .toDouble(),
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.directions,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: Get.height * 0.05,
+                          decoration: BoxDecoration(
+                              // border: Border.all(color: Color(0xFFF2642C)),
+                              border: Border.all(
                                 color: Color(0xFFF2642C),
                               ),
-                              SizedBox(
-                                width: Get.width * 0.008,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "Directions",
-                                  style: TextStyle(
-                                      // color: mapManager.mapCoordinateList[index]
-                                      //             .isHighlighted !=
-                                      //         null
-                                      //     ? (mapManager.mapCoordinateList[index]
-                                      //                 .isHighlighted ==
-                                      //             true
-                                      //         ? Colors.green
-                                      //         : Color(0xFFF2642C))
-                                      //     : Color(0xFFF2642C),
-                                      color: Color(0xFFF2642C)),
+                              borderRadius: BorderRadius.circular(6)),
+                          width: Get.width * 0.25,
+                          child: GestureDetector(
+                            onTap: () {
+                              mapManager.openDirections(
+                                mapManager
+                                    .mapCoordinateList[index].geoLocation!.lat!
+                                    .toDouble(),
+                                mapManager
+                                    .mapCoordinateList[index].geoLocation!.lon!
+                                    .toDouble(),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.directions,
+                                  color: Color(0xFFF2642C),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: Text(
+                                    "Directions",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        // color: mapManager.mapCoordinateList[index]
+                                        //             .isHighlighted !=
+                                        //         null
+                                        //     ? (mapManager.mapCoordinateList[index]
+                                        //                 .isHighlighted ==
+                                        //             true
+                                        //         ? Colors.green
+                                        //         : Color(0xFFF2642C))
+                                        //     : Color(0xFFF2642C),
+                                        color: Color(0xFFF2642C)),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              (int.parse(distance.toString()) / 1000)
+                                      .toStringAsFixed(1) +
+                                  " Kms",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 4,
+                              style: TextStyle(
+                                overflow: TextOverflow.visible,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.primary,
+                                fontSize: Dimens.font_16sp,
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )),

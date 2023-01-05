@@ -21,54 +21,72 @@ class CarasoulImages extends StatelessWidget {
               for (var i = 0; i < getController.bannerList.length; i++)
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BannerAds(getController.bannerList[i].title.toString(),getController.bannerList[i].redirectUrl.toString())),
-                    );
+                    if (getController.bannerList[i].redirectUrl == null) {
+                      Get.toNamed(getController.bannerList[i].route == null
+                          ? MRouter.homeScreen
+                          : getController.bannerList[i].route.toString());
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BannerAds(
+                                getController.bannerList[i].title.toString(),
+                                getController.bannerList[i].redirectUrl
+                                    .toString())),
+                      );
+                    }
                   },
                   child: Container(
-                      width: double.maxFinite,
-                      margin: EdgeInsets.symmetric(horizontal: 2.0.hp),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 2.0.hp, vertical: 2.0.hp),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0.wp),
-                          image: DecorationImage(
-                              image: NetworkImage(getController
-                                  .bannerList[i].imageUrl
-                                  .toString()),
-                              fit: BoxFit.fill)),
-                      child:
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(getController.bannerList[i].subTitle.toString(),
-                              style: AppStyle.shortHeading.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
-                          SizedBox(height: 1.0.wp),
-                          Text(getController.bannerList[i].title.toString(),
-                              style: AppStyle.shortHeading.copyWith(
-                                  color: Colors.white, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 2.0.wp),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Apply Now',
-                                  style: AppStyle.shortHeading.copyWith(
-                                      color: AppColors.yellowgradient1,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10.0.sp)),
-                              SizedBox(width: 2.0.wp),
-                              Image.asset(AppImages.rightArrow)
-                            ],
-                          ),
-                        ],
-                      ),
-                      ),
-                       ),
-
+                    width: double.maxFinite,
+                    margin: EdgeInsets.symmetric(horizontal: 2.0.hp),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 2.0.hp, vertical: 2.0.hp),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2.0.wp),
+                        image: DecorationImage(
+                            image: NetworkImage(getController
+                                .bannerList[i].imageUrl
+                                .toString()),
+                            fit: BoxFit.fill)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            getController.bannerList[i].subTitle != null
+                                ? getController.bannerList[i].subTitle
+                                    .toString()
+                                : "",
+                            style: AppStyle.shortHeading.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                        SizedBox(height: 1.0.wp),
+                        Text(
+                            getController.bannerList[i].title != null
+                                ? getController.bannerList[i].title.toString()
+                                : "",
+                            style: AppStyle.shortHeading.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2.0.wp),
+                        getController.bannerList[i].title == null
+                            ? SizedBox()
+                            : Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Apply Now',
+                                      style: AppStyle.shortHeading.copyWith(
+                                          color: AppColors.yellowgradient1,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 10.0.sp)),
+                                  SizedBox(width: 2.0.wp),
+                                  Image.asset(AppImages.rightArrow)
+                                ],
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
             ],
             options: CarouselOptions(
               height: 30.0.wp,

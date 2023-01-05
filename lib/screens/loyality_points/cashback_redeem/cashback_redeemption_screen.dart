@@ -70,7 +70,6 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
         () => IgnorePointer(
           ignoring: _controller.ignorePointer.value,
           child: Scaffold(
-            resizeToAvoidBottomInset: false,
             backgroundColor: AppColors.white,
             body: Column(
               children: [
@@ -860,6 +859,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
 
   @override
   Widget build(BuildContext context) {
+    FocusNode upifocus = FocusNode();
     return Obx(
       () => Column(
         children: [
@@ -981,6 +981,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                             return null;
                           }
                         },
+                        focus: upifocus,
                         inputOnChanged: (inputValue) {
                           if (inputValue.toString().length >= 14) {
                             cashbackCtrl.upiAddEnable.value = true;
@@ -1020,7 +1021,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                             labelColor: Colors.white,
                             labelWeight: FontWeight.bold,
                             onPressed: () {
-                              if (cashbackCtrl.upiAddEnable == true) {
+                              if (cashbackCtrl.upiAddEnable.value == true) {
                                 print("Verify onclick");
                                 cashbackCtrl.upiFormKey.currentState!.save();
                                 print(cashbackCtrl
@@ -1032,6 +1033,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                 cashbackCtrl.upiAddEnable.value = false;
                                 cashbackCtrl.upiFormKey.currentState!.reset();
                               }
+                              upifocus.unfocus();
                             }),
                       ))
                 ],

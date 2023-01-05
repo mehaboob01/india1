@@ -29,6 +29,7 @@ class ManageAccountsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => IgnorePointer(
+        ignoring: _controller.ignorePointer.value,
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
@@ -236,15 +237,15 @@ class ManageAccountsCard extends StatelessWidget {
                                                                       .id);
 
                                                               Get.back();
-                                                              await Future.delayed(
-                                                                  Duration(
-                                                                      seconds:
-                                                                          1),
-                                                                  () {
-                                                                cashBackManager
-                                                                    .fetchCustomerUpiAccounts();
-                                                                Get.back();
-                                                              });
+                                                              // await Future.delayed(
+                                                              //     Duration(
+                                                              //         seconds:
+                                                              //             1),
+                                                              //     () {
+                                                              //   cashBackManager
+                                                              //       .fetchCustomerUpiAccounts();
+                                                              //   Get.back();
+                                                              // });
                                                             });
                                                           },
                                                           cardWidth:

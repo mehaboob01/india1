@@ -22,11 +22,13 @@ class CommonTextField extends StatelessWidget {
       this.suffixIcon,
       required this.formName,
       this.initialValue,
-      this.isfieldEnabled});
+      this.isfieldEnabled,
+      this.focus});
   final String? hintText;
   final String? labelText;
   final bool? inUperCase;
   final int maxlines;
+  final FocusNode? focus;
   final TextInputType keyboardType;
   final TextEditingController? inputController;
   final String? Function(String? value) inputValidator;
@@ -43,6 +45,7 @@ class CommonTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      focusNode: focus,
       name: formName,
       textCapitalization: isUpperCase == true
           ? TextCapitalization.characters

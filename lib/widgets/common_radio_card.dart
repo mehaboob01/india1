@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constant/theme_manager.dart';
+import '../utils/common_methods.dart';
 import 'common_divider.dart';
 
 class CommonRadioCard extends StatefulWidget {
@@ -334,7 +335,9 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                   SizedBox(width: 2.0.wp),
                                   Expanded(
                                     child: Text(
-                                      '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
+                                      // '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
+                                        CommonMethods().textMask(
+                                          '${widget.bankAccountNumber}'),
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 12.0.sp,
                                         fontWeight: FontWeight.w600,

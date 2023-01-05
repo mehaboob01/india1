@@ -12,10 +12,12 @@ import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
+import '../../utils/common_methods.dart';
 import '../../widgets/loyalty_common_header.dart';
 import '../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
 import '../loyality_points/cashback_redeem/cb_manager.dart';
@@ -446,6 +448,10 @@ class ProfileScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 30,
                                       ),
+                                      Obx(
+                                        () => Text(
+                                            "App version : ${profileController.appVersion.value}"),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -1063,7 +1069,7 @@ class ProfileScreen extends StatelessWidget {
                 title: "Account number",
                 isEmpty: account.maskAccountNumber == null ? true : false,
                 value:
-                    "${cashBackManager.customerBankList.isEmpty ? "" : cashBackManager.customerBankList[0].maskAccountNumber ?? ''}",
+                    "${cashBackManager.customerBankList.isEmpty ? "" : CommonMethods().textMask(cashBackManager.customerBankList[0].maskAccountNumber ?? '')}",
               ),
             ),
           ],

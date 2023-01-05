@@ -77,7 +77,7 @@ class CashBackManager extends GetxController {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         "x-digital-api-key": "1234"
-      //  "Authorization": accessToken.toString()
+        //  "Authorization": accessToken.toString()
       });
       var jsonData = jsonDecode(response.body);
       print("response of bank lists${response.body}");
@@ -137,7 +137,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-          //  "Authorization": accessToken.toString()
+            //  "Authorization": accessToken.toString()
           });
 
       print("response==> ${response.body.toString()}");
@@ -194,7 +194,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-         //   "Authorization": accessToken.toString()
+            //   "Authorization": accessToken.toString()
           });
       var jsonData = jsonDecode(response.body);
 
@@ -279,7 +279,6 @@ class CashBackManager extends GetxController {
         };
       }
 
-
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.cashBackToBank),
           body: jsonEncode(sendData),
@@ -287,7 +286,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-          //  "Authorization": accessToken.toString()
+            //  "Authorization": accessToken.toString()
           });
       print("Response of points to bank api");
       print(response.body);
@@ -343,7 +342,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-           // "Authorization": accessToken.toString()
+            // "Authorization": accessToken.toString()
           });
 
       print("Response of add upi${response.body}");
@@ -412,7 +411,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-         //   "Authorization": accessToken.toString()
+            //   "Authorization": accessToken.toString()
           });
 
       if (response.statusCode == 200) {
@@ -463,7 +462,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-          //  "Authorization": accessToken.toString()
+            //  "Authorization": accessToken.toString()
           });
 
       print("response delete==> ${response.body}");
@@ -481,7 +480,7 @@ class CashBackManager extends GetxController {
           Get.back();
           Flushbar(
             title: "Success!!",
-            message: "bank del Successfully ..",
+            message: "bank deleted Successfully ..",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
         } else {
@@ -523,7 +522,6 @@ class CashBackManager extends GetxController {
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
-
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerUpiAccount),
           body: jsonEncode({"customerId": customerId, "customerUpiId": id}),
@@ -531,7 +529,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234"
-         //   "Authorization": accessToken.toString()
+            //   "Authorization": accessToken.toString()
           });
 
       print("response delete==> ${response.body}");
@@ -544,13 +542,13 @@ class CashBackManager extends GetxController {
 
         if (commonApiResponseModel.status!.code == 2000) {
           isLoading(false);
-
+          await fetchCustomerUpiAccounts();
+          Get.back();
           Flushbar(
             title: "Success!!",
-            message: "Upi del Successfully ..",
+            message: "Upi deleted Successfully ..",
             duration: Duration(seconds: 2),
           )..show(Get.context!).then((value) => Get.back());
-
         } else {
           isLoading(false);
           Flushbar(

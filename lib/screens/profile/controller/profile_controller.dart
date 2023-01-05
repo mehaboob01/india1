@@ -24,6 +24,7 @@ import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -248,6 +249,7 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     _homeManager.showAuth.value = false;
+    getAppVersion();
     getId();
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () {
@@ -255,6 +257,12 @@ class ProfileController extends GetxController {
       // getBankDetails();
       // getUpiIdDetails();
     });
+  }
+
+  RxString appVersion = "".obs;
+  getAppVersion() async {
+    PackageInfo info = await PackageInfo.fromPlatform();
+    appVersion.value = info.version.trim().toString();
   }
 
   getId() async {

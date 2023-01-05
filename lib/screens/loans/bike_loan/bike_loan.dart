@@ -308,7 +308,10 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
               item: loanController.twoWheelerMakes.toSet().map((value) {
                 return DropdownMenuItem(
                   value: value,
-                  child: Text(value.toString()),
+                  child: Text(
+                    value.toString(),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 );
               }).toList(),
               onChanged: (value) async {

@@ -26,7 +26,7 @@ class _BikeInsuranceState extends State<BikeInsurance> {
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appBar('Bike Insurance'),
+          appBar: appBar('2 Wheeler Insurance'),
           body: SafeArea(
               child: Column(
             children: [

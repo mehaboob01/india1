@@ -37,7 +37,7 @@ import '../screens/refer/refer_earn_ui.dart';
 class MRouter {
   static const String splashRoute = 'SplashWidget';
 
-  static const String homeScreen = 'HomeWidget';
+  static const String homeScreen = 'homeScreen';
   static const String userLogin = 'UserLogin';
   static const String verifiedScreen = 'VerifiedScreen';
   static const String languageSelectionIO = 'LanguageSelectionIO';
@@ -61,7 +61,7 @@ class MRouter {
   static const String bikeInsurance = 'BikeInsurance';
   static const String carInsurance = 'CarInsurance';
   static const String loanPage = 'LoansPage';
-  static const String referEarn = 'ReferEarn';
+  static const String referEarn = 'referEarn';
   static const String usedRewardHistory = 'UsedRewardHistory';
   static const String farmLoan = 'FarmLoan';
   static const String healthInsurance = 'HealthInsurance';

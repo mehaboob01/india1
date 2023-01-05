@@ -91,7 +91,7 @@ class _UserLoginState extends State<UserLogin> {
         () => IgnorePointer(
           ignoring: _controller.ignorePointer.value,
           child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            //  resizeToAvoidBottomInset: false,
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());

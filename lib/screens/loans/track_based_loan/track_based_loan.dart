@@ -101,7 +101,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          // resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(
               width: widthIs,
@@ -144,13 +144,13 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                                                 .currentScreen.value,
                                             callBack: (i) {
                                               print("find me");
-                                              if (i <=
-                                                  loanController
-                                                      .trackCompletedIndex
-                                                      .value) {
-                                                loanController
-                                                    .currentScreen.value = i;
-                                              }
+                                              // if (i <=
+                                              //     loanController
+                                              //         .trackCompletedIndex
+                                              //         .value) {
+                                              //   loanController
+                                              //       .currentScreen.value = i;
+                                              // }
                                             },
                                           ),
                                         ),
@@ -239,13 +239,13 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
               ],
             ),
             Spacer(),
-            SizedBox(
-              height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
-              ),
-            ),
+            // SizedBox(
+            //   height: 48,
+            //   child: Image.asset(
+            //     "assets/images/btn_img.png",
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
           ],
         ),
         decoration: BoxDecoration(
@@ -382,108 +382,146 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
   // RESIDENTIAL INFO BUTTON
 
   Widget residentialInfoButton() {
-    return InkWell(
-      onTap: () {
-        profileController.autoValidation.value = true;
-        if (!residentialForm.currentState!.validate()) {
-          Flushbar(
-            title: "Alert!",
-            message: "missing some values",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.city.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for city",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else if (profileController.state.value == '') {
-          Flushbar(
-            title: "Alert!",
-            message: "Enter valid pincode for state",
-            duration: Duration(seconds: 3),
-          )..show(context);
-        } else {
-          profileController.addResidentialDetails(
-              isFromLoan: true,
-              loanApplicationId:
-                  loanController.createLoanModel.value.loanApplicationId,
-              callBack: () {
-                // Get.to(() => LendersList(
-                //       title: 'Farm loan',
-                //     ));
-
-                LoanCommon().bottomSheet(
-                  context,
-                  lenderId: "lenders.id ?? ''",
-                  callBack: () {
-                    // Get.off(() => LendersList(
-                    //           title: 'Farm loan',
-                    //         ));
-                    loanController.applyLoan(
-                      providerId: '',
-                      lenderId: '',
-                    );
-                  },
-                  providerId: '',
-                );
-              });
-        }
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.9,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            Row(
-              children: [
-                Text(
-                  'NEXT',
-                  style: AppTextThemes.button,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () => loanController.updateScreen(Steps.PERSONAL.index),
+            child: Container(
+              width: MediaQuery.of(context).size.height * 0.9,
               height: 48,
-              child: Image.asset(
-                "assets/images/btn_img.png",
-                fit: BoxFit.fill,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Back',
+                    style: AppTextThemes.button,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  end: Alignment.topRight,
+                  colors: [Color(0xFF357CBE), Color(0xFF004280)],
+                ),
+
+                // color: termConditionChecked == true
+                //     ? AppColors.btnColor
+                //     : AppColors.btnDisableColor,
+                borderRadius: BorderRadius.circular(6.0),
               ),
             ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            end: Alignment.topRight,
-            colors: [Colors.orange, Colors.redAccent],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.8),
-              offset: Offset(
-                -6.0,
-                -6.0,
-              ),
-              blurRadius: 16.0,
-            ),
-            BoxShadow(
-              color: AppColors.darkerGrey.withOpacity(0.4),
-              offset: Offset(6.0, 6.0),
-              blurRadius: 16.0,
-            ),
-          ],
-          // color: termConditionChecked == true
-          //     ? AppColors.btnColor
-          //     : AppColors.btnDisableColor,
-          borderRadius: BorderRadius.circular(6.0),
         ),
-      ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              profileController.autoValidation.value = true;
+              if (!residentialForm.currentState!.validate()) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "missing some values",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.city.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for city",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.state.value == '') {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter valid pincode for state",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else {
+                profileController.addResidentialDetails(
+                    isFromLoan: true,
+                    loanApplicationId:
+                        loanController.createLoanModel.value.loanApplicationId,
+                    callBack: () {
+                      // Get.to(() => LendersList(
+                      //       title: 'Farm loan',
+                      //     ));
+
+                      LoanCommon().bottomSheet(
+                        context,
+                        lenderId: "lenders.id ?? ''",
+                        callBack: () {
+                          // Get.off(() => LendersList(
+                          //           title: 'Farm loan',
+                          //         ));
+                          loanController.applyLoan(
+                            providerId: '',
+                            lenderId: '',
+                          );
+                        },
+                        providerId: '',
+                      );
+                    });
+              }
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.height * 0.9,
+              height: 48,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  Row(
+                    children: [
+                      Text(
+                        'NEXT',
+                        style: AppTextThemes.button,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  // SizedBox(
+                  //   height: 48,
+                  //   child: Image.asset(
+                  //     "assets/images/btn_img.png",
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  // ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  end: Alignment.topRight,
+                  colors: [Colors.orange, Colors.redAccent],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.8),
+                    offset: Offset(
+                      -6.0,
+                      -6.0,
+                    ),
+                    blurRadius: 16.0,
+                  ),
+                  BoxShadow(
+                    color: AppColors.darkerGrey.withOpacity(0.4),
+                    offset: Offset(6.0, 6.0),
+                    blurRadius: 16.0,
+                  ),
+                ],
+                // color: termConditionChecked == true
+                //     ? AppColors.btnColor
+                //     : AppColors.btnDisableColor,
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

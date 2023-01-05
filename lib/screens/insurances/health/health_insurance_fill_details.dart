@@ -62,7 +62,6 @@ class _HealthInsuranceFillDetailsState
     return IgnorePointer(
       ignoring: _controller.ignorePointer.value,
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         body: SizedBox(
           width: widthIs,
           height: heightIs,
@@ -72,7 +71,7 @@ class _HealthInsuranceFillDetailsState
                 CustomAppBar(
                     heading: widget.isAccidentInsurance
                         ? 'Accident Insurance'
-                        : "Critical Illness",
+                        : "Personal Accident",
                     customActionIconsList: commonAppIcons),
                 Expanded(
                   child: SingleChildScrollView(
@@ -96,6 +95,9 @@ class _HealthInsuranceFillDetailsState
                                   stepperDirection: Axis.horizontal,
                                   iconWidth: 25,
                                   iconHeight: 25,
+                                  titleTextStyle: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,
                                   activeIndex:

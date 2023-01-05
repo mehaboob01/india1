@@ -108,6 +108,7 @@ class MapManager extends GetxController {
   }
 
   getCurrentLocation() async {
+    mapCoordinateList.clear();
     Position position;
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
@@ -197,7 +198,6 @@ class MapManager extends GetxController {
   var controller = TextEditingController().obs;
 
   Future<void> getAddressFromLatLong(lat, long) async {
-    String type = '(regions)';
     String baseURL =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=${Apis.kPLACES_API_KEY}';
 
@@ -226,7 +226,7 @@ class MapManager extends GetxController {
     }
   }
 
-  bringSelectedTileToFirst(int index) {
+  bringSelectedTileToFirst(int index) async {
     var temp;
     temp = mapCoordinateList[index];
     mapCoordinateList[index] = mapCoordinateList[0];
