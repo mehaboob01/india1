@@ -14,6 +14,7 @@ import 'package:india_one/constant/routes.dart';
 import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
+import 'package:local_auth/error_codes.dart';
 
 import 'package:local_auth/local_auth.dart';
 import 'package:location/location.dart';
@@ -78,7 +79,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _profileController.setData();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      WidgetsBinding.instance.addObserver(this); // observer
+      if (androidVersion != 10) {
+        WidgetsBinding.instance.addObserver(this);
+      }
+      // observer
       _homeManager.callHomeApi();
       _profileController.getProfileData();
       //  _homeManager.callAdsBannerApi();
@@ -91,7 +95,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       _profileController.getProfileData();
 
       showFirstTimePoints();
-     // showCompleteProfile();
+      // showCompleteProfile();
       checkLogin();
     });
   }
@@ -149,7 +153,9 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
     print("state : ${state}");
-    if (state == AppLifecycleState.resumed && androidVersion > 8) {
+    if (state == AppLifecycleState.resumed &&
+        androidVersion > 8 &&
+        androidVersion != 10) {
       checkLogin();
     }
   }
@@ -198,50 +204,78 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     bool? showAuth = prefs.getBool(SPKeys.SHOW_AUTH);
     String? finger = prefs.getString(SPKeys.finger);
     print("check auth fggfgfgf status${_homeManager.showAuth.value}");
-
-    if (showAuth == true) {
-      {
-        try {
-          bool hasbiometrics =
-              await auth.canCheckBiometrics; //check if there is authencations,
-
-          if (hasbiometrics) {
-            List<BiometricType> availableBiometrics =
-                await auth.getAvailableBiometrics();
-            if (Platform.isAndroid) {
-              bool pass = await auth.authenticate(
-                  localizedReason: 'Authenticate with pattern/pin/passcode',
-                  options: AuthenticationOptions(biometricOnly: false));
-              if (pass) {
-                msg = "You are Authenticated.";
-                setState(() {
-                  _homeManager.showAuth.value = true;
-                  WidgetsBinding.instance.removeObserver(this);
-                });
-              } else {
-                 SystemNavigator.pop();
-              }
+    try {
+      //--------------------
+      if (showAuth == true) {
+        List<BiometricType> availableBiometric =
+            await auth.getAvailableBiometrics();
+        print("availableBiometric $availableBiometric");
+        //---------------
+        if (availableBiometric.isEmpty) {
+          //---------------
+          bool pass = await auth.authenticate(
+              localizedReason: 'Authenticate with pattern/pin/passcode',
+              options: AuthenticationOptions(
+                biometricOnly: false,
+              ));
+          if (pass) {
+            msg = "You are Authenticated.";
+            setState(() {
+              _homeManager.showAuth.value = true;
+              WidgetsBinding.instance.removeObserver(this);
+            });
+          } else {
+            auth.stopAuthentication();
+            WidgetsBinding.instance.removeObserver(this);
+          }
+          //----------------
+        } else {
+          if (availableBiometric.contains(BiometricType.fingerprint)) {
+            bool pass = await auth.authenticate(
+                localizedReason: 'Authenticate with fingerprint/face',
+                options: AuthenticationOptions(
+                  biometricOnly: true,
+                  stickyAuth: true,
+                ));
+            if (pass) {
+              msg = "You are Authenicated.";
+              setState(() {
+                _homeManager.showAuth.value = true;
+                WidgetsBinding.instance.removeObserver(this);
+              });
             } else {
-              if (availableBiometrics.contains(BiometricType.fingerprint)) {
-                bool pass = await auth.authenticate(
-                    localizedReason: 'Authenticate with fingerprint/face',
-                    options: AuthenticationOptions(biometricOnly: true));
-                if (pass) {
-                  msg = "You are Authenicated.";
-                  setState(() {
-                    _homeManager.showAuth.value = true;
-                    WidgetsBinding.instance.removeObserver(this);
-                  });
-                } else {
-                   SystemNavigator.pop();
-                }
-              }
+              SystemNavigator.pop();
             }
-          } else {}
-        } on PlatformException catch (e) {
-          // SystemNavigator.pop();
-          msg = "Error while opening fingerprint/face scanner";
+          } else {
+            //when list is not empty and doesnt have fingerprint
+            //---------
+            bool pass = await auth.authenticate(
+                localizedReason: 'Authenticate with pattern/pin/passcode',
+                options: AuthenticationOptions(biometricOnly: false));
+            if (pass) {
+              msg = "You are Authenticated.";
+              setState(() {
+                _homeManager.showAuth.value = true;
+                WidgetsBinding.instance.removeObserver(this);
+              });
+            } else {
+              SystemNavigator.pop();
+            }
+            //----------
+          }
         }
+        //------------------
+      } else {
+        auth.stopAuthentication();
+        WidgetsBinding.instance.removeObserver(this);
+      }
+      //--------------------
+    } catch (e) {
+      // SystemNavigator.pop();
+
+      if (e.toString().contains("NotAvailable")) {
+        auth.stopAuthentication();
+        WidgetsBinding.instance.removeObserver(this);
       }
     }
   }
