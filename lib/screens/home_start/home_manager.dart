@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:india_one/core/data/model/common_model.dart';
+import 'package:india_one/screens/home_start/payment_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
@@ -14,6 +16,7 @@ import '../../core/data/remote/api_constant.dart';
 import 'package:http/http.dart' as http;
 
 import '../banner_ads/model/BannerAds.dart';
+import '../onboarding_login/user_login/tnc_io.dart';
 import 'home_model.dart';
 
 class HomeManager extends GetxController {
@@ -229,6 +232,67 @@ class HomeManager extends GetxController {
       )..show(Get.context!);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void callPaymentApi(String api_route, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    print("customer id ${customerId}");
+
+
+
+
+
+
+    try {
+      isLoading.value = true;
+
+      print(baseUrl+api_route);
+      var response = await http.post(
+        Uri.parse(baseUrl +api_route),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "x-digital-api-key": "1234"
+        },
+        body: jsonEncode({"customerId": customerId}),
+      );
+
+   //   print("response home===>${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        PaymentModel paymentModel = PaymentModel.fromJson(jsonData);
+
+
+        if (paymentModel!.status!.code == 2000) {
+          isLoading(false);
+          print("http success in model!!");
+
+
+        } else {
+          Flushbar(
+            title: "Error!",
+            message: paymentModel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
+      } else {
+        Flushbar(
+          title: "Server Error!",
+          message: "Please try after sometime ...",
+          duration: Duration(seconds: 1),
+        )..show(Get.context!);
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Server Error!",
+        message: "Please try after sometime",
+        duration: Duration(seconds: 1),
+      )..show(Get.context!);
+    } finally {
+      isLoading(false);
     }
   }
 }

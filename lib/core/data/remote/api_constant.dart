@@ -15,6 +15,12 @@ class Apis {
 
   static String dashboard = "dashboards/home/";
   static String bannerAds = "advertisement-banners";
+  static String termCondition = "terms-and-conditions?language=";
+
+  // payments api
+  static String payment_recharge = "dashboards/payments/Recharge";
+  static String payment_dth = "dashboards/payments/DTH";
+  static String payment_fastag = "dashboards/payments/Fastag";
 
   //map location's
   static String mapLocations = "atms/locations?customer-id=";

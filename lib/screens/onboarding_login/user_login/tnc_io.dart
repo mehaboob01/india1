@@ -7,7 +7,10 @@ import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/theme_manager.dart';
 
 class Tnc_IO extends StatefulWidget {
-  const Tnc_IO({Key? key}) : super(key: key);
+
+  RxString termCondition;
+  String title;
+   Tnc_IO(this.termCondition, this.title, {Key? key}) : super(key: key);
 
   @override
   State<Tnc_IO> createState() => _Tnc_IOState();
@@ -28,7 +31,7 @@ class _Tnc_IOState extends State<Tnc_IO> {
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appBar('term_condition'),
+          appBar: appBar(widget.title.tr),
           body: SafeArea(
               child: Column(
             children: [
@@ -40,7 +43,7 @@ class _Tnc_IOState extends State<Tnc_IO> {
               Expanded(
                 child: WebView(
                   initialUrl:
-                      'https://india1payments.in/terms-and-conditions/index.html',
+                  widget.termCondition.toString(),
                   javascriptMode: JavascriptMode.unrestricted,
                   onProgress: (progress) => setState(() {
                     this.progress = progress / 100 as double;

@@ -265,7 +265,7 @@ class _ReferEarnState extends State<ReferEarn> {
       children: [
         Container(
           width: double.maxFinite,
-          height: Get.height * 0.15,
+          height: Get.height * 0.16,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.0.wp),
             gradient: LinearGradient(
@@ -292,7 +292,7 @@ class _ReferEarnState extends State<ReferEarn> {
                     "You have not allowed the permission to access contacts, please allow the permissions to see the contacts on your phone.",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: Dimens.font_14sp,
                     ),
                   ),
                   Spacer(),
@@ -301,7 +301,7 @@ class _ReferEarnState extends State<ReferEarn> {
                       Text(
                         "Allow Permissions Now",
                         style:
-                            TextStyle(color: Colors.amberAccent, fontSize: 18),
+                            TextStyle(color: Colors.amberAccent, fontSize: Dimens.font_16sp),
                       ),
                       SizedBox(
                         width: Get.width * 0.01,

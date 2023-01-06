@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
+import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
+import '../../core/data/remote/api_constant.dart';
 import '../../widgets/card.dart';
 import '../../widgets/common_banner.dart';
 import '../../widgets/common_page_header.dart';
@@ -43,7 +45,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   Padding(
                     padding: EdgeInsets.only(
                         bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                    child: const PaymentCards(),
+                    child:  PaymentCards(),
                   ),
                   CommonBanner()
                 ],
@@ -57,29 +59,51 @@ class _PaymentsPageState extends State<PaymentsPage> {
 }
 
 class PaymentCards extends StatelessWidget {
-  const PaymentCards({
-    Key? key,
-  }) : super(key: key);
+  HomeManager _homeManager = Get.put(HomeManager());
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 2.0.wp,
-      children: const [
-        ItemCard(
-          image: AppImages.mobilRechargeSvg,
-          label: 'recharge',
-          itembgColor: ItemCardbgColor.lightRed,
+      children:  [
+        InkWell(
+          onTap: () async {
+            _homeManager.callPaymentApi(Apis.payment_recharge,context);
+
+
+
+          },
+          child: ItemCard(
+            image: AppImages.mobilRechargeSvg,
+            label: 'recharge',
+            itembgColor: ItemCardbgColor.lightRed,
+          ),
         ),
-        ItemCard(
-          image: AppImages.fastagSvg,
-          label: 'fast_teg',
-          itembgColor: ItemCardbgColor.lightRed,
+        InkWell(
+          onTap: () {
+            _homeManager.callPaymentApi(Apis.payment_fastag,context);
+            //  Get.toNamed(MRouter.carInsurance);
+          },
+          child: ItemCard(
+            image: AppImages.fastagSvg,
+            label: 'fast_teg',
+            itembgColor: ItemCardbgColor.lightRed,
+          ),
         ),
-        ItemCard(
-            image: AppImages.dthSvg,
-            label: 'dth',
-            itembgColor: ItemCardbgColor.lightRed),
+        InkWell(
+          onTap: () {
+            _homeManager.callPaymentApi(Apis.payment_dth,context);
+
+            //  Get.toNamed(MRouter.carInsurance);
+          },
+          child: ItemCard(
+              image: AppImages.dthSvg,
+              label: 'dth',
+              itembgColor: ItemCardbgColor.lightRed),
+        ),
       ],
     );
   }

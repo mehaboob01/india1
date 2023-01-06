@@ -8,7 +8,7 @@ class LocaleString extends Translations {
 
           'hello': 'Hello World',
           'mobile_number': 'Mobile number',
-          'term_condition': 'Terms & Conditions',
+          'term_condition': 'Terms and Conditions',
           'i_accept': 'I accept',
           'request_otp': 'Request OTP',
           'empty_error_msg': '*Please enter a valid 10 digit mobile number',
@@ -68,7 +68,9 @@ class LocaleString extends Translations {
           'digi_gold': 'Digi Gold',
           'digi_silver': 'Digi Silver',
 
-          'current_balance': 'Current balance'
+          'current_balance': 'Current balance',
+
+          'privacy_policy': 'Privacy policy'
 
 
 
@@ -137,7 +139,9 @@ class LocaleString extends Translations {
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
 
-          'current_balance': 'वर्तमान शेष'
+          'current_balance': 'वर्तमान शेष',
+
+           'privacy_policy': 'Privacy policy'
         },
         'ka_IN': {
   'current_balance': 'Current balance',
@@ -203,6 +207,8 @@ class LocaleString extends Translations {
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
 
+          'privacy_policy': 'Privacy policy'
+
         },
         'ma_IN': {
   'current_balance': 'चालू शिल्लक',
@@ -265,6 +271,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          'privacy_policy': 'Privacy policy'
         },
         'te_IN': {
           'current_balance': 'Current balance',
@@ -329,6 +337,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          'privacy_policy': 'Privacy policy'
         },
         'ta_IN': {
           'current_balance': 'Current balance',
@@ -392,6 +402,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          'privacy_policy': 'Privacy policy'
         },
         'mal_IN': {
           'current_balance': 'Current balance',
@@ -456,6 +468,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          'privacy_policy': 'Privacy policy'
         },
         'ban_IN': {
           'current_balance': 'Current balance',
@@ -520,6 +534,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'Fixed Deposit',
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
+
+          'privacy_policy': 'Privacy policy'
         },
         'or_IN': {
           'current_balance': 'ସାମ୍ପ୍ରତିକ ସନ୍ତୁଳନ',
@@ -585,6 +601,8 @@ class LocaleString extends Translations {
           'fixed_deposit': 'ପଏଣ୍ଟଗୁଡିକ',
           'digi_gold': 'ପଏଣ୍ଟଗୁଡିକ',
           'digi_silver': 'ପଏଣ୍ୁଡିକ',
+
+          'privacy_policy': 'Privacy policy'
         },
       };
 }

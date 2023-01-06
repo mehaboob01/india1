@@ -420,6 +420,7 @@ class AppImages {
   static const String carSvg = '${assetSvg}loans/car.svg';
   static const String bikeSvg = '${assetSvg}loans/bike.svg';
   static const String tract_based_Svg = '${assetSvg}loans/track_based_Svg.svg';
+  static const String tract_based_Png = '${assetPng}loans/track_based_loan.png';
   static const String tractorSvg = '${assetSvg}loans/tractor_svg.svg';
   static const String handSackSvg = '${assetSvg}loans/MSME.svg';
   static const String goldSvg = '${assetSvg}loans/gold.svg';

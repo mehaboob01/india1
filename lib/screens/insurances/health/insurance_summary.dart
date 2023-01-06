@@ -8,6 +8,7 @@ import 'package:india_one/screens/onboarding_login/user_login/tnc_io.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
+import '../../onboarding_login/user_login/login_manager.dart';
 import '../insurance_common.dart';
 
 class InsuranceSummary extends StatefulWidget {
@@ -21,6 +22,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
   bool? termConditionChecked = false;
   bool? alertTextShow = false;
   InsuranceController insuranceController = Get.find();
+  LoginManager _loginManager = Get.put(LoginManager());
 
   @override
   void initState() {
@@ -306,7 +308,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => Tnc_IO()),
+                                                builder: (context) => Tnc_IO(_loginManager.termCondition,"term_condition")),
                                           );
                                         },
                                         child: Text(

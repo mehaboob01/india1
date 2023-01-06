@@ -70,6 +70,8 @@ class _UserLoginState extends State<UserLogin> {
   void initState() {
     super.initState();
     getMobilePopup();
+    _loginManager.callTermConditionPolicyApi();
+
   }
 
   Future<void> initPlatformState() async {
@@ -91,7 +93,7 @@ class _UserLoginState extends State<UserLogin> {
         () => IgnorePointer(
           ignoring: _controller.ignorePointer.value,
           child: Scaffold(
-            //  resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: false,
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
@@ -287,25 +289,68 @@ class _UserLoginState extends State<UserLogin> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 6,
+                                          width: 4,
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Tnc_IO()),
-                                            );
-                                          },
-                                          child: Text(
-                                            "term_condition".tr,
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: AppFonts.appFont,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.facebookBlue,
-                                              fontSize: Dimens.font_16sp,
+                                        Obx(
+                                          ()=> _loginManager.isPrivacyLoading == true?  Container(
+                                              height: 18,
+                                              width: 18,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2.0,
+                                                color: AppColors.blueColor,
+                                              )): Container(
+                                            child: Row(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+
+                                                    print("ontapp");
+
+                                                    print(_loginManager.termCondition);
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Tnc_IO(_loginManager.termCondition,"term_condition")),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    "term_condition".tr,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      fontFamily: AppFonts.appFont,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.facebookBlue,
+                                                      fontSize: Dimens.font_16sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 4,),
+                                                GestureDetector(
+                                                  onTap: () {
+
+                                                    print("ontapp");
+
+                                                    print(_loginManager.privacyPolicy);
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Tnc_IO(_loginManager.privacyPolicy,"privacy_policy")),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    " & Privacy policy".tr,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      fontFamily: AppFonts.appFont,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.facebookBlue,
+                                                      fontSize: Dimens.font_16sp,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),

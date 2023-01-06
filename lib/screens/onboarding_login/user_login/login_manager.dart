@@ -3,6 +3,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:india_one/screens/onboarding_login/user_login/term_condition_model.dart';
 
 import 'package:india_one/screens/onboarding_login/user_login/user_login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,8 +13,13 @@ import '../otp_screen/otp_screen_ui.dart';
 
 class LoginManager extends GetxController {
   var isLoading = false.obs;
+  var isPrivacyLoading = false.obs;
   var getOtp = false.obs;
   var resendOtpLoading = false.obs;
+
+  RxString termCondition = "".obs;
+  RxString privacyPolicy = "".obs;
+
 
   callSentOtpApi(String phoneNumber, BuildContext context,
       bool? termConditionChecked, String appSignatureId, bool isResend) async {
@@ -93,6 +99,61 @@ class LoginManager extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void callTermConditionPolicyApi() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
+    //
+    // print("select lan ${selectedLan}");
+
+    try {
+
+    //  print(baseUrl + Apis.termCondition+selectedLan!);
+       isPrivacyLoading.value = true;
+      var response = await http.get(
+          Uri.parse(baseUrl + Apis.termCondition+"kn"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234"
+            //"Authorization": accessToken.toString()
+          });
+
+      print("response${response.body}");
+
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var jsonData = jsonDecode(response.body);
+        TermConditionMpdel termConditionMpdel = TermConditionMpdel.fromJson(jsonData);
+
+
+
+        if (termConditionMpdel!.status!.code == 2000) {
+          isPrivacyLoading.value = false;
+          print("http success in model!!");
+          termCondition.value = termConditionMpdel.data!.termsAndConditions!;
+          privacyPolicy.value = termConditionMpdel.data!.privacyPolicy!;
+
+
+        } else {
+          print("in else");
+          Flushbar(
+            title: "Error!",
+            message: termConditionMpdel.status!.message.toString(),
+            duration: Duration(seconds: 2),
+          )..show(Get.context!);
+        }
+      }
+    } catch (e) {
+      Flushbar(
+        title: "Server Error!",
+        message: "Please try after sometime",
+        duration: Duration(seconds: 1),
+      )..show(Get.context!);
+    } finally {
+      isPrivacyLoading.value = false;
     }
   }
 }
