@@ -9,6 +9,7 @@ import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
 import 'package:india_one/screens/loans/model/create_loan_model.dart';
+import 'package:india_one/screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/utils/common_methods.dart';
@@ -16,6 +17,7 @@ import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
+import 'package:intl/intl.dart';
 
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -62,8 +64,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
                     loanController.maxValue.value) {
               loanController.sliderValue.value =
                   double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text =
-                  (createLoanModel.loanAmount ?? 0).toInt().priceString();
+              loanAmountEditingController.text = CommonMethods()
+                  .indianRupeeValue(createLoanModel.loanAmount!.toDouble());
             }
           } else {
             loanAmountEditingController.text =
@@ -473,6 +475,27 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 )..show(context);
 
                 // log("Validation error");
+              } else if (profileController.highestQualification.value == '' ||
+                  profileController.highestQualification.value.text.isEmpty ||
+                  profileController.highestQualification.value.text
+                      .contains("null")) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Select your highest qualification",
+                  duration: Duration(seconds: 3),
+                )..show(context);
+              } else if (profileController.existingLoan
+                          .toLowerCase()
+                          .replaceAll(' ', '') ==
+                      'yes' &&
+                  (profileController.activeOrExistingLoans.value.text.isEmpty ||
+                      profileController.activeOrExistingLoans.value.text ==
+                          '')) {
+                Flushbar(
+                  title: "Alert!",
+                  message: "Enter the no. of active or existing loans",
+                  duration: Duration(seconds: 3),
+                )..show(context);
               } else {
                 // navigate to next screen
 
@@ -574,7 +597,9 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                inputFormatters: [CurrencyInputFormatter()],
+                inputFormatters: [
+                  CurrencyInputFormatter(),
+                ],
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: Dimens.font_16sp,

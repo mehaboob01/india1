@@ -99,6 +99,7 @@ class _LendersListState extends State<LendersListOthers> {
                                           "Redirect") {
                                         Get.to(
                                           () => ProviderDetail(
+                                            
                                             title:
                                                 '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
                                             lenders: loanController

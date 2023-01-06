@@ -670,7 +670,7 @@ class ProfileController extends GetxController {
                   ? DateFormat('yyyy-MM-dd').format(
                       DateFormat("dd-MM-yyyy").parse(dobController.value.text))
                   : null,
-              "preferredLanguage": "EN",
+              "preferredLanguage": "en",
               "email": emailController.value.text.trim().isNotEmpty
                   ? emailController.value.text.trim()
                   : null,
@@ -743,11 +743,24 @@ class ProfileController extends GetxController {
             },
             "customerDetails": {
               "address": {
-                "addressLine1": "${addressLine1Controller.value.text.trim()}",
-                "addressLine2": "${addressLine2Controller.value.text.trim()}",
-                "postCode": "${pincodeController.value.text.trim()}",
-                "city": "${city.value}",
-                "state": "${state.value}"
+                "addressLine1": addressLine1Controller.value.text.isEmpty ||
+                        addressLine1Controller.value.text == " "
+                    ? null
+                    : "${addressLine1Controller.value.text.trim()}",
+                "addressLine2": addressLine2Controller.value.text.isEmpty ||
+                        addressLine2Controller.value.text == " "
+                    ? null
+                    : "${addressLine2Controller.value.text.trim()}",
+                "postCode": pincodeController.value.text.isEmpty ||
+                        pincodeController.value.text == " "
+                    ? null
+                    : "${pincodeController.value.text.trim()}",
+                "city": city.value.isEmpty || city.value == " "
+                    ? null
+                    : "${city.value}",
+                "state": state.value.isEmpty || state.value == " "
+                    ? null
+                    : "${state.value}",
               }
             }
           },
@@ -792,26 +805,8 @@ class ProfileController extends GetxController {
       String? loanApplicationId,
       String? insuranceApplicationId}) async {
     addOccupationLoading.value = true;
+    //
 
-    // Map<String, dynamic> DATA = {
-    //   "customerId": "${prefs.getString(SPKeys.CUSTOMER_ID)}",
-    //   if (loanApplicationId != null) ...{
-    //     "loanApplicationId": loanApplicationId,
-    //   },
-    //   if (insuranceApplicationId != null) ...{
-    //     "insuranceApplicationId": insuranceApplicationId
-    //   },
-    //   "customerDetails": {
-    //     "panNumber": "${panNumberController.value.text.trim()}",
-    //     "occupation": "${occupationController.value.text.trim()}",
-    //     "salaryMode": accountType.value == '' ? null : accountType!.value,
-    //     "income":
-    //         "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-    //     "preferredLanguage": "EN",
-    //     "employmentType":
-    //         "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
-    //   }
-    // };
     // print(accountType!.value);
     // print("SENDIG DATA=>$DATA");
     // print("loanApplicationId : $loanApplicationId");
@@ -832,15 +827,25 @@ class ProfileController extends GetxController {
                 "insuranceApplicationId": insuranceApplicationId
               },
               "customerDetails": {
-                "panNumber": "${panNumberController.value.text.trim()}",
-                "occupation": "${occupationController.value.text.trim()}",
+                "panNumber": panNumberController.value.text.isEmpty ||
+                        panNumberController.value.text == ""
+                    ? null
+                    : panNumberController.value.text.trim(),
+                "occupation": occupationController.value.text.isEmpty ||
+                        occupationController.value.text == " "
+                    ? null
+                    : "${occupationController.value.text.trim()}",
                 "salaryMode":
                     accountType!.value == '' ? null : accountType!.value,
-                "income":
-                    "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-                "preferredLanguage": "EN",
-                "employmentType":
-                    "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
+                "income": monthlyIncomeController.value.text.isEmpty ||
+                        monthlyIncomeController.value.text == ""
+                    ? null
+                    : "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
+                "preferredLanguage": "en",
+                "employmentType": employmentType.value.isEmpty ||
+                        employmentType.value == ""
+                    ? null
+                    : "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
               }
             },
           ));
@@ -952,7 +957,7 @@ class ProfileController extends GetxController {
               "occupation": "${occupationController.value.text.trim()}",
               "income":
                   "${monthlyIncomeController.value.text.trim().replaceAll(",", "")}",
-              "preferredLanguage": "EN",
+              "preferredLanguage": "en",
               "employmentType":
                   "${employmentType.value.toString() == "Self Employed" ? "SelfEmployed" : employmentType.value.toString() == "Business Owner" ? "BusinessOwner" : employmentType.value}",
               "residingTenure": "${noOfMonthsResiding.value.text.trim()}",

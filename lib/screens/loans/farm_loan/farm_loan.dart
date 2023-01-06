@@ -97,7 +97,6 @@ class _FarmLoanState extends State<FarmLoan> {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(
               width: widthIs,

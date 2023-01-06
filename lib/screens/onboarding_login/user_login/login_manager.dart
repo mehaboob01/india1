@@ -20,7 +20,6 @@ class LoginManager extends GetxController {
   RxString termCondition = "".obs;
   RxString privacyPolicy = "".obs;
 
-
   callSentOtpApi(String phoneNumber, BuildContext context,
       bool? termConditionChecked, String appSignatureId, bool isResend) async {
     try {
@@ -39,7 +38,7 @@ class LoginManager extends GetxController {
             "deviceId": deviceId,
             "deviceToken": deviceToken,
             "platform": "Android",
-            "preferredLanguage": selectedLan
+            "preferredLanguage": "en"
           }),
           headers: {
             'Content-type': 'application/json',
@@ -109,34 +108,28 @@ class LoginManager extends GetxController {
     // print("select lan ${selectedLan}");
 
     try {
-
-    //  print(baseUrl + Apis.termCondition+selectedLan!);
-       isPrivacyLoading.value = true;
-      var response = await http.get(
-          Uri.parse(baseUrl + Apis.termCondition+"kn"),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //"Authorization": accessToken.toString()
-          });
+      //  print(baseUrl + Apis.termCondition+selectedLan!);
+      isPrivacyLoading.value = true;
+      var response = await http
+          .get(Uri.parse(baseUrl + Apis.termCondition + "kn"), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        "x-digital-api-key": "1234"
+        //"Authorization": accessToken.toString()
+      });
 
       print("response${response.body}");
 
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        TermConditionMpdel termConditionMpdel = TermConditionMpdel.fromJson(jsonData);
-
-
+        TermConditionMpdel termConditionMpdel =
+            TermConditionMpdel.fromJson(jsonData);
 
         if (termConditionMpdel!.status!.code == 2000) {
           isPrivacyLoading.value = false;
           print("http success in model!!");
           termCondition.value = termConditionMpdel.data!.termsAndConditions!;
           privacyPolicy.value = termConditionMpdel.data!.privacyPolicy!;
-
-
         } else {
           print("in else");
           Flushbar(

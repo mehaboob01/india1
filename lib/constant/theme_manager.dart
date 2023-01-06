@@ -426,6 +426,7 @@ class AppImages {
   static const String goldSvg = '${assetSvg}loans/gold.svg';
   static const String creditCardSvg = '${assetSvg}loans/credit_card.svg';
   static const String creditScoreSvg = '${assetSvg}loans/speedMeter.svg';
+  static const String emiCardSvg = '${assetSvg}loans/emiCard.svg';
 
   // payments
   static const String mobilRecharge2Svg = '${assetSvg}payments/Recharge2.svg';
@@ -559,6 +560,34 @@ showSnackBar({
 
 class AppFonts {
   static const appFont = 'Graphik';
+}
+
+Widget text(String text,
+    {double? textScaleFactor,
+    Color? color,
+    double? fontSize,
+    String? fontFamily,
+    FontWeight? fontWeight,
+    TextOverflow? textOverflow,
+    TextAlign? textAlign,
+    double? letterSpacing,
+    TextStyle? style,
+    int? maxLines}) {
+  return Text(
+    text,
+    textScaleFactor: textScaleFactor ?? 1,
+    textAlign: textAlign,
+    maxLines: maxLines,
+    style: style ??
+        TextStyle(
+          color: color ?? Colors.black,
+          fontSize: fontSize,
+          letterSpacing: letterSpacing,
+          fontFamily: fontFamily,
+          fontWeight: fontWeight,
+          overflow: textOverflow ?? TextOverflow.ellipsis,
+        ),
+  );
 }
 
 double bottomMargin = 84;

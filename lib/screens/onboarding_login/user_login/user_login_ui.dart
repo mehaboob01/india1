@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -71,7 +72,6 @@ class _UserLoginState extends State<UserLogin> {
     super.initState();
     getMobilePopup();
     _loginManager.callTermConditionPolicyApi();
-
   }
 
   Future<void> initPlatformState() async {
@@ -93,7 +93,6 @@ class _UserLoginState extends State<UserLogin> {
         () => IgnorePointer(
           ignoring: _controller.ignorePointer.value,
           child: Scaffold(
-            resizeToAvoidBottomInset: false,
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
@@ -248,121 +247,200 @@ class _UserLoginState extends State<UserLogin> {
                       SizedBox(
                         height: 44,
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Checkbox(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            5.0))), // Rounded Checkbox
-                                activeColor: AppColors.facebookBlue,
-                                //only check box
-                                value: termConditionChecked,
-                                //unchecked
-                                onChanged: (bool? value) {
-                                  //value returned when checkbox is clicked
-                                  setState(() {
-                                    termConditionChecked = value;
-                                    alertTextShow = false;
-                                  });
-                                }),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  SingleChildScrollView(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "i_accept".tr,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontFamily: AppFonts.appFont,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.black,
-                                            fontSize: Dimens.font_16sp,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 4,
-                                        ),
-                                        Obx(
-                                          ()=> _loginManager.isPrivacyLoading == true?  Container(
-                                              height: 18,
-                                              width: 18,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2.0,
-                                                color: AppColors.blueColor,
-                                              )): Container(
-                                            child: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
 
-                                                    print("ontapp");
-
-                                                    print(_loginManager.termCondition);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Tnc_IO(_loginManager.termCondition,"term_condition")),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    "term_condition".tr,
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontFamily: AppFonts.appFont,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: AppColors.facebookBlue,
-                                                      fontSize: Dimens.font_16sp,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 4,),
-                                                GestureDetector(
-                                                  onTap: () {
-
-                                                    print("ontapp");
-
-                                                    print(_loginManager.privacyPolicy);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Tnc_IO(_loginManager.privacyPolicy,"privacy_policy")),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    " & Privacy policy".tr,
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontFamily: AppFonts.appFont,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: AppColors.facebookBlue,
-                                                      fontSize: Dimens.font_16sp,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Checkbox(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          5.0))), // Rounded Checkbox
+                              activeColor: AppColors.facebookBlue,
+                              //only check box
+                              value: termConditionChecked,
+                              //unchecked
+                              onChanged: (bool? value) {
+                                //value returned when checkbox is clicked
+                                setState(() {
+                                  termConditionChecked = value;
+                                  alertTextShow = false;
+                                });
+                              }),
+                          Obx(
+                            () => _loginManager.isPrivacyLoading == true
+                                ? Container(
+                                    height: 18,
+                                    width: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.0,
+                                      color: AppColors.blueColor,
+                                    ))
+                                : Expanded(
+                                    child: RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.appFont,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.black,
+                                        fontSize: Dimens.font_16sp,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(text: 'i_accept'.tr),
+                                        TextSpan(text: " "),
+                                        TextSpan(
+                                            text: 'term_condition'.tr,
+                                            style: TextStyle(
+                                              fontFamily: AppFonts.appFont,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.facebookBlue,
+                                              fontSize: Dimens.font_16sp,
                                             ),
-                                          ),
-                                        ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                print('Terms of Service');
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => Tnc_IO(
+                                                            _loginManager
+                                                                .termCondition,
+                                                            "term_condition")));
+                                              }),
+                                        TextSpan(text: " & "),
+                                        TextSpan(
+                                            text: 'Privacy Policy',
+                                            style: TextStyle(
+                                              fontFamily: AppFonts.appFont,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.facebookBlue,
+                                              fontSize: Dimens.font_16sp,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                print('Privacy Policy"');
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Tnc_IO(
+                                                              _loginManager
+                                                                  .privacyPolicy,
+                                                              "privacy_policy")),
+                                                );
+                                              }),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                                  )),
+                          )
+                        ],
                       ),
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.end  ,
+                      //   children: [
+                      //     Checkbox(
+                      //         shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.all(
+                      //                 Radius.circular(
+                      //                     5.0))), // Rounded Checkbox
+                      //         activeColor: AppColors.facebookBlue,
+                      //         //only check box
+                      //         value: termConditionChecked,
+                      //         //unchecked
+                      //         onChanged: (bool? value) {
+                      //           //value returned when checkbox is clicked
+                      //           setState(() {
+                      //             termConditionChecked = value;
+                      //             alertTextShow = false;
+                      //           });
+                      //         }),
+                      //     SizedBox(
+                      //       width: 4,
+                      //     ),
+                      //     Text(
+                      //       "i_accept".tr +
+                      //           "Terms and conditions" +
+                      //           "Privacy Policy",
+                      //       maxLines: 4,
+                      // style: TextStyle(
+                      //   fontFamily: AppFonts.appFont,
+                      //   fontWeight: FontWeight.w400,
+                      //   color: AppColors.black,
+                      //   fontSize: Dimens.font_16sp,
+                      // ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 4,
+                      //     ),
+                      //     Obx(
+                      // () => _loginManager.isPrivacyLoading == true
+                      //     ? Container(
+                      //         height: 18,
+                      //         width: 18,
+                      //         child: CircularProgressIndicator(
+                      //           strokeWidth: 2.0,
+                      //           color: AppColors.blueColor,
+                      //         ))
+                      //           : Container(
+                      //               child: Row(
+                      //                 children: [
+                      //                   // GestureDetector(
+                      //                   //   onTap: () {
+
+                      //                   //     print("ontapp");
+
+                      //                   //     print(_loginManager.termCondition);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) =>
+                      //           Tnc_IO(_loginManager.termCondition,"term_condition")),
+                      //                   //     );
+                      //                   //   },
+                      //                   //   child: Text(
+                      //                   //     "term_condition".tr,
+                      //                   //     maxLines: 1,
+                      //                   //     style: TextStyle(
+                      //                   //       fontFamily: AppFonts.appFont,
+                      //                   //       fontWeight: FontWeight.w600,
+                      //                   //       color: AppColors.facebookBlue,
+                      //                   //       fontSize: Dimens.font_16sp,
+                      //                   //     ),
+                      //                   //   ),
+                      //                   // ),
+                      //                   SizedBox(
+                      //                     width: 4,
+                      //                   ),
+                      //                   // GestureDetector(
+                      //                   //   onTap: () {
+
+                      //                   //     print("ontapp");
+
+                      // print(_loginManager.privacyPolicy);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) =>
+                      //           Tnc_IO(_loginManager.privacyPolicy,"privacy_policy")),
+                      // );
+                      //                   //   },
+                      //                   //   child: Text(
+                      //                   //     " & Privacy policy".tr,
+                      //                   //     maxLines: 1,
+                      // style: TextStyle(
+                      //   fontFamily: AppFonts.appFont,
+                      //   fontWeight: FontWeight.w600,
+                      //   color: AppColors.facebookBlue,
+                      //   fontSize: Dimens.font_16sp,
+                      // ),
+                      //                   //   ),
+                      //                   // ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //     ),
+                      //   ],
+                      // ),
                       Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Row(

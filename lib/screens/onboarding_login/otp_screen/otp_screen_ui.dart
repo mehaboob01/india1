@@ -94,7 +94,6 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Column(
               children: [

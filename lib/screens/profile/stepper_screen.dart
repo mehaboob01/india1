@@ -45,7 +45,6 @@ class _StepperScreenState extends State<StepperScreen> {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           body: Column(
             children: [
               SafeArea(

@@ -15,6 +15,7 @@ import '../../core/data/local/shared_preference_keys.dart';
 import '../../core/data/remote/api_constant.dart';
 import 'package:http/http.dart' as http;
 
+import '../../utils/common_webview.dart';
 import '../banner_ads/model/BannerAds.dart';
 import '../onboarding_login/user_login/tnc_io.dart';
 import 'home_model.dart';
@@ -36,11 +37,8 @@ class HomeManager extends GetxController {
   var bannerList = <Ad>[].obs;
   var bannerListSend = <Ad>[].obs;
 
-
-
   @override
   void onInit() {
-
     super.onInit();
 
     callHomeApi();
@@ -57,9 +55,6 @@ class HomeManager extends GetxController {
     print("Customer Id ${customerId}");
     print("points Id ${points}");
     print("Access token ${accessToken}");
-
-
-
 
     loyalityPoints.value = points!;
     try {
@@ -133,7 +128,6 @@ class HomeManager extends GetxController {
       print("response ads===>${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         var jsonData = jsonDecode(response.body);
         BanerAdsMOdel banerAdsMOdel = BanerAdsMOdel.fromJson(jsonData);
         print("data response");
@@ -141,13 +135,8 @@ class HomeManager extends GetxController {
         print(banerAdsMOdel.data);
 
         if (banerAdsMOdel!.status!.code == 2000) {
-
-
-
-
           for (var index in banerAdsMOdel.data!.ads!) {
             bannerListSend.add(index);
-
           }
           bannerList.addAll(bannerListSend);
           print("banerr lenth ${bannerList.length}");
@@ -185,9 +174,6 @@ class HomeManager extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-
-
-
 
       print("device Id ${deviceId}");
       var response = await http.put(Uri.parse(baseUrl + Apis.sendToken),
@@ -240,17 +226,12 @@ class HomeManager extends GetxController {
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     print("customer id ${customerId}");
 
-
-
-
-
-
     try {
       isLoading.value = true;
 
-      print(baseUrl+api_route);
+      print(baseUrl + api_route);
       var response = await http.post(
-        Uri.parse(baseUrl +api_route),
+        Uri.parse(baseUrl + api_route),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -259,18 +240,24 @@ class HomeManager extends GetxController {
         body: jsonEncode({"customerId": customerId}),
       );
 
-   //   print("response home===>${response.body}");
+      //   print("response home===>${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         PaymentModel paymentModel = PaymentModel.fromJson(jsonData);
 
-
         if (paymentModel!.status!.code == 2000) {
           isLoading(false);
           print("http success in model!!");
-
-
+          print("http success in model!!${paymentModel.data!.link.toString()}");
+          Get.to(() => CommonWebView(
+                title: api_route == Apis.payment_fastag
+                    ? "FASTag"
+                    : api_route == Apis.payment_dth
+                        ? "DTH"
+                        : "Recharge",
+                url: paymentModel.data!.link.toString(),
+              ));
         } else {
           Flushbar(
             title: "Error!",

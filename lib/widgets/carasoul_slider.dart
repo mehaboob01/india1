@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/banner_ads/bannerAdsView/bannerAdsWebView.dart';
+import 'package:india_one/utils/common_webview.dart';
 
 import '../constant/theme_manager.dart';
 import '../screens/home_start/home_manager.dart';
@@ -26,14 +27,18 @@ class CarasoulImages extends StatelessWidget {
                           ? MRouter.homeScreen
                           : getController.bannerList[i].route.toString());
                     } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BannerAds(
-                                getController.bannerList[i].title.toString(),
-                                getController.bannerList[i].redirectUrl
-                                    .toString())),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => BannerAds(
+                      //           getController.bannerList[i].title.toString(),
+                      //           getController.bannerList[i].redirectUrl
+                      //               .toString())),
+                      // );
+                      Get.to(() => CommonWebView(
+                          title: getController.bannerList[i].title.toString(),
+                          url: getController.bannerList[i].redirectUrl
+                              .toString()));
                     }
                   },
                   child: Container(

@@ -70,6 +70,7 @@ class Apis {
   static String updateNomineeDetail = "insurances/application/update-nominee";
 
   // //Loans
+
   // static String recentTransactionLoan = "dashboards/loans";
   // static String createLoanApplication = "loan/application";
   // static String updateAmountLoan = "loan/application/update-amount";
@@ -117,7 +118,11 @@ class Apis {
       "https://cos.stfc.in/cos/affiliate/cos_schemedetails.aspx?affiliatecode=INDIA1&subaffiliatecode=APP";
   static String digiGold =
       "https://investhaat.augmont.com/buy?utm_source=India1&utm_medium=APP&utm_campaign=1";
+  static String twoWheelerIns =
+      "https://www.godigit.com/partner/two-wheeler-insurance?utm_source=partner&utm_medium=email&utm_campaign=IndiaOne&utm_content=teleblock&imdKey=F355351E7D59822A22B60E6E82527C0A";
   static String Faq = "https://digitaluat.india1.co.in/Faq";
+  static String fourWheelerIns =
+      "https://www.godigit.com/partner/go-digit-car-insurance?utm_source=partner&utm_medium=email&utm_campaign=IndiaOne&utm_content=teleblock&imdKey=F355351E7D59822A22B60E6E82527C0A";
 
   // token related api's
 

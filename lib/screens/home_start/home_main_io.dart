@@ -306,7 +306,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _homeManager.callHomeApi();
     _homeManager.callAdsBannerApi();
     _loyaltyManager.callLoyaltyDashboardApi();
-    
+
     // _homeManager.sendTokens();
     _profileController.getProfileData();
   }
@@ -396,21 +396,21 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         .spaceBetween,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Focus(
-                                                    focusNode:
-                                                        widget.focusNodes![5],
-                                                    child: HeadingBox(
-                                                        text: 'Aa',
-                                                        ontap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (BuildContext
-                                                                          context) =>
-                                                                      LanguageSelectionIO(
-                                                                          'home')));
-                                                        }),
-                                                  ),
+                                                  // Focus(
+                                                  //   focusNode:
+                                                  //       widget.focusNodes![5],
+                                                  //   child: HeadingBox(
+                                                  //       text: 'Aa',
+                                                  //       ontap: () {
+                                                  //         Navigator.push(
+                                                  //             context,
+                                                  //             MaterialPageRoute(
+                                                  //                 builder: (BuildContext
+                                                  //                         context) =>
+                                                  //                     LanguageSelectionIO(
+                                                  //                         'home')));
+                                                  //       }),
+                                                  // ),
                                                   SizedBox(
                                                     width: 2.0.wp,
                                                   ),
@@ -454,7 +454,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                         )
                                                       : Focus(
                                                           focusNode: widget
-                                                              .focusNodes![6],
+                                                              .focusNodes![5],
                                                           child:
                                                               GestureDetector(
                                                             onTap: () => Get
@@ -470,7 +470,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                   ),
                                                   Focus(
                                                     focusNode:
-                                                        widget.focusNodes![7],
+                                                        widget.focusNodes![6],
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         _homeManager.isClicked

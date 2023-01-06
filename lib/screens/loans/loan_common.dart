@@ -253,7 +253,10 @@ class LoanCommon {
     );
   }
 
-  Widget rowText({required String title, required String value}) {
+  Widget rowText(
+      {required String title,
+      required String value,
+      bool fromPersonalLoan = false}) {
     // return Column(
     //   children: [
     //     Container(
@@ -277,6 +280,7 @@ class LoanCommon {
     //     ),
     //   ],
     // );
+
     return Container(
       //color: Colors.red,
       width: 100,

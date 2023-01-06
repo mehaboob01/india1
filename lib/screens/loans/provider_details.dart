@@ -26,12 +26,12 @@ class ProviderDetail extends StatelessWidget {
 
   LoanController loanController = Get.put(LoanController());
   final ConnectionManagerController _controller =
-        Get.find<ConnectionManagerController>();
+      Get.find<ConnectionManagerController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> IgnorePointer(
+      () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -96,7 +96,8 @@ class ProviderDetail extends StatelessWidget {
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return LoanCommon().bulletPoint(
-                                      title: "${lenders.keywords?[index] ?? ''}",
+                                      title:
+                                          "${lenders.keywords?[index] ?? ''}",
                                     );
                                   },
                                 ),
@@ -146,8 +147,8 @@ class ProviderDetail extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16.0),
                   child: InkWell(
                     onTap: () {
                       LoanCommon().bottomSheet(

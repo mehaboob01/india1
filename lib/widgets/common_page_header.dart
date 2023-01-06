@@ -337,15 +337,15 @@ class CommonPageHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      HeadingBox(
-                          text: 'Aa',
-                          ontap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        LanguageSelectionIO('home')));
-                          }),
+                      // HeadingBox(
+                      //     text: 'Aa',
+                      //     ontap: () {
+                      //       Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (BuildContext context) =>
+                      //                   LanguageSelectionIO('home')));
+                      //     }),
                       SizedBox(
                         width: 2.0.wp,
                       ),

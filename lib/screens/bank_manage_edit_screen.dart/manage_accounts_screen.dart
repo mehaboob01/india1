@@ -31,7 +31,6 @@ class ManageAccountsCard extends StatelessWidget {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             body: updateBankAccount.isLoading.value == true
                 ? Column(

@@ -86,7 +86,7 @@ class OtpManager extends GetxController {
       Map<String, dynamic> verifyHeadersData = {
         "token": tokenKey,
         "otp": otpNumber,
-        "preferredLanguage": "kn"
+        "preferredLanguage": "en"
       };
       Map<String, dynamic> headers = {
         'Content-type': 'application/json',
@@ -98,7 +98,7 @@ class OtpManager extends GetxController {
 
       var response = await http.post(Uri.parse(baseUrl + Apis.verifyOtp),
           body: jsonEncode(
-              {"token": tokenKey, "otp": otpNumber, "preferredLanguage": "kn"}),
+              {"token": tokenKey, "otp": otpNumber, "preferredLanguage": "en"}),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -120,10 +120,14 @@ class OtpManager extends GetxController {
               SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
           prefs!.setString(SPKeys.REFRESH_TOKEN,
               verifyOtpModel.data!.refreshToken.toString());
-          prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-          loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
-          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained!);
-          prefs!.setInt(SPKeys.LOYALTY_POINT_PROFILE, verifyOtpModel.data!.loyaltyPointsGained!);
+          prefs!.setString(
+              SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+          loyaltyPoints.value =
+              verifyOtpModel.data!.loyaltyPointsGained.toString();
+          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED,
+              verifyOtpModel.data!.loyaltyPointsGained!);
+          prefs!.setInt(SPKeys.LOYALTY_POINT_PROFILE,
+              verifyOtpModel.data!.loyaltyPointsGained!);
           prefs!.setInt(SPKeys.COMPLETE_PROFILE_COUNT, 0);
           prefs!.setBool(SPKeys.LOGGED_IN, true);
           Get.offAllNamed(MRouter.homeScreen);

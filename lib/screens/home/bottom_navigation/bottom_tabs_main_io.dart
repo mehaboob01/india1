@@ -735,136 +735,136 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
               ),
             );
           }),
+      // OnboardingStep(
+      //     focusNode: _focusNodes[5],
+      //     bodyText: "Choose the language that you are comfortable with",
+      //     hasLabelBox: false,
+      //     fullscreen: true,
+      //     overlayColor: Colors.black.withOpacity(0.9),
+      //     hasArrow: false,
+      //     titleText: "CHANGE LANGUAGE",
+      //     stepBuilder: (
+      //       BuildContext context,
+      //       OnboardingStepRenderInfo renderInfo,
+      //     ) {
+      //       return Material(
+      //         color: Colors.transparent,
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           children: [
+      //             Row(
+      //               crossAxisAlignment: CrossAxisAlignment.start,
+      //               children: [
+      //                 Expanded(
+      //                   child: Column(
+      //                     crossAxisAlignment: CrossAxisAlignment.start,
+      //                     children: [
+      //                       Text(
+      //                         renderInfo.titleText.toUpperCase(),
+      //                         style: TextStyle(
+      //                           color: Colors.white,
+      //                           fontFamily: AppFonts.appFont,
+      //                           fontWeight: FontWeight.w500,
+      //                           fontSize: 18,
+      //                         ),
+      //                         // style: renderInfo.titleStyle,
+      //                       ),
+      //                       const SizedBox(
+      //                         height: 30,
+      //                       ),
+      //                       Text(
+      //                         renderInfo.bodyText,
+      //                         style: TextStyle(
+      //                           color: Colors.white,
+      //                           fontFamily: AppFonts.appFont,
+      //                           fontWeight: FontWeight.w400,
+      //                           fontSize: 16,
+      //                         ),
+      //                       ),
+      //                       const SizedBox(
+      //                         height: 30,
+      //                       ),
+      //                       InkWell(
+      //                         onTap: () {
+      //                           renderInfo.nextStep();
+      //                         },
+      //                         child: Container(
+      //                           // width: MediaQuery.of(context).size.height * 0.8,
+      //                           width: 80,
+      //                           height: 40,
+      //                           child: Row(
+      //                             mainAxisAlignment: MainAxisAlignment.center,
+      //                             children: [
+      //                               Text(
+      //                                 'NEXT',
+      //                                 style: AppTextThemes.labelStyle.apply(
+      //                                   color: Colors.black,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                           decoration: BoxDecoration(
+      //                             gradient: new LinearGradient(
+      //                               end: Alignment.topRight,
+      //                               colors: [
+      //                                 AppColors.yellowgradient1,
+      //                                 AppColors.yellowgradient2,
+      //                                 AppColors.yellowgradient2,
+      //                               ],
+      //                             ),
+      //                             borderRadius: BorderRadius.circular(6.0),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //                 SizedBox(
+      //                   width: 40,
+      //                 ),
+      //                 SvgPicture.asset(
+      //                   AppImages.arrowUpRightSvg,
+      //                 ),
+      //                 SizedBox(
+      //                   width: widthIs * 0.2,
+      //                 ),
+      //               ],
+      //             ),
+      //             Align(
+      //               alignment: Alignment.centerRight,
+      //               child: GestureDetector(
+      //                 behavior: HitTestBehavior.translucent,
+      //                 onTap: () {
+      //                   onboardingKey.currentState!.hide();
+      //                 },
+      //                 child: SizedBox(
+      //                   width: 80,
+      //                   child: Row(
+      //                     children: [
+      //                       Text(
+      //                         "Skip",
+      //                         style: TextStyle(
+      //                           color: Colors.white,
+      //                           fontFamily: AppFonts.appFont,
+      //                           fontWeight: FontWeight.w600,
+      //                           fontSize: 18,
+      //                         ),
+      //                       ),
+      //                       SizedBox(
+      //                         width: 6,
+      //                       ),
+      //                       SvgPicture.asset(AppImages.skipWalkThroughSvg)
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       );
+      //     }),
       OnboardingStep(
           focusNode: _focusNodes[5],
-          bodyText: "Choose the language that you are comfortable with",
-          hasLabelBox: false,
-          fullscreen: true,
-          overlayColor: Colors.black.withOpacity(0.9),
-          hasArrow: false,
-          titleText: "CHANGE LANGUAGE",
-          stepBuilder: (
-            BuildContext context,
-            OnboardingStepRenderInfo renderInfo,
-          ) {
-            return Material(
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              renderInfo.titleText.toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: AppFonts.appFont,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                              ),
-                              // style: renderInfo.titleStyle,
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              renderInfo.bodyText,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: AppFonts.appFont,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                renderInfo.nextStep();
-                              },
-                              child: Container(
-                                // width: MediaQuery.of(context).size.height * 0.8,
-                                width: 80,
-                                height: 40,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'NEXT',
-                                      style: AppTextThemes.labelStyle.apply(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                  gradient: new LinearGradient(
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      AppColors.yellowgradient1,
-                                      AppColors.yellowgradient2,
-                                      AppColors.yellowgradient2,
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      SvgPicture.asset(
-                        AppImages.arrowUpRightSvg,
-                      ),
-                      SizedBox(
-                        width: widthIs * 0.2,
-                      ),
-                    ],
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        onboardingKey.currentState!.hide();
-                      },
-                      child: SizedBox(
-                        width: 80,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Skip",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: AppFonts.appFont,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                            SvgPicture.asset(AppImages.skipWalkThroughSvg)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
-      OnboardingStep(
-          focusNode: _focusNodes[6],
           bodyText: "Access to all your app related notifications",
           hasLabelBox: false,
           fullscreen: true,
@@ -995,7 +995,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
             );
           }),
       OnboardingStep(
-          focusNode: _focusNodes[7],
+          focusNode: _focusNodes[6],
           bodyText: "View and manage your profile details here",
           hasLabelBox: false,
           fullscreen: true,

@@ -12,6 +12,7 @@ import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
+import 'package:india_one/utils/common_methods.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -59,8 +60,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                     loanController.maxValue.value) {
               loanController.sliderValue.value =
                   double.parse(createLoanModel.loanAmount.toString());
-              loanAmountEditingController.text =
-                  createLoanModel.loanAmount.toString();
+              loanAmountEditingController.text = CommonMethods()
+                  .indianRupeeValue(createLoanModel.loanAmount!.toDouble());
+              //createLoanModel.loanAmount.toString();
             }
           }
         });
@@ -86,7 +88,6 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(
               width: widthIs,
@@ -181,7 +182,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
             )..show(context);
           } else {
             loanController.updateLoanAmount(
-                amount: loanAmountEditingController.text,
+                amount: loanAmountEditingController.text
+                    .replaceAll(",", "")
+                    .removeAllWhitespace,
                 type: LoanType.GoldLoan);
           }
         }
@@ -347,6 +350,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
           margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
           child: CustomSlider(
             sliderValue: loanController.sliderValue,
+            isAmount: true,
             textEditingController: loanAmountEditingController,
             minValue: loanController.minValue,
             maxValue: loanController.maxValue,
@@ -399,8 +403,11 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(context),
                 ]),
+                inputFormatters: [CurrencyInputFormatter()],
                 onChanged: (value) {
-                  double newVal = double.tryParse(value.toString()) ?? 0;
+                  double newVal =
+                      double.tryParse(value!.replaceAll(",", "").toString()) ??
+                          0;
                   if (newVal >= loanController.minValue.value &&
                       newVal <= loanController.maxValue.value) {
                     loanController.sliderValue.value = newVal;

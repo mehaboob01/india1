@@ -54,7 +54,7 @@ class ProfileScreen extends StatelessWidget {
       () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          // resizeToAvoidBottomInset: false,
           body: profileController.uploadProfileLoading == true
               ? CircularProgressbar()
               : Column(

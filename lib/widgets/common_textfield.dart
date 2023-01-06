@@ -45,6 +45,7 @@ class CommonTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      autofocus: false,
       focusNode: focus,
       name: formName,
       textCapitalization: isUpperCase == true

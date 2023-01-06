@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/insurances/health/health_insurance.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
+import 'package:india_one/utils/common_webview.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/routes.dart';
@@ -79,7 +81,8 @@ class InsuranceCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.toNamed(MRouter.bikeInsurance);
+            Get.to(() => CommonWebView(
+                title: "2 Wheeler Insurance", url: Apis.twoWheelerIns));
           },
           child: ItemCard(
             image: AppImages.bikeSvg,
@@ -89,7 +92,8 @@ class InsuranceCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed(MRouter.carInsurance);
+            Get.to(() => CommonWebView(
+                title: "4 Wheeler Insurance", url: Apis.fourWheelerIns));
           },
           child: ItemCard(
             image: AppImages.carSvg,

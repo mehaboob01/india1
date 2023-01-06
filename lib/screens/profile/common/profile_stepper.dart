@@ -108,7 +108,7 @@ class ProfileStepper {
       bool textCap = false}) {
     return TextFormField(
       textInputAction: TextInputAction.next,
-      autofocus: true,
+      autofocus: false,
       controller: controller,
       obscureText: isObscure ?? false,
       textCapitalization:
@@ -1275,15 +1275,14 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                       .replaceAll(' ', '') ==
                   'yes')
                 textField(
-                  keyboardType: TextInputType.number,
-                  controller: profileController.activeOrExistingLoans.value,
-                  label: 'No. of active / existing loans',
-                  hint: 'Enter the no. of active / existing loans',
-                  vaidation: (value) {
-                    if (value.toString().trim().isNotEmpty) {}
-                    return null;
-                  },
-                ),
+                    keyboardType: TextInputType.number,
+                    controller: profileController.activeOrExistingLoans.value,
+                    label: 'No. of active / existing loans',
+                    hint: 'Enter the no. of active / existing loans',
+                    onChanged: (value) {
+                      profileController.activeOrExistingLoans.value.text =
+                          value;
+                    }),
             ],
           ),
         ),
