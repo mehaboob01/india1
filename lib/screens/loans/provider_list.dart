@@ -292,23 +292,21 @@ class _ProvidersListState extends State<ProvidersList> {
                                                             BorderRadius
                                                                 .circular(15),
                                                       ),
-                                                      child: Column(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
-                                                          LoanCommon().rowText(
-                                                            parentColumn: true,
+                                                          LoanCommon().rowtext(
                                                             value: 'Max amount',
                                                             title:
                                                                 '₹ ${lenders?[index].details?.loanAmount == null ? "0" : lenders![index].details?.loanAmount}',
                                                           ),
-                                                          LoanCommon().rowText(
-                                                              parentColumn:
-                                                                  true,
+                                                          LoanCommon().rowtext(
                                                               value: 'Tenure',
                                                               title:
                                                                   '${lenders?[index].details?.tenure == null ? "0" : lenders![index].details?.tenure}'),
-                                                          LoanCommon().rowText(
-                                                              parentColumn:
-                                                                  true,
+                                                          LoanCommon().rowtext(
                                                               value:
                                                                   'Interest/m',
                                                               title:

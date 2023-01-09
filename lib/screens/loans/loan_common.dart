@@ -138,7 +138,7 @@ class LoanCommon {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               SizedBox(
@@ -160,26 +160,24 @@ class LoanCommon {
                       width: 50,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: FittedBox(
-                          child: CachedNetworkImage(
-                            // height: 50,
-                            // width: 50,
-                            imageUrl: (isPersonalLoan == true
-                                    ? (providers?.logoURL ?? '')
-                                    : lenders?.logoURL) ??
-                                '',
-                            errorWidget: (context, _, error) {
-                              return Icon(
-                                Icons.warning_amber_outlined,
-                              );
-                            },
-                            fit: BoxFit.cover,
-                          ),
+                        child: CachedNetworkImage(
+                          height: 50,
+                          width: 50,
+                          imageUrl: (isPersonalLoan == true
+                                  ? (providers?.logoURL ?? '')
+                                  : lenders?.logoURL) ??
+                              '',
+                          errorWidget: (context, _, error) {
+                            return Icon(
+                              Icons.warning_amber_outlined,
+                            );
+                          },
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -216,20 +214,18 @@ class LoanCommon {
               ),
               if (applyButtonClick == null) ...[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    rowText(
-                        parentColumn: false,
-                        value: 'Max annmount',
+                    rowtext(
+                        value: 'Max amount',
                         title:
                             '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
-                    rowText(
-                      parentColumn: false,
+                    rowtext(
                       value: 'Tenure',
                       title:
                           '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
                     ),
-                    rowText(
-                      parentColumn: false,
+                    rowtext(
                       value: 'Interest/m',
                       title:
                           '${lenders.minInterestRate} - ${lenders.maxInterestRate}%',
@@ -257,15 +253,15 @@ class LoanCommon {
     );
   }
 
-  Widget rowText(
+  Widget rowtext(
       {required String title,
       required String value,
-      required bool parentColumn}) {
+      bool fromPersonalLoan = false}) {
     // return Column(
     //   children: [
     //     Container(
     //       width: 98,
-    //       child: Text(
+    //       child: text(
     //         "$title",
     //         style: TextStyle(
     //           color: AppColors.iconColorDark,
@@ -274,7 +270,7 @@ class LoanCommon {
     //         ),
     //       ),
     //     ),
-    //     Text(
+    //     text(
     //       "$value",
     //       style: TextStyle(
     //         color: AppColors.iconColorDark,
@@ -285,84 +281,45 @@ class LoanCommon {
     //   ],
     // );
 
-    return parentColumn == true
-        ? Container(
-            height: 40,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    padding: EdgeInsets.all(12.0),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "$value",
-                      style: TextStyle(
-                        color: AppColors.iconColorDark,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+    return Container(
+      //color: Colors.red,
+      width: 100,
+      height: 60,
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              //color: Colors.blue,
+              // width: 98,
+              child: Center(
+                child: text(
+                  "$title",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.iconColorDark,
+                    fontSize: Dimens.font_12sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    // width: 98,
-                    child: Text(
-                      "$title",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: AppColors.iconColorDark,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          )
-        : Container(
-            //color: Colors.red,
-            width: 100,
-            height: 60,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    //color: Colors.blue,
-                    // width: 98,
-                    child: Center(
-                      child: Text(
-                        "$title",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.iconColorDark,
-                          fontSize: Dimens.font_12sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
+          ),
+          Container(
+            //color: Colors.green,
+            child: Center(
+              child: text(
+                "$value",
+                style: TextStyle(
+                  color: AppColors.iconColorDark,
+                  fontSize: Dimens.font_12sp,
+                  fontWeight: FontWeight.w400,
                 ),
-                Container(
-                  //color: Colors.green,
-                  child: Center(
-                    child: Text(
-                      "$value",
-                      style: TextStyle(
-                        color: AppColors.iconColorDark,
-                        fontSize: Dimens.font_12sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 
   Widget bulletPoint({
