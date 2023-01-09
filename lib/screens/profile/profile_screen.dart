@@ -163,7 +163,9 @@ class ProfileScreen extends StatelessWidget {
                                                   child: Obx(
                                                     () => InkWell(
                                                         onTap: () {
-                                                          _handlePermissions();
+                                                          profileController
+                                                              .pickImage(
+                                                                  Get.context!);
                                                         },
                                                         child: CircleAvatar(
                                                           maxRadius: 50,
@@ -273,7 +275,8 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  _handlePermissions();
+                                                  profileController
+                                                      .pickImage(Get.context!);
                                                 },
                                                 child: Container(
                                                   height: 45,
@@ -1003,7 +1006,7 @@ class ProfileScreen extends StatelessWidget {
                                 title: "Monthly income",
                                 value: profileDetailsModel.income == null
                                     ? ''
-                                    : '${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble())}', //"${profileDetailsModel.income ?? ""}",
+                                    : "₹"+'${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble())}', //"${profileDetailsModel.income ?? ""}",
                                 isEmpty: profileDetailsModel.income == null
                                     ? true
                                     : false),
