@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:india_one/screens/loyality_points/cashback_redeem/cashback_redeemption_screen.dart';
+
 import 'package:india_one/screens/loyality_points/loyality_manager.dart';
 import 'package:india_one/screens/loyality_points/redeem_points/rp_ui.dart';
 
@@ -242,15 +242,18 @@ class _YourRewardCardState extends State<YourRewardCard>
                   loyaltyManager.isOverlayOpen.value = true;
                 },
                 child: wonCard(false))
-            :
-            // used or expired card container ---------------------------------
-            GestureDetector(
-                onTap: () {
-                  _showOverlay();
-                  loyaltyManager.isOverlayOpen.value = true;
-                },
-                child: usedBgCard(context, widget.rewardState,
-                    widget.rewardtype, widget.date, widget.points, false))
+            : widget.rewardState == RewardState.history
+                ? historyCard(context, widget.rewardState, widget.rewardtype,
+                    widget.date, widget.points, false)
+                :
+                // used or expired card container ---------------------------------
+                GestureDetector(
+                    onTap: () {
+                      _showOverlay();
+                      loyaltyManager.isOverlayOpen.value = true;
+                    },
+                    child: usedBgCard(context, widget.rewardState,
+                        widget.rewardtype, widget.date, widget.points, false))
       ],
     );
   }
@@ -340,7 +343,7 @@ class _YourRewardCardState extends State<YourRewardCard>
             usedBg = AppImages.referralBonusImage;
             break;
           case Rewardtype.recharge:
-            usedBg = AppImages.referralBonusImage;
+            usedBg = AppImages.rechargeImage;
             break;
           case Rewardtype.loan:
             usedBg = AppImages.loanImage;
@@ -349,6 +352,9 @@ class _YourRewardCardState extends State<YourRewardCard>
         break;
       case RewardState.won:
         usedBg = '';
+        break;
+      case RewardState.history:
+        usedBg = AppImages.referralBonusImage;
     }
 
     return usedBg;
@@ -454,6 +460,98 @@ class _YourRewardCardState extends State<YourRewardCard>
     );
   }
 
+  Widget historyCard(BuildContext context, RewardState rewardState,
+      Rewardtype rewardtype, String date, int points, bool isOverlay) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: double.maxFinite,
+              decoration: BoxDecoration(
+                  // image: DecorationImage(
+                  //     image: AssetImage(bgUsed(rewardtype)), fit: BoxFit.fill),
+                  color: Colors.white,
+                  //Colors.blue.withOpacity(0.5),
+                  border:
+                      Border.all(color: const Color(0xffe7e7e7), width: 1.0),
+                  borderRadius: BorderRadius.circular(4.0.wp)),
+            ),
+            Positioned(
+                right: 0,
+                top: 0,
+                child: SizedBox(
+                  width: 18.0.wp,
+                  height: 30.0.wp,
+                  //color: Colors.teal.withOpacity(0.5),
+                  child: Image.asset(
+                    bgUsed(rewardtype, rewardState),
+                    fit: BoxFit.fill,
+                  ),
+                )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 6.0.wp, left: 4.0.wp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Redeemed',
+                        style: TextStyle(
+                            fontSize: isOverlay == true ? 20 : 10.0.sp,
+                            fontFamily: AppFonts.appFont,
+                            color: rewardState == RewardState.won
+                                ? Colors.white
+                                : Colors.black),
+                      ),
+                      SizedBox(height: 2.0.hp),
+                      Text(
+                        '$points Points'.replaceAll("-", ""),
+                        style: TextStyle(
+                            fontFamily: AppFonts.appFont,
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                isOverlay == true ? Dimens.font_24sp : 14.0.sp,
+                            color: //Colors.black
+                                AppColors.pointsColor),
+                      ),
+                    ],
+                  ),
+                ),
+                //const Center(child: SizedBox()),
+                Padding(
+                    padding: EdgeInsets.only(bottom: 4.0.wp, left: 4.0.wp),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // getRewardType(rewardtype, isOverlay),
+                        // SizedBox(height: 1.0.wp),
+                        isOverlay == true
+                            ? SizedBox.shrink()
+                            : Text(
+                                'Used on $date',
+                                style: TextStyle(
+                                    fontSize: 10.0.sp,
+                                    fontFamily: AppFonts.appFont,
+                                    color: rewardState == RewardState.won
+                                        ? Colors.white
+                                        : Colors.black),
+                              )
+                      ],
+                    ))
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 // to get reward type of the card -----------------------------------
   Widget getRewardType(Rewardtype rewardtype, bool isOverlay) {
     Widget getType;
@@ -499,6 +597,6 @@ class _YourRewardCardState extends State<YourRewardCard>
 }
 // enum or constant value ---------------
 
-enum RewardState { won, used, expired }
+enum RewardState { won, used, expired, history }
 
 enum Rewardtype { referralBonus, cashTransaction, recharge, loan }

@@ -167,7 +167,8 @@ class UsedRewardHistory extends StatelessWidget {
                                                 _usedPointsController
                                                     .usedpointsList[index];
                                             return YourRewardCard(
-                                                rewardState: RewardState.used,
+                                                rewardState:
+                                                    RewardState.history,
                                                 rewardtype:
                                                     Rewardtype.cashTransaction,
                                                 date: CommonMethods()
