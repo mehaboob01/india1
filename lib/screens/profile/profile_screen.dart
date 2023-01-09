@@ -864,7 +864,7 @@ class ProfileScreen extends StatelessWidget {
           addDetailButton(
             title: 'Add Residential Details',
             callBack: () {
-              nextStep('Residential address');
+              nextStep('Residential Address');
             },
           ),
         ],
