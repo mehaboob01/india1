@@ -64,6 +64,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                   .indianRupeeValue(createLoanModel.loanAmount!.toDouble());
               //createLoanModel.loanAmount.toString();
             }
+          } else {
+            loanAmountEditingController.text =
+                CommonMethods().indianRupeeValue(loanController.minValue.value);
           }
         });
   }
@@ -366,9 +369,9 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
             ),
             child: FormBuilder(
               key: _loanAmountKey,
-              initialValue: {
-                "loan_amount": "",
-              },
+              // initialValue: {
+              //   "loan_amount": "",
+              // },
               child: FormBuilderTextField(
                 keyboardType: TextInputType.number,
                 controller: loanAmountEditingController,
@@ -398,7 +401,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                   ),
                   border: const OutlineInputBorder(),
                   labelText: 'Loan amount',
-                  labelStyle: new TextStyle(color: Color(0xFF787878)),
+                  labelStyle: TextStyle(color: Color(0xFF787878)),
                 ),
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(context),

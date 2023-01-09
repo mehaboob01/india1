@@ -11,7 +11,6 @@ import '../../constant/theme_manager.dart';
 import '../../widgets/button_with_flower.dart';
 import '../../widgets/common_drop_down.dart';
 import '../../widgets/loyalty_common_header.dart';
-import '../loyality_points/cashback_redeem/cashback_redo_controller.dart';
 import 'controller/update_bank_account_manager.dart';
 import 'delete_bottom_sheet.dart';
 
@@ -209,11 +208,13 @@ class EditAccountsCard extends StatelessWidget {
                                                 // bank name
                                                 DropDown(
                                                   onChanged: (value) {
-                                                    bankName = value.toString();
+                                                    return bankName = value;
                                                   },
                                                   formName: 'bankName',
+                                                  initialValue: bankName,
                                                   labelName: 'Bank name',
-                                                  hintText: bankName.toString(),
+                                                  hintText:
+                                                      'Select your bank here',
                                                   data:
                                                       cashBackManager.bankList,
                                                   validationText:
@@ -413,7 +414,7 @@ class EditAccountsCard extends StatelessWidget {
                                   onPressed: () async {
                                     // method for checkBankID
 
-                                    String? checkBankId(bankName) {
+                                    checkBankId(bankName) {
                                       for (var index
                                           in cashBackManager.bankListId) {
                                         if (index.name == bankName) {

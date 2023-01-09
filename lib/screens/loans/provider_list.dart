@@ -292,21 +292,23 @@ class _ProvidersListState extends State<ProvidersList> {
                                                             BorderRadius
                                                                 .circular(15),
                                                       ),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
+                                                      child: Column(
                                                         children: [
                                                           LoanCommon().rowText(
+                                                            parentColumn: true,
                                                             value: 'Max amount',
                                                             title:
                                                                 '₹ ${lenders?[index].details?.loanAmount == null ? "0" : lenders![index].details?.loanAmount}',
                                                           ),
                                                           LoanCommon().rowText(
+                                                              parentColumn:
+                                                                  true,
                                                               value: 'Tenure',
                                                               title:
                                                                   '${lenders?[index].details?.tenure == null ? "0" : lenders![index].details?.tenure}'),
                                                           LoanCommon().rowText(
+                                                              parentColumn:
+                                                                  true,
                                                               value:
                                                                   'Interest/m',
                                                               title:

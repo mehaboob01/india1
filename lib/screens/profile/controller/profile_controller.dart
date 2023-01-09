@@ -205,7 +205,13 @@ class ProfileController extends GetxController {
     // monthlyIncomeController.value.text =
     //     "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     monthlyIncomeController.value.text =
-        "${(profileDetailsModel.value.income ?? '').toString()}";
+        profileDetailsModel.value.income == null
+            ? ''
+            : CommonMethods()
+                .indianRupeeValue(profileDetailsModel.value.income!.toDouble());
+
+    // monthlyIncomeController.value.text =
+    //     "${(profileDetailsModel.value.income ?? '').toString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
     // new changes

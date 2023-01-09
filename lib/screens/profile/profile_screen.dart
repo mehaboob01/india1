@@ -163,9 +163,7 @@ class ProfileScreen extends StatelessWidget {
                                                   child: Obx(
                                                     () => InkWell(
                                                         onTap: () {
-                                                          profileController
-                                                              .pickImage(
-                                                                  Get.context!);
+                                                          _handlePermissions();
                                                         },
                                                         child: CircleAvatar(
                                                           maxRadius: 50,
@@ -275,8 +273,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  profileController
-                                                      .pickImage(Get.context!);
+                                                  _handlePermissions();
                                                 },
                                                 child: Container(
                                                   height: 45,
@@ -511,6 +508,27 @@ class ProfileScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _handlePermissions() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION);
+    var status = Permission.storage.request();
+    if (await status.isGranted || await status.isLimited) {
+      profileController.pickImage(Get.context!);
+    } else if (await status.isDenied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, true);
+      }
+    } else if (await status.isPermanentlyDenied) {
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, false);
+        return false;
+      } else {
+        Geolocator.openAppSettings();
+      }
+    }
   }
 
   getPersonalDetailButton() {
@@ -843,7 +861,7 @@ class ProfileScreen extends StatelessWidget {
           addDetailButton(
             title: 'Add Residential Details',
             callBack: () {
-              nextStep('Residential Address');
+              nextStep('Residential address');
             },
           ),
         ],
@@ -983,8 +1001,9 @@ class ProfileScreen extends StatelessWidget {
                           Expanded(
                             child: singleDetails(
                                 title: "Monthly income",
-                                value:
-                                    "₹ ${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble()) ?? ""}",
+                                value: profileDetailsModel.income == null
+                                    ? ''
+                                    : '${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble())}', //"${profileDetailsModel.income ?? ""}",
                                 isEmpty: profileDetailsModel.income == null
                                     ? true
                                     : false),

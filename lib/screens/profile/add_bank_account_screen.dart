@@ -98,8 +98,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                 isforProfileScreen: true,
                                 formkey: cashBackManager.bankNameFormKey,
                                 searchIconColor: AppColors.primary,
-                                selectedValue:
-                                    cashBackManager.dropDownBankName.value,
+                                selectedValue: redoCtrl.bankname.value,
+                                // cashBackManager.dropDownBankName.value,
                                 onChanged: (value) {
                                   redoCtrl.bankname.value = value!;
                                   print(redoCtrl.bankname.value);
