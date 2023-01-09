@@ -42,7 +42,7 @@ class ProviderDetail extends StatelessWidget {
                 Column(
                   children: [
                     CustomAppBar(
-                      heading: "2 Wheeler Loan", //'$title',
+                      heading: '$title',
                       customActionIconsList: [
                         // CustomActionIcons(
                         //   image: AppImages.bottomNavHome,
