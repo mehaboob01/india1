@@ -300,8 +300,9 @@ class _ReferEarnState extends State<ReferEarn> {
                     children: [
                       Text(
                         "Allow Permissions Now",
-                        style:
-                            TextStyle(color: Colors.amberAccent, fontSize: Dimens.font_16sp),
+                        style: TextStyle(
+                            color: Colors.amberAccent,
+                            fontSize: Dimens.font_16sp),
                       ),
                       SizedBox(
                         width: Get.width * 0.01,
@@ -333,7 +334,6 @@ class _ReferEarnState extends State<ReferEarn> {
       await contactCont.fetchContacts();
       return;
     } else if (await status.isDenied) {
-      Permission.contacts.request();
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_CONTACT_PERMISSION, true);
       }

@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,9 +23,11 @@ import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
+import 'package:india_one/utils/common_methods.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -375,6 +378,59 @@ class ProfileController extends GetxController {
       return null;
   }
 
+  _handleMediaPermissions() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION);
+    var status = Permission.storage.request();
+    if (await status.isGranted || await status.isLimited) {
+      image.value =
+          (await _picker.pickImage(source: ImageSource.gallery))!.path;
+      Get.back();
+      // await cropImage();
+      compress().then((value) async {
+        await cropImage();
+      });
+    } else if (await status.isDenied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, true);
+      }
+    } else if (await status.isPermanentlyDenied) {
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, false);
+        return false;
+      } else {
+        Geolocator.openAppSettings();
+      }
+    }
+  }
+
+  _handleCameraPermissions() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool? firstInit =
+        sharedPreferences.getBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION);
+    var status = Permission.camera.request();
+    if (await status.isGranted || await status.isLimited) {
+      image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
+      Get.back();
+
+      compress().then((value) async {
+        await cropImage();
+      });
+    } else if (await status.isDenied) {
+      if (firstInit != null) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION, true);
+      }
+    } else if (await status.isPermanentlyDenied) {
+      if (firstInit == null || firstInit) {
+        sharedPreferences.setBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION, false);
+        return false;
+      } else {
+        Geolocator.openAppSettings();
+      }
+    }
+  }
+
   Future pickImage(context) async {
     showModalBottomSheet(
       context: context,
@@ -403,13 +459,7 @@ class ProfileController extends GetxController {
               title: Text('Camera'),
               leading: Icon(Icons.camera_alt_outlined),
               onTap: () async {
-                image.value =
-                    (await _picker.pickImage(source: ImageSource.camera))!.path;
-                Get.back();
-                // await cropImage();
-                compress().then((value) async {
-                  await cropImage();
-                });
+                _handleCameraPermissions();
               },
             ),
             Divider(),
@@ -417,14 +467,7 @@ class ProfileController extends GetxController {
               title: Text('Gallery'),
               leading: Icon(Icons.photo_size_select_actual_outlined),
               onTap: () async {
-                image.value =
-                    (await _picker.pickImage(source: ImageSource.gallery))!
-                        .path;
-                Get.back();
-                // await cropImage();
-                compress().then((value) async {
-                  await cropImage();
-                });
+                _handleMediaPermissions();
               },
             ),
           ],

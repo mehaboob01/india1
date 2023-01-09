@@ -185,8 +185,8 @@ class ProfileStepper {
         child: Form(
           key: personalForm,
           autovalidateMode: profileController.autoValidation.value == true
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
+              ? AutovalidateMode.onUserInteraction
+              : AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -764,6 +764,7 @@ class ProfileStepper {
                 label: 'Monthly income',
                 hint: 'Enter monthly income',
                 prefix: '₹',
+                inputFormatters: [CurrencyInputFormatter()],
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -797,7 +798,10 @@ class ProfileStepper {
                       label: 'PAN number',
                       hint: 'Enter your PAN number here',
                       textCap: true,
-                      inputFormatters: [UpperCaseTextFormatter()],
+                      inputFormatters: [
+                        UpperCaseTextFormatter(),
+                        LengthLimitingTextInputFormatter(10)
+                      ],
                       onChanged: (value) {},
                       vaidation: (value) {
                         if (isFromLoan == true ||
