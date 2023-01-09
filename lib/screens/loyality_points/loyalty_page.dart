@@ -89,7 +89,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
+                                      text(
                                         'Your rewards',
                                         style: AppStyle.shortHeading.copyWith(
                                             color: const Color(0xff2d2d2d),
@@ -101,7 +101,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                               MRouter.usedRewardHistory);
                                         },
                                         // history text will be there
-                                        child: Text(
+                                        child: text(
                                           'History', //'View used points',
                                           style: AppStyle.shortHeading.copyWith(
                                               fontSize: 10.0.sp,
@@ -140,7 +140,7 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
                                                   .length ==
                                               0
                                           ? Center(
-                                              child: Text(
+                                              child: text(
                                               "No Rewards!",
                                               style: AppStyle.shortHeading
                                                   .copyWith(

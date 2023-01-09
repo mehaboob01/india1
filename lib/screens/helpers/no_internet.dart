@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../constant/theme_manager.dart';
+
 class NoInternet extends StatelessWidget {
   const NoInternet({super.key});
 
@@ -22,14 +24,14 @@ class NoInternet extends StatelessWidget {
             SizedBox(
               height: Get.height * 0.04,
             ),
-            Text(
+            text(
               "No Internet connection",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
             SizedBox(
               height: Get.height * 0.02,
             ),
-            Text(
+            text(
               "There seems to be network issue. Please check and try again",
               textAlign: TextAlign.center,
               style: TextStyle(

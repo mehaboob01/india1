@@ -43,7 +43,7 @@ class ButtonWithFlower extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Text(
+                child: text(
                   label,
                   textAlign: TextAlign.center,
                   style: AppStyle.shortHeading.copyWith(

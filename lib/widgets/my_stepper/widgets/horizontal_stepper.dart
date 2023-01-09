@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/utils/utils.dart';
 
+import '../../../constant/theme_manager.dart';
 import 'stepper_dot_widget.dart';
 
 class HorizontalStepperItem extends StatelessWidget {
   /// Stepper Item to show horizontal stepper
-  const HorizontalStepperItem(
-      {Key? key,
-      required this.item,
-      required this.index,
-      required this.totalLength,
-      required this.activeIndex,
-      required this.isInverted,
-      required this.activeBarColor,
-      required this.inActiveBarColor,
-      required this.barHeight,
-      required this.titleTextStyle,
-      required this.subtitleTextStyle,
-      this.iconHeight,
-      this.iconWidth,
-      this.callBack,})
-      : super(key: key);
+  const HorizontalStepperItem({
+    Key? key,
+    required this.item,
+    required this.index,
+    required this.totalLength,
+    required this.activeIndex,
+    required this.isInverted,
+    required this.activeBarColor,
+    required this.inActiveBarColor,
+    required this.barHeight,
+    required this.titleTextStyle,
+    required this.subtitleTextStyle,
+    this.iconHeight,
+    this.iconWidth,
+    this.callBack,
+  }) : super(key: key);
 
   /// Stepper item of type [StepperData] to inflate stepper with data
   final StepperData item;
@@ -66,7 +67,8 @@ class HorizontalStepperItem extends StatelessWidget {
     return Flexible(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: isInverted ? MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment:
+            isInverted ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: isInverted ? getInvertedChildren() : getChildren(),
       ),
     );
@@ -88,7 +90,7 @@ class HorizontalStepperItem extends StatelessWidget {
     return [
       if (item.title != null) ...[
         SizedBox(
-            child: Text(
+            child: text(
           item.title!,
           textAlign: TextAlign.center,
           style: titleTextStyle,
@@ -97,7 +99,7 @@ class HorizontalStepperItem extends StatelessWidget {
       ],
       if (item.subtitle != null) ...[
         SizedBox(
-            child: Text(
+            child: text(
           item.subtitle!,
           textAlign: TextAlign.center,
           style: subtitleTextStyle,
@@ -108,12 +110,14 @@ class HorizontalStepperItem extends StatelessWidget {
         children: [
           Flexible(
             child: Container(
-              color: index == 0 ? Colors.transparent : (index <= activeIndex ? activeBarColor : inActiveBarColor),
+              color: index == 0
+                  ? Colors.transparent
+                  : (index <= activeIndex ? activeBarColor : inActiveBarColor),
               height: barHeight,
             ),
           ),
           InkWell(
-            onTap: (){
+            onTap: () {
               callBack!(index);
             },
             child: Padding(
@@ -128,7 +132,9 @@ class HorizontalStepperItem extends StatelessWidget {
           ),
           Flexible(
             child: Container(
-              color: index == totalLength - 1 ? Colors.transparent : (index < activeIndex ? activeBarColor : inActiveBarColor),
+              color: index == totalLength - 1
+                  ? Colors.transparent
+                  : (index < activeIndex ? activeBarColor : inActiveBarColor),
               height: barHeight,
             ),
           ),

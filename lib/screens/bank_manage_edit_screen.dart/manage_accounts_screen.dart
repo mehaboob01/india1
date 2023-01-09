@@ -52,7 +52,7 @@ class ManageAccountsCard extends StatelessWidget {
                           : cashBackManager.customerBankList.length == 0 &&
                                   cashBackManager.customerUPIList.length == 0
                               ? Center(
-                                  child: Text(
+                                  child: text(
                                   "No Accounts!",
                                   style: TextStyle(
                                       fontSize: Dimens.font_20sp,
@@ -66,7 +66,7 @@ class ManageAccountsCard extends StatelessWidget {
                                       horizontal: 2.0.wp, vertical: 4.0.hp),
                                   children: [
                                     cashBackManager.customerBankList.isNotEmpty
-                                        ? Text(
+                                        ? text(
                                             'Your accounts',
                                             style: AppStyle.shortHeading
                                                 .copyWith(
@@ -175,7 +175,7 @@ class ManageAccountsCard extends StatelessWidget {
                                             ))
                                         : const SizedBox.shrink(),
                                     cashBackManager.customerUPIList.isNotEmpty
-                                        ? Text(
+                                        ? text(
                                             'Your UPI or VPA’s',
                                             style: AppStyle.shortHeading
                                                 .copyWith(

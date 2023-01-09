@@ -98,7 +98,7 @@ class RedeemPointsPage extends StatelessWidget {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Text(
+                                                      text(
                                                         'Redeem your balance',
                                                         style: AppStyle
                                                             .shortHeading
@@ -122,7 +122,7 @@ class RedeemPointsPage extends StatelessWidget {
                                                             width: 4,
                                                           ),
                                                           Obx(
-                                                            () => Text(
+                                                            () => text(
                                                               _loyaltyManager
                                                                   .redeemablePoints
                                                                   .toString(),
@@ -138,7 +138,7 @@ class RedeemPointsPage extends StatelessWidget {
                                                                       0.5),
                                                             ),
                                                           ),
-                                                          Text(
+                                                          text(
                                                             ' Points',
                                                             style: AppStyle
                                                                 .shortHeading
@@ -164,7 +164,7 @@ class RedeemPointsPage extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(height: 2.0.wp),
-                                          Text(
+                                          text(
                                             'You can redeem your points either through recharge or cashback to your bank account or UPI.',
                                             style:
                                                 AppStyle.shortHeading.copyWith(

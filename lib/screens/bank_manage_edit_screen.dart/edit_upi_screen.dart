@@ -92,7 +92,7 @@ class EditUpi extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        text(
                                           "Your UPI's",
                                           style: AppStyle.shortHeading.copyWith(
                                             fontSize: Dimens.font_16sp,
@@ -122,7 +122,7 @@ class EditUpi extends StatelessWidget {
                                                       AppColors.greyInlineText,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 11.0.sp),
-                                              label: Text(
+                                              label: text(
                                                 "UPI", //'Points for cashback', // dynamic
                                               ),
                                               floatingLabelBehavior:

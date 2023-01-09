@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
+import '../../../constant/theme_manager.dart';
 
 class UseAppPasswordIO extends StatefulWidget {
   const UseAppPasswordIO({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _UseAppPasswordIOState extends State<UseAppPasswordIO> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(userPswdTitle),
+                  text(userPswdTitle),
                   TextField(
                     onChanged: (val) {
                       if ((userPswdTitle.contains("Choose your password"))) {
@@ -62,7 +63,7 @@ class _UseAppPasswordIOState extends State<UseAppPasswordIO> {
                             prefs.setString("useAppPassword", actualPassword);
                             Get.offAllNamed(MRouter.homeScreen);
                           },
-                          child: Text("Set password"))
+                          child: text("Set password"))
                       : Container()
                 ],
               ),

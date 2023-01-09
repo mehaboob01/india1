@@ -81,14 +81,14 @@ class _HealthInsuranceState extends State<HealthInsurance> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                text(
                   "Select a plan",
                   style: AppTextThemes.button,
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Text(
+                text(
                   "Choose sum insured to view the most suited policies.",
                   style: AppTextThemes.labelStyle.apply(
                     color: AppColors.white,
@@ -111,7 +111,7 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(
+                          child: text(
                             value.toString(),
                           ),
                         );
@@ -164,7 +164,7 @@ class _HealthInsuranceState extends State<HealthInsurance> {
                                   ?.length ??
                               0) ==
                           0
-                      ? Text("No data available")
+                      ? text("No data available")
                       : ListView.separated(
                           itemCount: insuranceController
                                   .insuranceApplicationModel

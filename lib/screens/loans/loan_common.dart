@@ -26,7 +26,7 @@ class LoanCommon {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          text(
             'Back',
             style: AppTextThemes.button,
           ),
@@ -50,7 +50,7 @@ class LoanCommon {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            text(
               'Next',
               style: AppTextThemes.button,
             ),
@@ -77,7 +77,7 @@ class LoanCommon {
           Spacer(),
           Row(
             children: [
-              Text(
+              text(
                 '$title',
                 style: AppTextThemes.button,
               ),
@@ -181,7 +181,7 @@ class LoanCommon {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             (isPersonalLoan == true
                                     ? (providers?.name ?? '')
                                     : lenders?.loanTitle.toString()) ??
@@ -192,7 +192,7 @@ class LoanCommon {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Text(
+                          text(
                             (isPersonalLoan == true
                                     ? providers?.subTitle
                                     : (lenders?.loanType ?? '')) ??
@@ -216,16 +216,16 @@ class LoanCommon {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    rowText(
+                    rowtext(
                         value: 'Max amount',
                         title:
                             '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
-                    rowText(
+                    rowtext(
                       value: 'Tenure',
                       title:
                           '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
                     ),
-                    rowText(
+                    rowtext(
                       value: 'Interest/m',
                       title:
                           '${lenders.minInterestRate} - ${lenders.maxInterestRate}%',
@@ -253,7 +253,7 @@ class LoanCommon {
     );
   }
 
-  Widget rowText(
+  Widget rowtext(
       {required String title,
       required String value,
       bool fromPersonalLoan = false}) {
@@ -261,7 +261,7 @@ class LoanCommon {
     //   children: [
     //     Container(
     //       width: 98,
-    //       child: Text(
+    //       child: text(
     //         "$title",
     //         style: TextStyle(
     //           color: AppColors.iconColorDark,
@@ -270,7 +270,7 @@ class LoanCommon {
     //         ),
     //       ),
     //     ),
-    //     Text(
+    //     text(
     //       "$value",
     //       style: TextStyle(
     //         color: AppColors.iconColorDark,
@@ -292,7 +292,7 @@ class LoanCommon {
               //color: Colors.blue,
               // width: 98,
               child: Center(
-                child: Text(
+                child: text(
                   "$title",
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -307,7 +307,7 @@ class LoanCommon {
           Container(
             //color: Colors.green,
             child: Center(
-              child: Text(
+              child: text(
                 "$value",
                 style: TextStyle(
                   color: AppColors.iconColorDark,
@@ -334,7 +334,7 @@ class LoanCommon {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-          child: Text(
+          child: text(
             "$title",
             style: TextStyle(
               color: AppColors.lightBlack,
@@ -389,7 +389,7 @@ class LoanCommon {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: text(
                   "Do you want to proceed?",
                   style: TextStyle(
                     color: AppColors.lightBlack,
@@ -403,7 +403,7 @@ class LoanCommon {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: text(
                   "Please verify all the details provided. Once it is submitted, you will not be allowed to change the details.",
                   style: TextStyle(
                     color: AppColors.lightBlack,
@@ -437,7 +437,7 @@ class LoanCommon {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        child: Text(
+        child: text(
           '$title',
           style: AppTextThemes.button,
           textAlign: TextAlign.center,
@@ -475,7 +475,7 @@ class LoanCommon {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        child: Text(
+        child: text(
           '$title',
           style: TextStyle(
             fontSize: Dimens.font_16sp,

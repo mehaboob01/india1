@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:india_one/screens/helpers/version_validator.dart';
 
+import '../../constant/theme_manager.dart';
+
 class Updateavailable extends StatelessWidget {
   Updateavailable({super.key});
   VersionValidator _versionValidator = Get.put(VersionValidator());
@@ -14,7 +16,7 @@ class Updateavailable extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
+          text(
             "Update is available, please update the application before continuing",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, color: Colors.black),
@@ -23,7 +25,7 @@ class Updateavailable extends StatelessWidget {
               onPressed: () {
                 _versionValidator.launchUrl(Uri.parse("Play Store URL"));
               },
-              child: Text("Update now"))
+              child: text("Update now"))
         ],
       ),
     );

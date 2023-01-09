@@ -105,14 +105,14 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
   //     showDialog<String>(
   //       context: context,
   //       builder: (BuildContext context) => AlertDialog(
-  //         title: const Text('Allow application to access your Contacts?'),
-  //         content: const Text(
+  //         title: const text('Allow application to access your Contacts?'),
+  //         content: const text(
   //             'You need to allow permissions to allow access to contacts in settings'),
   //         actions: <Widget>[
   //           // if user deny again, we do nothing
   //           TextButton(
   //             onPressed: () => Navigator.pop(context),
-  //             child: const Text('Don\'t allow'),
+  //             child: const text('Don\'t allow'),
   //           ),
 
   //           // if user is agree, you can redirect him to the app parameters :)
@@ -121,7 +121,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
   //               Geolocator.openAppSettings();
   //               Navigator.pop(context);
   //             },
-  //             child: const Text('Allow'),
+  //             child: const text('Allow'),
   //           ),
   //         ],
   //       ),
@@ -231,7 +231,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
           //           Icons.chevron_left,
           //           color: AppColors.black,
           //         )),
-          //     title: Text(
+          //     title: text(
           //       "Redeem points ",
           //       style: AppStyle.shortHeading.copyWith(
           //         fontSize: Dimens.font_16sp,
@@ -253,7 +253,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                     SizedBox(
                       height: 8,
                     ),
-                    Text('Loading ...',
+                    text('Loading ...',
                         style: AppStyle.shortHeading.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.w400))
@@ -303,7 +303,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          text(
                                             "Enter the following details to proceed",
                                             style:
                                                 AppStyle.shortHeading.copyWith(
@@ -379,7 +379,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                   .only(
                                                                       left: 8.0,
                                                                       top: 4.0),
-                                                              child: Text(
+                                                              child: text(
                                                                 '+91 ',
                                                                 style: AppStyle.shortHeading.copyWith(
                                                                     color: AppColors
@@ -623,7 +623,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                               SizedBox(
                                                 height: 4,
                                               ),
-                                              Text('Fetching plans ...',
+                                              text('Fetching plans ...',
                                                   style: AppStyle.shortHeading
                                                       .copyWith(
                                                           color:
@@ -639,7 +639,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                   width: widthIs * 0.9,
                                                   height: heightIs * 0.3,
                                                   child:
-                                                      Center(child: Text(""))))
+                                                      Center(child: text(""))))
                                           : Padding(
                                               padding: EdgeInsets.only(
                                                   left: 8.0, right: 8.0),
@@ -666,7 +666,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                             const EdgeInsets
                                                                     .only(
                                                                 left: 22.0),
-                                                        child: Text(
+                                                        child: text(
                                                           "Plans under ₹${_loyaltyManager.redeemablePoints.toString()}",
                                                           style: AppStyle
                                                               .shortHeading
@@ -836,7 +836,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
             Spacer(),
             Row(
               children: [
-                Text(
+                text(
                   'Recharge Now',
                   style: AppTextThemes.button,
                 ),

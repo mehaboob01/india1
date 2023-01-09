@@ -77,7 +77,7 @@ class ProviderDetail extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              text(
                                 "Top Features",
                                 style: TextStyle(
                                   color: AppColors.lightBlack,
@@ -104,7 +104,7 @@ class ProviderDetail extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                               ),
-                              Text(
+                              text(
                                 "Other details",
                                 style: TextStyle(
                                   color: AppColors.lightBlack,
@@ -122,11 +122,11 @@ class ProviderDetail extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return ExpansionTile(
                                     tilePadding: EdgeInsets.all(0),
-                                    title: Text(
+                                    title: text(
                                       '${loanController.otherDetails[index]['title']}',
                                     ),
                                     children: [
-                                      Text(
+                                      text(
                                         '${loanController.otherDetails[index]['value']}',
                                       ),
                                       SizedBox(

@@ -49,7 +49,7 @@ class PolicyItemWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      text(
                         plan.name ?? "Unknown",
                         style: AppTextThemes.button
                             .apply(color: AppColors.lightBlack),
@@ -57,7 +57,7 @@ class PolicyItemWidget extends StatelessWidget {
                       SizedBox(
                         height: 4,
                       ),
-                      Text(
+                      text(
                         plan.type ?? "Unknown",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -86,7 +86,7 @@ class PolicyItemWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        text(
                           "10%",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
@@ -95,7 +95,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontFamily: "AppFonts.appFont",
                           ),
                         ),
-                        Text(
+                        text(
                           " Claim settled",
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -121,7 +121,7 @@ class PolicyItemWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        text(
                           "2 hrs",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
@@ -130,7 +130,7 @@ class PolicyItemWidget extends StatelessWidget {
                             fontFamily: "AppFonts.appFont",
                           ),
                         ),
-                        Text(
+                        text(
                           " Claim approval",
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -157,7 +157,7 @@ class PolicyItemWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        text(
                           'View Plan',
                           style: AppTextThemes.button.apply(
                             // color: AppColors.backGroundgradient1,
@@ -199,7 +199,7 @@ class PolicyItemWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          text(
                             'Buy for ₹${plan.amount}',
                             style: AppTextThemes.button,
                           ),

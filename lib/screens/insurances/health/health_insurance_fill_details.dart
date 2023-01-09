@@ -213,7 +213,7 @@ class _HealthInsuranceFillDetailsState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          text(
                             'Back',
                             style: AppTextThemes.button,
                           ),
@@ -235,7 +235,7 @@ class _HealthInsuranceFillDetailsState
                     //     children: [
                     //       Row(
                     //         children: [
-                    //           Text(
+                    //           text(
                     //             'BACK',
                     //             style: AppTextThemes.button,
                     //           ),
@@ -294,7 +294,7 @@ class _HealthInsuranceFillDetailsState
                       Spacer(),
                       Row(
                         children: [
-                          Text(
+                          text(
                             insuranceController.currentScreen.value ==
                                     InsuranceStep.HEALTH.index
                                 ? 'View Summary'

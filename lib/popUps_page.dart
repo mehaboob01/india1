@@ -33,7 +33,7 @@ class DisplayPopuP {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      text(
                         'Welcome to',
                         style: AppStyle.shortHeading
                             .copyWith(height: 1.2, fontSize: Dimens.font_24sp),
@@ -41,7 +41,7 @@ class DisplayPopuP {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          text(
                             'Cashback',
                             style: AppStyle.shortHeading.copyWith(
                                 fontWeight: FontWeight.w700,
@@ -49,14 +49,14 @@ class DisplayPopuP {
                                 letterSpacing: 1.2,
                                 fontSize: Dimens.font_24sp),
                           ),
-                          Text(
+                          text(
                             ' by ',
                             style: AppStyle.shortHeading.copyWith(
                                 fontWeight: FontWeight.w600,
                                 height: 1.2,
                                 fontSize: Dimens.font_20sp),
                           ),
-                          Text(
+                          text(
                             'India1',
                             style: AppStyle.shortHeading.copyWith(
                                 fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class DisplayPopuP {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.05),
-                      Text(
+                      text(
                         'You just won',
                         style: AppStyle.shortHeading
                             .copyWith(fontSize: Dimens.font_20sp),
@@ -82,7 +82,7 @@ class DisplayPopuP {
                             Image.asset(AppImages.goldenHexagonal),
                             Positioned(
                               top: 45,
-                              child: Text(
+                              child: text(
                                 welcomePoints,
                                 style: AppStyle.shortHeading.copyWith(
                                     fontWeight: FontWeight.w900, fontSize: 40),
@@ -91,7 +91,7 @@ class DisplayPopuP {
                           ],
                         ),
                       ),
-                      Text(
+                      text(
                         'Points',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w700,
@@ -102,7 +102,6 @@ class DisplayPopuP {
                 ),
               ),
             ).show());
-
   }
 
   Future getProfileWelcome(
@@ -131,14 +130,14 @@ class DisplayPopuP {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Text(
+                      // text(
                       //   'Complete your profile',
                       //   style: AppStyle.shortHeading.copyWith(
                       //       height: 1.2,
                       //       color: AppColors.orangeColor,
                       //       fontSize: Dimens.font_24sp),
                       // ),
-                      Text(
+                      text(
                         'Complete your profile',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w500,
@@ -149,12 +148,12 @@ class DisplayPopuP {
                       ),
 
                       SizedBox(height: height * 0.02),
-                      Text(
+                      text(
                         'You have a chance to',
                         style: AppStyle.shortHeading.copyWith(
                             fontSize: Dimens.font_18sp, color: Colors.white),
                       ),
-                      Text(
+                      text(
                         'earn upto',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w600,
@@ -170,7 +169,7 @@ class DisplayPopuP {
                             Image.asset(AppImages.goldenHexagonal),
                             Positioned(
                               top: 45,
-                              child: Text(
+                              child: text(
                                 profilePoints,
                                 style: AppStyle.shortHeading.copyWith(
                                     fontWeight: FontWeight.w900, fontSize: 40),
@@ -179,7 +178,7 @@ class DisplayPopuP {
                           ],
                         ),
                       ),
-                      Text(
+                      text(
                         'Points',
                         style: AppStyle.shortHeading.copyWith(
                             fontWeight: FontWeight.w600,

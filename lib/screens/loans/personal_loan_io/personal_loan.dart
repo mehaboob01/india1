@@ -91,7 +91,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
   @override
   Widget build(BuildContext context) {
     print('account formatted');
-    print(CommonMethods().accountFormattedText('23456789'));
+    print(CommonMethods().accountFormattedtext('23456789'));
     // print('Hello world');
     // print(loanController.createLoanModel.value.loanAmount.toString());
     // print(loanAmountEditingController.text);
@@ -538,7 +538,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
@@ -554,7 +554,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
               DividerIO(
                 height: 24,
               ),
-              Text(
+              text(
                 'Enter the loan amount required using the slider OR type in the text field.',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
@@ -609,7 +609,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹",
+                      text("₹",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: Dimens.font_16sp,

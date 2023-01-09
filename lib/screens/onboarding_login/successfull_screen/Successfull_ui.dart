@@ -55,15 +55,15 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-            child: Image.asset(
-              "assets/images/success.gif",
-              width: 320,
-              height: 320,
-            ),
-            ),
-        Text(
+          child: Image.asset(
+            "assets/images/success.gif",
+            width: 320,
+            height: 320,
+          ),
+        ),
+        text(
           "Successful!",
-          overflow: TextOverflow.visible,
+          textOverflow: TextOverflow.visible,
           maxLines: 1,
           style: TextStyle(
             overflow: TextOverflow.visible,
@@ -72,8 +72,10 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
             fontSize: Dimens.font_24sp,
           ),
         ),
-        SizedBox(height: 44,),
-        // Text(
+        SizedBox(
+          height: 44,
+        ),
+        // text(
         //   "Mobile Recharge successful!",
         //   overflow: TextOverflow.visible,
         //   maxLines: 1,

@@ -32,6 +32,7 @@ class _HeadingIconsBoxState extends State<HeadingIconsBox> {
             ? Center(
                 child: Text(
                 widget.text!,
+                textScaleFactor: 1,
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
               ))

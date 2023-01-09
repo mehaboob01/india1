@@ -78,7 +78,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                             size: 40,
                                             color: Colors.white,
                                           ),
-                                          Text(
+                                          text(
                                             "${insuranceController.insuranceSummaryModel.value.totalAmount}",
                                             style: TextStyle(
                                                 fontSize: 70,
@@ -98,7 +98,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                         height: Get.height * 0.04,
                                         width: Get.width * 0.3,
                                         child: Center(
-                                            child: Text(
+                                            child: text(
                                           "Total Amount",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
@@ -137,7 +137,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(top: 1),
-                                        child: Text(
+                                        child: text(
                                           "Price Details",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -167,7 +167,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(
+                                                  text(
                                                     "Premium amount",
                                                     style: TextStyle(
                                                       fontSize: 16,
@@ -175,7 +175,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                                           FontWeight.w400,
                                                     ),
                                                   ),
-                                                  Text(
+                                                  text(
                                                     "₹ ${insuranceController.insuranceSummaryModel.value.premiumAmount}",
                                                     style: TextStyle(
                                                       fontSize: 16,
@@ -190,7 +190,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(
+                                                  text(
                                                     "GST",
                                                     style: TextStyle(
                                                       fontSize: 16,
@@ -198,7 +198,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                                           FontWeight.w400,
                                                     ),
                                                   ),
-                                                  Text(
+                                                  text(
                                                     "₹ ${insuranceController.insuranceSummaryModel.value.gstAmount}",
                                                     style: TextStyle(
                                                       fontSize: 16,
@@ -217,18 +217,20 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
+                                                    text(
                                                       "Total amount",
                                                       style: TextStyle(
-                                                        fontSize: Dimens.font_16sp,
+                                                        fontSize:
+                                                            Dimens.font_16sp,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
                                                     ),
-                                                    Text(
+                                                    text(
                                                       "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
                                                       style: TextStyle(
-                                                        fontSize: Dimens.font_16sp,
+                                                        fontSize:
+                                                            Dimens.font_16sp,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -257,7 +259,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               "View Summary",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w500),
@@ -290,7 +292,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                 SingleChildScrollView(
                                   child: Row(
                                     children: [
-                                      Text(
+                                      text(
                                         "i_accept".tr,
                                         maxLines: 2,
                                         style: TextStyle(
@@ -308,10 +310,12 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => Tnc_IO(_loginManager.termCondition,"term_condition")),
+                                                builder: (context) => Tnc_IO(
+                                                    _loginManager.termCondition,
+                                                    "term_condition")),
                                           );
                                         },
-                                        child: Text(
+                                        child: text(
                                           "term_condition".tr,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -342,9 +346,9 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                 Visibility(
                                   visible: alertTextShow == true ? true : false,
                                   child: Expanded(
-                                    child: Text(
+                                    child: text(
                                       'checkbox_select_error'.tr,
-                                      overflow: TextOverflow.visible,
+                                      textOverflow: TextOverflow.visible,
                                       maxLines: 2,
                                       style: TextStyle(
                                         overflow: TextOverflow.visible,
@@ -388,7 +392,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                     Spacer(),
                                     Row(
                                       children: [
-                                        Text(
+                                        text(
                                           "Proceed to Pay",
                                           style: AppTextThemes.button,
                                         ),
@@ -470,7 +474,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
               iconColor: Colors.grey,
               childrenPadding: EdgeInsets.all(1),
               tilePadding: EdgeInsets.all(0),
-              title: Text(
+              title: text(
                 titletext,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
@@ -536,7 +540,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.name}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
@@ -547,7 +551,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                         SizedBox(
                           height: Get.height * 0.004,
                         ),
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.type}",
                           style: const TextStyle(
                               fontWeight: FontWeight.w500,
@@ -568,10 +572,10 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                               "₹ ${insuranceController.insuranceSummaryModel.value.sumInsured}",
                               style: _stats),
-                          Text(
+                          text(
                             "Sum Insured",
                             style: _statsTitle,
                           )
@@ -579,11 +583,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       ),
                       Column(
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.tenureInYears} year",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Tenure",
                             style: _statsTitle,
                           )
@@ -592,7 +596,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                               "₹ ${insuranceController.insuranceSummaryModel.value.totalAmount}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -600,7 +604,7 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                                   color: _stats.color)
                               // color: _statusColor(index),
                               ),
-                          Text(
+                          text(
                             "Premium",
                             style: _statsTitle,
                           )
@@ -631,11 +635,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.firstName} ${insuranceController.insuranceSummaryModel.value.profile?.lastName}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Name",
                             style: _statsTitle,
                           ),
@@ -646,11 +650,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.dateOfBirth}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Birth date",
                             style: _statsTitle,
                           ),
@@ -668,11 +672,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.profile?.maritalStatus}",
                           style: _stats,
                         ),
-                        Text(
+                        text(
                           "marital status",
                           style: _statsTitle,
                         ),
@@ -682,11 +686,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.gender}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Gender",
                             style: _statsTitle,
                           ),
@@ -704,11 +708,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             "+91 ${insuranceController.insuranceSummaryModel.value.profile?.mobileNumber}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Mobile Number",
                             style: _statsTitle,
                           ),
@@ -719,11 +723,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                             "+91 ${insuranceController.insuranceSummaryModel.value.profile?.alternateNumber}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Alternate Number",
                             style: _statsTitle,
                           ),
@@ -741,11 +745,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.email}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Email ID",
                             style: _statsTitle,
                           ),
@@ -756,11 +760,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.panNumber}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "PAN number",
                             style: _statsTitle,
                           ),
@@ -778,11 +782,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             "Rs. ${insuranceController.insuranceSummaryModel.value.profile?.income}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Monthly Income",
                             style: _statsTitle,
                           ),
@@ -793,11 +797,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          text(
                             "${insuranceController.insuranceSummaryModel.value.profile?.occupation}",
                             style: _stats,
                           ),
-                          Text(
+                          text(
                             "Occupation",
                             style: _statsTitle,
                           ),
@@ -825,12 +829,12 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                text(
                   "Residential Address",
                   style: _stats,
                 ),
                 SizedBox(height: Get.height * 0.015),
-                Text(
+                text(
                   "${insuranceController.insuranceSummaryModel.value.profile?.address?.addressLine1}\n${insuranceController.insuranceSummaryModel.value.profile?.address?.addressLine2}",
                   style: _statsTitle,
                 ),
@@ -860,11 +864,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.nominee?.name}",
                           style: _stats,
                         ),
-                        Text(
+                        text(
                           "Name",
                           style: _statsTitle,
                         ),
@@ -873,11 +877,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.nominee?.dateOfBirth}",
                           style: _stats,
                         ),
-                        Text(
+                        text(
                           "Birth date",
                           style: _statsTitle,
                         ),
@@ -894,11 +898,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.nominee?.relationship}",
                           style: _stats,
                         ),
-                        Text(
+                        text(
                           "Relation",
                           style: _statsTitle,
                         ),
@@ -907,11 +911,11 @@ class _InsuranceSummaryState extends State<InsuranceSummary> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
+                        text(
                           "${insuranceController.insuranceSummaryModel.value.nominee?.gender}",
                           style: _stats,
                         ),
-                        Text(
+                        text(
                           "Gender",
                           style: _statsTitle,
                         ),

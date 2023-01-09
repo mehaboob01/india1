@@ -72,7 +72,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                 horizontal: 8,
                                 vertical: 16,
                               ),
-                              child: Text(
+                              child: text(
                                 "Choose one lender from the list",
                                 style: TextStyle(
                                   color: AppColors.lightBlack,
@@ -87,7 +87,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                             .lenders?.length ==
                                         0
                                     ? Center(
-                                        child: Text(
+                                        child: text(
                                           "No Lenders available",
                                           style: TextStyle(
                                             color: AppColors.lightBlack,
@@ -188,7 +188,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                                     CrossAxisAlignment
                                                                         .start,
                                                                 children: [
-                                                                  Text(
+                                                                  text(
                                                                     lenders?[index]
                                                                             .details
                                                                             ?.lender ??
@@ -205,7 +205,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                                               .w600,
                                                                     ),
                                                                   ),
-                                                                  Text(
+                                                                  text(
                                                                     lenders?[index].details?.keywords ==
                                                                             null
                                                                         ? ""
@@ -262,7 +262,7 @@ class _ProvidersListState extends State<ProvidersList> {
                                                         //             color: AppColors
                                                         //                 .lightSkyBlue,
                                                         //           ),
-                                                        //           child: Text(
+                                                        //           child: text(
                                                         //             e ?? '',
                                                         //             style: TextStyle(
                                                         //               color: AppColors
@@ -297,16 +297,16 @@ class _ProvidersListState extends State<ProvidersList> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          LoanCommon().rowText(
+                                                          LoanCommon().rowtext(
                                                             value: 'Max amount',
                                                             title:
                                                                 '₹ ${lenders?[index].details?.loanAmount == null ? "0" : lenders![index].details?.loanAmount}',
                                                           ),
-                                                          LoanCommon().rowText(
+                                                          LoanCommon().rowtext(
                                                               value: 'Tenure',
                                                               title:
                                                                   '${lenders?[index].details?.tenure == null ? "0" : lenders![index].details?.tenure}'),
-                                                          LoanCommon().rowText(
+                                                          LoanCommon().rowtext(
                                                               value:
                                                                   'Interest/m',
                                                               title:

@@ -225,7 +225,7 @@ class _FarmLoanState extends State<FarmLoan> {
             Spacer(),
             Row(
               children: [
-                Text(
+                text(
                   'NEXT',
                   style: AppTextThemes.button,
                 ),
@@ -286,7 +286,7 @@ class _FarmLoanState extends State<FarmLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'BACK',
                     style: AppTextThemes.button,
                   ),
@@ -355,7 +355,7 @@ class _FarmLoanState extends State<FarmLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'NEXT',
                     style: AppTextThemes.button,
                   ),
@@ -435,7 +435,7 @@ class _FarmLoanState extends State<FarmLoan> {
   //           Spacer(),
   //           Row(
   //             children: [
-  //               Text(
+  //               text(
   //                 'NEXT',
   //                 style: AppTextThemes.button,
   //               ),
@@ -496,7 +496,7 @@ class _FarmLoanState extends State<FarmLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'BACK',
                     style: AppTextThemes.button,
                   ),
@@ -577,7 +577,7 @@ class _FarmLoanState extends State<FarmLoan> {
                   Spacer(),
                   Row(
                     children: [
-                      Text(
+                      text(
                         'NEXT',
                         style: AppTextThemes.button,
                       ),
@@ -642,7 +642,7 @@ class _FarmLoanState extends State<FarmLoan> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 'Loan details',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
@@ -658,7 +658,7 @@ class _FarmLoanState extends State<FarmLoan> {
               DividerIO(
                 height: 24,
               ),
-              Text(
+              text(
                 'Choose the product against which you want the loan',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
@@ -707,7 +707,7 @@ class _FarmLoanState extends State<FarmLoan> {
         //           prefixIcon: Column(
         //             mainAxisAlignment: MainAxisAlignment.center,
         //             children: [
-        //               Text("₹", style: TextStyle(color: Colors.black,
+        //               text("₹", style: TextStyle(color: Colors.black,
         //                   fontSize: Dimens.font_16sp,
         //                   fontWeight: FontWeight.w600)),
         //             ],
@@ -749,7 +749,7 @@ class _FarmLoanState extends State<FarmLoan> {
                   (FarmLoanRequirementModel value) {
             return DropdownMenuItem<FarmLoanRequirementModel>(
               value: value,
-              child: Text(value.name.toString()),
+              child: text(value.name.toString()),
             );
           }).toList(),
           onChanged: (value) {
@@ -780,7 +780,7 @@ class _FarmLoanState extends State<FarmLoan> {
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value.toString()),
+                    child: text(value.toString()),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -810,7 +810,7 @@ class _FarmLoanState extends State<FarmLoan> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value.toString()),
+                  child: text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {

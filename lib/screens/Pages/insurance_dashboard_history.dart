@@ -70,7 +70,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    text(
                       "Recent transactions",
                       style: AppStyle.shortHeading.copyWith(
                         color: Color(0xff2d2d2d),
@@ -83,7 +83,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
                         Get.to(() =>
                             InsuranceDashboardHistory(isFromInsurance: false));
                       },
-                      child: Text(
+                      child: text(
                         "History",
                         style: AppStyle.shortHeading.copyWith(
                           color: AppColors.orangeGradient2,
@@ -106,7 +106,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
             ] else ...[
               if (loanController.insuranceRecentTransactionModel.value
                   .recentTransactions!.isEmpty) ...[
-                Text("No recent transaction found")
+                text("No recent transaction found")
               ] else ...[
                 ListView.builder(
                   padding:
@@ -175,7 +175,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  text(
                                     e.title ?? '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -183,7 +183,7 @@ class InsuranceDashboardHistory extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16),
                                   ),
-                                  Text(
+                                  text(
                                     e.type ?? '',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -205,8 +205,8 @@ class InsuranceDashboardHistory extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("₹ ${e.amount ?? 0}", style: _stats),
-                                    Text(
+                                    text("₹ ${e.amount ?? 0}", style: _stats),
+                                    text(
                                       "Amount coveres",
                                       style: _statsTitle,
                                     )
@@ -217,11 +217,11 @@ class InsuranceDashboardHistory extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
+                                    text(
                                       "${e.dateTime != null || e.dateTime != '' ? DateFormat('dd-MMM-yyyy').format(DateTime.parse(e.dateTime.toString())) : ''}",
                                       style: _stats,
                                     ),
-                                    Text(
+                                    text(
                                       "Bought On",
                                       style: _statsTitle,
                                     )
@@ -232,11 +232,11 @@ class InsuranceDashboardHistory extends StatelessWidget {
                               //   child: Column(
                               //     crossAxisAlignment: CrossAxisAlignment.end,
                               //     children: [
-                              //       Text(
+                              //       text(
                               //         e.status ?? '',
                               //         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: loanController.statusTextColor(e.status ?? '')),
                               //       ),
-                              //       Text(
+                              //       text(
                               //         "Status",
                               //         style: _statsTitle,
                               //       )

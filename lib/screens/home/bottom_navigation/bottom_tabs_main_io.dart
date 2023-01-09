@@ -100,7 +100,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -131,7 +131,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -144,7 +144,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -167,7 +167,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    text(
                                       'NEXT',
                                       style: AppTextThemes.labelStyle.apply(
                                         color: Colors.black,
@@ -229,7 +229,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -263,7 +263,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -276,7 +276,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -299,7 +299,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    text(
                                       'NEXT',
                                       style: AppTextThemes.labelStyle.apply(
                                         color: Colors.black,
@@ -362,7 +362,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -387,7 +387,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -400,7 +400,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -427,7 +427,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        text(
                                           'NEXT',
                                           style: AppTextThemes.labelStyle.apply(
                                             color: Colors.black,
@@ -495,7 +495,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -523,7 +523,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -536,7 +536,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -563,7 +563,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        text(
                                           'NEXT',
                                           style: AppTextThemes.labelStyle.apply(
                                             color: Colors.black,
@@ -629,7 +629,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -657,7 +657,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -670,7 +670,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -697,7 +697,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        text(
                                           'NEXT',
                                           style: AppTextThemes.labelStyle.apply(
                                             color: Colors.black,
@@ -759,7 +759,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
       //                   child: Column(
       //                     crossAxisAlignment: CrossAxisAlignment.start,
       //                     children: [
-      //                       Text(
+      //                       text(
       //                         renderInfo.titleText.toUpperCase(),
       //                         style: TextStyle(
       //                           color: Colors.white,
@@ -772,7 +772,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
       //                       const SizedBox(
       //                         height: 30,
       //                       ),
-      //                       Text(
+      //                       text(
       //                         renderInfo.bodyText,
       //                         style: TextStyle(
       //                           color: Colors.white,
@@ -795,7 +795,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
       //                           child: Row(
       //                             mainAxisAlignment: MainAxisAlignment.center,
       //                             children: [
-      //                               Text(
+      //                               text(
       //                                 'NEXT',
       //                                 style: AppTextThemes.labelStyle.apply(
       //                                   color: Colors.black,
@@ -841,7 +841,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
       //                   width: 80,
       //                   child: Row(
       //                     children: [
-      //                       Text(
+      //                       text(
       //                         "Skip",
       //                         style: TextStyle(
       //                           color: Colors.white,
@@ -890,7 +890,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -903,7 +903,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -926,7 +926,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    text(
                                       'NEXT',
                                       style: AppTextThemes.labelStyle.apply(
                                         color: Colors.black,
@@ -972,7 +972,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,
@@ -1021,7 +1021,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            text(
                               renderInfo.titleText.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.white,
@@ -1034,7 +1034,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Text(
+                            text(
                               renderInfo.bodyText,
                               style: TextStyle(
                                 color: Colors.white,
@@ -1057,7 +1057,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    text(
                                       'NEXT',
                                       style: AppTextThemes.labelStyle.apply(
                                         color: Colors.black,
@@ -1100,7 +1100,7 @@ class _BottomTabsMainIOState extends State<BottomTabsMainIO> {
                         width: 80,
                         child: Row(
                           children: [
-                            Text(
+                            text(
                               "Skip",
                               style: TextStyle(
                                 color: Colors.white,

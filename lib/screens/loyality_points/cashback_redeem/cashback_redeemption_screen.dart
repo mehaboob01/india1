@@ -96,7 +96,7 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 2.0.hp),
-                            child: Text(
+                            child: text(
                               'Enter the following details to proceed',
                               style: AppStyle.shortHeading.copyWith(
                                   color: AppColors.black,
@@ -106,7 +106,7 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(bottom: 2.0.hp),
-                            child: Text(
+                            child: text(
                               'Redemption mode',
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: 11.0.sp,
@@ -137,7 +137,7 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                               top: 2.0.hp,
                               bottom: 2.0.hp,
                             ),
-                            child: Text(
+                            child: text(
                               'Choose your points for redemption',
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: 11.0.sp,
@@ -446,7 +446,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                     SizedBox(
                                       height: 4,
                                     ),
-                                    Text('Fetching accounts ...',
+                                    text('Fetching accounts ...',
                                         style: AppStyle.shortHeading.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w400))
@@ -458,7 +458,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                     child: Container(
                                         width: Get.size.width * 0.9,
                                         height: Get.size.height * 0.3,
-                                        child: Center(child: Text("No Plans"))))
+                                        child: Center(child: text("No Plans"))))
                                 : Container(
                                     width: Get.size.width * 0.9,
                                     height: Get.size.height * 0.3,
@@ -539,7 +539,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                   EdgeInsets.symmetric(horizontal: 2.0.wp),
                             ),
                           ),
-                          Text(
+                          text(
                             'or',
                             style: AppStyle.shortHeading.copyWith(
                                 color: const Color(0xff2d2d2d),
@@ -555,7 +555,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         ],
                       ),
                       sizedbox,
-                      Text(
+                      text(
                         'Add account details',
                         style: AppStyle.shortHeading.copyWith(
                             color: const Color(0xff2d2d2d),
@@ -930,7 +930,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                                   EdgeInsets.symmetric(horizontal: 2.0.wp),
                             ),
                           ),
-                          Text(
+                          text(
                             'or',
                             style: AppStyle.shortHeading.copyWith(
                                 color: const Color(0xff2d2d2d),
@@ -946,7 +946,7 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                         ],
                       ),
                       sizedbox,
-                      Text(
+                      text(
                         'Add UPI details',
                         style: AppStyle.shortHeading.copyWith(
                             color: const Color(0xff2d2d2d),

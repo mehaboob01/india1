@@ -84,7 +84,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              text(
                                 widget.upiId ??
                                     'enter your UpiId', //CardModel().upiModel[0]['upiId'],
                                 style: AppStyle.shortHeading.copyWith(
@@ -156,7 +156,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    text(
                                       'Validity : ${widget.rechargePlanValidity} days', //${CardModel().rechargePlanModel[0]['validity'].toString()}
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 12.0.sp,
@@ -173,7 +173,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     ),
                                     CardModel().rechargePlanModel[0]['data'] !=
                                             null
-                                        ? Text(
+                                        ? text(
                                             'Enjoy ${widget.rechargePlanData} data', //${CardModel().rechargePlanModel[0]['data']}
                                             style:
                                                 AppStyle.shortHeading.copyWith(
@@ -185,7 +185,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                           )
                                         : Row(
                                             children: [
-                                              Text(
+                                              text(
                                                 'Talktime : ',
                                                 style: AppStyle.shortHeading
                                                     .copyWith(
@@ -222,7 +222,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 4.0.wp),
-                                child: Text(
+                                child: text(
                                   '+91 ${widget.rechargeDonePhoneNumber}', //${CardModel().rechargeDoneModel[0]['number']}
                                   style: AppStyle.shortHeading.copyWith(
                                     fontSize: 16.0.sp,
@@ -237,7 +237,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               IntrinsicHeight(
                                 child: Row(
                                   children: [
-                                    Text(
+                                    text(
                                       '${widget.rechargeDoneSim}', //${CardModel().rechargeDoneModel[0]['sim']}
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 14.0.sp,
@@ -251,7 +251,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                         isvertical: true,
                                         verticalPadding: EdgeInsets.zero),
                                     SizedBox(width: 4.0.wp),
-                                    Text(
+                                    text(
                                       'Karnataka',
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 14.0.sp,
@@ -265,7 +265,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               ),
                               SizedBox(height: 4.0.hp),
                               Row(children: [
-                                Text(
+                                text(
                                   'Redeemed ',
                                   style: AppStyle.shortHeading.copyWith(
                                     fontSize: 12.0.sp,
@@ -286,7 +286,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     label:
                                         '${widget.rechargeDoneRedeemedValue}' // '${CardModel().rechargeDoneModel[0]['redeemed']}',
                                     ),
-                                Text(
+                                text(
                                   ' on ${widget.rechargeDoneRedeemedDate}', //${CardModel().rechargeDoneModel[0]['date']}
                                   style: AppStyle.shortHeading.copyWith(
                                     fontSize: 12.0.sp,
@@ -308,7 +308,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(right: 4.0.wp),
-                                child: Text(
+                                child: text(
                                   '${widget.bankAccountName}', //'${CardModel().accountModel[0]['name']}',
                                   style: AppStyle.shortHeading.copyWith(
                                     fontSize: Dimens.font_18sp,
@@ -323,7 +323,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               // account number row ------------------
                               Row(
                                 children: [
-                                  Text(
+                                  text(
                                     'Account Number :',
                                     style: AppStyle.shortHeading.copyWith(
                                       fontSize: 12.0.sp,
@@ -334,9 +334,9 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                   ),
                                   SizedBox(width: 2.0.wp),
                                   Expanded(
-                                    child: Text(
+                                    child: text(
                                       // '${widget.bankAccountNumber}', //'${CardModel().accountModel[0]['accountNumber']}',
-                                        CommonMethods().textMask(
+                                      CommonMethods().textMask(
                                           '${widget.bankAccountNumber}'),
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 12.0.sp,
@@ -353,7 +353,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               SizedBox(height: 2.0.hp),
                               Row(
                                 children: [
-                                  Text(
+                                  text(
                                     'IFSC code :',
                                     style: AppStyle.shortHeading.copyWith(
                                       fontSize: 12.0.sp,
@@ -363,7 +363,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     ),
                                   ),
                                   SizedBox(width: 2.0.wp),
-                                  Text(
+                                  text(
                                     '${widget.bankAccountIFSC}', //'${CardModel().accountModel[0]['IFSC']}',
                                     style: AppStyle.shortHeading.copyWith(
                                       fontSize: 12.0.sp,
@@ -379,7 +379,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                               SizedBox(height: 2.0.hp),
                               Row(
                                 children: [
-                                  Text(
+                                  text(
                                     'Account type :',
                                     style: AppStyle.shortHeading.copyWith(
                                       fontSize: 12.0.sp,
@@ -389,7 +389,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                     ),
                                   ),
                                   SizedBox(width: 2.0.wp),
-                                  Text(
+                                  text(
                                     '${widget.bankAccountType}', //'${CardModel().accountModel[0]['type']}',
                                     style: AppStyle.shortHeading.copyWith(
                                       fontSize: 12.0.sp,
@@ -452,7 +452,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                   //     color: isSelected ? Colors.white : null,
                   //   ),
                   // ),
-                  // Text(
+                  // text(
                   //   label,
                   //   style: AppStyle.shortHeading.copyWith(
                   //     fontSize: 12.0.sp,
@@ -527,7 +527,7 @@ class CommonButton extends StatelessWidget {
                 : null,
             borderRadius: BorderRadius.circular(2.0.wp)),
         child: Center(
-          child: Text(
+          child: text(
             isdelete ? 'Delete' : 'Edit',
             style: AppStyle.shortHeading.copyWith(
               fontSize: 12.0.sp,

@@ -167,7 +167,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                         CrossAxisAlignment.start,
                                     children: [
                                       _otpManager.resendOtpLoading == true
-                                          ? Text(
+                                          ? text(
                                               "Resending OTP",
                                               maxLines: 2,
                                               style: TextStyle(
@@ -180,7 +180,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                           : _otpManager.isLoading == true
                                               ? Row(
                                                   children: [
-                                                    Text(
+                                                    text(
                                                       "Verifying..",
                                                       maxLines: 2,
                                                       style: TextStyle(
@@ -206,7 +206,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                                         ))
                                                   ],
                                                 )
-                                              : Text(
+                                              : text(
                                                   "enter_otp".tr,
                                                   maxLines: 2,
                                                   style: TextStyle(
@@ -224,7 +224,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           children: [
-                                            Text(
+                                            text(
                                               "otp_message".tr,
                                               style: TextStyle(
                                                 fontFamily: AppFonts.appFont,
@@ -236,7 +236,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             SizedBox(
                                               width: 6,
                                             ),
-                                            Text(
+                                            text(
                                               widget.phoneNumber.toString(),
                                               style: TextStyle(
                                                 fontFamily: AppFonts.appFont,
@@ -314,9 +314,9 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                             visible: _otpManager.wrongOtp.value == true
                                 ? true
                                 : false,
-                            child: Text(
+                            child: text(
                               "invalid_otp".tr,
-                              overflow: TextOverflow.visible,
+                              textOverflow: TextOverflow.visible,
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppFonts.appFont,
@@ -344,7 +344,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                 _otpManager.wrongOtp.value = false;
                                 Get.offAllNamed(MRouter.userLogin);
                               },
-                              child: Text(
+                              child: text(
                                 "edit_number".tr,
                                 style: TextStyle(
                                   fontFamily: AppFonts.appFont,
@@ -391,7 +391,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                       },
                                       child: Row(
                                         children: [
-                                          Text(
+                                          text(
                                             'resend_otp'.tr,
                                             style: TextStyle(
                                               fontFamily: AppFonts.appFont,
@@ -409,7 +409,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                             visible: currentSeconds == 0
                                                 ? false
                                                 : true,
-                                            child: Text(
+                                            child: text(
                                               'in'.tr,
                                               style: TextStyle(
                                                 fontFamily: AppFonts.appFont,
@@ -432,7 +432,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                               child: Center(
                                                 child: Padding(
                                                   padding: EdgeInsets.all(2),
-                                                  child: Text(
+                                                  child: text(
                                                     "00:" +
                                                         currentSeconds
                                                             .toString(),
@@ -456,7 +456,7 @@ class _OtpState extends State<OtpScreen> with CodeAutoFill {
                                     )
                                   : Row(
                                       children: [
-                                        Text(
+                                        text(
                                           'sending_otp'.tr,
                                           style: TextStyle(
                                             fontFamily: AppFonts.appFont,

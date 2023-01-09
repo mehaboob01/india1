@@ -175,7 +175,7 @@ class CommonPageHeader extends StatelessWidget {
   //           borderRadius: BorderRadius.circular(5)),
   //       child: text != null
   //           ? Center(
-  //           child: Text(
+  //           child: text(
   //             text,
   //             style: const TextStyle(fontWeight: FontWeight.bold),
   //           ))
@@ -217,7 +217,7 @@ class CommonPageHeader extends StatelessWidget {
         //               notificationManager.notificationsCount.length.toInt() !=
         //                   0,
         //           badgeContent: Container(
-        //             child: Text(
+        //             child: text(
         //               "",
         //               style: TextStyle(color: Colors.white),
         //             ),
@@ -255,7 +255,7 @@ class CommonPageHeader extends StatelessWidget {
         //                   child: Container(
         //                     height: Get.height * 0.03,
         //                     width: double.infinity,
-        //                     child: Text(
+        //                     child: text(
         //                       "My Profile",
         //                       style: AppStyle.shortHeading.copyWith(
         //                           fontSize: Dimens.font_14sp,
@@ -281,7 +281,7 @@ class CommonPageHeader extends StatelessWidget {
         //                     child: Container(
         //                       height: Get.height * 0.03,
         //                       width: double.infinity,
-        //                       child: Text(
+        //                       child: text(
         //                         "My Rewards",
         //                         style: AppStyle.shortHeading.copyWith(
         //                             fontSize: Dimens.font_14sp,
@@ -358,7 +358,7 @@ class CommonPageHeader extends StatelessWidget {
                                     BadgePosition.topEnd(top: -10, end: 0),
                                 badgeColor: Colors.red,
                                 badgeContent: Container(
-                                  child: Text(
+                                  child: text(
                                     "",
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -398,7 +398,7 @@ class CommonPageHeader extends StatelessWidget {
                                   child: Container(
                                     height: Get.height * 0.03,
                                     width: double.infinity,
-                                    child: Text(
+                                    child: text(
                                       "My Profile",
                                       style: AppStyle.shortHeading.copyWith(
                                           fontSize: Dimens.font_14sp,
@@ -423,7 +423,7 @@ class CommonPageHeader extends StatelessWidget {
                                     child: Container(
                                       height: Get.height * 0.02,
                                       width: double.infinity,
-                                      child: Text(
+                                      child: text(
                                         "My Rewards",
                                         style: AppStyle.shortHeading.copyWith(
                                             fontSize: Dimens.font_14sp,
@@ -465,7 +465,7 @@ class CommonPageHeader extends StatelessWidget {
                 ],
               ),
             ),
-            // Text(headerName(pageName),
+            // text(headerName(pageName),
             //     style: AppStyle.shortHeading.copyWith(
             //         color: Colors.white,
             //         fontWeight: FontWeight.w600,
@@ -487,7 +487,7 @@ class CommonPageHeader extends StatelessWidget {
                               SizedBox(height: 2.0.hp),
                               Padding(
                                 padding: EdgeInsets.only(right: 2.0.wp),
-                                child: Text(headerHeaderName(pageName),
+                                child: text(headerHeaderName(pageName),
                                     style: AppStyle.shortHeading.copyWith(
                                         color: Colors.white,
                                         fontSize: 14.0.sp,
@@ -495,7 +495,7 @@ class CommonPageHeader extends StatelessWidget {
                                         fontWeight: FontWeight.w600)),
                               ),
                               SizedBox(height: 2.0.hp),
-                              Text(indiaOneTitle(pageName),
+                              text(indiaOneTitle(pageName),
                                   style: AppStyle.shortHeading.copyWith(
                                       color: const Color(0xffFFEF37),
                                       fontSize: 16.0.sp,
@@ -570,7 +570,7 @@ class CommonPageCategoriesHeading extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
           top: 4.0.hp, bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-      child: Text(categoreisTitle(pageName).tr,
+      child: text(categoreisTitle(pageName).tr,
           style: AppStyle.shortHeading.copyWith(
               color: AppColors.blackColor,
               fontSize: Dimens.font_20sp,

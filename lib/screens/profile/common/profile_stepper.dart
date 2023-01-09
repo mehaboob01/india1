@@ -65,7 +65,7 @@ class ProfileStepper {
           ? null
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
+              child: text(
                 prefix,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -160,7 +160,7 @@ class ProfileStepper {
       items: item,
       onChanged: onChanged,
       value: value,
-      hint: Text(hint),
+      hint: text(hint),
       icon: Icon(
         Icons.keyboard_arrow_down_rounded,
         color: AppColors.greyInlineText,
@@ -190,7 +190,7 @@ class ProfileStepper {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Personal Details",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -341,7 +341,7 @@ class ProfileStepper {
                 height: 20,
               ),
               if (loanType != LoanType.FarmLoan) ...[
-                Text(
+                text(
                   "Gender",
                   style: TextStyle(
                     color: AppColors.lightBlack,
@@ -395,7 +395,7 @@ class ProfileStepper {
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value.toString()),
+                      child: text(value.toString()),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -468,7 +468,7 @@ class ProfileStepper {
             groupValue: groupValue,
             onChanged: (value) => callBack(value),
           ),
-          Text(value),
+          text(value),
           SizedBox(
             width: 12,
           )
@@ -492,7 +492,7 @@ class ProfileStepper {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Residential Address",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -610,7 +610,7 @@ class ProfileStepper {
       width: Get.width,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 16, right: 8),
-      child: Text(
+      child: text(
         value == null || value == '' ? title : value,
         style: TextStyle(
           fontWeight: FontWeight.w600,
@@ -641,7 +641,7 @@ class ProfileStepper {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Occupation",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -664,7 +664,7 @@ class ProfileStepper {
                 ].map((value) {
                   return DropdownMenuItem(
                     value: value['value'],
-                    child: Text(value['name'].toString()),
+                    child: text(value['name'].toString()),
                   );
                 }).toList(),
                 value: profileController.employmentType.value.isEmpty ||
@@ -717,7 +717,7 @@ class ProfileStepper {
                     ].map((value) {
                       return DropdownMenuItem(
                         value: value['value'],
-                        child: Text(value['name'].toString()),
+                        child: text(value['name'].toString()),
                       );
                     }).toList(),
                     value: profileController.accountType.value.isEmpty ||
@@ -738,7 +738,7 @@ class ProfileStepper {
                   //         .map<DropdownMenuItem<String>>((String value) {
                   //       return DropdownMenuItem<String>(
                   //         value: value,
-                  //         child: Text(value.toString()),
+                  //         child: text(value.toString()),
                   //       );
                   //     }).toList(),
                   //     value: profileController.accountType.value.isEmpty
@@ -837,7 +837,7 @@ class ProfileStepper {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Nominee",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -874,7 +874,7 @@ class ProfileStepper {
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value.toString()),
+                    child: text(value.toString()),
                   );
                 }).toList(),
                 value: profileController.nomineeRelationship.value == ''
@@ -941,7 +941,7 @@ class ProfileStepper {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Proposed member's health",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -951,7 +951,7 @@ class ProfileStepper {
               SizedBox(
                 height: Get.height * 0.03,
               ),
-              Text(
+              text(
                 "Do the proposed member to be insured suffer from below listed issues?",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -969,7 +969,7 @@ class ProfileStepper {
                 width: double.maxFinite,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
-                  child: Text(
+                  child: text(
                     """
 Diabetes, Hypertension, Thyroid Disorder, Nervous 
 disorder, fits, mental condition, heart & circulatory disorder, Respiratory disorder, Disorders of stomach including intestine, Kidney stones, Prostrate disorder, Disorder of spine and joints, Tumours or cancer, Ever reported positive for hepatitis B, HIV / AIDS or other sexually transmitted disease or is pregnant at the time of application
@@ -991,7 +991,7 @@ data""",
               SizedBox(
                 height: Get.height * 0.01,
               ),*/
-              Text(
+              text(
                 "Do any of the proposed members to be insured suffer from any  pre-existing diseases?",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -1008,7 +1008,7 @@ data""",
                 width: double.maxFinite,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
-                  child: Text(
+                  child: text(
                     """
 Please choose “Yes” in case any of the proposed person to be insured has been / are under any continuous medication for treatment for any illness (Excluding vitamins, supplements) or under treatment for any illness.""",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
@@ -1061,7 +1061,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 "Additional Information",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -1097,7 +1097,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                 ].map((value) {
                   return DropdownMenuItem(
                     value: value['value'],
-                    child: Text(value['name'].toString()),
+                    child: text(value['name'].toString()),
                   );
                 }).toList(),
                 value: profileController
@@ -1189,7 +1189,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   SizedBox(
                     width: Get.width * 0.1,
                   ),
-                  Text(
+                  text(
                     "Do you use Netbanking?",
                     style: TextStyle(
                       color: Color(0xFF999999),
@@ -1233,7 +1233,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   SizedBox(
                     width: Get.width * 0.1,
                   ),
-                  Text(
+                  text(
                     "Do you have any existing loan?",
                     style: TextStyle(
                       color: Color(0xFF999999),

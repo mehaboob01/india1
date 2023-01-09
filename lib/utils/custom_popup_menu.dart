@@ -183,7 +183,7 @@ class _RenderMenuItem extends RenderShiftedBox {
 /// ```dart
 /// const CustomPopupMenuItem<WhyFarther>(
 ///   value: WhyFarther.harder,
-///   child: Text('Working a lot harder'),
+///   child: text('Working a lot harder'),
 /// )
 /// ```
 /// {@end-tool}
@@ -410,12 +410,12 @@ class CustomCustomPopupMenuItemState<T, W extends CustomPopupMenuItem<T>>
 ///     CheckedCustomPopupMenuItem<Commands>(
 ///       checked: _heroAndScholar,
 ///       value: Commands.heroAndScholar,
-///       child: const Text('Hero and scholar'),
+///       child: const text('Hero and scholar'),
 ///     ),
 ///     const CustomPopupMenuDivider(),
 ///     const CustomPopupMenuItem<Commands>(
 ///       value: Commands.hurricaneCame,
-///       child: ListTile(leading: Icon(null), title: Text('Bring hurricane')),
+///       child: ListTile(leading: Icon(null), title: text('Bring hurricane')),
 ///     ),
 ///     // ...other items listed here
 ///   ],
@@ -963,19 +963,19 @@ typedef CustomCustomPopupMenuItemBuilder<T> = List<CustomPopupMenuEntry<T>>
 ///   itemBuilder: (BuildContext context) => <CustomPopupMenuEntry<WhyFarther>>[
 ///     const CustomPopupMenuItem<WhyFarther>(
 ///       value: WhyFarther.harder,
-///       child: Text('Working a lot harder'),
+///       child: text('Working a lot harder'),
 ///     ),
 ///     const CustomPopupMenuItem<WhyFarther>(
 ///       value: WhyFarther.smarter,
-///       child: Text('Being a lot smarter'),
+///       child: text('Being a lot smarter'),
 ///     ),
 ///     const CustomPopupMenuItem<WhyFarther>(
 ///       value: WhyFarther.selfStarter,
-///       child: Text('Being a self-starter'),
+///       child: text('Being a self-starter'),
 ///     ),
 ///     const CustomPopupMenuItem<WhyFarther>(
 ///       value: WhyFarther.tradingCharter,
-///       child: Text('Placed in charge of trading charter'),
+///       child: text('Placed in charge of trading charter'),
 ///     ),
 ///   ],
 /// )

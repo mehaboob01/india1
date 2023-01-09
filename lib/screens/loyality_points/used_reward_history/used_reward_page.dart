@@ -35,7 +35,7 @@ class UsedRewardHistory extends StatelessWidget {
                         ? Center(child: CircularProgressIndicator())
                         : _usedPointsController.usedpointsList.isEmpty
                             ? Center(
-                                child: Text('You have not Redeemed Any Points'),
+                                child: text('You have not Redeemed Any Points'),
                               )
                             : SingleChildScrollView(
                                 child: Column(
@@ -75,7 +75,7 @@ class UsedRewardHistory extends StatelessWidget {
                                     //                   MainAxisAlignment
                                     //                       .spaceBetween,
                                     //               children: [
-                                    //                 Text(
+                                    //                 text(
                                     //                   'All transactions',
                                     //                   style: AppStyle.shortHeading
                                     //                       .copyWith(
@@ -118,7 +118,7 @@ class UsedRewardHistory extends StatelessWidget {
                                     //                   MainAxisAlignment
                                     //                       .spaceBetween,
                                     //               children: [
-                                    //                 Text(
+                                    //                 text(
                                     //                   'All time',
                                     //                   style: AppStyle.shortHeading
                                     //                       .copyWith(
@@ -139,7 +139,7 @@ class UsedRewardHistory extends StatelessWidget {
                                     //     ],
                                     //   ),
                                     // ),
-                                    Text(
+                                    text(
                                       'View used points',
                                       style: AppStyle.shortHeading.copyWith(
                                           color: const Color(0xff2d2d2d),

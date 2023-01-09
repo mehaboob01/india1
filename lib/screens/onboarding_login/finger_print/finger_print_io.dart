@@ -66,18 +66,18 @@
 //                 child: Column(
 //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //                   children: [
-//                     const Text(
+//                     const text(
 //                       "India1 Authentication",
 //                       style: TextStyle(
 //                           fontSize: 21,
 //                           fontWeight: FontWeight.bold,
 //                           color: Colors.blue),
 //                     ),
-//                     const Text(
+//                     const text(
 //                       "Please login to access",
 //                       style: TextStyle(fontSize: 18),
 //                     ),
-//                     const Text(
+//                     const text(
 //                       "India1 is using biometrics to authenticate",
 //                       style: TextStyle(fontSize: 14, color: Colors.deepPurple),
 //                     ),
@@ -95,7 +95,7 @@
 //                                 verified;
 //                               });
 //                             },
-//                             child: const Text(
+//                             child: const text(
 //                               "Finger print doesn't match. Click here to try again.",
 //                               style: TextStyle(
 //                                   fontSize: 12,
@@ -114,7 +114,7 @@
 //                                 builder: (context) => UseAppPasswordIO()),
 //                           );
 //                         },
-//                         child: const Text(
+//                         child: const text(
 //                           "Use app password",
 //                           style: TextStyle(
 //                               fontSize: 14,

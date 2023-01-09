@@ -446,7 +446,7 @@ class ProfileController extends GetxController {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Text(
+              child: text(
                 'Select Image mode',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -456,7 +456,7 @@ class ProfileController extends GetxController {
               ),
             ),
             ListTile(
-              title: Text('Camera'),
+              title: text('Camera'),
               leading: Icon(Icons.camera_alt_outlined),
               onTap: () async {
                 _handleCameraPermissions();
@@ -464,7 +464,7 @@ class ProfileController extends GetxController {
             ),
             Divider(),
             ListTile(
-              title: Text('Gallery'),
+              title: text('Gallery'),
               leading: Icon(Icons.photo_size_select_actual_outlined),
               onTap: () async {
                 _handleMediaPermissions();

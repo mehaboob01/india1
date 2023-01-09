@@ -97,14 +97,14 @@ class _YourRewardCardState extends State<YourRewardCard>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(height: 2),
-                          Text(
+                          text(
                             'You just won',
                             style: TextStyle(
                                 fontSize: 12.0.sp,
                                 fontFamily: AppFonts.appFont,
                                 color: Colors.black),
                           ),
-                          Text(
+                          text(
                             '${widget.points} Points',
                             style: TextStyle(
                                 fontFamily: AppFonts.appFont,
@@ -137,7 +137,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                             ),
                           ])),
                           SizedBox(height: 1.0.wp),
-                          Text(
+                          text(
                             'Use by ${widget.date}',
                             style: TextStyle(
                                 fontSize: 12.0.sp,
@@ -186,7 +186,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                                 children: [
                                   Align(
                                     alignment: Alignment.center,
-                                    child: Text(
+                                    child: text(
                                       'Redeem Now',
                                       style: AppStyle.shortHeading.copyWith(
                                           fontSize: 14.0.sp,
@@ -278,7 +278,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    text(
                       'You just won!',
                       style: TextStyle(
                           fontSize: 10.0.sp,
@@ -288,7 +288,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                               : Colors.black),
                     ),
                     SizedBox(height: 1.0.wp),
-                    Text(
+                    text(
                       '${widget.points} Points',
                       style: TextStyle(
                           fontFamily: AppFonts.appFont,
@@ -307,7 +307,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                     children: [
                       getRewardType(widget.rewardtype, isOverlay),
                       SizedBox(height: 1.0.wp),
-                      Text(
+                      text(
                         'Use by ${widget.date}',
                         style: TextStyle(
                             fontSize: 10.0.sp,
@@ -395,7 +395,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      text(
                         rewardState == RewardState.won
                             ? 'You just won!'
                             : 'You won!',
@@ -407,7 +407,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                                 : Colors.black),
                       ),
                       SizedBox(height: 1.0.wp),
-                      Text(
+                      text(
                         '$points Points',
                         style: TextStyle(
                             fontFamily: AppFonts.appFont,
@@ -432,7 +432,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                         SizedBox(height: 1.0.wp),
                         isOverlay == true
                             ? SizedBox.shrink()
-                            : Text(
+                            : text(
                                 rewardState == RewardState.won ||
                                         rewardState == RewardState.used
                                     ? 'Use by $date'
@@ -485,7 +485,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                   ? const Color(0xfff0f0f0)
                   : const Color(0xffdedede)),
       padding: const EdgeInsets.all(5.0),
-      child: Text(
+      child: text(
         rewardtype,
         style: TextStyle(
             fontFamily: AppFonts.appFont,

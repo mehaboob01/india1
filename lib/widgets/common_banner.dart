@@ -106,7 +106,7 @@ class CommonBanner extends StatelessWidget {
                         ? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Refer Now',
+                              text('Refer Now',
                                   style: AppStyle.shortHeading.copyWith(
                                       color: AppColors.yellowgradient1,
                                       fontWeight: FontWeight.w600,

@@ -166,7 +166,7 @@ class _UserLoginState extends State<UserLogin> {
                                 left: 12.0,
                                 right: 12.0,
                               ),
-                              child: Text(
+                              child: text(
                                 'mobile_number'.tr,
                                 maxLines: 2,
                                 style: TextStyle(
@@ -213,7 +213,7 @@ class _UserLoginState extends State<UserLogin> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
+                                    child: text(
                                       '+91 ',
                                       style: TextStyle(
                                           letterSpacing: 3,
@@ -357,7 +357,7 @@ class _UserLoginState extends State<UserLogin> {
                       //     SizedBox(
                       //       width: 4,
                       //     ),
-                      //     Text(
+                      //     text(
                       //       "i_accept".tr +
                       //           "Terms and conditions" +
                       //           "Privacy Policy",
@@ -397,7 +397,7 @@ class _UserLoginState extends State<UserLogin> {
                       //           Tnc_IO(_loginManager.termCondition,"term_condition")),
                       //                   //     );
                       //                   //   },
-                      //                   //   child: Text(
+                      //                   //   child: text(
                       //                   //     "term_condition".tr,
                       //                   //     maxLines: 1,
                       //                   //     style: TextStyle(
@@ -458,9 +458,9 @@ class _UserLoginState extends State<UserLogin> {
                             Visibility(
                               visible: alertTextShow == true ? true : false,
                               child: Expanded(
-                                child: Text(
+                                child: text(
                                   'checkbox_select_error'.tr,
-                                  overflow: TextOverflow.visible,
+                                  textOverflow: TextOverflow.visible,
                                   maxLines: 2,
                                   style: TextStyle(
                                     overflow: TextOverflow.visible,
@@ -594,7 +594,7 @@ class _UserLoginState extends State<UserLogin> {
                               Spacer(),
                               Row(
                                 children: [
-                                  Text(
+                                  text(
                                     'sending_otp'.tr,
                                     style: AppTextThemes.button,
                                   ),

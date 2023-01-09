@@ -196,7 +196,7 @@ class _MapsState extends State<Maps> {
                           child: Container(
                             decoration: BoxDecoration(color: Colors.white),
                             child: ListTile(
-                              title: Text(mapManager.placeList.value[index]
+                              title: text(mapManager.placeList.value[index]
                                   ["description"]),
                             ),
                           ),
@@ -324,7 +324,7 @@ class AtmDetailsCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                           atmName.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -336,7 +336,7 @@ class AtmDetailsCard extends StatelessWidget {
                           height: Get.height * 0.005,
                         ),
 
-                        //   Text(, softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
+                        //   text(, softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
                       ],
                     ),
                   ),
@@ -372,9 +372,9 @@ class AtmDetailsCard extends StatelessWidget {
                                   color: Color(0xFFF2642C),
                                 ),
                                 Expanded(
-                                  child: Text(
+                                  child: text(
                                     "Directions",
-                                    overflow: TextOverflow.ellipsis,
+                                  textOverflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(
                                         // color: mapManager.mapCoordinateList[index]
@@ -399,11 +399,11 @@ class AtmDetailsCard extends StatelessWidget {
                         Row(
                           children: [
                             Spacer(),
-                            Text(
+                            text(
                               (int.parse(distance.toString()) / 1000)
                                       .toStringAsFixed(1) +
                                   " Kms",
-                              overflow: TextOverflow.ellipsis,
+                              textOverflow: TextOverflow.ellipsis,
                               maxLines: 4,
                               style: TextStyle(
                                 overflow: TextOverflow.visible,

@@ -99,7 +99,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                     right: 12.0,
                   ),
                   child: Center(
-                    child: Text(
+                    child: text(
                       'select_prefer_lan'.tr,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -369,7 +369,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                       children: [
                         Spacer(),
                         Center(
-                          child: Text(
+                          child: text(
                             'proceed_btn'.tr,
                             style: AppTextThemes.button,
                           ),

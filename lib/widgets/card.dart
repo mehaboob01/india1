@@ -48,7 +48,7 @@ class ItemCard extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Text(
+              child: text(
                 label.tr,
                 style: AppStyle.shortHeading.copyWith(
                     color: AppColors.black,
@@ -56,7 +56,7 @@ class ItemCard extends StatelessWidget {
                     fontWeight: FontWeight.w400),
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+                textOverflow: TextOverflow.ellipsis,
               ),
             ),
           ],

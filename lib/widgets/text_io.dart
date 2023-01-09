@@ -29,7 +29,7 @@ class _TextIOState extends State<TextIO> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(widget.padding),
-      child: AutoSizeText(
+      child: text(
         widget.text,
         style: TextStyle(
             fontSize: widget.size,

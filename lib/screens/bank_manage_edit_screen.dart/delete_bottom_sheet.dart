@@ -35,7 +35,7 @@ class CommonDeleteBottomSheet {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                text(
                   'Do you want to delete account?',
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
@@ -43,7 +43,7 @@ class CommonDeleteBottomSheet {
                       fontWeight: FontWeight.w600),
                 ),
                 const Spacer(),
-                Text(
+                text(
                   'Once you delete the account details, it cannot be used to redeem the points. This cannot be reversed.',
                   style: AppStyle.shortHeading.copyWith(
                     color: const Color(0xff2d2d2d),
@@ -106,7 +106,7 @@ class CommonDeleteBottomSheet {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                text(
                   'Do you want to delete account?',
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
@@ -114,7 +114,7 @@ class CommonDeleteBottomSheet {
                       fontWeight: FontWeight.w600),
                 ),
                 const Spacer(),
-                Text(
+                text(
                   'Once you delete the account details, it cannot be used to redeem the points. This cannot be reversed.',
                   style: AppStyle.shortHeading.copyWith(
                     color: const Color(0xff2d2d2d),
@@ -177,7 +177,7 @@ class CommonDeleteBottomSheet {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                text(
                   'Do you want to delete Upi?',
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
@@ -185,7 +185,7 @@ class CommonDeleteBottomSheet {
                       fontWeight: FontWeight.w600),
                 ),
                 const Spacer(),
-                Text(
+                text(
                   'Once you delete the upi details, it cannot be used to redeem the points. This cannot be reversed.',
                   style: AppStyle.shortHeading.copyWith(
                     color: const Color(0xff2d2d2d),
