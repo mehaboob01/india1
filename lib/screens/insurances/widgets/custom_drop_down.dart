@@ -25,7 +25,7 @@ class CustomDropDown extends StatelessWidget {
       items: item,
       onChanged: onChanged,
       value: value,
-      hint: Text(hint, style: TextStyle(color: AppColors.white)),
+      hint: text(hint, style: TextStyle(color: AppColors.white)),
       icon: Icon(
         Icons.keyboard_arrow_down,
         color: Colors.white,
@@ -68,7 +68,7 @@ class CustomDropDown extends StatelessWidget {
           ? null
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
+              child: text(
                 prefix,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,

@@ -59,7 +59,7 @@ class _LendersListState extends State<LendersListOthers> {
                         horizontal: 8,
                         vertical: 16,
                       ),
-                      child: Text(
+                      child: text(
                         "Select the lender to proceed",
                         style: TextStyle(
                           color: AppColors.lightBlack,
@@ -76,7 +76,7 @@ class _LendersListState extends State<LendersListOthers> {
                                 loanController
                                         .loanLenderOthersModel.value.lenders ==
                                     [])
-                            ? Center(child: Text("No lenders found"))
+                            ? Center(child: text("No lenders found"))
                             : ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: isPersonalLoan
@@ -99,7 +99,6 @@ class _LendersListState extends State<LendersListOthers> {
                                           "Redirect") {
                                         Get.to(
                                           () => ProviderDetail(
-                                            
                                             title:
                                                 '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
                                             lenders: loanController

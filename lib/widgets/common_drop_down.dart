@@ -6,15 +6,15 @@ import '../constant/theme_manager.dart';
 class DropDown extends StatefulWidget {
   DropDown(
       {required this.data,
-        Key? key,
-        required this.validationText,
-        required this.formName,
-        required this.labelName,
-        required this.hintText,
-        this.initialValue,
-        required this.onChanged,
-        this.isDropDownEnabled,
-         this.onTapped})
+      Key? key,
+      required this.validationText,
+      required this.formName,
+      required this.labelName,
+      required this.hintText,
+      this.initialValue,
+      required this.onChanged,
+      this.isDropDownEnabled,
+      this.onTapped})
       : super(key: key);
   final List<String> data;
   final String validationText;
@@ -53,7 +53,7 @@ class _DropDownState extends State<DropDown> {
               fontWeight: FontWeight.w400,
               fontSize: 12.0.sp),
           contentPadding:
-          EdgeInsets.symmetric(vertical: 1.0.hp, horizontal: 4.0.wp),
+              EdgeInsets.symmetric(vertical: 1.0.hp, horizontal: 4.0.wp),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0.wp),
               borderSide: BorderSide(
@@ -76,7 +76,7 @@ class _DropDownState extends State<DropDown> {
       items: widget.data.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(
+          child: text(
             value,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.black,

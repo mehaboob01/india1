@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -27,7 +26,7 @@ class LoanCommon {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          text(
             'Back',
             style: AppTextThemes.button,
           ),
@@ -51,7 +50,7 @@ class LoanCommon {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            text(
               'Next',
               style: AppTextThemes.button,
             ),
@@ -78,7 +77,7 @@ class LoanCommon {
           Spacer(),
           Row(
             children: [
-              Text(
+              text(
                 '$title',
                 style: AppTextThemes.button,
               ),
@@ -184,7 +183,7 @@ class LoanCommon {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          text(
                             (isPersonalLoan == true
                                     ? (providers?.name ?? '')
                                     : lenders?.loanTitle.toString()) ??
@@ -195,7 +194,7 @@ class LoanCommon {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Text(
+                          text(
                             (isPersonalLoan == true
                                     ? providers?.subTitle
                                     : (lenders?.loanType ?? '')) ??
@@ -378,7 +377,7 @@ class LoanCommon {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-          child: Text(
+          child: text(
             "$title",
             style: TextStyle(
               color: AppColors.lightBlack,
@@ -433,7 +432,7 @@ class LoanCommon {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: text(
                   "Do you want to proceed?",
                   style: TextStyle(
                     color: AppColors.lightBlack,
@@ -447,7 +446,7 @@ class LoanCommon {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: text(
                   "Please verify all the details provided. Once it is submitted, you will not be allowed to change the details.",
                   style: TextStyle(
                     color: AppColors.lightBlack,
@@ -481,7 +480,7 @@ class LoanCommon {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        child: Text(
+        child: text(
           '$title',
           style: AppTextThemes.button,
           textAlign: TextAlign.center,
@@ -519,7 +518,7 @@ class LoanCommon {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        child: Text(
+        child: text(
           '$title',
           style: TextStyle(
             fontSize: Dimens.font_16sp,

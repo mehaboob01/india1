@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_ui.dart';
 import 'package:india_one/screens/loyality_points/used_reward_history/used_reward_page.dart';
 import 'package:india_one/screens/notification/notification_screen.dart';
@@ -187,7 +188,7 @@ class NoRouteScreen extends StatelessWidget {
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Center(child: Text('${'no_route_defined'} "$screenName"')),
+          body: Center(child: text('${'no_route_defined'} "$screenName"')),
         ),
       ),
     );

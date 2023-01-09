@@ -145,7 +145,7 @@ class EditAccountsCard extends StatelessWidget {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
+                                                    text(
                                                       "Your account",
                                                       style: AppStyle
                                                           .shortHeading
@@ -187,7 +187,7 @@ class EditAccountsCard extends StatelessWidget {
                                                                   //  cashBackManager.fetchCustomerBankAccounts();
                                                                 });
                                                       },
-                                                      child: Text(
+                                                      child: text(
                                                         "Delete account",
                                                         style: AppStyle
                                                             .shortHeading
@@ -243,7 +243,7 @@ class EditAccountsCard extends StatelessWidget {
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontSize: 11.0.sp),
-                                                      label: Text(
+                                                      label: text(
                                                         "Account Number", //'Points for cashback', // dynamic
                                                       ),
                                                       floatingLabelBehavior:
@@ -295,7 +295,7 @@ class EditAccountsCard extends StatelessWidget {
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontSize: 11.0.sp),
-                                                      label: Text(
+                                                      label: text(
                                                         "IFSC Code", //'Points for cashback', // dynamic
                                                       ),
                                                       floatingLabelBehavior:
@@ -376,7 +376,7 @@ class EditAccountsCard extends StatelessWidget {
                                                   items: bankAcntList
                                                       .map((country) {
                                                     return DropdownMenuItem(
-                                                      child: Text(country),
+                                                      child: text(country),
                                                       value: country,
                                                     );
                                                   }).toList(),

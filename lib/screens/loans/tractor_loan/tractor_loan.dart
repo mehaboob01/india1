@@ -51,7 +51,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Obx(
-      ()=> IgnorePointer(
+      () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -115,7 +115,8 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                       child: _plManager.currentScreen.value ==
                               Steps.LOAN_AMOUNT.index
                           ? loanAmountButton()
-                          : _plManager.currentScreen.value == Steps.PERSONAL.index
+                          : _plManager.currentScreen.value ==
+                                  Steps.PERSONAL.index
                               ? personalInfoButton()
                               : residentialInfoButton(),
                     ),
@@ -155,7 +156,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
             Spacer(),
             Row(
               children: [
-                Text(
+                text(
                   'NEXT',
                   style: AppTextThemes.button,
                 ),
@@ -216,7 +217,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'BACK',
                     style: AppTextThemes.button,
                   ),
@@ -276,7 +277,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'NEXT',
                     style: AppTextThemes.button,
                   ),
@@ -336,7 +337,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            text(
               'NEXT',
               style: AppTextThemes.button,
             ),
@@ -371,7 +372,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
@@ -386,7 +387,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               DividerIO(
                 height: 24,
               ),
-              Text(
+              text(
                 'Choose the loan amount you want from slider or enter in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
@@ -435,7 +436,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹",
+                      text("₹",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: Dimens.font_16sp,
@@ -477,7 +478,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value.toString()),
+              child: text(value.toString()),
             );
           }).toList(),
           onChanged: (value) {

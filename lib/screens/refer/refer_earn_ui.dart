@@ -49,7 +49,7 @@ class _ReferEarnState extends State<ReferEarn> {
   }
 
   var snackBar = SnackBar(
-    content: Text('Already invited!'),
+    content: text('Already invited!'),
   );
   var _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
@@ -123,7 +123,7 @@ class _ReferEarnState extends State<ReferEarn> {
                                   //             crossAxisAlignment:
                                   //                 CrossAxisAlignment.start,
                                   //             children: [
-                                  //               RichText(
+                                  //               Richtext(
                                   //                 text: TextSpan(
                                   //                   style: AppStyle.shortHeading
                                   //                       .copyWith(
@@ -227,7 +227,7 @@ class _ReferEarnState extends State<ReferEarn> {
                                                   ],
                                                 )),
                                             child: Center(
-                                                child: Text(
+                                                child: text(
                                               "Invite",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -288,7 +288,7 @@ class _ReferEarnState extends State<ReferEarn> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  text(
                     "You have not allowed the permission to access contacts, please allow the permissions to see the contacts on your phone.",
                     style: TextStyle(
                       color: Colors.white,
@@ -298,7 +298,7 @@ class _ReferEarnState extends State<ReferEarn> {
                   Spacer(),
                   Row(
                     children: [
-                      Text(
+                      text(
                         "Allow Permissions Now",
                         style: TextStyle(
                             color: Colors.amberAccent,
@@ -404,14 +404,14 @@ class _ReferEarnState extends State<ReferEarn> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  text(
                                     contactCont.filteredList.value[index].name
                                             .first.isEmpty
                                         ? ""
                                         : "${contactCont.filteredList.value[index].name.first.substring(0, 1)}",
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  Text(
+                                  text(
                                     contactCont.filteredList.value[index].name
                                             .last.isEmpty
                                         ? ""
@@ -429,10 +429,10 @@ class _ReferEarnState extends State<ReferEarn> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(contactCont
+                                text(contactCont
                                     .filteredList.value[index].displayName
                                     .toString()),
-                                Text(
+                                text(
                                     ' ${contactCont.filteredList.value[index].phones.isNotEmpty ? contactCont.filteredList.value[index].phones.first.number : 'No Number'}')
                               ],
                             ),
@@ -510,7 +510,7 @@ class _ReferEarnState extends State<ReferEarn> {
                       colors: [Color(0xFF004280), Color(0xFF357CBE)],
                     )),
           child: Center(
-              child: Text(
+              child: text(
             invitedList.contains(contactCont
                         .filteredList.value[index].phones.isNotEmpty
                     ? contactCont.filteredList.value[index].phones.first.number
@@ -573,7 +573,7 @@ class _ReferEarnState extends State<ReferEarn> {
         SizedBox(
           height: Get.height * 0.01,
         ),
-        Text(
+        text(
           name,
           style: TextStyle(
               fontWeight: FontWeight.w500,

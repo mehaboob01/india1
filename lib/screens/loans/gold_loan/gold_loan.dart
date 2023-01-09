@@ -317,7 +317,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 'Loan Amount',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
@@ -333,7 +333,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
               DividerIO(
                 height: 24,
               ),
-              Text(
+              text(
                 'Enter the loan amount required using the slider OR type in the text field',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
@@ -384,7 +384,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                   prefixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("₹",
+                      text("₹",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: Dimens.font_16sp,

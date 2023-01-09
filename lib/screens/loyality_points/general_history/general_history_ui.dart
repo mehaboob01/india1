@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:india_one/screens/loyality_points/general_history/general_history_manager.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
+import 'package:india_one/constant/theme_manager.dart';
 
 class GeneralHistory extends StatefulWidget {
   GeneralHistory({key});
@@ -25,7 +26,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text(
+            title:  text(
               "History",
               style: TextStyle(color: Colors.black),
             ),
@@ -78,10 +79,10 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                     items: _filters.map((filter) {
                       return DropdownMenuItem(
                         value: filter,
-                        child: Text(filter),
+                        child: text(filter),
                       );
                     }).toList(),
-                    hint: Text(
+                    hint: text(
                       "Apply Filter",
                       style: _stats,
                     ),
@@ -110,8 +111,8 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                   alignment: Alignment.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text(
+                    children:  [
+                      text(
                         "All Time",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 16),
@@ -161,7 +162,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        text(
                                           _controller
                                               .filteredList.value[index].name
                                               .toString(),
@@ -174,7 +175,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                         SizedBox(
                                           height: Get.height * 0.004,
                                         ),
-                                        Text(
+                                        text(
                                           _controller
                                               .filteredList.value[index].type
                                               .toString(),
@@ -203,10 +204,10 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
+                                                text(
                                                     "₹ ${_controller.filteredList.value[index].loanAmount}",
                                                     style: _stats),
-                                                Text(
+                                                text(
                                                   "Loan Amount",
                                                   style: _statsTitle,
                                                 )
@@ -216,11 +217,11 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
+                                                text(
                                                   "₹ ${_controller.filteredList.value[index].amountCoveres}",
                                                   style: _stats,
                                                 ),
-                                                Text(
+                                                text(
                                                   "Amount Coverees",
                                                   style: _statsTitle,
                                                 )
@@ -231,11 +232,11 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                               null
                                           ? Column(
                                               children: [
-                                                Text(
+                                                text(
                                                   "${_controller.filteredList.value[index].appliedOn!.day} ${_controller.filteredList.value[index].appliedOn!.month} ${_controller.filteredList.value[index].appliedOn!.year}",
                                                   style: _stats,
                                                 ),
-                                                Text(
+                                                text(
                                                   "Applied On",
                                                   style: _statsTitle,
                                                 )
@@ -249,7 +250,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                Text(
+                                                text(
                                                   _controller.filteredList
                                                       .value[index].status
                                                       .toString(),
@@ -263,7 +264,7 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                                       // color: _statusColor(index),
                                                       ),
                                                 ),
-                                                Text(
+                                                text(
                                                   "Status",
                                                   style: _statsTitle,
                                                 )
@@ -273,11 +274,11 @@ class _GeneralHistoryState extends State<GeneralHistory> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                Text(
+                                                text(
                                                   "${_controller.filteredList.value[index].boughtOn!.day} ${_controller.filteredList.value[index].boughtOn!.month} ${_controller.filteredList.value[index].boughtOn!.year}",
                                                   style: _stats,
                                                 ),
-                                                Text(
+                                                text(
                                                   "Bought On",
                                                   style: _statsTitle,
                                                 )

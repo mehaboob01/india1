@@ -60,7 +60,7 @@ class _LendersListState extends State<LendersList> {
                         horizontal: 8,
                         vertical: 16,
                       ),
-                      child: Text(
+                      child: text(
                         "Select the lender to proceed",
                         style: TextStyle(
                           color: AppColors.lightBlack,
@@ -84,7 +84,7 @@ class _LendersListState extends State<LendersList> {
                                     loanController
                                             .loanLendersModel.value.lenders ==
                                         []))
-                            ? Center(child: Text("No providers found"))
+                            ? Center(child: text("No providers found"))
                             : ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: isPersonalLoan

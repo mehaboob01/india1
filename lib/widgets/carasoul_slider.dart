@@ -56,7 +56,7 @@ class CarasoulImages extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        text(
                             getController.bannerList[i].subTitle != null
                                 ? getController.bannerList[i].subTitle
                                     .toString()
@@ -66,7 +66,7 @@ class CarasoulImages extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16)),
                         SizedBox(height: 1.0.wp),
-                        Text(
+                        text(
                             getController.bannerList[i].title != null
                                 ? getController.bannerList[i].title.toString()
                                 : "",
@@ -79,7 +79,7 @@ class CarasoulImages extends StatelessWidget {
                             : Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Apply Now',
+                                  text('Apply Now',
                                       style: AppStyle.shortHeading.copyWith(
                                           color: AppColors.yellowgradient1,
                                           fontWeight: FontWeight.w400,

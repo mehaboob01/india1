@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../constant/theme_manager.dart';
+
 class StepperDot extends StatelessWidget {
   /// Default stepper dot
   const StepperDot({
@@ -62,7 +64,7 @@ class StepperDot extends StatelessWidget {
                       Radius.circular(30),
                     ),
                   ),
-                  child: Text(
+                  child: text(
                     "${index + 1}",
                     style: TextStyle(
                       fontSize: 12,

@@ -74,7 +74,7 @@ class RedeemCard extends StatelessWidget {
                       color: isSelected ? Colors.white : null,
                     ),
                   ),
-                  Text(
+                  text(
                     label,
                     style: AppStyle.shortHeading.copyWith(
                       fontSize: 12.0.sp,

@@ -229,7 +229,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
             Spacer(),
             Row(
               children: [
-                Text(
+                text(
                   'Next',
                   style: AppTextThemes.button,
                 ),
@@ -290,7 +290,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'Back',
                     style: AppTextThemes.button,
                   ),
@@ -359,7 +359,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'Next',
                     style: AppTextThemes.button,
                   ),
@@ -393,7 +393,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  text(
                     'Back',
                     style: AppTextThemes.button,
                   ),
@@ -474,7 +474,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                   Spacer(),
                   Row(
                     children: [
-                      Text(
+                      text(
                         'NEXT',
                         style: AppTextThemes.button,
                       ),
@@ -539,7 +539,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              text(
                 'Loan details',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
@@ -555,7 +555,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
               DividerIO(
                 height: 24,
               ),
-              Text(
+              text(
                 'Choose the sub-product for which you want the loan',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
@@ -604,7 +604,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         //           prefixIcon: Column(
         //             mainAxisAlignment: MainAxisAlignment.center,
         //             children: [
-        //               Text("₹", style: TextStyle(color: Colors.black,
+        //               text("₹", style: TextStyle(color: Colors.black,
         //                   fontSize: Dimens.font_16sp,
         //                   fontWeight: FontWeight.w600)),
         //             ],
@@ -646,7 +646,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         //           (TrackBasedLoanRequirementModel value) {
         //     return DropdownMenuItem<TrackBasedLoanRequirementModel>(
         //       value: value,
-        //       child: Text(value.name.toString()),
+        //       child: text(value.name.toString()),
         //     );
         //   }).toList(),
         //   onChanged: (value) {
@@ -674,7 +674,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value.toString()),
+                  child: text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {
@@ -703,7 +703,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         //           .map<DropdownMenuItem<String>>((String value) {
         //         return DropdownMenuItem<String>(
         //           value: value,
-        //           child: Text(value.toString()),
+        //           child: text(value.toString()),
         //         );
         //       }).toList(),
         //       onChanged: (value) {

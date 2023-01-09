@@ -80,7 +80,7 @@ class CommonMethods {
     return data;
   }
 
-  String accountFormattedText(String value) {
+  String accountFormattedtext(String value) {
     if (value == '') {
       return '';
     }
@@ -133,7 +133,7 @@ class MaskedInputFormatter extends TextInputFormatter {
     String newVal = newValue.text;
     String? newText = newValue.text.length < 4
         ? newValue.text
-        : CommonMethods().accountFormattedText(newVal);
+        : CommonMethods().accountFormattedtext(newVal);
     return newValue.copyWith(
         text: newText,
         selection: TextSelection.collapsed(offset: newText.length));

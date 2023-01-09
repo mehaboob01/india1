@@ -320,7 +320,7 @@ AppBar appBar(titleOfAppbar) {
           end: Alignment.bottomCenter,
           colors: <Color>[AppColors.cardBg1, AppColors.cardBg2]),
     )),
-    title: Text(
+    title: text(
       titleOfAppbar,
       maxLines: 1,
       style: TextStyle(
@@ -342,7 +342,7 @@ AppBar transParentAppbar(titleOfAppbar) {
           end: Alignment.bottomCenter,
           colors: <Color>[AppColors.white, AppColors.white]),
     )),
-    title: Text(
+    title: text(
       titleOfAppbar,
       style: TextStyle(
         fontWeight: FontWeight.w600,
@@ -370,7 +370,7 @@ Widget rupeeIcon(
         ),
       ),
       const SizedBox(width: 4.0),
-      Text(
+      text(
         label,
         style: AppStyle.shortHeading.copyWith(
           fontSize: fontSize,
@@ -562,7 +562,7 @@ class AppFonts {
   static const appFont = 'Graphik';
 }
 
-Widget text(String text,
+Widget text(String teext,
     {double? textScaleFactor,
     Color? color,
     double? fontSize,
@@ -574,7 +574,7 @@ Widget text(String text,
     TextStyle? style,
     int? maxLines}) {
   return Text(
-    text,
+    teext,
     textScaleFactor: textScaleFactor ?? 1,
     textAlign: textAlign,
     maxLines: maxLines,

@@ -68,7 +68,7 @@ class LoanDashboardHistory extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    text(
                       "Recent Transactions",
                       style: AppStyle.shortHeading.copyWith(
                         color: Color(0xff2d2d2d),
@@ -80,7 +80,7 @@ class LoanDashboardHistory extends StatelessWidget {
                       onTap: () {
                         Get.to(() => LoanDashboardHistory(isFromLoans: false));
                       },
-                      child: Text(
+                      child: text(
                         "History",
                         style: AppStyle.shortHeading.copyWith(
                           color: AppColors.orangeGradient2,
@@ -103,7 +103,7 @@ class LoanDashboardHistory extends StatelessWidget {
             ] else ...[
               if (loanController.recentTransactionModel.value
                   .recentTransactions!.isEmpty) ...[
-                Text("No recent transaction found")
+                text("No recent transaction found")
               ] else ...[
                 ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: isFromLoans ? 0 : 16),
@@ -169,7 +169,7 @@ class LoanDashboardHistory extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  text(
                                     e.loanTitle ?? '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -177,7 +177,7 @@ class LoanDashboardHistory extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16),
                                   ),
-                                  Text(
+                                  text(
                                     e.loanType ?? '',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -199,9 +199,9 @@ class LoanDashboardHistory extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("₹ ${e.loanAmount ?? 0}",
+                                    text("₹ ${e.loanAmount ?? 0}",
                                         style: _stats),
-                                    Text(
+                                    text(
                                       "Loan Amount",
                                       style: _statsTitle,
                                     )
@@ -212,11 +212,11 @@ class LoanDashboardHistory extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
+                                    text(
                                       "${e.loanAppliedOn != null || e.loanAppliedOn != '' ? DateFormat('dd-MMM-yyyy').format(DateTime.parse(e.loanAppliedOn.toString())) : ''}",
                                       style: _stats,
                                     ),
-                                    Text(
+                                    text(
                                       "Applied On",
                                       style: _statsTitle,
                                     )
@@ -227,7 +227,7 @@ class LoanDashboardHistory extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
+                                    text(
                                       e.status ?? '',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
@@ -235,7 +235,7 @@ class LoanDashboardHistory extends StatelessWidget {
                                           color: loanController
                                               .statusTextColor(e.status ?? '')),
                                     ),
-                                    Text(
+                                    text(
                                       "Status",
                                       style: _statsTitle,
                                     )

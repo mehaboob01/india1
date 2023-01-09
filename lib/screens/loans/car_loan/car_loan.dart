@@ -58,7 +58,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return Obx(
-      ()=>IgnorePointer(
+      () => IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           body: SafeArea(
@@ -97,11 +97,13 @@ class _CarLoanIOState extends State<CarLoanIO> {
                                             iconWidth: 25,
                                             iconHeight: 25,
                                             inverted: true,
-                                            activeBarColor: AppColors.pointsColor,
+                                            activeBarColor:
+                                                AppColors.pointsColor,
                                             activeIndex:
                                                 _plManager.currentScreen.value,
                                             callBack: (i) {
-                                              _plManager.currentScreen.value = i;
+                                              _plManager.currentScreen.value =
+                                                  i;
                                             },
                                           ),
                                         ),
@@ -294,7 +296,7 @@ class _CarLoanIOState extends State<CarLoanIO> {
           ].map((value) {
             return DropdownMenuItem(
               value: value['value'],
-              child: Text(value['name'].toString()),
+              child: text(value['name'].toString()),
             );
           }).toList(),
           onChanged: (value) {

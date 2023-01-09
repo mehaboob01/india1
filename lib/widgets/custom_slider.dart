@@ -62,7 +62,7 @@ class CustomSlider extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                text(
                   isAmount == true
                       ? CommonMethods().indianRupeeValue(minValue.value)
                       : minValue.value
@@ -73,7 +73,7 @@ class CustomSlider extends StatelessWidget {
                       fontSize: 11.0.sp,
                       fontWeight: FontWeight.w600),
                 ),
-                Text(
+                text(
                   isAmount == true
                       ? CommonMethods().indianRupeeValue(maxValue.value)
                       : maxValue.value

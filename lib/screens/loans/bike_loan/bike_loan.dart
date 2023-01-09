@@ -285,7 +285,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           DividerIO(
             height: 28,
           ),
-          Text(
+          text(
             'Loan details',
             style: AppStyle.shortHeading.copyWith(
                 fontSize: Dimens.font_18sp,
@@ -307,9 +307,9 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
               item: loanController.twoWheelerMakes.toSet().map((value) {
                 return DropdownMenuItem(
                   value: value,
-                  child: Text(
+                  child: text(
                     value.toString(),
-                    overflow: TextOverflow.ellipsis,
+                    textOverflow: TextOverflow.ellipsis,
                   ),
                 );
               }).toList(),
@@ -338,7 +338,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                       .map((value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value.toString()),
+                      child: text(value.toString()),
                     );
                   }).toList(),
                   onChanged: (value) async {
@@ -363,7 +363,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           //   ].map((value) {
           //     return DropdownMenuItem(
           //       value: value['value'],
-          //       child: Text(value['name'].toString()),
+          //       child: text(value['name'].toString()),
           //     );
           //   }).toList(),
           //   onChanged: (value) {

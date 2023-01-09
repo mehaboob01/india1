@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:india_one/widgets/my_stepper/dto/stepper_data.dart';
 import 'package:india_one/widgets/my_stepper/utils/utils.dart';
 
+import '../../../constant/theme_manager.dart';
 import 'stepper_dot_widget.dart';
 
 class VerticalStepperItem extends StatelessWidget {
@@ -74,7 +75,9 @@ class VerticalStepperItem extends StatelessWidget {
       Column(
         children: [
           Container(
-            color: index == 0 ? Colors.transparent : (index <= activeIndex ? activeBarColor : inActiveBarColor),
+            color: index == 0
+                ? Colors.transparent
+                : (index <= activeIndex ? activeBarColor : inActiveBarColor),
             width: barWidth,
             height: gap,
           ),
@@ -105,7 +108,9 @@ class VerticalStepperItem extends StatelessWidget {
                   ),
                 ),
           Container(
-            color: index == totalLength - 1 ? Colors.transparent : (index < activeIndex ? activeBarColor : inActiveBarColor),
+            color: index == totalLength - 1
+                ? Colors.transparent
+                : (index < activeIndex ? activeBarColor : inActiveBarColor),
             width: barWidth,
             height: gap,
           ),
@@ -114,10 +119,11 @@ class VerticalStepperItem extends StatelessWidget {
       const SizedBox(width: 8),
       Expanded(
         child: Column(
-          crossAxisAlignment: isInverted ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isInverted ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             if (item.title != null) ...[
-              Text(
+              text(
                 item.title!,
                 textAlign: TextAlign.start,
                 style: titleTextStyle,
@@ -125,7 +131,7 @@ class VerticalStepperItem extends StatelessWidget {
             ],
             if (item.subtitle != null) ...[
               const SizedBox(height: 8),
-              Text(
+              text(
                 item.subtitle!,
                 textAlign: TextAlign.start,
                 style: subtitleTextStyle,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant/theme_manager.dart';
+
 class DropdownIO extends StatefulWidget {
   String hint, label;
   String? error;
@@ -36,7 +38,7 @@ class _DropdownIOState extends State<DropdownIO> {
           value: value,
           child: Padding(
             padding: EdgeInsets.all(3),
-            child: Text(value, style: new TextStyle(color: Colors.black)),
+            child: text(value, style: new TextStyle(color: Colors.black)),
           ),
         );
       }).toList(),

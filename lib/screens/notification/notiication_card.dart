@@ -19,11 +19,10 @@ class NotificationCard extends StatelessWidget {
   final String dateTime;
   final String readStatus;
 
-
-
   bool isActive(String dateTime) {
     DateTime dateNow = DateTime.now();
-    DateTime startDateTemp = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(CommonMethods().getDateFormat(dateTime));
+    DateTime startDateTemp = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        .parse(CommonMethods().getDateFormat(dateTime));
     final difference = dateNow.difference(startDateTemp);
     if (readStatus != "Unread") {
       return false;
@@ -60,13 +59,13 @@ class NotificationCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(CommonMethods().getFormatedDate(date: dateTime),
+                          text(CommonMethods().getFormatedDate(date: dateTime),
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: Dimens.font_12sp,
                                   color: Color(0xff666666),
                                   fontWeight: FontWeight.w600)),
                           SizedBox(height: 10),
-                          Text(notificationHeading,
+                          text(notificationHeading,
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: Dimens.font_14sp,
                                   color: isActive(dateTime)
@@ -74,7 +73,7 @@ class NotificationCard extends StatelessWidget {
                                       : Color(0xff666666),
                                   fontWeight: FontWeight.w600)),
                           SizedBox(height: 10),
-                          Text(notificationMsg,
+                          text(notificationMsg,
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: Dimens.font_16sp,
                                   color: Color(0xff666666),
@@ -96,5 +95,4 @@ class NotificationCard extends StatelessWidget {
             ? Image.asset(AppImages.notificationActive)
             : Image.asset(AppImages.notificationWithBorderImage));
   }
-
 }

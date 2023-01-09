@@ -58,7 +58,7 @@ class _DropDownState extends State<DropDown> {
       items: widget.data.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(
+          child: text(
             value,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.black,
@@ -67,7 +67,7 @@ class _DropDownState extends State<DropDown> {
           ),
         );
       }).toList(),
-      // hint: Text(
+      // hint: text(
       //   widget.hint,
       //   style: AppStyle.shortHeading.copyWith(
       //       color: AppColors.greyInlineText,

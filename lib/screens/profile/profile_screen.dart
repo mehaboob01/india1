@@ -126,7 +126,7 @@ class ProfileScreen extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text(
+                                                text(
                                                   "Mobile number",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
@@ -135,7 +135,7 @@ class ProfileScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Obx(
-                                                  () => Text(
+                                                  () => text(
                                                     "+91 ${profileController.profileDetailsModel.value.mobileNumber ?? ''}",
                                                     style: TextStyle(
                                                       fontWeight:
@@ -340,7 +340,7 @@ class ProfileScreen extends StatelessWidget {
                                                               .center,
                                                       children: [
                                                         Spacer(),
-                                                        Text(
+                                                        text(
                                                           'Logout'.tr,
                                                           maxLines: 2,
                                                           style: TextStyle(
@@ -449,7 +449,7 @@ class ProfileScreen extends StatelessWidget {
                                         height: 30,
                                       ),
                                       Obx(
-                                        () => Text(
+                                        () => text(
                                             "App version : ${profileController.appVersion.value}"),
                                       )
                                     ],
@@ -472,7 +472,7 @@ class ProfileScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        text(
           title,
           style: TextStyle(
             color: AppColors.lightBlack,
@@ -483,7 +483,7 @@ class ProfileScreen extends StatelessWidget {
           height: 6,
         ),
         if (isEmpty != null)
-          Text(
+          text(
             value,
             style: isEmpty
                 ? TextStyle(
@@ -496,7 +496,7 @@ class ProfileScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600),
           )
         else
-          Text(
+          text(
             value,
             style: TextStyle(
                 color: AppColors.lightBlack,
@@ -635,7 +635,7 @@ class ProfileScreen extends StatelessWidget {
             title: Row(
               children: [
                 Expanded(
-                  child: Text(
+                  child: text(
                     title,
                     style: TextStyle(
                         color: AppColors.lightBlack,
@@ -853,7 +853,7 @@ class ProfileScreen extends StatelessWidget {
                           isEmpty: address.state == null ? true : false),
                     ]
                   : [
-                      Text("Could not find any residential data!"),
+                      text("Could not find any residential data!"),
                     ],
             ),
           ),
@@ -893,7 +893,7 @@ class ProfileScreen extends StatelessWidget {
                         child: Container(
                             height: 34,
                             child:
-                                Text("Could not find any bank account data!")),
+                                text("Could not find any bank account data!")),
                       ),
                     ],
                   )
@@ -935,7 +935,7 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ]
                           : [
-                              Text("Could not find any bank account data!"),
+                              text("Could not find any bank account data!"),
                             ],
                     ),
                   ),
@@ -1024,7 +1024,7 @@ class ProfileScreen extends StatelessWidget {
                       )
                     ]
                   : [
-                      Text("Could not find any of your occupation details!"),
+                      text("Could not find any of your occupation details!"),
                     ],
             ),
           ),
@@ -1043,7 +1043,7 @@ class ProfileScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        text(
           "${index == null ? 'Primary Account:' : cashBackManager.customerBankList[0].name}",
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -1138,7 +1138,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
               ] else ...[
-                Text(cashBackManager.customerUPIList.isEmpty
+                text(cashBackManager.customerUPIList.isEmpty
                     ? "Could not find any upi id data!"
                     : cashBackManager.customerUPIList[0].upiId.toString()),
               ]
@@ -1173,7 +1173,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         width: double.infinity,
         alignment: Alignment.center,
-        child: Text(
+        child: text(
           title,
           style: TextStyle(
             color: AppColors.blueColor,

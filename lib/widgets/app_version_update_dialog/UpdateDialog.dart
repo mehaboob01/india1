@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../constant/theme_manager.dart';
+
 class UpdateDialog extends StatefulWidget {
   final String version;
   final String description;
   final String appLink;
   final bool allowDismissal;
 
-  const UpdateDialog({Key? key,
-    this.version = " ",
-    required this.description,
-    required this.appLink,
-    required this.allowDismissal
-  }) : super(key: key);
+  const UpdateDialog(
+      {Key? key,
+      this.version = " ",
+      required this.description,
+      required this.appLink,
+      required this.allowDismissal})
+      : super(key: key);
 
   @override
   State<UpdateDialog> createState() => _UpdateDialogState();
@@ -24,7 +27,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
 
   @override
   void dispose() {
-    if(!widget.allowDismissal) {
+    if (!widget.allowDismissal) {
       print("EXIT APP");
       // SystemNavigator.pop(); this will close the app
     }
@@ -102,9 +105,9 @@ class _UpdateDialogState extends State<UpdateDialog> {
                           flex: 1,
                           child: Stack(
                             children: [
-                              const Align(
+                              Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: text(
                                   "ABOUT UPDATE",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -113,7 +116,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: Text(
+                                child: text(
                                   widget.version,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -123,11 +126,13 @@ class _UpdateDialogState extends State<UpdateDialog> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 12,),
+                        const SizedBox(
+                          height: 12,
+                        ),
                         Expanded(
                           flex: 5,
                           child: SingleChildScrollView(
-                            child: Text(
+                            child: text(
                               widget.description,
                             ),
                           ),
@@ -142,33 +147,37 @@ class _UpdateDialogState extends State<UpdateDialog> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        widget.allowDismissal ? Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.indigo,
-                                ),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "LATER",
-                                  style: TextStyle(
-                                    color: Colors.indigo,
-                                    fontWeight: FontWeight.bold,
+                        widget.allowDismissal
+                            ? Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.indigo,
+                                      ),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Center(
+                                      child: text(
+                                        "LATER",
+                                        style: TextStyle(
+                                          color: Colors.indigo,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ) : const SizedBox(),
-                        SizedBox(width: widget.allowDismissal ? 16 : 0,),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          width: widget.allowDismissal ? 16 : 0,
+                        ),
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
@@ -188,8 +197,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
                                   ),
                                 ],
                               ),
-                              child: const Center(
-                                child: Text(
+                              child:  Center(
+                                child: text(
                                   "UPDATE",
                                   style: TextStyle(
                                     color: Colors.white,

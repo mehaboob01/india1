@@ -247,7 +247,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
-                                    child: Text(value.toString()),
+                                    child: text(value.toString()),
                                   );
                                 }).toList(),
                                 onChanged: (value) {
@@ -334,7 +334,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Spacer(),
-                                            Text(
+                                            text(
                                               'Add Bank Details',
                                               maxLines: 2,
                                               style: TextStyle(

@@ -82,7 +82,7 @@ class CommonTextField extends StatelessWidget {
               color: AppColors.greyInlineText,
               fontWeight: FontWeight.w400,
               fontSize: 11.0.sp),
-          label: Text(
+          label: text(
             labelText!, //'Points for cashback', // dynamic
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.greyInlineText,

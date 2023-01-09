@@ -165,7 +165,7 @@ class _StepperScreenState extends State<StepperScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Spacer(),
-                                        Text(
+                                        text(
                                           'Save ${profileController.titleList[(profileController.currentStep.value) - 1]} Details',
                                           maxLines: 2,
                                           style: TextStyle(

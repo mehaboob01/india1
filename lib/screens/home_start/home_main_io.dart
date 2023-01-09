@@ -138,8 +138,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
           context: context,
           builder: ((context) {
             return AlertDialog(
-              title: Text("Location Access"),
-              content: Text(
+              title: text("Location Access"),
+              content: text(
                   "You need to allow location permissions to see nearby ATM's, please allow the permission in settings to proceed."),
               actions: [
                 Row(
@@ -149,7 +149,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       onPressed: () {
                         Geolocator.openAppSettings();
                       },
-                      child: Text(
+                      child: text(
                         "Open application settings",
                       ),
                     ),
@@ -157,7 +157,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text(
+                      child: text(
                         "Cancel",
                       ),
                     ),
@@ -367,7 +367,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
                           Navigator.of(context, rootNavigator: true).pop();
                         },
-                        child: Text("No"))
+                        child: text("No"))
                   ],
                   radius: 8,
                   backgroundColor: AppColors.primary,
@@ -471,7 +471,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                   Colors.red,
                                                               badgeContent:
                                                                   Container(
-                                                                child: Text(
+                                                                child: text(
                                                                   "",
                                                                   style: TextStyle(
                                                                       color: Colors
@@ -551,7 +551,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                           0.03,
                                                                   width: double
                                                                       .infinity,
-                                                                  child: Text(
+                                                                  child: text(
                                                                     "my_profile"
                                                                         .tr,
                                                                     style: AppStyle.shortHeading.copyWith(
@@ -591,7 +591,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                                         width: double
                                                                             .infinity,
                                                                         child:
-                                                                            Text(
+                                                                            text(
                                                                           "my_rewards"
                                                                               .tr,
                                                                           style: AppStyle.shortHeading.copyWith(
@@ -655,7 +655,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('welcome'.tr,
+                                          text('welcome'.tr,
                                               style: AppStyle.shortHeading
                                                   .copyWith(
                                                 color: Colors.white,
@@ -663,7 +663,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                           SizedBox(
                                             width: 2,
                                           ),
-                                          Text(
+                                          text(
                                               "${_profileController.profileDetailsModel.value.firstName ?? ''}",
                                               style: AppStyle.shortHeading
                                                   .copyWith(
@@ -672,7 +672,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                         ],
                                       ),
                                       SizedBox(height: 1.0.hp),
-                                      Text('cashback_india1_summary'.tr,
+                                      text('cashback_india1_summary'.tr,
                                           style: AppStyle.shortHeading.copyWith(
                                               color: Colors.white,
                                               fontSize: 20,
@@ -699,7 +699,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                       //     child: Padding(
                                       //       padding:
                                       //           const EdgeInsets.only(left: 4.0),
-                                      //       child: Text(
+                                      //       child: text(
                                       //         'Note : You can redeem only if you have 15 or more points',
                                       //         style: AppStyle.shortHeading.copyWith(
                                       //           fontSize: Dimens.font_12sp,
@@ -725,7 +725,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     top: 12.0.wp,
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
-                                child: Text(
+                                child: text(
                                   'loans'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
@@ -745,7 +745,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     top: 12.0.wp,
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
-                                child: Text(
+                                child: text(
                                   'payments'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
@@ -766,7 +766,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                     top: 12.0.wp,
                                     bottom: 2.0.wp,
                                     right: 6.0.wp),
-                                child: Text(
+                                child: text(
                                   'insurance'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
@@ -783,7 +783,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 6.0.wp, top: 12.0.wp, right: 6.0.wp),
-                                child: Text(
+                                child: text(
                                   'savings'.tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       fontSize: 16.0.sp,
@@ -835,7 +835,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  text(
                     'current_balance'.tr,
                     style: AppStyle.shortHeading.copyWith(
                         fontSize: Dimens.font_14sp,
@@ -852,7 +852,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         width: 4,
                       ),
                       Obx(
-                        () => Text(
+                        () => text(
                           _homeManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: Dimens.font_16sp,
@@ -861,7 +861,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Text(
+                      text(
                         ' Points',
                         style: AppStyle.shortHeading.copyWith(
                             fontSize: Dimens.font_14sp,
@@ -879,7 +879,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      text(
                         'Total earned : ',
                         style: AppStyle.shortHeading.copyWith(
                           fontSize: Dimens.font_14sp,
@@ -887,7 +887,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         ),
                       ),
                       Obx(
-                        () => Text(
+                        () => text(
                           _homeManager.pointsEarned.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: Dimens.font_14sp,
@@ -900,7 +900,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      text(
                         'Total redeemed : ',
                         style: AppStyle.shortHeading.copyWith(
                           fontSize: Dimens.font_14sp,
@@ -908,7 +908,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         ),
                       ),
                       Obx(
-                        () => Text(
+                        () => text(
                           _homeManager.pointsRedeemed.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: Dimens.font_14sp,
@@ -933,7 +933,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          text(
             'Ways to redeem :',
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
@@ -1021,7 +1021,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          text(
             'Find the nearest India1 ATM',
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 14.0.sp,
@@ -1033,7 +1033,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              text(
                 '2x/3x',
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: 18,
@@ -1041,7 +1041,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     letterSpacing: 0.5,
                     fontWeight: FontWeight.w600),
               ),
-              Text(
+              text(
                 ' rewards at ATMs',
                 style: AppStyle.shortHeading
                     .copyWith(fontSize: 15, color: Colors.black),
@@ -1076,7 +1076,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       children: [
                         Align(
                           alignment: Alignment.center,
-                          child: Text(
+                          child: text(
                             'Locate ATM',
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 10.0.sp,
@@ -1124,7 +1124,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        text(
           'Find the nearest India1 ATM',
           style: AppStyle.shortHeading.copyWith(
               fontSize: Dimens.font_16sp,
@@ -1136,7 +1136,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            text(
               '2x/3x',
               style: AppStyle.shortHeading.copyWith(
                   fontSize: Dimens.font_16sp,
@@ -1144,7 +1144,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
                   letterSpacing: 0.5,
                   fontWeight: FontWeight.w600),
             ),
-            Text(
+            text(
               ' rewards at ATMs',
               style: AppStyle.shortHeading
                   .copyWith(fontSize: Dimens.font_16sp, color: Colors.black),
@@ -1168,7 +1168,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
                     children: [
                       Align(
                         alignment: Alignment.center,
-                        child: Text(
+                        child: text(
                           'Locate ATM',
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: Dimens.font_14sp,
@@ -1208,7 +1208,7 @@ Widget confirmBtn() {
           exit(0);
         }
       },
-      child: Text("Yes"));
+      child: text("Yes"));
 }
 
 Widget cancelBtn() {
@@ -1217,7 +1217,7 @@ Widget cancelBtn() {
         print("Go back");
         Get.back();
       },
-      child: Text("No"));
+      child: text("No"));
 }
 
 enum ProfileColor { INACTIVE, ACTIVE }

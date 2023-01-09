@@ -60,7 +60,7 @@ class CustomAppBar extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.center,
-                child: Text(
+                child: text(
                   heading,
                   style: AppStyle.shortHeading.copyWith(
                       color: const Color(0xff2d2d2d),
@@ -194,7 +194,7 @@ class HeadingContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  text(
                     'Current balance',
                     style: AppStyle.shortHeading.copyWith(
                       fontSize: 12.0.sp,
@@ -211,7 +211,7 @@ class HeadingContainer extends StatelessWidget {
                         width: 4,
                       ),
                       Obx(
-                        () => Text(
+                        () => text(
                           _loyaltyManager.redeemablePoints.toString(),
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: 18.0.sp,
@@ -220,7 +220,7 @@ class HeadingContainer extends StatelessWidget {
                               letterSpacing: 0.5),
                         ),
                       ),
-                      Text(
+                      text(
                         ' Points',
                         style: AppStyle.shortHeading.copyWith(
                           fontSize: 14.0.sp,
@@ -238,7 +238,7 @@ class HeadingContainer extends StatelessWidget {
                   //         _loyaltyManager.redeemablePoints <= 14 ? true : false,
                   //     child: Padding(
                   //       padding: const EdgeInsets.only(left: 4.0),
-                  //       child: Text(
+                  //       child: text(
                   //         'Note : You can redeem only if you have 15 points',
                   //         style: AppStyle.shortHeading.copyWith(
                   //           fontSize: Dimens.font_12sp,
@@ -267,7 +267,7 @@ class HeadingContainer extends StatelessWidget {
                     children: [
                       // total earned row
                       Row(children: [
-                        Text(
+                        text(
                           'Total earned : ',
                           style: AppStyle.shortHeading.copyWith(
                             fontSize: 12.0.sp,
@@ -275,7 +275,7 @@ class HeadingContainer extends StatelessWidget {
                           ),
                         ),
                         Obx(
-                          () => Text(
+                          () => text(
                             _loyaltyManager.pointsEarned.toString(),
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: Dimens.font_12sp,
@@ -288,7 +288,7 @@ class HeadingContainer extends StatelessWidget {
                       // total redeemed row
                       Row(
                         children: [
-                          Text(
+                          text(
                             'Total redeemed : ',
                             style: AppStyle.shortHeading.copyWith(
                               fontSize: 12.0.sp,
@@ -296,7 +296,7 @@ class HeadingContainer extends StatelessWidget {
                             ),
                           ),
                           Obx(
-                            () => Text(
+                            () => text(
                               _loyaltyManager.pointsRedeemed.toString(),
                               style: AppStyle.shortHeading.copyWith(
                                   fontSize: Dimens.font_12sp,

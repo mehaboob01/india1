@@ -18,7 +18,7 @@ class UserAccountPage {
             bankAccountName: CardModel().accountModel[0]['name'],
             bankAccountIFSC: CardModel().accountModel[0]['IFSC'],
             bankAccountNumber:
-            CardModel().accountModel[0]['accountNumber'].toString(),
+                CardModel().accountModel[0]['accountNumber'].toString(),
             bankAccountType: CardModel().accountModel[0]['type'],
             isSelected: false,
             cardWidth: double.maxFinite,
@@ -46,8 +46,8 @@ class UserAccountPage {
 class RowHeadingWithunderLineSubHeading extends StatelessWidget {
   const RowHeadingWithunderLineSubHeading(
       {required this.heading,
-        required this.subHeading,
-        required this.onPressedSubHeading});
+      required this.subHeading,
+      required this.onPressedSubHeading});
   final String heading;
   final String subHeading;
   final VoidCallback onPressedSubHeading;
@@ -56,14 +56,14 @@ class RowHeadingWithunderLineSubHeading extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        text(
           heading,
           style: AppStyle.shortHeading.copyWith(
               color: const Color(0xff2d2d2d), fontWeight: FontWeight.w600),
         ),
         GestureDetector(
           onTap: onPressedSubHeading,
-          child: Text(
+          child: text(
             subHeading,
             style: AppStyle.shortHeading.copyWith(
                 color: AppColors.blueColor,
