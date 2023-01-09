@@ -850,17 +850,16 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       Text(
                         'Total earned : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: Dimens.font_14sp,
-                            color: Colors.white,
-                            letterSpacing: 0.5),
+                          fontSize: Dimens.font_14sp,
+                          color: Colors.white,
+                        ),
                       ),
                       Obx(
                         () => Text(
                           _homeManager.pointsEarned.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: Dimens.font_16sp,
+                              fontSize: Dimens.font_14sp,
                               color: Colors.white,
-                              letterSpacing: 0.5,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -872,17 +871,16 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       Text(
                         'Total redeemed : ',
                         style: AppStyle.shortHeading.copyWith(
-                            fontSize: Dimens.font_14sp,
-                            color: Colors.white,
-                            letterSpacing: 0.2),
+                          fontSize: Dimens.font_14sp,
+                          color: Colors.white,
+                        ),
                       ),
                       Obx(
                         () => Text(
                           _homeManager.pointsRedeemed.toString(),
                           style: AppStyle.shortHeading.copyWith(
-                              fontSize: Dimens.font_16sp,
+                              fontSize: Dimens.font_14sp,
                               color: Colors.white,
-                              letterSpacing: 0.2,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

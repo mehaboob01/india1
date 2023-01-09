@@ -207,10 +207,14 @@ class EditAccountsCard extends StatelessWidget {
                                                 ),
                                                 // bank name
                                                 DropDown(
-                                                  onChanged: (value) {},
+                                                  onChanged: (value) {
+                                                    return bankName = value;
+                                                  },
                                                   formName: 'bankName',
+                                                  initialValue: bankName,
                                                   labelName: 'Bank name',
-                                                  hintText: bankName.toString(),
+                                                  hintText:
+                                                      'Select your bank here',
                                                   data:
                                                       cashBackManager.bankList,
                                                   validationText:
@@ -410,7 +414,7 @@ class EditAccountsCard extends StatelessWidget {
                                   onPressed: () async {
                                     // method for checkBankID
 
-                                    String? checkBankId(bankName) {
+                                    checkBankId(bankName) {
                                       for (var index
                                           in cashBackManager.bankListId) {
                                         if (index.name == bankName) {

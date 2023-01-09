@@ -459,7 +459,7 @@ class ProfileStepper {
           width: 2,
         ),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 6),
+      margin: EdgeInsets.symmetric(horizontal: 4),
       child: Row(
         children: [
           Radio(
@@ -470,7 +470,7 @@ class ProfileStepper {
           ),
           Text(value),
           SizedBox(
-            width: 12,
+            width: 6,
           )
         ],
       ),
@@ -764,6 +764,10 @@ class ProfileStepper {
                 label: 'Monthly income',
                 hint: 'Enter monthly income',
                 prefix: '₹',
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                  CurrencyInputFormatter(),
+                ],
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -776,14 +780,14 @@ class ProfileStepper {
                   return null;
                 },
                 onChanged: (val) {
-                  profileController.monthlyIncomeController.value.text =
-                      (int.parse((val).replaceAll(",", "").replaceAll(".", ""))
-                              .priceString())
-                          .toString();
-                  profileController.monthlyIncomeController.value.selection =
-                      TextSelection.collapsed(
-                          offset: profileController
-                              .monthlyIncomeController.value.text.length);
+                  // profileController.monthlyIncomeController.value.text =
+                  //     (int.parse((val).replaceAll(",", "").replaceAll(".", ""))
+                  //             .priceString())
+                  //         .toString();
+                  // profileController.monthlyIncomeController.value.selection =
+                  //     TextSelection.collapsed(
+                  //         offset: profileController
+                  //             .monthlyIncomeController.value.text.length);
                 },
                 keyboardType: TextInputType.number,
               ),
@@ -797,7 +801,11 @@ class ProfileStepper {
                       label: 'PAN number',
                       hint: 'Enter your PAN number here',
                       textCap: true,
-                      inputFormatters: [UpperCaseTextFormatter()],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z0-9]")),
+                        UpperCaseTextFormatter()
+                      ],
                       onChanged: (value) {},
                       vaidation: (value) {
                         if (isFromLoan == true ||
@@ -1078,6 +1086,9 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   }
                   return null;
                 },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
                 keyboardType: TextInputType.number,
               ),
               SizedBox(
@@ -1151,6 +1162,9 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                   }
                   return null;
                 },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
                 keyboardType: TextInputType.number,
               ),
               SizedBox(
@@ -1279,9 +1293,12 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
                     controller: profileController.activeOrExistingLoans.value,
                     label: 'No. of active / existing loans',
                     hint: 'Enter the no. of active / existing loans',
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     onChanged: (value) {
-                      profileController.activeOrExistingLoans.value.text =
-                          value;
+                      // profileController.activeOrExistingLoans.value.text =
+                      //     value;
                     }),
             ],
           ),

@@ -1,7 +1,12 @@
 class CommonValidations {
   String? textValidation(
-      String? value, String? nullError, String? invalidInputError) {
-    final validCharacters = RegExp(r'^[a-zA-Z0-9_\-=@,\.;]+$');
+      {bool? isIfsc,
+      String? value,
+      String? nullError,
+      String? invalidInputError}) {
+    final validCharacters = isIfsc == true
+        ? RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$')
+        : RegExp(r'^[a-zA-Z0-9_\-=@,\.;]+$');
     if (value!.isEmpty) {
       return nullError ?? 'Input field cant be Empty';
     } else if (!validCharacters.hasMatch(value)) {
@@ -31,6 +36,7 @@ class CommonValidations {
       {String? value,
       String? maxErrorText,
       String? minErrorText,
+      String? nullErrorText,
       required int maxValue,
       required int minValue}) {
     if (value != '') {
@@ -45,7 +51,7 @@ class CommonValidations {
         return null;
       }
     } else {
-      return 'Loan value is mandatory*';
+      return nullErrorText ?? 'Loan value is mandatory*';
     }
   }
 }

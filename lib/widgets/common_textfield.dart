@@ -5,25 +5,27 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../constant/theme_manager.dart';
 
 class CommonTextField extends StatelessWidget {
-  const CommonTextField(
-      {this.hintText,
-      this.labelText,
-      this.inUperCase,
-      this.maxlines = 1,
-      this.keyboardType = TextInputType.text,
-      this.inputController,
-      required this.inputValidator,
-      this.inputOnChanged,
-      this.isAutoValidate,
-      this.isObscure = false,
-      this.inputOnSubmitted,
-      this.isUpperCase,
-      this.inputFormat,
-      this.suffixIcon,
-      required this.formName,
-      this.initialValue,
-      this.isfieldEnabled,
-      this.focus});
+  const CommonTextField({
+    this.hintText,
+    this.labelText,
+    this.inUperCase,
+    this.maxlines = 1,
+    this.keyboardType = TextInputType.text,
+    this.inputController,
+    required this.inputValidator,
+    this.inputOnChanged,
+    this.isAutoValidate,
+    this.isObscure = false,
+    this.inputOnSubmitted,
+    this.isUpperCase,
+    this.inputFormat,
+    this.suffixIcon,
+    required this.formName,
+    this.initialValue,
+    this.isfieldEnabled,
+    this.focus,
+    this.fieldOnTap,
+  });
   final String? hintText;
   final String? labelText;
   final bool? inUperCase;
@@ -34,6 +36,7 @@ class CommonTextField extends StatelessWidget {
   final String? Function(String? value) inputValidator;
   final String? Function(String? value)? inputOnChanged;
   final String? Function(String? value)? inputOnSubmitted;
+  final VoidCallback? fieldOnTap;
   final bool isObscure;
   final List<TextInputFormatter>? inputFormat;
   final String formName;
@@ -41,6 +44,7 @@ class CommonTextField extends StatelessWidget {
   final bool? isfieldEnabled;
   final bool? isAutoValidate;
   final bool? isUpperCase;
+
   final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,7 @@ class CommonTextField extends StatelessWidget {
       autofocus: false,
       focusNode: focus,
       name: formName,
+      onTap: fieldOnTap,
       textCapitalization: isUpperCase == true
           ? TextCapitalization.characters
           : TextCapitalization.none,

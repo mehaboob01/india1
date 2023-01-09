@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,6 +8,7 @@ import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dar
 import 'package:india_one/screens/loyality_points/cashback_redeem/your_accounts_page.dart';
 import 'package:india_one/screens/loyality_points/loyality_manager.dart';
 import 'package:india_one/screens/loyality_points/redeem_points/rp_manager.dart';
+
 import 'package:india_one/widgets/button_with_flower.dart';
 import 'package:india_one/widgets/common_redeem_card.dart';
 
@@ -15,7 +17,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
-import '../../../utils/comman_validaters.dart';
+
 import '../../../widgets/common_divider.dart';
 
 import '../../../widgets/common_drop_down.dart';
@@ -25,6 +27,7 @@ import '../../../widgets/common_textfield.dart';
 import '../../../widgets/common_toggle_card.dart';
 import '../../../widgets/custom_slider.dart';
 
+import '../../bank_manage_edit_screen.dart/common_validation.dart';
 import '../../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
 import 'cashback_redo_controller.dart';
 
@@ -165,12 +168,27 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                             hintText: 'Slide the amount above or enter',
                             labelText: 'Points for cashback',
                             keyboardType: TextInputType.number,
+                            inputFormat: [
+                              FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                            ],
+                            isAutoValidate: true,
                             inputValidator: (value) {
-                              if (cashbackCtrl.validateValue(value!)) {
-                                return '*Invalid redeem code';
-                              } else {
-                                return null;
-                              }
+                              return CommonValidations()
+                                  .maxAmountLengthValidate(
+                                value: value,
+                                maxValue: _loyaltyManager.redeemablePoints
+                                    .toDouble()
+                                    .round(),
+                                nullErrorText:
+                                    'Enter points you wish to redeem',
+                                minValue:
+                                    redoCtrl.redeemPointsMinValue.value.round(),
+                              );
+                              // if (cashbackCtrl.validateValue(value!)) {
+                              //   return '*Invalid redeem code';
+                              // } else {
+                              //   return null;
+                              // }
                             },
                             inputOnChanged: (inputValue) {
                               if (inputValue!.isNotEmpty) {
@@ -228,52 +246,74 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                     debugPrint(redoCtrl
                                         .redeemPointsSliderValue.value
                                         .toString());
-                                    cashbackManager.cashBackToBankApi(
-                                        true,
-                                        cashbackManager
-                                            .customerBankList[cashbackManager
-                                                .selectedIndex.value]
-                                            .id,
-                                        {},
-                                        redoCtrl.redeemPointsSliderValue.value
-                                            .round()
-                                            .toString(),
-                                        context);
-                                  } else {
-                                    redoCtrl.accountFormKey.currentState!
-                                        .save();
-
-                                    // custom data to bank transfer
-                                    print(
-                                        "bank name===> ${redoCtrl.accountFormKey!.currentState!.value['bankDropDown']}");
-
-                                    var bankId =
-                                        checkBankId(redoCtrl.bankname.value);
-                                    print("bank id${bankId}");
-
-                                    if (redoCtrl.accountFormKey.currentState!
-                                            .validate() ==
-                                        true) {
-                                      // on click on redeem now bank
-                                      redoCtrl.accountFormKey.currentState!
-                                          .save();
-
-                                      print("redeem");
-                                      print(redoCtrl
-                                          .accountFormKey.currentState!.value);
+                                    if (redoCtrl.redeemPointsSliderValue.value <
+                                        15) {
+                                      Flushbar(
+                                        title: "Alert!",
+                                        message:
+                                            'You can only redeem 15 or more points',
+                                        duration: Duration(seconds: 2),
+                                      )..show(context);
+                                    } else {
                                       cashbackManager.cashBackToBankApi(
-                                          false,
-                                          bankId,
-                                          redoCtrl.accountFormKey.currentState!
-                                              .value,
+                                          true,
+                                          cashbackManager
+                                              .customerBankList[cashbackManager
+                                                  .selectedIndex.value]
+                                              .id,
+                                          {},
                                           redoCtrl.redeemPointsSliderValue.value
                                               .round()
                                               .toString(),
                                           context);
-                                    } else {
-                                      redoCtrl.accountFormKey.currentState!
-                                          .validate();
                                     }
+                                  } else {
+                                    redoCtrl.accountFormKey.currentState!
+                                        .save();
+                                    if (redoCtrl.redeemPointsSliderValue.value <
+                                        15) {
+                                      Flushbar(
+                                        title: "Alert!",
+                                        message:
+                                            'You can only redeem 15 or more points',
+                                        duration: Duration(seconds: 2),
+                                      )..show(context);
+                                    } else {
+                                      print(
+                                          "bank name===> ${redoCtrl.accountFormKey!.currentState!.value['bankDropDown']}");
+
+                                      var bankId =
+                                          checkBankId(redoCtrl.bankname.value);
+                                      print("bank id${bankId}");
+
+                                      if (redoCtrl.accountFormKey.currentState!
+                                              .validate() ==
+                                          true) {
+                                        // on click on redeem now bank
+                                        redoCtrl.accountFormKey.currentState!
+                                            .save();
+
+                                        print("redeem");
+                                        print(redoCtrl.accountFormKey
+                                            .currentState!.value);
+                                        cashbackManager.cashBackToBankApi(
+                                            false,
+                                            bankId,
+                                            redoCtrl.accountFormKey
+                                                .currentState!.value,
+                                            redoCtrl
+                                                .redeemPointsSliderValue.value
+                                                .round()
+                                                .toString(),
+                                            context);
+                                      } else {
+                                        redoCtrl.accountFormKey.currentState!
+                                            .validate();
+                                      }
+                                    }
+
+                                    // custom data to bank transfer
+
                                   }
                                 })
                             : LoyaltySubmitButton(
@@ -290,13 +330,24 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
 
                                   print(
                                       "upi data${cashbackManager.addUpiData.value['upiId']}");
-                                  cashbackManager.cashBackToUpiApi(
-                                      cashbackManager.addUpiData.value['upiId'],
-                                      redoCtrl.redeemPointsSliderValue.value
-                                          .round()
-                                          .toString(),
-                                      context);
-                                  debugPrint('Upi Vpa Clicked');
+                                  if (redoCtrl.redeemPointsSliderValue.value <
+                                      15) {
+                                    Flushbar(
+                                      title: "Alert!",
+                                      message:
+                                          'You can only redeem 15 or more points',
+                                      duration: Duration(seconds: 2),
+                                    )..show(context);
+                                  } else {
+                                    cashbackManager.cashBackToUpiApi(
+                                        cashbackManager
+                                            .addUpiData.value['upiId'],
+                                        redoCtrl.redeemPointsSliderValue.value
+                                            .round()
+                                            .toString(),
+                                        context);
+                                    debugPrint('Upi Vpa Clicked');
+                                  }
                                 }));
                   }),
                 )
@@ -339,6 +390,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
   final cashBackManager = Get.put(CashBackManager());
   double widthIs = 0, heightIs = 0;
   bool accountNumberValidate = false;
+  FocusNode accountFocus = FocusNode();
 
   @override
   void initState() {
@@ -399,6 +451,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
     bankAccountDropDownTapped = false;
     bankTypeDropDownTapped = false;
     redoCtrl.bankname.value = '';
+
     redoCtrl.accountFormKey.currentState!.reset();
 
     cashbackCtrl.loyaltyBankAccountTextEditingCtrl.value.text = '';
@@ -604,7 +657,9 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         () => SearchDropDown(
                           formkey: cashBackManager.bankNameFormKey,
                           searchIconColor: AppColors.primary,
-                          selectedValue: cashBackManager.dropDownBankName.value,
+                          selectedValue: redoCtrl.bankname
+                              .value, //cashBackManager.dropDownBankName.value,
+
                           onChanged: (value) {
                             redoCtrl.bankname.value = value!;
                             print(redoCtrl.bankname.value);
@@ -616,6 +671,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                           // //  return bankAccountDropDownTapped = true;
 
                           // },
+
                           isDropDownEnabled:
                               cashBackManager.selectedIndex.value != -1
                                   ? false
@@ -631,6 +687,12 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                       sizedbox,
                       // enter your account number ------------------------------------------------------------
                       CommonTextField(
+                        fieldOnTap: () {
+                          setState(() {
+                            accountNumberValidate = true;
+                          });
+                        },
+                        focus: accountFocus,
                         formName: 'accountNumber',
                         isObscure: cashBackManager.accountTextObscure.value,
                         isAutoValidate: accountNumberValidate,
@@ -643,6 +705,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         hintText: 'Enter your account number here',
                         labelText: 'Account number',
                         keyboardType: TextInputType.number,
+
                         inputFormat: [
                           LengthLimitingTextInputFormatter(18),
                         ],
@@ -668,43 +731,24 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                         ),
                         inputValidator: (value) {
                           if (value != null) {
+                            // return CommonValidations().numberValidation(
+                            //     value: value,
+                            //     nullError: '*Account number is mandatory',
+                            //     invalidInputError: 'It only takes numbers',
+                            //     minValue: 9);
                             return CommonValidations().numberValidation(
-                                value: value,
-                                nullError: '*Account number is mandatory',
-                                invalidInputError: 'It only takes numbers',
-                                minValue: 9);
+                                value,
+                                '*Account number is mandatory',
+                                '*It only takes numbers');
                           } else {
                             return '';
                           }
                         },
-                        inputOnChanged: (inputValuee) {
-                          setState(() {
-                            accountNumberValidate = true;
-                          });
+                        // inputOnChanged: (inputValuee) {
 
-                          //  redoCtrl.accountFormKey.currentState!.save();
-                          //  redoCtrl.accountFormKey.currentState.validate();
-                          //
-                          // print( redoCtrl.accountFormKey.currentState!.value['accountNumber']) ;
-                          //
-                          //
-                          //
-                          //  if(inputValue!.length<7)
-                          //    {
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //      return "error";
-                          //
-                          //    }
-                          //
-                        },
-                        inputOnSubmitted: (value) {},
+                        // },
                       ),
+
                       sizedbox,
                       // comfirm account number -----------------------------------------------
                       CommonTextField(
@@ -787,8 +831,8 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                 invalidInputError:
                                     'Please enter valid IFSC code',
                                 isIfsc: true),
-                        inputOnChanged: (inputValue) {},
-                        inputOnSubmitted: (value) {},
+                        // inputOnChanged: (inputValue) {},
+                        // inputOnSubmitted: (value) {},
                       ),
                       sizedbox,
                       // bank account type ---------------------------------------------------------
@@ -885,7 +929,9 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
 
                       Container(
                           width: Get.size.width * 0.9,
-                          height: Get.size.height * 0.3,
+                          height: cashBackManager.customerUPIList.length > 2
+                              ? Get.size.height * 0.3
+                              : Get.size.height * 0.2,
                           child: Obx(
                             () => ListView.builder(
                                 itemCount:
@@ -973,6 +1019,11 @@ class _UpiVpaCardState extends State<UpiVpaCard> {
                         formName: 'upiId',
                         hintText: 'Your UPI ID or VPA number',
                         labelText: 'UPI / VPA',
+                        inputFormat: [
+                          LengthLimitingTextInputFormatter(20),
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r"[@0-9a-zA-Z]")),
+                        ],
                         keyboardType: TextInputType.text,
                         inputValidator: (value) {
                           if (cashbackCtrl.validateValue(value!)) {

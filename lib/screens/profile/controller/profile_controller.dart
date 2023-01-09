@@ -22,6 +22,7 @@ import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
+import 'package:india_one/utils/common_methods.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -202,7 +203,13 @@ class ProfileController extends GetxController {
     // monthlyIncomeController.value.text =
     //     "${(profileDetailsModel.value.income ?? 0).toInt().priceString()}";
     monthlyIncomeController.value.text =
-        "${(profileDetailsModel.value.income ?? '').toString()}";
+        profileDetailsModel.value.income == null
+            ? ''
+            : CommonMethods()
+                .indianRupeeValue(profileDetailsModel.value.income!.toDouble());
+
+    // monthlyIncomeController.value.text =
+    //     "${(profileDetailsModel.value.income ?? '').toString()}";
     panNumberController.value.text = profileDetailsModel.value.panNumber ?? '';
 
     // new changes
