@@ -62,8 +62,8 @@ class _HealthInsuranceState extends State<HealthInsurance> {
         children: [
           CustomAppBar(
               heading: widget.isAccidentInsurance
-                  ? 'Personal accident'
-                  : "Personal accident",
+                  ? 'Personal Accident'
+                  : "Personal Accident",
               customActionIconsList: commonAppIcons),
           Container(
             width: widthIs,

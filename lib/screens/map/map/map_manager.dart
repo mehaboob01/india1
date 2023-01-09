@@ -99,10 +99,11 @@ class MapManager extends GetxController {
 
   addMarker(String markerId, GeoLocation? loc, index) async {
     var marker = Marker(
-        onTap: () {},
-        markerId: MarkerId(markerId),
-        position: LatLng(loc!.lat!.toDouble(), loc.lon!.toDouble()),
-        infoWindow: InfoWindow(title: mapCoordinateList[index].name));
+      onTap: () {},
+      markerId: MarkerId(markerId),
+      position: LatLng(loc!.lat!.toDouble(), loc.lon!.toDouble()),
+      infoWindow: InfoWindow(title: mapCoordinateList[index].name),
+    );
 
     allMarkersPlot.add(marker);
   }

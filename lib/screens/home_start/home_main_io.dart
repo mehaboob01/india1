@@ -133,7 +133,39 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_LOCATION_PERMISSION, false);
         return false;
       }
-      Geolocator.openAppSettings();
+
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              title: Text("Location Access"),
+              content: Text(
+                  "You need to allow location permissions to see nearby ATM's, please allow the permission in settings to proceed."),
+              actions: [
+                Row(
+                  children: [
+                    Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        Geolocator.openAppSettings();
+                      },
+                      child: Text(
+                        "Open application settings",
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "Cancel",
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }));
       return false;
     } else {
       Get.to(Maps());

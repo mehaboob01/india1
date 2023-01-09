@@ -4,15 +4,14 @@ class LocaleString extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-
-
           'hello': 'Hello World',
           'mobile_number': 'Mobile number',
           'term_condition': 'Terms and Conditions',
           'i_accept': 'I accept',
           'request_otp': 'Request OTP',
           'empty_error_msg': '*Please enter a valid 10 digit mobile number',
-          'checkbox_select_error': 'Agree to our Terms & Conditions to proceed further',
+          'checkbox_select_error':
+              'Agree to our Terms & Conditions to proceed further',
           'sending_otp': 'Sending OTP',
           'proceed_btn': 'Proceed',
           'enter_otp': 'Enter OTP',
@@ -54,7 +53,7 @@ class LocaleString extends Translations {
 
           // insurance section text
           '4_wheeler': '4 Wheeler',
-          'critical_illness': 'Personal accident',
+          'critical_illness': 'Personal Accident',
 
           //payments section
 
@@ -71,9 +70,6 @@ class LocaleString extends Translations {
           'current_balance': 'Current balance',
 
           'privacy_policy': 'Privacy policy'
-
-
-
         },
         'hi_IN': {
           'hello': 'नमस्ते दुनिया',
@@ -141,10 +137,10 @@ class LocaleString extends Translations {
 
           'current_balance': 'वर्तमान शेष',
 
-           'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'Privacy policy'
         },
         'ka_IN': {
-  'current_balance': 'Current balance',
+          'current_balance': 'Current balance',
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
           'mobile_number': 'Mobile number',
           'term_condition': 'ನಿಯಮ ಮತ್ತು ಶರತ್ತುಗಳು',
@@ -208,10 +204,9 @@ class LocaleString extends Translations {
           'digi_silver': 'Digi Gold',
 
           'privacy_policy': 'Privacy policy'
-
         },
         'ma_IN': {
-  'current_balance': 'चालू शिल्लक',
+          'current_balance': 'चालू शिल्लक',
           'hello': 'हॅलो वर्ल्ड',
           'mobile_number': 'मोबाईल नंबर',
           'term_condition': 'अटी व शर्ती',
@@ -362,7 +357,7 @@ class LocaleString extends Translations {
           'welcome': 'வரவேற்பு,',
           'cashback_india1_summary': 'இந்தியா 1 சுருக்கம்  கேஷ்பேக்',
           'in': '்ளே',
-          'redeem_points_now':'Redeem Points Now',
+          'redeem_points_now': 'Redeem Points Now',
           'home': 'சுருக்ம்',
           'payments': 'சுருக்க',
           'loans': 'Loans',
@@ -462,7 +457,6 @@ class LocaleString extends Translations {
           'fast_teg': 'FASTag',
           'dth': 'DTH',
 
-
           // Saving section
 
           'fixed_deposit': 'Fixed Deposit',
@@ -527,7 +521,6 @@ class LocaleString extends Translations {
           'recharge': 'Recharge',
           'fast_teg': 'FASTag',
           'dth': 'DTH',
-
 
           // Saving section
 
@@ -594,7 +587,6 @@ class LocaleString extends Translations {
           'recharge': 'ପଏଣ୍ଟଗୁଡିକ',
           'fast_teg': 'ପଏଣ୍ଟଗୁଡିକ',
           'dth': 'ପଏଣ',
-
 
           // Saving section
 

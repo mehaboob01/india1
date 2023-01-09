@@ -984,7 +984,7 @@ class ProfileScreen extends StatelessWidget {
                             child: singleDetails(
                                 title: "Monthly income",
                                 value:
-                                    "${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble()) ?? ""}",
+                                    "₹ ${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble()) ?? ""}",
                                 isEmpty: profileDetailsModel.income == null
                                     ? true
                                     : false),
