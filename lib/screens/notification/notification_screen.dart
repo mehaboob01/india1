@@ -16,10 +16,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  // commit code
-  // jfjfjj
 
-  // commit code
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);

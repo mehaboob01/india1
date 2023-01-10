@@ -57,7 +57,7 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
                       )
                     : BoxDecoration(),
                 height: bottomMargin + 36,
-                width: widthIs / 5.4,
+                width: widthIs / 5.2,
                 child: Center(
                   child: SingleChildScrollView(
                     child: Column(
@@ -88,6 +88,7 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
                         ),
                         TextIO(
                           widget.title,
+
                           color: widget.selected
                               ? AppColors.primary
                               : AppColors.passiveTabColor,

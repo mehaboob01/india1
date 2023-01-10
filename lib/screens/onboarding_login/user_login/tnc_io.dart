@@ -1,12 +1,9 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
-import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
 import '../../../widgets/loyalty_common_header.dart';
 
@@ -22,6 +19,7 @@ class Tnc_IO extends StatefulWidget {
 class _Tnc_IOState extends State<Tnc_IO> {
   double heightIs = 0, widthIs = 0;
   double progress = 0.0;
+  bool isVisible = true;
 
   final ConnectionManagerController _controller =
       Get.find<ConnectionManagerController>();
@@ -40,11 +38,34 @@ class _Tnc_IOState extends State<Tnc_IO> {
                     heading: '${widget.title.tr}',
                     hasLogo: false,
                   ),
+                  Visibility(
+                    visible: isVisible,
+                    child: LinearProgressIndicator(
+                      color: AppColors.primary,
+                      backgroundColor: Colors.black38,
+                      value: progress,
+                    ),
+                  ),
+                  // Expanded(
+                  //   child: InAppWebView(
+                  //     initialUrlRequest: URLRequest(
+                  //       url: Uri.tryParse(widget.termCondition.value),
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
-                    child: InAppWebView(
-                      initialUrlRequest: URLRequest(
-                        url: Uri.tryParse(widget.termCondition.value),
-                      ),
+                    child: WebView(
+                      initialUrl: widget.termCondition.value,
+                      javascriptMode: JavascriptMode.unrestricted,
+                      onProgress: (progress) => setState(() {
+                        if (progress > 99) {
+                          Future.delayed(Duration(seconds: 1)).then((value) {
+                            isVisible = false;
+                            setState(() {});
+                          });
+                        }
+                        this.progress = progress / 100 as double;
+                      }),
                     ),
                   ),
                 ],

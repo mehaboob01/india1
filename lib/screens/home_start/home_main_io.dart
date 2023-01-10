@@ -140,7 +140,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
             return AlertDialog(
               title: text("Location Access"),
               content: text(
-                  "You need to allow location permissions to see nearby ATM's, please allow the permission in settings to proceed."),
+
+                  "You need to allow location permissions to see nearby ATM's, please allow the permission in settings to proceed.",maxLines: 5),
               actions: [
                 Row(
                   children: [
@@ -151,6 +152,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       },
                       child: text(
                         "Open application settings",
+                        color: Colors.blue
                       ),
                     ),
                     TextButton(
@@ -159,6 +161,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                       },
                       child: text(
                         "Cancel",
+                          color: Colors.blue
                       ),
                     ),
                   ],
@@ -281,6 +284,11 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 WidgetsBinding.instance.removeObserver(this);
               });
             } else {
+              if (androidVersion == 10) {
+                auth.stopAuthentication();
+                WidgetsBinding.instance.removeObserver(this);
+                SystemNavigator.pop();
+              }
               SystemNavigator.pop();
             }
           } else {
@@ -355,10 +363,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                   cancelTextColor: AppColors.white,
                   title: "Logout",
                   middleText: "Do you want to close the app?",
-                  // textConfirm: "Yes",
-                  // textCancel: "No",
-                  // confirm: await confirmBtn(),
-                  // cancel: await cancelBtn(),
+
                   actions: [
                     confirmBtn(),
                     ElevatedButton(

@@ -100,7 +100,7 @@ class _LendersListState extends State<LendersListOthers> {
                                         Get.to(
                                           () => ProviderDetail(
                                             title:
-                                                '${loanController.loanLenderOthersModel.value.lenders![index].loanTitle}',
+                                                '${widget.title}',
                                             lenders: loanController
                                                 .loanLenderOthersModel
                                                 .value

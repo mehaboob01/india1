@@ -87,6 +87,7 @@ class LoanCommon {
             ],
           ),
           Spacer(),
+
           // SizedBox(
           //   height: 48,
           //   child: Image.asset(
@@ -214,18 +215,21 @@ class LoanCommon {
               ),
               if (applyButtonClick == null) ...[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: [
-                    rowtext(
+                    rowText(
+                        parentColumn: false,
                         value: 'Max amount',
                         title:
                             '₹ ${CommonMethods().indianRupeeValue(double.parse(lenders!.loanMaxAmount!.toString()) ?? 0)}'),
-                    rowtext(
+                    rowText(
+                      parentColumn: false,
                       value: 'Tenure',
                       title:
                           '${lenders.minTenureInMonths} - ${lenders.maxTenureInMonths}months  ',
                     ),
-                    rowtext(
+                    rowText(
+                      parentColumn: false,
                       value: 'Interest/m',
                       title:
                           '${lenders.minInterestRate} - ${lenders.maxInterestRate}%',
@@ -253,15 +257,15 @@ class LoanCommon {
     );
   }
 
-  Widget rowtext(
+  Widget rowText(
       {required String title,
-      required String value,
-      bool fromPersonalLoan = false}) {
+        required String value,
+        required bool parentColumn}) {
     // return Column(
     //   children: [
     //     Container(
     //       width: 98,
-    //       child: text(
+    //       child: Text(
     //         "$title",
     //         style: TextStyle(
     //           color: AppColors.iconColorDark,
@@ -270,7 +274,7 @@ class LoanCommon {
     //         ),
     //       ),
     //     ),
-    //     text(
+    //     Text(
     //       "$value",
     //       style: TextStyle(
     //         color: AppColors.iconColorDark,
@@ -281,7 +285,46 @@ class LoanCommon {
     //   ],
     // );
 
-    return Container(
+    return parentColumn == true
+        ? Container(
+      height: 40,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: EdgeInsets.all(12.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "$value",
+                style: TextStyle(
+                  color: AppColors.iconColorDark,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              // width: 98,
+              child: Text(
+                "$title",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: AppColors.iconColorDark,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    )
+        : Container(
       //color: Colors.red,
       width: 100,
       height: 60,
@@ -292,7 +335,7 @@ class LoanCommon {
               //color: Colors.blue,
               // width: 98,
               child: Center(
-                child: text(
+                child: Text(
                   "$title",
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -307,7 +350,7 @@ class LoanCommon {
           Container(
             //color: Colors.green,
             child: Center(
-              child: text(
+              child: Text(
                 "$value",
                 style: TextStyle(
                   color: AppColors.iconColorDark,

@@ -197,7 +197,8 @@ class _MapsState extends State<Maps> {
                             decoration: BoxDecoration(color: Colors.white),
                             child: ListTile(
                               title: text(mapManager.placeList.value[index]
-                                  ["description"]),
+                                  ["description"],
+                              maxLines: 4),
                             ),
                           ),
                         );

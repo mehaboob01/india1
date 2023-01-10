@@ -1,12 +1,12 @@
 // DEV URL
-final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl =
-    "https://india1-digital.s3.ap-south-1.amazonaws.com";
+// final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+// final String bucketBaseUrl =
+//     "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
-// final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
-// final String bucketBaseUrl =
-//     "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
+final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
+final String bucketBaseUrl =
+    "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
 
 class Apis {
   // OnBoarding & login Api

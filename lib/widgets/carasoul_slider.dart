@@ -27,14 +27,7 @@ class CarasoulImages extends StatelessWidget {
                           ? MRouter.homeScreen
                           : getController.bannerList[i].route.toString());
                     } else {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => BannerAds(
-                      //           getController.bannerList[i].title.toString(),
-                      //           getController.bannerList[i].redirectUrl
-                      //               .toString())),
-                      // );
+
                       Get.to(() => CommonWebView(
                           title: getController.bannerList[i].title.toString(),
                           url: getController.bannerList[i].redirectUrl

@@ -8,6 +8,9 @@ import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
+import '../../constant/routes.dart';
+import '../../core/data/remote/api_constant.dart';
+import '../../utils/common_webview.dart';
 import 'model/loan_lender_others_model.dart';
 
 class ProviderDetail extends StatelessWidget {
@@ -44,11 +47,25 @@ class ProviderDetail extends StatelessWidget {
                     CustomAppBar(
                       heading: '$title',
                       customActionIconsList: [
-                        // CustomActionIcons(
-                        //   image: AppImages.bottomNavHome,
-                        // ),
+                        CustomActionIcons(
+                            image: AppImages.askIconSvg,
+                            onHeaderIconPressed: () async {
+                              Get.to(() => CommonWebView(
+                                title: "FAQs",
+                                url: Apis.Faq,
+                              ));
+                            }),
+                        CustomActionIcons(
+                            image: AppImages.bottomNavHomeSvg,
+                            onHeaderIconPressed: () async {
+                              Get.offNamedUntil(MRouter.homeScreen,
+                                      (route) => route.isFirst);
+                            }),
+
+
                       ],
                     ),
+
                     Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
