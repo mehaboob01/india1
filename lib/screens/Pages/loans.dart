@@ -158,7 +158,7 @@ class LoansCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-               Get.to(() => CommonWebView(
+            Get.to(() => CommonWebView(
                   title: 'Credit Score',
                   url: Apis.creditScore,
                 ));

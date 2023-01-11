@@ -188,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
                                                                     fit: BoxFit
                                                                         .fill,
                                                                     imageUrl:
-                                                                        '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
+                                                                        '${profileController.profileDetailsModel.value.imageUrl}',
                                                                     errorWidget:
                                                                         (context,
                                                                             _,

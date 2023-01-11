@@ -59,6 +59,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final notificationManager = Get.put(NotificationManager());
   ProfileController _profileController = Get.put(ProfileController());
 
+
   int androidVersion = 0;
 
   getAndroidVersion() async {
@@ -723,7 +724,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                               ),
                               nearestAtm(),
                               // carosuel Images --------------------
-                              CarasoulImages(),
+                              _homeManager.bannerList.isEmpty?SizedBox.shrink():  CarasoulImages(),
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 6.0.wp,

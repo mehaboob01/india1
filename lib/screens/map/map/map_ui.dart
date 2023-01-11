@@ -145,22 +145,24 @@ class _MapsState extends State<Maps> {
                   SizedBox(
                     width: Get.width * 0.03,
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      mapManager.controller.value.text = "Search Location";
-                      await mapManager.getCurrentLocation();
-                    },
-                    child: Container(
-                      height: Get.height * 0.06,
-                      width: Get.width * 0.135,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              width: 1, color: AppColors.cardScreenBg),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: ImageIcon(
-                        AssetImage(
-                          AppImages.locationIcon,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        mapManager.controller.value.text = "Search Location";
+                        await mapManager.getCurrentLocation();
+                      },
+                      child: Container(
+                        height: Get.height * 0.06,
+                        width: Get.width * 0.135,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                width: 1, color: AppColors.cardScreenBg),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: ImageIcon(
+                          AssetImage(
+                            AppImages.locationIcon,
+                          ),
                         ),
                       ),
                     ),
