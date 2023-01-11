@@ -394,9 +394,13 @@ class ProfileController extends GetxController {
           (await _picker.pickImage(source: ImageSource.gallery))!.path;
       Get.back();
       // await cropImage();
-      compress().then((value) async {
-        await cropImage();
-      });
+      if(image.value!=null)
+        {
+          await compress().then((value) async {
+            await cropImage();
+          });
+        }
+
     } else if (await status.isDenied) {
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, true);
@@ -420,9 +424,12 @@ class ProfileController extends GetxController {
       image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
       Get.back();
 
-      compress().then((value) async {
-        await cropImage();
-      });
+      if(image.value!=null)
+      {
+        await compress().then((value) async {
+          await cropImage();
+        });
+      }
     } else if (await status.isDenied) {
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION, true);

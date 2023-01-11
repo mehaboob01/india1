@@ -173,7 +173,7 @@ class LoanCommon {
                               Icons.warning_amber_outlined,
                             );
                           },
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),

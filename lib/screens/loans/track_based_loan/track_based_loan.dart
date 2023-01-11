@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -212,11 +213,12 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
 
             loanController.updateScreen(Steps.PERSONAL.index);
           } else {
-            Flushbar(
-              title: "",
-              message: "Something went wrong!",
-              duration: Duration(seconds: 3),
-            )..show(context);
+            Fluttertoast.showToast(
+              msg: "Please select sub product!",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              fontSize: 16.0,
+            );
           }
         }
       },

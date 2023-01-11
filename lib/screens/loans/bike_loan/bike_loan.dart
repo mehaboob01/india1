@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -156,17 +157,25 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        // if (profileController.vehicleType.value == '') {
-        //   Flushbar(
-        //     title: "Alert!",
-        //     message: "Select vehicle type",
-        //     duration: Duration(seconds: 3),
-        //   )..show(context);
-        // } else {
-
-        // }
-        loanController.updateLoanAmount(
-            amount: loanAmountEditingController.text, type: LoanType.BikeLoan);
+        if (profileController.twoWheelermakes.value == '') {
+          Fluttertoast.showToast(
+            msg: "Please select product!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        } else if (profileController.twoWheelerModel.value == '') {
+          Fluttertoast.showToast(
+            msg: "Please select model!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+        } else {
+          loanController.updateLoanAmount(
+              amount: loanAmountEditingController.text,
+              type: LoanType.BikeLoan);
+        }
       },
       child: LoanCommon().nextButton(),
     );
