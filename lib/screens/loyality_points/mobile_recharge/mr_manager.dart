@@ -60,16 +60,22 @@ class MrManager extends GetxController {
   Future<void> showAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs!.setBool(SPKeys.SHOW_AUTH, false);
+
   }
   // operator list
   callOperatorListApi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
     try {
       isLoading(true);
       var response =
           await http.get(Uri.parse(baseUrl + Apis.operatorList), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        "x-digital-api-key": "1234"
+        "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
+
       });
 
       print("Operator response");
@@ -117,13 +123,16 @@ class MrManager extends GetxController {
   //circle list
 
   callCircleListApi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     try {
       isLoading(true);
       var response =
           await http.get(Uri.parse(baseUrl + Apis.circleList), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        "x-digital-api-key": "1234"
+        "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
       });
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
@@ -164,6 +173,9 @@ class MrManager extends GetxController {
   // check planes
 
   checkPlanesApi(int? operatorId, int? circleId, mobileNumber) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     selectedIndex.value = (-1);
 
     plansList.clear();
@@ -188,7 +200,8 @@ class MrManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
       print("response ${response.body}");
 
@@ -249,6 +262,9 @@ class MrManager extends GetxController {
 
   mobileRechargeApi(int? operatorId, int? circleId, String? phoneNumber,
       RxMap<String, dynamic> rechargeData, BuildContext context) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     isMobileRechargeLoading(true);
 
     try {
@@ -268,7 +284,8 @@ class MrManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("REsponse of mobile recharge ${response.body}");

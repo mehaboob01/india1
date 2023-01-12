@@ -2,11 +2,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SPUtil {
   static SharedPreferences? _prefs;
-  static SharedPreferences? _globalPrefs;
 
   static init() async {
     _prefs = await SharedPreferences.getInstance();
-    _globalPrefs = await SharedPreferences.getInstance();
   }
 
   static putInteger(String key, int value) {
@@ -40,55 +38,19 @@ class SPUtil {
     return _prefs!.clear();
   }
 
-  static gPutInteger(String key, int value) {
-    if (_globalPrefs != null) _globalPrefs!.setInt(key, value);
-  }
 
-  static int gGetInteger(String key) {
-    return _globalPrefs == null ? 0 : _globalPrefs!.getInt(key) ?? 0;
-  }
+  // static bool? checkUserExist(String key) {
+  //   String strCustomerData = getString(key);
+  //   if (strCustomerData.isEmpty || strCustomerData.length == 0) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 
-  static gPutString(String key, String value) {
-    if (_globalPrefs != null) _globalPrefs!.setString(key, value);
-  }
-
-  static String gGetString(String key) {
-    return _globalPrefs == null ? '' : _globalPrefs!.getString(key) ?? "";
-  }
-
-  static gPutBool(String key, bool? value) async {
-    if (_globalPrefs != null) _globalPrefs!.setBool(key, value!);
-  }
-
-
-  static bool? gGetBool(String key) {
-    if (_globalPrefs == null) {
-      return false;
-    } else if (_globalPrefs!.getBool(key) == null) {
-      return false;
-    } else {
-      return _globalPrefs!.getBool(key);
-    }
-  }
-
-  static Future<bool> gClear() {
-    return _globalPrefs!.clear();
-  }
-
-
-
-  static bool? checkUserExist(String key) {
-    String strCustomerData = getString(key);
-    if (strCustomerData.isEmpty || strCustomerData.length == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  static Future<bool> clearUserData(String key) {
-    return _prefs!.remove(key);
-  }
+  // static Future<bool> clearUserData(String key) {
+  //   return _prefs!.remove(key);
+  // }
 
 
 }

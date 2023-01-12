@@ -21,6 +21,7 @@ class UsedRewardController extends GetxController {
   Future<List<Transaction>> getUsedRewardHistory() async {
     final preference = await SharedPreferences.getInstance();
     String? customerId = preference.getString(SPKeys.CUSTOMER_ID);
+    String? accessToken = preference!.getString(SPKeys.ACCESS_TOKEN);
     loadingData.value = true;
     try {
       List<Transaction> getList = [];
@@ -31,7 +32,8 @@ class UsedRewardController extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       var jsonData = jsonDecode(response.body);

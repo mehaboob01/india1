@@ -30,8 +30,8 @@ class SelectLanManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //"Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("send tokens${response.body}");

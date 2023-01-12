@@ -1,13 +1,18 @@
 //DEV URL
 final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
 // final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
-
+// final String bucketBaseUrl =
+//     "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
 
 
 // prod link
-//final String baseUrl = "http://india1digitalebsapp-env.eba-xk2hzvrc.ap-south-1.elasticbeanstalk.com/v1/";
+
+//   final String baseUrl = "http://india1digitalebsapp-env.eba-xk2hzvrc.ap-south-1.elasticbeanstalk.com/v1/";
+// final String bucketBaseUrl =
+//     "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 
 
@@ -112,7 +117,7 @@ class Apis {
   static String twoWheelerModel = "loans/fetch-two-wheeler-models";
 
   //miscellaneous
-//  static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
+  static String profileImageUrl = "$bucketBaseUrl/images/profile-images/";
   static String creditCard =
       "https://applycc.yesbank.in/YESBankCreditCard?uid=ab180";
   static String emiCard =

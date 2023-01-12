@@ -29,6 +29,8 @@ class LoginManager extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
 
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
@@ -43,7 +45,8 @@ class LoginManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+           // "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response of send otp${response.body}");
@@ -102,10 +105,8 @@ class LoginManager extends GetxController {
   }
 
   void callTermConditionPolicyApi() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
-    //
-    // print("select lan ${selectedLan}");
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
     try {
       //  print(baseUrl + Apis.termCondition+selectedLan!);
@@ -114,14 +115,18 @@ class LoginManager extends GetxController {
           .get(Uri.parse(baseUrl + Apis.termCondition + "kn"), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        "x-digital-api-key": "1234"
-        //"Authorization": accessToken.toString()
+        "x-digital-api-key": "1234",
+        "Authorization": "Bearer "+accessToken.toString()
       });
-
       print("response${response.body}");
 
+
+
       if (response.statusCode == 200 || response.statusCode == 201) {
+
         var jsonData = jsonDecode(response.body);
+
+
         TermConditionMpdel termConditionMpdel =
             TermConditionMpdel.fromJson(jsonData);
 

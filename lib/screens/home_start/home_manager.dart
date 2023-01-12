@@ -64,8 +64,8 @@ class HomeManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //"Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response home===>${response.body}");
@@ -111,8 +111,11 @@ class HomeManager extends GetxController {
   }
 
   void callAdsBannerApi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     bannerListSend.clear();
     bannerList.clear();
+
     try {
       isLoading.value = true;
       var response = await http.post(
@@ -120,7 +123,9 @@ class HomeManager extends GetxController {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-          "x-digital-api-key": "1234"
+          "x-digital-api-key": "1234",
+          "Authorization": "Bearer "+accessToken.toString()
+
         },
         body: jsonEncode({"adPlacement": "Home"}),
       );
@@ -174,6 +179,8 @@ class HomeManager extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
 
       print("device Id ${deviceId}");
       var response = await http.put(Uri.parse(baseUrl + Apis.sendToken),
@@ -185,7 +192,9 @@ class HomeManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
+
           });
 
       print("send tokens${response.body}");
@@ -224,6 +233,8 @@ class HomeManager extends GetxController {
   void callPaymentApi(String api_route, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
     print("customer id ${customerId}");
 
     try {
@@ -235,7 +246,8 @@ class HomeManager extends GetxController {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-          "x-digital-api-key": "1234"
+          "x-digital-api-key": "1234",
+          "Authorization": "Bearer "+accessToken.toString()
         },
         body: jsonEncode({"customerId": customerId}),
       );

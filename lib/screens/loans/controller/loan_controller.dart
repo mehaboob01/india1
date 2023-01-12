@@ -19,7 +19,9 @@ import 'package:india_one/screens/loans/model/loan_providers_model.dart';
 import 'package:india_one/screens/loans/submission_page.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/data/local/shared_preference_keys.dart';
 import '../model/loan_lender_others_model.dart';
 import '../personal_loan_io/personal_loan.dart';
 
@@ -484,6 +486,8 @@ class LoanController extends GetxController {
   }
 
   Future recentTransactions({LoanType? loanType}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -498,7 +502,8 @@ class LoanController extends GetxController {
               headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+                "Authorization": "Bearer "+accessToken.toString()
           });
       // var response = await DioApiCall().commonApiCall(
       //   endpoint: Apis.recentTransactionLoan,
@@ -536,6 +541,9 @@ class LoanController extends GetxController {
   }
 
   Future insuranceRecentTransactions() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     try {
       createLoanLoading.value = true;
       customerId.value = await profileController.getId();
@@ -549,7 +557,8 @@ class LoanController extends GetxController {
               headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+                "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("Json data ==> ${response.body}");

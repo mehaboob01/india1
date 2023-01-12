@@ -88,11 +88,7 @@ class OtpManager extends GetxController {
         "otp": otpNumber,
         "preferredLanguage": "en"
       };
-      Map<String, dynamic> headers = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "x-digital-api-key": "1234"
-      };
+
 
       verifyHeadersData['x-digital-api-key'] = '1234';
 

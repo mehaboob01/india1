@@ -114,6 +114,8 @@ class NotificationManager extends GetxController {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+
     try {
       isLoading.value = true;
       var response = await http.post(Uri.parse(baseUrl + Apis.markAsRead),
@@ -124,7 +126,8 @@ class NotificationManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
       print("response of mark as read${response.body}");
 

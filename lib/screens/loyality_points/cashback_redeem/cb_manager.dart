@@ -76,8 +76,8 @@ class CashBackManager extends GetxController {
       var response = await http.get(Uri.parse(baseUrl + Apis.banks), headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        "x-digital-api-key": "1234"
-        //  "Authorization": accessToken.toString()
+        "x-digital-api-key": "1234",
+          "Authorization": "Bearer "+accessToken.toString()
       });
       var jsonData = jsonDecode(response.body);
       print("response of bank lists${response.body}");
@@ -136,8 +136,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //  "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+              "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response==> ${response.body.toString()}");
@@ -193,8 +193,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //   "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
       var jsonData = jsonDecode(response.body);
 
@@ -285,8 +285,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //  "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+              "Authorization": "Bearer "+accessToken.toString()
           });
       print("Response of points to bank api");
       print(response.body);
@@ -341,8 +341,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            // "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+             "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("Response of add upi${response.body}");
@@ -410,8 +410,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //   "Authorization": accessToken.toString()
+            'x-digital-api-key': '1234',
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       if (response.statusCode == 200) {
@@ -461,8 +461,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //  "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+             "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response delete==> ${response.body}");
@@ -528,8 +528,8 @@ class CashBackManager extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //   "Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response delete==> ${response.body}");

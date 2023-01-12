@@ -258,15 +258,12 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-
     _homeManager.showAuth.value = false;
     getAppVersion();
     getId();
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () {
       getProfileData();
-
       // getBankDetails();
       // getUpiIdDetails();
     });
@@ -592,10 +589,7 @@ class ProfileController extends GetxController {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           fontSize: 16.0,
-        ).then((value) async {
-          await    getProfileData();
-          await    setData();
-        });
+        );
       }
     } catch (e) {
       uploadProfileLoading.value = false;
@@ -641,10 +635,6 @@ class ProfileController extends GetxController {
           profileDetailsModel.value.imageName =
               "${response['imageURL'].toString().split("/").last}";
           profileDetailsModel.refresh();
-
-          // updating profile details
-          getProfileData();
-          setData();
         }
       } else {
         Fluttertoast.showToast(
@@ -1397,8 +1387,8 @@ class ProfileController extends GetxController {
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            "x-digital-api-key": "1234"
-            //"Authorization": accessToken.toString()
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer "+accessToken.toString()
           });
 
       if (response.statusCode == 200 || response.statusCode == 201) {

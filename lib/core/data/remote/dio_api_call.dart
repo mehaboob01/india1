@@ -29,8 +29,8 @@ class DioApiCall {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        "x-digital-api-key": "1234"
-        //"Authorization": accessToken.toString()
+        "x-digital-api-key": "1234",
+        "Authorization": "Bearer "+accessToken.toString()
       },
     );
     if (headers != null) {

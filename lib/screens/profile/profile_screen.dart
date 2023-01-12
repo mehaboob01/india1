@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/theme_manager.dart';
+import '../../core/data/remote/api_constant.dart';
+import '../../core/data/remote/api_constant.dart';
 import '../../utils/common_methods.dart';
 import '../../widgets/loyalty_common_header.dart';
 import '../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
@@ -188,7 +190,7 @@ class ProfileScreen extends StatelessWidget {
                                                                     fit: BoxFit
                                                                         .fill,
                                                                     imageUrl:
-                                                                        '${profileController.profileDetailsModel.value.imageUrl}',
+                                                                        '${Apis.profileImageUrl}${profileController.profileDetailsModel.value.imageName}',
                                                                     errorWidget:
                                                                         (context,
                                                                             _,
