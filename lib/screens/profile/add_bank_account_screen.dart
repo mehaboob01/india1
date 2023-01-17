@@ -302,7 +302,20 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                                 "Account number mismatch!! please check",
                                             duration: Duration(seconds: 3),
                                           )..show(context);
-                                        } else {
+                                        }
+
+                                        else if(redoCtrl.bankname.value ==
+                                            '')
+                                          {
+                                            Flushbar(
+                                              title: "Alert!",
+                                              message:
+                                              "Please select bank",
+                                              duration: Duration(seconds: 3),
+                                            )..show(context);
+                                          }
+
+                                        else {
                                           bankAccountKeyForBankId.currentState!
                                               .save();
 

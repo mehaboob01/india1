@@ -9,6 +9,7 @@ import 'package:india_one/screens/onboarding_login/user_login/user_login_model.d
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_constant.dart';
+import '../../../core/data/remote/dio_api_call.dart';
 import '../otp_screen/otp_screen_ui.dart';
 
 class LoginManager extends GetxController {
@@ -116,17 +117,13 @@ class LoginManager extends GetxController {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         "x-digital-api-key": "1234",
-        "Authorization": "Bearer "+accessToken.toString()
+        "Authorization": accessToken.toString()
       });
+
       print("response${response.body}");
 
-
-
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         var jsonData = jsonDecode(response.body);
-
-
         TermConditionMpdel termConditionMpdel =
             TermConditionMpdel.fromJson(jsonData);
 

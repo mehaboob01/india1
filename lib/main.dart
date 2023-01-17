@@ -34,6 +34,7 @@ Future<void> main() async {
 
   // for notification
   await Firebase.initializeApp();
+
   initializeNotification();
 
   // for firebase analytics

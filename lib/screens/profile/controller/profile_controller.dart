@@ -1370,7 +1370,7 @@ class ProfileController extends GetxController {
   //   }
   // }
 
-  void logoutUser() async {
+  Future<void> logoutUser() async {
     try {
       logoutLoading.value = true;
 

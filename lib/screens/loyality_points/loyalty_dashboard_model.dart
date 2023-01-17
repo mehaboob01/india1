@@ -1,202 +1,141 @@
-import 'dart:convert';
-
-LoyaltyDashboardModel loyaltyDashboardModelFromJson(String str) =>
-    LoyaltyDashboardModel.fromJson(json.decode(str));
-
-String loyaltyDashboardModelToJson(LoyaltyDashboardModel data) =>
-    json.encode(data.toJson());
-
 class LoyaltyDashboardModel {
-  LoyaltyDashboardModel({
-    this.data,
-    this.status,
-  });
-
-  Data? data;
-  Status? status;
-
-  factory LoyaltyDashboardModel.fromJson(Map<String, dynamic> json) =>
-      LoyaltyDashboardModel(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        status: json["status"] == null ? null : Status.fromJson(json["status"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": data == null ? null : data!.toJson(),
-        "status": status == null ? null : status!.toJson(),
-      };
-}
-
-class Data {
-  Data({
-    this.pointsSummary,
-    this.atmRewards,
-    this.pointsConfiguration,
-    this.recentRewardTransactions,
-  });
-
   PointsSummary? pointsSummary;
   AtmRewards? atmRewards;
   PointsConfiguration? pointsConfiguration;
-  List<RecentRewardTransaction>? recentRewardTransactions;
+  List<RecentRewardTransactions>? recentRewardTransactions;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        pointsSummary: json["pointsSummary"] == null
-            ? null
-            : PointsSummary.fromJson(json["pointsSummary"]),
-        atmRewards: json["atmRewards"] == null
-            ? null
-            : AtmRewards.fromJson(json["atmRewards"]),
-        pointsConfiguration: json["pointsConfiguration"] == null
-            ? null
-            : PointsConfiguration.fromJson(json["pointsConfiguration"]),
-        recentRewardTransactions: json["recentRewardTransactions"] == null
-            ? null
-            : List<RecentRewardTransaction>.from(
-                json["recentRewardTransactions"]
-                    .map((x) => RecentRewardTransaction.fromJson(x))),
-      );
+  LoyaltyDashboardModel(
+      {this.pointsSummary,
+        this.atmRewards,
+        this.pointsConfiguration,
+        this.recentRewardTransactions});
 
-  Map<String, dynamic> toJson() => {
-        "pointsSummary": pointsSummary == null ? null : pointsSummary!.toJson(),
-        "atmRewards": atmRewards == null ? null : atmRewards!.toJson(),
-        "pointsConfiguration":
-            pointsConfiguration == null ? null : pointsConfiguration!.toJson(),
-        "recentRewardTransactions": recentRewardTransactions == null
-            ? null
-            : List<dynamic>.from(
-                recentRewardTransactions!.map((x) => x.toJson())),
-      };
-}
+  LoyaltyDashboardModel.fromJson(Map<String, dynamic> json) {
+    pointsSummary = json['pointsSummary'] != null
+        ? new PointsSummary.fromJson(json['pointsSummary'])
+        : null;
+    atmRewards = json['atmRewards'] != null
+        ? new AtmRewards.fromJson(json['atmRewards'])
+        : null;
+    pointsConfiguration = json['pointsConfiguration'] != null
+        ? new PointsConfiguration.fromJson(json['pointsConfiguration'])
+        : null;
+    if (json['recentRewardTransactions'] != null) {
+      recentRewardTransactions = <RecentRewardTransactions>[];
+      json['recentRewardTransactions'].forEach((v) {
+        recentRewardTransactions!.add(new RecentRewardTransactions.fromJson(v));
+      });
+    }
+  }
 
-class AtmRewards {
-  AtmRewards({
-    this.rewardsMultipliers,
-  });
-
-  List<int>? rewardsMultipliers;
-
-  factory AtmRewards.fromJson(Map<String, dynamic> json) => AtmRewards(
-        rewardsMultipliers: json["rewardsMultipliers"] == null
-            ? null
-            : List<int>.from(json["rewardsMultipliers"].map((x) => x)),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "rewardsMultipliers": rewardsMultipliers == null
-            ? null
-            : List<dynamic>.from(rewardsMultipliers!.map((x) => x)),
-      };
-}
-
-class PointsConfiguration {
-  PointsConfiguration({
-    this.redeemThreshold,
-    this.referFriendRewardPoints,
-    this.atmWithdrawRewardPoints,
-  });
-
-  int? redeemThreshold;
-  int? referFriendRewardPoints;
-  int? atmWithdrawRewardPoints;
-
-  factory PointsConfiguration.fromJson(Map<String, dynamic> json) =>
-      PointsConfiguration(
-        redeemThreshold:
-            json["redeemThreshold"] == null ? null : json["redeemThreshold"],
-        referFriendRewardPoints: json["referFriendRewardPoints"] == null
-            ? null
-            : json["referFriendRewardPoints"],
-        atmWithdrawRewardPoints: json["atmWithdrawRewardPoints"] == null
-            ? null
-            : json["atmWithdrawRewardPoints"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "redeemThreshold": redeemThreshold == null ? null : redeemThreshold,
-        "referFriendRewardPoints":
-            referFriendRewardPoints == null ? null : referFriendRewardPoints,
-        "atmWithdrawRewardPoints":
-            atmWithdrawRewardPoints == null ? null : atmWithdrawRewardPoints,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.pointsSummary != null) {
+      data['pointsSummary'] = this.pointsSummary!.toJson();
+    }
+    if (this.atmRewards != null) {
+      data['atmRewards'] = this.atmRewards!.toJson();
+    }
+    if (this.pointsConfiguration != null) {
+      data['pointsConfiguration'] = this.pointsConfiguration!.toJson();
+    }
+    if (this.recentRewardTransactions != null) {
+      data['recentRewardTransactions'] =
+          this.recentRewardTransactions!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class PointsSummary {
-  PointsSummary({
-    this.redeemablePoints,
-    this.pointsEarned,
-    this.pointsRedeemed,
-  });
-
   int? redeemablePoints;
   int? pointsEarned;
   int? pointsRedeemed;
 
-  factory PointsSummary.fromJson(Map<String, dynamic> json) => PointsSummary(
-        redeemablePoints:
-            json["redeemablePoints"] == null ? null : json["redeemablePoints"],
-        pointsEarned:
-            json["pointsEarned"] == null ? null : json["pointsEarned"],
-        pointsRedeemed:
-            json["pointsRedeemed"] == null ? null : json["pointsRedeemed"],
-      );
+  PointsSummary(
+      {this.redeemablePoints, this.pointsEarned, this.pointsRedeemed});
 
-  Map<String, dynamic> toJson() => {
-        "redeemablePoints": redeemablePoints == null ? null : redeemablePoints,
-        "pointsEarned": pointsEarned == null ? null : pointsEarned,
-        "pointsRedeemed": pointsRedeemed == null ? null : pointsRedeemed,
-      };
+  PointsSummary.fromJson(Map<String, dynamic> json) {
+    redeemablePoints = json['redeemablePoints'];
+    pointsEarned = json['pointsEarned'];
+    pointsRedeemed = json['pointsRedeemed'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['redeemablePoints'] = this.redeemablePoints;
+    data['pointsEarned'] = this.pointsEarned;
+    data['pointsRedeemed'] = this.pointsRedeemed;
+    return data;
+  }
 }
 
-class RecentRewardTransaction {
-  RecentRewardTransaction({
-    this.id,
-    this.points,
-    this.date,
-    this.typeId,
-    this.expiryDate,
-  });
+class AtmRewards {
+  List<int>? rewardsMultipliers;
 
+  AtmRewards({this.rewardsMultipliers});
+
+  AtmRewards.fromJson(Map<String, dynamic> json) {
+    rewardsMultipliers = json['rewardsMultipliers'].cast<int>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['rewardsMultipliers'] = this.rewardsMultipliers;
+    return data;
+  }
+}
+
+class PointsConfiguration {
+  int? redeemThreshold;
+  int? referFriendRewardPoints;
+  int? atmWithdrawRewardPoints;
+
+  PointsConfiguration(
+      {this.redeemThreshold,
+        this.referFriendRewardPoints,
+        this.atmWithdrawRewardPoints});
+
+  PointsConfiguration.fromJson(Map<String, dynamic> json) {
+    redeemThreshold = json['redeemThreshold'];
+    referFriendRewardPoints = json['referFriendRewardPoints'];
+    atmWithdrawRewardPoints = json['atmWithdrawRewardPoints'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['redeemThreshold'] = this.redeemThreshold;
+    data['referFriendRewardPoints'] = this.referFriendRewardPoints;
+    data['atmWithdrawRewardPoints'] = this.atmWithdrawRewardPoints;
+    return data;
+  }
+}
+
+class RecentRewardTransactions {
   String? id;
   int? points;
   String? date;
   String? typeId;
   String? expiryDate;
 
-  factory RecentRewardTransaction.fromJson(Map<String, dynamic> json) =>
-      RecentRewardTransaction(
-        id: json["id"] == null ? null : json["id"],
-        points: json["points"] == null ? null : json["points"],
-        date: json["date"] == null ? null : json["date"],
-        typeId: json["typeId"] == null ? null : json["typeId"],
-        expiryDate: json["expiryDate"] == null ? null : (json["expiryDate"]),
-      );
+  RecentRewardTransactions(
+      {this.id, this.points, this.date, this.typeId, this.expiryDate});
 
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "points": points == null ? null : points,
-        "date": date == null ? null : date,
-        "typeId": typeId == null ? null : typeId,
-        "expiryDate": expiryDate == null ? null : expiryDate!,
-      };
-}
+  RecentRewardTransactions.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    points = json['points'];
+    date = json['date'];
+    typeId = json['typeId'];
+    expiryDate = json['expiryDate'];
+  }
 
-class Status {
-  Status({
-    this.code,
-    this.message,
-  });
-
-  int? code;
-  String? message;
-
-  factory Status.fromJson(Map<String, dynamic> json) => Status(
-        code: json["code"] == null ? null : json["code"],
-        message: json["message"] == null ? null : json["message"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "code": code == null ? null : code,
-        "message": message == null ? null : message,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['points'] = this.points;
+    data['date'] = this.date;
+    data['typeId'] = this.typeId;
+    data['expiryDate'] = this.expiryDate;
+    return data;
+  }
 }

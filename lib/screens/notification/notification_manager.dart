@@ -31,11 +31,10 @@ class NotificationManager extends GetxController {
 // api call for verify otp
 
   callNotificationsApi(bool addOldData) async {
-    if (addOldData == false)
-     {
-       notificationList.clear();
-       notificationListSend.clear();
-     }
+    if (addOldData == false) {
+      notificationList.clear();
+      notificationListSend.clear();
+    }
 
     notificationsCount.clear();
     notificationsCountSend.clear();
@@ -43,27 +42,34 @@ class NotificationManager extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     String? nextToken = prefs.getString(SPKeys.NOTIFICATION_NEXT_TOKEN);
+    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
     try {
-      if (addOldData)
-      {
+      if (addOldData) {
         isPaginationLoading.value = true;
-      } else
-      {
+      } else {
         isLoading.value = true;
       }
 
       var response = await http.post(Uri.parse(baseUrl + Apis.notifications),
-                     body: jsonEncode({"customerId": customerId, "nextToken": null, "limit": limit}),
-                     headers: {'Content-type': 'application/json', 'Accept': 'application/json', "x-digital-api-key": "1234"});
+          body: jsonEncode(
+              {"customerId": customerId, "nextToken": null, "limit": limit}),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "x-digital-api-key": "1234",
+            "Authorization": "Bearer " + accessToken.toString()
+          });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
-        NotificationModel notificationModel = NotificationModel.fromJson(jsonData);
+        NotificationModel notificationModel =
+            NotificationModel.fromJson(jsonData);
 
         if (notificationModel.status!.code == 2000) {
           prefs = await SharedPreferences.getInstance();
-          prefs!.setString(SPKeys.NOTIFICATION_NEXT_TOKEN,notificationModel.data!.nextToken.toString());
+          prefs!.setString(SPKeys.NOTIFICATION_NEXT_TOKEN,
+              notificationModel.data!.nextToken.toString());
 
           for (var index in notificationModel.data!.notifications!) {
             notificationListSend.add(index);
@@ -127,7 +133,7 @@ class NotificationManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
       print("response of mark as read${response.body}");
 

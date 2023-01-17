@@ -36,8 +36,8 @@ import '../Pages/payments.dart';
 import '../Pages/savings.dart';
 import '../loyality_points/loyality_manager.dart';
 import '../loyality_points/redeem_points/rp_manager.dart';
-import '../map/map/map_manager.dart';
-import '../map/map/map_ui.dart';
+
+import '../map/map_ui.dart';
 import '../notification/notification_manager.dart';
 import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/controller/profile_controller.dart';
@@ -80,24 +80,25 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _profileController.setData();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (androidVersion != 10) {
+      if (androidVersion > 10) {
         WidgetsBinding.instance.addObserver(this);
       }
       // observer
       _homeManager.callHomeApi();
       _profileController.getProfileData();
       //  _homeManager.callAdsBannerApi();
-      notificationManager.callNotificationsApi(false);
+       notificationManager.callNotificationsApi(false);
 
       // _homeManager.sendTokens();
       _loyaltyManager.callLoyaltyDashboardApi();
       cashbackCtrl.onInit();
       cashbackManager.callBankListApi();
       _profileController.getProfileData();
+      _profileController.setData();
 
       showFirstTimePoints();
       // showCompleteProfile();
-      checkLogin();
+       checkLogin();
     });
   }
 
@@ -244,7 +245,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
       //--------------------
       if (showAuth == true) {
         List<BiometricType> availableBiometric =
-            await auth.getAvailableBiometrics();
+        await auth.getAvailableBiometrics();
         print("availableBiometric $availableBiometric");
         //---------------
         if (availableBiometric.isEmpty) {
@@ -305,7 +306,20 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 WidgetsBinding.instance.removeObserver(this);
               });
             } else {
-              SystemNavigator.pop();
+              if (androidVersion == 10) {
+                bool pass = await auth.authenticate(
+                    localizedReason: 'Authenticate with pattern/pin/passcode',
+                    options: AuthenticationOptions(biometricOnly: false));
+                if (pass) {
+                  msg = "You are Authenticated.";
+                  setState(() {
+                    _homeManager.showAuth.value = true;
+                    WidgetsBinding.instance.removeObserver(this);
+                  });
+                }
+              } else {
+                SystemNavigator.pop();
+              }
             }
             //----------
           }

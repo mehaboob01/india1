@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:india_one/core/data/model/common_model.dart';
+import 'package:india_one/core/data/remote/api_calls.dart';
 import 'package:india_one/screens/home_start/payment_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,7 @@ import '../../core/data/local/shared_preference_keys.dart';
 import '../../core/data/remote/api_constant.dart';
 import 'package:http/http.dart' as http;
 
+import '../../core/data/remote/dio_api_call.dart';
 import '../../utils/common_webview.dart';
 import '../banner_ads/model/BannerAds.dart';
 import '../onboarding_login/user_login/tnc_io.dart';
@@ -34,8 +36,8 @@ class HomeManager extends GetxController {
   var isClicked = false.obs;
   var showAuth = false.obs;
 
-  var bannerList = <Ad>[].obs;
-  var bannerListSend = <Ad>[].obs;
+  var bannerList = <Ads>[].obs;
+  var bannerListSend = <Ads>[].obs;
 
   @override
   void onInit() {
@@ -43,135 +45,102 @@ class HomeManager extends GetxController {
 
     callHomeApi();
     callAdsBannerApi();
-    sendTokens();
+
     //sendTokens();
+
   }
 
-  void callHomeApi() async {
+  // HOME API
+  Future<void> callHomeApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-    String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
     int? points = prefs.getInt(SPKeys.LOYALTY_POINT_GAINED);
-    print("Customer Id ${customerId}");
-    print("points Id ${points}");
-    print("Access token ${accessToken}");
 
     loyalityPoints.value = points!;
     try {
       isLoading.value = true;
-      var response = await http.get(
-          Uri.parse(baseUrl + Apis.dashboard + customerId.toString()),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-          });
+      var response = await DioApiCall().commonApiCall(
+          endpoint: Apis.dashboard + customerId.toString(), method: Type.GET);
+      if (response != null) {
+        HomeModel homeModel = HomeModel.fromJson(response);
+        pointsEarned.value = homeModel.pointsSummary!.pointsEarned!;
+        pointsRedeemed.value = homeModel.pointsSummary!.pointsRedeemed!;
+        redeemablePoints.value = homeModel!.pointsSummary!.redeemablePoints!;
+        atmRewards.value = homeModel!.atmRewards!.rewardsMultipliers![0];
 
-      print("response home===>${response.body}");
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        HomeModel homeModel = HomeModel.fromJson(jsonData);
-        print("data response");
-        print("http success!!");
-        print(homeModel.data);
-
-        if (homeModel!.status!.code == 2000) {
-          isLoading(false);
-          print("http success in model!!");
-          pointsEarned.value = homeModel.data!.pointsSummary!.pointsEarned!;
-          pointsRedeemed.value = homeModel.data!.pointsSummary!.pointsRedeemed!;
-          redeemablePoints.value =
-              homeModel.data!.pointsSummary!.redeemablePoints!;
-          atmRewards.value = homeModel.data!.atmRewards!.rewardsMultipliers![0];
-        } else {
-          Flushbar(
-            title: "Error!",
-            message: homeModel.status!.message.toString(),
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-        }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
       }
-    } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try after sometime",
-        duration: Duration(seconds: 1),
-      )..show(Get.context!);
+    } catch (exception) {
+      print(exception);
     } finally {
       isLoading(false);
     }
   }
 
-  void callAdsBannerApi() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
+  // ADS BANNER API
+  Future<void> callAdsBannerApi() async {
     bannerListSend.clear();
     bannerList.clear();
+    try {
+      isLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.bannerAds,
+        method: Type.POST,
+        data: jsonEncode({"adPlacement": "Home"}),
+      );
+      if (response != null) {
+        BanerAdsMOdel banerAdsMOdel = BanerAdsMOdel.fromJson(response);
+
+        for (var index in banerAdsMOdel.ads!) {
+          bannerListSend.add(index);
+        }
+        bannerList.addAll(bannerListSend);
+
+        isLoading(false);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  // BANNERS API
+  Future<void> callPaymentApi(String api_route, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    print("customer id ${customerId}");
 
     try {
       isLoading.value = true;
-      var response = await http.post(
-        Uri.parse(baseUrl + Apis.bannerAds),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          "x-digital-api-key": "1234",
-          "Authorization": "Bearer "+accessToken.toString()
 
-        },
-        body: jsonEncode({"adPlacement": "Home"}),
+      var response = await DioApiCall().commonApiCall(
+        endpoint: api_route,
+        method: Type.POST,
+        data: jsonEncode({"customerId": customerId}),
       );
 
-      print("response ads===>${response.body}");
+      if (response != null) {
+        isLoading(false);
+        PaymentModel paymentModel = PaymentModel.fromJson(response);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        BanerAdsMOdel banerAdsMOdel = BanerAdsMOdel.fromJson(jsonData);
-        print("data response");
-        print("http success!!");
-        print(banerAdsMOdel.data);
-
-        if (banerAdsMOdel!.status!.code == 2000) {
-          for (var index in banerAdsMOdel.data!.ads!) {
-            bannerListSend.add(index);
-          }
-          bannerList.addAll(bannerListSend);
-          print("banerr lenth ${bannerList.length}");
-          isLoading(false);
-        } else {
-          Flushbar(
-            title: "Error!",
-            message: banerAdsMOdel.status!.message.toString(),
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-        }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
+        Get.to(() => CommonWebView(
+              title: api_route == Apis.payment_fastag
+                  ? "FASTag"
+                  : api_route == Apis.payment_dth
+                      ? "DTH"
+                      : "Recharge",
+              url: paymentModel.link.toString(),
+            ));
       }
-    } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try after sometime",
-        duration: Duration(seconds: 1),
-      )..show(Get.context!);
+    } catch (exception) {
+      print(exception);
     } finally {
       isLoading(false);
     }
   }
 
-  void sendTokens() async {
+  // SEND TOKENS
+  Future<void> sendTokens() async {
     try {
       isLoading.value = true;
 
@@ -179,119 +148,36 @@ class HomeManager extends GetxController {
       String? deviceId = prefs.getString(SPKeys.DEVICE_ID);
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
 
-      print("device Id ${deviceId}");
-      var response = await http.put(Uri.parse(baseUrl + Apis.sendToken),
-          body: jsonEncode({
-            "customerId": customerId,
-            "deviceId": deviceId,
-            "deviceToken": deviceToken
-          }),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-
-          });
-
-      print("send tokens${response.body}");
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
-
-        if (commonApiResponseModel.status!.code == 2000) {
-        } else {
-          Flushbar(
-            title: "Server Error!",
-            message: commonApiResponseModel.status!.message.toString(),
-            duration: Duration(seconds: 1),
-          )..show(Get.context!);
-        }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
-      }
-    } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try after sometime ...",
-        duration: Duration(seconds: 1),
-      )..show(Get.context!);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void callPaymentApi(String api_route, BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-
-    print("customer id ${customerId}");
-
-    try {
-      isLoading.value = true;
-
-      print(baseUrl + api_route);
-      var response = await http.post(
-        Uri.parse(baseUrl + api_route),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          "x-digital-api-key": "1234",
-          "Authorization": "Bearer "+accessToken.toString()
-        },
-        body: jsonEncode({"customerId": customerId}),
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.sendToken,
+        method: Type.PUT,
+        data: jsonEncode({
+          "customerId": customerId,
+          "deviceId": deviceId,
+          "deviceToken": deviceToken
+        }),
       );
 
-      //   print("response home===>${response.body}");
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        PaymentModel paymentModel = PaymentModel.fromJson(jsonData);
 
-        if (paymentModel!.status!.code == 2000) {
-          isLoading(false);
-          print("http success in model!!");
-          print("http success in model!!${paymentModel.data!.link.toString()}");
-          Get.to(() => CommonWebView(
-                title: api_route == Apis.payment_fastag
-                    ? "FASTag"
-                    : api_route == Apis.payment_dth
-                        ? "DTH"
-                        : "Recharge",
-                url: paymentModel.data!.link.toString(),
-              ));
-        } else {
-          Flushbar(
-            title: "Error!",
-            message: paymentModel.status!.message.toString(),
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-        }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
+      if(response != null)
+      {
+        print("DONE SEND TOKENS");
       }
-    } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try after sometime",
-        duration: Duration(seconds: 1),
-      )..show(Get.context!);
+
+
+
+
+
+
+
+
+    } catch (exception) {
+      print(exception);
     } finally {
-      isLoading(false);
+      isLoading.value = false;
     }
   }
 }

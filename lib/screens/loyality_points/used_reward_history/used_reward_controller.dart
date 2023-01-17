@@ -7,45 +7,37 @@ import 'package:india_one/screens/loyality_points/used_reward_history/used_rewar
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/data/local/shared_preference_keys.dart';
+import '../../../core/data/remote/dio_api_call.dart';
 
 class UsedRewardController extends GetxController {
   final loadingData = false.obs;
-  List<Transaction> usedpointsList =
-      <Transaction>[].obs;
+  List<Transactions> usedpointsList = <Transactions>[].obs;
 
   void onInit() {
     super.onInit();
     getUsedRewardHistory();
   }
 
-  Future<List<Transaction>> getUsedRewardHistory() async {
+  Future<List<Transactions>> getUsedRewardHistory() async {
     final preference = await SharedPreferences.getInstance();
     String? customerId = preference.getString(SPKeys.CUSTOMER_ID);
-    String? accessToken = preference!.getString(SPKeys.ACCESS_TOKEN);
     loadingData.value = true;
     try {
-      List<Transaction> getList = [];
-      var response = await http.post(
-          Uri.parse(baseUrl + Apis.loyaltyHistory),
-          body: json
-              .encode({"customerId": customerId, "limit": 10}),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-          });
+      List<Transactions> getList = [];
 
-      var jsonData = jsonDecode(response.body);
-      print('History data');
-      print(jsonData);
-      UsedPointsHistoryModel usedPointsHistoryModel =
-          UsedPointsHistoryModel.fromJson(jsonData);
-      getList = usedPointsHistoryModel.data!.transactions!
-          .map((e) => e)
-          .toList();
-      usedpointsList.addAll(getList);
-      loadingData.value = false;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.loyaltyHistory,
+        method: Type.POST,
+        data: json.encode({"customerId": customerId, "limit": 10}),
+      );
+
+      if (response != null) {
+        UsedPointsHistoryModel usedPointsHistoryModel =
+            UsedPointsHistoryModel.fromJson(response);
+        getList = usedPointsHistoryModel.transactions!.map((e) => e).toList();
+        usedpointsList.addAll(getList);
+        loadingData.value = false;
+      }
       return usedpointsList;
     } catch (e) {
       loadingData.value = false;

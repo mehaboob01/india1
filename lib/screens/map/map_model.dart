@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-// old static model
 import 'dart:convert';
 
 class MapModel {
@@ -15,12 +12,6 @@ class MapModel {
     required this.status,
   });
 }
-
-// To parse this JSON data, do
-//
-//     final mapCordinatesModel = mapCordinatesModelFromJson(jsonString);
-
-// map cordinated model
 
 MapCordinatesModel mapCordinatesModelFromJson(String str) =>
     MapCordinatesModel.fromJson(json.decode(str));

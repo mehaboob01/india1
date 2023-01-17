@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
@@ -246,14 +247,13 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                     debugPrint(redoCtrl
                                         .redeemPointsSliderValue.value
                                         .toString());
-                                    if (redoCtrl.redeemPointsSliderValue.value <
-                                        15) {
-                                      Flushbar(
-                                        title: "Alert!",
-                                        message:
-                                            'You can only redeem 15 or more points',
-                                        duration: Duration(seconds: 2),
-                                      )..show(context);
+                                    if (redoCtrl.redeemPointsSliderValue.value == 0) {
+                                      Fluttertoast.showToast(
+                                        msg: "please select points",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        fontSize: 16.0,
+                                      );
                                     } else {
                                       cashbackManager.cashBackToBankApi(
                                           true,
@@ -555,7 +555,7 @@ class _BankAccoutCardState extends State<BankAccoutCard> {
                                                           cashBackManager
                                                               .customerBankList[
                                                                   index]
-                                                              .accountType,
+                                                              .accountType.toString(),
                                                       cardWidth:
                                                           double.maxFinite,
                                                       isSelected: index ==

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 class CashBackRedoController extends GetxController {
   final RxList<bool> isSelectedBoolList =
       <bool>[true, false].obs; // bank and vpa toggle
-  final sliderTextEditingCtrl =
-      TextEditingController(); // slider text controller
+  final sliderTextEditingCtrl = TextEditingController();
+  final bankNameCtrl = TextEditingController(); // slider text controller
   final accountFormKey = GlobalKey<FormBuilderState>(); // account form key
   final accountCardSelectedIndex = (-1).obs; // account card selected or not
   final accountButtonEnabled =

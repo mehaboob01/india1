@@ -119,7 +119,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                                   accountType: cashBackManager
                                                                       .customerBankList[
                                                                           index]
-                                                                      .accountType,
+                                                                      .accountType.toString(),
                                                                   id: cashBackManager
                                                                       .customerBankList[
                                                                           index]
@@ -169,7 +169,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                               cashBackManager
                                                                   .customerBankList[
                                                                       index]
-                                                                  .accountType,
+                                                                  .accountType.toString(),
                                                         )),
                                               ),
                                             ))

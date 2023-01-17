@@ -1,4 +1,4 @@
-//DEV URL
+// //DEV URL
 final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
 final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
@@ -27,6 +27,7 @@ class Apis {
   static String dashboard = "dashboards/home/";
   static String bannerAds = "advertisement-banners";
   static String termCondition = "terms-and-conditions?language=";
+  static String refreshTokenApi = "auth/refresh-token";
 
   // payments api
   static String payment_recharge = "dashboards/payments/Recharge";

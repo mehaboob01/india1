@@ -13,8 +13,9 @@ import '../../core/data/remote/api_constant.dart';
 class ReferManager extends GetxController {
   var isLoading = false.obs;
   // var getSuccess = false.obs;
+  var invitedList = [].obs;
   ContactCont cont = Get.put(ContactCont());
-  callReferApi(String number) async {
+  Future<void> callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
@@ -32,7 +33,7 @@ class ReferManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       print("response of send otp${response.body}");
@@ -50,6 +51,7 @@ class ReferManager extends GetxController {
             message: "Invitation sent successfully!",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
+          invitedList.value.add(number);
           cont.contactsLenght.value = cont.contacts.length;
           cont.filteredList.value = cont.contacts;
 

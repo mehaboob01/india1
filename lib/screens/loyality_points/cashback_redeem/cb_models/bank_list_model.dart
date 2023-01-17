@@ -1,83 +1,41 @@
-
-
-import 'dart:convert';
-
-BankListModel bankListModelFromJson(String str) => BankListModel.fromJson(json.decode(str));
-
-String bankListModelToJson(BankListModel data) => json.encode(data.toJson());
-
 class BankListModel {
-  BankListModel({
-    this.data,
-    this.status,
-  });
+  List<Banks>? banks;
 
-  Data? data;
-  Status? status;
+  BankListModel({this.banks});
 
-  factory BankListModel.fromJson(Map<String, dynamic> json) => BankListModel(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    status: json["status"] == null ? null : Status.fromJson(json["status"]),
-  );
+  BankListModel.fromJson(Map<String, dynamic> json) {
+    if (json['banks'] != null) {
+      banks = <Banks>[];
+      json['banks'].forEach((v) {
+        banks!.add(new Banks.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "data": data == null ? null : data!.toJson(),
-    "status": status == null ? null : status!.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.banks != null) {
+      data['banks'] = this.banks!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Data {
-  Data({
-    this.banks,
-  });
-
-  List<Bank>? banks;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    banks: json["banks"] == null ? null : List<Bank>.from(json["banks"].map((x) => Bank.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "banks": banks == null ? null : List<dynamic>.from(banks!.map((x) => x.toJson())),
-  };
-}
-
-class Bank {
-  Bank({
-    this.id,
-    this.name,
-  });
-
+class Banks {
   String? id;
   String? name;
 
-  factory Bank.fromJson(Map<String, dynamic> json) => Bank(
-    id: json["id"] == null ? null : json["id"],
-    name: json["name"] == null ? null : json["name"],
-  );
+  Banks({this.id, this.name});
 
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-  };
-}
+  Banks.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
 
-class Status {
-  Status({
-    this.code,
-    this.message,
-  });
-
-  int? code;
-  String? message;
-
-  factory Status.fromJson(Map<String, dynamic> json) => Status(
-    code: json["code"] == null ? null : json["code"],
-    message: json["message"] == null ? null : json["message"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
+  }
 }

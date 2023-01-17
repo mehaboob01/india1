@@ -1,85 +1,41 @@
-// To parse this JSON data, do
-//
-//     final rcOperatorModel = rcOperatorModelFromJson(jsonString);
-
-import 'dart:convert';
-
-RcOperatorModel rcOperatorModelFromJson(String str) => RcOperatorModel.fromJson(json.decode(str));
-
-String rcOperatorModelToJson(RcOperatorModel data) => json.encode(data.toJson());
-
 class RcOperatorModel {
-  RcOperatorModel({
-    this.data,
-    this.status,
-  });
+  List<Operators>? operators;
 
-  Data? data;
-  Status? status;
+  RcOperatorModel({this.operators});
 
-  factory RcOperatorModel.fromJson(Map<String, dynamic> json) => RcOperatorModel(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    status: json["status"] == null ? null : Status.fromJson(json["status"]),
-  );
+  RcOperatorModel.fromJson(Map<String, dynamic> json) {
+    if (json['operators'] != null) {
+      operators = <Operators>[];
+      json['operators'].forEach((v) {
+        operators!.add(new Operators.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "data": data == null ? null : data!.toJson(),
-    "status": status == null ? null : status!.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.operators != null) {
+      data['operators'] = this.operators!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Data {
-  Data({
-    this.operators,
-  });
-
-  List<Operator>? operators;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    operators: json["operators"] == null ? null : List<Operator>.from(json["operators"].map((x) => Operator.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "operators": operators == null ? null : List<dynamic>.from(operators!.map((x) => x.toJson())),
-  };
-}
-
-class Operator {
-  Operator({
-    this.id,
-    this.name,
-  });
-
+class Operators {
   String? id;
   String? name;
 
-  factory Operator.fromJson(Map<String, dynamic> json) => Operator(
-    id: json["id"] == null ? null : json["id"],
-    name: json["name"] == null ? null : json["name"],
-  );
+  Operators({this.id, this.name});
 
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-  };
-}
+  Operators.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
 
-class Status {
-  Status({
-    this.code,
-    this.message,
-  });
-
-  int? code;
-  String? message;
-
-  factory Status.fromJson(Map<String, dynamic> json) => Status(
-    code: json["code"] == null ? null : json["code"],
-    message: json["message"] == null ? null : json["message"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
+  }
 }

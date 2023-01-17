@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../core/data/remote/api_constant.dart';
+import '../../core/data/remote/dio_api_call.dart';
 import 'loyalty_dashboard_model.dart';
 
 class LoyaltyManager extends GetxController {
@@ -16,8 +17,8 @@ class LoyaltyManager extends GetxController {
   var redeemablePoints = 0.obs;
   var pointsEarned = 0.obs;
   var pointsRedeemed = 0.obs;
-  var recentRewardTransactionsList = <RecentRewardTransaction>[].obs;
-  var recentRewardTransactionSend = <RecentRewardTransaction>[];
+  var recentRewardTransactionsList = <RecentRewardTransactions>[].obs;
+  var recentRewardTransactionSend = <RecentRewardTransactions>[];
   var isOverlayOpen = false.obs;
 
   @override
@@ -26,74 +27,39 @@ class LoyaltyManager extends GetxController {
     callLoyaltyDashboardApi();
   }
 
-  callLoyaltyDashboardApi() async {
+  // LOYALTY DASHBOARD API
+  Future<void> callLoyaltyDashboardApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-
 
     try {
       isLoading(true);
-      var response = await http.post(Uri.parse(baseUrl + Apis.loyaltyDashBoard),
-          body: jsonEncode({
-            "customerId": customerId,
-            "rewardTransactionCount": 4,
-          }),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-          });
 
-      print("Response ${response.body}");
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.loyaltyDashBoard,
+        method: Type.POST,
+        data: jsonEncode({
+          "customerId": customerId,
+          "rewardTransactionCount": 4,
+        }),
+      );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print("http response");
-        var jsonData = jsonDecode(response.body);
-        LoyaltyDashboardModel loyaltyDashboardModel =
-            LoyaltyDashboardModel.fromJson(jsonData);
-        if (loyaltyDashboardModel.status!.code == 2000) {
-          print("model  response");
 
-          redeemablePoints.value = loyaltyDashboardModel
-              .data!.pointsSummary!.redeemablePoints!
-              .toInt();
-          pointsEarned.value =
-              loyaltyDashboardModel.data!.pointsSummary!.pointsEarned!.toInt();
-          pointsRedeemed.value = loyaltyDashboardModel
-              .data!.pointsSummary!.pointsRedeemed!
-              .toInt();
-          recentRewardTransactionsList.clear();
+      if (response != null) {
+        LoyaltyDashboardModel loyaltyDashboardModel = LoyaltyDashboardModel.fromJson(response);
 
-          for (var index
-              in loyaltyDashboardModel.data!.recentRewardTransactions!) {
-            recentRewardTransactionSend.add(index);
-          }
 
-          recentRewardTransactionsList.addAll(recentRewardTransactionSend);
-
-          isLoading(false);
-        } else {
-          Flushbar(
-            title: "Alert!",
-            message: loyaltyDashboardModel.status!.message,
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
+        redeemablePoints.value = loyaltyDashboardModel.pointsSummary!.redeemablePoints!.toInt();
+        pointsEarned.value = loyaltyDashboardModel.pointsSummary!.pointsEarned!.toInt();
+        pointsRedeemed.value = loyaltyDashboardModel.pointsSummary!.pointsRedeemed!.toInt();
+        recentRewardTransactionsList.clear();
+        for (var index in loyaltyDashboardModel.recentRewardTransactions!) {
+          recentRewardTransactionSend.add(index);
         }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after again ...",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        recentRewardTransactionsList.addAll(recentRewardTransactionSend);
+        isLoading(false);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
       isLoading(false);
     }

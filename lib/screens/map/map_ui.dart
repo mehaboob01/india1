@@ -1,51 +1,30 @@
-// ignore_for_file: invalid_use_of_protected_member
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:india_one/constant/theme_manager.dart';
-
 import 'package:india_one/widgets/loyalty_common_header.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
-import '../../../core/data/remote/api_constant.dart';
 import 'map_manager.dart';
 
-class Maps extends StatefulWidget {
-  Maps({key});
-
-  @override
-  State<Maps> createState() => _MapsState();
-}
-
-class _MapsState extends State<Maps> {
+class Maps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => IgnorePointer(
+    return Obx(() {
+      return IgnorePointer(
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: _body(),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  MapManager mapManager = Get.put(MapManager());
+  final MapManager mapManager = Get.put(MapManager());
 
   final ConnectionManagerController _controller =
       Get.find<ConnectionManagerController>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   _body() {
     return Column(
@@ -198,9 +177,11 @@ class _MapsState extends State<Maps> {
                           child: Container(
                             decoration: BoxDecoration(color: Colors.white),
                             child: ListTile(
-                              title: text(mapManager.placeList.value[index]
-                                  ["description"],
-                              maxLines: 4),
+                              title: text(
+                                mapManager.placeList.value[index]
+                                    ["description"],
+                                maxLines: 4,
+                              ),
                             ),
                           ),
                         );
@@ -213,9 +194,11 @@ class _MapsState extends State<Maps> {
             Visibility(
               child: DraggableScrollableSheet(
                 controller: mapManager.scrollableController.value,
-                initialChildSize: 0.4,
+                initialChildSize:
+                    mapManager.mapCoordinateList.length >= 3 ? 0.4 : 0.1,
                 maxChildSize: 0.75,
-                minChildSize: 0.4,
+                minChildSize:
+                    mapManager.mapCoordinateList.length >= 3 ? 0.4 : 0.1,
                 builder: (context, scrollController) {
                   return Padding(
                     padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
@@ -273,14 +256,14 @@ class AtmDetailsCard extends StatelessWidget {
       required this.index,
       required this.scrollCtrl})
       : super(key: key);
-  int? distance;
-  String address;
-  String? status;
-  String atmName;
-  int index;
-  ScrollController scrollCtrl;
+  final int? distance;
+  final String address;
+  final String? status;
+  final String atmName;
+  final int index;
+  final ScrollController scrollCtrl;
 
-  MapManager mapManager = Get.put(MapManager());
+  final MapManager mapManager = Get.put(MapManager());
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -334,12 +317,9 @@ class AtmDetailsCard extends StatelessWidget {
                               color: Color(0xFF000000),
                               fontSize: 16),
                         ),
-
                         SizedBox(
                           height: Get.height * 0.005,
                         ),
-
-                        //   text(, softWrap: false, overflow: TextOverflow.ellipsis, maxLines: 4,)
                       ],
                     ),
                   ),
@@ -377,7 +357,7 @@ class AtmDetailsCard extends StatelessWidget {
                                 Expanded(
                                   child: text(
                                     "Directions",
-                                  textOverflow: TextOverflow.ellipsis,
+                                    textOverflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(
                                         // color: mapManager.mapCoordinateList[index]

@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/remote/api_calls.dart';
 import '../../../core/data/remote/api_constant.dart';
+import '../../../core/data/remote/dio_api_call.dart';
 import 'model/mobile_recharge_model.dart';
 import 'model/operator_model.dart';
 import 'model/circle_model.dart';
@@ -28,19 +29,19 @@ class MrManager extends GetxController {
   var operatorListString = <String>[].obs;
   var operatorListStringSend = <String>[];
 
-  var operatorList = <Operator>[].obs;
-  var operatorListSend = <Operator>[];
+  var operatorList = <Operators>[].obs;
+  var operatorListSend = <Operators>[];
 
   var circleListString = <String>[].obs;
   var circleListStringSend = <String>[];
 
-  var circleList = <Circle>[].obs;
-  var circleListSend = <Circle>[];
+  var circleList = <Circles>[].obs;
+  var circleListSend = <Circles>[];
 
   // planes
 
-  var plansList = <Plan>[].obs;
-  var plansListSend = <Plan>[];
+  var plansList = <Plans>[].obs;
+  var plansListSend = <Plans>[];
 
   RxInt selectedIndex = (-1).obs;
 
@@ -57,64 +58,31 @@ class MrManager extends GetxController {
     callOperatorListApi();
     callCircleListApi();
   }
+
   Future<void> showAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs!.setBool(SPKeys.SHOW_AUTH, false);
-
   }
+
   // operator list
   callOperatorListApi() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-
     try {
       isLoading(true);
-      var response =
-          await http.get(Uri.parse(baseUrl + Apis.operatorList), headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-
-      });
-
-      print("Operator response");
-      print(response.body.toString());
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(jsonData);
-        if (rcOperatorModel.status!.code == 2000) {
-          print(rcOperatorModel.data!.operators!);
-          operatorList.clear();
-          operatorListString.clear();
-          for (var index in rcOperatorModel.data!.operators!) {
-            operatorListSend.add(index);
-            operatorListStringSend.add(index.name.toString());
-          }
-          operatorList.addAll(operatorListSend);
-          operatorListString.addAll(operatorListStringSend);
-          isLoading(false);
-        } else {
-          Flushbar(
-            title: "Alert!",
-            message: rcOperatorModel.status!.message,
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
+      var response = await DioApiCall()
+          .commonApiCall(endpoint: Apis.operatorList, method: Type.GET);
+      if (response != null) {
+        RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(response);
+        operatorList.clear();
+        operatorListString.clear();
+        for (var index in rcOperatorModel.operators!) {
+          operatorListSend.add(index);
+          operatorListStringSend.add(index.name.toString());
         }
-      } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        operatorList.addAll(operatorListSend);
+        operatorListString.addAll(operatorListStringSend);
+        isLoading(false);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
       isLoading(false);
     }
@@ -123,48 +91,25 @@ class MrManager extends GetxController {
   //circle list
 
   callCircleListApi() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     try {
       isLoading(true);
-      var response =
-          await http.get(Uri.parse(baseUrl + Apis.circleList), headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-      });
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
 
-        RcCircleModel circleModel = RcCircleModel.fromJson(jsonData);
+      var response = await DioApiCall()
+          .commonApiCall(endpoint: Apis.circleList, method: Type.GET);
 
-        if (circleModel.status!.code == 2000) {
-          circleList.clear();
-          circleListString.clear();
-          for (var index in circleModel.data!.circles!) {
-            circleListSend.add(index);
-            circleListStringSend.add(index.name.toString());
-          }
-
-          circleList.addAll(circleListSend);
-          circleListString.addAll(circleListStringSend);
-
-          isLoading(false);
-        } else {
-          Flushbar(
-            title: "Alert!",
-            message: circleModel.status!.message,
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
+      if (response != null) {
+        RcCircleModel circleModel = RcCircleModel.fromJson(response);
+        circleList.clear();
+        circleListString.clear();
+        for (var index in circleModel.circles!) {
+          circleListSend.add(index);
+          circleListStringSend.add(index.name.toString());
         }
-      } else {}
+        circleList.addAll(circleListSend);
+        circleListString.addAll(circleListStringSend);
+        isLoading(false);
+      }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
       isLoading(false);
     }
@@ -173,9 +118,6 @@ class MrManager extends GetxController {
   // check planes
 
   checkPlanesApi(int? operatorId, int? circleId, mobileNumber) async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     selectedIndex.value = (-1);
 
     plansList.clear();
@@ -185,74 +127,41 @@ class MrManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
 
-      print("Send Mobile Recharge data ${operatorId}");
-      print("Send Mobile Recharge data ${circleId}");
-      print("Send Mobile Recharge data ${mobileNumber}");
-      print("Send Mobile Recharge data ${operatorId}");
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.plans,
+        method: Type.POST,
+        data: jsonEncode({
+          "operatorId": operatorId,
+          "circleId": circleId,
+          "mobileNumber": mobileNumber,
+          "customerId": customerId,
+        }),
+      );
 
-      var response = await http.post(Uri.parse(baseUrl + Apis.plans),
-          body: jsonEncode({
-            "operatorId": operatorId,
-            "circleId": circleId,
-            "mobileNumber": mobileNumber,
-            "customerId": customerId,
-          }),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
-          });
-      print("response ${response.body}");
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        PlanesModel planesModel = PlanesModel.fromJson(jsonData);
+      if (response != null) {
+        PlanesModel planesModel = PlanesModel.fromJson(response);
+        List<bool> localSelectedList = [];
 
-        if (planesModel.status!.code == 2000) {
-          List<bool> localSelectedList = [];
+        plansList.clear();
+        for (var index in planesModel.plans!) {
+          plansListSend.add(index);
+          localSelectedList.add(false);
+        }
 
-          plansList.clear();
-          for (var index in planesModel.data!.plans!) {
-            plansListSend.add(index);
-            localSelectedList.add(false);
-          }
-
-          plansList.addAll(plansListSend);
-
-          isPlansAvailable(true);
-          selectedplanList.addAll(localSelectedList);
-
-          print("plans List ");
-          print(plansList.length);
-          isFetchPlanLoading(false);
-          if (plansList.length == 0) {
-            Flushbar(
-              title: "Alert!",
-              message: "No planes in List",
-              duration: Duration(seconds: 2),
-            )..show(Get.context!);
-          }
-        } else {
+        plansList.addAll(plansListSend);
+        isPlansAvailable(true);
+        selectedplanList.addAll(localSelectedList);
+        isFetchPlanLoading(false);
+        if (plansList.length == 0) {
           Flushbar(
-            title: "Error!",
-            message: planesModel.status!.message,
+            title: "Alert!",
+            message: "No planes in List",
             duration: Duration(seconds: 2),
           )..show(Get.context!);
         }
-      } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
       isFetchPlanLoading.value = false;
     }
@@ -262,7 +171,6 @@ class MrManager extends GetxController {
 
   mobileRechargeApi(int? operatorId, int? circleId, String? phoneNumber,
       RxMap<String, dynamic> rechargeData, BuildContext context) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     isMobileRechargeLoading(true);
@@ -285,10 +193,8 @@ class MrManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
-
-      print("REsponse of mobile recharge ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);

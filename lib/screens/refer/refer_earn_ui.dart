@@ -33,8 +33,6 @@ class _ReferEarnState extends State<ReferEarn> {
   ContactCont _contactCont = Get.put(ContactCont());
   TextEditingController _controller = TextEditingController();
 
-  List<String> invitedList = [];
-
   @override
   void initState() {
     super.initState();
@@ -450,7 +448,7 @@ class _ReferEarnState extends State<ReferEarn> {
   inviteButton(int index) {
     return GestureDetector(
       onTap: () {
-        if (invitedList.contains(contactCont
+        if (_referManager.invitedList.value.contains(contactCont
             .filteredList.value[index].phones.first.number
             .toString())) {
           const snackBar = SnackBar(
@@ -470,12 +468,6 @@ class _ReferEarnState extends State<ReferEarn> {
                 .replaceAll('-', '')
                 .replaceAll('(', '')
                 .replaceAll(')', ''));
-
-            invitedList.add(contactCont
-                .filteredList.value[index].phones.first.number
-                .toString());
-
-            print("selected list${invitedList.toString()}");
           });
           // contactCont.contactsLenght.value =
           //     contactCont.contacts.length;
@@ -488,7 +480,7 @@ class _ReferEarnState extends State<ReferEarn> {
           height: Get.height * 0.04,
           width: Get.width * 0.2,
           decoration: BoxDecoration(
-              border: invitedList.contains(
+              border: _referManager.invitedList.value.contains(
                       contactCont.filteredList.value[index].phones.isNotEmpty
                           ? contactCont
                               .filteredList.value[index].phones.first.number
@@ -497,7 +489,7 @@ class _ReferEarnState extends State<ReferEarn> {
                   ? Border.all(width: 1, color: AppColors.primary)
                   : null,
               borderRadius: BorderRadius.circular(5),
-              gradient: invitedList.contains(
+              gradient: _referManager.invitedList.value.contains(
                       contactCont.filteredList.value[index].phones.isNotEmpty
                           ? contactCont
                               .filteredList.value[index].phones.first.number
@@ -511,7 +503,7 @@ class _ReferEarnState extends State<ReferEarn> {
                     )),
           child: Center(
               child: text(
-            invitedList.contains(contactCont
+            _referManager.invitedList.value.contains(contactCont
                         .filteredList.value[index].phones.isNotEmpty
                     ? contactCont.filteredList.value[index].phones.first.number
                         .toString()
@@ -521,7 +513,7 @@ class _ReferEarnState extends State<ReferEarn> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: invitedList.contains(
+                color: _referManager.invitedList.value.contains(
                         contactCont.filteredList.value[index].phones.isNotEmpty
                             ? contactCont
                                 .filteredList.value[index].phones.first.number

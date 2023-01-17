@@ -4,6 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ import '../../../constant/routes.dart';
 import '../../../core/data/local/shared_preference_keys.dart';
 import '../../../core/data/model/common_model.dart';
 import '../../../core/data/remote/api_constant.dart';
+import '../../../core/data/remote/dio_api_call.dart';
 import 'cb_models/bank_list_model.dart';
 import 'cb_models/customer_banks_model.dart';
 import 'cb_models/customer_upi_model.dart';
@@ -22,11 +24,11 @@ class CashBackManager extends GetxController {
   var cardUpiTapped = false.obs;
 
   //bank list for drop dowm
-  var bankList = <String>['ABHYUDAYA CO-OP BANK-1'].obs;
+  var bankList = <String>[].obs;
   var bankListSend = <String>[];
 
-  var bankListId = <Bank>[].obs;
-  var bankListIdSend = <Bank>[];
+  var bankListId = <Banks>[].obs;
+  var bankListIdSend = <Banks>[];
   final bankNameFormKey = GlobalKey<FormState>();
   final dropDownBankName = ''.obs;
   final accountTextObscure = false.obs; // bank account isObscure bool
@@ -71,45 +73,24 @@ class CashBackManager extends GetxController {
     bankListId.clear();
     bankListIdSend.clear();
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-      var response = await http.get(Uri.parse(baseUrl + Apis.banks), headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        "x-digital-api-key": "1234",
-          "Authorization": "Bearer "+accessToken.toString()
-      });
-      var jsonData = jsonDecode(response.body);
-      print("response of bank lists${response.body}");
+      var response = await DioApiCall()
+          .commonApiCall(endpoint: Apis.banks, method: Type.GET);
 
-      BankListModel bankListModel = BankListModel.fromJson(jsonData);
-
-      if (response.statusCode == 200) {
+      if (response != null) {
+        BankListModel bankListModel = BankListModel.fromJson(response);
         bankList.clear();
         bankListId.clear();
-        for (var index in bankListModel.data!.banks!) {
+        for (var index in bankListModel.banks!) {
           bankListSend.add(index.name.toString());
           bankListIdSend.add(index);
         }
 
         bankList.addAll(bankListSend);
         bankListId.addAll(bankListIdSend);
-        // print("asdf");
-        // print(bankList.value);
+
         isLoading(false);
-      } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
       isLoading(false);
     }
@@ -137,7 +118,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-              "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       print("response==> ${response.body.toString()}");
@@ -194,7 +175,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
       var jsonData = jsonDecode(response.body);
 
@@ -241,17 +222,11 @@ class CashBackManager extends GetxController {
     String pointsToReedem,
     BuildContext context,
   ) async {
-    print("cashbank to bank");
-    print("points to redeemed ${double.parse(pointsToReedem)}");
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-      // print("customer id==> ${customerId}");
-      // print("data tab ==>  ${data}");
-      // print("from list ==>  ${fromAccountList}");
-      // print("points to redeem ==>  ${pointsToReedem}");
-      // print("bank account id ==>  ${bankIdOrBankAccountId}");
 
       String? accountType = data['accountType'].toString() == "Saving account"
           ? "savings"
@@ -286,21 +261,21 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-              "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
-      print("Response of points to bank api");
-      print(response.body);
+
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
         CommonApiResponseModel commonApiResponseModel =
             CommonApiResponseModel.fromJson(jsonData);
         if (commonApiResponseModel.status!.code == 2000) {
-          Flushbar(
-            title: "successful!",
-            message: "Cashback sent in bank account !!",
-            duration: Duration(seconds: 1),
-          )..show(Get.context!)
+          Fluttertoast.showToast(
+            msg: "cashback sent  successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          )
               .then((value) => Get.toNamed(MRouter.verifiedScreen))
               .then((value) => selectedIndex.value == -1);
         } else {
@@ -333,64 +308,28 @@ class CashBackManager extends GetxController {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
-      String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-      isLoading.value = true;
+      isLoading(true);
 
-      var response = await http.post(Uri.parse(baseUrl + Apis.upiAdd),
-          body: jsonEncode({"upiId": upiId, "customerId": customerId}),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            "x-digital-api-key": "1234",
-             "Authorization": "Bearer "+accessToken.toString()
-          });
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.upiAdd,
+        method: Type.POST,
+        data: jsonEncode({"upiId": upiId, "customerId": customerId}),
+      );
 
-      print("Response of add upi${response.body}");
+      if (response != null) {
+        Fluttertoast.showToast(
+          msg: "upi added successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonData = jsonDecode(response.body);
-        CommonApiResponseModel commonApiResponseModel =
-            CommonApiResponseModel.fromJson(jsonData);
-
-        if (commonApiResponseModel.status!.code == 2000) {
-          Flushbar(
-            title: "Upi Added!",
-            message: "upi added successfully ...",
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-
-          await fetchCustomerUpiAccounts();
-
-//           Future.delayed(
-//               const Duration(milliseconds: 500),
-//                   () async {
-// // Here you can write your code
-//                 await fetchCustomerBankAccounts();
-//                 await fetchCustomerUpiAccounts();
-//               });
-
-        } else {
-          Flushbar(
-            title: "Something went wrong ..",
-            message: commonApiResponseModel.status!.message.toString(),
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-        }
-      } else {
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try again ...",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        await fetchCustomerUpiAccounts();
+        isLoading(false);
       }
     } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try again ...",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
     } finally {
-      isLoading.value = false;
+      isLoading(false);
     }
   }
 
@@ -411,20 +350,22 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'x-digital-api-key': '1234',
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       if (response.statusCode == 200) {
-        Flushbar(
-          title: "successful!",
-          message: "Cashback sent in Upi !!",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!)
-            .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                MRouter.homeScreen, (Route<dynamic> route) => false))
+
+
+        Fluttertoast.showToast(
+          msg: "cashback sent  successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        )
+            .then((value) => Get.toNamed(MRouter.verifiedScreen))
             .then((value) => selectedUpiIndex.value == -1);
 
-        // customerBankList.clear();
+
 
       } else {
         Flushbar(
@@ -452,8 +393,7 @@ class CashBackManager extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
-      print("customer id${customerId}");
-      print("bankAccountId${id}");
+
 
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerBankAccount),
@@ -462,10 +402,10 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-             "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
-      print("response delete==> ${response.body}");
+
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
@@ -529,7 +469,7 @@ class CashBackManager extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       print("response delete==> ${response.body}");
