@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/refer/contacts_manager.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/common_banner.dart';
@@ -36,6 +38,8 @@ class _ReferEarnState extends State<ReferEarn> {
   @override
   void initState() {
     super.initState();
+
+    DioApiCall().refreshToken();
     if (_contactCont.isPermissionAllowed.isTrue) {
       _contactCont.fetchContacts();
     }
@@ -186,6 +190,9 @@ class _ReferEarnState extends State<ReferEarn> {
                                       children: [
                                         Expanded(
                                           child: TextFormField(
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                            ],
                                             keyboardType: TextInputType.number,
                                             controller: _editingController,
                                             decoration: InputDecoration(
@@ -484,7 +491,10 @@ class _ReferEarnState extends State<ReferEarn> {
                       contactCont.filteredList.value[index].phones.isNotEmpty
                           ? contactCont
                               .filteredList.value[index].phones.first.number
-                              .toString()
+                              .toString().replaceAll(' ', '')
+                  .replaceAll('-', '')
+                  .replaceAll('(', '')
+                  .replaceAll(')', '')
                           : null)
                   ? Border.all(width: 1, color: AppColors.primary)
                   : null,
@@ -493,7 +503,10 @@ class _ReferEarnState extends State<ReferEarn> {
                       contactCont.filteredList.value[index].phones.isNotEmpty
                           ? contactCont
                               .filteredList.value[index].phones.first.number
-                              .toString()
+                              .toString()  .replaceAll(' ', '')
+                          .replaceAll('-', '')
+                          .replaceAll('(', '')
+                          .replaceAll(')', '')
                           : null)
                   ? LinearGradient(
                       colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
@@ -506,7 +519,10 @@ class _ReferEarnState extends State<ReferEarn> {
             _referManager.invitedList.value.contains(contactCont
                         .filteredList.value[index].phones.isNotEmpty
                     ? contactCont.filteredList.value[index].phones.first.number
-                        .toString()
+                        .toString().replaceAll(' ', '')
+                .replaceAll('-', '')
+                .replaceAll('(', '')
+                .replaceAll(')', '')
                     : null)
                 ? "Invited"
                 : "Invite",
@@ -517,7 +533,10 @@ class _ReferEarnState extends State<ReferEarn> {
                         contactCont.filteredList.value[index].phones.isNotEmpty
                             ? contactCont
                                 .filteredList.value[index].phones.first.number
-                                .toString()
+                                .toString().replaceAll(' ', '')
+                            .replaceAll('-', '')
+                            .replaceAll('(', '')
+                            .replaceAll(')', '')
                             : null)
                     ? AppColors.primary
                     : AppColors.white),

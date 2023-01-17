@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/model/common_model.dart';
@@ -12,15 +13,15 @@ import '../../core/data/remote/api_constant.dart';
 
 class ReferManager extends GetxController {
   var isLoading = false.obs;
-  // var getSuccess = false.obs;
   var invitedList = [].obs;
+
   ContactCont cont = Get.put(ContactCont());
   Future<void> callReferApi(String number) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
-    print("mobile number ${number.substring(number.length - 10)}");
+
     try {
       isLoading.value = true;
 
@@ -36,7 +37,6 @@ class ReferManager extends GetxController {
             "Authorization": "Bearer " + accessToken.toString()
           });
 
-      print("response of send otp${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
@@ -44,47 +44,52 @@ class ReferManager extends GetxController {
             CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-          //  getSuccess.value = true;
 
-          Flushbar(
-            title: "Success:)",
-            message: "Invitation sent successfully!",
-            duration: Duration(seconds: 2),
-          )..show(Get.context!);
-          invitedList.value.add(number);
+          Fluttertoast.showToast(
+            msg: "Invitation sent successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
+          invitedList.value.add(number
+              .toString()
+              .replaceAll(' ', '')
+              .replaceAll('-', '')
+              .replaceAll('(', '')
+              .replaceAll(')', ''));
           cont.contactsLenght.value = cont.contacts.length;
           cont.filteredList.value = cont.contacts;
 
-          // cont.filteredList.value.clear();
-          // cont.filteredList.value = cont.contacts;
-          //
-          //
-          // cont.contactsLenght.value = cont.contacts.length;
+
 
         } else {
           cont.contactsLenght.value = cont.contacts.length;
           cont.filteredList.value = cont.contacts;
-          Flushbar(
-            title: "Alert!",
-            message: commonApiResponseModel.status!.message.toString(),
-            duration: Duration(seconds: 3),
-          )..show(Get.context!);
+
+          Fluttertoast.showToast(
+            msg: commonApiResponseModel.status!.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
         }
       } else {
         cont.contactsLenght.value = cont.contacts.length;
-        print("Success");
-        Flushbar(
-          title: "Server Error!",
-          message: "Please try after sometime ...",
-          duration: Duration(seconds: 1),
-        )..show(Get.context!);
+
+        Fluttertoast.showToast(
+          msg: "Try again ...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0,
+        );
       }
     } catch (e) {
-      Flushbar(
-        title: "Server Error!",
-        message: "Please try after sometime ...",
-        duration: Duration(seconds: 1),
-      )..show(Get.context!);
+      Fluttertoast.showToast(
+        msg: "server error",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0,
+      );
     } finally {
       cont.contactsLenght.value = cont.contacts.length;
 

@@ -29,10 +29,10 @@ class DioApiCall {
       options.headers['Authorization'] = 'Bearer $accessToken';
       return handler.next(options);
     }, onError: (DioError error, handler) async {
-      print("dio error${error}");
+
       if ((error.response?.statusCode == 403 ||
           error.response?.data['message'] == "Invalid JWT")) {
-        print("inside 403");
+
 
         if (await refreshToken()) {
           return handler.resolve(await _retry(error.requestOptions));
@@ -85,8 +85,8 @@ class DioApiCall {
         );
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print('response data bro');
-          print(response.data);
+
+
           if (response.data['status']['code'] != 2000) {
             Fluttertoast.showToast(
                 msg: "${response.data['status']['message']}",
@@ -115,7 +115,7 @@ class DioApiCall {
       }
       return null;
     } catch (exception) {
-      print(exception);
+
       return null;
     }
   }
@@ -135,23 +135,23 @@ class DioApiCall {
   // method for refresh token api call
   Future<bool> refreshToken() async {
 
-    print("refresh screen");
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? refreshToken = prefs!.getString(SPKeys.REFRESH_TOKEN);
 
-    print("shared prefernce ${refreshToken}");
+
     var response = await ApiCalls().postForRefreshToken(Apis.refreshTokenApi,
         {"refreshToken": refreshToken!}).catchError((err) {});
 
 
-    print("response of refresh token ${response.body}");
+
     if (response == null) return false;
     var jsonData = jsonDecode(response.body); // map for response
     var data = jsonData['data']; // map for data
-    print("refresh status access token ${data['accessToken'].toString()}");
+
     // Saving tokens again after it expired.
     prefs.remove(SPKeys.ACCESS_TOKEN).then((value) => prefs!.setString(SPKeys.ACCESS_TOKEN, data['accessToken'].toString()));
-    prefs.remove(SPKeys.REFRESH_TOKEN).then((value) => prefs!.setString(SPKeys.REFRESH_TOKEN, data['refreshToken'].toString()));
+   // prefs.remove(SPKeys.REFRESH_TOKEN).then((value) => prefs!.setString(SPKeys.REFRESH_TOKEN, data['refreshToken'].toString()));
     return true;
   }
 }

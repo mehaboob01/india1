@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../connection_manager/ConnectionManagerController.dart';
@@ -49,8 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     initDynamicLinks();
+
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
+
+
 
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
@@ -83,18 +87,11 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
     if (loggedIn == true) {
+      await DioApiCall().refreshToken();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs!.setBool(SPKeys.SHOW_AUTH, true);
       Get.offAllNamed(MRouter.homeScreen);
-
-      // int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
-      // updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
     } else {
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (BuildContext context) =>
-      //             UserLogin()));
       Get.offAllNamed(MRouter.userLogin);
     }
   }

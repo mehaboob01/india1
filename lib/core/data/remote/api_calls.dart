@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/local/shared_prefer_utils.dart';
 import 'package:india_one/core/data/model/common_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../constant/routes.dart';
 import '../local/shared_preference_keys.dart';
 import '../model/refresh_token_model.dart';
 import 'api_constant.dart';
@@ -120,7 +122,10 @@ class ApiCalls {
     var response = await client.post(url, body: _payload, headers: _headers);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response;
-    } else if (response.statusCode == 403) {
+    } else if (response.statusCode == 401) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+      Get.offAllNamed(MRouter.userLogin);
 
     } else {
       Fluttertoast.showToast(

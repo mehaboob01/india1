@@ -1399,7 +1399,7 @@ class ProfileController extends GetxController {
         if (commonApiResponseModel.status!.code == 2000) {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           await preferences.clear();
-          Get.toNamed(MRouter.userLogin);
+          Get.offAllNamed(MRouter.userLogin);
         } else {
           Flushbar(
             title: "Server Error!",
