@@ -417,6 +417,8 @@ class LoanController extends GetxController {
   }
 
   Future<bool> updateFarmLoanDetails() async {
+    FarmLoanRequirementModel model = loanRequirements.firstWhere((element) =>
+        element.name == profileController.farmLoanReqCtrl.value.text);
     try {
       farmLoanProductLoading.value = true;
       customerId.value = await profileController.getId();
@@ -427,14 +429,17 @@ class LoanController extends GetxController {
         data: json.encode({
           "customerId": customerId.value,
           "loanApplicationId": createLoanModel.value.loanApplicationId,
-          "farmLoanRequirement":
-              loanRequirements[profileController.loanRequirement.value].key,
+          "farmLoanRequirement": model.key,
+
+          // loanRequirements[profileController.loanRequirement.value].key,
           if (farmLoanProductModel.value.subProducts != null)
-            "farmSubProduct": farmLoanProductModel
-                .value.subProducts![profileController.subProduct.value],
+            "farmSubProduct": profileController.farmSubproductCtrl.value.text,
+          // farmLoanProductModel
+          //     .value.subProducts![profileController.subProduct.value],
           if (farmLoanProductModel.value.brands != null)
-            "farmBrand": farmLoanProductModel
-                .value.brands![profileController.brand.value]
+            "farmBrand": profileController.farmBrand.value.text,
+          // farmLoanProductModel
+          //     .value.brands![profileController.brand.value]
         }),
       );
       if (response != null) {
@@ -464,8 +469,9 @@ class LoanController extends GetxController {
             "loanApplicationId": createLoanModel.value.loanApplicationId,
             "farmLoanRequirement": "TrackBasedPersonalLoan",
             if (trackLoanProductModel.value.subProducts != null)
-              "farmSubProduct": trackLoanProductModel.value
-                  .subProducts![profileController.trackBasedsubProduct.value],
+              "farmSubProduct": profileController.trackBasedCtrl.text
+            // trackLoanProductModel.value
+            //     .subProducts![profileController.trackBasedsubProduct.value],
             // if (trackLoanProductModel.value.brands != null)
             //   "farmBrand": trackLoanProductModel
             //       .value.brands![profileController.trackBasedbrand.value]
@@ -503,7 +509,7 @@ class LoanController extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-                "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
       // var response = await DioApiCall().commonApiCall(
       //   endpoint: Apis.recentTransactionLoan,
@@ -541,7 +547,6 @@ class LoanController extends GetxController {
   }
 
   Future insuranceRecentTransactions() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     try {
@@ -558,7 +563,7 @@ class LoanController extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-                "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       print("Json data ==> ${response.body}");

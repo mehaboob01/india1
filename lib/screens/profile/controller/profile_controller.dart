@@ -246,6 +246,10 @@ class ProfileController extends GetxController {
     cashBackManager.fetchCustomerBankAccounts(); // fetch customer bank accounts
   }
 
+  final trackBasedCtrl = TextEditingController(); // track based loan
+  final farmLoanReqCtrl = TextEditingController();
+  final farmSubproductCtrl = TextEditingController();
+  final farmBrand = TextEditingController();
   RxInt loanRequirement = (-1).obs;
   RxInt subProduct = (-1).obs;
   RxInt brand = (-1).obs;
@@ -395,13 +399,11 @@ class ProfileController extends GetxController {
           (await _picker.pickImage(source: ImageSource.gallery))!.path;
       Get.back();
       // await cropImage();
-      if(image.value!=null)
-        {
-          await compress().then((value) async {
-            await cropImage();
-          });
-        }
-
+      if (image.value != null) {
+        await compress().then((value) async {
+          await cropImage();
+        });
+      }
     } else if (await status.isDenied) {
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_STORAGE_PERMISSION, true);
@@ -425,8 +427,7 @@ class ProfileController extends GetxController {
       image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
       Get.back();
 
-      if(image.value!=null)
-      {
+      if (image.value != null) {
         await compress().then((value) async {
           await cropImage();
         });
@@ -1388,7 +1389,7 @@ class ProfileController extends GetxController {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-            "Authorization": "Bearer "+accessToken.toString()
+            "Authorization": "Bearer " + accessToken.toString()
           });
 
       if (response.statusCode == 200 || response.statusCode == 201) {

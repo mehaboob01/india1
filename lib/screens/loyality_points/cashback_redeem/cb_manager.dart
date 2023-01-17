@@ -222,7 +222,6 @@ class CashBackManager extends GetxController {
     String pointsToReedem,
     BuildContext context,
   ) async {
-
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
@@ -245,6 +244,7 @@ class CashBackManager extends GetxController {
           "customerId": customerId,
           "saveBankDetails": true
         };
+        print(sendData);
       } else {
         print("from list data");
         sendData = {
@@ -263,7 +263,6 @@ class CashBackManager extends GetxController {
             "x-digital-api-key": "1234",
             "Authorization": "Bearer " + accessToken.toString()
           });
-
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);
@@ -354,8 +353,6 @@ class CashBackManager extends GetxController {
           });
 
       if (response.statusCode == 200) {
-
-
         Fluttertoast.showToast(
           msg: "cashback sent  successfully!",
           toastLength: Toast.LENGTH_SHORT,
@@ -364,9 +361,6 @@ class CashBackManager extends GetxController {
         )
             .then((value) => Get.toNamed(MRouter.verifiedScreen))
             .then((value) => selectedUpiIndex.value == -1);
-
-
-
       } else {
         Flushbar(
           title: "Error!",
@@ -394,7 +388,6 @@ class CashBackManager extends GetxController {
       String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
       String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
-
       var response = await http.delete(
           Uri.parse(baseUrl + Apis.deleteCustomerBankAccount),
           body: jsonEncode({"customerId": customerId, "bankAccountId": id}),
@@ -404,8 +397,6 @@ class CashBackManager extends GetxController {
             "x-digital-api-key": "1234",
             "Authorization": "Bearer " + accessToken.toString()
           });
-
-
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var jsonData = jsonDecode(response.body);

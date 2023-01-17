@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:india_one/widgets/common_text_search.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
 import '../../constant/routes.dart';
@@ -53,6 +54,7 @@ class EditAccountsCard extends StatelessWidget {
     // print("act type==>  ${accountType}");
     final ConnectionManagerController _controller =
         Get.find<ConnectionManagerController>();
+    final bankNameCtrl = TextEditingController(text: bankName);
 
     return Obx(
       () => IgnorePointer(
@@ -77,31 +79,6 @@ class EditAccountsCard extends StatelessWidget {
                                     Get.offNamedUntil(MRouter.homeScreen,
                                         (route) => route.isFirst);
                                   })
-                              //                           CustomActionIcons(
-                              //                               image: AppImages.deleteIconSvg,
-                              //                               onHeaderIconPressed: () async {
-                              //                                 CommonDeleteBottomSheet().deleteBottomSheet(
-                              //                                     index: index!,
-                              //                                     onDelete: () {
-                              //                                       print(
-                              //                                           'Deleted ${cashBackManager.customerBankList[index!].id} successfully');
-
-                              //                                       cashBackManager.delBankAccount(
-                              //                                           cashBackManager
-                              //                                               .customerBankList[index!].id);
-
-                              //                                       Future.delayed(
-                              //                                           const Duration(milliseconds: 500),
-                              //                                           () async {
-                              // // Here you can write your code
-                              //                                         await cashBackManager
-                              //                                             .fetchCustomerBankAccounts();
-                              //                                         await cashBackManager
-                              //                                             .fetchCustomerUpiAccounts();
-                              //                                       });
-                              //                                       //  cashBackManager.fetchCustomerBankAccounts();
-                              //                                     });
-                              //                               })
                             ],
                           ),
                         ),
@@ -206,20 +183,32 @@ class EditAccountsCard extends StatelessWidget {
                                                   height: 34,
                                                 ),
                                                 // bank name
-                                                DropDown(
-                                                  onChanged: (value) {
-                                                    return bankName = value;
-                                                  },
-                                                  formName: 'bankName',
-                                                  initialValue: bankName,
-                                                  labelName: 'Bank name',
-                                                  hintText:
-                                                      'Select your bank here',
-                                                  data:
-                                                      cashBackManager.bankList,
-                                                  validationText:
-                                                      ' name is compulsory',
-                                                ),
+                                                CommonSearchTextField(
+                                                    itemList: cashBackManager
+                                                        .bankList,
+                                                    label: 'Bank name',
+                                                    hintText:
+                                                        'Select your bank here',
+                                                    searchCtrl: bankNameCtrl,
+                                                    searchHintText:
+                                                        'Select your Bank here...',
+                                                    itemListNullError:
+                                                        'Invalid Bank Name'),
+
+                                                // DropDown(
+                                                //   onChanged: (value) {
+                                                //     return bankName = value;
+                                                //   },
+                                                //   formName: 'bankName',
+                                                //   initialValue: bankName,
+                                                //   labelName: 'Bank name',
+                                                //   hintText:
+                                                //       'Select your bank here',
+                                                //   data:
+                                                //       cashBackManager.bankList,
+                                                //   validationText:
+                                                //       ' name is compulsory',
+                                                // ),
                                                 SizedBox(
                                                   height: 18,
                                                 ),
@@ -428,10 +417,11 @@ class EditAccountsCard extends StatelessWidget {
                                     _updateBankAccount.currentState!.validate();
                                     print(
                                         _updateBankAccount.currentState!.value);
-                                    var bankId = checkBankId(bankName);
+                                    var bankId =
+                                        checkBankId(bankNameCtrl.value.text);
 
                                     print(
-                                        "bankId for updtae bank account${bankId}");
+                                        "bankId for updtae bank account${bankId} and ${bankNameCtrl.value.text}");
                                     print(
                                         "json value update bank ${_updateBankAccount.currentState!.value}");
 

@@ -10,6 +10,7 @@ import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
+import 'package:india_one/widgets/common_text_search.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -77,8 +78,11 @@ class _FarmLoanState extends State<FarmLoan> {
   }
 
   void resetValues() {
+    profileController.farmLoanReqCtrl.clear();
     profileController.loanRequirement.value = -1;
+    profileController.farmSubproductCtrl.clear();
     profileController.subProduct.value = -1;
+    profileController.farmBrand.clear();
     profileController.brand.value = -1;
     loanController.farmLoanProductModel.value = FarmLoanProductModel();
   }
@@ -183,12 +187,12 @@ class _FarmLoanState extends State<FarmLoan> {
     return GestureDetector(
       onTap: () async {
         String? msg;
-        if (profileController.loanRequirement.value == -1) {
+        if (profileController.farmLoanReqCtrl.value.text.isEmpty) {
           msg = "Select loan requirement";
-        } else if (profileController.subProduct.value == -1 &&
+        } else if (profileController.farmSubproductCtrl.value.text.isEmpty &&
             loanController.farmLoanProductModel.value.subProducts != null) {
           msg = "Select sub product";
-        } else if (profileController.brand.value == -1 &&
+        } else if (profileController.farmBrand.value.text.isEmpty &&
             loanController.farmLoanProductModel.value.brands != null) {
           msg = "Select brand";
         }
@@ -631,209 +635,262 @@ class _FarmLoanState extends State<FarmLoan> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DividerIO(
-          height: 38,
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              text(
-                'Loan details',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_18sp,
-                    color: loanController.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? Colors.black
-                        : AppColors.black26Color,
-                    fontWeight: loanController.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? FontWeight.w600
-                        : FontWeight.w400),
-              ),
-              DividerIO(
-                height: 24,
-              ),
-              text(
-                'Choose the product against which you want the loan',
-                style: AppStyle.shortHeading.copyWith(
-                    fontSize: Dimens.font_14sp,
-                    color: loanController.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? Colors.grey
-                        : AppColors.black26Color,
-                    fontWeight: loanController.currentScreen.value ==
-                            Steps.LOAN_AMOUNT.index
-                        ? FontWeight.w600
-                        : FontWeight.w400),
-              ),
-            ],
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DividerIO(
+            height: 38,
           ),
-        ),
-        // Container(
-        //   margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
-        //   child: CustomSlider(
-        //     sliderValue: loanController.sliderValue,
-        //     textEditingController: loanAmountEditingController,
-        //     minValue: loanController.minValue,
-        //     maxValue: loanController.maxValue,
-        //   ),
-        // ),
-        // DividerIO(
-        //   height: 18,
-        // ),
-        // Padding(
-        //     padding: EdgeInsets.only(
-        //       left: 4.0,
-        //       right: 4,
-        //     ),
-        //     child: FormBuilder(
-        //       key: _loanAmountKey,
-        //       initialValue: {
-        //         "loan_amount": "",
-        //       },
-        //       child: FormBuilderTextField(
-        //         keyboardType: TextInputType.number,
-        //         controller: loanAmountEditingController,
-        //         autovalidateMode: AutovalidateMode.onUserInteraction,
-        //         style: TextStyle(color: Colors.black,
-        //             fontSize: Dimens.font_16sp,
-        //             fontWeight: FontWeight.w600),
-        //         decoration: new InputDecoration(
-        //           prefixIcon: Column(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               text("₹", style: TextStyle(color: Colors.black,
-        //                   fontSize: Dimens.font_16sp,
-        //                   fontWeight: FontWeight.w600)),
-        //             ],
-        //           ),
-        //           focusedBorder: const OutlineInputBorder(
-        //             borderSide: BorderSide(
-        //                 color: Colors.blue, width: 1.0),
-        //           ),
-        //           enabledBorder: const OutlineInputBorder(
-        //             // width: 0.0 produces a thin "hairline" border
-        //             borderSide: const BorderSide(
-        //                 color: Color(0xFFCDCBCB), width: 1.0),
-        //           ),
-        //           border: const OutlineInputBorder(),
-        //           labelText: 'Loan amount',
-        //           labelStyle: new TextStyle(color: Color(0xFF787878)),
-        //         ),
-        //         validator: FormBuilderValidators.compose([
-        //           FormBuilderValidators.required(context),
-        //         ]),
-        //         onChanged: (value) {
-        //           double newVal = double.tryParse(value.toString()) ?? 0;
-        //           if (newVal >= loanController.minValue.value &&
-        //               newVal <= loanController.maxValue.value) {
-        //             loanController.sliderValue.value = newVal;
-        //           } else {
-        //             loanController.sliderValue.value = loanController.minValue.value;
-        //           }
-        //         },
-        //         name: 'loan_amount',
-        //       ),
-        //     )),
-        DividerIO(
-          height: 28,
-        ),
-        ProfileStepper().commonDropDown(
-          item: loanController.loanRequirements
-              .map<DropdownMenuItem<FarmLoanRequirementModel>>(
-                  (FarmLoanRequirementModel value) {
-            return DropdownMenuItem<FarmLoanRequirementModel>(
-              value: value,
-              child: text(value.name.toString()),
-            );
-          }).toList(),
-          onChanged: (value) {
-            // profileController.loanRequirement.value = value.name;
-            profileController.loanRequirement.value =
-                loanController.loanRequirements.indexOf(value!);
-            loanController.fetchFarmLoanProducts(
-                requirementId: loanController
-                    .loanRequirements[profileController.loanRequirement.value]
-                    .key);
-          },
-          label: 'Loan requirement',
-          hint: 'Choose the option for loan',
-          value: profileController.loanRequirement.value == -1
-              ? null
-              : loanController
-                  .loanRequirements[profileController.loanRequirement.value],
-        ),
-        DividerIO(
-          height: 28,
-        ),
-        Obx(
-          () {
-            if (profileController.loanRequirement.value != -1 &&
-                loanController.farmLoanProductModel.value.subProducts != null) {
-              return ProfileStepper().commonDropDown(
-                item: loanController.farmLoanProductModel.value.subProducts!
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  profileController.subProduct.value = loanController
-                      .farmLoanProductModel.value.subProducts!
-                      .indexOf(value!);
-                },
-                label: 'Sub product',
-                hint: 'Select sub product',
-                value: profileController.subProduct.value == -1
-                    ? null
-                    : loanController.farmLoanProductModel.value
-                        .subProducts![profileController.subProduct.value],
-              );
-            } else {
-              return SizedBox();
-            }
-          },
-        ),
-        DividerIO(
-          height: 28,
-        ),
-        Obx(() {
-          if (loanController.farmLoanProductModel.value.brands != null) {
-            return ProfileStepper().commonDropDown(
-              item: loanController.farmLoanProductModel.value.brands!
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: text(value.toString()),
-                );
-              }).toList(),
-              onChanged: (value) {
-                profileController.brand.value = loanController
-                    .farmLoanProductModel.value.brands!
-                    .indexOf(value!);
+          Padding(
+            padding: EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                text(
+                  'Loan details',
+                  style: AppStyle.shortHeading.copyWith(
+                      fontSize: Dimens.font_18sp,
+                      color: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
+                          ? Colors.black
+                          : AppColors.black26Color,
+                      fontWeight: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
+                          ? FontWeight.w600
+                          : FontWeight.w400),
+                ),
+                DividerIO(
+                  height: 24,
+                ),
+                text(
+                  'Choose the product against which you want the loan',
+                  style: AppStyle.shortHeading.copyWith(
+                      fontSize: Dimens.font_14sp,
+                      color: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
+                          ? Colors.grey
+                          : AppColors.black26Color,
+                      fontWeight: loanController.currentScreen.value ==
+                              Steps.LOAN_AMOUNT.index
+                          ? FontWeight.w600
+                          : FontWeight.w400),
+                ),
+              ],
+            ),
+          ),
+          // Container(
+          //   margin: EdgeInsets.fromLTRB(0, 28, 0, 28),
+          //   child: CustomSlider(
+          //     sliderValue: loanController.sliderValue,
+          //     textEditingController: loanAmountEditingController,
+          //     minValue: loanController.minValue,
+          //     maxValue: loanController.maxValue,
+          //   ),
+          // ),
+          // DividerIO(
+          //   height: 18,
+          // ),
+          // Padding(
+          //     padding: EdgeInsets.only(
+          //       left: 4.0,
+          //       right: 4,
+          //     ),
+          //     child: FormBuilder(
+          //       key: _loanAmountKey,
+          //       initialValue: {
+          //         "loan_amount": "",
+          //       },
+          //       child: FormBuilderTextField(
+          //         keyboardType: TextInputType.number,
+          //         controller: loanAmountEditingController,
+          //         autovalidateMode: AutovalidateMode.onUserInteraction,
+          //         style: TextStyle(color: Colors.black,
+          //             fontSize: Dimens.font_16sp,
+          //             fontWeight: FontWeight.w600),
+          //         decoration: new InputDecoration(
+          //           prefixIcon: Column(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             children: [
+          //               text("₹", style: TextStyle(color: Colors.black,
+          //                   fontSize: Dimens.font_16sp,
+          //                   fontWeight: FontWeight.w600)),
+          //             ],
+          //           ),
+          //           focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: Colors.blue, width: 1.0),
+          //           ),
+          //           enabledBorder: const OutlineInputBorder(
+          //             // width: 0.0 produces a thin "hairline" border
+          //             borderSide: const BorderSide(
+          //                 color: Color(0xFFCDCBCB), width: 1.0),
+          //           ),
+          //           border: const OutlineInputBorder(),
+          //           labelText: 'Loan amount',
+          //           labelStyle: new TextStyle(color: Color(0xFF787878)),
+          //         ),
+          //         validator: FormBuilderValidators.compose([
+          //           FormBuilderValidators.required(context),
+          //         ]),
+          //         onChanged: (value) {
+          //           double newVal = double.tryParse(value.toString()) ?? 0;
+          //           if (newVal >= loanController.minValue.value &&
+          //               newVal <= loanController.maxValue.value) {
+          //             loanController.sliderValue.value = newVal;
+          //           } else {
+          //             loanController.sliderValue.value = loanController.minValue.value;
+          //           }
+          //         },
+          //         name: 'loan_amount',
+          //       ),
+          //     )),
+          DividerIO(
+            height: 28,
+          ),
+          CommonSearchTextField(
+              itemList:
+                  loanController.loanRequirements.map((e) => e.name).toList(),
+              label: 'Loan requirement',
+              hintText: 'Choose the option for loan',
+              searchCtrl: profileController.farmLoanReqCtrl,
+              inputOnChanged: (value) {
+                FarmLoanRequirementModel model = loanController.loanRequirements
+                    .firstWhere((element) =>
+                        element.name ==
+                        profileController.farmLoanReqCtrl.value.text);
+
+                int index = loanController.loanRequirements.indexOf(model);
+                loanController.fetchFarmLoanProducts(
+                    requirementId: loanController.loanRequirements[index].key);
+                // if (value == "Implement finance") {
+
+                // }
               },
-              label: 'Implement brand',
-              hint: 'Select brand',
-              value: profileController.brand.value == -1
-                  ? null
-                  : loanController.farmLoanProductModel.value
-                      .brands![profileController.brand.value],
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
-        SizedBox(
-          height: 54,
-        )
-      ],
-    );
+              searchHintText: 'Search your Loan Requirment',
+              itemListNullError: 'Invalid Loan Requirment Value'),
+          DividerIO(
+            height: 28,
+          ),
+          // ProfileStepper().commonDropDown(
+          //   item: loanController.loanRequirements
+          //       .map<DropdownMenuItem<FarmLoanRequirementModel>>(
+          //           (FarmLoanRequirementModel value) {
+          //     return DropdownMenuItem<FarmLoanRequirementModel>(
+          //       value: value,
+          //       child: text(value.name.toString()),
+          //     );
+          //   }).toList(),
+          //   onChanged: (value) {
+          //     // profileController.loanRequirement.value = value.name;
+          //     // profileController.loanRequirement.value =
+          //     //     loanController.loanRequirements.indexOf(value!);
+          //     // loanController.fetchFarmLoanProducts(
+          //     //     requirementId: loanController
+          //     //         .loanRequirements[profileController.loanRequirement.value]
+          //     //         .key);
+          //   },
+          //   label: 'Loan requirement',
+          //   hint: 'Choose the option for loan',
+          //   value: profileController.loanRequirement.value == -1
+          //       ? null
+          //       : loanController
+          //           .loanRequirements[profileController.loanRequirement.value],
+          // ),
+          // DividerIO(
+          //   height: 28,
+          // ),
+
+          loanController.farmLoanProductModel.value.subProducts == null &&
+                  profileController.farmLoanReqCtrl.value.text !=
+                      'Implement finance'
+              ? SizedBox.shrink()
+              : CommonSearchTextField(
+                  itemList:
+                      loanController.farmLoanProductModel.value.subProducts!,
+                  label: 'Sub Product',
+                  hintText: 'Select a Sub Product',
+                  searchCtrl: profileController.farmBrand,
+                  searchHintText: 'Search Sub Product ...',
+                  itemListNullError: 'Invalid Sub Product',
+                ),
+          // Obx(
+          //   () {
+          //     if (
+          //         // profileController.loanRequirement.value != -1 &&
+          //         loanController.farmLoanProductModel.value.subProducts != null) {
+          //       return ProfileStepper().commonDropDown(
+          //         item: loanController.farmLoanProductModel.value.subProducts!
+          //             .map<DropdownMenuItem<String>>((String value) {
+          //           return DropdownMenuItem<String>(
+          //             value: value,
+          //             child: text(value.toString()),
+          //           );
+          //         }).toList(),
+          //         onChanged: (value) {
+          //           profileController.subProduct.value = loanController
+          //               .farmLoanProductModel.value.subProducts!
+          //               .indexOf(value!);
+          //         },
+          //         label: 'Sub product',
+          //         hint: 'Select sub product',
+          //         value: profileController.subProduct.value == -1
+          //             ? null
+          //             : loanController.farmLoanProductModel.value
+          //                 .subProducts![profileController.subProduct.value],
+          //       );
+          //     } else {
+          //       return SizedBox();
+          //     }
+          //   },
+          // ),
+          DividerIO(
+            height: 28,
+          ),
+          loanController.farmLoanProductModel.value.brands == null &&
+                  profileController.farmLoanReqCtrl.value.text !=
+                      'Implement finance'
+              ? SizedBox.shrink()
+              : CommonSearchTextField(
+                  itemList: loanController.farmLoanProductModel.value.brands!,
+                  label: 'Implement Brand',
+                  hintText: 'Select a Brand',
+                  searchCtrl: profileController.farmSubproductCtrl,
+                  searchHintText: 'Search Sub Product ...',
+                  itemListNullError: 'Invalid Sub Product',
+                ),
+          // Obx(() {
+          //   if (loanController.farmLoanProductModel.value.brands != null) {
+          //     return ProfileStepper().commonDropDown(
+          //       item: loanController.farmLoanProductModel.value.brands!
+          //           .map<DropdownMenuItem<String>>((String value) {
+          //         return DropdownMenuItem<String>(
+          //           value: value,
+          //           child: text(value.toString()),
+          //         );
+          //       }).toList(),
+          //       onChanged: (value) {
+          //         profileController.brand.value = loanController
+          //             .farmLoanProductModel.value.brands!
+          //             .indexOf(value!);
+          //       },
+          //       label: 'Implement brand',
+          //       hint: 'Select brand',
+          //       value: profileController.brand.value == -1
+          //           ? null
+          //           : loanController.farmLoanProductModel.value
+          //               .brands![profileController.brand.value],
+          //     );
+          //   } else {
+          //     return SizedBox();
+          //   }
+          // }),
+          SizedBox(
+            height: 54,
+          )
+        ],
+      );
+    });
   }
 
   //Personal info UI

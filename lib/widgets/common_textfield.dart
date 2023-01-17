@@ -25,6 +25,8 @@ class CommonTextField extends StatelessWidget {
     this.isfieldEnabled,
     this.focus,
     this.fieldOnTap,
+    this.floatingBehavior,
+    this.readonly,
   });
   final String? hintText;
   final String? labelText;
@@ -44,11 +46,14 @@ class CommonTextField extends StatelessWidget {
   final bool? isfieldEnabled;
   final bool? isAutoValidate;
   final bool? isUpperCase;
+  final bool? readonly;
+  final FloatingLabelBehavior? floatingBehavior;
 
   final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      readOnly: readonly ?? false,
       autofocus: false,
       focusNode: focus,
       name: formName,
@@ -82,14 +87,17 @@ class CommonTextField extends StatelessWidget {
               color: AppColors.greyInlineText,
               fontWeight: FontWeight.w400,
               fontSize: 11.0.sp),
-          label: text(
-            labelText!, //'Points for cashback', // dynamic
-            style: AppStyle.shortHeading.copyWith(
-                color: AppColors.greyInlineText,
-                fontWeight: FontWeight.w400,
-                fontSize: 11.0.sp),
-          ),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
+          label: labelText == null
+              ? null
+              : text(
+                  labelText!, //'Points for cashback', // dynamic
+                  style: AppStyle.shortHeading.copyWith(
+                      color: AppColors.greyInlineText,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 11.0.sp),
+                ),
+          floatingLabelBehavior:
+              floatingBehavior ?? FloatingLabelBehavior.always,
           errorStyle: AppStyle.shortHeading.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 11.0.sp,
