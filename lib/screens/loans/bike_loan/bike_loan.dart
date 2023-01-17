@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/screens/loans/bike_loan/models_model.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
 import 'package:india_one/screens/loans/lenders_list_others.dart';
 import 'package:india_one/screens/loans/loan_common.dart';
@@ -10,6 +11,7 @@ import 'package:india_one/screens/loans/model/create_loan_model.dart';
 import 'package:india_one/screens/loans/personal_loan_io/personal_loan.dart';
 import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
+import 'package:india_one/widgets/common_text_search.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -286,6 +288,8 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
+    final twoWheelerMakeCtrl =
+        TextEditingController(text: profileController.twoWheelermakes.value);
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -308,6 +312,22 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                     : FontWeight.w400),
           ),
           DividerIO(
+            height: 24,
+          ),
+          // CommonSearchTextField(
+          //     itemList: loanController.twoWheelerMakes.toSet().toList(),
+          //     label: 'Product',
+          //     hintText: 'Select a Product',
+          //     searchCtrl: twoWheelerMakeCtrl,
+          //     inputOnChanged: (value) {
+          //       print(profileController.twoWheelermakes.value);
+          //       profileController.twoWheelermakes.value = value!;
+          //       profileController.twoWheelerModel.value = '';
+          //       loanController.fetch2WheelerModels();
+          //     },
+          //     searchHintText: 'Select a product here...',
+          //     itemListNullError: 'Invalid Product Name'),
+          SizedBox(
             height: 24,
           ),
           ButtonTheme(

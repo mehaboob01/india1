@@ -17,6 +17,7 @@ class CashBackRedoController extends GetxController {
   final redeemPointsMinValue = 0.0.obs; // slider minimum value
   final accountNumberAutoValidate = false.obs; // account number auto validate
   final bankname = ''.obs; // drop down bank name
+  final bankNameDropDownCtrl = TextEditingController().obs;
   Rx<FocusNode> accountFocus = FocusNode().obs;
   @override
   void onClose() {

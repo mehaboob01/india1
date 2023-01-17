@@ -42,7 +42,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
 
   TextEditingController loanAmountEditingController = TextEditingController();
   ProfileController profileController = Get.put(ProfileController());
-
+  CreateLoanModel createloanModel = CreateLoanModel();
   @override
   void initState() {
     super.initState();
@@ -68,11 +68,12 @@ class _PersonalLoanState extends State<PersonalLoan> {
               loanAmountEditingController.text = CommonMethods()
                   .indianRupeeValue(createLoanModel.loanAmount!.toDouble());
             }
-          } else {
-            loanAmountEditingController.text =
-                CommonMethods().indianRupeeValue(loanController.minValue.value);
-          }
+          } else {}
         });
+    loanAmountEditingController.text = createloanModel.loanAmount == null
+        ? CommonMethods().indianRupeeValue(loanController.minValue.value)
+        : CommonMethods()
+            .indianRupeeValue(createloanModel.loanAmount!.toDouble());
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();

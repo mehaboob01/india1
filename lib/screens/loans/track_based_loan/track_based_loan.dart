@@ -12,6 +12,7 @@ import 'package:india_one/screens/profile/common/profile_stepper.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
 import 'package:india_one/utils/common_appbar_icons.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
+import 'package:india_one/widgets/common_text_search.dart';
 import 'package:india_one/widgets/divider_io.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:india_one/widgets/my_stepper/another_stepper.dart';
@@ -195,12 +196,12 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
     return GestureDetector(
       onTap: () async {
         String? msg;
-        if (loanController.trackLoanProductModel.value.subProducts == null) {
+        if (profileController.trackBasedCtrl.text.isEmpty) {
           msg = "Select sub product";
         }
         if (msg != null) {
           Flushbar(
-            title: "",
+            title: 'Alert!',
             message: msg,
             duration: Duration(seconds: 3),
           )..show(context);
@@ -530,6 +531,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
+    final productCtrl = TextEditingController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -669,64 +671,77 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
         // DividerIO(
         //   height: 28,
         // ),
-        Obx(() {
-          if (loanController.trackLoanProductModel.value.subProducts != null) {
-            return ProfileStepper().commonDropDown(
-              item: loanController.trackLoanProductModel.value.subProducts!
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: text(value.toString()),
-                );
-              }).toList(),
-              onChanged: (value) {
-                profileController.trackBasedsubProduct.value = loanController
-                    .trackLoanProductModel.value.subProducts!
-                    .indexOf(value!);
-              },
-              label: 'Sub product',
-              hint: 'Select sub product',
-              value: profileController.trackBasedsubProduct.value == -1
-                  ? null
-                  : loanController.trackLoanProductModel.value.subProducts![
-                      profileController.trackBasedsubProduct.value],
-            );
-          } else {
-            return SizedBox();
-          }
-        }),
-        DividerIO(
-          height: 28,
-        ),
-        // Obx(() {
-        //   if (loanController.trackLoanProductModel.value.brands != null) {
-        //     return ProfileStepper().commonDropDown(
-        //       item: loanController.trackLoanProductModel.value.brands!
-        //           .map<DropdownMenuItem<String>>((String value) {
-        //         return DropdownMenuItem<String>(
-        //           value: value,
-        //           child: text(value.toString()),
+
+        loanController.trackLoanProductModel.value.subProducts != null
+            ? Obx(() => CommonSearchTextField(
+                  itemList:
+                      loanController.trackLoanProductModel.value.subProducts!,
+                  label: 'Sub product',
+                  hintText: 'Select sub product',
+                  searchCtrl: profileController.trackBasedCtrl,
+                  searchHintText: 'Search your LoanType...',
+                  itemListNullError: 'Invalid Loan Type',
+                ))
+            : SizedBox.shrink(),
+
+        //             ProfileStepper().commonDropDown(
+        //               item: loanController.trackLoanProductModel.value.subProducts!
+        //                   .map<DropdownMenuItem<String>>((String value) {
+        //                 return DropdownMenuItem<String>(
+        //                   value: value,
+        //                   child: text(value.toString()),
+        //                 );
+        //               }).toList(),
+        //               onChanged: (value) {
+        //                 profileController.trackBasedsubProduct.value =
+        //                     loanController.trackLoanProductModel.value.subProducts!
+        //                         .indexOf(value!);
+        //               },
+        //               label: 'Sub product',
+        //               hint: 'Select sub product',
+        //               value: profileController.trackBasedsubProduct.value == -1
+        //                   ? null
+        //                   : loanController.trackLoanProductModel.value.subProducts![
+        //                       profileController.trackBasedsubProduct.value],
+        //             ),
+        //           ],
         //         );
-        //       }).toList(),
-        //       onChanged: (value) {
-        //         profileController.trackBasedbrand.value = loanController
-        //             .trackLoanProductModel.value.brands!
-        //             .indexOf(value!);
-        //       },
-        //       label: 'Implement brand',
-        //       hint: 'Select brand',
-        //       value: profileController.trackBasedbrand.value == -1
-        //           ? null
-        //           : loanController.trackLoanProductModel.value
-        //               .brands![profileController.trackBasedbrand.value],
-        //     );
-        //   } else {
-        //     return SizedBox();
-        //   }
-        // }),
-        SizedBox(
-          height: 54,
-        )
+        //       } else {
+        //         return SizedBox();
+        //       }
+        //     }),
+        //     DividerIO(
+        //       height: 28,
+        //     ),
+        //     // Obx(() {
+        //     //   if (loanController.trackLoanProductModel.value.brands != null) {
+        //     //     return ProfileStepper().commonDropDown(
+        //     //       item: loanController.trackLoanProductModel.value.brands!
+        //     //           .map<DropdownMenuItem<String>>((String value) {
+        //     //         return DropdownMenuItem<String>(
+        //     //           value: value,
+        //     //           child: text(value.toString()),
+        //     //         );
+        //     //       }).toList(),
+        //     //       onChanged: (value) {
+        //     //         profileController.trackBasedbrand.value = loanController
+        //     //             .trackLoanProductModel.value.brands!
+        //     //             .indexOf(value!);
+        //     //       },
+        //     //       label: 'Implement brand',
+        //     //       hint: 'Select brand',
+        //     //       value: profileController.trackBasedbrand.value == -1
+        //     //           ? null
+        //     //           : loanController.trackLoanProductModel.value
+        //     //               .brands![profileController.trackBasedbrand.value],
+        //     //     );
+        //     //   } else {
+        //     //     return SizedBox();
+        //     //   }
+        //     // }),
+        //     SizedBox(
+        //       height: 54,
+        //     )
       ],
     );
   }

@@ -35,7 +35,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
   ProfileController profileController = Get.put(ProfileController());
 
   LoanController loanController = Get.put(LoanController());
-
+  CreateLoanModel createloanModel = CreateLoanModel();
   @override
   void initState() {
     profileController.setData();
@@ -69,6 +69,10 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 CommonMethods().indianRupeeValue(loanController.minValue.value);
           }
         });
+    loanAmountEditingController.text = createloanModel.loanAmount == null
+        ? CommonMethods().indianRupeeValue(loanController.minValue.value)
+        : CommonMethods()
+            .indianRupeeValue(createloanModel.loanAmount!.toDouble());
   }
 
   GlobalKey<FormState> personalForm = GlobalKey<FormState>();
