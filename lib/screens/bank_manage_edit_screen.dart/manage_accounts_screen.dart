@@ -119,10 +119,10 @@ class ManageAccountsCard extends StatelessWidget {
                                                                   accountType: cashBackManager
                                                                       .customerBankList[
                                                                           index]
-                                                                      .accountType.toString(),
+                                                                      .accountType
+                                                                      .toString(),
                                                                   id: cashBackManager
-                                                                      .customerBankList[
-                                                                          index]
+                                                                      .customerBankList[index]
                                                                       .id,
                                                                   index: index),
                                                               arguments: [
@@ -169,7 +169,8 @@ class ManageAccountsCard extends StatelessWidget {
                                                               cashBackManager
                                                                   .customerBankList[
                                                                       index]
-                                                                  .accountType.toString(),
+                                                                  .accountType
+                                                                  .toString(),
                                                         )),
                                               ),
                                             ))
@@ -235,7 +236,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                                           index]
                                                                       .id);
 
-                                                              Get.back();
+                                                              // Get.back();
                                                               // await Future.delayed(
                                                               //     Duration(
                                                               //         seconds:

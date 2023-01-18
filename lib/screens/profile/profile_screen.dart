@@ -266,13 +266,23 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                    color: AppColors
-                                                        .lightOrangeColor
-                                                        .withOpacity(0.4),
-                                                    width: 10,
-                                                    style: BorderStyle.solid,
-                                                  ),
+                                                  // border: Border.all(
+                                                  //   // color: AppColors
+                                                  //   //     .lightOrangeColor
+                                                  //   //     .withOpacity(0.4),
+                                                  //   width: 10,
+                                                  //   style: BorderStyle.solid,
+                                                  // ),
+                                                  gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment(-0.3, -0.3),
+                                                      end: Alignment(0.4, 0.4),
+                                                      colors: [
+                                                        AppColors.blueColor
+                                                            .withOpacity(0.4),
+                                                        AppColors.redColor
+                                                            .withOpacity(0.4)
+                                                      ]),
                                                 ),
                                               ),
                                               GestureDetector(
@@ -1008,7 +1018,8 @@ class ProfileScreen extends StatelessWidget {
                                 title: "Monthly income",
                                 value: profileDetailsModel.income == null
                                     ? ''
-                                    : "₹"+'${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble())}', //"${profileDetailsModel.income ?? ""}",
+                                    : "₹" +
+                                        '${CommonMethods().indianRupeeValue(profileDetailsModel.income!.toDouble())}', //"${profileDetailsModel.income ?? ""}",
                                 isEmpty: profileDetailsModel.income == null
                                     ? true
                                     : false),

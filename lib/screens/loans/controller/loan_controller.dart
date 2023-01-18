@@ -199,8 +199,8 @@ class LoanController extends GetxController {
           "loanApplicationId": "${createLoanModel.value.loanApplicationId}",
           "loanAmount": "$amount",
           if (type == LoanType.BikeLoan) ...{
-            "twoWheelerMake": profileController.twoWheelermakes.value,
-            "twoWheelerModel": profileController.twoWheelerModel.value,
+            "twoWheelerMake": profileController.twoWheelerMakeCtrl.value.text,
+            "twoWheelerModel": profileController.twoWheelerModelCtrl.value.text,
           },
           if (type == LoanType.CarLoan) ...{
             "fourWheelerType": profileController.vehicleType.value,
@@ -403,7 +403,8 @@ class LoanController extends GetxController {
       var response = await DioApiCall().commonApiCall(
           endpoint: Apis.fetchTwoWheelerModels,
           method: Type.POST,
-          data: json.encode({"make": profileController.twoWheelermakes.value}));
+          data: json.encode(
+              {"make": profileController.twoWheelerMakeCtrl.value.text}));
       if (response != null) {
         print(response);
         twoWheelerModelsmodel.value = TwoWheelerModels.fromJson(response);

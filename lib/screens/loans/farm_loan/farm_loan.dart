@@ -635,6 +635,11 @@ class _FarmLoanState extends State<FarmLoan> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
+    Future<void> getFarmLoan(int index) async {
+      await loanController.fetchFarmLoanProducts(
+          requirementId: loanController.loanRequirements[index].key);
+    }
+
     return Obx(() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -761,11 +766,7 @@ class _FarmLoanState extends State<FarmLoan> {
                         profileController.farmLoanReqCtrl.value.text);
 
                 int index = loanController.loanRequirements.indexOf(model);
-                loanController.fetchFarmLoanProducts(
-                    requirementId: loanController.loanRequirements[index].key);
-                // if (value == "Implement finance") {
-
-                // }
+                getFarmLoan(index);
               },
               searchHintText: 'Search your Loan Requirment',
               itemListNullError: 'Invalid Loan Requirment Value'),
@@ -807,7 +808,8 @@ class _FarmLoanState extends State<FarmLoan> {
               ? SizedBox.shrink()
               : CommonSearchTextField(
                   itemList:
-                      loanController.farmLoanProductModel.value.subProducts!,
+                      loanController.farmLoanProductModel.value.subProducts ??
+                          [],
                   label: 'Sub Product',
                   hintText: 'Select a Sub Product',
                   searchCtrl: profileController.farmBrand,
@@ -852,7 +854,8 @@ class _FarmLoanState extends State<FarmLoan> {
                       'Implement finance'
               ? SizedBox.shrink()
               : CommonSearchTextField(
-                  itemList: loanController.farmLoanProductModel.value.brands!,
+                  itemList:
+                      loanController.farmLoanProductModel.value.brands ?? [],
                   label: 'Implement Brand',
                   hintText: 'Select a Brand',
                   searchCtrl: profileController.farmSubproductCtrl,

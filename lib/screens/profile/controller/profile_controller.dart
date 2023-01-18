@@ -249,6 +249,8 @@ class ProfileController extends GetxController {
   final trackBasedCtrl = TextEditingController(); // track based loan
   final farmLoanReqCtrl = TextEditingController();
   final farmSubproductCtrl = TextEditingController();
+  final twoWheelerMakeCtrl = TextEditingController();
+  final twoWheelerModelCtrl = TextEditingController();
   final farmBrand = TextEditingController();
   RxInt loanRequirement = (-1).obs;
   RxInt subProduct = (-1).obs;
