@@ -28,7 +28,7 @@ class _LendersListState extends State<LendersListOthers> {
   @override
   void initState() {
     super.initState();
-    isPersonalLoan = (widget.title == 'Personal loan') ? true : false;
+    isPersonalLoan = (widget.title == 'personal_loan_header'.tr) ? true : false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loanController.getProviders(
           isPersonalLoan: isPersonalLoan, providerId: "", fromScreen: "Gold");
@@ -99,8 +99,7 @@ class _LendersListState extends State<LendersListOthers> {
                                           "Redirect") {
                                         Get.to(
                                           () => ProviderDetail(
-                                            title:
-                                                '${widget.title}',
+                                            title: '${widget.title}',
                                             lenders: loanController
                                                 .loanLenderOthersModel
                                                 .value
@@ -129,7 +128,7 @@ class _LendersListState extends State<LendersListOthers> {
 
                                         Get.to(
                                           () => CommonWebView(
-                                            title: 'Gold Loan',
+                                            title: 'gold_loan_header'.tr,
                                             url: loanController
                                                     .loanLenderOthersModel
                                                     .value

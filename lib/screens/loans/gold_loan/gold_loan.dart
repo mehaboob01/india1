@@ -102,7 +102,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 () => Column(
                   children: [
                     CustomAppBar(
-                      heading: 'Gold loan',
+                      heading: 'gold_loan_header'.tr,
                       customActionIconsList: commonAppIcons,
                     ),
                     Expanded(
@@ -122,7 +122,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                                       stepperList:
                                           loanController.bikeLoanTitleList
                                               .map((e) => StepperData(
-                                                    title: "$e",
+                                                    title: "$e".tr,
                                                   ))
                                               .toList(),
                                       stepperDirection: Axis.horizontal,
@@ -295,7 +295,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                     isFromLoan: true,
                     callBack: () {
                       Get.to(() => LendersListOthers(
-                            title: 'Gold loan',
+                            title: 'gold_loan_header'.tr,
                           ));
                     });
               }
@@ -338,7 +338,7 @@ class _GoldLoanIOState extends State<GoldLoanIO> {
                 height: 24,
               ),
               text(
-                'Enter the loan amount required using the slider OR type in the text field',
+                'loan_amount_desc'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color: loanController.currentScreen.value ==

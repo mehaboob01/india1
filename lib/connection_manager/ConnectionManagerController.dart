@@ -5,9 +5,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:india_one/screens/profile/controller/profile_controller.dart';
 
 import '../constant/theme_manager.dart';
-
 
 class ConnectionManagerController extends GetxController {
   //0 = No Internet, 1 = WIFI Connected ,2 = Mobile Data Connected.
@@ -56,7 +56,6 @@ class ConnectionManagerController extends GetxController {
 
     if (connectionType.value == 0) {
       showSnackBar(
-
           title: " Checking for internet Connectivity",
           message: "Please enable your internet connection to proceed");
       ignorePointer.value = true;
@@ -71,4 +70,3 @@ class ConnectionManagerController extends GetxController {
     _streamSubscription.cancel();
   }
 }
-

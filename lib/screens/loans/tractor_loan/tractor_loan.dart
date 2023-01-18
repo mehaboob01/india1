@@ -81,7 +81,7 @@ class _TractorLoanIOState extends State<TractorLoanIO> {
                                     child: AnotherStepper(
                                       stepperList: _plManager.bikeLoanTitleList
                                           .map((e) => StepperData(
-                                                title: "$e",
+                                                title: "$e".tr,
                                               ))
                                           .toList(),
                                       stepperDirection: Axis.horizontal,

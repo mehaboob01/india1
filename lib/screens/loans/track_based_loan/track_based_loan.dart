@@ -560,7 +560,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                 height: 24,
               ),
               text(
-                'Choose the sub-product for which you want the loan',
+                'track_based_loan_details_desc'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color: loanController.currentScreen.value ==

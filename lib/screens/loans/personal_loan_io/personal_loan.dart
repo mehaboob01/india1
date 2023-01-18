@@ -135,11 +135,11 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                                 () => IgnorePointer(
                                               child: AnotherStepper(
                                                 stepperList:
-                                                loanController.titleList
-                                                    .map((e) => StepperData(
-                                                  title: "$e",
-                                                ))
-                                                    .toList(),
+                                                    loanController.titleList
+                                                        .map((e) => StepperData(
+                                                              title: "$e".tr,
+                                                            ))
+                                                        .toList(),
                                                 titleTextStyle: TextStyle(
                                                   fontFamily: AppFonts.appFont,
                                                   fontSize: Dimens.font_12sp,
@@ -162,24 +162,24 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                             ),
                                           ),
                                           loanController.currentScreen.value ==
-                                              Steps.LOAN_AMOUNT.index
+                                                  Steps.LOAN_AMOUNT.index
                                               ? loanAmountUi()
                                               : loanController.currentScreen
-                                              .value ==
-                                              Steps.PERSONAL.index
-                                              ? personalInfoUi()
-                                              : loanController.currentScreen
-                                              .value ==
-                                              Steps
-                                                  .RESIDENTIAL.index
-                                              ? residentialInfoUi()
-                                              : loanController
-                                              .currentScreen
-                                              .value ==
-                                              Steps.ADDITIONAL
-                                                  .index
-                                              ? additionalInfoUI()
-                                              : occupationInfoUi()
+                                                          .value ==
+                                                      Steps.PERSONAL.index
+                                                  ? personalInfoUi()
+                                                  : loanController.currentScreen
+                                                              .value ==
+                                                          Steps
+                                                              .RESIDENTIAL.index
+                                                      ? residentialInfoUi()
+                                                      : loanController
+                                                                  .currentScreen
+                                                                  .value ==
+                                                              Steps.ADDITIONAL
+                                                                  .index
+                                                          ? additionalInfoUI()
+                                                          : occupationInfoUi()
                                         ],
                                       ),
                                     ),
@@ -189,19 +189,19 @@ class _PersonalLoanState extends State<PersonalLoan> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: loanController.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
+                                        Steps.LOAN_AMOUNT.index
                                     ? loanAmountButton()
                                     : loanController.currentScreen.value ==
-                                    Steps.PERSONAL.index
-                                    ? personalInfoButton()
-                                    : loanController.currentScreen.value ==
-                                    Steps.RESIDENTIAL.index
-                                    ? residentialInfoButton()
-                                    : loanController
-                                    .currentScreen.value ==
-                                    Steps.ADDITIONAL.index
-                                    ? additionalInfoButton()
-                                    : occupationButton(),
+                                            Steps.PERSONAL.index
+                                        ? personalInfoButton()
+                                        : loanController.currentScreen.value ==
+                                                Steps.RESIDENTIAL.index
+                                            ? residentialInfoButton()
+                                            : loanController
+                                                        .currentScreen.value ==
+                                                    Steps.ADDITIONAL.index
+                                                ? additionalInfoButton()
+                                                : occupationButton(),
                               ),
                             ],
                           ),
@@ -548,7 +548,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                'Loan Amount',
+                'loan_amount_header'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
                     color:
@@ -564,7 +564,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 height: 24,
               ),
               text(
-                'Enter the loan amount required using the slider OR type in the text field.',
+                'loan_amount_desc'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color:
@@ -634,7 +634,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                         const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   border: const OutlineInputBorder(),
-                  labelText: 'Loan amount',
+                  labelText: 'loan_amount_header'.tr,
                   labelStyle: new TextStyle(color: Color(0xFF787878)),
                 ),
                 autocorrect: true,

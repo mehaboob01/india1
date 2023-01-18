@@ -109,7 +109,7 @@ class _FarmLoanState extends State<FarmLoan> {
                 () => Column(
                   children: [
                     CustomAppBar(
-                        heading: 'Farm loan',
+                        heading: 'farm_loan_header'.tr,
                         customActionIconsList: commonAppIcons),
                     Expanded(
                       child: SingleChildScrollView(
@@ -128,7 +128,7 @@ class _FarmLoanState extends State<FarmLoan> {
                                       stepperList:
                                           loanController.farmLoanTitleList
                                               .map((e) => StepperData(
-                                                    title: "$e",
+                                                    title: "$e".tr,
                                                   ))
                                               .toList(),
                                       stepperDirection: Axis.horizontal,
@@ -682,7 +682,7 @@ class _FarmLoanState extends State<FarmLoan> {
                   height: 24,
                 ),
                 text(
-                  'Choose the product against which you want the loan',
+                  'farm_loan_details_desc'.tr,
                   style: AppStyle.shortHeading.copyWith(
                       fontSize: Dimens.font_14sp,
                       color: loanController.currentScreen.value ==

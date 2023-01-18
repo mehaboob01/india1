@@ -56,8 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () => launchLoginWidget());
   }
 
-
-
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
       Get.toNamed(MRouter.splashRoute);
@@ -105,6 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Get.offAllNamed(MRouter.languageSelectionIO);
     }
+  
   }
 
   final ConnectionManagerController _controller =
