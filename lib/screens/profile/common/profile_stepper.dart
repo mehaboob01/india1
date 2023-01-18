@@ -417,8 +417,9 @@ class ProfileStepper {
                 ),
                 textField(
                   controller: profileController.panNumberController.value,
-                  label: 'PAN number',
+                  label: 'PANns number',
                   keyboardType: TextInputType.text,
+                  textCap: true,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]")),
                     LengthLimitingTextInputFormatter(10),

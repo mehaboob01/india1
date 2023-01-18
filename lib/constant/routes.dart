@@ -30,6 +30,7 @@ import '../screens/loyality_points/mobile_recharge/mobile_recharge_ui.dart';
 import '../screens/loyality_points/redeem_points/rp_ui.dart';
 
 import '../screens/map/map_ui.dart';
+import '../screens/onboarding_login/select_language/language_selection_io.dart';
 import '../screens/onboarding_login/splash/splash_ui.dart';
 import '../screens/onboarding_login/successfull_screen/Successfull_ui.dart';
 import '../screens/refer/refer_earn_ui.dart';
@@ -146,8 +147,8 @@ class MRouter {
 
       case usedRewardHistory:
         return CupertinoPageRoute(builder: (_) => UsedRewardHistory());
-      // case healthInsurance:
-      //   return CupertinoPageRoute(builder: (_) => HealthInsurance());
+      case languageSelectionIO:
+        return CupertinoPageRoute(builder: (_) => LanguageSelectionIO('not home'));
 
       // case healthInsuranceFillDetails:
       //   return CupertinoPageRoute(builder: (_) => HealthInsuranceFillDetails());

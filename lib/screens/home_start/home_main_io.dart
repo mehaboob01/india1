@@ -76,32 +76,39 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    DioApiCall().refreshToken();
-    getAndroidVersion();
-    _profileController.getProfileData();
-    _profileController.setData();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (androidVersion > 10) {
-        WidgetsBinding.instance.addObserver(this);
-      }
-      // observer
-      _homeManager.callHomeApi();
-      _profileController.getProfileData();
-      //  _homeManager.callAdsBannerApi();
-       notificationManager.callNotificationsApi(false);
 
-      // _homeManager.sendTokens();
-      _loyaltyManager.callLoyaltyDashboardApi();
-      cashbackCtrl.onInit();
-      cashbackManager.callBankListApi();
+      DioApiCall().refreshToken();
+      getAndroidVersion();
       _profileController.getProfileData();
       _profileController.setData();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
 
-      showFirstTimePoints();
-      // showCompleteProfile();
-       checkLogin();
-    });
+
+
+        if (androidVersion > 10) {
+          WidgetsBinding.instance.addObserver(this);
+        }
+        // observer
+        _homeManager.callHomeApi();
+        _profileController.getProfileData();
+        //  _homeManager.callAdsBannerApi();
+        notificationManager.callNotificationsApi(false);
+
+        // _homeManager.sendTokens();
+        _loyaltyManager.callLoyaltyDashboardApi();
+        cashbackCtrl.onInit();
+        cashbackManager.callBankListApi();
+        _profileController.getProfileData();
+        _profileController.setData();
+
+        showFirstTimePoints();
+        // showCompleteProfile();
+        checkLogin();
+      });
+
+
+
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -451,21 +458,21 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                   .spaceBetween,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                // Focus(
-                                                //   focusNode:
-                                                //       widget.focusNodes![5],
-                                                //   child: HeadingBox(
-                                                //       text: 'Aa',
-                                                //       ontap: () {
-                                                //         Navigator.push(
-                                                //             context,
-                                                //             MaterialPageRoute(
-                                                //                 builder: (BuildContext
-                                                //                         context) =>
-                                                //                     LanguageSelectionIO(
-                                                //                         'home')));
-                                                //       }),
-                                                // ),
+                                                Focus(
+                                                  focusNode:
+                                                      widget.focusNodes![5],
+                                                  child: HeadingBox(
+                                                      text: 'Aa',
+                                                      ontap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    LanguageSelectionIO(
+                                                                        'home')));
+                                                      }),
+                                                ),
                                                 SizedBox(
                                                   width: 2.0.wp,
                                                 ),

@@ -30,11 +30,14 @@ class ManageAccountsCard extends StatelessWidget {
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
             backgroundColor: Colors.white,
-            body:
-
-            Stack(
-              children: [ SafeArea(
-                  child: Column(children: [
+            body: updateBankAccount.isLoading.value == true
+                ? Column(
+                    children: [
+                      CircularProgressbar(),
+                    ],
+                  )
+                : SafeArea(
+                    child: Column(children: [
                     const Align(
                       alignment: Alignment.topCenter,
                       child: CustomAppBar(
@@ -42,98 +45,9 @@ class ManageAccountsCard extends StatelessWidget {
                       ),
                     ),
                     Obx(
-                          () => cashBackManager.isLoading == true
+                      () => cashBackManager.isLoading == true
                           ? CircularProgressbar()
                           : cashBackManager.customerBankList.length == 0 &&
-                          cashBackManager.customerUPIList.length == 0
-                          ? Center(
-                          child: text(
-                            "No Accounts!",
-                            style: TextStyle(
-                                fontSize: Dimens.font_20sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.greyText),
-                          ))
-                          : Expanded(
-                          child: ListView(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 2.0.wp, vertical: 4.0.hp),
-                            children: [
-                              cashBackManager.customerBankList.isNotEmpty
-                                  ? text(
-                                'Your accounts',
-                                style: AppStyle.shortHeading
-                                    .copyWith(
-                                    color:
-                                    const Color(0xff2d2d2d),
-                                    fontWeight:
-                                    FontWeight.w600),
-                              )
-                                  : const SizedBox.shrink(),
-                              cashBackManager.customerBankList.isNotEmpty
-                                  ? Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 2.0.hp, bottom: 4.0.hp),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:
-                                          AppColors.cardScreenBg),
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          2.0.wp),
-                                    ),
-                                    child: Column(
-                                      children: List.generate(
-                                          cashBackManager
-                                              .customerBankList
-                                              .length,
-                                              (index) => CommonRadioCard(
-                                            isEditable: true,
-                                            isSelected: false,
-                                            cardWidth:
-                                            double.maxFinite,
-                                            onEditPressed: () => Get.to(
-                                                    () => EditAccountsCard(
-                                                    bankList: cashBackManager
-                                                        .bankList
-                                                        .toList(),
-                                                    bankName: cashBackManager
-                                                        .customerBankList[
-                                                    index]
-                                                        .name,
-                                                    accountNumber: cashBackManager
-                                                        .customerBankList[
-                                                    index]
-                                                        .maskAccountNumber,
-                                                    ifscCode: cashBackManager
-                                                        .customerBankList[
-                                                    index]
-                                                        .ifscCode,
-                                                    accountType: cashBackManager
-                                                        .customerBankList[
-                                                    index]
-                                                        .accountType.toString(),
-                                                    id: cashBackManager
-                                                        .customerBankList[
-                                                    index]
-                                                        .id,
-                                                    index: index),
-                                                arguments: [
-                                                  cashBackManager
-                                                      .customerBankList[
-                                                  index],
-                                                ]),
-                                            onDeletePressed: () =>
-                                                CommonDeleteBottomSheet()
-                                                    .deleteBottomSheet(
-                                                    index:
-                                                    index,
-                                                    onDelete:
-                                                        () {
-                                                      print(
-                                                          'Deleted ${cashBackManager.customerBankList[index].id} successfully');
                                   cashBackManager.customerUPIList.length == 0
                               ? Center(
                                   child: text(
@@ -203,10 +117,10 @@ class ManageAccountsCard extends StatelessWidget {
                                                                   accountType: cashBackManager
                                                                       .customerBankList[
                                                                           index]
-                                                                      .accountType
-                                                                      .toString(),
+                                                                      .accountType.toString(),
                                                                   id: cashBackManager
-                                                                      .customerBankList[index]
+                                                                      .customerBankList[
+                                                                          index]
                                                                       .id,
                                                                   index: index),
                                                               arguments: [
@@ -224,10 +138,10 @@ class ManageAccountsCard extends StatelessWidget {
                                                                         print(
                                                                             'Deleted ${cashBackManager.customerBankList[index].id} successfully');
 
-                                                      cashBackManager.delBankAccount(cashBackManager
-                                                          .customerBankList[index]
-                                                          .id);
-                                                      Get.back();
+                                                                        cashBackManager.delBankAccount(cashBackManager
+                                                                            .customerBankList[index]
+                                                                            .id);
+                                                                        Get.back();
 
                                                                         //  cashBackManager.fetchCustomerBankAccounts();
                                                                       }),
@@ -253,8 +167,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                               cashBackManager
                                                                   .customerBankList[
                                                                       index]
-                                                                  .accountType
-                                                                  .toString(),
+                                                                  .accountType.toString(),
                                                         )),
                                               ),
                                             ))
@@ -320,7 +233,7 @@ class ManageAccountsCard extends StatelessWidget {
                                                                           index]
                                                                       .id);
 
-                                                              // Get.back();
+                                                             // Get.back();
                                                               // await Future.delayed(
                                                               //     Duration(
                                                               //         seconds:
@@ -347,13 +260,7 @@ class ManageAccountsCard extends StatelessWidget {
                                   ],
                                 )),
                     )
-                  ])),
-                updateBankAccount.isLoading.value == true? CircularProgressbar() : SizedBox()
-              ]
-
-            )
-
-        ),
+                  ]))),
       ),
     );
   }

@@ -79,10 +79,10 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // updateLanguage(Locale locale, int selectdLang) {
-  //   Get.updateLocale(locale);
-  //   setState(() {});
-  // }
+  updateLanguage(Locale locale, int selectdLang) {
+    Get.updateLocale(locale);
+    setState(() {});
+  }
 
   // launch login screen
   Future<void> launchLoginWidget() async {
@@ -96,11 +96,14 @@ class _SplashScreenState extends State<SplashScreen> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs!.setBool(SPKeys.SHOW_AUTH, true);
         Get.offAllNamed(MRouter.homeScreen);
+        int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
+        updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+
 
 
 
     } else {
-      Get.offAllNamed(MRouter.userLogin);
+      Get.offAllNamed(MRouter.languageSelectionIO);
     }
   }
 

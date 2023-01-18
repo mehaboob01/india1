@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/theme_manager.dart';
@@ -137,6 +138,8 @@ class CustomActionIcons extends StatelessWidget {
             : isSvg!
                 ? GestureDetector(
                     onTap: () async {
+
+                      await DioApiCall().refreshToken();
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs!.setBool(SPKeys.SHOW_AUTH, false);
