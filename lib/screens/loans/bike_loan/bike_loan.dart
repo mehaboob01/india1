@@ -95,7 +95,7 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
                                           stepperList:
                                               _plManager.bikeLoanTitleList
                                                   .map((e) => StepperData(
-                                                        title: "$e",
+                                                        title: "$e".tr,
                                                       ))
                                                   .toList(),
                                           stepperDirection: Axis.horizontal,

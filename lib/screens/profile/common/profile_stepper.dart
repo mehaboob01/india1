@@ -191,7 +191,7 @@ class ProfileStepper {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                "Personal Details",
+                "personal_details".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppColors.lightBlack,
@@ -203,8 +203,8 @@ class ProfileStepper {
               ),
               textField(
                 controller: profileController.firstNameController.value,
-                label: 'First Name',
-                hint: 'Enter your first name',
+                label: 'first_name'.tr,
+                hint: 'enter_first_name'.tr,
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -225,8 +225,8 @@ class ProfileStepper {
               ),
               textField(
                 controller: profileController.lastNameController.value,
-                label: 'Last Name',
-                hint: 'Enter your last name',
+                label: 'last_name'.tr,
+                hint: 'enter_last_name'.tr,
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -247,8 +247,8 @@ class ProfileStepper {
               ),
               textField(
                 controller: profileController.mobileNumberController.value,
-                label: 'Mobile number',
-                hint: 'Enter mobile number',
+                label: 'mobile_num'.tr,
+                hint: 'enter_mobile_num'.tr,
                 prefix: '+91',
                 isDisable: true,
                 inputFormatters: <TextInputFormatter>[
@@ -264,8 +264,8 @@ class ProfileStepper {
                 ),
                 textField(
                   controller: profileController.alternateNumberController.value,
-                  label: 'Alternate number',
-                  hint: 'Enter alternate number',
+                  label: 'alt_num'.tr,
+                  hint: 'enter_alt_num'.tr,
                   prefix: '+91',
                   vaidation: (value) {
                     if (value.toString().trim().isNotEmpty) {
@@ -286,8 +286,8 @@ class ProfileStepper {
               ),
               textField(
                 controller: profileController.emailController.value,
-                label: 'Email ID',
-                hint: 'Enter email ID here',
+                label: 'email_id'.tr,
+                hint: 'enter_email_id'.tr,
                 vaidation: (value) {
                   if (isFromLoan == true ||
                       isFromInsurance == true ||
@@ -308,7 +308,7 @@ class ProfileStepper {
                 ),
                 textField(
                   controller: profileController.dobController.value,
-                  label: 'Date of birth (DD-MM-YYYY)',
+                  label: 'date_of_birth'.tr,
                   hint: 'DD-MM-YYYY',
                   suffix: Icon(
                     Icons.calendar_today_outlined,
@@ -342,7 +342,7 @@ class ProfileStepper {
               ),
               if (loanType != LoanType.FarmLoan) ...[
                 text(
-                  "Gender",
+                  "gender".tr,
                   style: TextStyle(
                     color: AppColors.lightBlack,
                     fontSize: Dimens.font_14sp,
@@ -395,14 +395,14 @@ class ProfileStepper {
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: text(value.toString()),
+                      child: text(value.tr.toString()),
                     );
                   }).toList(),
                   onChanged: (value) {
                     profileController.maritalStatus.value = value;
                   },
-                  label: 'Marital status',
-                  hint: 'Select your marital status',
+                  label: 'maritial_status'.tr,
+                  hint: 'select_maritial_status'.tr,
                   value: profileController.maritalStatus.value == ''
                       ? null
                       : profileController.maritalStatus.value,
@@ -468,7 +468,7 @@ class ProfileStepper {
             groupValue: groupValue,
             onChanged: (value) => callBack(value),
           ),
-          text(value),
+          text(value.tr),
           SizedBox(
             width: 6,
           )
@@ -493,7 +493,7 @@ class ProfileStepper {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                "Residential Address",
+                "residential_details".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppColors.lightBlack,
@@ -642,7 +642,7 @@ class ProfileStepper {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                "Occupation",
+                "occupation_details".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppColors.lightBlack,
@@ -1067,7 +1067,7 @@ Please choose “Yes” in case any of the proposed person to be insured has bee
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                "Additional Information",
+                "additional_information".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppColors.lightBlack,

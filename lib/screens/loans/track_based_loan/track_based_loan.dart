@@ -113,7 +113,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                     : Column(
                         children: [
                           CustomAppBar(
-                              heading: 'Track based Loan',
+                              heading: 'trackBased_loan_header'.tr,
                               customActionIconsList: commonAppIcons),
                           Expanded(
                             child: SingleChildScrollView(
@@ -133,7 +133,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                                             stepperList:
                                                 loanController.farmLoanTitleList
                                                     .map((e) => StepperData(
-                                                          title: "$e",
+                                                          title: "$e".tr,
                                                         ))
                                                     .toList(),
                                             stepperDirection: Axis.horizontal,
@@ -560,7 +560,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                 height: 24,
               ),
               text(
-                'Choose the sub-product for which you want the loan',
+                'track_based_loan_details_desc'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color: loanController.currentScreen.value ==

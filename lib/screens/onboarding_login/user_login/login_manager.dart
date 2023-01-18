@@ -32,7 +32,6 @@ class LoginManager extends GetxController {
       String? selectedLan = prefs.getString(SPKeys.SELECTED_LANGUAGE_CODE);
       String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
 
-
       var response = await http.post(Uri.parse(baseUrl + Apis.sendOtp),
           body: jsonEncode({
             "mobileNumber": phoneNumber,
@@ -41,13 +40,13 @@ class LoginManager extends GetxController {
             "deviceId": deviceId,
             "deviceToken": deviceToken,
             "platform": "Android",
-            "preferredLanguage": "en"
+            "preferredLanguage": selectedLan
           }),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             "x-digital-api-key": "1234",
-           // "Authorization": "Bearer "+accessToken.toString()
+            // "Authorization": "Bearer "+accessToken.toString()
           });
 
       print("response of send otp${response.body}");
@@ -106,8 +105,8 @@ class LoginManager extends GetxController {
   }
 
   void callTermConditionPolicyApi() async {
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-     String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
 
     try {
       //  print(baseUrl + Apis.termCondition+selectedLan!);

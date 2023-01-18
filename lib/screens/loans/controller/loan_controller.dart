@@ -79,21 +79,21 @@ class LoanController extends GetxController {
   ];
 
   List<String> titleList = [
-    "Loan amount",
-    "Personal",
-    "Residential",
-    "Occupation",
-    "Additional",
+    "loan_amount_header",
+    "personal_header_stpr",
+    "residential_header_stpr",
+    "occupational_header_stpr",
+    "additional_header_stpr",
   ];
   List<String> bikeLoanTitleList = [
-    "Loan details",
-    "Personal",
-    "Residential",
+    "loan_details_header_stpr",
+    "personal_header_stpr",
+    "residential_header_stpr",
   ];
   List<String> farmLoanTitleList = [
-    "Loan details",
-    "Personal",
-    "Residential",
+    "loan_details_header_stpr",
+    "personal_header_stpr",
+    "residential_header_stpr",
   ];
 
   List<FarmLoanRequirementModel> loanRequirements = [

@@ -115,7 +115,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                           Column(
                             children: [
                               CustomAppBar(
-                                heading: 'Personal loan',
+                                heading: 'personal_loan_header'.tr,
                                 customActionIconsList: commonAppIcons,
                               ),
                               Expanded(
@@ -136,7 +136,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                                 stepperList:
                                                     loanController.titleList
                                                         .map((e) => StepperData(
-                                                              title: "$e",
+                                                              title: "$e".tr,
                                                             ))
                                                         .toList(),
                                                 titleTextStyle: TextStyle(
@@ -512,9 +512,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                         loanController.createLoanModel.value.loanApplicationId,
                     callBack: () {
                       profileController.setData();
-                      Get.to(() => LendersList(
-                            title: 'Personal loan',
-                          ));
+                      Get.to(() => LendersList(title: 'Personal loan'));
                     });
               }
             },
@@ -541,7 +539,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                'Loan Amount',
+                'loan_amount_header'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_18sp,
                     color:
@@ -557,7 +555,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 height: 24,
               ),
               text(
-                'Enter the loan amount required using the slider OR type in the text field.',
+                'loan_amount_desc'.tr,
                 style: AppStyle.shortHeading.copyWith(
                     fontSize: Dimens.font_14sp,
                     color:
@@ -627,7 +625,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                         const BorderSide(color: Color(0xFFCDCBCB), width: 1.0),
                   ),
                   border: const OutlineInputBorder(),
-                  labelText: 'Loan amount',
+                  labelText: 'loan_amount_header'.tr,
                   labelStyle: new TextStyle(color: Color(0xFF787878)),
                 ),
                 autocorrect: true,
