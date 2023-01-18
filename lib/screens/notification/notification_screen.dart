@@ -16,8 +16,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
-
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   int page = 1;
@@ -82,71 +80,71 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   SizedBox(height: 10),
                   Expanded(
                     child: Obx(
-                      () => _notificationManager.isLoading.value == true
-                          ? CircularProgressbar()
-                          : _notificationManager.notificationList.length == 0
-                              ? Center(
-                                  child: text(
-                                  "No notifications!",
-                                  style: TextStyle(
-                                      fontSize: Dimens.font_20sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.greyText),
-                                ))
-                              : Obx(
-                                  () => ListView.separated(
-                                      controller: scrollController,
-                                      itemBuilder: (context, index) {
-                                        if (index <
+                      () => _notificationManager.notificationList.length == 0
+                          ? Center(
+                              child: text(
+                              "No notifications!",
+                              style: TextStyle(
+                                  fontSize: Dimens.font_20sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.greyText),
+                            ))
+                          : Obx(
+                              () => Stack(children: [
+                                ListView.separated(
+                                    controller: scrollController,
+                                    itemBuilder: (context, index) {
+                                      if (index <
+                                          _notificationManager
+                                              .notificationList.length) {
+                                        return GestureDetector(
+                                          onTap: () {
                                             _notificationManager
-                                                .notificationList.length) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              _notificationManager
-                                                  .callNotificationMarkAsRead(
-                                                      _notificationManager
-                                                          .notificationList[
-                                                              index]
-                                                          .id);
-                                            },
-                                            child: NotificationCard(
-                                              readStatus: _notificationManager
-                                                  .notificationList[index]
-                                                  .status!,
-                                              notificationHeading:
-                                                  _notificationManager
-                                                      .notificationList[index]
-                                                      .title!,
-                                              notificationMsg:
-                                                  _notificationManager
-                                                      .notificationList[index]
-                                                      .body!,
-                                              dateTime: _notificationManager
-                                                  .notificationList[index]
-                                                  .date!,
-                                            ),
-                                          );
-                                        } else {
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                        }
-                                      },
-                                      separatorBuilder: (context, index) =>
-                                          Divider(
-                                            height: 0,
-                                            thickness: 2,
-                                            color: Color(0xffe4e4e4),
+                                                .callNotificationMarkAsRead(
+                                                    _notificationManager
+                                                        .notificationList[index]
+                                                        .id);
+                                          },
+                                          child: NotificationCard(
+                                            readStatus: _notificationManager
+                                                .notificationList[index]
+                                                .status!,
+                                            notificationHeading:
+                                                _notificationManager
+                                                    .notificationList[index]
+                                                    .title!,
+                                            notificationMsg:
+                                                _notificationManager
+                                                    .notificationList[index]
+                                                    .body!,
+                                            dateTime: _notificationManager
+                                                .notificationList[index].date!,
                                           ),
-                                      itemCount: _notificationManager
-                                                  .isPaginationLoading.value ==
-                                              true
-                                          ? _notificationManager
-                                                  .notificationList.length +
-                                              1
-                                          : _notificationManager
-                                              .notificationList.length),
-                                ),
+                                        );
+                                      } else {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                    },
+                                    separatorBuilder: (context, index) =>
+                                        Divider(
+                                          height: 0,
+                                          thickness: 2,
+                                          color: Color(0xffe4e4e4),
+                                        ),
+                                    itemCount: _notificationManager
+                                                .isPaginationLoading.value ==
+                                            true
+                                        ? _notificationManager
+                                                .notificationList.length +
+                                            1
+                                        : _notificationManager
+                                            .notificationList.length),
+                                _notificationManager.isLoading.value == true
+                                    ? CircularProgressbar()
+                                    : SizedBox()
+                              ]),
+                            ),
                     ),
                   )
                 ],

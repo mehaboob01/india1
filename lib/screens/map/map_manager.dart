@@ -24,7 +24,8 @@ class MapManager extends GetxController {
   var isLoading = false.obs;
 
   // providing initial camera poistion
-  var cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 15).obs;
+  var cameraPosition = CameraPosition(target: LatLng(12.9715998,
+      77.594563), zoom: 15).obs;
 
   // Boolean value to check if suggestions should be visible
   RxBool areSuggestionsVisible = false.obs;

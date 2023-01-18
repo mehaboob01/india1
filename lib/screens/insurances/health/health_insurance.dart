@@ -158,39 +158,45 @@ class _HealthInsuranceState extends State<HealthInsurance> {
           ),
           Expanded(
             child: Obx(() {
-              return insuranceController.createInsuranceApplicationLoading.value
-                  ? CircularProgressbar()
-                  : (insuranceController.insuranceApplicationModel.value.plans
+              return  (insuranceController.insuranceApplicationModel.value.plans
                                   ?.length ??
                               0) ==
                           0
                       ? text("No data available")
-                      : ListView.separated(
-                          itemCount: insuranceController
-                                  .insuranceApplicationModel
-                                  .value
-                                  .plans
-                                  ?.length ??
-                              0,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: 10,
-                            );
-                          },
-                          itemBuilder: (context, index) {
-                            return PolicyItemWidget(
-                              plan: insuranceController
-                                      .insuranceApplicationModel
-                                      .value
-                                      .plans?[index] ??
-                                  Plans(),
-                              isAccidentInsurance: widget.isAccidentInsurance,
-                            );
-                          },
-                        );
+                      :
+
+              Stack(
+                children: [
+                  ListView.separated(
+                    itemCount: insuranceController
+                        .insuranceApplicationModel
+                        .value
+                        .plans
+                        ?.length ??
+                        0,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      return PolicyItemWidget(
+                        plan: insuranceController
+                            .insuranceApplicationModel
+                            .value
+                            .plans?[index] ??
+                            Plans(),
+                        isAccidentInsurance: widget.isAccidentInsurance,
+                      );
+                    },
+                  ),
+                  insuranceController.createInsuranceApplicationLoading.value == true? CircularProgressbar() : SizedBox()
+                ]
+
+              );
             }),
           ),
         ],

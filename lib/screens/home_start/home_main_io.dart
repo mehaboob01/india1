@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
+import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
@@ -75,6 +76,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    DioApiCall().refreshToken();
     getAndroidVersion();
     _profileController.getProfileData();
     _profileController.setData();
@@ -477,9 +479,14 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                       .focusNodes![6],
                                                   child:
                                                   GestureDetector(
-                                                    onTap: () => Get
+                                                    onTap: () async{
+                                                    await  DioApiCall().refreshToken();
+                                                    Get
                                                         .toNamed(MRouter
-                                                        .notificationScreen),
+                                                        .notificationScreen);
+                                                    },
+
+
                                                     child: Badge(
                                                       position:
                                                       BadgePosition

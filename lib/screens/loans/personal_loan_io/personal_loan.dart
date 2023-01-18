@@ -99,10 +99,11 @@ class _PersonalLoanState extends State<PersonalLoan> {
     // print(loanAmountEditingController.text);
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
-    return Obx(
-      () => loanController.createLoanLoading.value == true
-          ? CircularProgressbar()
-          : IgnorePointer(
+    return
+      Obx(
+       ()=> Stack(
+          children: [
+            IgnorePointer(
               ignoring: _controller.ignorePointer.value,
               child: Scaffold(
                 resizeToAvoidBottomInset: true,
@@ -110,7 +111,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   child: SizedBox(
                     width: widthIs,
                     child: Obx(
-                      () => Stack(
+                          () => Stack(
                         children: [
                           Column(
                             children: [
@@ -123,34 +124,34 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(9.0),
                                     child: Obx(
-                                      () => Column(
+                                          () => Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           DividerIO(
                                             height: 21,
                                           ),
                                           Obx(
-                                            () => IgnorePointer(
+                                                () => IgnorePointer(
                                               child: AnotherStepper(
                                                 stepperList:
-                                                    loanController.titleList
-                                                        .map((e) => StepperData(
-                                                              title: "$e",
-                                                            ))
-                                                        .toList(),
+                                                loanController.titleList
+                                                    .map((e) => StepperData(
+                                                  title: "$e",
+                                                ))
+                                                    .toList(),
                                                 titleTextStyle: TextStyle(
                                                   fontFamily: AppFonts.appFont,
                                                   fontSize: Dimens.font_12sp,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                                 stepperDirection:
-                                                    Axis.horizontal,
+                                                Axis.horizontal,
                                                 iconWidth: 25,
                                                 iconHeight: 25,
                                                 inverted: true,
                                                 activeBarColor:
-                                                    AppColors.pointsColor,
+                                                AppColors.pointsColor,
                                                 activeIndex: loanController
                                                     .currentScreen.value,
                                                 callBack: (i) {
@@ -161,24 +162,24 @@ class _PersonalLoanState extends State<PersonalLoan> {
                                             ),
                                           ),
                                           loanController.currentScreen.value ==
-                                                  Steps.LOAN_AMOUNT.index
+                                              Steps.LOAN_AMOUNT.index
                                               ? loanAmountUi()
                                               : loanController.currentScreen
-                                                          .value ==
-                                                      Steps.PERSONAL.index
-                                                  ? personalInfoUi()
-                                                  : loanController.currentScreen
-                                                              .value ==
-                                                          Steps
-                                                              .RESIDENTIAL.index
-                                                      ? residentialInfoUi()
-                                                      : loanController
-                                                                  .currentScreen
-                                                                  .value ==
-                                                              Steps.ADDITIONAL
-                                                                  .index
-                                                          ? additionalInfoUI()
-                                                          : occupationInfoUi()
+                                              .value ==
+                                              Steps.PERSONAL.index
+                                              ? personalInfoUi()
+                                              : loanController.currentScreen
+                                              .value ==
+                                              Steps
+                                                  .RESIDENTIAL.index
+                                              ? residentialInfoUi()
+                                              : loanController
+                                              .currentScreen
+                                              .value ==
+                                              Steps.ADDITIONAL
+                                                  .index
+                                              ? additionalInfoUI()
+                                              : occupationInfoUi()
                                         ],
                                       ),
                                     ),
@@ -188,19 +189,19 @@ class _PersonalLoanState extends State<PersonalLoan> {
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: loanController.currentScreen.value ==
-                                        Steps.LOAN_AMOUNT.index
+                                    Steps.LOAN_AMOUNT.index
                                     ? loanAmountButton()
                                     : loanController.currentScreen.value ==
-                                            Steps.PERSONAL.index
-                                        ? personalInfoButton()
-                                        : loanController.currentScreen.value ==
-                                                Steps.RESIDENTIAL.index
-                                            ? residentialInfoButton()
-                                            : loanController
-                                                        .currentScreen.value ==
-                                                    Steps.ADDITIONAL.index
-                                                ? additionalInfoButton()
-                                                : occupationButton(),
+                                    Steps.PERSONAL.index
+                                    ? personalInfoButton()
+                                    : loanController.currentScreen.value ==
+                                    Steps.RESIDENTIAL.index
+                                    ? residentialInfoButton()
+                                    : loanController
+                                    .currentScreen.value ==
+                                    Steps.ADDITIONAL.index
+                                    ? additionalInfoButton()
+                                    : occupationButton(),
                               ),
                             ],
                           ),
@@ -220,7 +221,13 @@ class _PersonalLoanState extends State<PersonalLoan> {
                 ),
               ),
             ),
-    );
+            loanController.createLoanLoading.value  == true? CircularProgressbar() : SizedBox()
+          ],
+
+
+        ),
+      );
+
   }
 
   // LOAN AMOUNT BUTTON

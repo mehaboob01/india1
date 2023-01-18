@@ -378,17 +378,18 @@ class _ReferEarnState extends State<ReferEarn> {
           height: Get.height * 0.01,
         ),
         Obx(
-          () => _contactCont.isLoading.value == true
-              ? CircularProgressbar()
-              : ListView.builder(
-                  // itemExtent: 60,
+          () =>
+          Stack(
+            children:[
+              ListView.builder(
+                // itemExtent: 60,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: _contactCont.contactsLenght.value,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding:
-                          const EdgeInsets.only(left: 2, right: 2, bottom: 8),
+                      const EdgeInsets.only(left: 2, right: 2, bottom: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -411,14 +412,14 @@ class _ReferEarnState extends State<ReferEarn> {
                                 children: [
                                   text(
                                     contactCont.filteredList.value[index].name
-                                            .first.isEmpty
+                                        .first.isEmpty
                                         ? ""
                                         : "${contactCont.filteredList.value[index].name.first.substring(0, 1)}",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   text(
                                     contactCont.filteredList.value[index].name
-                                            .last.isEmpty
+                                        .last.isEmpty
                                         ? ""
                                         : "${contactCont.filteredList.value[index].name.last.substring(0, 1)}",
                                     style: TextStyle(color: Colors.white),
@@ -447,6 +448,10 @@ class _ReferEarnState extends State<ReferEarn> {
                       ),
                     );
                   }),
+              _contactCont.isLoading.value == true? CircularProgressbar() : SizedBox()
+            ]
+
+          ),
         ),
       ],
     );

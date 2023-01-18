@@ -108,81 +108,81 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
             child: SizedBox(
               width: widthIs,
               child: Obx(
-                () => loanController.trackLoading.value == true
-                    ? CircularProgressbar()
-                    : Column(
-                        children: [
-                          CustomAppBar(
-                              heading: 'Track based Loan',
-                              customActionIconsList: commonAppIcons),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: const EdgeInsets.all(9.0),
-                                child: Obx(
-                                  () => Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      DividerIO(
-                                        height: 21,
-                                      ),
-                                      Obx(
-                                        () => Container(
-                                          child: AnotherStepper(
-                                            stepperList:
-                                                loanController.farmLoanTitleList
-                                                    .map((e) => StepperData(
-                                                          title: "$e",
-                                                        ))
-                                                    .toList(),
-                                            stepperDirection: Axis.horizontal,
-                                            iconWidth: 25,
-                                            iconHeight: 25,
-                                            inverted: true,
-                                            activeBarColor:
-                                                AppColors.pointsColor,
-                                            activeIndex: loanController
-                                                .currentScreen.value,
-                                            callBack: (i) {
-                                              print("find me");
-                                              // if (i <=
-                                              //     loanController
-                                              //         .trackCompletedIndex
-                                              //         .value) {
-                                              //   loanController
-                                              //       .currentScreen.value = i;
-                                              // }
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      loanController.currentScreen.value ==
-                                              Steps.LOAN_AMOUNT.index
-                                          ? loanAmountUi()
-                                          : loanController
-                                                      .currentScreen.value ==
-                                                  Steps.PERSONAL.index
-                                              ? personalInfoUi()
-                                              : residentialInfoUi()
-                                    ],
+                () => Stack(children: [
+                  Column(
+                    children: [
+                      CustomAppBar(
+                          heading: 'Track based Loan',
+                          customActionIconsList: commonAppIcons),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Obx(
+                              () => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DividerIO(
+                                    height: 21,
                                   ),
-                                ),
+                                  Obx(
+                                    () => Container(
+                                      child: AnotherStepper(
+                                        stepperList:
+                                            loanController.farmLoanTitleList
+                                                .map((e) => StepperData(
+                                                      title: "$e",
+                                                    ))
+                                                .toList(),
+                                        stepperDirection: Axis.horizontal,
+                                        iconWidth: 25,
+                                        iconHeight: 25,
+                                        inverted: true,
+                                        activeBarColor: AppColors.pointsColor,
+                                        activeIndex:
+                                            loanController.currentScreen.value,
+                                        callBack: (i) {
+                                          print("find me");
+                                          // if (i <=
+                                          //     loanController
+                                          //         .trackCompletedIndex
+                                          //         .value) {
+                                          //   loanController
+                                          //       .currentScreen.value = i;
+                                          // }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  loanController.currentScreen.value ==
+                                          Steps.LOAN_AMOUNT.index
+                                      ? loanAmountUi()
+                                      : loanController.currentScreen.value ==
+                                              Steps.PERSONAL.index
+                                          ? personalInfoUi()
+                                          : residentialInfoUi()
+                                ],
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: loanController.currentScreen.value ==
-                                    Steps.LOAN_AMOUNT.index
-                                ? loanAmountButton()
-                                : loanController.currentScreen.value ==
-                                        Steps.PERSONAL.index
-                                    ? personalInfoButton()
-                                    : residentialInfoButton(),
-                          ),
-                        ],
+                        ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: loanController.currentScreen.value ==
+                                Steps.LOAN_AMOUNT.index
+                            ? loanAmountButton()
+                            : loanController.currentScreen.value ==
+                                    Steps.PERSONAL.index
+                                ? personalInfoButton()
+                                : residentialInfoButton(),
+                      ),
+                    ],
+                  ),
+                  loanController.trackLoading.value == true
+                      ? CircularProgressbar()
+                      : SizedBox()
+                ]),
               ),
             ),
           ),

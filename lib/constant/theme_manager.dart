@@ -521,7 +521,7 @@ class AppImages {
 
   // svg
   static const String newIndiaOneSvg =
-      '${assetSvg}new_design_svgImages/indiaONESVG.svg';
+      '${assetSvg}new_design_svgImages/indiaSvg.svg';
 }
 
 extension PercentSize on double {

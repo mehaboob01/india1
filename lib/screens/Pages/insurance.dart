@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/screens/insurances/health/health_insurance.dart';
@@ -106,9 +107,15 @@ class InsuranceCard extends StatelessWidget {
             // Get.toNamed(MRouter.healthInsurance, arguments: [
             //   {"isAccidentInsurance": false}
             // ]);
-            Get.to(() => HealthInsurance(
-                  isAccidentInsurance: false,
-                ));
+            // Get.to(() => HealthInsurance(
+            //       isAccidentInsurance: false,
+            //     ));
+            Fluttertoast.showToast(
+              msg: "Coming Soon ...",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              fontSize: 16.0,
+            );
           },
           child: ItemCard(
             image: AppImages.accidentSvg,

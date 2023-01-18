@@ -37,9 +37,12 @@ class CircularProgressbar extends StatelessWidget {
                   Center(
                     child: Container(
                       height: Get.height*0.1,
-                      width: Get.width*0.2,
+                      width: Get.height*0.1,
                       child: const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.orangeColor),
+                        backgroundColor: Colors.white,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.orangeGradient2, //<-- SEE HERE
+                        ),
                         strokeWidth: 2,
                       ),
                     ),

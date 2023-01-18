@@ -39,6 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+     DioApiCall().refreshToken();
+
     FirebaseMessaging.instance.getToken().then((deviceToken) async {
       print("FCM / DEVICE TOKEN ${deviceToken}");
       String? deviceId = await _getDeviceId();
@@ -86,11 +88,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> launchLoginWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
+
+
     if (loggedIn == true) {
-      await DioApiCall().refreshToken();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs!.setBool(SPKeys.SHOW_AUTH, true);
-      Get.offAllNamed(MRouter.homeScreen);
+    //
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs!.setBool(SPKeys.SHOW_AUTH, true);
+        Get.offAllNamed(MRouter.homeScreen);
+
+
+
     } else {
       Get.offAllNamed(MRouter.userLogin);
     }

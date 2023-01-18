@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -49,10 +50,16 @@ class OtpManager extends GetxController {
           }).then((value) {
         print(value.body);
         if (value.statusCode == 200) {
-          var snackBar = SnackBar(
-            content: Text("OTP Resend Successfully!"),
+          // var snackBar = SnackBar(
+          //   content: Text("OTP Resend Successfully!"),
+          // );
+          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Fluttertoast.showToast(
+            msg: "OTP Resend Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
           );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
           return true;
         } else {
           var snackBar = SnackBar(
@@ -116,14 +123,10 @@ class OtpManager extends GetxController {
               SPKeys.ACCESS_TOKEN, verifyOtpModel.data!.accessToken.toString());
           prefs!.setString(SPKeys.REFRESH_TOKEN,
               verifyOtpModel.data!.refreshToken.toString());
-          prefs!.setString(
-              SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
-          loyaltyPoints.value =
-              verifyOtpModel.data!.loyaltyPointsGained.toString();
-          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED,
-              verifyOtpModel.data!.loyaltyPointsGained!);
-          prefs!.setInt(SPKeys.LOYALTY_POINT_PROFILE,
-              verifyOtpModel.data!.loyaltyPointsGained!);
+          prefs!.setString(SPKeys.CUSTOMER_ID, verifyOtpModel.data!.customerId.toString());
+          loyaltyPoints.value = verifyOtpModel.data!.loyaltyPointsGained.toString();
+          prefs!.setInt(SPKeys.LOYALTY_POINT_GAINED, verifyOtpModel.data!.loyaltyPointsGained!);
+          prefs!.setInt(SPKeys.LOYALTY_POINT_PROFILE, verifyOtpModel.data!.loyaltyPointsGained!);
           prefs!.setInt(SPKeys.COMPLETE_PROFILE_COUNT, 0);
           prefs!.setBool(SPKeys.LOGGED_IN, true);
           Get.offAllNamed(MRouter.homeScreen);

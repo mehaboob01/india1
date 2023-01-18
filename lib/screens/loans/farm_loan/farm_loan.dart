@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/theme_manager.dart';
 import 'package:india_one/screens/loans/controller/loan_controller.dart';
@@ -198,11 +199,17 @@ class _FarmLoanState extends State<FarmLoan> {
         }
 
         if (msg != null) {
-          Flushbar(
-            title: "Alert!",
-            message: msg,
-            duration: Duration(seconds: 3),
-          )..show(context);
+          // Flushbar(
+          //   title: "Alert!",
+          //   message: msg,
+          //   duration: Duration(seconds: 3),
+          // )..show(context);
+          Fluttertoast.showToast(
+            msg: msg,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
+          );
         } else {
           if (await loanController.updateFarmLoanDetails()) {
             if (loanController.farmCompletedIndex.value <
@@ -319,11 +326,17 @@ class _FarmLoanState extends State<FarmLoan> {
               personalForm.currentState!.save();
               profileController.autoValidation.value = true;
               if (!personalForm.currentState!.validate()) {
-                Flushbar(
-                  title: "Alert!",
-                  message: "missing some values",
-                  duration: Duration(seconds: 3),
-                )..show(context);
+                // Flushbar(
+                //   title: "Alert!",
+                //   message: "missing some values",
+                //   duration: Duration(seconds: 3),
+                // )..show(context);
+                Fluttertoast.showToast(
+                  msg: "missing some values",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  fontSize: 16.0,
+                );
               }
               /*else if (profileController.gender.value == '') {
                 Flushbar(
