@@ -159,14 +159,14 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   Widget loanAmountButton() {
     return GestureDetector(
       onTap: () {
-        if (profileController.twoWheelermakes.value == '') {
+        if (profileController.twoWheelerMakeCtrl.text.isEmpty) {
           Fluttertoast.showToast(
             msg: "Please select product!",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             fontSize: 16.0,
           );
-        } else if (profileController.twoWheelerModel.value == '') {
+        } else if (profileController.twoWheelerModelCtrl.text.isEmpty) {
           Fluttertoast.showToast(
             msg: "Please select model!",
             toastLength: Toast.LENGTH_SHORT,
@@ -288,8 +288,10 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
   // SCREENS UI FOR DIFFERENT STEPS
 
   Widget loanAmountUi() {
-    final twoWheelerMakeCtrl =
-        TextEditingController(text: profileController.twoWheelermakes.value);
+    Future<void> getModelList() async {
+      await loanController.fetch2WheelerModels();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -314,96 +316,37 @@ class _BikeLoanIOState extends State<BikeLoanIO> {
           DividerIO(
             height: 24,
           ),
-          // CommonSearchTextField(
-          //     itemList: loanController.twoWheelerMakes.toSet().toList(),
-          //     label: 'Product',
-          //     hintText: 'Select a Product',
-          //     searchCtrl: twoWheelerMakeCtrl,
-          //     inputOnChanged: (value) {
-          //       print(profileController.twoWheelermakes.value);
-          //       profileController.twoWheelermakes.value = value!;
-          //       profileController.twoWheelerModel.value = '';
-          //       loanController.fetch2WheelerModels();
-          //     },
-          //     searchHintText: 'Select a product here...',
-          //     itemListNullError: 'Invalid Product Name'),
-          SizedBox(
-            height: 24,
-          ),
-          ButtonTheme(
-            alignedDropdown: true,
-            child: ProfileStepper().commonDropDown(
-              item: loanController.twoWheelerMakes.toSet().map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: text(
-                    value.toString(),
-                    textOverflow: TextOverflow.ellipsis,
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) async {
-                profileController.twoWheelermakes.value = value;
-                profileController.twoWheelerModel.value = '';
-                await loanController.fetch2WheelerModels();
-              },
-              label: 'Product',
-              hint: 'Select product',
-              value: profileController.twoWheelermakes.value == ''
-                  ? null
-                  : profileController.twoWheelermakes.value,
-            ),
-          ),
-          SizedBox(
-            height: 24,
-          ),
           Obx(() {
-            if (loanController.twoWheelerModelsmodel.value.models != null) {
-              return ButtonTheme(
-                alignedDropdown: true,
-                child: ProfileStepper().commonDropDown(
-                  item: loanController.twoWheelerModelsmodel.value.models!
-                      .toSet()
-                      .map((value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: text(value.toString()),
-                    );
-                  }).toList(),
-                  onChanged: (value) async {
-                    profileController.twoWheelerModel.value = value;
-                  },
-                  label: 'Model',
-                  hint: 'Select Models',
-                  value: profileController.twoWheelerModel.value == ''
-                      ? null
-                      : profileController.twoWheelerModel.value,
-                ),
-              );
-            } else {
-              return SizedBox();
-            }
-          })
+            return CommonSearchTextField(
+                itemList: loanController.twoWheelerMakes.toSet().toList(),
+                label: 'Product',
+                hintText: 'Select a Product',
+                searchCtrl: profileController.twoWheelerMakeCtrl,
+                inputOnChanged: (value) {
+                  // profileController.twoWheelermakes.value = value!;
+                  profileController.twoWheelerModelCtrl.clear();
 
-          // ProfileStepper().commonDropDown(
-          //   item: [
-          //     {"name": "2 wheeler - Scooty", "value": "TwoWheelerScooty"},
-          //     {"name": "2 wheeler - Bike", "value": "TwoWheelerBike"},
-          //   ].map((value) {
-          //     return DropdownMenuItem(
-          //       value: value['value'],
-          //       child: text(value['name'].toString()),
-          //     );
-          //   }).toList(),
-          //   onChanged: (value) {
-          //     profileController.vehicleType.value = value;
-          //   },
-          //   label: 'Model',
-          //   hint: 'Select model',
-          //   value: profileController.vehicleType.value == ''
-          //       ? null
-          //       : profileController.vehicleType.value,
-          // ),
+                  getModelList();
+                },
+                searchHintText: 'Select a product here...',
+                itemListNullError: 'Invalid Product Name');
+          }),
+          SizedBox(
+            height: 24,
+          ),
+          Obx(
+            () => loanController.twoWheelerModelsmodel.value.models != null
+                ? CommonSearchTextField(
+                    itemList: loanController.twoWheelerModelsmodel.value.models!
+                        .toSet()
+                        .toList(),
+                    label: 'Model',
+                    hintText: 'Select a Model',
+                    searchCtrl: profileController.twoWheelerModelCtrl,
+                    searchHintText: 'Select a product here...',
+                    itemListNullError: 'Invalid Product Name')
+                : SizedBox.shrink(),
+          ),
         ],
       ),
     );

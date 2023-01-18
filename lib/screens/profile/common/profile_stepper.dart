@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -417,11 +418,17 @@ class ProfileStepper {
                 textField(
                   controller: profileController.panNumberController.value,
                   label: 'PAN number',
+                  keyboardType: TextInputType.text,
                   inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]")),
                     LengthLimitingTextInputFormatter(10),
-                    UpperCaseTextFormatter()
+                    // UpperCaseTextFormatter()
                   ],
                   hint: 'Enter your PAN number here',
+                  onChanged: () {
+                    profileController.panNumberController.value.text
+                        .toUpperCase();
+                  },
                   vaidation: (value) {
                     if (isFromLoan == true ||
                         isFromInsurance == true ||
@@ -804,10 +811,13 @@ class ProfileStepper {
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
                             RegExp("[a-zA-Z0-9]")),
-                        UpperCaseTextFormatter(),
+                        // UpperCaseTextFormatter(),
                         LengthLimitingTextInputFormatter(10)
                       ],
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        profileController.panNumberController.value.text
+                            .toUpperCase();
+                      },
                       vaidation: (value) {
                         if (isFromLoan == true ||
                             isFromInsurance == true ||

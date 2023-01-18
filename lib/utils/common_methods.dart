@@ -112,12 +112,21 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 }
 
+extension on String {
+  /// To iterate a [String]: `"Hello".iterable()`
+  Iterable<String> iterable() sync* {
+    for (var i = 0; i < length; i++) {
+      yield this[i];
+    }
+  }
+}
+
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
-      text: newValue.text.toUpperCase(),
+      text: newValue.text,
       selection: newValue.selection,
     );
   }
