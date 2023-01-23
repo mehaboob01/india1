@@ -62,10 +62,10 @@ class OtpManager extends GetxController {
           );
           return true;
         } else {
-          var snackBar = SnackBar(
-            content: Text("Something went wrong!"),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          // var snackBar = SnackBar(
+          //   content: Text("Something went wrong!"),
+          // );
+          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
           return false;
         }
       });
@@ -142,11 +142,11 @@ class OtpManager extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 3),
-      )..show(context);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 3),
+      // )..show(context);
     } finally {
       isLoading.value = false;
       resendOtpLoading.value = false;

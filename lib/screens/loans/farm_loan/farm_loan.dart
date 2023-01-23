@@ -219,11 +219,11 @@ class _FarmLoanState extends State<FarmLoan> {
 
             loanController.updateScreen(Steps.PERSONAL.index);
           } else {
-            Flushbar(
-              title: "Alert!",
-              message: "Something went wrong!",
-              duration: Duration(seconds: 3),
-            )..show(context);
+            // Flushbar(
+            //   title: "Alert!",
+            //   message: "Something went wrong!",
+            //   duration: Duration(seconds: 3),
+            // )..show(context);
           }
         }
       },

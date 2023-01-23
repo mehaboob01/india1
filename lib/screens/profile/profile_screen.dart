@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 SafeArea(
                   child: CustomAppBar(
-                    heading: 'Profile',
+                    heading: 'my_profile'.tr,
                     hasLogo: true,
                     customActionIconsList: [
                       CustomActionIcons(
@@ -130,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                                       MainAxisAlignment.center,
                                       children: [
                                         text(
-                                          "Mobile number",
+                                          'mobile_number'.tr,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: Dimens.font_14sp,
@@ -651,7 +651,7 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: text(
-                    title,
+                    title.tr,
                     style: TextStyle(
                         color: AppColors.lightBlack,
                         fontSize: Dimens.font_18sp,
@@ -669,8 +669,9 @@ class ProfileScreen extends StatelessWidget {
                     (title == 'UPI ID(s) / VPA Number(s)' &&
                         (isUpiIdVisible.value == true))) ...[
                   InkWell(
-                    onTap: () {
+                    onTap: () async{
                       DioApiCall().refreshToken();
+
 
 
                       if (title == 'Bank account(s)') {
@@ -678,6 +679,7 @@ class ProfileScreen extends StatelessWidget {
                         cashBackManager.fetchCustomerUpiAccounts();
                         Get.to(() => ManageAccountsCard());
                       } else if (title == 'UPI ID(s) / VPA Number(s)') {
+
                         Get.to(() => ManageAccountsCard());
                       } else {
                         nextStep(title);
@@ -733,14 +735,14 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       singleDetails(
-                          title: "First name",
+                          title: "first_name".tr,
                           value:
-                              profileDetailsModel.firstName ?? "No First name",
+                              profileDetailsModel.firstName ?? "no_first_name".tr,
                           isEmpty: profileDetailsModel.firstName == null
                               ? true
                               : false),
                       singleDetails(
-                        title: "Mobile number",
+                        title: 'mobile_number'.tr,
                         value: profileDetailsModel.mobileNumber == null
                             ? "No contact"
                             : "+91 ${profileDetailsModel.mobileNumber}",
@@ -749,12 +751,12 @@ class ProfileScreen extends StatelessWidget {
                             : false,
                       ),
                       singleDetails(
-                          title: "Email ID",
+                          title: "email_id".tr,
                           value: profileDetailsModel.email ?? "No email ID",
                           isEmpty:
                               profileDetailsModel.email == null ? true : false),
                       singleDetails(
-                          title: "Gender",
+                          title: "gender".tr,
                           value: profileDetailsModel.gender ?? "Not entered",
                           isEmpty: profileDetailsModel.gender == null
                               ? true
@@ -770,15 +772,15 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       singleDetails(
-                          title: "Last name",
-                          value: profileDetailsModel.lastName ?? "No last name",
+                          title: "last_name".tr,
+                          value: profileDetailsModel.lastName ?? "no_last_name".tr,
                           isEmpty: profileDetailsModel.lastName == null
                               ? true
                               : false),
                       singleDetails(
-                          title: "Alternate number",
+                          title: "alt_num".tr,
                           value: profileDetailsModel.alternateNumber != null
-                              ? "+91 ${profileDetailsModel.alternateNumber ?? "No Number"}"
+                              ? "+91 ${profileDetailsModel.alternateNumber ?? "no_number".tr}"
                               : "No Number",
                           isEmpty: profileDetailsModel.alternateNumber == null
                               ? true
@@ -849,7 +851,7 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: singleDetails(
-                                title: "Pincode",
+                                title: "pincode".tr,
                                 value: "${address.postCode ?? 'No Postcode'}",
                                 isEmpty:
                                     address.postCode == null ? true : false),

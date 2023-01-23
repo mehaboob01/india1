@@ -95,10 +95,10 @@ class LoginManager extends GetxController {
         )..show(Get.context!);
       }
     } catch (e) {
-      var snackBar = SnackBar(
-        content: Text("Something went wrong!"),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // var snackBar = SnackBar(
+      //   content: Text("Something went wrong!"),
+      // );
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } finally {
       isLoading.value = false;
     }

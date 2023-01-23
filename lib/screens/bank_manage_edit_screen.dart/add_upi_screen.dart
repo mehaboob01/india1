@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
@@ -149,11 +150,17 @@ class AddUpiScreen extends StatelessWidget {
                         //   ),
                         // ),
                         FormBuilder(
+
                           initialValue: {
                             "upiId": "",
                           },
                           key: _addUpiAccount,
                           child: CommonTextField(
+                            inputFormat: [
+                              LengthLimitingTextInputFormatter(45),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r"[@_\-.0-9a-zA-Z]")),
+                            ],
                             formName: 'upiId',
                             hintText: 'Your UPI ID or VPA number',
                             labelText: 'UPI / VPA',

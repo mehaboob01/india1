@@ -62,6 +62,7 @@ class ProfileController extends GetxController {
       getProfileLoading = true.obs,
       getPinCodeLoading = false.obs,
       getBankAccountLoading = false.obs,
+      addBankDetails = false.obs,
       getUpiIdLoading = false.obs,
       autoValidation = false.obs,
       uploadProfileLoading = false.obs,
@@ -125,6 +126,9 @@ class ProfileController extends GetxController {
       existingLoan = ''.obs;
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
+  Rx<TextEditingController> bankAccountType = TextEditingController().obs;
+
+
   Rx<TextEditingController> accountNumberController =
       TextEditingController().obs;
   Rx<TextEditingController> comfirmAccountNumber = TextEditingController().obs;
@@ -267,9 +271,12 @@ class ProfileController extends GetxController {
     _homeManager.showAuth.value = false;
     getAppVersion();
     getId();
+
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 2), () async {
       getProfileData();
+      cashBackManager.fetchCustomerBankAccounts();
+      cashBackManager.fetchCustomerUpiAccounts();
       // getBankDetails();
       // getUpiIdDetails();
     });
@@ -536,20 +543,20 @@ class ProfileController extends GetxController {
         if (uploadSignedModel.value.uploadSignedURL != null) {
           uploadProfilePic(croppedFile);
         } else {
-          Fluttertoast.showToast(
-            msg: "something went wrong, try again!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            fontSize: 16.0,
-          );
+          // Fluttertoast.showToast(
+          //   msg: "something went wrong, try again!",
+          //   toastLength: Toast.LENGTH_SHORT,
+          //   gravity: ToastGravity.BOTTOM,
+          //   fontSize: 16.0,
+          // );
         }
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       uploadProfileLoading.value = false;
@@ -622,12 +629,12 @@ class ProfileController extends GetxController {
       );
       if (response != null) {
         if (response['imageURL'] == null) {
-          Fluttertoast.showToast(
-            msg: "something went wrong, try again!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            fontSize: 16.0,
-          );
+          // Fluttertoast.showToast(
+          //   msg: "something went wrong, try again!",
+          //   toastLength: Toast.LENGTH_SHORT,
+          //   gravity: ToastGravity.BOTTOM,
+          //   fontSize: 16.0,
+          // );
         } else {
           Fluttertoast.showToast(
             msg: "Profile updated successfully",
@@ -640,12 +647,12 @@ class ProfileController extends GetxController {
           profileDetailsModel.refresh();
         }
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       uploadProfileLoading.value = false;
@@ -760,12 +767,12 @@ class ProfileController extends GetxController {
         }
         getProfileData();
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       print(e);
@@ -840,12 +847,12 @@ class ProfileController extends GetxController {
         }
         getProfileData();
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       Fluttertoast.showToast(
@@ -925,12 +932,12 @@ class ProfileController extends GetxController {
         getProfileData();
       } else {
         print("response of occuaption${response}");
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       print(e);
@@ -1060,12 +1067,12 @@ class ProfileController extends GetxController {
         }
         getProfileData();
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       print(e);
@@ -1123,12 +1130,12 @@ class ProfileController extends GetxController {
         getProfileData();
         callBack();
       } else {
-        Fluttertoast.showToast(
-          msg: "something went wrong, try again!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "something went wrong, try again!",
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   fontSize: 16.0,
+        // );
       }
     } catch (e) {
       print(e);
@@ -1269,17 +1276,17 @@ class ProfileController extends GetxController {
 
   Future addBankAccountData(String? bankId) async {
     try {
-      getBankAccountLoading.value = true;
+      addBankDetails.value = true;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
 
       Map<String, dynamic> data = {
-        "customerId": customerId,
+        "customerId": customerId.toString(),
         "bankAccount": {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
           "ifscCode": "${ifscController.value.text}",
-          "accountType": accountType!.value.isEmpty ? null : accountType!.value,
+          "accountType": bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
         }
       };
 
@@ -1296,13 +1303,17 @@ class ProfileController extends GetxController {
               "accountNumber": "${accountNumberController.value.text}",
               "ifscCode": "${ifscController.value.text}",
               "accountType":
-                  accountType!.value.isEmpty ? null : accountType!.value,
+              bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
             }
           },
         ),
       );
+      addBankDetails.value = false;
+
+      print("response ${response}");
 
       if (response != null) {
+        addBankDetails.value = false;
         if (response['account'] != null) {
           cashBackManager.fetchCustomerBankAccounts();
           Get.back();
@@ -1312,16 +1323,20 @@ class ProfileController extends GetxController {
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
         } else {
+          addBankDetails.value = false;
           const snackBar = SnackBar(
             content: Text('Server Error!'),
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
         }
+      }else{
+        addBankDetails.value = false;
       }
     } catch (exception) {
+      addBankDetails.value = false;
       print(exception);
     } finally {
-      getBankAccountLoading.value = false;
+      addBankDetails.value = false;
     }
   }
 

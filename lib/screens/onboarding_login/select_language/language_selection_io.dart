@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -147,34 +148,9 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               selectedLanguage == Language.ENGLISH.index
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
-                          EachLanguageIO("ಕನ್ನಡ", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                                Language.KANNADA.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "kn");
-
-                            updateLanguage(
-                                locale[Language.KANNADA.index]['locale'],
-                                Language.KANNADA.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("kn");
-                            } else {
-                              print("No api call for lan update!");
-                            }
-                          },
-                              selectedLanguage == Language.KANNADA.index
-                                  ? AppColors.selectedLangColor
-                                  : AppColors.unSelectedLangColor,
-                              selectedLanguage == Language.KANNADA.index
-                                  ? AppColors.selectedTextColor
-                                  : AppColors.unSelectedTextColor),
                           EachLanguageIO("हिन्दी", () async {
                             SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+                            await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
                             prefs.setString(
@@ -197,24 +173,62 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               selectedLanguage == Language.HINDI.index
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
-                          EachLanguageIO("मराठी", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                                Language.MARATHI.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "mr");
+                          EachLanguageIO("ಕನ್ನಡ", () async {
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                            //     Language.KANNADA.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "kn");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.KANNADA.index]['locale'],
+                            //     Language.KANNADA.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("kn");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
+                          },
+                              selectedLanguage == Language.KANNADA.index
+                                  ? AppColors.selectedLangColor
+                                  : AppColors.unSelectedLangColor,
+                              selectedLanguage == Language.KANNADA.index
+                                  ? AppColors.selectedTextColor
+                                  : AppColors.unSelectedTextColor),
 
-                            updateLanguage(
-                                locale[Language.MARATHI.index]['locale'],
-                                Language.MARATHI.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("mr");
-                            } else {
-                              print("No api call for lan update!");
-                            }
+                          EachLanguageIO("मराठी", () async {
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                            //     Language.MARATHI.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "mr");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.MARATHI.index]['locale'],
+                            //     Language.MARATHI.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("mr");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
                           },
                               selectedLanguage == Language.MARATHI.index
                                   ? AppColors.selectedLangColor
@@ -223,23 +237,29 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("తెలుగు", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                                Language.TELUGU.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "te");
-
-                            updateLanguage(
-                                locale[Language.TELUGU.index]['locale'],
-                                Language.TELUGU.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("te");
-                            } else {
-                              print("No api call for lan update!");
-                            }
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                            //     Language.TELUGU.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "te");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.TELUGU.index]['locale'],
+                            //     Language.TELUGU.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("te");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
                           },
                               selectedLanguage == Language.TELUGU.index
                                   ? AppColors.selectedLangColor
@@ -248,23 +268,29 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("தமிழ்", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.TAMIL.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "ta");
-
-                            updateLanguage(
-                                locale[Language.TAMIL.index]['locale'],
-                                Language.TAMIL.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("ta");
-                            } else {
-                              print("No api call for lan update!");
-                            }
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(
+                            //     SPKeys.SELECTED_LANGUAGE, Language.TAMIL.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "ta");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.TAMIL.index]['locale'],
+                            //     Language.TAMIL.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("ta");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
                           },
                               selectedLanguage == Language.TAMIL.index
                                   ? AppColors.selectedLangColor
@@ -273,23 +299,29 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("മലയാളം", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                                Language.MALAYALAM.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "ml");
-
-                            updateLanguage(
-                                locale[Language.MALAYALAM.index]['locale'],
-                                Language.MALAYALAM.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("ml");
-                            } else {
-                              print("No api call for lan update!");
-                            }
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                            //     Language.MALAYALAM.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "ml");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.MALAYALAM.index]['locale'],
+                            //     Language.MALAYALAM.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("ml");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
                           },
                               selectedLanguage == Language.MALAYALAM.index
                                   ? AppColors.selectedLangColor
@@ -298,23 +330,29 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("বাংলো", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                                Language.BENGALI.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "bn");
-
-                            updateLanguage(
-                                locale[Language.BENGALI.index]['locale'],
-                                Language.BENGALI.index);
-                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                              print("api call");
-                              // call update lan api
-                              _selectLanManager.updateLan("bn");
-                            } else {
-                              print("No api call for lan update!");
-                            }
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                            //     Language.BENGALI.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "bn");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.BENGALI.index]['locale'],
+                            //     Language.BENGALI.index);
+                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                            //   print("api call");
+                            //   // call update lan api
+                            //   _selectLanManager.updateLan("bn");
+                            // } else {
+                            //   print("No api call for lan update!");
+                            // }
                           },
                               selectedLanguage == Language.BENGALI.index
                                   ? AppColors.selectedLangColor
@@ -323,16 +361,22 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("ଓଡିଆ", () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setInt(
-                                SPKeys.SELECTED_LANGUAGE, Language.ODIA.index);
-                            prefs.setString(
-                                SPKeys.SELECTED_LANGUAGE_CODE, "bn");
-
-                            updateLanguage(
-                                locale[Language.ODIA.index]['locale'],
-                                Language.ODIA.index);
+                            Fluttertoast.showToast(
+                              msg: "Coming soon ...",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              fontSize: 16.0,
+                            );
+                            // SharedPreferences prefs =
+                            //     await SharedPreferences.getInstance();
+                            // prefs.setInt(
+                            //     SPKeys.SELECTED_LANGUAGE, Language.ODIA.index);
+                            // prefs.setString(
+                            //     SPKeys.SELECTED_LANGUAGE_CODE, "bn");
+                            //
+                            // updateLanguage(
+                            //     locale[Language.ODIA.index]['locale'],
+                            //     Language.ODIA.index);
                           },
                               selectedLanguage == Language.ODIA.index
                                   ? AppColors.selectedLangColor

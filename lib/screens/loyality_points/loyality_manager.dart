@@ -35,6 +35,13 @@ class LoyaltyManager extends GetxController {
     try {
       isLoading(true);
 
+      Map<dynamic,dynamic> data = {
+        "customerId": customerId,
+        "rewardTransactionCount": 20,
+      };
+
+      print("sending data= >${data} ");
+
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.loyaltyDashBoard,
         method: Type.POST,
@@ -43,6 +50,9 @@ class LoyaltyManager extends GetxController {
           "rewardTransactionCount": 4,
         }),
       );
+
+
+      print("cards response  ==> ${response}");
 
 
       if (response != null) {

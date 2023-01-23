@@ -101,11 +101,11 @@ class NotificationManager extends GetxController {
       } else {
         isLoading.value = false;
       }
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 3),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 3),
+      // )..show(Get.context!);
     } finally {
       if (addOldData) {
         isPaginationLoading.value = false;
@@ -156,11 +156,11 @@ class NotificationManager extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 3),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 3),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }

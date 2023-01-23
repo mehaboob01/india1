@@ -275,11 +275,11 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                     redoCtrl.accountFormKey.currentState!
                                         .save();
                                     if (redoCtrl.redeemPointsSliderValue.value <
-                                        15) {
+                                        0) {
                                       Flushbar(
                                         title: "Alert!",
                                         message:
-                                            'You can only redeem 15 or more points',
+                                            'Please choose points',
                                         duration: Duration(seconds: 2),
                                       )..show(context);
                                     } else {
@@ -335,11 +335,11 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
                                   print(
                                       "upi data${cashbackManager.addUpiData.value['upiId']}");
                                   if (redoCtrl.redeemPointsSliderValue.value <
-                                      15) {
+                                      0) {
                                     Flushbar(
                                       title: "Alert!",
                                       message:
-                                          'You can only redeem 15 or more points',
+                                          'Please select points',
                                       duration: Duration(seconds: 2),
                                     )..show(context);
                                   } else {

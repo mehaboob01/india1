@@ -99,7 +99,7 @@ dev_dependencies:
 flutter_icons:
       android: true
       ios: true
-      image_path: "assets/app_logo.png"
+      image_path: "assets/app_logo_new.png"
       min_sdk_android: 21 # android min sdk min:16, default 21
       web:
         generate: true

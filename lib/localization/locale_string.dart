@@ -4,6 +4,37 @@ class LocaleString extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
+
+          //profile section
+          'bank_accounts': 'Bank account(s)',
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+
+          'earn_more_points': 'Earn More Points',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+          'recharge': 'Recharge',
+          'ways_to_reddem': 'Ways to redeem: ',
+          'total_redeemed': 'Total redeemed: ',
           'hello': 'Hello World',
           'mobile_number': 'Mobile number',
           'term_condition': 'Terms and Conditions',
@@ -23,6 +54,8 @@ class LocaleString extends Translations {
           'loyalty_points': 'Loyalty points',
           'welcome': 'Welcome,',
           'cashback_india1_summary': 'Cashback by India1 summary',
+          'cashback_summary': 'Cashback by India1 summary',
+
           'in': 'in',
           'redeem_points_now': 'Redeem Points Now',
           'home': 'Home',
@@ -30,6 +63,13 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings': 'Savings',
+
+
+
+          // home card
+
+          'point': ' Points',
+          'total_earned': 'Total earned: ',
 
           // loan section text
 
@@ -234,8 +274,21 @@ class LocaleString extends Translations {
           'current_balance': 'Current balance',
 
           'privacy_policy': 'Privacy policy'
+
+
         },
         'hi_IN': {
+          'bank_accounts': 'बैंक खाते',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'एटीएम खोजें',
+          'rewads_at_atm': 'एटीएम इनाम',
+          'find_nearest_atm' : 'निकटतम India1 एटीएम खोजें',
+          'cashback': 'कैशबैक',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'कुल भुनाया गया:',
+          'point': 'अंक',
           'hello': 'नमस्ते दुनिया',
           'mobile_number': 'मोबाइल नंबर',
           'term_condition': 'नियम एवं शर्तें',
@@ -255,6 +308,7 @@ class LocaleString extends Translations {
           'loyalty_points': 'Loyalty points',
           'welcome': 'स्वागत,',
           'cashback_india1_summary': 'India1 सारांश द्वारा कैशबैक',
+          'cashback_summary': 'India1 सारांश द्वारा कैशबैक',
           'in': 'में',
           'redeem_points_now': 'पॉइंट्स अभी रिडीम करें',
           'home': 'घर',
@@ -262,6 +316,27 @@ class LocaleString extends Translations {
           'loans': 'ऋण',
           'insurance': 'बीमा',
           'savings': 'जमा पूंजी',
+          'total_earned': 'कुल अर्जित अंक:',
+
+          //profile section
+          'no_first_name': 'कोई पहला नाम नहीं',
+          'no_last_name': 'कोई अंतिम नाम नहीं',
+          'no_number': 'नंबर नहीं है',
+          'no_email': 'कोई ईमेल आईडी नहीं',
+          'no_dob': 'कोई जन्म तिथि नहीं',
+          'not_entered': 'प्रवेश नहीं',
+          'not_updated': 'अद्यतन नहीं हुआ',
+          'add_persnl_details': 'व्यक्तिगत विवरण जोड़ें',
+          'add_residntl_details': 'आवासीय विवरण जोड़ें',
+          'no_residntl_data': 'कोई आवासीय डेटा नहीं मिला!',
+          'add_occupation_details': 'व्यवसाय विवरण जोड़ें',
+          'no_occupation_data': 'आपके किसी भी व्यवसाय का कोई विवरण नहीं मिला!',
+          'bank_accounts': 'बैंक खाते',
+          'no_bank_data': 'किसी भी सहेजे गए बैंक खाते का विवरण नहीं मिला!',
+          'add_bank_acc': 'बैंक खाता जोड़ें',
+          'upi_id': 'यूपीआई आईडी (एस) / वीपीए नंबर (एस)',
+          'no_upi_data': 'कोई भी सहेजा गया यूपीआई / वीपीए विवरण नहीं मिला!',
+          'add_upi_id': 'यूपीआई / वीपीए विवरण जोड़ें',
 
           // loan section
 
@@ -370,9 +445,9 @@ class LocaleString extends Translations {
           'enter_first_name': 'अपना पहला नाम दर्ज करें',
           'last_name': 'उपनाम',
           'enter_last_name': 'अपना अंतिम नाम दर्ज करें',
-          'mobile_num': 'Mobile Number',
+          'mobile_num': 'मोबाइल नंबर',
           'enter_mobile_num': 'मोबाइल नंबर दर्ज करें',
-          'alt_num': 'Alternate Number',
+          'alt_num': 'वैकल्पिक नंबर',
           'enter_alt_num': 'वैकल्पिक संख्या दर्ज करें',
           'email_id': 'ईमेल आईडी',
           'enter_email_id': 'यहाँ ईमेल आईडी दर्ज करें',
@@ -469,6 +544,37 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'ka_IN': {
+          //profile section
+          'bank_accounts': 'बैंक खाते',
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
           'current_balance': 'Current balance',
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
           'mobile_number': 'Mobile number',
@@ -489,6 +595,7 @@ class LocaleString extends Translations {
           'loyalty_points': 'Loyalty points',
           'welcome': 'Welcome,',
           'cashback_india1_summary': 'ಭಾರತದಿಂದ ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ 1 ಸಾರಾಂಶ',
+          'cashback_summary': 'Cashback by India1 summary',
           'in': 'ಒಗೆ',
           'redeem_points_now': 'Redeem Points Now',
           'home': 'ಮನೆ',
@@ -698,6 +805,39 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'ma_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'चालू शिल्लक',
           'hello': 'हॅलो वर्ल्ड',
           'mobile_number': 'मोबाईल नंबर',
@@ -925,6 +1065,39 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'te_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'Current balance',
           'hello': 'హలో వరల్డ్',
           'mobile_number': 'మొబైల్ నంబర్',
@@ -1154,6 +1327,39 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'ta_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'Current balance',
           'hello': 'வணக்கம் உலகம்',
           'mobile_number': 'கைபேசி எண்',
@@ -1382,6 +1588,41 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'mal_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+
+
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'Current balance',
           'hello': 'ഹലോ വേൾഡ്',
           'mobile_number': 'മൊബൈൽ നമ്പർ',
@@ -1609,6 +1850,39 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'ban_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_redeemed': 'Total redeemed:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'Current balance',
           'hello': 'হ্যালো',
           'mobile_number': 'মোবাইল নম্বর',
@@ -1836,6 +2110,39 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'or_IN': {
+          'bank_accounts': 'बैंक खाते',
+
+          //profile section
+          'no_first_name': 'No First Name',
+          'no_last_name': 'No Last Name',
+          'no_number': 'No Number',
+          'no_email': 'No Email Id',
+          'no_dob': 'No Dob',
+          'not_entered': 'Not Entered',
+          'not_updated': 'Not Updated',
+          'add_persnl_details': 'Add Personal Details',
+          'add_residntl_details': 'Add Residental Details',
+          'no_residntl_data': 'Could Not Find Any Residential Data!',
+          'add_occupation_details': 'Add Occupation Details',
+          'no_occupation_data':
+          'Could Not Find Any Of Your Occupation Details!',
+          'bank_accounts': 'Bank Account(S)',
+          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
+          'add_bank_acc': 'Add Bank Account',
+          'upi_id': 'Upi Id(S) / Vpa Number(S)',
+          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
+          'add_upi_id': 'Add Upi / Vpa Details',
+          'earn_more_points': 'अधिक अंक अर्जित करें',
+          'locate_atm': 'Locate ATM',
+          'rewads_at_atm': 'rewards at ATMs',
+          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'cashback': 'Cashback',
+
+          'recharge': 'रिचार्ज',
+          'ways_to_reddem': 'भुनाने के तरीके:',
+          'total_earned': 'कुल अर्जित अंक:',
+          'total_redeemed': 'Total redeemed:',
+          'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'ସାମ୍ପ୍ରତିକ ସନ୍ତୁଳନ',
           'hello': ' ନମ୍ବର',
           'mobile_number': 'ମୋବାଇଲ୍ ନମ୍ବର',
@@ -1856,6 +2163,7 @@ class LocaleString extends Translations {
           'loyalty_points': 'Loyalty points',
           'welcome': 'ସ୍ୱାଗତ,',
           'cashback_india1_summary': 'ଭାରତ 1 ସାରାଂଶ ଦ୍ୱାରା କ୍ୟାସବ୍ୟାକ୍',
+          'cashback_summary': 'ଭାରତ 1 ସାରାଂଶ ଦ୍ୱାରା କ୍ୟାସବ୍ୟାକ୍',
           'in': 'ଭିତରେ',
           'redeem_points_now': 'ପଏଣ୍ଟଗୁଡିକ ବର୍ତ୍ତମାନ ମୁକ୍ତ କରନ୍ତୁ',
           'home': 'କରନ୍ତୁ',

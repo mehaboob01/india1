@@ -534,11 +534,11 @@ class LoanController extends GetxController {
         recentTransactionModel.value =
             RecentTransactionModel.fromJson(jsonData['data']);
       } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong ...",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        // Flushbar(
+        //   title: "Error!",
+        //   message: "Something went wrong ...",
+        //   duration: Duration(seconds: 2),
+        // )..show(Get.context!);
       }
     } catch (exception) {
       print(exception);
@@ -579,11 +579,11 @@ class LoanController extends GetxController {
         insuranceRecentTransactionModel.value =
             InsuranceRecentTransactionModel.fromJson(jsonData['data']);
       } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong ...",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        // Flushbar(
+        //   title: "Error!",
+        //   message: "Something went wrong ...",
+        //   duration: Duration(seconds: 2),
+        // )..show(Get.context!);
       }
     } catch (exception) {
       print(exception);

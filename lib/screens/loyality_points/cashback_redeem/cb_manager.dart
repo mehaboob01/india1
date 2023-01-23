@@ -148,11 +148,11 @@ class CashBackManager extends GetxController {
         )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }
@@ -161,8 +161,8 @@ class CashBackManager extends GetxController {
   // fetch upi's  accounts
 
   fetchCustomerUpiAccounts() async {
-    customerUPIList.clear();
-    customerUPIListSend.clear();
+    customerUPIList.value.clear();
+    customerUPIListSend.value.clear();
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -184,8 +184,7 @@ class CashBackManager extends GetxController {
 
       if (response.statusCode == 200) {
         List<bool> localSelectedList = [];
-        customerUPIList.clear();
-        customerUPIListSend.clear();
+
         for (var index in fetchCustomerUpiModel.data!.upiIds!) {
           customerUPIListSend.add(index);
           localSelectedList.add(false);
@@ -193,7 +192,7 @@ class CashBackManager extends GetxController {
 
         customerUPIList.addAll(customerUPIListSend);
         selectedplanUpiList.addAll(localSelectedList);
-        print("upi list :: ${customerUPIList.length} ");
+        print("upi list :: ${customerUPIList} ");
 
         isLoading(false);
       } else {
@@ -204,11 +203,11 @@ class CashBackManager extends GetxController {
         )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }
@@ -292,11 +291,11 @@ class CashBackManager extends GetxController {
         )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }
@@ -362,18 +361,18 @@ class CashBackManager extends GetxController {
             .then((value) => Get.toNamed(MRouter.verifiedScreen))
             .then((value) => selectedUpiIndex.value == -1);
       } else {
-        Flushbar(
-          title: "Error!",
-          message: "Something went wrong",
-          duration: Duration(seconds: 2),
-        )..show(Get.context!);
+        // Flushbar(
+        //   title: "Error!",
+        //   message: "Something went wrong",
+        //   duration: Duration(seconds: 2),
+        // )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }
@@ -434,11 +433,11 @@ class CashBackManager extends GetxController {
             });
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }
@@ -500,11 +499,11 @@ class CashBackManager extends GetxController {
             });
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading.value = false;
     }

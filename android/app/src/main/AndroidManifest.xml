@@ -67,7 +67,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="digitalappuat.india1.co.in"
+                    android:host="digitalapi.india1.co.in"
                     android:scheme="https" />
             </intent-filter>
         </activity>

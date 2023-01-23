@@ -59,6 +59,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   final cashbackManager = Get.put(CashBackManager());
   final notificationManager = Get.put(NotificationManager());
   ProfileController _profileController = Get.put(ProfileController());
+  CashBackManager cashBackManager = Get.put(CashBackManager());
 
 
   int androidVersion = 0;
@@ -79,6 +80,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
 
       DioApiCall().refreshToken();
+     cashBackManager.fetchCustomerBankAccounts();
+     cashBackManager.fetchCustomerUpiAccounts();
       getAndroidVersion();
       _profileController.getProfileData();
       _profileController.setData();
@@ -381,30 +384,57 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     heightIs = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Future.delayed(
-            const Duration(seconds: 0),
-            () async => Get.defaultDialog(
-                  cancelTextColor: AppColors.white,
-                  title: "Logout",
-                  middleText: "Do you want to close the app?",
-
-                  actions: [
-                    confirmBtn(),
-                    ElevatedButton(
+        showDialog(
+            context: context,
+            builder: ((context) {
+              return AlertDialog(
+                contentPadding: EdgeInsets.all(20),
+                buttonPadding: EdgeInsets.all(12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                title: SvgPicture.asset(AppImages.newIndiaOneSvg),
+                content: text("Do you want to exit app?",
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    fontSize: Dimens.font_20sp,
+                    color: Colors.black),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
                         onPressed: () {
                           Get.back();
-
-                         // Navigator.of(context, rootNavigator: true).pop();
                         },
-                        child: text("No"))
-                  ],
-                  radius: 8,
-                  backgroundColor: AppColors.primary,
-                  titleStyle: TextStyle(
-                      color: Colors.white, fontSize: Dimens.font_14sp),
-                  middleTextStyle: TextStyle(
-                      color: Colors.white, fontSize: Dimens.font_12sp),
-                ));
+                        child: text(
+                          "Cancel",
+                          fontWeight: FontWeight.w600,
+                          fontSize: Dimens.font_16sp,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (Platform.isAndroid) {
+                            SystemNavigator.pop();
+                            Navigator.of(Get.context!, rootNavigator: true)
+                                .pop();
+                          } else if (Platform.isIOS) {
+                            exit(0);
+                          }
+                        },
+                        child: text(
+                          "Exit",
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: Dimens.font_16sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }));
         return false;
       },
       child: Obx(
@@ -707,7 +737,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                       ],
                                     ),
                                     SizedBox(height: 1.0.hp),
-                                    text('cashback_india1_summary'.tr,
+                                    text('cashback_summary'.tr,
                                         style: AppStyle.shortHeading.copyWith(
                                             color: Colors.white,
                                             fontSize: 20,
@@ -902,7 +932,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         ),
                       ),
                       text(
-                        ' Points',
+                        'point'.tr,
                         style: AppStyle.shortHeading.copyWith(
                             fontSize: Dimens.font_14sp,
                             color: Colors.white,
@@ -920,7 +950,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       text(
-                        'Total earned : ',
+                        'total_earned'.tr,
                         style: AppStyle.shortHeading.copyWith(
                           fontSize: Dimens.font_14sp,
                           color: Colors.white,
@@ -941,7 +971,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       text(
-                        'Total redeemed : ',
+                        'total_redeemed'.tr,
                         style: AppStyle.shortHeading.copyWith(
                           fontSize: Dimens.font_14sp,
                           color: Colors.white,
@@ -974,17 +1004,17 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           text(
-            'Ways to redeem :',
+            'ways_to_reddem'.tr,
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
           ),
           redeemWaySub(
               image: AppImages.mobilRecharge2Svg,
-              text: 'Recharge',
+              text: 'recharge'.tr,
               routName: MRouter.mobileRechargeIO),
           redeemWaySub(
               image: AppImages.walletIcon,
-              text: 'Cashback',
+              text: 'cashback'.tr,
               routName: MRouter.cashBackRedeemPage)
         ],
       ),
@@ -1062,7 +1092,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           text(
-            'Find the nearest India1 ATM',
+            'find_nearest_atm'.tr,
             style: AppStyle.shortHeading.copyWith(
                 fontSize: 14.0.sp,
                 fontWeight: FontWeight.w600,
@@ -1082,7 +1112,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     fontWeight: FontWeight.w600),
               ),
               text(
-                ' rewards at ATMs',
+                'rewads_at_atm'.tr,
                 style: AppStyle.shortHeading
                     .copyWith(fontSize: 15, color: Colors.black),
               ),
@@ -1117,7 +1147,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                         Align(
                           alignment: Alignment.center,
                           child: text(
-                            'Locate ATM',
+                            'locate_atm'.tr,
                             style: AppStyle.shortHeading.copyWith(
                                 fontSize: 10.0.sp,
                                 fontWeight: FontWeight.w600,
@@ -1165,7 +1195,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         text(
-          'Find the nearest India1 ATM',
+          'find_nearest_atm'.tr,
           style: AppStyle.shortHeading.copyWith(
               fontSize: Dimens.font_16sp,
               fontWeight: FontWeight.w600,
@@ -1185,7 +1215,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
                   fontWeight: FontWeight.w600),
             ),
             text(
-              ' rewards at ATMs',
+              'locate_atm'.tr,
               style: AppStyle.shortHeading
                   .copyWith(fontSize: Dimens.font_16sp, color: Colors.black),
             ),
@@ -1209,7 +1239,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
                       Align(
                         alignment: Alignment.center,
                         child: text(
-                          'Locate ATM',
+                          'locate_atm'.tr,
                           style: AppStyle.shortHeading.copyWith(
                               fontSize: Dimens.font_14sp,
                               fontWeight: FontWeight.w500,

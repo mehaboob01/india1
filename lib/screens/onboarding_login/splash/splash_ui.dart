@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-     DioApiCall().refreshToken();
+      DioApiCall().refreshToken();
 
     FirebaseMessaging.instance.getToken().then((deviceToken) async {
       print("FCM / DEVICE TOKEN ${deviceToken}");
@@ -88,6 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
 
 
+
     if (loggedIn == true) {
     //
 
@@ -96,6 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAllNamed(MRouter.homeScreen);
         int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
         updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+
 
 
 

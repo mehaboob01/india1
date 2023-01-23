@@ -112,7 +112,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                   Column(
                     children: [
                       CustomAppBar(
-                          heading: 'Track based Loan',
+                          heading: 'trackBased_loan_header'.tr,
                           customActionIconsList: commonAppIcons),
                       Expanded(
                         child: SingleChildScrollView(
@@ -131,7 +131,7 @@ class _TrackBasedLoanState extends State<TrackBasedLoan> {
                                         stepperList:
                                             loanController.farmLoanTitleList
                                                 .map((e) => StepperData(
-                                                      title: "$e",
+                                                      title: "$e".tr,
                                                     ))
                                                 .toList(),
                                         stepperDirection: Axis.horizontal,

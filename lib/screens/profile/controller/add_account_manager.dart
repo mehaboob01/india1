@@ -77,11 +77,11 @@ class AddAccountManager extends GetxController {
         )..show(Get.context!);
       }
     } catch (e) {
-      Flushbar(
-        title: "Error!",
-        message: "Something went wrong",
-        duration: Duration(seconds: 2),
-      )..show(Get.context!);
+      // Flushbar(
+      //   title: "Error!",
+      //   message: "Something went wrong",
+      //   duration: Duration(seconds: 2),
+      // )..show(Get.context!);
     } finally {
       isLoading(false);
     }

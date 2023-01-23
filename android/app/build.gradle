@@ -54,6 +54,7 @@ android {
     // code added for release build: start
     signingConfigs {
         release {
+
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
@@ -62,6 +63,9 @@ android {
     }
     buildTypes {
         release {
+            shrinkResources true
+            minifyEnabled true
+
             signingConfig signingConfigs.release
         }
 
@@ -70,6 +74,7 @@ android {
             disable "Instantiatable"
             checkReleaseBuilds false
             abortOnError false
+
         }
     }
 
