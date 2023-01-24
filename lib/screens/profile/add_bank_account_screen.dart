@@ -270,6 +270,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                             CommonSearchTextField(
                                 itemList: <String>['savings', 'current'],
                                 label: 'Account type',
+
                                 hintText: 'Select account type',
                                 searchCtrl: profileController.bankAccountType.value,
                                 searchHintText: 'Select your account type',
@@ -306,14 +307,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                                 message: "missing some values",
                                 duration: Duration(seconds: 3),
                               )..show(context);
-                            } else if (profileController.accountType.value ==
-                                '') {
-                              Flushbar(
-                                title: "Alert!",
-                                message: "Select account type",
-                                duration: Duration(seconds: 3),
-                              )..show(context);
-                            } else if (profileController
+                            }  else if (profileController
                                     .accountNumberController.value.text !=
                                 profileController
                                     .comfirmAccountNumber.value.text) {

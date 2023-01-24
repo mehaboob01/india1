@@ -70,6 +70,8 @@ class MrManager extends GetxController {
       isLoading(true);
       var response = await DioApiCall()
           .commonApiCall(endpoint: Apis.operatorList, method: Type.GET);
+
+      print("opearot list ==> ${response}");
       if (response != null) {
         RcOperatorModel rcOperatorModel = RcOperatorModel.fromJson(response);
         operatorList.clear();

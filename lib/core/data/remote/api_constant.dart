@@ -8,10 +8,10 @@
 // final String bucketBaseUrl =
 //     "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
 
-// prod link
+// // prod link
 
   final String baseUrl = "https://digitalapi.india1.co.in/v1/";
-  final String bucketBaseUrl = "https://india1-digital.s3.ap-south-1.amazonaws.com";
+  final String bucketBaseUrl = "https://india1-digital-production.s3.ap-south-1.amazonaws.com";
 
 class Apis {
   // OnBoarding & login Api

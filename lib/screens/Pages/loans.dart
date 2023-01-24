@@ -36,31 +36,40 @@ class _LoansPageState extends State<LoansPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => IgnorePointer(
-        ignoring: _controller.ignorePointer.value,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonPageHeader(pageName: PageName.loans),
-                  CommonPageCategoriesHeading(pageName: PageName.loans),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                    child: const LoansCard(),
-                  ),
-                  CommonBanner(),
+      () => WillPopScope(
+        onWillPop: () async{
 
-                  //  loans history
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: LoanDashboardHistory(isFromLoans: true),
-                  ),
-                ],
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              MRouter.homeScreen, (Route<dynamic> route) => false);
+          return false;
+
+        },
+        child: IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonPageHeader(pageName: PageName.loans),
+                    CommonPageCategoriesHeading(pageName: PageName.loans),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                      child: const LoansCard(),
+                    ),
+                    CommonBanner(),
+
+                    //  loans history
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: LoanDashboardHistory(isFromLoans: true),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

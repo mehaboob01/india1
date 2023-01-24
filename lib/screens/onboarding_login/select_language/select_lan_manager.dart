@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -42,11 +43,14 @@ class SelectLanManager extends GetxController {
             CommonApiResponseModel.fromJson(jsonData);
 
         if (commonApiResponseModel.status!.code == 2000) {
-          const snackBar = SnackBar(
-            content: Text('Language updated!'),
+          Fluttertoast.showToast(
+            msg: "Language updated ...",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 16.0,
           );
 
-          ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+
         } else {}
       } else {}
     } catch (e) {

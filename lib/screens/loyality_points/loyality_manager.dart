@@ -31,6 +31,8 @@ class LoyaltyManager extends GetxController {
   Future<void> callLoyaltyDashboardApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerId = prefs!.getString(SPKeys.CUSTOMER_ID);
+    recentRewardTransactionsList.clear();
+    recentRewardTransactionSend.clear();
 
     try {
       isLoading(true);
@@ -63,6 +65,7 @@ class LoyaltyManager extends GetxController {
         pointsEarned.value = loyaltyDashboardModel.pointsSummary!.pointsEarned!.toInt();
         pointsRedeemed.value = loyaltyDashboardModel.pointsSummary!.pointsRedeemed!.toInt();
         recentRewardTransactionsList.clear();
+        recentRewardTransactionSend.clear();
         for (var index in loyaltyDashboardModel.recentRewardTransactions!) {
           recentRewardTransactionSend.add(index);
         }

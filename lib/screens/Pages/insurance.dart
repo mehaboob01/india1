@@ -38,29 +38,38 @@ class _InsurancePageState extends State<InsurancePage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => IgnorePointer(
-        ignoring: _controller.ignorePointer.value,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonPageHeader(pageName: PageName.insurance),
-                  CommonPageCategoriesHeading(pageName: PageName.insurance),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                    child: const InsuranceCard(),
-                  ),
-                  CommonBanner(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: InsuranceDashboardHistory(isFromInsurance: true),
-                  ),
-                ],
+      () => WillPopScope(
+        onWillPop: () async{
+
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              MRouter.homeScreen, (Route<dynamic> route) => false);
+          return false;
+
+        },
+        child: IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonPageHeader(pageName: PageName.insurance),
+                    CommonPageCategoriesHeading(pageName: PageName.insurance),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                      child: const InsuranceCard(),
+                    ),
+                    CommonBanner(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: InsuranceDashboardHistory(isFromInsurance: true),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

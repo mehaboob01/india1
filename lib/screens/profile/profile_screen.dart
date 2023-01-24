@@ -70,8 +70,8 @@ class ProfileScreen extends StatelessWidget {
                       CustomActionIcons(
                           image: AppImages.bottomNavHomeSvg,
                           onHeaderIconPressed: () async {
-                            Get.offNamedUntil(MRouter.homeScreen,
-                                    (route) => route.isFirst);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                MRouter.homeScreen, (Route<dynamic> route) => false);
                           })
                     ],
                   ),

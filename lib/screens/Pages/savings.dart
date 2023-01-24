@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
+import '../../constant/routes.dart';
 import '../../constant/theme_manager.dart';
 import '../../core/data/remote/api_constant.dart';
 import '../../utils/common_webview.dart';
@@ -30,25 +31,35 @@ class _SavingsPageState extends State<SavingsPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => IgnorePointer(
-        ignoring: _controller.ignorePointer.value,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonPageHeader(pageName: PageName.savings),
-                  CommonPageCategoriesHeading(pageName: PageName.savings),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                    child: const SavingsCard(),
-                  ),
-                  CommonBanner()
-                ],
+      () => WillPopScope(
+        onWillPop: () async{
+
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              MRouter.homeScreen, (Route<dynamic> route) => false);
+          return false;
+
+        },
+
+        child: IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonPageHeader(pageName: PageName.savings),
+                    CommonPageCategoriesHeading(pageName: PageName.savings),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                      child: const SavingsCard(),
+                    ),
+                    CommonBanner()
+                  ],
+                ),
               ),
             ),
           ),

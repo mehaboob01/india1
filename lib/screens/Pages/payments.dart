@@ -30,25 +30,34 @@ class _PaymentsPageState extends State<PaymentsPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => IgnorePointer(
-        ignoring: _controller.ignorePointer.value,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonPageHeader(pageName: PageName.payments),
-                  CommonPageCategoriesHeading(pageName: PageName.payments),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
-                    child:  PaymentCards(),
-                  ),
-                  CommonBanner()
-                ],
+      () => WillPopScope(
+        onWillPop: () async{
+
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              MRouter.homeScreen, (Route<dynamic> route) => false);
+          return false;
+
+        },
+        child: IgnorePointer(
+          ignoring: _controller.ignorePointer.value,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonPageHeader(pageName: PageName.payments),
+                    CommonPageCategoriesHeading(pageName: PageName.payments),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 2.0.hp, left: 4.0.wp, right: 4.0.wp),
+                      child:  PaymentCards(),
+                    ),
+                    CommonBanner()
+                  ],
+                ),
               ),
             ),
           ),
