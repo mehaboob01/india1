@@ -11,11 +11,13 @@ class YourRewardCard extends StatefulWidget {
       {required this.rewardState,
       required this.rewardtype,
       required this.date,
-      required this.points});
+      required this.points,
+      required this.isOverlay});
   final RewardState rewardState;
   final Rewardtype rewardtype;
   final String date;
   final int points;
+  final bool isOverlay;
 
   @override
   State<YourRewardCard> createState() => _YourRewardCardState();
@@ -231,31 +233,13 @@ class _YourRewardCardState extends State<YourRewardCard>
 // ----------------------------------------  overlay end --------------------------------------------
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        widget.rewardState == RewardState.won
-
-            // won  card container ---------------------------
-            ? GestureDetector(
-                onTap: () {
-                  _showOverlay();
-                  loyaltyManager.isOverlayOpen.value = true;
-                },
-                child: wonCard(false))
-            : widget.rewardState == RewardState.history
-                ? historyCard(context, widget.rewardState, widget.rewardtype,
-                    widget.date, widget.points, false)
-                :
-                // used or expired card container ---------------------------------
-                GestureDetector(
-                    onTap: () {
-                      _showOverlay();
-                      loyaltyManager.isOverlayOpen.value = true;
-                    },
-                    child: usedBgCard(context, widget.rewardState,
-                        widget.rewardtype, widget.date, widget.points, false))
-      ],
-    );
+    return widget.rewardState == RewardState.won
+        ? wonCard(widget.isOverlay)
+        : widget.rewardState == RewardState.history
+            ? historyCard(context, widget.rewardState, widget.rewardtype,
+                widget.date, widget.points, false)
+            : usedBgCard(context, widget.rewardState, widget.rewardtype,
+                widget.date, widget.points, widget.isOverlay);
   }
 
 // wonCard -------------------------------------
@@ -296,7 +280,7 @@ class _YourRewardCardState extends State<YourRewardCard>
                       style: TextStyle(
                           fontFamily: AppFonts.appFont,
                           fontWeight: FontWeight.w600,
-                          fontSize: 14.0.sp,
+                          fontSize: isOverlay == true ? 18.0.sp : 14.0.sp,
                           color: Colors.white),
                     ),
                   ],
@@ -310,13 +294,15 @@ class _YourRewardCardState extends State<YourRewardCard>
                     children: [
                       getRewardType(widget.rewardtype, isOverlay),
                       SizedBox(height: 1.0.wp),
-                      text(
-                        'Use by ${widget.date}',
-                        style: TextStyle(
-                            fontSize: 10.0.sp,
-                            fontFamily: AppFonts.appFont,
-                            color: Colors.white),
-                      )
+                      isOverlay == true
+                          ? SizedBox.shrink()
+                          : text(
+                              'Use by ${widget.date}',
+                              style: TextStyle(
+                                  fontSize: 10.0.sp,
+                                  fontFamily: AppFonts.appFont,
+                                  color: Colors.white),
+                            )
                     ],
                   ))
             ],
@@ -578,16 +564,16 @@ class _YourRewardCardState extends State<YourRewardCard>
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: widget.rewardState == RewardState.won
-              ? AppColors.backGrounddarkheader
+              ? Colors.black12
               : widget.rewardState == RewardState.used
                   ? const Color(0xfff0f0f0)
                   : const Color(0xffdedede)),
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: text(
         rewardtype,
         style: TextStyle(
             fontFamily: AppFonts.appFont,
-            fontSize: isOverlay == true ? 20 : 10.0.sp,
+            fontSize: isOverlay == true ? 16 : 10.0.sp,
             color: widget.rewardState == RewardState.won
                 ? Colors.white
                 : Colors.black),

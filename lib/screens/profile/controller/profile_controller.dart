@@ -128,7 +128,6 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> bankAccountType = TextEditingController().obs;
 
-
   Rx<TextEditingController> accountNumberController =
       TextEditingController().obs;
   Rx<TextEditingController> comfirmAccountNumber = TextEditingController().obs;
@@ -1286,7 +1285,9 @@ class ProfileController extends GetxController {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
           "ifscCode": "${ifscController.value.text}",
-          "accountType": bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
+          "accountType": bankAccountType.value.text.isEmpty
+              ? null
+              : bankAccountType.value.text,
         }
       };
 
@@ -1302,8 +1303,9 @@ class ProfileController extends GetxController {
               "bankId": bankId,
               "accountNumber": "${accountNumberController.value.text}",
               "ifscCode": "${ifscController.value.text}",
-              "accountType":
-              bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
+              "accountType": bankAccountType.value.text.isEmpty
+                  ? null
+                  : bankAccountType.value.text,
             }
           },
         ),
@@ -1329,7 +1331,7 @@ class ProfileController extends GetxController {
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
         }
-      }else{
+      } else {
         addBankDetails.value = false;
       }
     } catch (exception) {
