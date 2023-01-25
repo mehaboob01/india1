@@ -14,13 +14,12 @@ import 'package:india_one/constant/routes.dart';
 import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/loyality_points/cashback_redeem/cb_manager.dart';
-import 'package:india_one/widgets/loyalty_common_header.dart';
-import 'package:local_auth/error_codes.dart';
+
 
 import 'package:local_auth/local_auth.dart';
 import 'package:location/location.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../connection_manager/ConnectionManagerController.dart';
@@ -44,7 +43,7 @@ import '../onboarding_login/select_language/language_selection_io.dart';
 import '../profile/controller/profile_controller.dart';
 import '../profile/profile_screen.dart';
 import 'home_manager.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 
 class HomeMainIO extends StatefulWidget with WidgetsBindingObserver {
   bool? showPonitsPopup;

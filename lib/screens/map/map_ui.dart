@@ -106,6 +106,7 @@ class Maps extends StatelessWidget {
                                       focusColor: Colors.white,
                                       suffixIcon: IconButton(
                                         onPressed: () async {
+                                          mapManager.areSuggestionsVisible.value = false;
                                           mapManager.controller.value.clear();
                                         },
                                         icon: Icon(Icons.clear),

@@ -54,7 +54,7 @@ class LoyaltyManager extends GetxController {
       );
 
 
-      print("cards response  ==> ${response}");
+
 
 
       if (response != null) {

@@ -4,12 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:india_one/core/data/local/shared_prefer_utils.dart';
-import 'package:india_one/core/data/model/common_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/routes.dart';
 import '../local/shared_preference_keys.dart';
-import '../model/refresh_token_model.dart';
 import 'api_constant.dart';
 
 class ApiCalls {
@@ -31,9 +29,8 @@ class ApiCalls {
     var response = await client.get(url, headers: _headers);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response;
-    }  else {
-
-     // throw exception and catch it in UI
+    } else {
+      // throw exception and catch it in UI
       Fluttertoast.showToast(
         msg: "Server Error ...",
         toastLength: Toast.LENGTH_SHORT,
@@ -106,17 +103,14 @@ class ApiCalls {
     }
   }
 
-
-  Future<dynamic> postForRefreshToken(String api, Map<String, String> data) async {
-
-
+  Future<dynamic> postForRefreshToken(
+      String api, Map<String, String> data) async {
     var url = Uri.parse(baseUrl + api);
     var _payload = json.encode(data);
     var _headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       "x-digital-api-key": "1234",
-
     };
 
     var response = await client.post(url, body: _payload, headers: _headers);
@@ -126,7 +120,6 @@ class ApiCalls {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
       Get.offAllNamed(MRouter.userLogin);
-
     } else {
       Fluttertoast.showToast(
         msg: "Server Error ...",
@@ -136,10 +129,6 @@ class ApiCalls {
       );
     }
   }
-
-
-
-
 
   // method for refresh token api call
   // Future<bool> refreshToken() async {

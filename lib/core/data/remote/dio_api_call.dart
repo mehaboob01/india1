@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as d;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -105,11 +104,7 @@ class DioApiCall {
             }
           }
         } else {
-          // Flushbar(
-          //   title: "Error!",
-          //   message: "Something went wrong ...",
-          //   duration: Duration(seconds: 1),
-          // )..show(Get.context!);
+         
           return null;
         }
       }

@@ -1,25 +1,21 @@
 import 'dart:convert';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:india_one/core/data/model/common_model.dart';
-import 'package:india_one/core/data/remote/api_calls.dart';
+
 import 'package:india_one/screens/home_start/payment_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
 import '../../core/data/remote/api_constant.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 import '../../core/data/remote/dio_api_call.dart';
 import '../../utils/common_webview.dart';
 import '../banner_ads/model/BannerAds.dart';
-import '../onboarding_login/user_login/tnc_io.dart';
+
 import 'home_model.dart';
 
 class HomeManager extends GetxController {
