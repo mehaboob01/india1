@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:camera/camera.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import 'package:india_one/core/data/remote/dio_api_call.dart';
 import 'package:india_one/screens/loans/bike_loan/models_model.dart';
 import 'package:india_one/screens/onboarding_login/user_login/user_login_ui.dart';
 import 'package:india_one/screens/onboarding_login/splash/splash_ui.dart';
+import 'package:india_one/screens/profile/camera_screen.dart';
 import 'package:india_one/screens/profile/model/bank_details_model.dart';
 import 'package:india_one/screens/profile/model/profile_details_model.dart';
 import 'package:india_one/screens/profile/model/upload_signed_model.dart';
@@ -127,7 +129,6 @@ class ProfileController extends GetxController {
 
   Rx<TextEditingController> bankNameController = TextEditingController().obs;
   Rx<TextEditingController> bankAccountType = TextEditingController().obs;
-
 
   Rx<TextEditingController> accountNumberController =
       TextEditingController().obs;
@@ -271,7 +272,6 @@ class ProfileController extends GetxController {
     _homeManager.showAuth.value = false;
     getAppVersion();
     getId();
-
     pageSelection?.value = PageController(initialPage: currentStep.value - 1);
     Future.delayed(Duration(seconds: 2), () async {
       getProfileData();
@@ -427,20 +427,19 @@ class ProfileController extends GetxController {
     }
   }
 
+  var selectedCamInt = 0.obs;
+  var selectedCam;
+
   _handleCameraPermissions() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? firstInit =
         sharedPreferences.getBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION);
     var status = Permission.camera.request();
     if (await status.isGranted || await status.isLimited) {
-      image.value = (await _picker.pickImage(source: ImageSource.camera))!.path;
       Get.back();
-
-      if (image.value != null) {
-        await compress().then((value) async {
-          await cropImage();
-        });
-      }
+      final cameras = await availableCameras();
+      selectedCam = cameras[0];
+      Get.to(() => CameraScrn());
     } else if (await status.isDenied) {
       if (firstInit != null) {
         sharedPreferences.setBool(SPKeys.FIRST_INIT_CAMERA_PERMISSION, true);
@@ -1286,7 +1285,9 @@ class ProfileController extends GetxController {
           "bankId": bankId,
           "accountNumber": "${accountNumberController.value.text}",
           "ifscCode": "${ifscController.value.text}",
-          "accountType": bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
+          "accountType": bankAccountType.value.text.isEmpty
+              ? null
+              : bankAccountType.value.text,
         }
       };
 
@@ -1302,8 +1303,9 @@ class ProfileController extends GetxController {
               "bankId": bankId,
               "accountNumber": "${accountNumberController.value.text}",
               "ifscCode": "${ifscController.value.text}",
-              "accountType":
-              bankAccountType.value.text.isEmpty ? null : bankAccountType.value.text,
+              "accountType": bankAccountType.value.text.isEmpty
+                  ? null
+                  : bankAccountType.value.text,
             }
           },
         ),
@@ -1329,7 +1331,7 @@ class ProfileController extends GetxController {
           );
           ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
         }
-      }else{
+      } else {
         addBankDetails.value = false;
       }
     } catch (exception) {

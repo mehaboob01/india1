@@ -140,6 +140,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget buildSplashLogo() {
     return Center(
       child: Hero(
+
+        
         tag: 'logo_image',
         child: Image.asset(
           "assets/images/splash_logo.gif",

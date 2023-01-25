@@ -88,8 +88,10 @@ dependencies:
 
   firebase_crashlytics: ^3.0.6
   image_cropper: ^3.0.1
-
   onboarding_overlay: ^3.1.2
+  camera:
+  path_provider:
+  path:
 
 dev_dependencies:
   flutter_test:

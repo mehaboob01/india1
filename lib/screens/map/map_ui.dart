@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:india_one/constant/theme_manager.dart';
@@ -107,6 +108,8 @@ class Maps extends StatelessWidget {
                                       suffixIcon: IconButton(
                                         onPressed: () async {
                                           mapManager.controller.value.clear();
+                                          mapManager.areSuggestionsVisible
+                                              .value = false;
                                         },
                                         icon: Icon(Icons.clear),
                                         color: Colors.white,
@@ -127,6 +130,7 @@ class Maps extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () async {
+                        mapManager.areSuggestionsVisible.value = false;
                         mapManager.controller.value.text = "Search Location";
                         await mapManager.getCurrentLocation();
                       },
@@ -268,6 +272,7 @@ class AtmDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        mapManager.areSuggestionsVisible.value = false;
         mapManager.scrollableController.value.animateTo(0.4,
             duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
         scrollCtrl.animateTo(0,
@@ -359,17 +364,7 @@ class AtmDetailsCard extends StatelessWidget {
                                     "Directions",
                                     textOverflow: TextOverflow.ellipsis,
                                     maxLines: 1,
-                                    style: TextStyle(
-                                        // color: mapManager.mapCoordinateList[index]
-                                        //             .isHighlighted !=
-                                        //         null
-                                        //     ? (mapManager.mapCoordinateList[index]
-                                        //                 .isHighlighted ==
-                                        //             true
-                                        //         ? Colors.green
-                                        //         : Color(0xFFF2642C))
-                                        //     : Color(0xFFF2642C),
-                                        color: Color(0xFFF2642C)),
+                                    style: TextStyle(color: Color(0xFFF2642C)),
                                   ),
                                 ),
                               ],

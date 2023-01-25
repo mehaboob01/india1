@@ -5,9 +5,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:india_one/core/data/local/shared_preference_keys.dart';
 import 'package:india_one/screens/profile/controller/profile_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/theme_manager.dart';
+import '../screens/home_start/home_manager.dart';
 
 class ConnectionManagerController extends GetxController {
   //0 = No Internet, 1 = WIFI Connected ,2 = Mobile Data Connected.
@@ -27,6 +30,8 @@ class ConnectionManagerController extends GetxController {
         _connectivity.onConnectivityChanged.listen(_updateState);
   }
 
+  ProfileController profileController = Get.put(ProfileController());
+  HomeManager homeManager = Get.put(HomeManager());
   Future<void> getConnectivityType() async {
     late ConnectivityResult connectivityResult;
     try {
@@ -39,7 +44,7 @@ class ConnectionManagerController extends GetxController {
     return _updateState(connectivityResult);
   }
 
-  _updateState(ConnectivityResult result) {
+  _updateState(ConnectivityResult result) async {
     switch (result) {
       case ConnectivityResult.wifi:
         connectionType.value = 1;
@@ -62,6 +67,18 @@ class ConnectionManagerController extends GetxController {
     } else {
       ignorePointer.value = false;
       Get.closeAllSnackbars();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      bool? isLoggedIn = sharedPreferences.getBool(SPKeys.LOGGED_IN);
+      if (isLoggedIn == true &&
+          (profileController.profileDetailsModel.value.mobileNumber == null ||
+              profileController.profileDetailsModel.value.mobileNumber == "" ||
+              profileController.profileDetailsModel.value.mobileNumber!.length <
+                  10)) {
+        profileController.getProfileData();
+        profileController.setData();
+        homeManager.callHomeApi();
+      }
     }
   }
 
