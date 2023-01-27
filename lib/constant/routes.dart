@@ -70,6 +70,7 @@ class MRouter {
   static const String addUpi = 'AddUpiScreen';
   static const String login = '/login';
   static const String web = '/web';
+  static const String india1 = '/india1';
   static const String no_routes = '';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -77,6 +78,8 @@ class MRouter {
       case splashRoute:
         return CupertinoPageRoute(builder: (_) => SplashScreen());
       case web:
+        return CupertinoPageRoute(builder: (_) => SplashScreen());
+      case india1:
         return CupertinoPageRoute(builder: (_) => SplashScreen());
       case no_routes:
         return CupertinoPageRoute(builder: (_) => SplashScreen());

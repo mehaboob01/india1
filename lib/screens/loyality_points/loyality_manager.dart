@@ -53,6 +53,8 @@ class LoyaltyManager extends GetxController {
         }),
       );
 
+      print("response of loyalty$response");
+
 
 
 
