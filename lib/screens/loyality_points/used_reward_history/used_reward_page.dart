@@ -167,6 +167,7 @@ class UsedRewardHistory extends StatelessWidget {
                                                 _usedPointsController
                                                     .usedpointsList[index];
                                             return YourRewardCard(
+                                                isOverlay: false,
                                                 rewardState:
                                                     RewardState.history,
                                                 rewardtype:
