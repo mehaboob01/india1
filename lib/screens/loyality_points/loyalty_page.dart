@@ -489,9 +489,9 @@ class _LoyaltyScreenState extends State<LoyaltyScreen>
   RewardState isActive(String dateTime, String expireDate) {
     DateTime dateNow = DateTime.now();
     DateTime expireDateTemp =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse("2023-01-19T10:19:28Z");
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(expireDate);
     DateTime startDateTemp =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse("2022-01-20T10:19:28Z");
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateTime);
 
     final difference = dateNow.difference(startDateTemp);
     final expiredifference = dateNow.difference(expireDateTemp);

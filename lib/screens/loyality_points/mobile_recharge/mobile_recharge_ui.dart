@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/screens/home_start/home_main_io.dart';
+import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -239,27 +240,15 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
           //         color: Colors.black,
           //       ),
           //     )),
-          body: _mrManager.isMobileRechargeLoading == true ||
-                  _mrManager.isLoading == true
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: LoadingAnimationWidget.inkDrop(
-                        size: 36,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    text('Loading ...',
-                        style: AppStyle.shortHeading.copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w400))
-                  ],
-                )
-              : Stack(children: [
+          body:
+
+
+
+
+          Stack(
+            children:
+              [
+                Stack(children: [
                   Container(
                     height: heightIs,
                     width: widthIs,
@@ -274,7 +263,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                     image: AppImages.bottomNavHomeSvg,
                                     onHeaderIconPressed: () async {
                                       Get.offNamedUntil(MRouter.homeScreen,
-                                          (route) => route.isFirst);
+                                              (route) => route.isFirst);
                                     })
                               ],
                             ),
@@ -299,14 +288,14 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                           top: 24),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           text(
                                             "Enter the following details to proceed",
                                             style:
-                                                AppStyle.shortHeading.copyWith(
+                                            AppStyle.shortHeading.copyWith(
                                               fontSize: Dimens.font_16sp,
                                               fontWeight: FontWeight.w600,
                                               color: Colors.black,
@@ -329,9 +318,9 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                   children: [
                                                     FormBuilderTextField(
                                                       controller:
-                                                          mobileNumberController,
+                                                      mobileNumberController,
                                                       keyboardType:
-                                                          TextInputType.number,
+                                                      TextInputType.number,
                                                       onChanged: _onTextChanged,
                                                       inputFormatters: [
                                                         FilteringTextInputFormatter
@@ -343,109 +332,109 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                       style: AppStyle
                                                           .shortHeading
                                                           .copyWith(
-                                                              color: AppColors
-                                                                  .black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: Dimens
-                                                                  .font_16sp),
+                                                          color: AppColors
+                                                              .black,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                          fontSize: Dimens
+                                                              .font_16sp),
                                                       decoration:
-                                                          new InputDecoration(
+                                                      new InputDecoration(
                                                         labelStyle: AppStyle
                                                             .shortHeading
                                                             .copyWith(
-                                                                color: AppColors
-                                                                    .greyText,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize:
-                                                                    12.0.sp),
+                                                            color: AppColors
+                                                                .greyText,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
+                                                            fontSize:
+                                                            12.0.sp),
                                                         suffixIconConstraints:
-                                                            BoxConstraints(
-                                                                minHeight: 32,
-                                                                minWidth: 32),
+                                                        BoxConstraints(
+                                                            minHeight: 32,
+                                                            minWidth: 32),
                                                         floatingLabelBehavior:
-                                                            FloatingLabelBehavior
-                                                                .always,
+                                                        FloatingLabelBehavior
+                                                            .always,
                                                         prefixIcon: Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets
                                                                   .only(
-                                                                      left: 8.0,
-                                                                      top: 4.0),
+                                                                  left: 8.0,
+                                                                  top: 4.0),
                                                               child: text(
                                                                 '+91 ',
                                                                 style: AppStyle.shortHeading.copyWith(
                                                                     color: AppColors
                                                                         .black,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
+                                                                    FontWeight
+                                                                        .w600,
                                                                     fontSize: Dimens
                                                                         .font_16sp),
                                                                 textAlign:
-                                                                    TextAlign
-                                                                        .start,
+                                                                TextAlign
+                                                                    .start,
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                         hintText:
-                                                            ' • • • •  • • •  • • •',
+                                                        ' • • • •  • • •  • • •',
                                                         hintStyle: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                            FontWeight.w600,
                                                             color: AppColors
                                                                 .dotsColor,
                                                             fontSize: Dimens
                                                                 .font_28sp),
                                                         focusedBorder:
-                                                            const OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                           borderSide: BorderSide(
                                                               color: AppColors
                                                                   .primary,
                                                               width: 1.0),
                                                         ),
                                                         enabledBorder:
-                                                            const OutlineInputBorder(
+                                                        const OutlineInputBorder(
                                                           // width: 0.0 produces a thin "hairline" border
                                                           borderSide:
-                                                              const BorderSide(
-                                                                  color: Color(
-                                                                      0xFFCDCBCB),
-                                                                  width: 1.0),
+                                                          const BorderSide(
+                                                              color: Color(
+                                                                  0xFFCDCBCB),
+                                                              width: 1.0),
                                                         ),
                                                         labelText:
-                                                            'Mobile Number',
+                                                        'Mobile Number',
                                                         suffixIcon:
-                                                            GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  _handleLocationPermission();
-                                                                },
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      right:
-                                                                          8.0),
-                                                                  child: SvgPicture.asset(
-                                                                      AppImages
-                                                                          .contactPickerSvg,
-                                                                      color: AppColors
-                                                                          .primary),
-                                                                )),
+                                                        GestureDetector(
+                                                            onTap:
+                                                                () async {
+                                                              _handleLocationPermission();
+                                                            },
+                                                            child: Padding(
+                                                              padding: const EdgeInsets
+                                                                  .only(
+                                                                  right:
+                                                                  8.0),
+                                                              child: SvgPicture.asset(
+                                                                  AppImages
+                                                                      .contactPickerSvg,
+                                                                  color: AppColors
+                                                                      .primary),
+                                                            )),
                                                         border:
-                                                            const OutlineInputBorder(),
+                                                        const OutlineInputBorder(),
                                                       ),
                                                       validator:
-                                                          FormBuilderValidators
-                                                              .compose([
+                                                      FormBuilderValidators
+                                                          .compose([
                                                         FormBuilderValidators
                                                             .required(context),
                                                       ]),
@@ -457,17 +446,17 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
 
                                                     // Operator dropdown
                                                     Obx(
-                                                      () => DropDown(
+                                                          () => DropDown(
                                                         onChanged: (value) {
                                                           planSelected = false;
 
                                                           operatorEnabled =
-                                                              true;
+                                                          true;
                                                           _mobileRecharge
                                                               .currentState!
                                                               .save();
                                                           if (circleEnabled ==
-                                                                  true &&
+                                                              true &&
                                                               operatorEnabled ==
                                                                   true &&
                                                               mobileNumberEnabled ==
@@ -477,14 +466,14 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                 .validate()) {
                                                               var operatorId = checkOperatorId(
                                                                   _mobileRecharge
-                                                                          .currentState!
-                                                                          .value[
-                                                                      'operatorName']);
+                                                                      .currentState!
+                                                                      .value[
+                                                                  'operatorName']);
                                                               var circleId = checkCircleId(
                                                                   _mobileRecharge
-                                                                          .currentState!
-                                                                          .value[
-                                                                      'circleName']);
+                                                                      .currentState!
+                                                                      .value[
+                                                                  'circleName']);
 
                                                               print(
                                                                   "operator Id == >$operatorId");
@@ -500,10 +489,10 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                     _mobileRecharge
                                                                         .currentState!
                                                                         .value[
-                                                                            'mobileNumber']
+                                                                    'mobileNumber']
                                                                         .replaceAll(
-                                                                            ' ',
-                                                                            ''));
+                                                                        ' ',
+                                                                        ''));
                                                               }
                                                             }
                                                           }
@@ -512,12 +501,12 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                             .operatorListString
                                                             .toList(),
                                                         hintText:
-                                                            'Choose the Operator',
+                                                        'Choose the Operator',
                                                         labelName: 'Operator',
                                                         validationText:
-                                                            '*Operator is mandatory here ',
+                                                        '*Operator is mandatory here ',
                                                         formName:
-                                                            'operatorName',
+                                                        'operatorName',
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -525,7 +514,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                     ),
                                                     // Circle dropdown
                                                     Obx(
-                                                      () => DropDown(
+                                                          () => DropDown(
                                                         onChanged: (value) {
                                                           planSelected = false;
 
@@ -536,7 +525,7 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                           // _mobileRecharge.currentState!
                                                           //     .validate();
                                                           if (circleEnabled ==
-                                                                  true &&
+                                                              true &&
                                                               operatorEnabled ==
                                                                   true &&
                                                               mobileNumberEnabled ==
@@ -546,14 +535,14 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
 
                                                             var operatorId = checkOperatorId(
                                                                 _mobileRecharge
-                                                                        .currentState!
-                                                                        .value[
-                                                                    'operatorName']);
+                                                                    .currentState!
+                                                                    .value[
+                                                                'operatorName']);
                                                             var circleId = checkCircleId(
                                                                 _mobileRecharge
-                                                                        .currentState!
-                                                                        .value[
-                                                                    'circleName']);
+                                                                    .currentState!
+                                                                    .value[
+                                                                'circleName']);
 
                                                             if (_mobileRecharge
                                                                 .currentState!
@@ -564,10 +553,10 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                                   _mobileRecharge
                                                                       .currentState!
                                                                       .value[
-                                                                          'mobileNumber']
+                                                                  'mobileNumber']
                                                                       .replaceAll(
-                                                                          ' ',
-                                                                          ''));
+                                                                      ' ',
+                                                                      ''));
                                                             }
                                                           }
                                                         },
@@ -575,10 +564,10 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                                                             .circleListString
                                                             .toList(),
                                                         hintText:
-                                                            'Choose your state',
+                                                        'Choose your state',
                                                         labelName: 'Circle',
                                                         validationText:
-                                                            '*DD error state here',
+                                                        '*DD error state here',
                                                         formName: 'circleName',
                                                       ),
                                                     ),
@@ -598,155 +587,155 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                             ),
 
                             Obx(
-                              () => Visibility(
+                                  () => Visibility(
                                 visible:
-                                    _mrManager.isPlansAvailable.value == true
-                                        ? true
-                                        : true,
+                                _mrManager.isPlansAvailable.value == true
+                                    ? true
+                                    : true,
                                 child: Obx(
-                                  () => _mrManager.isFetchPlanLoading.value ==
-                                          true
+                                      () => _mrManager.isFetchPlanLoading.value ==
+                                      true
                                       ? Container(
-                                          width: widthIs,
-                                          height: heightIs * 0.3,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Center(
-                                                child: LoadingAnimationWidget
-                                                    .inkDrop(
-                                                  size: 34,
-                                                  color: AppColors.primary,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 4,
-                                              ),
-                                              text('Fetching plans ...',
-                                                  style: AppStyle.shortHeading
-                                                      .copyWith(
-                                                          color:
-                                                              AppColors.black,
-                                                          fontWeight:
-                                                              FontWeight.w400))
-                                            ],
+                                    width: widthIs,
+                                    height: heightIs * 0.3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Center(
+                                          child: LoadingAnimationWidget
+                                              .inkDrop(
+                                            size: 34,
+                                            color: AppColors.primary,
                                           ),
-                                        )
+                                        ),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        text('Fetching plans ...',
+                                            style: AppStyle.shortHeading
+                                                .copyWith(
+                                                color:
+                                                AppColors.black,
+                                                fontWeight:
+                                                FontWeight.w400))
+                                      ],
+                                    ),
+                                  )
                                       : _mrManager.plansList.length == 0
-                                          ? Center(
-                                              child: Container(
-                                                  width: widthIs * 0.9,
-                                                  height: heightIs * 0.3,
-                                                  child:
-                                                      Center(child: text(""))))
-                                          : Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 8.0, right: 8.0),
-                                              child: Obx(
-                                                () => Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 20.0,
-                                                              right: 20.0),
-                                                      child:
-                                                          Divider(thickness: 1),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 12,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional
-                                                              .centerStart,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 22.0),
-                                                        child: text(
-                                                          "Plans under ₹${_loyaltyManager.redeemablePoints.toString()}",
-                                                          style: AppStyle
-                                                              .shortHeading
-                                                              .copyWith(
-                                                            fontSize: Dimens
-                                                                .font_16sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.black,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Container(
-                                                        width: widthIs * 0.9,
-                                                        height: heightIs * 0.3,
-                                                        child: ListView.builder(
-                                                            itemCount:
-                                                                _mrManager
-                                                                    .plansList
-                                                                    .length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
-                                                              return Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            4.0),
-                                                                child:
-                                                                    Container(
-                                                                        child:
-                                                                            GestureDetector(
-                                                                          onTap:
-                                                                              () => {
-                                                                            if (_mrManager.plansList.isNotEmpty)
-                                                                              {
-                                                                                onCardTapped(index)
-                                                                              }
-                                                                          },
-                                                                          child:
-                                                                              Obx(
-                                                                            () =>
-                                                                                CommonRadioCard(
-                                                                              radioCardType: RadioCardType.rechargePlan,
-                                                                              rechargePlanAmount: _mrManager.plansList[index].amount.toString(),
-                                                                              rechargePlanValidity: _mrManager.plansList[index].validity.toString(),
-                                                                              rechargePlanData: _mrManager.plansList[index].description,
-                                                                              isSelected: index == _mrManager.selectedIndex.value,
-                                                                              cardWidth: double.maxFinite,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          border:
-                                                                              Border.all(color: AppColors.cardScreenBg),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(1.0.wp),
-                                                                        )),
-                                                              );
-                                                            }),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          // border: Border.all(
-                                                          //     color: AppColors.cardScreenBg),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      2.0.wp),
-                                                        )),
-                                                  ],
+                                      ? Center(
+                                      child: Container(
+                                          width: widthIs * 0.9,
+                                          height: heightIs * 0.3,
+                                          child:
+                                          Center(child: text(""))))
+                                      : Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: Obx(
+                                          () => Column(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(
+                                                left: 20.0,
+                                                right: 20.0),
+                                            child:
+                                            Divider(thickness: 1),
+                                          ),
+                                          SizedBox(
+                                            height: 12,
+                                          ),
+                                          Align(
+                                            alignment:
+                                            AlignmentDirectional
+                                                .centerStart,
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .only(
+                                                  left: 22.0),
+                                              child: text(
+                                                "Plans under ₹${_loyaltyManager.redeemablePoints.toString()}",
+                                                style: AppStyle
+                                                    .shortHeading
+                                                    .copyWith(
+                                                  fontSize: Dimens
+                                                      .font_16sp,
+                                                  fontWeight:
+                                                  FontWeight.w600,
+                                                  color: Colors.black,
                                                 ),
+                                                textAlign:
+                                                TextAlign.start,
                                               ),
                                             ),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Container(
+                                              width: widthIs * 0.9,
+                                              height: heightIs * 0.3,
+                                              child: ListView.builder(
+                                                  itemCount:
+                                                  _mrManager
+                                                      .plansList
+                                                      .length,
+                                                  itemBuilder:
+                                                      (context,
+                                                      index) {
+                                                    return Padding(
+                                                      padding:
+                                                      EdgeInsets
+                                                          .all(
+                                                          4.0),
+                                                      child:
+                                                      Container(
+                                                          child:
+                                                          GestureDetector(
+                                                            onTap:
+                                                                () => {
+                                                              if (_mrManager.plansList.isNotEmpty)
+                                                                {
+                                                                  onCardTapped(index)
+                                                                }
+                                                            },
+                                                            child:
+                                                            Obx(
+                                                                  () =>
+                                                                  CommonRadioCard(
+                                                                    radioCardType: RadioCardType.rechargePlan,
+                                                                    rechargePlanAmount: _mrManager.plansList[index].amount.toString(),
+                                                                    rechargePlanValidity: _mrManager.plansList[index].validity.toString(),
+                                                                    rechargePlanData: _mrManager.plansList[index].description,
+                                                                    isSelected: index == _mrManager.selectedIndex.value,
+                                                                    cardWidth: double.maxFinite,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          decoration:
+                                                          BoxDecoration(
+                                                            border:
+                                                            Border.all(color: AppColors.cardScreenBg),
+                                                            borderRadius:
+                                                            BorderRadius.circular(1.0.wp),
+                                                          )),
+                                                    );
+                                                  }),
+                                              decoration:
+                                              BoxDecoration(
+                                                // border: Border.all(
+                                                //     color: AppColors.cardScreenBg),
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    2.0.wp),
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -781,6 +770,11 @@ class _MobileRechargeIOState extends State<MobileRechargeIO> {
                     height: 16,
                   ),
                 ]),
+                _mrManager.isMobileRechargeLoading == true ||
+                    _mrManager.isLoading == true?CircularProgressbar():SizedBox()
+              ]
+
+          ),
         ),
       ),
     );

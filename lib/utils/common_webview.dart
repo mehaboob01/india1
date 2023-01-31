@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/loyalty_common_header.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../connection_manager/ConnectionManagerController.dart';
 import '../constant/routes.dart';
@@ -37,10 +40,8 @@ class _CommonWebViewState extends State<CommonWebView> {
         ignoring: _controller.ignorePointer.value,
         child: Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Stack(
-              children:
-
-              [SafeArea(
+            body: Stack(children: [
+              SafeArea(
                   child: Column(
                 children: [
                   CustomAppBar(
@@ -55,9 +56,16 @@ class _CommonWebViewState extends State<CommonWebView> {
                           })
                     ],
                   ),
-
                   Expanded(
                     child: WebView(
+                      navigationDelegate: (nav) async {
+                        if (nav.url.startsWith('upi:')) {
+                          openUpiApps(nav.url);
+                          return NavigationDecision.prevent;
+                        } else {
+                          return NavigationDecision.navigate;
+                        }
+                      },
                       initialUrl: widget.url,
                       javascriptMode: JavascriptMode.unrestricted,
                       onProgress: (progress) => setState(() {
@@ -73,13 +81,14 @@ class _CommonWebViewState extends State<CommonWebView> {
                   ),
                 ],
               )),
-                Visibility(
-                    visible: isVisible,
-                    child: CircularProgressbar()
-                ),
-      ]
-            )),
+              Visibility(visible: isVisible, child: CircularProgressbar()),
+            ])),
       ),
     );
+  }
+
+  Future<void> openUpiApps(url) async {
+    log(Uri.parse(url).toString());
+    launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }

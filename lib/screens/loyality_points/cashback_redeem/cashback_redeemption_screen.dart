@@ -11,6 +11,7 @@ import 'package:india_one/screens/loyality_points/loyality_manager.dart';
 import 'package:india_one/screens/loyality_points/redeem_points/rp_manager.dart';
 
 import 'package:india_one/widgets/button_with_flower.dart';
+import 'package:india_one/widgets/circular_progressbar.dart';
 import 'package:india_one/widgets/common_redeem_card.dart';
 import 'package:india_one/widgets/common_text_search.dart';
 
@@ -72,293 +73,306 @@ class _CashBackRedeemPageState extends State<CashBackRedeemPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Obx(
-        () => IgnorePointer(
-          ignoring: _controller.ignorePointer.value,
-          child: Scaffold(
-            backgroundColor: AppColors.white,
-            body: Column(
+        () =>
+
+
+
+            Stack(
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: CustomAppBar(
-                    heading: 'Redeem Points',
-                    customActionIconsList: [
-                      CustomActionIcons(
-                          image: AppImages.bottomNavHomeSvg,
-                          onHeaderIconPressed: () async {
-                            Get.offNamedUntil(
-                                MRouter.homeScreen, (route) => route.isFirst);
-                          })
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Obx(() {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.0.hp),
-                            child: text(
-                              'Enter the following details to proceed',
-                              style: AppStyle.shortHeading.copyWith(
-                                  color: AppColors.black,
-                                  fontSize: 14.0.sp,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 2.0.hp),
-                            child: text(
-                              'Redemption mode',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 11.0.sp,
-                                  height: 1.2.sp,
-                                  color: AppColors.greyTextColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Center(
-                            child: CommonToggleCard(
-                              isSelectedlist: redoCtrl.isSelectedBoolList,
-                              redeemCardList: [
-                                RedeemCard(
-                                  imageSvg: AppImages.bankImageSvg,
-                                  label: 'Bank account',
-                                  isSelected: redoCtrl.isSelectedBoolList[0],
-                                ),
-                                RedeemCard(
-                                  imageSvg: AppImages.upiVpaSvg,
-                                  label: 'UPI/VPA',
-                                  isSelected: redoCtrl.isSelectedBoolList[1],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 2.0.hp,
-                              bottom: 2.0.hp,
-                            ),
-                            child: text(
-                              'Choose your points for redemption',
-                              style: AppStyle.shortHeading.copyWith(
-                                  fontSize: 11.0.sp,
-                                  height: 1.2.sp,
-                                  color: AppColors.greyTextColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, right: 4.0),
-                            child: CustomSlider(
-                                sliderValue: redoCtrl.redeemPointsSliderValue,
-                                textEditingController:
-                                    redoCtrl.sliderTextEditingCtrl,
-                                minValue: redoCtrl.redeemPointsMinValue,
-                                maxValue: _loyaltyManager.redeemablePoints
-                                    .toDouble()
-                                    .obs),
-                          ),
-                          SizedBox(height: 10),
-                          CommonTextField(
-                            formName: 'pointsToRedeem',
-                            inputController: redoCtrl.sliderTextEditingCtrl,
-                            hintText: 'Slide the amount above or enter',
-                            labelText: 'Points for cashback',
-                            keyboardType: TextInputType.number,
-                            inputFormat: [
-                              FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                IgnorePointer(
+                  ignoring: _controller.ignorePointer.value,
+                  child: Scaffold(
+                    backgroundColor: AppColors.white,
+                    body: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: CustomAppBar(
+                            heading: 'Redeem Points',
+                            customActionIconsList: [
+                              CustomActionIcons(
+                                  image: AppImages.bottomNavHomeSvg,
+                                  onHeaderIconPressed: () async {
+                                    Get.offNamedUntil(
+                                        MRouter.homeScreen, (route) => route.isFirst);
+                                  })
                             ],
-                            isAutoValidate: true,
-                            inputValidator: (value) {
-                              return CommonValidations()
-                                  .maxAmountLengthValidate(
-                                value: value,
-                                maxValue: _loyaltyManager.redeemablePoints
-                                    .toDouble()
-                                    .round(),
-                                nullErrorText:
-                                    'Enter points you wish to redeem',
-                                minValue:
-                                    redoCtrl.redeemPointsMinValue.value.round(),
-                              );
-                              // if (cashbackCtrl.validateValue(value!)) {
-                              //   return '*Invalid redeem code';
-                              // } else {
-                              //   return null;
-                              // }
-                            },
-                            inputOnChanged: (inputValue) {
-                              if (inputValue!.isNotEmpty) {
-                                double data =
-                                    double.parse(inputValue).toDouble();
-                                if (data <=
-                                        _loyaltyManager
-                                            .redeemablePoints.value &&
-                                    data >
-                                        redoCtrl.redeemPointsMinValue.value) {
-                                  redoCtrl.redeemPointsSliderValue.value =
-                                      double.parse(inputValue);
-                                } else {}
-                              }
-                            },
                           ),
-                          SizedBox(
-                            height: 6.0.wp,
-                          ),
-                          redoCtrl.isSelectedBoolList[0]
-                              ? BankAccoutCard(formkey: redoCtrl.accountFormKey)
-                              : UpiVpaCard(),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 1.0.hp, horizontal: 4.0.wp),
-                  child: Obx(() {
-                    return Align(
-                        alignment: Alignment.bottomCenter,
-                        child: redoCtrl.isSelectedBoolList[0]
-                            ? LoyaltySubmitButton(
-                                buttonEnabled: (redoCtrl
-                                                .accountButtonEnabled.value &&
-                                            redoCtrl.bankNameDropDownCtrl.value
-                                                .text.isNotEmpty &&
-                                            redoCtrl.redeemPointsSliderValue
-                                                    .value !=
-                                                0.0) ||
-                                        (cashbackManager.selectedIndex.value !=
-                                                -1 &&
-                                            redoCtrl.redeemPointsSliderValue
-                                                    .value !=
-                                                0.0)
-                                    ? true.obs
-                                    : false.obs,
-                                onPressed: () {
-                                  if (cashbackManager.selectedIndex.value !=
-                                      -1) {
-                                    print("card api");
-
-                                    // api call from bank list to bank transfer
-                                    debugPrint(redoCtrl
-                                        .redeemPointsSliderValue.value
-                                        .toString());
-                                    if (redoCtrl
-                                            .redeemPointsSliderValue.value ==
-                                        0) {
-                                      Fluttertoast.showToast(
-                                        msg: "please select points",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        fontSize: 16.0,
+                        ),
+                        Expanded(
+                          child: Obx(() {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 2.0.hp),
+                                    child: text(
+                                      'Enter the following details to proceed',
+                                      style: AppStyle.shortHeading.copyWith(
+                                          color: AppColors.black,
+                                          fontSize: 14.0.sp,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2.0.hp),
+                                    child: text(
+                                      'Redemption mode',
+                                      style: AppStyle.shortHeading.copyWith(
+                                          fontSize: 11.0.sp,
+                                          height: 1.2.sp,
+                                          color: AppColors.greyTextColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CommonToggleCard(
+                                      isSelectedlist: redoCtrl.isSelectedBoolList,
+                                      redeemCardList: [
+                                        RedeemCard(
+                                          imageSvg: AppImages.bankImageSvg,
+                                          label: 'Bank account',
+                                          isSelected: redoCtrl.isSelectedBoolList[0],
+                                        ),
+                                        RedeemCard(
+                                          imageSvg: AppImages.upiVpaSvg,
+                                          label: 'UPI/VPA',
+                                          isSelected: redoCtrl.isSelectedBoolList[1],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 2.0.hp,
+                                      bottom: 2.0.hp,
+                                    ),
+                                    child: text(
+                                      'Choose your points for redemption',
+                                      style: AppStyle.shortHeading.copyWith(
+                                          fontSize: 11.0.sp,
+                                          height: 1.2.sp,
+                                          color: AppColors.greyTextColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 8.0, right: 4.0),
+                                    child: CustomSlider(
+                                        sliderValue: redoCtrl.redeemPointsSliderValue,
+                                        textEditingController:
+                                        redoCtrl.sliderTextEditingCtrl,
+                                        minValue: redoCtrl.redeemPointsMinValue,
+                                        maxValue: _loyaltyManager.redeemablePoints
+                                            .toDouble()
+                                            .obs),
+                                  ),
+                                  SizedBox(height: 10),
+                                  CommonTextField(
+                                    formName: 'pointsToRedeem',
+                                    inputController: redoCtrl.sliderTextEditingCtrl,
+                                    hintText: 'Slide the amount above or enter',
+                                    labelText: 'Points for cashback',
+                                    keyboardType: TextInputType.number,
+                                    inputFormat: [
+                                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                                    ],
+                                    isAutoValidate: true,
+                                    inputValidator: (value) {
+                                      return CommonValidations()
+                                          .maxAmountLengthValidate(
+                                        value: value,
+                                        maxValue: _loyaltyManager.redeemablePoints
+                                            .toDouble()
+                                            .round(),
+                                        nullErrorText:
+                                        'Enter points you wish to redeem',
+                                        minValue:
+                                        redoCtrl.redeemPointsMinValue.value.round(),
                                       );
-                                    } else {
-                                      cashbackManager.cashBackToBankApi(
-                                          true,
-                                          cashbackManager
-                                              .customerBankList[cashbackManager
+                                      // if (cashbackCtrl.validateValue(value!)) {
+                                      //   return '*Invalid redeem code';
+                                      // } else {
+                                      //   return null;
+                                      // }
+                                    },
+                                    inputOnChanged: (inputValue) {
+                                      if (inputValue!.isNotEmpty) {
+                                        double data =
+                                        double.parse(inputValue).toDouble();
+                                        if (data <=
+                                            _loyaltyManager
+                                                .redeemablePoints.value &&
+                                            data >
+                                                redoCtrl.redeemPointsMinValue.value) {
+                                          redoCtrl.redeemPointsSliderValue.value =
+                                              double.parse(inputValue);
+                                        } else {}
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 6.0.wp,
+                                  ),
+                                  redoCtrl.isSelectedBoolList[0]
+                                      ? BankAccoutCard(formkey: redoCtrl.accountFormKey)
+                                      : UpiVpaCard(),
+                                ],
+                              ),
+                            );
+                          }),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.0.hp, horizontal: 4.0.wp),
+                          child: Obx(() {
+                            return Align(
+                                alignment: Alignment.bottomCenter,
+                                child: redoCtrl.isSelectedBoolList[0]
+                                    ? LoyaltySubmitButton(
+                                    buttonEnabled: (redoCtrl
+                                        .accountButtonEnabled.value &&
+                                        redoCtrl.bankNameDropDownCtrl.value
+                                            .text.isNotEmpty &&
+                                        redoCtrl.redeemPointsSliderValue
+                                            .value !=
+                                            0.0) ||
+                                        (cashbackManager.selectedIndex.value !=
+                                            -1 &&
+                                            redoCtrl.redeemPointsSliderValue
+                                                .value !=
+                                                0.0)
+                                        ? true.obs
+                                        : false.obs,
+                                    onPressed: () {
+                                      if (cashbackManager.selectedIndex.value !=
+                                          -1) {
+                                        print("card api");
+
+                                        // api call from bank list to bank transfer
+                                        debugPrint(redoCtrl
+                                            .redeemPointsSliderValue.value
+                                            .toString());
+                                        if (redoCtrl
+                                            .redeemPointsSliderValue.value ==
+                                            0) {
+                                          Fluttertoast.showToast(
+                                            msg: "please select points",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            fontSize: 16.0,
+                                          );
+                                        } else {
+
+                                          //todo
+                                          cashbackManager.cashBackToBankApi(
+                                              true,
+                                              cashbackManager
+                                                  .customerBankList[cashbackManager
                                                   .selectedIndex.value]
-                                              .id,
-                                          {},
-                                          redoCtrl.redeemPointsSliderValue.value
-                                              .round()
-                                              .toString(),
-                                          context);
-                                    }
-                                  } else {
-                                    redoCtrl.accountFormKey.currentState!
-                                        .save();
-                                    if (redoCtrl.redeemPointsSliderValue.value <
-                                        0) {
-                                      Flushbar(
-                                        title: "Alert!",
-                                        message:
-                                            'Please choose points',
-                                        duration: Duration(seconds: 2),
-                                      )..show(context);
-                                    } else {
-                                      // print(
-                                      //     "bank name===> ${redoCtrl.accountFormKey!.currentState!.value['bankDropDown']}");
-
-                                      var bankId = checkBankId(redoCtrl
-                                          .bankNameDropDownCtrl.value.text);
-                                      print("bank id${bankId}");
-
-                                      if (redoCtrl.accountFormKey.currentState!
-                                              .validate() ==
-                                          true) {
-                                        // on click on redeem now bank
+                                                  .id,
+                                              {},
+                                              redoCtrl.redeemPointsSliderValue.value
+                                                  .round()
+                                                  .toString(),
+                                              context);
+                                        }
+                                      } else {
                                         redoCtrl.accountFormKey.currentState!
                                             .save();
+                                        if (redoCtrl.redeemPointsSliderValue.value <
+                                            0) {
+                                          Flushbar(
+                                            title: "Alert!",
+                                            message:
+                                            'Please choose points',
+                                            duration: Duration(seconds: 2),
+                                          )..show(context);
+                                        } else {
+                                          // print(
+                                          //     "bank name===> ${redoCtrl.accountFormKey!.currentState!.value['bankDropDown']}");
 
-                                        print("redeem");
-                                        print(redoCtrl.accountFormKey
-                                            .currentState!.value);
-                                        cashbackManager.cashBackToBankApi(
-                                            false,
-                                            bankId,
-                                            redoCtrl.accountFormKey
-                                                .currentState!.value,
-                                            redoCtrl
-                                                .redeemPointsSliderValue.value
+                                          var bankId = checkBankId(redoCtrl
+                                              .bankNameDropDownCtrl.value.text);
+                                          print("bank id${bankId}");
+
+                                          if (redoCtrl.accountFormKey.currentState!
+                                              .validate() ==
+                                              true) {
+                                            // on click on redeem now bank
+                                            redoCtrl.accountFormKey.currentState!
+                                                .save();
+
+                                            print("redeem");
+                                            print(redoCtrl.accountFormKey
+                                                .currentState!.value);
+                                            cashbackManager.cashBackToBankApi(
+                                                false,
+                                                bankId,
+                                                redoCtrl.accountFormKey
+                                                    .currentState!.value,
+                                                redoCtrl
+                                                    .redeemPointsSliderValue.value
+                                                    .round()
+                                                    .toString(),
+                                                context);
+                                          } else {
+                                            redoCtrl.accountFormKey.currentState!
+                                                .validate();
+                                          }
+                                        }
+
+                                        // custom data to bank transfer
+
+                                      }
+                                    })
+                                    : LoyaltySubmitButton(
+                                    buttonEnabled:
+                                    cashbackManager.selectedUpiIndex.value !=
+                                        -1 &&
+                                        redoCtrl.redeemPointsSliderValue
+                                            .value !=
+                                            0.0
+                                        ? true.obs
+                                        : false.obs,
+                                    onPressed: () {
+                                      // todo api call for banktoapi
+
+                                      print(
+                                          "upi data${cashbackManager.addUpiData.value['upiId']}");
+                                      if (redoCtrl.redeemPointsSliderValue.value <
+                                          0) {
+                                        Flushbar(
+                                          title: "Alert!",
+                                          message:
+                                          'Please select points',
+                                          duration: Duration(seconds: 2),
+                                        )..show(context);
+                                      } else {
+                                        cashbackManager.cashBackToUpiApi(
+                                            cashbackManager
+                                                .addUpiData.value['upiId'],
+                                            redoCtrl.redeemPointsSliderValue.value
                                                 .round()
                                                 .toString(),
                                             context);
-                                      } else {
-                                        redoCtrl.accountFormKey.currentState!
-                                            .validate();
+                                        debugPrint('Upi Vpa Clicked');
                                       }
-                                    }
+                                    }));
+                          }),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                cashbackManager.isLoading.value == true? CircularProgressbar() : SizedBox()
+              ]
 
-                                    // custom data to bank transfer
 
-                                  }
-                                })
-                            : LoyaltySubmitButton(
-                                buttonEnabled:
-                                    cashbackManager.selectedUpiIndex.value !=
-                                                -1 &&
-                                            redoCtrl.redeemPointsSliderValue
-                                                    .value !=
-                                                0.0
-                                        ? true.obs
-                                        : false.obs,
-                                onPressed: () {
-                                  // todo api call for banktoapi
-
-                                  print(
-                                      "upi data${cashbackManager.addUpiData.value['upiId']}");
-                                  if (redoCtrl.redeemPointsSliderValue.value <
-                                      0) {
-                                    Flushbar(
-                                      title: "Alert!",
-                                      message:
-                                          'Please select points',
-                                      duration: Duration(seconds: 2),
-                                    )..show(context);
-                                  } else {
-                                    cashbackManager.cashBackToUpiApi(
-                                        cashbackManager
-                                            .addUpiData.value['upiId'],
-                                        redoCtrl.redeemPointsSliderValue.value
-                                            .round()
-                                            .toString(),
-                                        context);
-                                    debugPrint('Upi Vpa Clicked');
-                                  }
-                                }));
-                  }),
-                )
-              ],
             ),
-          ),
-        ),
       ),
     );
   }

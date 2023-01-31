@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../connection_manager/ConnectionManagerController.dart';
 import '../../../constant/routes.dart';
 import '../../../constant/theme_manager.dart';
+import '../../../core/data/local/shared_preference_keys.dart';
 
 class VerifiedScreen extends StatefulWidget {
   @override
@@ -16,12 +18,17 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   void initState() {
     super.initState();
+    showAuth();
+
     Timer(
         Duration(seconds: 2),
         () => Navigator.of(context).pushNamedAndRemoveUntil(
             MRouter.homeScreen, (Route<dynamic> route) => false));
   }
-
+  Future<void> showAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs!.setBool(SPKeys.SHOW_AUTH, false);
+  }
   Future<void> launchLoginWidget() async {
     Get.offAllNamed(MRouter.mobileRechargeIO);
   }

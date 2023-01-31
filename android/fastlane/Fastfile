@@ -1,0 +1,18 @@
+default_platform(:android)
+
+platform :android do
+  desc "We distribute the profile app to testers in this lane."
+  gradle(
+      task: 'assemble',
+      build_type: 'Profile'
+  )
+
+  lane :android_profile_app do
+      firebase_app_distribution(
+          app: "1:952438329741:android:24e5022bbf512b6ef6adc4",
+          testers: "huzaif@codewave.com, satyam@codewave.com",
+          release_notes: "First try",
+          apk_path: "../build/app/outputs/apk/profile/app-profile.apk"
+      ) 
+  end
+end

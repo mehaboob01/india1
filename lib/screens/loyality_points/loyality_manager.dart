@@ -49,7 +49,7 @@ class LoyaltyManager extends GetxController {
         method: Type.POST,
         data: jsonEncode({
           "customerId": customerId,
-          "rewardTransactionCount": 4,
+          "rewardTransactionCount": 20,
         }),
       );
 
