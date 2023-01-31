@@ -21,7 +21,7 @@ class AnotherStepper extends StatelessWidget {
     this.inActiveBarColor = Colors.grey,
     this.barThickness = 2,
     this.titleTextStyle = const TextStyle(
-      fontSize: 14,
+      fontSize: 10,
       color: Colors.black,
       fontWeight: FontWeight.w600,
     ),
@@ -87,10 +87,14 @@ class AnotherStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var crossAxisAlign = stepperDirection == Axis.horizontal ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    var crossAxisAlign = stepperDirection == Axis.horizontal
+        ? CrossAxisAlignment.end
+        : CrossAxisAlignment.start;
     if (inverted) {
       // invert Alignment in case of [Axis.vertical]
-      crossAxisAlign = crossAxisAlign == CrossAxisAlignment.end ? CrossAxisAlignment.start : CrossAxisAlignment.end;
+      crossAxisAlign = crossAxisAlign == CrossAxisAlignment.end
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.end;
     }
     final Iterable<int> iterable = Iterable<int>.generate(stepperList.length);
     return Flex(

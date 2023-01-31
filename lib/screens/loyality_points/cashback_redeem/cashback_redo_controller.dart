@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
+import '../../bank_manage_edit_screen.dart/common_validation.dart';
+
 class CashBackRedoController extends GetxController {
   final RxList<bool> isSelectedBoolList =
       <bool>[true, false].obs; // bank and vpa toggle
@@ -19,6 +21,7 @@ class CashBackRedoController extends GetxController {
   final bankname = ''.obs; // drop down bank name
   final bankNameDropDownCtrl = TextEditingController().obs;
   Rx<FocusNode> accountFocus = FocusNode().obs;
+  final validCheck = false.obs;
   @override
   void onClose() {
     sliderTextEditingCtrl.clear();

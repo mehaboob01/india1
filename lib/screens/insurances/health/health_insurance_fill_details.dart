@@ -96,7 +96,7 @@ class _HealthInsuranceFillDetailsState
                                   iconWidth: 25,
                                   iconHeight: 25,
                                   titleTextStyle: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.w600),
                                   inverted: true,
                                   activeBarColor: AppColors.pointsColor,

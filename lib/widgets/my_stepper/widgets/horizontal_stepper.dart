@@ -92,6 +92,7 @@ class HorizontalStepperItem extends StatelessWidget {
         SizedBox(
             child: text(
           item.title!,
+          maxLines: 1,
           textAlign: TextAlign.center,
           style: titleTextStyle,
         )),

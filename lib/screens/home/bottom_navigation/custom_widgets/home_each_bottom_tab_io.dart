@@ -88,7 +88,6 @@ class _HomeEachBottomTabIOState extends State<HomeEachBottomTabIO> {
                         ),
                         TextIO(
                           widget.title,
-
                           color: widget.selected
                               ? AppColors.primary
                               : AppColors.passiveTabColor,

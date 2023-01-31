@@ -351,7 +351,8 @@ class _SearchTextContainerState extends State<SearchTextContainer> {
                 searchList(value ?? '');
               },
               inputFormat: [
-                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9]"))
+                FilteringTextInputFormatter.allow(
+                    RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9 ]*"))
               ],
               inputValidator: (value) {},
             ),

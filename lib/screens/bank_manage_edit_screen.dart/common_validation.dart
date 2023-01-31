@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class CommonValidations {
   String? textValidation(
       {bool? isIfsc,
@@ -21,14 +23,22 @@ class CommonValidations {
 
 // number validation
 
-  String? numberValidation(
-      String? value, String? nullError, String? invalidInputError) {
+  String? numberValidation({
+    String? value,
+    String? nullError,
+    String? invalidInputError,
+    String? minLengthError,
+    num minValLength = 0,
+  }) {
     final validCharacters = RegExp(r'^([0-9]*)$');
     if (value!.isEmpty) {
       return nullError ?? 'Input field cant be Empty';
+    } else if (value.length < minValLength) {
+      return minLengthError ?? "Invalid Input value";
     } else if (!validCharacters.hasMatch(value)) {
       return invalidInputError ?? 'Invalid Input value';
     }
+
     return null;
   }
 

@@ -31,6 +31,7 @@ class _TextIOState extends State<TextIO> {
       padding: EdgeInsets.all(widget.padding),
       child: text(
         widget.text,
+        textScaleFactor: 0.8,
         style: TextStyle(
             fontSize: widget.size,
             color: widget.color,

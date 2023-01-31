@@ -157,7 +157,7 @@ class _CommonRadioCardState extends State<CommonRadioCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     text(
-                                      'Validity : ${widget.rechargePlanValidity} days', //${CardModel().rechargePlanModel[0]['validity'].toString()}
+                                      'Validity : ${widget.rechargePlanValidity}', //${CardModel().rechargePlanModel[0]['validity'].toString()}
                                       style: AppStyle.shortHeading.copyWith(
                                         fontSize: 12.0.sp,
                                         color: widget.isSelected
