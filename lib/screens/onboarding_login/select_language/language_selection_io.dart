@@ -174,29 +174,29 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("ಕನ್ನಡ", () async {
-                            Fluttertoast.showToast(
-                              msg: "Coming soon ...",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              fontSize: 16.0,
-                            );
-                            // SharedPreferences prefs =
-                            //     await SharedPreferences.getInstance();
-                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                            //     Language.KANNADA.index);
-                            // prefs.setString(
-                            //     SPKeys.SELECTED_LANGUAGE_CODE, "kn");
-                            //
-                            // updateLanguage(
-                            //     locale[Language.KANNADA.index]['locale'],
-                            //     Language.KANNADA.index);
-                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                            //   print("api call");
-                            //   // call update lan api
-                            //   _selectLanManager.updateLan("kn");
-                            // } else {
-                            //   print("No api call for lan update!");
-                            // }
+                            // Fluttertoast.showToast(
+                            //   msg: "Coming soon ...",
+                            //   toastLength: Toast.LENGTH_SHORT,
+                            //   gravity: ToastGravity.BOTTOM,
+                            //   fontSize: 16.0,
+                            // );
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.KANNADA.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "kn");
+
+                            updateLanguage(
+                                locale[Language.KANNADA.index]['locale'],
+                                Language.KANNADA.index);
+                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                              print("api call");
+                              // call update lan api
+                              _selectLanManager.updateLan("kn");
+                            } else {
+                              print("No api call for lan update!");
+                            }
                           },
                               selectedLanguage == Language.KANNADA.index
                                   ? AppColors.selectedLangColor

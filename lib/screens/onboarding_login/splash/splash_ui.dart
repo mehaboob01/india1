@@ -27,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   final List locale = [
     {'name': 'ENGLISH', 'locale': Locale('en', 'US')},
-    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
     {'name': 'ಕನ್ನಡ', 'locale': Locale('ka', 'IN')},
+    {'name': 'हिंदी', 'locale': Locale('hi', 'IN')},
     {'name': 'मराठी', 'locale': Locale('ma', 'IN')},
     {'name': 'తెలుగు', 'locale': Locale('te', 'IN')},
     {'name': 'தமிழ்', 'locale': Locale('ta', 'IN')},
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-      DioApiCall().refreshToken();
+    DioApiCall().refreshToken();
 
     FirebaseMessaging.instance.getToken().then((deviceToken) async {
       print("FCM / DEVICE TOKEN ${deviceToken}");
@@ -86,26 +86,31 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> launchLoginWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
+    int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
+
+   if(selectedLan != null)
+     {
+       updateLanguage(locale[selectedLan.toInt()]['locale'], selectedLan);
+     }
+
 
 
 
     if (loggedIn == true) {
-    //
+      //
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs!.setBool(SPKeys.SHOW_AUTH, true);
-        Get.offAllNamed(MRouter.homeScreen);
-        int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
-        updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs!.setBool(SPKeys.SHOW_AUTH, true);
+      int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
 
+      Get.offAllNamed(MRouter.homeScreen);
 
-
-
-
+      updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
     } else {
+
+
       Get.offAllNamed(MRouter.languageSelectionIO);
     }
-  
   }
 
   final ConnectionManagerController _controller =

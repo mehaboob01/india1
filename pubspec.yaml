@@ -45,6 +45,8 @@ dependencies:
   intl: ^0.17.0
   flutter_libphonenumber: ^1.2.4
   flutter_image_slideshow: ^0.1.4
+  native_flutter_proxy: ^0.1.4
+  ssl_pinning_plugin: ^2.0.0
   share_plus: ^5.0.0
   contacts_service: ^0.6.3
   permission_handler: ^10.1.0
@@ -92,6 +94,7 @@ dependencies:
   image_cropper: ^3.0.1
 
   onboarding_overlay: ^3.1.2
+  
 
 dev_dependencies:
   flutter_test:

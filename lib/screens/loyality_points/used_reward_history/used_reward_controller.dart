@@ -11,11 +11,29 @@ import '../../../core/data/remote/dio_api_call.dart';
 
 class UsedRewardController extends GetxController {
   final loadingData = false.obs;
+  final loadingMoreData = false.obs;
+  var hasMoreData = false;
+
   List<Transactions> usedpointsList = <Transactions>[].obs;
+
+  final int _limit = 20;
+  int _page = 0;
 
   void onInit() {
     super.onInit();
     getUsedRewardHistory();
+  }
+
+  void loadMore() async
+  {
+
+    if(hasMoreData)
+      {
+
+      }
+
+
+
   }
 
   Future<List<Transactions>> getUsedRewardHistory() async {
@@ -28,7 +46,7 @@ class UsedRewardController extends GetxController {
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.loyaltyHistory,
         method: Type.POST,
-        data: json.encode({"customerId": customerId, "limit": 10}),
+        data: json.encode({"customerId": customerId, "limit": 200}),
       );
 
       if (response != null) {

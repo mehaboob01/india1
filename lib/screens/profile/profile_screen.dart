@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +25,8 @@ import '../../utils/common_methods.dart';
 import '../../widgets/loyalty_common_header.dart';
 import '../bank_manage_edit_screen.dart/manage_accounts_screen.dart';
 import '../loyality_points/cashback_redeem/cb_manager.dart';
+import '../onboarding_login/user_login/login_manager.dart';
+import '../onboarding_login/user_login/tnc_io.dart';
 import 'common/profile_stepper.dart';
 import 'stepper_screen.dart';
 import '../../core/data/local/shared_preference_keys.dart';
@@ -36,12 +39,14 @@ class ProfileScreen extends StatelessWidget {
   ProfileController profileController = Get.put(ProfileController());
   CashBackManager cashBackManager = Get.put(CashBackManager());
   ProfileDetailsModel profileDetailsModel = ProfileDetailsModel();
+  LoginManager _loginManager = Get.put(LoginManager());
 
   RxBool isPersonalDetailsVisible = false.obs,
       isResidentialDetailsVisible = false.obs,
       isOccupationDetailsVisible = false.obs,
       isBankAccountVisible = false.obs,
-      isUpiIdVisible = false.obs;
+      isUpiIdVisible = false.obs,
+      startLoading = false.obs;
 
   final ConnectionManagerController _controller =
       Get.find<ConnectionManagerController>();
@@ -70,8 +75,10 @@ class ProfileScreen extends StatelessWidget {
                       CustomActionIcons(
                           image: AppImages.bottomNavHomeSvg,
                           onHeaderIconPressed: () async {
+                            startLoading.value = true;
                             Navigator.of(context).pushNamedAndRemoveUntil(
-                                MRouter.homeScreen, (Route<dynamic> route) => false);
+                                MRouter.homeScreen, (Route<dynamic> route) => false).then((value) =>    startLoading.value = false);
+
                           })
                     ],
                   ),
@@ -457,10 +464,68 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 30,
                               ),
+
+
                               Obx(
                                     () => text(
                                     "App version : ${profileController.appVersion.value}"),
-                              )
+                              ),
+                              SizedBox(height: 4,),
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.appFont,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.black,
+                                    fontSize: Dimens.font_16sp,
+                                  ),
+                                  children: <TextSpan>[
+
+                                    TextSpan(
+                                        text: 'term_condition'.tr,
+                                        style: TextStyle(
+                                          fontFamily: AppFonts.appFont,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.facebookBlue,
+                                          fontSize: Dimens.font_14sp,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            print('Terms of Service');
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Tnc_IO(
+                                                        _loginManager
+                                                            .termCondition,
+                                                        "term_condition")));
+                                          }),
+                                    TextSpan(text: " & "),
+                                    TextSpan(
+                                        text: 'Privacy Policy',
+                                        style: TextStyle(
+                                          fontFamily: AppFonts.appFont,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.facebookBlue,
+                                          fontSize: Dimens.font_14sp,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            print('Privacy Policy"');
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Tnc_IO(
+                                                          _loginManager
+                                                              .privacyPolicy,
+                                                          "privacy_policy")),
+                                            );
+                                          }),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 2,),
                             ],
                           ),
                         ),
@@ -470,7 +535,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-              profileController.uploadProfileLoading.value == true? CircularProgressbar() : SizedBox()
+              profileController.uploadProfileLoading.value == true|| startLoading.value == true    ?CircularProgressbar() : SizedBox()
 
 
             ]

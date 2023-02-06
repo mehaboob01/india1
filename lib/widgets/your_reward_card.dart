@@ -325,13 +325,19 @@ class _YourRewardCardState extends State<YourRewardCard>
           case Rewardtype.cashTransaction:
             usedBg = AppImages.referralBonusImage; // to change later
             break;
-          case Rewardtype.referralBonus:
+          case Rewardtype.BankTransfer:
             usedBg = AppImages.referralBonusImage;
             break;
-          case Rewardtype.recharge:
+          case Rewardtype.NonCashTransaction:
             usedBg = AppImages.rechargeImage;
             break;
-          case Rewardtype.loan:
+          case Rewardtype.Recharge:
+            usedBg = AppImages.loanImage;
+            break;
+            case Rewardtype.Other:
+            usedBg = AppImages.loanImage;
+            break;
+          case Rewardtype.LoginBonus:
             usedBg = AppImages.loanImage;
             break;
         }
@@ -546,14 +552,20 @@ class _YourRewardCardState extends State<YourRewardCard>
       case Rewardtype.cashTransaction:
         getType = getrewardtype('Cash transaction', isOverlay);
         break;
-      case Rewardtype.referralBonus:
-        getType = getrewardtype('Referral bonus', isOverlay);
+      case Rewardtype.BankTransfer:
+        getType = getrewardtype('Bank Transfer', isOverlay);
         break;
-      case Rewardtype.recharge:
+      case Rewardtype.NonCashTransaction:
+        getType = getrewardtype('Cashless transaction', isOverlay);
+        break;
+      case Rewardtype.LoginBonus:
+        getType = getrewardtype('Login Bonus', isOverlay);
+        break;
+      case Rewardtype.Recharge:
         getType = getrewardtype('Recharge', isOverlay);
         break;
-      case Rewardtype.loan:
-        getType = getrewardtype('Loan', isOverlay);
+      case Rewardtype.Other:
+        getType = getrewardtype('Other', isOverlay);
     }
     return getType;
   }
@@ -585,4 +597,5 @@ class _YourRewardCardState extends State<YourRewardCard>
 
 enum RewardState { won, used, expired, history }
 
-enum Rewardtype { referralBonus, cashTransaction, recharge, loan }
+// enum Rewardtype { referralBonus, cashTransaction, recharge, loan }
+enum Rewardtype { BankTransfer, cashTransaction,NonCashTransaction, Recharge, LoginBonus,Other }

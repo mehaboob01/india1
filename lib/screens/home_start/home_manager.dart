@@ -4,8 +4,11 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:india_one/screens/Pages/recent_transaction_model.dart';
+import 'package:india_one/screens/home_start/home_new_model.dart';
 
 import 'package:india_one/screens/home_start/payment_model.dart';
+import 'package:india_one/screens/loyality_points/loyalty_dashboard_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/data/local/shared_preference_keys.dart';
@@ -32,8 +35,13 @@ class HomeManager extends GetxController {
   var isClicked = false.obs;
   var showAuth = false.obs;
 
+// banner list
   var bannerList = <Ads>[].obs;
   var bannerListSend = <Ads>[].obs;
+
+// pop up list
+  var popUpList = <RecentRewardTransaction>[].obs;
+  var popUpListSend = <RecentRewardTransaction>[].obs;
 
   @override
   void onInit() {
@@ -41,9 +49,9 @@ class HomeManager extends GetxController {
 
     callHomeApi();
     callAdsBannerApi();
+    callHomeDashboard();
 
     //sendTokens();
-
   }
 
   // HOME API
@@ -63,7 +71,70 @@ class HomeManager extends GetxController {
         pointsRedeemed.value = homeModel.pointsSummary!.pointsRedeemed!;
         redeemablePoints.value = homeModel!.pointsSummary!.redeemablePoints!;
         atmRewards.value = homeModel!.atmRewards!.rewardsMultipliers![0];
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      isLoading(false);
+    }
+  }
 
+  // this api call will contain popus conust as well to show
+  Future<void> callHomeDashboard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+    popUpListSend.clear();
+    popUpList.clear();
+    try {
+      isLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.dashboardHome,
+        method: Type.POST,
+        data: jsonEncode({"customerId": customerId, "numOfPopupsToShow": "2"}),
+      );
+      if (response != null) {
+        print("response == > ${response}");
+
+        NewHomeModel newHomeModel = NewHomeModel.fromJson(response);
+
+        for (var index in newHomeModel.recentRewardTransactions!) {
+          popUpListSend.add(index);
+        }
+        popUpList.addAll(popUpListSend);
+
+        isLoading(false);
+      }
+    } catch (exception) {
+      print(exception);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  // update pop up
+
+  Future<void> callUpdatePopup(String transactionId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+
+    try {
+
+  print("INside update popuop");
+      isLoading.value = true;
+      var response = await DioApiCall().commonApiCall(
+        endpoint: Apis.updatePopUp,
+        method: Type.POST,
+        data: jsonEncode({"customerId": customerId.toString(),"transactionId":transactionId.toString(),"isInteracted" : true}),
+      );
+
+      print("response  updtae popup== > ${response}");
+      if (response != null) {
+
+        print("ho gya intract");
+        print("response == > ${response}");
+
+
+        isLoading(false);
       }
     } catch (exception) {
       print(exception);
@@ -145,7 +216,6 @@ class HomeManager extends GetxController {
       String? deviceToken = prefs.getString(SPKeys.DEVICE_TOKEN);
       String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
 
-
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.sendToken,
         method: Type.PUT,
@@ -156,20 +226,9 @@ class HomeManager extends GetxController {
         }),
       );
 
-
-
-      if(response != null)
-      {
+      if (response != null) {
         print("DONE SEND TOKENS");
       }
-
-
-
-
-
-
-
-
     } catch (exception) {
       print(exception);
     } finally {

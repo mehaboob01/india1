@@ -896,6 +896,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  native_flutter_proxy:
+    dependency: "direct main"
+    description:
+      name: native_flutter_proxy
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.15"
   nested:
     dependency: transitive
     description:
@@ -1377,6 +1384,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  ssl_pinning_plugin:
+    dependency: "direct main"
+    description:
+      name: ssl_pinning_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   stack_trace:
     dependency: transitive
     description:

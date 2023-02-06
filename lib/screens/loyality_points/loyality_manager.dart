@@ -37,7 +37,7 @@ class LoyaltyManager extends GetxController {
     try {
       isLoading(true);
 
-      Map<dynamic,dynamic> data = {
+      Map<dynamic, dynamic> data = {
         "customerId": customerId,
         "rewardTransactionCount": 20,
       };
@@ -49,23 +49,22 @@ class LoyaltyManager extends GetxController {
         method: Type.POST,
         data: jsonEncode({
           "customerId": customerId,
-          "rewardTransactionCount": 20,
+          "rewardTransactionCount": 200,
         }),
       );
 
       print("response of loyalty$response");
 
-
-
-
-
       if (response != null) {
-        LoyaltyDashboardModel loyaltyDashboardModel = LoyaltyDashboardModel.fromJson(response);
+        LoyaltyDashboardModel loyaltyDashboardModel =
+            LoyaltyDashboardModel.fromJson(response);
 
-
-        redeemablePoints.value = loyaltyDashboardModel.pointsSummary!.redeemablePoints!.toInt();
-        pointsEarned.value = loyaltyDashboardModel.pointsSummary!.pointsEarned!.toInt();
-        pointsRedeemed.value = loyaltyDashboardModel.pointsSummary!.pointsRedeemed!.toInt();
+        redeemablePoints.value =
+            loyaltyDashboardModel.pointsSummary!.redeemablePoints!.toInt();
+        pointsEarned.value =
+            loyaltyDashboardModel.pointsSummary!.pointsEarned!.toInt();
+        pointsRedeemed.value =
+            loyaltyDashboardModel.pointsSummary!.pointsRedeemed!.toInt();
         recentRewardTransactionsList.clear();
         recentRewardTransactionSend.clear();
         for (var index in loyaltyDashboardModel.recentRewardTransactions!) {

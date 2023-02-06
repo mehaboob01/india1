@@ -420,17 +420,17 @@ class _LoyaltyScreenState extends State<LoyaltyScreen>
                                                                     index]
                                                                 .typeId
                                                                 .toString() ==
-                                                            "referralBonnus"
+                                                            "cashTransaction"
                                                         ? Rewardtype
-                                                            .referralBonus
+                                                            .cashTransaction
                                                         : _loyaltyManager
                                                                     .recentRewardTransactionsList[
                                                                         index]
                                                                     .typeId
                                                                     .toString() ==
-                                                                "cacheTransaction"
+                                                                "NonCashTransaction"
                                                             ? Rewardtype
-                                                                .cashTransaction
+                                                                .NonCashTransaction
                                                             : _loyaltyManager
                                                                         .recentRewardTransactionsList[
                                                                             index]
@@ -438,17 +438,21 @@ class _LoyaltyScreenState extends State<LoyaltyScreen>
                                                                         .toString() ==
                                                                     "Recharge"
                                                                 ? Rewardtype
-                                                                    .recharge
+                                                                    .Recharge
                                                                 : _loyaltyManager
                                                                             .recentRewardTransactionsList[
                                                                                 index]
                                                                             .typeId
                                                                             .toString() ==
-                                                                        "nonCacheTransaction"
+                                                                        "BankTransfer"
                                                                     ? Rewardtype
-                                                                        .recharge
-                                                                    : Rewardtype
-                                                                        .cashTransaction,
+                                                                        .BankTransfer
+                                                                    : _loyaltyManager.recentRewardTransactionsList[index].typeId.toString() ==
+                                                                            "LoginBonus"
+                                                                        ? Rewardtype
+                                                                            .LoginBonus
+                                                                        : Rewardtype
+                                                                            .Other,
                                                     date: CommonMethods()
                                                         .getOnlyDate(
                                                             date: _loyaltyManager

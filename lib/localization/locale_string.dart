@@ -545,39 +545,39 @@ class LocaleString extends Translations {
         },
         'ka_IN': {
           //profile section
-          'bank_accounts': 'बैंक खाते',
-          'no_first_name': 'No First Name',
-          'no_last_name': 'No Last Name',
-          'no_number': 'No Number',
-          'no_email': 'No Email Id',
-          'no_dob': 'No Dob',
-          'not_entered': 'Not Entered',
-          'not_updated': 'Not Updated',
-          'add_persnl_details': 'Add Personal Details',
-          'add_residntl_details': 'Add Residental Details',
-          'no_residntl_data': 'Could Not Find Any Residential Data!',
-          'add_occupation_details': 'Add Occupation Details',
-          'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
-          'bank_accounts': 'Bank Account(S)',
-          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
-          'add_bank_acc': 'Add Bank Account',
-          'upi_id': 'Upi Id(S) / Vpa Number(S)',
-          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
-          'add_upi_id': 'Add Upi / Vpa Details',
-          'earn_more_points': 'अधिक अंक अर्जित करें',
-          'locate_atm': 'Locate ATM',
-          'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
-          'cashback': 'Cashback',
+          'point': ' ಅಂಕಗಳು',
+          'bank_accounts': 'ಬ್ಯಾಂಕ್ ಖಾತೆಗಳು)',
+          'no_first_name': 'ಮೊದಲ ಹೆಸರು ಇಲ್ಲ',
+          'no_last_name': 'ಕೊನೆಯ ಹೆಸರು ಇಲ್ಲ',
+          'no_number': 'ಸಂಖ್ಯೆ ಇಲ್ಲ',
+          'no_email': 'ಇಮೇಲ್ ID ಇಲ್ಲ',
+          'no_dob': 'ಡಾಬ್ ಇಲ್ಲ',
+          'not_entered': 'ನಮೂದಿಸಲಾಗಿಲ್ಲ',
+          'not_updated': 'ನವೀಕರಿಸಲಾಗಿಲ್ಲ',
+          'add_persnl_details': 'ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
+          'add_residntl_details': 'ವಸತಿ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
+          'no_residntl_data': 'ಯಾವುದೇ ವಸತಿ ಡೇಟಾವನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'add_occupation_details': 'ಉದ್ಯೋಗ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
+          'no_occupation_data': 'ನಿಮ್ಮ ಯಾವುದೇ ಉದ್ಯೋಗ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'bank_accounts': 'ಬ್ಯಾಂಕ್ ಖಾತೆಗಳು)',
+          'no_bank_data': 'ಯಾವುದೇ ಉಳಿಸಿದ ಬ್ಯಾಂಕ್ ಖಾತೆ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'add_bank_acc': 'ಬ್ಯಾಂಕ್ ಖಾತೆ ಸೇರಿಸಿ',
+          'upi_id': 'ಯುಪಿಐ  (ಎಸ್) / ವಿಪಿಎ  (ಗಳು)',
+          'no_upi_data': 'ಯಾವುದೇ ಉಳಿಸಿದ ಯುಪಿಐ / ವಿಪಿಎ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'add_upi_id': 'ಯುಪಿಐ / ವಿಪಿಎ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
+          'earn_more_points': 'ಹೆಚ್ಚಿನ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ',
+          'locate_atm': 'ಅನ್ನು ಪತ್ತೆ ಮಾಡಿ',
+          'rewads_at_atm': 'ಹೆಚ್ಚಿನ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ',
+          'find_nearest_atm' : 'ಹತ್ತಿರದ ಭಾರತ 1 ಎಟಿಎಂ ಅನ್ನು ಹುಡುಕಿ',
+          'cashback': 'ನಗದುಬರೆ',
 
-          'recharge': 'रिचार्ज',
-          'ways_to_reddem': 'भुनाने के तरीके:',
-          'total_redeemed': 'Total redeemed:',
-          'total_earned': 'कुल अर्जित अंक:',
-          'current_balance': 'Current balance',
+          'recharge': 'ಪುನರ್ಭರ್ತಿ',
+          'ways_to_reddem': 'ಪುನಃ  ಮಾರ್ಗಗಳು:',
+          'total_redeemed': 'ಒಟ್ಟು ವಿಮೋಚನೆ:',
+          'total_earned': 'ಗಳಿಸಿದ ಒಟ್ಟು:',
+          'current_balance': 'ಪ್ರಸ್ತುತ ಸಮತೋಲನ',
           'hello': 'ಹಲೋ ವರ್ಲ್ಡ್',
-          'mobile_number': 'Mobile number',
+          'mobile_number': 'ಮೊಬೈಲ್ ನಂಬರ',
           'term_condition': 'ನಿಯಮ ಮತ್ತು ಶರತ್ತುಗಳು',
           'i_accept': 'ಒಪ್ಪುತ್ತೇನೆ',
           'request_otp': 'OTP ವಿನಂತಿಸಿ',
@@ -585,222 +585,220 @@ class LocaleString extends Translations {
           'checkbox_select_error':
               'ಮುಂದುವರೆಯಲು ನಮ್ಮ ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ',
           'sending_otp': 'OTP ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ',
-          'proceed_btn': 'Proceed',
-          'enter_otp': 'Enter OTP',
+          'proceed_btn': 'ಮುಂದುವರೆಯಲು',
+          'enter_otp': 'ಒಟಿಪಿ ನಮೂದಿಸಿ',
           'otp_message': 'ನಾವು ಅದನ್ನು ನಂಬರ್‌ಗೆ ಕಳುಹಿಸಿದ್ದೇವೆ',
           'edit_number': 'ಸಂಖ್ಯೆ ಸಂಪಾದಿಸಿ',
           'resend_otp': 'OTP ಮರುಕಳುಹಿಸಿ',
           'invalid_otp': 'ದಯವಿಟ್ಟು ಮಾನ್ಯ OTP ಅನ್ನು ನಮೂದಿಸಿ',
           'select_prefer_lan': 'ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
-          'loyalty_points': 'Loyalty points',
-          'welcome': 'Welcome,',
+          'loyalty_points': 'ಬಿಂಬಗಳು',
+          'welcome': 'ಸ್ವಾಗತ,',
           'cashback_india1_summary': 'ಭಾರತದಿಂದ ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ 1 ಸಾರಾಂಶ',
-          'cashback_summary': 'Cashback by India1 summary',
+          'cashback_summary': 'ಭಾರತ 1 ಸಾರಾಂಶದಿಂದ ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್',
           'in': 'ಒಗೆ',
-          'redeem_points_now': 'Redeem Points Now',
+          'redeem_points_now': 'ಈಗ ಅಂಕಗಳನ್ನು ಪಡೆದುಕೊಳ್ಳಿ',
           'home': 'ಮನೆ',
           'payments': 'ಪಾವತಿಗಳು',
-          'loans': 'Loans',
+          'loans': 'ದಾನ',
           'insurance': 'ವಿಮೆ',
-          'savings': 'Savings',
+          'savings': 'ಉಳಿತಾಯ',
 
           //loans => Commmon Headers and texts like all stepper things
           'next_button': 'Next',
-          'personal_loan_header': 'Personal Loan', // prsnl loan
-          'gold_loan_header': 'Gold Loan', // gold loan
-          'bike_loan_header': 'Bike Loan', // bike loan
-          'farm_loan_header': 'Farm Loan', //farm
-          'trackBased_loan_header': 'Track based Loan', // trackbased
+          'personal_loan_header': 'ವೈಯಕ್ತಿಕ ಸಾಲ', // prsnl loan
+          'gold_loan_header': 'ಚಿನ್ನದ ಸಾಲ', // gold loan
+          'bike_loan_header': 'ಬೈಕು', // bike loan
+          'farm_loan_header': 'ಕೃಷಿ ಸಾಲ', //farm
+          'trackBased_loan_header': 'ಟ್ರ್ಯಾಕ್ ಆಧಾರಿತ ಸಾಲ', // trackbased
 
           // loan details
-          'loan_amount_desc':
-              'Enter The Loan Amount Required Using The Slider Or Type In The Text Field', //done
+          'loan_amount_desc': 'ಪಠ್ಯ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸ್ಲೈಡರ್ ಅಥವಾ ಟೈಪ್ ಬಳಸಿ ಅಗತ್ಯವಿರುವ ಸಾಲದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ', //done
           'track_based_loan_details_desc':
-              'Choose The Sub-Product For Which You Want The Loan',
+              'ನೀವು ಸಾಲವನ್ನು ಬಯಸುವ ಉಪ-ಉತ್ಪನ್ನವನ್ನು ಆರಿಸಿ',
           'farm_loan_details_desc':
-              'Choose The Product Against Which You Want The Loan',
+              'ನೀವು ಸಾಲವನ್ನು ಬಯಸುವ ಉತ್ಪನ್ನವನ್ನು ಆರಿಸಿ',
 
           // loans => steppers headers
-          'loan_amount_header': 'Loan Amount',
-          'personal_header_stpr': 'Personal',
-          'residential_header_stpr': 'Residential',
-          'occupational_header_stpr': 'Occupation',
-          'additional_header_stpr': 'Additional',
-          'loan_details_header_stpr': 'Loan Details',
-          'personal_details': 'Personal Details',
-          'residential_details': 'Residential Details',
-          'occupation_details': 'Occupation Details',
-          'additional_information': 'Additional Information',
+          'loan_amount_header': 'ಸಾಲದ ಪ್ರಮಾಣ',
+          'personal_header_stpr': 'ವೈಯಕ್ತಿಕ',
+          'residential_header_stpr': 'ವಸತಿ',
+          'occupational_header_stpr': 'ಉದ್ಯೋಗ',
+          'additional_header_stpr': 'ಹೆಚ್ಚುವರಿ',
+          'loan_details_header_stpr': 'ಸಾಲದ ವಿವರಗಳು',
+          'personal_details': 'ವೈಯಕ್ತಿಕ ವಿವರಗಳು',
+          'residential_details': 'ವಸತಿ ವಿವರಗಳು',
+          'occupation_details': 'ಉದ್ಯೋಗ ವಿವರಗಳು',
+          'additional_information': 'ಹೆಚ್ಚುವರಿ ಮಾಹಿತಿ',
 
           //All  --> errors
           //no errors for additional info
-          'this_field_mandatory': '*This Field Is Mandatory',
-          'first_name_e': '*First Name Is Mandatory',
-          'last_name_e': '*Last Name Is Mandatory',
-          'mobile_num_e': '*Mobile Number Should Be 10 Digits',
-          'email_id_e': '*Email Id Is Mandatory',
-          'date_of_birth_e': "*Date Of Birth Is Mandatory",
-          'maritial_status_e': 'Marital Status Is Mandatory',
-          'pan_num_e': '*Pan Number Is Mandatory',
-          'ad_e': '*Address Is Mandatory',
-          'pincode_e': '*Pincode Needs To Be Filled',
+          'this_field_mandatory': '*ಈ ಕ್ಷೇತ್ರವು ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'first_name_e': '*ಮೊದಲ ಹೆಸರು ಇಲ್ಲಿ ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'last_name_e': '*ಕೊನೆಯ ಹೆಸರು ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'mobile_num_e': '*ಮೊಬೈಲ್ ಸಂಖ್ಯೆ 10 ಅಂಕೆಗಳಾಗಿರಬೇಕು',
+          'email_id_e': '*ಇಮೇಲ್ ಐಡಿ ಇಲ್ಲಿ ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'date_of_birth_e': "*ಹುಟ್ಟಿದ ದಿನಾಂಕ ಕಡ್ಡಾಯ",
+          'maritial_status_e': 'ವೈವಾಹಿಕ ಸ್ಥಿತಿ ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'pan_num_e': '*ಪ್ಯಾನ್ ಸಂಖ್ಯೆ ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'ad_e': '*ವಿಳಾಸ ಕಡ್ಡಾಯವಾಗಿದೆ',
+          'pincode_e': '*ಪಿಂಕೋಡ್ ತುಂಬಬೇಕಾಗಿದೆ',
 
           // bottom sheet
-          'want_to_proceed_quest': 'Do You Want To Proceed?',
-          'proceed_description':
-              'Please Verify All The Details Provided. Once It Is Submitted, You Will Not Be Allowed To Change The Details.',
-          'apply_loan': 'Apply For Loan',
+          'want_to_proceed_quest': 'ನೀವು ಮುಂದುವರಿಯಲು ಬಯಸುವಿರಾ?',
+          'proceed_description': 'ದಯವಿಟ್ಟು ಒದಗಿಸಿದ ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ. ಒಮ್ಮೆ ಅದನ್ನು ಸಲ್ಲಿಸಿದ ನಂತರ, ವಿವರಗಳನ್ನು ಬದಲಾಯಿಸಲು ನಿಮಗೆ ಅನುಮತಿಸಲಾಗುವುದಿಲ್ಲ.',
+          'apply_loan': 'ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
 
           //applied success
-          'loan_application_submitted': 'Loan Application Submitted!',
-          'team_will_get_back': 'The Team Will Get Back To You.',
+          'loan_application_submitted': 'ಸಾಲ ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!',
+          'team_will_get_back': 'ತಂಡವು ನಿಮ್ಮನ್ನು ಮರಳಿ ಪಡೆಯುತ್ತದೆ.',
 
           //ask
           //denied success
 
           //select lender
-          'select_lender': 'Select The Lender To Proceed',
-          'loan_provider': 'Personal Loan Provider',
-          'explore': 'Explore',
+          'select_lender': 'ಮುಂದುವರಿಯಲು ಸಾಲಗಾರನನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+          'loan_provider': 'ವೈಯಕ್ತಿಕ ಸಾಲ ಒದಗಿಸುವವರು',
+          'explore': 'ಅನ್ವೇಷಿಸು',
 
           //choose lender
-          'one_lender_select': 'Choose One Lender From The List',
-          'min_doc': 'Minimum Documentation',
-          'paperless': 'Paperless Process',
-          'max_amount': 'Max Amount',
-          'tenure': 'Tenure',
-          'interest': 'Interest/M',
-          'view_details': 'View Details',
-          'apply': 'Apply',
+          'one_lender_select': 'ಪಟ್ಟಿಯಿಂದ ಒಂದು ಸಾಲಗಾರನನ್ನು ಆರಿಸಿ',
+          'min_doc': 'ಕನಿಷ್ಠ ದಸ್ತಾವೇಜನ್ನು',
+          'paperless': 'ಕಾಗದರಹಿತ ಪ್ರಕ್ರಿಯೆ',
+          'max_amount': 'ಗರಿಷ್ಠ ಪ್ರಮಾಣ',
+          'tenure': 'ಅಧಿಕಾರ:',
+          'interest': 'ಬಡ್ಡಿ/ಮೀ',
+          'view_details': 'ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ',
+          'apply': 'ಅನ್ವಯಿಸು',
 
           //provider details
-          'top_features': 'Top Features',
-          'other_details': 'Other Details',
+          'top_features': 'ಉನ್ನತ ವೈಶಿಷ್ಟ್ಯಗಳು',
+          'other_details': 'ಇತರ ವಿವರಗಳು',
           'interest_rate': '',
           'max_age': '',
           'min_age': '',
           'loan_tenure': '',
           'apply_now': '',
           // unique=> gold loan
-          'gold_loan_process': 'Gold loan process',
+          'gold_loan_process': 'ಚಿನ್ನದ ಸಾಲ ಪ್ರಕ್ರಿಯೆ',
           // unique => bike loan
-          'vehicle_loan_process': 'Vehicle loan process',
+          'vehicle_loan_process': 'ವಾಹನ ಸಾಲ ಪ್ರಕ್ರಿಯೆ',
           //-----------------
           //All Forms
           //Personal Details form
 
-          'first_name': 'First Name',
-          'enter_first_name': 'Enter Your First Name',
-          'last_name': 'Last Name',
-          'enter_last_name': 'Enter Your Last Name',
-          'mobile_num': 'Mobile Number',
-          'enter_mobile_num': 'Enter mobile number',
-          'alt_num': 'Alternate Number',
-          'enter_alt_num': 'Enter alternate number',
-          'email_id': 'Email Id',
-          'enter_email_id': 'Enter Email Id Here',
+          'first_name': 'ಮೊದಲ ಹೆಸರು',
+          'enter_first_name': 'ನಿಮ್ಮ ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ',
+          'last_name': 'ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ',
+          'enter_last_name': 'ನಿಮ್ಮ ಕೊನೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ',
+          'mobile_num': 'ಮೊಬೈಲ್ ನಂಬರ',
+          'enter_mobile_num': 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ',
+          'alt_num': 'ಪರ್ಯಾಯ ಸಂಖ್ಯೆ',
+          'enter_alt_num': 'ಪರ್ಯಾಯ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ',
+          'email_id': 'ಇಮೇಲ್ ಐಡಿ',
+          'enter_email_id': 'ಇಲ್ಲಿ ಇಮೇಲ್ ಐಡಿ ನಮೂದಿಸಿ',
           //ask
-          'date_of_birth': "Date Of Birth (Dd-Mm-Yyyy)",
-          'gender': 'Gender',
-          'male': 'Male',
-          'female': 'Female',
-          'other': 'Other',
-          'maritial_status': 'Marital Status',
-          'select_maritial_status': 'Select Your Marital Status',
-          'select_option': 'Select An Option',
-          'married': 'Married',
-          'unmarried': 'Unmarried',
-          'widowed': 'Widowed',
+          'date_of_birth': "ಹುಟ್ಟಿದ ದಿನಾಂಕ (Dd-Mm-Yyyy)",
+          'gender': 'ಲಿಂಗ',
+          'male': 'ಪುರುಷ',
+          'female': 'ಹೆಣ್ಣು',
+          'other': 'ಬೇರೆ',
+          'maritial_status': 'ವೈವಾಹಿಕ ಸ್ಥಿತಿ',
+          'select_maritial_status': 'ನಿಮ್ಮ ವೈವಾಹಿಕ ಸ್ಥಿತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+          'select_option': 'ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ',
+          'married': 'ವಿವಾಹಿತ',
+          'unmarried': 'ಅವಿವಾಹಿತ',
+          'widowed': 'ವಿಧವೆಯ',
 
           //Residential Form
-          'ad_line1': 'Address Line 1',
-          'ad_line1_h': 'Enter Door No, Cross, Etc',
-          'ad_line2': 'Address Line 2',
-          'ad_line2_h': 'Enter Area, Road, Landmark, Etc',
-          'pincode': 'Pincode',
-          'enter_pincode': 'Enter Pincode Here',
-          'city': 'City : Enter Pincode To View City',
-          'state': 'State : Enter Pincode To View State',
+          'ad_line1': 'ವಿಳಾಸ ಸಾಲು 1',
+          'ad_line1_h': 'ಬಾಗಿಲು ಇಲ್ಲ, ಅಡ್ಡ, ಇತ್ಯಾದಿ',
+          'ad_line2': 'ವಿಳಾಸ ಸಾಲು 2',
+          'ad_line2_h': 'ಪ್ರದೇಶ, ರಸ್ತೆ, ಹೆಗ್ಗುರುತು ಇತ್ಯಾದಿಗಳನ್ನು ನಮೂದಿಸಿ',
+          'pincode': 'ಒಂದು ತರುಣ',
+          'enter_pincode': 'ಪಿನ್ಕೋಡ್ ಅನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ',
+          'city': 'ನಗರ: ನಗರವನ್ನು ವೀಕ್ಷಿಸಲು ಪಿಂಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ',
+          'state': 'ರಾಜ್ಯ: ರಾಜ್ಯವನ್ನು ವೀಕ್ಷಿಸಲು ಪಿಂಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ',
 
           //occcupation Form
           //ask
           //show ui and doc (drop downs)
 
-          'employment_type': 'Employment Type',
-          'employment_type_h': 'Choose Your Employment Type',
-          'monthly_income': 'Monthly Income',
-          'salary_mode': 'Salary Mode',
-          'salary_mode_h': 'Choose How You Receive Salary',
-          'pan_num': 'Pan Number',
-          'pan_num_h': 'Enter Your Pan Number',
+          'employment_type': 'ಉದ್ಯೋಗದ ರೀತಿ',
+          'employment_type_h': 'ನಿಮ್ಮ ಉದ್ಯೋಗ ಪ್ರಕಾರವನ್ನು ಆರಿಸಿ',
+          'monthly_income': 'ಮಾಸಿಕ ಆದಾಯ',
+          'salary_mode': 'ಸಂಬಳ ಪಡೆಯುವ ಕ್ರಮ',
+          'salary_mode_h': 'ನೀವು ವೇತನವನ್ನು ಹೇಗೆ ಸ್ವೀಕರಿಸುತ್ತೀರಿ ಎಂಬುದನ್ನು',
+          'pan_num': 'ಅಬ್ಬರ',
+          'pan_num_h': 'ನಿಮ್ಮ ಪ್ಯಾನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ',
 
           //additional_info
 
-          'months_residing_at': 'No. Of Months Residing At',
-          'highest_qualification': 'Highest Qualification',
-          'comapany_name': 'Company Name',
-          'designation': 'Designation',
-          'work_exp': 'Work Experience',
-          'office_add1': 'Office Address Line 1',
-          'office_add2': 'Office Address Line 2',
-          'office_add_h': 'Address',
-          'netbanking_quest': 'Do You Use Netbanking?',
+          'months_residing_at': 'ನಲ್ಲಿ ವಾಸಿಸುವ ತಿಂಗಳುಗಳ ಸಂಖ್ಯೆ',
+          'highest_qualification': 'ಅತ್ಯುನ್ನತ ಅರ್ಹತೆ',
+          'comapany_name': 'ಸಂಸ್ಥೆಯ ಹೆಸರು',
+          'designation': 'ಹುದ್ದೆ',
+          'work_exp': 'ಕೆಲಸದ ಅನುಭವ',
+          'office_add1': 'ಕಚೇರಿ ವಿಳಾಸ ಸಾಲು 1',
+          'office_add2': 'ಕಚೇರಿ ವಿಳಾಸ ಸಾಲು 2',
+          'office_add_h': 'ಭಾಷಣ',
+          'netbanking_quest': 'ನೀವು ನೆಟ್‌ಬ್ಯಾಂಕಿಂಗ್ ಬಳಸುತ್ತೀರಾ?',
           'yes': 'Yes',
           'no': 'No',
-          'existing_loans_quest': 'Do You Have Any Existing Loan?',
-          'active_existng_loans_num': 'No. Of Active / Existing Loans',
+          'existing_loans_quest': 'ನೀವು ಸಾಲವನ್ನು ಹೊಂದಿದ್ದೀರಾ?',
+          'active_existng_loans_num': 'ಸಕ್ರಿಯ / ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಾಲಗಳ ಸಂಖ್ಯೆ',
 
           //-----------------
 
           //bike loan unique
-          'product': 'Product',
-          'product_h': 'Select A Product',
-          'model': 'Model',
-          'model_h': 'Select A Model',
+          'product': 'ಉತ್ಪನ್ನ',
+          'product_h': 'ಉತ್ಪನ್ನವನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+          'model': 'ಮಾದರಿ',
+          'model_h': 'ಮಾದರಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
 
           //track_based_unique
-          'sub_product': 'Sub Product',
-          'sub_product_h': 'Select Sub Product',
+          'sub_product': 'ಉಪ ಉತ್ಪನ್ನ',
+          'sub_product_h': 'ಉಪ ಉತ್ಪನ್ನವನ್ನು ಆಯ್ಕೆಮಾಡಿ',
 
           //farm loan unique
-          'loan_requirement': 'Loan Requirement',
-          'loan_requirement_h': 'Choose The Option For Loan',
-          'loan_requirement_e': '*This Is Mandatory To Proceed',
+          'loan_requirement': 'ಸಾಲದ ಅವಶ್ಯಕತೆ',
+          'loan_requirement_h': 'ಸಾಲಕ್ಕಾಗಿ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ',
+          'loan_requirement_e': '*ಮುಂದುವರಿಯಲು ಇದು ಕಡ್ಡಾಯವಾಗಿದೆ',
 
           // drop down
 
-          'my_profile': 'प्रोफाइल',
-          'my_rewards': 'पुरस्कार',
+          'my_profile': 'ಪ್ರಚಾರ',
+          'my_rewards': 'ಪ್ರತಿಫಲಗಳು',
 
           // loan section
           'loan_categories': 'ಮಾನ್ಯ',
           'payment_categories': 'ಸಾಲಗಳು',
           'insurance_categories': 'ಸಾಲಗಳು ',
 
-          'personal': 'निजी',
-          '2_wheeler': '2 व्हीलर',
-          'farm_eqp': 'फार्म ईक्यूपी',
-          'track_based_loan': 'ट्रैक  ऋण',
-          'gold': 'सोना',
-          'emi_card': 'ईएमआई कार्ड',
-          'credit_card': 'क्रेडिट कार्ड',
-          'credit_score': 'क्रेडिट अंक',
+          'personal': 'ವೈಯಕ್ತಿಕ',
+          '2_wheeler': '2 ವೀಲರ್',
+          'farm_eqp': 'ಫಾರ್ಮ್ ಇಕ್ಯೂಪಿ',
+          'track_based_loan': 'टರ್ಯಾಕ್',
+          'gold': 'ಚಿನ್ನ',
+          'emi_card': 'emi ಕಾರ್ಡ್',
+          'credit_card': 'ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್',
+          'credit_score': 'ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್',
 
           // insurance section text
-          '4_wheeler': '4 व्हीलर',
-          'critical_illness': 'गंभीर बीमारी',
+          '4_wheeler': '4 ಚಕ್ರದ ವಾಹನ',
+          'critical_illness': 'ಗಂಭೀರ ಅನಾರೋಗ್ಯ',
 
           //payments section
 
-          'recharge': 'Recharge',
-          'fast_teg': 'FASTag',
-          'dth': 'DTH',
+          'recharge': 'ಪುನರ್ಭರ್ತಿ',
+          'fast_teg': 'ದಳ',
+          'dth': 'ಡಿತ್',
 
           // Saving section
 
-          'fixed_deposit': 'Fixed Deposit',
-          'digi_gold': 'FD(Fixed Deposit)',
-          'digi_silver': 'Digi Gold',
+          'fixed_deposit': 'ಸ್ಥಿರ ಠೇವಣಿ',
+          'digi_gold': 'ಎಫ್‌ಡಿ (ಸ್ಥಿರ ಠೇವಣಿ)',
+          'digi_silver': 'ರಾಶಿ ಚಿನ್ನ',
 
           'privacy_policy': 'Privacy policy'
         },

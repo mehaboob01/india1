@@ -1,15 +1,15 @@
 // //DEV URL
-final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
-final String bucketBaseUrl =
-    "https://india1-digital.s3.ap-south-1.amazonaws.com";
+// final String baseUrl = "http://api-dev.india1-digital.hummingwavetech.com/v1/";
+// final String bucketBaseUrl =
+//     "https://india1-digital.s3.ap-south-1.amazonaws.com";
 
 // UAT URL
-// final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
-// final String bucketBaseUrl =
-//     "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
+final String baseUrl = "https://digitaluatbackend.india1.co.in/v1/";
+final String bucketBaseUrl =
+    "https://hummingwave-uat.s3.ap-south-1.amazonaws.com";
 
 // // prod link
-
+//
 // final String baseUrl = "https://digitalapi.india1.co.in/v1/";
 // final String bucketBaseUrl = "https://india1-digital-production.s3.ap-south-1.amazonaws.com";
 
@@ -19,6 +19,11 @@ class Apis {
   static String verifyOtp = "auth/verify-otp";
 
   static String dashboard = "dashboards/home/";
+
+  // for money withdrawl pop -up
+  static String dashboardHome = "dashboards/home-test";
+  static String updatePopUp = "dashboards/update-popup";
+
   static String bannerAds = "advertisement-banners";
   static String termCondition = "terms-and-conditions?language=";
   static String refreshTokenApi = "auth/refresh-token";
@@ -156,4 +161,5 @@ class Apis {
   // update language
 
   static String updateLan = "customers/profile/language";
+
 }

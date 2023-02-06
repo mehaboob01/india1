@@ -10,9 +10,13 @@ import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'package:india_one/constant/routes.dart';
 import 'package:india_one/constant/theme_manager.dart';
+import 'package:india_one/core/data/remote/api_constant.dart';
 import 'package:india_one/popUps_page.dart';
 import 'package:india_one/screens/helpers/no_internet.dart';
 import 'package:india_one/services/local_notifications_service.dart';
+import 'package:native_flutter_proxy/custom_proxy.dart';
+import 'package:native_flutter_proxy/native_proxy_reader.dart';
+import 'package:ssl_pinning_plugin/ssl_pinning_plugin.dart';
 
 import 'connection_manager/connection_binding.dart';
 import 'localization/locale_string.dart';
@@ -31,6 +35,26 @@ import 'localization/locale_string.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // bool enabled = true;
+  // String? host;
+  // int? port;
+
+  // try {
+  //   ProxySetting settings = await NativeProxyReader.proxySetting;
+  //   enabled = settings.enabled;
+  //   host = settings.host;
+  //   port = settings.port;
+  // } catch (e) {
+  //   print(e);
+  // }
+  //
+  // if (enabled) {
+  //   final proxy = CustomProxy(ipAddress: host!, port: port);
+  //   proxy.enable();
+  //   print("proxy not enabled");
+  // }
+
+
 
   // for notification
   await Firebase.initializeApp();
@@ -191,6 +215,8 @@ Future initializeLocalNotificationPlugin() async {
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 }
+
+
 
 Future showForegroundNotification(String title, String body) async {
   // var android = AndroidNotificationDetails("id", "channel", "description");
