@@ -13,7 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../constant/theme_manager.dart';
 
 class CommonWebView extends StatefulWidget {
-  final String title, url;
+  final String? title, url;
 
   const CommonWebView({
     Key? key,

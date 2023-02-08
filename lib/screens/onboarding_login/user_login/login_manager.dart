@@ -107,9 +107,11 @@ class LoginManager extends GetxController {
   void callTermConditionPolicyApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString(SPKeys.ACCESS_TOKEN);
+    print("access token");
+    print(accessToken);
 
     try {
-      //  print(baseUrl + Apis.termCondition+selectedLan!);
+
       isPrivacyLoading.value = true;
       var response = await http
           .get(Uri.parse(baseUrl + Apis.termCondition + "kn"), headers: {

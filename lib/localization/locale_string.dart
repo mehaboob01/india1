@@ -5,6 +5,9 @@ class LocaleString extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
 
+
+
+
           //profile section
           'bank_accounts': 'Bank account(s)',
           'no_first_name': 'No First Name',

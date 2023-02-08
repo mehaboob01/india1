@@ -81,10 +81,11 @@ class HomeManager extends GetxController {
 
   // this api call will contain popus conust as well to show
   Future<void> callHomeDashboard() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
     popUpListSend.clear();
     popUpList.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
+
     try {
       isLoading.value = true;
       var response = await DioApiCall().commonApiCall(
@@ -118,22 +119,18 @@ class HomeManager extends GetxController {
     String? customerId = prefs.getString(SPKeys.CUSTOMER_ID);
 
     try {
-
-  print("INside update popuop");
       isLoading.value = true;
       var response = await DioApiCall().commonApiCall(
         endpoint: Apis.updatePopUp,
         method: Type.POST,
-        data: jsonEncode({"customerId": customerId.toString(),"transactionId":transactionId.toString(),"isInteracted" : true}),
+        data: jsonEncode({
+          "customerId": customerId.toString(),
+          "transactionId": transactionId.toString(),
+          "isInteracted": true
+        }),
       );
 
-      print("response  updtae popup== > ${response}");
       if (response != null) {
-
-        print("ho gya intract");
-        print("response == > ${response}");
-
-
         isLoading(false);
       }
     } catch (exception) {

@@ -99,19 +99,44 @@ class _LendersListState extends State<LendersList> {
                                     //lenders: loanController.loanLendersModel.value.lenders?[index] == null?"0":loanController.loanLendersModel.value.lenders[index],
                                     applyButtonClick: () {
                                       if (isPersonalLoan == true) {
-                                        print(
-                                            "clecked on personal loan explore");
-                                        Get.to(
-                                          () => ProvidersList(
-                                            title: '${widget.title}',
-                                            providerId: loanController
-                                                    .loanProvidersModel
-                                                    .value
-                                                    .providers?[index]
-                                                    .id ??
-                                                '',
-                                          ),
-                                        );
+                                        if (loanController
+                                                .loanProvidersModel
+                                                .value
+                                                .providers?[index]
+                                                .redirect !=
+                                            true) {
+                                          print(
+                                              "clecked on personal loan explore");
+                                          Get.to(
+                                            () => ProvidersList(
+                                              title: '${widget.title}',
+                                              providerId: loanController
+                                                      .loanProvidersModel
+                                                      .value
+                                                      .providers?[index]
+                                                      .id ??
+                                                  '',
+                                            ),
+                                          );
+                                        } else {
+                                          Get.to(
+                                            () => CommonWebView(
+                                              title: loanController
+                                                  .loanProvidersModel
+                                                  .value
+                                                  .providers?[index]
+                                                  .name
+                                                  .toString(),
+                                              url: loanController
+                                                      .loanProvidersModel
+                                                      .value
+                                                      .providers?[index]
+                                                      .redirectLink
+                                                      .toString() ??
+                                                  '',
+                                            ),
+                                          );
+                                        }
                                       } else {
                                         Get.to(
                                           () => CommonWebView(

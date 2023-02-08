@@ -106,6 +106,12 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
       // showCompleteProfile();
       checkLogin();
+      if (_homeManager.popUpList.value.length != 0) {
+        for (var i = 0; i < _homeManager.popUpList.value.length; i++) {
+          showMoneyWithdrawPoints(_homeManager.popUpList[i].points.toString(),
+              _homeManager.popUpList[i].id.toString());
+        }
+      }
     });
   }
 
@@ -255,10 +261,8 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
 
   void showMoneyWithdrawPoints(
       String withdrawlPoints, String transactionId) async {
-
     print("transaction id==>${transactionId} ");
     _homeManager.callUpdatePopup(transactionId);
-
 
     return DisplayPopuP()
         .welcomepopup(context: context, welcomePoints: "${withdrawlPoints}");
@@ -407,7 +411,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     _homeManager.callHomeApi();
     _homeManager.callAdsBannerApi();
     _loyaltyManager.callLoyaltyDashboardApi();
-   _homeManager. callHomeDashboard();
+    _homeManager.callHomeDashboard();
 
     // _homeManager.sendTokens();
     _profileController.getProfileData();
@@ -416,9 +420,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     // showing popUp for money withdrawl ...
-    for (var i = 0; i < _homeManager.popUpList.value.length; i++)
-      showMoneyWithdrawPoints(_homeManager.popUpList[i].points.toString(),
-          _homeManager.popUpList[i].id.toString());
+
     widthIs = MediaQuery.of(context).size.width;
     heightIs = MediaQuery.of(context).size.height;
     return WillPopScope(

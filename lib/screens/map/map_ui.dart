@@ -106,7 +106,8 @@ class Maps extends StatelessWidget {
                                       focusColor: Colors.white,
                                       suffixIcon: IconButton(
                                         onPressed: () async {
-                                          mapManager.areSuggestionsVisible.value = false;
+                                          mapManager.areSuggestionsVisible
+                                              .value = false;
                                           mapManager.controller.value.clear();
                                         },
                                         icon: Icon(Icons.clear),
@@ -128,6 +129,7 @@ class Maps extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () async {
+                        mapManager.areSuggestionsVisible.value = false;
                         mapManager.controller.value.text = "Search Location";
                         await mapManager.getCurrentLocation();
                       },
@@ -168,6 +170,7 @@ class Maps extends StatelessWidget {
                         return GestureDetector(
                           onTap: () async {
                             mapManager.getLatLng(
+                            
                                 mapManager.placeList[index]["place_id"]);
                             mapManager.controller.value.text =
                                 mapManager.placeList[index]["description"];

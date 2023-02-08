@@ -453,6 +453,8 @@ class _LoyaltyScreenState extends State<LoyaltyScreen>
                                                                             .LoginBonus
                                                                         : Rewardtype
                                                                             .Other,
+
+
                                                     date: CommonMethods()
                                                         .getOnlyDate(
                                                             date: _loyaltyManager

@@ -115,8 +115,11 @@ class OtpManager extends GetxController {
 
         print("custmer id after logout${prefs.getString(SPKeys.CUSTOMER_ID)} ");
 
+
+
         if (verifyOtpModel.status!.code == 2000) {
           print("inside 2000 ${verifyOtpModel.data!.customerId.toString()} ");
+          print("inside 5000 ${verifyOtpModel.data!.accessToken.toString()} ");
 
           //  prefs = await SharedPreferences.getInstance();
           prefs!.setString(
