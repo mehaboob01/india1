@@ -88,13 +88,9 @@ class _SplashScreenState extends State<SplashScreen> {
     bool? loggedIn = prefs.getBool(SPKeys.LOGGED_IN);
     int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
 
-   if(selectedLan != null)
-     {
-       updateLanguage(locale[selectedLan.toInt()]['locale'], selectedLan);
-     }
-
-
-
+    if (selectedLan != null) {
+      updateLanguage(locale[selectedLan.toInt()]['locale'], selectedLan);
+    }
 
     if (loggedIn == true) {
       //
@@ -107,8 +103,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
       updateLanguage(locale[selectedLan!.toInt()]['locale'], selectedLan);
     } else {
-
-
       Get.offAllNamed(MRouter.languageSelectionIO);
     }
   }

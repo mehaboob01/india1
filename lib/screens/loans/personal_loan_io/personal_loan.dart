@@ -630,7 +630,8 @@ class _PersonalLoanState extends State<PersonalLoan> {
                   ),
                   border: const OutlineInputBorder(),
                   labelText: 'loan_amount_header'.tr,
-                  labelStyle: new TextStyle(color: Color(0xFF787878)),
+                  labelStyle: TextStyle(
+                      color: Color(0xFF787878), fontWeight: FontWeight.normal),
                 ),
                 autocorrect: true,
                 validator: (value) {

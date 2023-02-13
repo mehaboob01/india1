@@ -32,7 +32,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
   void getSelectedLan() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? selectedLan = prefs.getInt(SPKeys.SELECTED_LANGUAGE);
-    selectedLanguage = selectedLan!;
+    selectedLanguage = selectedLan ?? 0;
     setState(() {});
   }
 
@@ -150,7 +150,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("हिन्दी", () async {
                             SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                                await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
                             prefs.setString(
@@ -204,7 +204,6 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               selectedLanguage == Language.KANNADA.index
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
-
                           EachLanguageIO("मराठी", () async {
                             Fluttertoast.showToast(
                               msg: "Coming soon ...",

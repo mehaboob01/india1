@@ -96,7 +96,7 @@ class HorizontalStepperItem extends StatelessWidget {
           textAlign: TextAlign.center,
           style: titleTextStyle,
         )),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
       ],
       if (item.subtitle != null) ...[
         SizedBox(

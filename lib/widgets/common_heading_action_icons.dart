@@ -54,7 +54,7 @@ class HeadingBox extends StatelessWidget {
                 text!,
                 textScaleFactor: 1,
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+                    fontWeight: FontWeight.normal, color: Colors.black),
               ))
             : image != null
                 ? Center(

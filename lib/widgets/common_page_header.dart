@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -353,9 +353,9 @@ class CommonPageHeader extends StatelessWidget {
                           ? GestureDetector(
                               onTap: () =>
                                   Get.toNamed(MRouter.notificationScreen),
-                              child: Badge(
-                                position:
-                                    BadgePosition.topEnd(top: -10, end: 0),
+                              child: badge.Badge(
+                                position: badge.BadgePosition.topEnd(
+                                    top: -10, end: 0),
                                 badgeColor: Colors.red,
                                 badgeContent: Container(
                                   child: text(

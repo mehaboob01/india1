@@ -266,7 +266,6 @@ class LoanController extends GetxController {
           }
 
 // NewNewLoanLendersModel
-
         }
       }
     } catch (exception) {
@@ -314,7 +313,7 @@ class LoanController extends GetxController {
       if (response != null) {
         loanProvidersModel.value = LoanProvidersModel.fromJson(response);
         Get.to(() => SubmissionPage());
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 5), () {
           Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
         });
       }

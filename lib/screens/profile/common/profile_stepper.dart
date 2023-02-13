@@ -27,6 +27,16 @@ class ProfileStepper {
   Future<DateTime?> datePicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+          primary: AppColors.blueColor,
+          onPrimary: Colors.white,
+          // surface: AppColors.blueColor,
+          onSurface: AppColors.black,
+        )),
+        child: child!,
+      ),
       initialDate: profileController.dobController.value.text.isNotEmpty
           ? DateTime.parse(DateFormat('yyyy-MM-dd').format(
               DateFormat("dd-MM-yyyy")
