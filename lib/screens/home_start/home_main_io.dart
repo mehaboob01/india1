@@ -115,6 +115,28 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
     });
   }
 
+  filterBottomSheet() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+        ),
+        builder: (context) {
+          return Container(
+            height: Get.height * 0.5,
+            padding: EdgeInsets.all(10),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [],
+              ),
+            ),
+          );
+        });
+  }
+
   // Future<bool> checkSSL() async {
   //   try {
   //     bool checked = false;
@@ -542,13 +564,14 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 child: HeadingBox(
                                                     text: 'Aa',
                                                     ontap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  LanguageSelectionIO(
-                                                                      'home')));
+                                                      filterBottomSheet();
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //         builder: (BuildContext
+                                                      //                 context) =>
+                                                      //             LanguageSelectionIO(
+                                                      //                 'home')));
                                                     }),
                                               ),
                                               SizedBox(

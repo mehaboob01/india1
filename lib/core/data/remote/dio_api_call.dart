@@ -16,6 +16,8 @@ enum Type { GET, POST, PUT, DELETE }
 class DioApiCall {
   Dio dio = Dio();
 
+
+
   // intercepter
   DioApiCall() {
     dio.interceptors
@@ -41,7 +43,11 @@ class DioApiCall {
       }
       return handler.next(error);
     }));
+
+
   }
+
+
 
   Future commonApiCall({
     required String endpoint,
@@ -51,6 +57,9 @@ class DioApiCall {
     Map<String, dynamic>? getParam,
     bool? isLogout,
   }) async {
+
+
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs!.getString(SPKeys.ACCESS_TOKEN);
     dio.options = BaseOptions(

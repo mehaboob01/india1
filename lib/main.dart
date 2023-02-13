@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,7 +34,30 @@ import 'localization/locale_string.dart';
 //   LocalNotificationService.display(message);
 // }
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    if (Platform.isAndroid) {
+      return super.createHttpClient(context)
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+    }
+    return super.createHttpClient(context)
+      ..findProxy = (uri) {
+        return "PROXY localhost:8080";
+      }
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+
+}
+
 Future<void> main() async {
+
+  HttpOverrides.global = MyHttpOverrides();
+
+
+
   WidgetsFlutterBinding.ensureInitialized();
   // bool enabled = true;
   // String? host;
