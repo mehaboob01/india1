@@ -22,7 +22,8 @@ class InsuranceController extends GetxController {
   RxBool createInsuranceApplicationLoading = false.obs;
   RxBool insuranceSummaryLoading = false.obs;
   RxString customerId = ''.obs;
-  Rx<InsuranceApplicationModel> insuranceApplicationModel = InsuranceApplicationModel().obs;
+  Rx<InsuranceApplicationModel> insuranceApplicationModel =
+      InsuranceApplicationModel().obs;
   Rx<InsuranceSummaryModel> insuranceSummaryModel = InsuranceSummaryModel().obs;
   RxInt insuranceCompletedIndex = 0.obs;
 
@@ -68,7 +69,8 @@ class InsuranceController extends GetxController {
       insuranceSummaryLoading.value = true;
       customerId.value = await profileController.getId();
       var response = await DioApiCall().commonApiCall(
-        endpoint: "${Apis.createInsurance}/${insuranceApplicationModel.value.id}/summary",
+        endpoint:
+            "${Apis.createInsurance}/${insuranceApplicationModel.value.id}/summary",
         method: Type.GET,
         // data: json.encode({
         //   "customerId": customerId.value,
@@ -77,8 +79,7 @@ class InsuranceController extends GetxController {
       );
       print("$response");
       if (response != null) {
-        insuranceSummaryModel.value =
-            InsuranceSummaryModel.fromJson(response);
+        insuranceSummaryModel.value = InsuranceSummaryModel.fromJson(response);
       }
     } catch (exception) {
       print(exception);
@@ -86,6 +87,7 @@ class InsuranceController extends GetxController {
       insuranceSummaryLoading.value = false;
     }
   }
+
   void applyForInsurance() async {
     try {
       insuranceSummaryLoading.value = true;
@@ -96,17 +98,17 @@ class InsuranceController extends GetxController {
         data: json.encode({
           "customerId": customerId.value,
           "applicatonId": "${insuranceApplicationModel.value.id}",
-          "acceptedToCVersion":"${insuranceSummaryModel.value.tocVersion}",
+          "acceptedToCVersion": "${insuranceSummaryModel.value.tocVersion}",
         }),
       );
-      print("$response");
+     
       // if (response != null) {
-        Get.to(() => InsuranceSubmissionPage());
-        Future.delayed(Duration(seconds: 3), () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs!.setBool(SPKeys.SHOW_AUTH, false);
-          Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
-        });
+      Get.to(() => InsuranceSubmissionPage());
+      Future.delayed(Duration(seconds: 3), () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs!.setBool(SPKeys.SHOW_AUTH, false);
+        Get.offNamedUntil(MRouter.homeScreen, (route) => route.isFirst);
+      });
       // }
     } catch (exception) {
       print(exception);

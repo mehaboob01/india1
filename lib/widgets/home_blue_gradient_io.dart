@@ -217,7 +217,7 @@ class _HomeBlueGradientIOState extends State<HomeBlueGradientIO> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 2.0),
                                 child: text(
-                                  'Points',
+                                  'point'.tr,
                                   textOverflow: TextOverflow.visible,
                                   maxLines: 1,
                                   style: TextStyle(

@@ -79,6 +79,7 @@ class RedeemCard extends StatelessWidget {
                     style: AppStyle.shortHeading.copyWith(
                       fontSize: 12.0.sp,
                       height: 1.2.sp,
+                      overflow: TextOverflow.ellipsis,
                       color: isSelected ? Colors.white : Colors.black,
                     ),
                   )

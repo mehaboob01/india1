@@ -150,7 +150,7 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("हिन्दी", () async {
                             SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                                await SharedPreferences.getInstance();
                             prefs.setInt(
                                 SPKeys.SELECTED_LANGUAGE, Language.HINDI.index);
                             prefs.setString(
@@ -204,7 +204,6 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                               selectedLanguage == Language.KANNADA.index
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
-
                           EachLanguageIO("मराठी", () async {
                             Fluttertoast.showToast(
                               msg: "Coming soon ...",
@@ -299,29 +298,23 @@ class _LanguageSelectionIOState extends State<LanguageSelectionIO> {
                                   ? AppColors.selectedTextColor
                                   : AppColors.unSelectedTextColor),
                           EachLanguageIO("മലയാളം", () async {
-                            Fluttertoast.showToast(
-                              msg: "Coming soon ...",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              fontSize: 16.0,
-                            );
-                            // SharedPreferences prefs =
-                            //     await SharedPreferences.getInstance();
-                            // prefs.setInt(SPKeys.SELECTED_LANGUAGE,
-                            //     Language.MALAYALAM.index);
-                            // prefs.setString(
-                            //     SPKeys.SELECTED_LANGUAGE_CODE, "ml");
-                            //
-                            // updateLanguage(
-                            //     locale[Language.MALAYALAM.index]['locale'],
-                            //     Language.MALAYALAM.index);
-                            // if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
-                            //   print("api call");
-                            //   // call update lan api
-                            //   _selectLanManager.updateLan("ml");
-                            // } else {
-                            //   print("No api call for lan update!");
-                            // }
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setInt(SPKeys.SELECTED_LANGUAGE,
+                                Language.MALAYALAM.index);
+                            prefs.setString(
+                                SPKeys.SELECTED_LANGUAGE_CODE, "ml");
+
+                            updateLanguage(
+                                locale[Language.MALAYALAM.index]['locale'],
+                                Language.MALAYALAM.index);
+                            if (prefs!.getString(SPKeys.CUSTOMER_ID) != null) {
+                              print("api call");
+                              // call update lan api
+                              _selectLanManager.updateLan("ml");
+                            } else {
+                              print("No api call for lan update!");
+                            }
                           },
                               selectedLanguage == Language.MALAYALAM.index
                                   ? AppColors.selectedLangColor

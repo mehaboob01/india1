@@ -58,10 +58,10 @@ class CommonPageHeader extends StatelessWidget {
 
 // heading header value ---------------------------------------------------------------------------
   final List<String> headingHeader = <String>[
-    "No need to roam for loans anymore",
-    "Earn with every transaction",
-    "Insure yourself & your loved ones",
-    "The more you save, more you earn"
+    "loans_banner_text",
+    "payment_banner_text",
+    "insurance_banner_text",
+    "saving_banner_text" 
   ];
   String headerHeaderName(PageName pageName) {
     String value = '';
@@ -126,10 +126,10 @@ class CommonPageHeader extends StatelessWidget {
 
   // India1 title
   final List<String> indiaOneTitleList = <String>[
-    'Get it on India1',
-    'Now with India1',
-    'Now with India1',
-    'When with India1'
+    'Get_it_on_India1',
+    'Now_with_India1',
+    'Now_with_India1',
+    'When_with_India1'
   ];
   String indiaOneTitle(PageName pageName) {
     String value = '';
@@ -487,7 +487,7 @@ class CommonPageHeader extends StatelessWidget {
                               SizedBox(height: 2.0.hp),
                               Padding(
                                 padding: EdgeInsets.only(right: 2.0.wp),
-                                child: text(headerHeaderName(pageName),
+                                child: text(headerHeaderName(pageName).tr,
                                     style: AppStyle.shortHeading.copyWith(
                                         color: Colors.white,
                                         fontSize: 14.0.sp,
@@ -495,7 +495,7 @@ class CommonPageHeader extends StatelessWidget {
                                         fontWeight: FontWeight.w600)),
                               ),
                               SizedBox(height: 2.0.hp),
-                              text(indiaOneTitle(pageName),
+                              text(indiaOneTitle(pageName).tr,
                                   style: AppStyle.shortHeading.copyWith(
                                       color: const Color(0xffFFEF37),
                                       fontSize: 16.0.sp,

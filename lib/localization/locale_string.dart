@@ -4,10 +4,14 @@ class LocaleString extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
+          'Get_it_on_India1': 'Get it on India1',
+          'When_with_India1': 'When with India1',
+          'Now_with_India1': 'Now with India1',
+          'loans_banner_text': 'No need to roam for loans anymore',
+          'payment_banner_text': 'Earn with every transaction',
 
-
-
-
+          'insurance_banner_text': 'Insure yourself & your loved ones',
+          'saving_banner_text': 'The more you save, more you earn',
           //profile section
           'bank_accounts': 'Bank account(s)',
           'no_first_name': 'No First Name',
@@ -22,7 +26,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -33,7 +37,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'Earn More Points',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
           'recharge': 'Recharge',
           'ways_to_reddem': 'Ways to redeem: ',
@@ -66,8 +70,6 @@ class LocaleString extends Translations {
           'loans': 'Loans',
           'insurance': 'Insurance',
           'savings': 'Savings',
-
-
 
           // home card
 
@@ -277,15 +279,24 @@ class LocaleString extends Translations {
           'current_balance': 'Current balance',
 
           'privacy_policy': 'Privacy policy'
-
-
         },
         'hi_IN': {
+          'Get_it_on_India1': 'पाएं india1 में',
+          'Now_with_India1': 'अब India1 के साथ',
+          'When_with_India1': 'जब India1 के साथ',
+
+          'loans_banner_text': 'क्या आपको लोन चाहिए?',
+          'payment_banner_text': 'हर लेनदेन के साथ कमाएँ',
+
+          'insurance_banner_text': 'अपना और अपने प्रियजनों का बीमा करें',
+          'saving_banner_text':
+              'जितना अधिक आप बचाते हैं, उतना अधिक आप कमाते हैं',
+
           'bank_accounts': 'बैंक खाते',
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'एटीएम खोजें',
           'rewads_at_atm': 'एटीएम इनाम',
-          'find_nearest_atm' : 'निकटतम India1 एटीएम खोजें',
+          'find_nearest_atm': 'निकटतम India1 एटीएम खोजें',
           'cashback': 'कैशबैक',
 
           'recharge': 'रिचार्ज',
@@ -532,22 +543,34 @@ class LocaleString extends Translations {
 
           //payments section
 
-          'recharge': 'Recharge',
-          'fast_teg': 'FASTag',
-          'dth': 'DTH',
+          'recharge': 'रिडीम',
+          'fast_teg': 'फास्टैग',
+          'dth': 'डीटीएच',
 
           // Saving section
 
-          'fixed_deposit': 'Fixed Deposit',
-          'digi_gold': 'FD(Fixed Deposit)',
-          'digi_silver': 'Digi Gold',
+          'fixed_deposit': 'एफडी',
+          'digi_gold': 'डिजी गोल्ड',
+          'digi_silver': 'डिजी सिल्वर',
 
           'current_balance': 'वर्तमान शेष',
 
-          'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'गोपनीयता नीति'
         },
         'ka_IN': {
+          'Get_it_on_India1': 'ಇಂಡಿಯಾ 1 ನಲ್ಲಿ ಪಡೆಯಿರಿ',
+          'Now_with_India1': 'ಈಗ ಇಂಡಿಯಾ 1 ನೊಂದಿಗೆ',
+          'When_with_India1': 'ಇಂಡಿಯಾ 1 ನೊಂದಿಗೆ ಬಂದಾಗ',
+
           //profile section
+          'loans_banner_text': 'ಇನ್ನು ಮುಂದೆ ಸಾಲಕ್ಕಾಗಿ ಸಂಚರಿಸುವ ಅಗತ್ಯವಿಲ್ಲ',
+          'payment_banner_text': 'ಪ್ರತಿ ವಹಿವಾಟಿನೊಂದಿಗೆ ಸಂಪಾದಿಸಿ',
+
+          'insurance_banner_text':
+              'ನಿಮ್ಮನ್ನು ಮತ್ತು ನಿಮ್ಮ ಪ್ರೀತಿಪಾತ್ರರನ್ನು ವಿಮೆ ಮಾಡಿ',
+          'saving_banner_text':
+              'ನೀವು ಹೆಚ್ಚು ಉಳಿಸುತ್ತೀರಿ, ಹೆಚ್ಚು ನೀವು ಗಳಿಸುತ್ತೀರಿ',
+
           'point': ' ಅಂಕಗಳು',
           'bank_accounts': 'ಬ್ಯಾಂಕ್ ಖಾತೆಗಳು)',
           'no_first_name': 'ಮೊದಲ ಹೆಸರು ಇಲ್ಲ',
@@ -561,17 +584,20 @@ class LocaleString extends Translations {
           'add_residntl_details': 'ವಸತಿ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
           'no_residntl_data': 'ಯಾವುದೇ ವಸತಿ ಡೇಟಾವನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
           'add_occupation_details': 'ಉದ್ಯೋಗ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
-          'no_occupation_data': 'ನಿಮ್ಮ ಯಾವುದೇ ಉದ್ಯೋಗ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'no_occupation_data':
+              'ನಿಮ್ಮ ಯಾವುದೇ ಉದ್ಯೋಗ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
           'bank_accounts': 'ಬ್ಯಾಂಕ್ ಖಾತೆಗಳು)',
-          'no_bank_data': 'ಯಾವುದೇ ಉಳಿಸಿದ ಬ್ಯಾಂಕ್ ಖಾತೆ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'no_bank_data':
+              'ಯಾವುದೇ ಉಳಿಸಿದ ಬ್ಯಾಂಕ್ ಖಾತೆ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
           'add_bank_acc': 'ಬ್ಯಾಂಕ್ ಖಾತೆ ಸೇರಿಸಿ',
           'upi_id': 'ಯುಪಿಐ  (ಎಸ್) / ವಿಪಿಎ  (ಗಳು)',
-          'no_upi_data': 'ಯಾವುದೇ ಉಳಿಸಿದ ಯುಪಿಐ / ವಿಪಿಎ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
+          'no_upi_data':
+              'ಯಾವುದೇ ಉಳಿಸಿದ ಯುಪಿಐ / ವಿಪಿಎ ವಿವರಗಳನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ!',
           'add_upi_id': 'ಯುಪಿಐ / ವಿಪಿಎ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ',
           'earn_more_points': 'ಹೆಚ್ಚಿನ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ',
           'locate_atm': 'ಅನ್ನು ಪತ್ತೆ ಮಾಡಿ',
           'rewads_at_atm': 'ಹೆಚ್ಚಿನ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ',
-          'find_nearest_atm' : 'ಹತ್ತಿರದ ಭಾರತ 1 ಎಟಿಎಂ ಅನ್ನು ಹುಡುಕಿ',
+          'find_nearest_atm': 'ಹತ್ತಿರದ ಭಾರತ 1 ಎಟಿಎಂ ಅನ್ನು ಹುಡುಕಿ',
           'cashback': 'ನಗದುಬರೆ',
 
           'recharge': 'ಪುನರ್ಭರ್ತಿ',
@@ -616,11 +642,11 @@ class LocaleString extends Translations {
           'trackBased_loan_header': 'ಟ್ರ್ಯಾಕ್ ಆಧಾರಿತ ಸಾಲ', // trackbased
 
           // loan details
-          'loan_amount_desc': 'ಪಠ್ಯ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸ್ಲೈಡರ್ ಅಥವಾ ಟೈಪ್ ಬಳಸಿ ಅಗತ್ಯವಿರುವ ಸಾಲದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ', //done
+          'loan_amount_desc':
+              'ಪಠ್ಯ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸ್ಲೈಡರ್ ಅಥವಾ ಟೈಪ್ ಬಳಸಿ ಅಗತ್ಯವಿರುವ ಸಾಲದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ', //done
           'track_based_loan_details_desc':
               'ನೀವು ಸಾಲವನ್ನು ಬಯಸುವ ಉಪ-ಉತ್ಪನ್ನವನ್ನು ಆರಿಸಿ',
-          'farm_loan_details_desc':
-              'ನೀವು ಸಾಲವನ್ನು ಬಯಸುವ ಉತ್ಪನ್ನವನ್ನು ಆರಿಸಿ',
+          'farm_loan_details_desc': 'ನೀವು ಸಾಲವನ್ನು ಬಯಸುವ ಉತ್ಪನ್ನವನ್ನು ಆರಿಸಿ',
 
           // loans => steppers headers
           'loan_amount_header': 'ಸಾಲದ ಪ್ರಮಾಣ',
@@ -649,7 +675,8 @@ class LocaleString extends Translations {
 
           // bottom sheet
           'want_to_proceed_quest': 'ನೀವು ಮುಂದುವರಿಯಲು ಬಯಸುವಿರಾ?',
-          'proceed_description': 'ದಯವಿಟ್ಟು ಒದಗಿಸಿದ ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ. ಒಮ್ಮೆ ಅದನ್ನು ಸಲ್ಲಿಸಿದ ನಂತರ, ವಿವರಗಳನ್ನು ಬದಲಾಯಿಸಲು ನಿಮಗೆ ಅನುಮತಿಸಲಾಗುವುದಿಲ್ಲ.',
+          'proceed_description':
+              'ದಯವಿಟ್ಟು ಒದಗಿಸಿದ ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ. ಒಮ್ಮೆ ಅದನ್ನು ಸಲ್ಲಿಸಿದ ನಂತರ, ವಿವರಗಳನ್ನು ಬದಲಾಯಿಸಲು ನಿಮಗೆ ಅನುಮತಿಸಲಾಗುವುದಿಲ್ಲ.',
           'apply_loan': 'ಸಾಲಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
 
           //applied success
@@ -803,7 +830,7 @@ class LocaleString extends Translations {
           'digi_gold': 'ಎಫ್‌ಡಿ (ಸ್ಥಿರ ಠೇವಣಿ)',
           'digi_silver': 'ರಾಶಿ ಚಿನ್ನ',
 
-          'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'ಗೌಪ್ಯತಾ ನೀತಿ'
         },
         'ma_IN': {
           'bank_accounts': 'बैंक खाते',
@@ -821,7 +848,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -831,7 +858,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
 
           'recharge': 'रिचार्ज',
@@ -1063,7 +1090,7 @@ class LocaleString extends Translations {
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
 
-          'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'गोपनीयता धोरण'
         },
         'te_IN': {
           'bank_accounts': 'बैंक खाते',
@@ -1081,7 +1108,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -1091,7 +1118,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
 
           'recharge': 'रिचार्ज',
@@ -1325,7 +1352,7 @@ class LocaleString extends Translations {
           'digi_gold': 'FD(Fixed Deposit)',
           'digi_silver': 'Digi Gold',
 
-          'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'गोपनीयता नीति'
         },
         'ta_IN': {
           'bank_accounts': 'बैंक खाते',
@@ -1343,7 +1370,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -1353,7 +1380,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
 
           'recharge': 'रिचार्ज',
@@ -1363,7 +1390,7 @@ class LocaleString extends Translations {
           'cashback_summary': 'Cashback by India1 summary',
           'current_balance': 'Current balance',
           'hello': 'வணக்கம் உலகம்',
-          'mobile_number': 'கைபேசி எண்',
+          'mobile_number': 'ಮೊಬೈಲ್ ನಂಬರ',
           'term_condition': 'விதிமுறைகளும் நிபந்தனைகளும்',
           'i_accept': 'நான் ஏற்றுக்கொள்கிறேன்',
           'request_otp': 'OTP ஐக் கோரவும்',
@@ -1589,266 +1616,280 @@ class LocaleString extends Translations {
           'privacy_policy': 'Privacy policy'
         },
         'mal_IN': {
-          'bank_accounts': 'बैंक खाते',
+          'Get_it_on_India1': 'ഇന്ത്യ 1 ൽ നേടുക',
+          'Now_with_India1': 'ഇപ്പോൾ ഇന്ത്യ 1 ഉപയോഗിച്ച്',
+          'When_with_India1': 'ഇന്ത്യ 1 ഉള്ളപ്പോൾ',
+
+          'bank_accounts': 'ബാങ്ക് അക്കൗണ്ട്',
+          'point': 'പോയിന്റ്',
+          'loans_banner_text': 'വായ്പകൾക്കായി ചുറ്റിക്കറങ്ങേണ്ടതില്ല',
+          'payment_banner_text': 'ഓരോ ഇടപാടിലും സമ്പാദിക്കുക',
+
+          'insurance_banner_text': 'നിങ്ങളെയും നിങ്ങളുടെ  ഇൻഷ്വർ ചെയ്യുക',
+          'saving_banner_text':
+              'കൂടുതൽ ലാഭിക്കുന്നു, കൂടുതൽ നിങ്ങൾ സമ്പാദിക്കുന്നു',
 
           //profile section
-          'no_first_name': 'No First Name',
-          'no_last_name': 'No Last Name',
-          'no_number': 'No Number',
-          'no_email': 'No Email Id',
-          'no_dob': 'No Dob',
-          'not_entered': 'Not Entered',
-          'not_updated': 'Not Updated',
-          'add_persnl_details': 'Add Personal Details',
-          'add_residntl_details': 'Add Residental Details',
-          'no_residntl_data': 'Could Not Find Any Residential Data!',
-          'add_occupation_details': 'Add Occupation Details',
+          'no_first_name': 'ആദ്യ നാമം ഇല്ല',
+          'no_last_name': 'അവസാന നാമം ഇല്ല',
+          'no_number': 'നമ്പറില്ല',
+          'no_email': 'ഇമെയിൽ ഐഡി ഇല്ല',
+          'no_dob': 'ഡിഒബി ഇല്ല',
+          'not_entered': 'നൽകിയിട്ടില്ല',
+          'not_updated': 'അപ്ഡേറ്റ് ചെയ്തിട്ടില്ല',
+          'add_persnl_details': 'വ്യക്തിഗത വിശദാംശങ്ങൾ നല്കുക',
+          'add_residntl_details': 'വാസസ്ഥാന വിവരങ്ങൾ നല്കുക',
+          'no_residntl_data': 'റെസിഡൻഷ്യൽ ഡാറ്റ കണ്ടെത്താൻ കഴിഞ്ഞില്ല!',
+          'add_occupation_details': 'തൊഴിൽ വിശദാംശങ്ങൾ നല്കുക',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
-          'bank_accounts': 'Bank Account(S)',
-          'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
-          'add_bank_acc': 'Add Bank Account',
-          'upi_id': 'Upi Id(S) / Vpa Number(S)',
-          'no_upi_data': 'Could Not Find Any Saved Upi / Vpa Details!',
-          'add_upi_id': 'Add Upi / Vpa Details',
+              'നിങ്ങളുടെ തൊഴിൽ വിവരങ്ങൾ കണ്ടെത്താൻ കഴിഞ്ഞില്ല!',
+          'bank_accounts': 'ബാങ്ക് അക്കൗണ്ടുകൾ',
+          'no_bank_data':
+              'സേവ് ചെയ്ത ബാങ്ക് അക്കൗണ്ട് വിശദാംശങ്ങളൊന്നും കണ്ടെത്താനായില്ല!',
+          'add_bank_acc': 'ബാങ്ക് അക്കൗണ്ട് നല്കുക',
+          'upi_id': 'യുപിഐ ഐഡി',
+          'no_upi_data':
+              'സംരക്ഷിച്ച യുപിഎ/വിപിഎ വിശദാംശങ്ങളൊന്നും കണ്ടെത്താനായില്ല!',
+          'add_upi_id': 'യുപിഐ / വിപിഎ വിശദാംശങ്ങൾ നല്കുക',
 
+          'earn_more_points': 'കൂടുതൽ പോയിന്റുകൾ നേടുക',
+          'locate_atm': 'എടിഎം കണ്ടെത്തുക',
+          'rewads_at_atm': 'റിവാർഡുകൾ',
+          'find_nearest_atm': 'സമീപമുള്ള ഇന്ത്യ 1 ATM കണ്ടെത്തുക',
+          'cashback': 'ക്യാഷ്ബാക്ക് ',
 
-          'earn_more_points': 'अधिक अंक अर्जित करें',
-          'locate_atm': 'Locate ATM',
-          'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
-          'cashback': 'Cashback',
-
-          'recharge': 'रिचार्ज',
-          'ways_to_reddem': 'भुनाने के तरीके:',
-          'total_redeemed': 'Total redeemed:',
-          'total_earned': 'कुल अर्जित अंक:',
-          'cashback_summary': 'Cashback by India1 summary',
-          'current_balance': 'Current balance',
+          'recharge': 'റീചാർജ്',
+          'ways_to_reddem': 'റിഡീം വഴികൾ:',
+          'total_redeemed': 'ആകെ  ചെയ്തത്',
+          'total_earned': 'ആകെ നേടിയ:',
+          'cashback_summary': 'ക്യാഷ്ബാക്ക് ബൈ ഇന്ത്യ 1- സംഗ്രഹം',
+          'current_balance': 'നിലവിലെ ബാലൻസ്',
           'hello': 'ഹലോ വേൾഡ്',
           'mobile_number': 'മൊബൈൽ നമ്പർ',
           'term_condition': 'നിബന്ധനകളും വ്യവസ്ഥകളും',
           'i_accept': 'ഞാൻ അംഗീകരിക്കുന്നു',
           'request_otp': 'OTP അഭ്യർത്ഥിക്കുക',
-          'empty_error_msg': '*Please enter a valid 10 digit mobile number',
+          'empty_error_msg': '*ദയവായി സാധുവായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക',
           'checkbox_select_error':
               'തുടരുന്നതിന് ഞങ്ങളുടെ നിബന്ധനകളും വ്യവസ്ഥകളും അംഗീകരിക്കുക',
           'sending_otp': 'OTP അയയ്ക്കുന്നു',
-          'proceed_btn': 'Proceed',
-          'enter_otp': 'Enter OTP',
+          'proceed_btn': 'തുടരുക',
+          'enter_otp': 'OTP നൽകുക',
           'otp_message': 'ഞങ്ങൾ അത് നമ്പറിലേക്ക് അയച്ചു',
-          'edit_number': 'നമ്പർ എഡിറ്റ് ചെയ്യുക',
-          'resend_otp': 'OTP അയയ്‌ക്കുക',
+          'edit_number': 'നമ്പർ  ചെയ്യുക',
+          'resend_otp': 'OTP അയയ്‌',
           'invalid_otp': 'ദയവായി സാധുവായ OTP നൽകുക',
-          'select_prefer_lan': 'മുൻഗണന ഭാഷ തിരഞ്ഞെടുക്കുക',
-          'loyalty_points': 'Loyalty points',
+          'select_prefer_lan': 'ഇഷ്ടപ്പെട്ട ഭാഷ തിരഞ്ഞെടുക്കുക',
+          'loyalty_points': 'വിശ്വസ്തത ഒഴുകുന്നു',
           'welcome': 'സ്വാഗതം,',
           'cashback_india1_summary': 'ക്യാഷ്ബാക്ക് ബൈ ഇന്ത്യ1 സംഗ്രഹം',
           'in': 'in',
           'redeem_points_now': 'വീണ്ടെടുക്കുക',
-          'home': 'Home',
-          'payments': 'Payments',
-          'loans': 'Loans',
-          'insurance': 'Insurance',
-          'savings': 'Savings',
+          'home': 'ഹോം',
+          'payments': 'പേയ്മെന്റുകൾ',
+          'loans': 'വായ്പകൾ',
+          'insurance': 'ഇൻഷുറൻസ്',
+          'savings': 'സേവിംഗ്സ്',
 
           // loan section
           'loan_categories': 'തിരഞ്ഞെടുക്കുക',
           'payment_categories': 'ബൈ',
           'insurance_categories': 'ബൈ',
 
-          'personal': 'निजी',
-          '2_wheeler': '2 व्हीलर',
-          'farm_eqp': 'फार्म ईक्यूपी',
-          'track_based_loan': 'ट्रैक  ऋण',
-          'gold': 'सोना',
-          'emi_card': 'ईएमआई कार्ड',
-          'credit_card': 'क्रेडिट कार्ड',
-          'credit_score': 'क्रेडिट अंक',
+          'personal': 'വ്യക്തിഗതം',
+          '2_wheeler': 'ഇരുചക്ര വാഹനം',
+          'farm_eqp': 'കാർഷിക ഉപകരണങ്ങൾ',
+          'track_based_loan': 'അടിസ്ഥാനമാക്കിയുള്ളത്',
+          'gold': 'സ്വർണ്ണം',
+          'emi_card': 'എമി കാർഡ്',
+          'credit_card': 'ക്രെഡിറ്റ് കാർഡ്',
+          'credit_score': 'क्ക്രെഡിറ്റ് സ്കോർ',
           //loans => Commmon Headers and texts like all stepper things
-          'next_button': 'Next',
-          'personal_loan_header': 'Personal Loan', // prsnl loan
-          'gold_loan_header': 'Gold Loan', // gold loan
-          'bike_loan_header': 'Bike Loan', // bike loan
-          'farm_loan_header': 'Farm Loan', //farm
-          'trackBased_loan_header': 'Track based Loan', // trackbased
+          'next_button': 'അടുത്തത്',
+          'personal_loan_header': 'വ്യക്തിഗത വായ്പ', // prsnl loan
+          'gold_loan_header': 'സ്വർണ്ണ വായ്പ', // gold loan
+          'bike_loan_header': 'ബൈക്ക് വായ്പ', // bike loan
+          'farm_loan_header': 'കാർഷിക വായ്പ', //farm
+          'trackBased_loan_header':
+              'ട്രാക്ക് അടിസ്ഥാനമാക്കിയുള്ള വായ്പ', // trackbased
 
           // loan details
           'loan_amount_desc':
-              'Enter The Loan Amount Required Using The Slider Or Type In The Text Field', //done
+              'സ്ലൈഡർ ഉപയോഗിച്ച് ആവശ്യമായ വായ്പ തുക നൽകുക അല്ലെങ്കിൽ ടെക്സ്റ്റ് ഫീൽഡിൽ ടൈപ്പ് ചെയ്യുക', //done
           'track_based_loan_details_desc':
-              'Choose The Sub-Product For Which You Want The Loan',
+              'നിങ്ങൾക്ക് വായ്പ ആവശ്യമുള്ള ഉപ ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക',
           'farm_loan_details_desc':
-              'Choose The Product Against Which You Want The Loan',
+              'നിങ്ങൾക്ക് വായ്പ ആവശ്യമുള്ള ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക',
 
           // loans => steppers headers
-          'loan_amount_header': 'Loan Amount',
-          'personal_header_stpr': 'Personal',
-          'residential_header_stpr': 'Residential',
-          'occupational_header_stpr': 'Occupation',
-          'additional_header_stpr': 'Additional',
-          'loan_details_header_stpr': 'Loan Details',
-          'personal_details': 'Personal Details',
-          'residential_details': 'Residential Details',
-          'occupation_details': 'Occupation Details',
-          'additional_information': 'Additional Information',
+          'loan_amount_header': 'വായ്പാ തുക',
+          'personal_header_stpr': 'വ്യക്തിഗതം',
+          'residential_header_stpr': 'വാസസ്ഥലം',
+          'occupational_header_stpr': 'തൊഴിൽ',
+          'additional_header_stpr': 'അധികമായ',
+          'loan_details_header_stpr': 'വായ്പ വിശദാംശങ്ങൾ',
+          'personal_details': 'വ്യക്തിഗത വിശദാംശങ്ങൾ',
+          'residential_details': 'താമസ വിവരങ്ങൾ',
+          'occupation_details': 'തൊഴിൽ വിശദാംശങ്ങൾ',
+          'additional_information': 'അധിക വിവരം',
 
           //All  --> errors
           //no errors for additional info
-          'this_field_mandatory': '*This Field Is Mandatory',
-          'first_name_e': '*First Name Is Mandatory',
-          'last_name_e': '*Last Name Is Mandatory',
-          'mobile_num_e': '*Mobile Number Should Be 10 Digits',
-          'email_id_e': '*Email Id Is Mandatory',
-          'date_of_birth_e': "*Date Of Birth Is Mandatory",
-          'maritial_status_e': 'Marital Status Is Mandatory',
-          'pan_num_e': '*Pan Number Is Mandatory',
-          'ad_e': '*Address Is Mandatory',
-          'pincode_e': '*Pincode Needs To Be Filled',
+          'this_field_mandatory': '*ഈ വിവരം നിർബന്ധമാണ്',
+          'first_name_e': '* ആദ്യ നാമം നിർബന്ധമാണ്',
+          'last_name_e': '* അവസാന നാമം നിർബന്ധമാണ്',
+          'mobile_num_e': '*10 അക്ക മൊബൈൽ നമ്പർ നല്കുക',
+          'email_id_e': '* ഇമെയിൽ ഐഡി നിർബന്ധമാണ്',
+          'date_of_birth_e': "*ജനന തീയതി നിർബന്ധമാണ്",
+          'maritial_status_e': 'വൈവാഹിക നില നിർബന്ധമാണ്',
+          'pan_num_e': '* പാൻ നമ്പർ നിർബന്ധമാണ്',
+          'ad_e': '* വിലാസം നിർബന്ധമാണ്',
+          'pincode_e': '* പിൻകോഡ് പൂരിപ്പിക്കുക',
 
           // bottom sheet
-          'want_to_proceed_quest': 'Do You Want To Proceed?',
+          'want_to_proceed_quest': 'നിങ്ങൾക്ക് തുടരണോ?',
           'proceed_description':
-              'Please Verify All The Details Provided. Once It Is Submitted, You Will Not Be Allowed To Change The Details.',
-          'apply_loan': 'Apply For Loan',
+              'നൽകിയിരിക്കുന്ന എല്ലാ വിശദാംശങ്ങളും ദയവായി സ്ഥിരീകരിക്കുക. ഇത് സമർപ്പിച്ചുകഴിഞ്ഞാൽ, വിശദാംശങ്ങൾ മാറ്റാൻ നിങ്ങളെ അനുവദിക്കില്ല.',
+          'apply_loan': 'വായ്പയ്ക്ക് അപേക്ഷിക്കുക',
 
           //applied success
-          'loan_application_submitted': 'Loan Application Submitted!',
-          'team_will_get_back': 'The Team Will Get Back To You.',
+          'loan_application_submitted': 'വായ്പ അപേക്ഷ സമർപ്പിച്ചു!',
+          'team_will_get_back': 'ഞങ്ങൾ തിരികെ ബന്ധപ്പെടുന്നതായിരിക്കും',
 
           //ask
           //denied success
 
           //select lender
-          'select_lender': 'Select The Lender To Proceed',
-          'loan_provider': 'Personal Loan Provider',
-          'explore': 'Explore',
+          'select_lender': 'തുടരുന്നതിന് പണമിടപാടു സ്ഥാപനത്തെ തിരഞ്ഞെടുക്കുക',
+          'loan_provider': 'വ്യക്തിഗത വായ്പ ദാതാവ്',
+          'explore': 'ആരായുക',
 
           //choose lender
-          'one_lender_select': 'Choose One Lender From The List',
-          'min_doc': 'Minimum Documentation',
-          'paperless': 'Paperless Process',
-          'max_amount': 'Max Amount',
-          'tenure': 'Tenure',
-          'interest': 'Interest/M',
-          'view_details': 'View Details',
-          'apply': 'Apply',
+          'one_lender_select': 'പട്ടികയിൽ നിന്ന് ഒരു ദാതാവിനെ തിരഞ്ഞെടുക്കുക',
+          'min_doc': 'കുറഞ്ഞ ഡോക്യുമെന്റേഷൻ',
+          'paperless': 'പേപ്പർലെസ് പ്രോസസ്സ്',
+          'max_amount': 'പരമാവധി തുക',
+          'tenure': 'കാലാവധി',
+          'interest': 'താൽപ്പര്യം/m',
+          'view_details': 'വിശദാംശങ്ങൾ കാണുക',
+          'apply': 'അപേക്ഷിക്കുക',
 
           //provider details
-          'top_features': 'Top Features',
-          'other_details': 'Other Details',
+          'top_features': 'സവിശേഷതകൾ',
+          'other_details': 'മറ്റ് വിശദാംശങ്ങൾ',
           'interest_rate': '',
           'max_age': '',
           'min_age': '',
           'loan_tenure': '',
           'apply_now': '',
           // unique=> gold loan
-          'gold_loan_process': 'Gold loan process',
+          'gold_loan_process': 'സ്വർണ്ണ വായ്പ പ്രക്രിയ',
           // unique => bike loan
-          'vehicle_loan_process': 'Vehicle loan process',
+          'vehicle_loan_process': 'വാഹന വായ്പ പ്രക്രിയ',
           //-----------------
           //All Forms
           //Personal Details form
 
-          'first_name': 'First Name',
-          'enter_first_name': 'Enter Your First Name',
-          'last_name': 'Last Name',
-          'enter_last_name': 'Enter Your Last Name',
-          'mobile_num': 'Mobile Number',
-          'enter_mobile_num': 'Enter mobile number',
-          'alt_num': 'Alternate Number',
-          'enter_alt_num': 'Enter alternate number',
-          'email_id': 'Email Id',
-          'enter_email_id': 'Enter Email Id Here',
+          'first_name': 'പേരിന്റെ ആദ്യഭാഗം',
+          'enter_first_name': 'നിങ്ങളുടെ ആദ്യ നാമം നൽകുക',
+          'last_name': 'പേരിന്റെ അവസാന ഭാഗം',
+          'enter_last_name': 'നിങ്ങളുടെ അവസാന നാമം നൽകുക',
+          'mobile_num': 'മൊബൈൽ നമ്പർ',
+          'enter_mobile_num': 'മൊബൈൽ നമ്പർ നൽകുക',
+          'alt_num': 'ഇതര മൊബൈൽ നമ്പർ',
+          'enter_alt_num': 'ഇതര നമ്പർ നൽകുക',
+          'email_id': 'ഇ-മെയിൽ ഐഡി',
+          'enter_email_id': 'ഇമെയിൽ ഐഡി ഇവിടെ നൽകുക',
           //ask
-          'date_of_birth': "Date Of Birth (Dd-Mm-Yyyy)",
-          'gender': 'Gender',
-          'male': 'Male',
-          'female': 'Female',
-          'other': 'Other',
-          'maritial_status': 'Marital Status',
-          'select_maritial_status': 'Select Your Marital Status',
-          'select_option': 'Select An Option',
-          'married': 'Married',
-          'unmarried': 'Unmarried',
-          'widowed': 'Widowed',
+          'date_of_birth': "ജനനത്തീയതി (Dd-Mm-Yyyy)",
+          'gender': 'ലിംഗഭേദം',
+          'male': 'പുരുഷൻ',
+          'female': 'സ്ത്രീ',
+          'other': 'മറ്റുള്ളവ',
+          'maritial_status': 'വൈവാഹിക നില',
+          'select_maritial_status': 'നിങ്ങളുടെ വൈവാഹിക നില തിരഞ്ഞെടുക്കുക',
+          'select_option': 'ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക',
+          'married': 'വിവാഹിത(ൻ)',
+          'unmarried': 'അവിവാഹിത(ൻ)',
+          'widowed': 'വിധവ',
 
           //Residential Form
-          'ad_line1': 'Address Line 1',
-          'ad_line1_h': 'Enter Door No, Cross, Etc',
-          'ad_line2': 'Address Line 2',
-          'ad_line2_h': 'Enter Area, Road, Landmark, Etc',
-          'pincode': 'Pincode',
-          'enter_pincode': 'Enter Pincode Here',
-          'city': 'City : Enter Pincode To View City',
-          'state': 'State : Enter Pincode To View State',
+          'ad_line1': 'വിലാസം വരി 1',
+          'ad_line1_h': 'വീട്ട് നമ്പർ,  ക്രോസ്, മുതലായവ',
+          'ad_line2': 'വിലാസം വരി 2',
+          'ad_line2_h': 'ഏരിയ, റോഡ്, ലാൻഡ്മാർക്ക് തുടങ്ങിയവ നൽകുക',
+          'pincode': 'പിൻ കോഡ്',
+          'enter_pincode': 'പിൻകോഡ് ഇവിടെ നൽകുക',
+          'city': 'നഗരം: നഗരം കാണുന്നതിന് പിൻകോഡ്  നൽകുക',
+          'state': 'സംസ്ഥാനം: സംസ്ഥാനത്തിനായുള്ള പിൻകോഡ് നൽകുക',
 
           //occcupation Form
           //ask
           //show ui and doc (drop downs)
 
-          'employment_type': 'Employment Type',
-          'employment_type_h': 'Choose Your Employment Type',
-          'monthly_income': 'Monthly Income',
-          'salary_mode': 'Salary Mode',
-          'salary_mode_h': 'Choose How You Receive Salary',
-          'pan_num': 'Pan Number',
-          'pan_num_h': 'Enter Your Pan Number',
+          'employment_type': 'തൊഴിൽ തരം',
+          'employment_type_h': 'നിങ്ങളുടെ തൊഴിൽ തരം തിരഞ്ഞെടുക്കുക',
+          'monthly_income': 'പ്രതിമാസ വരുമാനം',
+          'salary_mode': 'ശമ്പളം കിട്ടുന്ന രീതി',
+          'salary_mode_h':
+              'നിങ്ങൾക്ക് എങ്ങനെ ശമ്പളം ലഭിക്കുന്നെന്ന് തിരഞ്ഞെടുക്കുക',
+          'pan_num': 'പാൻ നമ്പർ',
+          'pan_num_h': 'നിങ്ങളുടെ പാൻ നമ്പർ നൽകുക',
 
           //additional_info
 
-          'months_residing_at': 'No. Of Months Residing At',
-          'highest_qualification': 'Highest Qualification',
-          'comapany_name': 'Company Name',
-          'designation': 'Designation',
-          'work_exp': 'Work Experience',
-          'office_add1': 'Office Address Line 1',
-          'office_add2': 'Office Address Line 2',
-          'office_add_h': 'Address',
-          'netbanking_quest': 'Do You Use Netbanking?',
-          'yes': 'Yes',
-          'no': 'No',
-          'existing_loans_quest': 'Do You Have Any Existing Loan?',
-          'active_existng_loans_num': 'No. Of Active / Existing Loans',
+          'months_residing_at': 'താമസിക്കുന്ന മാസങ്ങളുടെ എണ്ണം',
+          'highest_qualification': 'ഏറ്റവും ഉയർന്ന യോഗ്യത',
+          'comapany_name': 'കമ്പനി പേര്',
+          'designation': 'പദവി',
+          'work_exp': 'പ്രവർത്തന പരിചയം ',
+          'office_add1': 'ഓഫീസ് വിലാസം ലൈൻ 1',
+          'office_add2': 'ഓഫീസ് വിലാസം ലൈൻ 2',
+          'office_add_h': 'വിലാസം',
+          'netbanking_quest': 'നിങ്ങൾ നെറ്റ്ബാങ്കിംഗ് ഉപയോഗിക്കാറുണ്ടോ?',
+          'yes': 'അതെ',
+          'no': 'ഇല്ല',
+          'existing_loans_quest': 'നിങ്ങൾക്ക് നിലവിൽ ഏതെങ്കിലും വായ്പയുണ്ടോ?',
+          'active_existng_loans_num': 'സജീവ / നിലവിലുള്ള വായ്പകളുടെ എണ്ണം',
 
           //-----------------
 
           //bike loan unique
-          'product': 'Product',
-          'product_h': 'Select A Product',
-          'model': 'Model',
-          'model_h': 'Select A Model',
+          'product': 'പ്രോഡക്ട്‌',
+          'product_h': 'ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക',
+          'model': 'മോഡൽ',
+          'model_h': 'മോഡൽ തിരഞ്ഞെടുക്കുക',
 
           //track_based_unique
-          'sub_product': 'Sub Product',
-          'sub_product_h': 'Select Sub Product',
+          'sub_product': 'ഉപ ഉൽപ്പന്നം',
+          'sub_product_h': 'ഉപ ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക',
 
           //farm loan unique
-          'loan_requirement': 'Loan Requirement',
-          'loan_requirement_h': 'Choose The Option For Loan',
-          'loan_requirement_e': '*This Is Mandatory To Proceed',
+          'loan_requirement': 'വായ്പ ആവശ്യകത',
+          'loan_requirement_h': 'വായ്പയ്ക്കുള്ള ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക',
+          'loan_requirement_e': '* തുടരുന്നതിന് ഇത് നിർബന്ധമാണ്',
           // drop down
 
-          'my_profile': 'प्रोफाइल',
-          'my_rewards': 'पुरस्कार',
+          'my_profile': 'പ്രൊഫൈൽ',
+          'my_rewards': 'റിവാർഡുകൾ',
 
           // insurance section text
-          '4_wheeler': '4 व्हीलर',
-          'critical_illness': 'गंभीर बीमारी',
+          '4_wheeler': '4 വീലർ',
+          'critical_illness': 'ഗുരുതരമായ രോഗം',
 
           //payments section
 
-          'recharge': 'Recharge',
-          'fast_teg': 'FASTag',
-          'dth': 'DTH',
+          'recharge': 'റീചാർജ്',
+          'fast_teg': 'ഫാസ്റ്റ്ടാഗ്',
+          'dth': 'ഡി.ടി.എച്ച്',
 
           // Saving section
 
-          'fixed_deposit': 'Fixed Deposit',
-          'digi_gold': 'FD(Fixed Deposit)',
-          'digi_silver': 'Digi Gold',
+          'fixed_deposit': 'സ്ഥിര നിക്ഷേപം',
+          'digi_gold': 'FD (സ്ഥിര നിക്ഷേപം)',
+          'digi_silver': 'ഡിജി ഗോൾഡ്',
 
-          'privacy_policy': 'Privacy policy'
+          'privacy_policy': 'സ്വകാര്യതാ നയം'
         },
         'ban_IN': {
           'bank_accounts': 'बैंक खाते',
@@ -1866,7 +1907,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -1876,7 +1917,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
 
           'recharge': 'रिचार्ज',
@@ -2126,7 +2167,7 @@ class LocaleString extends Translations {
           'no_residntl_data': 'Could Not Find Any Residential Data!',
           'add_occupation_details': 'Add Occupation Details',
           'no_occupation_data':
-          'Could Not Find Any Of Your Occupation Details!',
+              'Could Not Find Any Of Your Occupation Details!',
           'bank_accounts': 'Bank Account(S)',
           'no_bank_data': 'Could Not Find Any Saved Bank Account Details!',
           'add_bank_acc': 'Add Bank Account',
@@ -2136,7 +2177,7 @@ class LocaleString extends Translations {
           'earn_more_points': 'अधिक अंक अर्जित करें',
           'locate_atm': 'Locate ATM',
           'rewads_at_atm': 'rewards at ATMs',
-          'find_nearest_atm' : 'Find the nearest India1 ATM',
+          'find_nearest_atm': 'Find the nearest India1 ATM',
           'cashback': 'Cashback',
 
           'recharge': 'रिचार्ज',

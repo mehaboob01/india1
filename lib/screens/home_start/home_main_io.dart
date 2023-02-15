@@ -564,14 +564,14 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                                 child: HeadingBox(
                                                     text: 'Aa',
                                                     ontap: () {
-                                                      filterBottomSheet();
-                                                      // Navigator.push(
-                                                      //     context,
-                                                      //     MaterialPageRoute(
-                                                      //         builder: (BuildContext
-                                                      //                 context) =>
-                                                      //             LanguageSelectionIO(
-                                                      //                 'home')));
+                                                      // filterBottomSheet();
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  LanguageSelectionIO(
+                                                                      'home')));
                                                     }),
                                               ),
                                               SizedBox(
@@ -1067,7 +1067,10 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
           text(
             'ways_to_reddem'.tr,
             style: AppStyle.shortHeading.copyWith(
-                fontSize: 10.0.sp, color: Colors.white, letterSpacing: 0.5),
+                overflow: TextOverflow.ellipsis,
+                fontSize: 10.0.sp,
+                color: Colors.white,
+                letterSpacing: 0.5),
           ),
           redeemWaySub(
               image: AppImages.mobilRecharge2Svg,
@@ -1106,6 +1109,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
               style: AppStyle.shortHeading.copyWith(
                   fontSize: 10.0.sp,
                   color: AppColors.textColorshade,
+                  overflow: TextOverflow.ellipsis,
                   letterSpacing: 0.5),
             ),
           ],
@@ -1158,6 +1162,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                 fontSize: 14.0.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
+                overflow: TextOverflow.ellipsis,
                 letterSpacing: 0.5),
           ),
           SizedBox(height: 1.0.hp),
@@ -1170,12 +1175,16 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                     fontSize: 18,
                     color: Colors.black,
                     letterSpacing: 0.5,
+                    overflow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.w600),
               ),
               text(
                 'rewads_at_atm'.tr,
-                style: AppStyle.shortHeading
-                    .copyWith(fontSize: 15, color: Colors.black),
+                style: AppStyle.shortHeading.copyWith(
+                  fontSize: 15,
+                  color: Colors.black,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               SizedBox(width: 6.0.wp),
               Flexible(
@@ -1213,6 +1222,7 @@ class _HomeMainIOState extends State<HomeMainIO> with WidgetsBindingObserver {
                                 fontSize: 10.0.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.blueColor,
+                                overflow: TextOverflow.ellipsis,
                                 letterSpacing: 0.5),
                           ),
                         ),
@@ -1261,6 +1271,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
               fontSize: Dimens.font_16sp,
               fontWeight: FontWeight.w600,
               color: Colors.black,
+              overflow: TextOverflow.ellipsis,
               letterSpacing: 0.5),
         ),
         SizedBox(height: 1.0.hp),
@@ -1273,6 +1284,7 @@ Widget nearestAtm({VoidCallback? onPressed}) {
                   fontSize: Dimens.font_16sp,
                   color: Colors.black,
                   letterSpacing: 0.5,
+                  overflow: TextOverflow.ellipsis,
                   fontWeight: FontWeight.w600),
             ),
             text(

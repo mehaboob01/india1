@@ -309,7 +309,7 @@ class _UserLoginState extends State<UserLogin> {
                                               }),
                                         TextSpan(text: " & "),
                                         TextSpan(
-                                            text: 'Privacy Policy',
+                                            text: 'privacy_policy'.tr,
                                             style: TextStyle(
                                               fontFamily: AppFonts.appFont,
                                               fontWeight: FontWeight.w600,

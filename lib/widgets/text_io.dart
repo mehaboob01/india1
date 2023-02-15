@@ -38,6 +38,7 @@ class _TextIOState extends State<TextIO> {
             fontWeight: widget.fontWeight),
         maxLines: widget.maxlines,
         textAlign: TextAlign.center,
+        textOverflow: TextOverflow.ellipsis,
       ),
     );
   }
